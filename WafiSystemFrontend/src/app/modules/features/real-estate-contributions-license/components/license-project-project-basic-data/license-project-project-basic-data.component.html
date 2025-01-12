@@ -1,0 +1,79 @@
+<div class="tab-data-section" *ngIf="mainData">
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.name}}</div>
+            <div class="value">{{mainData.name}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6" *ngIf="mainData.category">
+            <div class="key">{{localization.categoryId}}</div>
+            <div class="value">{{mainData.category.categoryName}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6" *ngIf="mainData.subCategory">
+            <div class="key">{{localization.subCategoryId}}</div>
+            <div class="value">{{mainData.subCategory.subCategoryName}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.startOn}}</div>
+            <div class="value">{{ mainData.startOn | date:'yyyy-MM-dd' }}</div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.endOn}}</div>
+            <div class="value">{{ mainData.endOn | date:'yyyy-MM-dd' }}</div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.projectDescription}}</div>
+            <div class="value">{{mainData.projectDescription}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.projectServices}}</div>
+            <div class="value">{{mainData.projectServices}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6" *ngIf="mainData.sysLicenseProjectType">
+            <div class="key">{{localization.typeId}}</div>
+            <div class="value">{{mainData.sysLicenseProjectType.name}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6" *ngIf="mainData.licenseProjectScope">
+            <div class="key">{{localization.licenseProjectScopeId}}</div>
+            <div class="value">{{mainData.licenseProjectScope.name}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6" *ngIf="mainData.projectSize">
+            <div class="key">{{localization.ProjectSize}}</div>
+            <div class="value" [ngSwitch]="mainData.projectSize">
+                <div *ngSwitchCase="projectSizeType.Small">{{localization.ProjectSizeSmall}}</div>
+                <div *ngSwitchCase="projectSizeType.Medium">{{localization.ProjectSizeMedium}}</div>
+                <div *ngSwitchCase="projectSizeType.Large">{{localization.ProjectSizeLarge}}</div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6" *ngIf="mainData.achievementRate">
+            <div class="key">{{localization.achievementRate}}</div>
+            <div class="value">{{mainData.achievementRate}}%</div>
+        </div>
+        <div class="col-12 col-lg-6" *ngIf="mainData && mainData.engineeringConsultantReportFile">
+            <div class="key">{{localization.engineeringConsultantReportFileId}}</div>
+            <div class="col-12 col-lg-12">
+                <a [href]="baseUrl + mainData.engineeringConsultantReportFile.filePath" target="_blank">
+                    {{mainData.engineeringConsultantReportFile.fileDescription}}</a>
+            </div>
+        </div>
+
+  <!--       <div class="col-12 col-lg-12">
+            <div class="key">{{localization.quantitiesTableFileId}}</div>
+            <div class="value" *ngFor="let quantityTableFile of mainData.licenseProjectQuantitiesTableFiles">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a *ngIf="quantityTableFile && quantityTableFile.quantitiesTableFile" [href]="baseUrl + quantityTableFile.quantitiesTableFile.filePath">
+                    {{quantityTableFile.quantitiesTableFile.fileDescription}}</a>
+            </div>
+        </div> -->
+    </div>
+</div>

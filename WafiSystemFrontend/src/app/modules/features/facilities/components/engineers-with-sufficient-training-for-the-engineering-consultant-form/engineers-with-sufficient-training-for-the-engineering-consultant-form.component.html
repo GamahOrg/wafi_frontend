@@ -1,0 +1,27 @@
+<form [formGroup]="qualificationqualificatedEngineersForm" id="form-qualificationqualificatedEngineersForm">
+    <div class="row row-gap-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+                <label for="" class="form-label">المهندسين المعتمدين</label>
+                <select class="form-select" formControlName="qualificationCertifiedEngineerId">
+                    <option label="اختار مهندس"></option>
+                    <option *ngFor="let item of qualificationCertifiedEngineers" [value]="item.id">{{item.engineerName}}
+                    </option>
+                </select>
+                <mat-error *ngIf="controls.qualificationCertifiedEngineerId.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
+        </div>
+    </div>
+    </div>
+    <div class="row row-gap-3 mb-3">
+        <div class="col-12 col-lg-12">
+            <div class="form-group">
+            <label>ملف شهادة التدريب</label>
+            <app-file-uploader (fileRemoved)="onTrainingCertificateFileRemoved($event)" (fileUploaded)="onTrainingCertificateFileUploaded($event)"></app-file-uploader>
+        </div>
+        <div *ngIf="qualificationqualificatedEngineerDto.trainingCertificateFileId == '' && showValidation"
+        class="invalid-feedback d-block">
+       <div>حقل مطلوب</div>
+        </div>
+   </div> 
+    </div>
+</form>

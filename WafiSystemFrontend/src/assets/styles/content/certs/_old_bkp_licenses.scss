@@ -1,0 +1,462 @@
+.cetificate {
+    position: relative;
+    padding-inline: 2rem;
+    padding-bottom: 2rem;
+
+    // border: 1rem solid $darkgreen;
+    border: 1rem solid $theme-dark;
+
+    background-image: url('/assets/images/qualifying/subtract.svg');
+    background-repeat: repeat;
+    // background-color: $white;
+    border-color: $theme-dark;
+
+    :host-context(.rega) & {
+        border-color: $theme-dark;
+    }
+
+    .cert-side,
+    .cert-body,
+    .cert-footer {
+        position: relative;
+        z-index: 2;
+    }
+
+    .cert-slogan {
+        display: flex;
+        align-items: baseline;
+
+        position: absolute;
+        top: 1rem;
+        right: 0;
+
+        .icon {
+            .fa {
+                font-size: 2.25rem;
+                // color: $orange;
+                color: $theme-mid;
+
+                :host-context(.rega) & {
+                    color: $theme-mid;
+                }
+            }
+        }
+
+        .slogan {
+            font-size: 1.25rem;
+            // color: $darkgreen;
+            color: $theme-dark;
+
+            :host-context(.rega) & {
+                color: $theme-dark;
+            }
+        }
+
+        .line {
+            width: 5rem;
+            height: 1rem;
+            margin-inline-start: .5rem;
+            // background-color: $orange;
+            background-color: $theme-mid;
+
+            :host-context(.rega) & {
+                background-color: $theme-mid;
+            }
+        }
+
+        &.ar {
+            left: 0;
+            right: auto;
+        }
+    }
+
+    .cert-side {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        row-gap: 5rem;
+
+        position: relative;
+        height: 100%;
+        padding-top: 3.5rem;
+        overflow: hidden;
+
+        .arrow {
+            position: absolute;
+            top: -1rem;
+            right: 50%;
+            transform: translateX(50%);
+
+            .fa {
+                line-height: 3.5rem;
+                font-size: 10rem;
+                // color: $orange;
+                color: $theme-mid;
+
+                :host-context(.rega) & {
+                    color: $theme-mid;
+                }
+            }
+        }
+
+        .verification {
+            display: flex;
+            align-items: baseline;
+            column-gap: .5rem;
+
+            .label {
+                transform: rotate(180deg);
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+
+                font-size: small;
+                font-weight: bold;
+                // color: $darkgreen;
+                color: $theme-dark;
+
+                :host-context(.rega) & {
+                    color: $theme-dark;
+                }
+            }
+
+            .square {
+                width: 8rem;
+                height: 8rem;
+                // border: 2px solid $orange;
+                border: 2px solid $theme-mid;
+
+                :host-context(.rega) & {
+                    border-color: $theme-mid;
+                }
+            }
+        }
+    }
+
+    .cert-form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            margin-bottom: 0;
+            font-weight: bold;
+            color: #06281B;
+        }
+
+        input {
+            padding: 0;
+            text-align: center;
+            border: none;
+            border-radius: 0;
+
+            &:read-only,
+            &:disabled {
+                background-color: $white;
+            }
+        }
+    }
+
+    .cert-header {
+        padding-top: 5rem;
+
+        .title {
+            text-align: justify;
+            // color: $darkgreen;
+            color: $theme-dark;
+
+            :host-context(.rega) & {
+                color: $theme-dark;
+            }
+        }
+
+        .cert-form {
+            label {
+                padding-bottom: 0;
+                font-weight: bold;
+                color: #06281B;
+            }
+        }
+    }
+
+    .cert-body {
+        margin-top: 3rem;
+
+        .cert-form {
+            row-gap: 0.5rem;
+
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #06281B;
+
+            input {
+                border-bottom: 1px dashed #ADAFB2;
+            }
+        }
+
+        .cert-signature {
+            margin-top: 3rem;
+            text-align: center;
+
+            .name {
+                margin-top: 5rem;
+            }
+        }
+    }
+
+    .cert-footer {
+        margin-top: 2rem;
+
+        .cert-notes {
+            padding-inline-start: 3.5rem;
+            padding-inline-end: 1rem;
+
+            .text {
+                font-size: 0.75rem;
+            }
+        }
+
+        .footer-spacer {
+            // border-color: $orange;
+            border-color: $theme-mid;
+            border-width: 3px;
+            opacity: 1;
+
+            :host-context(.rega) & {
+                border-color: $theme-mid;
+            }
+        }
+
+        .info {
+            text-align: end;
+
+            .website {
+                font-size: 0.75rem;
+            }
+
+            .phone {
+                font-weight: bold;
+                letter-spacing: 3px;
+                // color: $darkgreen;
+                color: $theme-dark;
+
+                :host-context(.rega) & {
+                    color: $theme-dark;
+                }
+            }
+        }
+
+        .logo {
+            img {
+                height: 3rem;
+
+                :host-context(.rega) & {
+                    height: 6rem;
+                }
+            }
+        }
+    }
+
+    .lines {
+        img {
+            position: absolute;
+            z-index: 1;
+            max-width: 100%;
+
+            &.top-right {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            &.bottom-left {
+                bottom: 1rem;
+                left: 1rem;
+            }
+        }
+    }
+
+    &.thumbnail {
+        display: flex;
+        flex-direction: column;
+        row-gap: .5rem;
+
+        height: 20rem;
+        padding-inline: 1rem;
+        padding-bottom: 1rem;
+        border-width: .5rem;
+        overflow: hidden;
+
+        .row {
+            --bs-gutter-x: .5rem;
+        }
+
+        .cert-slogan {
+            top: 0;
+
+            .icon {
+                .fa {
+                    font-size: .75rem;
+                }
+            }
+
+            .slogan {
+                font-size: .5rem;
+                // color: $darkgreen;
+                color: $theme-dark;
+
+                :host-context(.rega) & {
+                    color: $theme-dark;
+                }
+            }
+
+            .line {
+                width: 1rem;
+                height: .25rem;
+                margin-inline-start: .125rem;
+            }
+        }
+
+        .cert-side {
+            padding-top: 1rem;
+
+            .arrow {
+                top: -1.5rem;
+
+                .fa {
+                    line-height: 3.5rem;
+                    font-size: 2rem;
+                }
+            }
+
+            .logo {
+                img {
+                    width: 1rem;
+                }
+            }
+
+            .verification {
+                column-gap: .25rem;
+
+                .label {
+                    font-size: 0.125rem;
+                }
+
+                .square {
+                    width: 2rem;
+                    height: 2rem;
+                    // border: 1px solid $orange;
+                    border: 1px solid $theme-mid;
+
+                    :host-context(.rega) & {
+                        border-color: $theme-mid;
+                    }
+                }
+            }
+        }
+
+        .cert-form {
+            padding-bottom: .5rem !important;
+
+            label,
+            input {
+                font-size: 0.25rem;
+            }
+        }
+
+        .cert-header {
+            padding-top: 1.5rem;
+
+            .title {
+                font-size: .5rem;
+            }
+        }
+
+        .cert-body {
+            margin-top: 1rem;
+
+            .cert-form {
+                row-gap: 0.125rem;
+            }
+
+            .cert-signature {
+                margin-top: .5rem;
+
+                .role,
+                .name {
+                    font-size: .25rem;
+                }
+
+                .name {
+                    margin-top: 1rem;
+                }
+            }
+        }
+
+        .cert-footer {
+            margin-top: auto;
+
+            .cert-notes {
+                padding-inline-start: 1rem;
+                padding-inline-end: .5rem;
+
+                .text {
+                    font-size: .125rem;
+                }
+            }
+
+            .footer-spacer {
+                margin: .125rem 0;
+            }
+
+            .info {
+
+                .website {
+                    font-size: .125rem;
+                }
+
+                .phone {
+                    font-size: .25rem;
+                    letter-spacing: 1px;
+                }
+            }
+
+            .logo {
+                img {
+                    height: .5rem;
+
+                    :host-context(.rega) & {
+                        height: 1rem;
+                    }
+                }
+            }
+        }
+
+        .lines {
+            img {
+
+                &.top-right {
+                    height: 50%;
+                    top: .5rem;
+                    right: .5rem;
+                }
+
+                &.bottom-left {
+                    width: 50%;
+                    bottom: .5rem;
+                    left: .5rem;
+                }
+            }
+        }
+
+        p,
+        th,
+        td,
+        dt,
+        dd {
+            font-size: 0.25rem !important;
+        }
+
+        th,
+        td {
+            padding: .125rem !important;
+        }
+    }
+}

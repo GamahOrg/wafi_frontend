@@ -1,0 +1,36 @@
+  <div class="tab-data-section">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <div class="key">رصيد حساب الضمان</div>
+        <div class="value">{{ projectDetails.escrowAccountBalance }}</div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">اخر تقرير مالي</div>
+        <a
+          *ngIf="projectDetails.lastFinancialReport != null"
+          [href]="baseUrl + projectDetails.lastFinancialReport.filePath"
+          id="link-lastFinancialReport"
+          target="_blank"
+        >
+          {{ projectDetails.lastFinancialReport.fileDescription }}
+        </a>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">قائمة بالوحدات العقارية المباعة</div>
+        <div
+          *ngFor="
+            let file of projectDetails.licenseProjectSoldUnitAttachmentFiles
+          "
+        >
+          <a
+            *ngIf="projectDetails.licenseProjectSoldUnitAttachmentFiles != null"
+            [href]="baseUrl + file.filePath"
+            id="link-licenseProjectSoldUnitAttachmentFiles"
+            target="_blank"
+          >
+            {{ file.fileDescription }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>

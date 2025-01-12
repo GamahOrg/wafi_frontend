@@ -1,0 +1,25 @@
+<div class="tab-data-section" *ngIf="bankingAccount">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div *ngIf="bankingAccount.sysBank" class="col-12 col-lg-6">
+            <div class="key">{{localization.bankName}}</div>
+            <div>{{bankingAccount.sysBank!.name}}</div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.accountNumber}}</div>
+            <div>{{bankingAccount.accountNumber}}</div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.bankAccountDelegatorName}}</div>
+            <div>{{bankingAccount.bankAccountDelegatorName}}</div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.bankAccountDelegatorMobile}}</div>
+            <div>{{bankingAccount.bankAccountDelegatorMobile}}</div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.bankAccountDelegatorEmail}}</div>
+            <div>{{bankingAccount.bankAccountDelegatorEmail}}</div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,51 @@
+
+<main class="form-signin" id="form-signin"> 
+    <div class="text-center">
+     <img
+       class="mb-4"
+       src="assets/images/auth/ForgotPass.svg"
+       alt=""
+       width="337"
+       height="365"
+     />
+     <h1 class="h3 mb-3 fw-normal" style="color: #076f42">
+       هل نسيت كلمة المرور ؟
+     </h1>
+     <h2 class="h5 mb-3 form-label">
+       نأمل ادخال اسم المستخدم  لارسال رمز التحقق
+     </h2>
+   </div> 
+    <form [formGroup]="forgotPassForm" id="form-forgotPassForm">
+     <div class="form-group mb-4">
+       <label for="username">اسم المستخدم </label>
+       <input
+         id="control-username"
+         class="form-control"
+         formControlName="username"
+         id="username"
+         placeholder=" أكتب اسم المستخدم "
+         [ngClass]="{
+           'is-invalid': usernameControl.touched && usernameControl.errors
+         }"
+       />
+       <div *ngIf="usernameControl.errors" class="invalid-feedback">
+         <div
+           *ngIf="usernameControl.touched && usernameControl.errors?.['required']"
+         >
+           اسم المستخدم مطلوب
+         </div>
+         
+       </div>
+     </div>
+
+     <div class="text-center">
+       <button
+         class="w-50 btn btn-primary" id="btn-onSubmit"
+         [disabled]="!forgotPassForm.valid"
+         (click)="onSubmit()"
+       >
+         استمرار
+       </button>
+     </div>
+   </form> 
+ </main> 

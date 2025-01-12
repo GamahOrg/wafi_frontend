@@ -1,0 +1,18 @@
+{
+  "direction": "ltr",
+  "layout": {
+    "sidebar": {
+      "requests": "resuests",
+      "projects": "projects",
+      "dashboard": "dashboard",
+      "default": "default",
+      "currentRequests":"current requests",
+      "pages":"pages",
+      "needToRenew": "need to renew"
+    }
+  },
+  "HOME": {
+    "TITLE": "test",
+    "SELECT": "test"
+  }
+}

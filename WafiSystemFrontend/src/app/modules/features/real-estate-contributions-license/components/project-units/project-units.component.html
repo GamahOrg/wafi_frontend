@@ -1,0 +1,87 @@
+<div class="tab-data-section"
+     *ngIf="projectUnits && projectUnits.length">
+    <div class="tab-data-section-title-subtitle">
+        <h6 class="title">
+            {{localization.totalNumberOfUnits}}
+            {{projectUnits.length}}
+
+            <button class="btn btn-link"
+                    (click)="openDialog()">
+                <span class="material-icons-outlined">add_circle_outline</span>
+                {{localization.addingNewUnit}}
+            </button>
+        </h6>
+    </div>
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 ">
+            <div class="table-responsive">
+                <table class="table table-light">
+                    <thead>
+                        <tr>
+                            <th>{{localization.type}}</th>
+                            <th>{{localization.unitNumber}}</th>
+                            <th> {{localization.constructionStartOn}}</th>
+                            <th> {{localization.constructionEndOn}}</th>
+                            <th> {{localization.stageNumber}}</th>
+                            <th> {{localization.subUnitsType}}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="projectUnits.length">
+                        <tr *ngFor="let unit of projectUnits">
+                            <td>{{unit.unitTypeName }}</td>
+                            <td>{{unit.code}}</td>
+                            <td>{{unit.constructionStartOn | date:'yyyy-MM-dd'}}</td>
+                            <td>{{unit.constructionEndOn | date:'yyyy-MM-dd'}}</td>
+                            <td> {{unit.stageNumber}}</td>
+                            <td>
+                                {{unit.licenseProjectSubUnits.length}}
+                                {{localization.subUnitsType}}
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <div class="menu-trigger">
+                                        <button mat-mini-fab
+                                                [matMenuTriggerFor]="tableActions">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                    </div>
+                                    <mat-menu #tableActions="matMenu">
+                                        <button mat-menu-item
+                                                (click)="openEditDialog(unit)">
+                                            <mat-icon color="primary">edit</mat-icon>
+                                            <span>تعديل البيانات</span>
+                                        </button>
+                                        <button mat-menu-item
+                                                (click)="deleteUnit(unit)">
+                                            <mat-icon color="warn">delete</mat-icon>
+                                            <span>حذف زون</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                                <!-- <div class="d-flex align-items-center justify-content-end column-gap-2">
+                                    <button mat-icon-button
+                                            color="primary"
+                                            (click)="openEditDialog(unit)"><mat-icon>edit</mat-icon></button>
+                                    <button mat-icon-button
+                                            color="warn"
+                                            (click)="deleteUnit(unit)"><mat-icon>delete</mat-icon></button>
+                                </div> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-data-section"
+     *ngIf="projectUnits?.length == 0">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 ">
+            <app-no-data class="mx-auto"
+                         (onNoDataButtonClicked)="openDialog()"></app-no-data>
+        </div>
+    </div>
+</div>

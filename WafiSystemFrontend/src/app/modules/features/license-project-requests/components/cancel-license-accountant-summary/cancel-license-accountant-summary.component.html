@@ -1,0 +1,65 @@
+<div class="tab-data-header">
+  <div class="icon"><span class="material-icons">list_alt</span></div>
+  <h6 class="title fw-normal">
+    البيانات من المحاسب القانونى (يتم ادخال البيانات من قبل المحاسب القانونى)
+  </h6>
+
+  <button
+    *ngIf="showButton"
+    (click)="openClearanceAccountDialog()"
+    mat-raised-button
+    class="edit-icon"
+  >
+    <span class="material-icons">edit</span>
+  </button>
+</div>
+
+<div class="tab-data-section">
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-md-6">
+      <div class="key">رصيد حساب الضمان</div>
+      <div class="value">{{ projectDetails.escrowAccountBalance }}</div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="key">اخر تقرير مالي</div>
+      <span *ngIf="projectDetails.lastEngineeringReport != null"
+
+        class="delete"
+        (click)="deletFile(projectDetails.lastFinancialReport?.id)"
+        ><i class="material-icons text-danger">close</i></span
+      >
+      <span class="icon material-icons-outlined">content_copy</span>
+
+      <a
+        *ngIf="projectDetails.lastFinancialReport != null"
+        [href]="baseUrl + projectDetails.lastFinancialReport.filePath"
+        id="link-lastFinancialReport"
+        target="_blank"
+      >
+        {{ projectDetails.lastFinancialReport.fileDescription }}
+      </a>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="key">قائمة بالوحدات العقارية المباعة</div>
+      <div
+        *ngFor="
+          let file of projectDetails.licenseProjectSoldUnitAttachmentFiles
+        "
+      >
+        <span class="delete" (click)="deletFile(file?.id)"
+          ><i class="material-icons text-danger">close</i></span
+        >
+        <span class="icon material-icons-outlined">content_copy</span>
+
+        <a
+          *ngIf="projectDetails.licenseProjectSoldUnitAttachmentFiles != null"
+          [href]="baseUrl + file.filePath"
+          id="link-licenseProjectSoldUnitAttachmentFiles"
+          target="_blank"
+        >
+          {{ file.fileDescription }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

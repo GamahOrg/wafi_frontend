@@ -1,0 +1,61 @@
+<div class="row"
+     *ngIf="qualificationCertificates.length > 0; else NoCertificate">
+  <div class="col-12 col-md-6 col-lg-4 mb-2"
+       *ngFor="let certificate of qualificationCertificates">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="cert-number mb-2"
+            (click)="navigateToRequestDetails(certificate.qualificationRequestId)">
+          #{{certificate.requestCode}}</h6>
+
+        <!-- <app-certificate [id]="'print-section'+certificate.requestCode"
+                         [certificateData]="certificate"></app-certificate> -->
+
+        <app-engineering-certificate *ngIf="certificate.qualificationRequestType==QualificationType.engineeringConsultantQualificationRequest" [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-engineering-certificate>
+        <app-accountant-certificate *ngIf="certificate.qualificationRequestType==QualificationType.accountantQualificationRequest" [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-accountant-certificate>
+        <app-developer-certificate  *ngIf="certificate.qualificationRequestType==QualificationType.realStateDeveloperQualificationRequest"  [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-developer-certificate>
+        <app-contribution-developer-certificate *ngIf="certificate.qualificationRequestType==QualificationType.realEstateDeveloperSpecializingInRealEstateParticipation" [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-contribution-developer-certificate>
+        <!-- <app-contribution-developer-certificate [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-contribution-developer-certificate> -->
+        
+      <div class="d-flex flex-column justify-content-between my-3">
+          <h5 class="card-title mb-0">
+            <span class="cert-name">
+              شهادة
+              {{certificate.qualificationRequestTypeName}}
+            </span>
+
+            <button class="p-0 border-0 bg-transparent"
+                    ngxPrint
+                    [previewOnly]="false"
+                    [useExistingCss]="true"
+                    [printSectionId]="'print-section'+certificate.requestCode"
+                    [printTitle]="certificate.qualificationRequestTypeName">
+              <span class="icon material-icons">download</span>
+            </button>
+          </h5>
+        </div>
+
+        <div class="card-text">
+          <div class="key">تاريخ إصدار الشهادة</div>
+          <div class="value"
+               dir="ltr">
+            {{certificate.committeeDecisionDate | date : "dd MMMM yyyy"}}
+            <span class="icon material-icons">calendar_month</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<ng-template #NoCertificate>
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-center">
+        لا توجد شهادات
+      </h3>
+    </div>
+  </div>
+</ng-template>

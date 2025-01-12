@@ -1,0 +1,104 @@
+<div class="table-responsive">
+    <table class="table table-light" >
+        <thead>
+            <tr>
+                <th> السنة</th>
+                <!--  <th>إجمالي الإيرادات</th>
+                    <th> تكلفة الأراضي</th>
+                    <th> التكاليف</th>
+                    <th> دفعات مقدمة</th>
+                    <th> أعمال البنية التحتية</th>
+                    <th> أعمال الهيكل الخارجي</th>
+                    <th> التشطيبات</th>
+                    <th> تركيبات الأساس والمعدات</th>
+                    <th> مصاريف الارتباط وإزالة العيوب وربط الخدمات</th>
+                    <th> مصاريف التسليم</th>
+                    <th> البند الجديد</th>
+                    <th> وصف البند الجديد</th>
+                    <th> مصاريف عن العيوب التي قد تقع بعد الإنشاء</th>
+                    <th> مصاريف التصميم</th>
+                    <th> مصاريف الإشراف</th>
+                    <th> المصاريف الاداريه والعمومية</th>
+                    <th> مصاريف الإيجار</th>
+                    <th> مصاريف الطاقه</th>
+                    <th> مصاريف الاتصالات</th>
+                    <th> اتعاب التدقيق</th>
+                    <th> عمولات بنكيه</th>
+                    <th> رسوم حكومية</th>
+                    <th> برامج تقنيه</th>
+                    <th> مصاريف التأمين</th>
+                    <th> مصاريف متنوعة</th>
+                    <th> مصاريف التوظيف</th>
+                    <th> قرطاسية ومطبوعات</th>
+                    <th> مصاريف نقل و سفر</th>
+                    <th> استهلاك الأجهزة</th>
+                    <th> إطفاء مصاريف ماقبل التشغيل</th>
+                    <th> الرواتب والاجور</th>
+                    <th>  مصاريف التسويق والتغطيه والاعلان</th>
+                    <th> مصاريف اخري</th>
+                    <th> مخصص الطواريء</th>
+                    <th> مصروف الزكاة</th>
+                    <th> مصروف الضريبة</th> -->
+                <!--  <th> صافي الإيرادات</th>
+                    <th> إجمالي تكاليف الانشاء والبناء</th>
+                    <th> إجمالي مصاريف البناء والتشييد</th>
+                    <th> إجمالي مصاريف  الإشراف</th>
+                    <th> مجموع المصاريف الإداريةوالعمومية</th> -->
+                <th> مجمل الربح</th>
+                <th> مجموع المصاريف والأعباءالآخرى</th>
+                <th> صافي الربح(الخساره) قبل احتساب الزكاة الضربيه</th>
+                <th> صافي الربح(الخساره) بعد احتساب الزكاة الضربيه</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="licenseProjectExpectedIncomes && licenseProjectExpectedIncomes.length>0">
+            <tr *ngFor="let exp of licenseProjectExpectedIncomes">
+                <td>{{exp?.year?.name}}</td>
+                <!-- <td>{{exp.totalRevenue}}</td>
+                    <td>{{exp.landCost}}</td>
+                    <td>{{exp.costs}}</td>
+                    <td>{{exp.advancePayments}}</td>
+                    <td>{{exp.infrastructureWorks}}</td>
+                    <td>{{exp.externalStructureWorks}}</td>
+                    <td>{{exp.finishes}}</td>
+                    <td>{{exp.foundationFixturesAndEquipment}}</td>
+                    <td>{{exp.connectionFeesDefectRemovalAndLinkingServices}}</td>
+                    <td>{{exp.deliveryCharges}}</td>
+                    <td>{{exp.newOtherClause}}</td>
+                    <td>{{exp.descriptionOfNewClause}}</td>
+                    <td>{{exp.deesForDefectsInConstruction}}</td>
+                    <td>{{exp.designFees}}</td>
+                    <td>{{exp.supervisionFees}}</td>
+                    <td>{{exp.administrativeAndGeneralFees}}</td>
+                    <td>{{exp.rentalFees}}</td>
+                    <td>{{exp.energyFees}}</td>
+                    <td>{{exp.communicationFees}}</td>
+                    <td>{{exp.auditFees}}</td>
+                    <td>{{exp.bankCommission}}</td>
+                    <td>{{exp.governmentalFees}}</td>
+                    <td>{{exp.technicalPrograms}}</td>
+                    <td>{{exp.insuranceFees}}</td>
+                    <td>{{exp.variousFees}}</td>
+                    <td>{{exp.employmentFees}}</td>
+                    <td>{{exp.stationeryAndPublications}}</td>
+                    <td>{{exp.travelAndTransportationFees}}</td>
+                    <td>{{exp.deviceConsumption}}</td>
+                    <td>{{exp.amortizationOfPreOperatingFees}}</td>
+                    <td>{{exp.salariesAndWages}}</td>
+                    <td>{{exp.marketingAndCoverageAndAdvertisingFees}}</td>
+                    <td>{{exp.otherFees}}</td>
+                    <td>{{exp.emergencyAllowance}}</td>
+                    <td>{{exp.zakatFees}}</td>
+                    <td>{{exp.taxFees}}</td> -->
+                <!--   <td>{{exp.netRevenue}}</td>
+                    <td>{{exp.totalConstructionCostsAndConstruction}}</td>
+                    <td>{{exp.totalConstructionExpensesAndConstruction}}</td>
+                    <td>{{exp.totalSupervisionExpenses}}</td>
+                    <td>{{exp.totalAdministrativeExpensesAndGenerality}}</td> -->
+                <td>{{exp.totalProfit}}</td>
+                <td>{{exp.totalExpensesAndBurdensOther}}</td>
+                <td>{{exp.netProfitLossBeforeCalculatingZakatTax}}</td>
+                <td>{{exp.netProfitLossAfterCalculatingZakatTax}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

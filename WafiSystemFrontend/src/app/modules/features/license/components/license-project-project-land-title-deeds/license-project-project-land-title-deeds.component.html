@@ -1,0 +1,23 @@
+<div class="table-responsive">
+    <table class="table table-light">
+        <thead>
+            <tr>
+                <th>{{localization.typeId}}</th>
+                <th>{{localization.number}}</th>
+                <th>{{localization.space}}</th>
+                <th> {{localization.issueOn}}</th>
+                <th>{{localization.owners}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let deed of deeds">
+                <td>{{deed?.type?.name}}</td>
+                <td>{{deed?.data?.deedNo}}</td>
+                <td>{{deed?.data?.deedArea}}</td>
+                <td>{{deed?.issueOn | date:'yyyy-MM-dd'}}</td>
+                <td>{{deed?.data?.deedOwners?.length}}</td>
+                <!-- <td *ngIf="deed?.ownersCount != 0"> <button type="button" class="btn btn-primary"   (click)="openShowOwnerListDialog(deed)">عرض الملاك</button></td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>

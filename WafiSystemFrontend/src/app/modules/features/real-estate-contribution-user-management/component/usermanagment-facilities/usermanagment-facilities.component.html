@@ -1,0 +1,87 @@
+<button type="button" class="btn btn-primary" (click)="addFacility()">اضافة منشأة</button>
+
+<div class="row row-gap-4">
+    <div class="col-12">
+        <div class="filter">
+            <!-- <div class="row">
+                <div class="col-4">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1"><i
+                                class="material-icons-outlined">search</i></span>
+                        <input type="text" class="form-control" placeholder="بحث رقم الهوية" aria-label="search"
+                            aria-describedby="basic-addon1" />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="criteria-wrapper">
+                        <button type="button " class="toggle btn btn-primary">
+                            <span class="d-flex align-items-center column-gap-1">
+                                <i class="material-icons">filter_alt</i>
+                                التصفية
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 justify-content-end align-items-center">
+                    <button type="button" style="float: left;" color="primary" mat-flat-button
+                        class="addbtn  btn btn-outline-primary d-flex align-items-center column-gap-1 float-left"
+                        >
+                        إضافة مفوض جديد
+                    </button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="table-responsive mb-3">
+        <table class="table">
+            <thead>
+                <tr>
+                       <th scope="col">اسم الشركة  </th>
+                       <th scope="col">كود الشركة  </th>
+                        <th scope="col">السجل التجاري</th>
+                        <th scope="col">تاريخ بدايه التسجيل</th>
+                        <th scope="col">تاريخ نهايه التسجيل</th>
+                        <th scope="col">العمليات</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let facility of reqList.results">
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{facility.facilityName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{facility.facilityCode}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{facility.commercialRegisterNumber}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{facility.commercialRegisterStartDate | date:'MMM d, y'}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{facility.commercialRegisterEndDate | date:'MMM d, y'}}
+                        </span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="assignSubCustomerOnFacility(facility)">تعين مفوضين على المنشأه</button>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>

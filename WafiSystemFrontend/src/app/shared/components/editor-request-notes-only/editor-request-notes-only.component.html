@@ -1,0 +1,40 @@
+<!-- <form [formGroup]="notesForm">
+    <angular-editor id="editor2" formControlName="htmlContent" [config]="editorConfig"></angular-editor>
+    <div mat-dialog-actions align="end">
+        <button type="button" mat-flat-button color="primary" (click)="submitBasicInfoForm()">حفظ الملاحظات</button>
+    </div>
+</form> -->
+
+<div [formGroup]="feedbackForm">
+    <div class="row row-gap-3">
+        <div class="col-12">
+            <h6 class="mb-2">هل يوجد ملاحظات على الطلب </h6>
+            <!-- {{isWithNotes.value=='true' ? true : false}} -->
+            <div class="form-check form-check-inline">
+                <input class="form-check-input"
+                       type="radio"
+                       id="yes"
+                       value=true
+                       formControlName="IsWithNotes"
+                       [checked]="isWithNotes.value=='true'">
+                <label class="form-check-label"
+                       for="yes">نعم</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input"
+                       type="radio"
+                       id="no"
+                       value=false
+                       formControlName="IsWithNotes"
+                       [checked]="isWithNotes.value=='false'">
+                <label class="form-check-label"
+                       for="no">لا</label>
+            </div>
+        </div>
+        <div class="col-12"
+             *ngIf="isWithNotes.value=='true'">
+            <app-rich-text-editor id=""
+                                  (valueChanged)="onValueChange($event)"></app-rich-text-editor>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<button type="button" class="btn btn-primary my-4" (click)="AddProject(0)">إضافة </button>
+
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">اسم المشروع</th>
+                    <th scope="col">نوع المشروع</th>
+                    <th scope="col">تاريخ بداية المشروع</th>
+                    <th scope="col">تاريخ نهاية المشروع</th>
+                    <th scope="col">رقم الرخصة</th>
+                    <th scope="col">تاريخ بداية الترخيص</th>
+                    <th scope="col">تاريخ نهاية الترخيص</th>
+                    <th scope="col">العمليات</th>
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.projectOrContributionName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.projectOrContributionType}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.projectOrContributionStartOn|date:'yyyy/MM/dd'}}</span>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.projectOrContributionEndOn|date:'yyyy/MM/dd'}}</span>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.certificateNumber}}</span>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.certificateStartOn|date:'yyyy/MM/dd'}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.certificateEndOn|date:'yyyy/MM/dd'}}</span>
+                       
+                     </td>
+                     <td>
+                        <button type="button" class="btn btn-outline-primary mx-4" (click)="showDetails(comdata.id)">عرض التفاصيل</button>
+                        <button type="button" class="btn btn-outline-primary mx-4" *ngIf="!comdata.approve" (click)="AddProject(comdata.id)">تعديل</button>
+
+                       
+                     </td>
+                     
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+
+

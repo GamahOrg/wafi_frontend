@@ -1,0 +1,219 @@
+.page {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    // padding: 1.5rem;
+
+    // background-color: $white;
+    // border-radius: $card-border-radius;
+    // border: 1px solid rgba($black, .1);
+}
+
+.page-header {
+    &.with-abstract {
+        padding: 1.5rem 2rem;
+        border-radius: $border-radius;
+
+        background-color: $success;
+        background-image: url('/assets/images/general/page-header-top-abstract.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+
+        .page-title {
+            .title {
+                color: $white;
+            }
+        }
+    }
+
+
+    .filter {
+
+        .input-group-text,
+        .form-control {
+            border-color: $bluegray;
+        }
+
+        .input-group-text {
+            padding-inline-end: 0;
+            border-inline-end: none;
+            // background-color: transparent;
+        }
+
+        .form-control {
+            border-inline-start: none;
+
+            &:focus {
+                background-color: transparent;
+            }
+        }
+
+        .btn {
+            border-color: $bluegray;
+            border-radius: $border-radius-sm;
+
+            &:not(:hover) {
+                // color: $darkgreen;
+                color: $theme-dark;
+                background-color: $white;
+            }
+        }
+
+        .criteria-wrapper {
+            position: relative;
+
+            .criteria {
+                min-width: 15rem;
+                position: absolute;
+                top: calc(100% + .5rem);
+                padding: 1.5rem 0;
+
+                border: 1px solid rgba($bluegray, .5);
+                border-radius: $border-radius;
+                background-color: $white;
+                box-shadow: 0px 12px 16px rgba($black, .05);
+
+                >.title {
+                    margin-bottom: 1rem;
+                    padding-inline: 1rem;
+                    font-size: $font-size-sm;
+                    color: $black;
+                }
+
+                .form-check {
+                    &+.form-check {
+                        margin-top: .5rem;
+                    }
+
+                    .form-check-label {
+                        color: #939393;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.page-title {
+
+    &+.text,
+    &+.order-list,
+    &+.page-content {
+        margin-top: 1rem;
+    }
+
+    .title {
+        font-size: 1.125rem;
+        color: $title-color;
+    }
+
+    .title-bottom-line {
+        display: flex;
+        align-items: center;
+        column-gap: .5rem;
+
+        position: relative;
+        font-size: 1.125rem;
+        color: $title-color;
+
+        .icon {
+            // color: $orange;
+            color: $theme-main;
+
+            :host-context(.rega) & {
+                color: $theme-main;
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -0.5rem;
+            inset-inline-start: 0;
+
+            width: 5rem;
+            height: 3px;
+
+            // background-color: $orange;
+            background-color: $theme-main;
+
+            :host-context(.rega) & {
+                background-color: $theme-main;
+            }
+        }
+    }
+}
+
+.page-section {
+    margin-top: 1.5rem;
+}
+
+.breadcrumb {
+    .breadcrumb-item {
+        &+.breadcrumb-item {
+            padding-left: 0;
+            padding-inline-start: .5rem;
+
+            &::before {
+                float: right;
+                padding-right: 0;
+                padding-inline-end: .5rem;
+                color: rgba($black, .4);
+            }
+        }
+
+        &:not(.active) {
+            a {
+                text-decoration: none;
+                color: rgba($black, .4);
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        &.active {
+            color: $dark;
+        }
+    }
+}
+
+ul.order-list {
+    li {
+        display: flex;
+        line-height: normal;
+
+        &+li {
+            margin-top: 1rem;
+        }
+    }
+
+    .order {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-inline-end: 0.5rem;
+
+        font-size: $font-size-xs;
+        font-weight: bold;
+        color: $white;
+        border-radius: 50%;
+        // background-color: $darkgreen;
+        background-color: $theme-dark;
+
+        :host-context(.rega) & {
+            background-color: $theme-dark;
+        }
+    }
+
+    .text {
+        line-height: 1.5;
+    }
+}

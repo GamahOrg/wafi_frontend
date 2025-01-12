@@ -1,0 +1,211 @@
+<div class="page">
+    <div class="filter mb-5">
+        <div class="page-header mb-4">
+            <div class="page-title">
+                <h2 class="title">إنشاء طلب ترخيص جديد</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="licenses-group"
+         id="g-sale">
+        <!-- <div class="licenses-group-header">
+            <div class="page-title">
+                <h2 class="title fs-6">رخص البيع على الخارطة</h2>
+            </div>
+        </div>
+        <div class="licenses-group-text">
+            <p class="text">
+                هذه رخصة تستخدم في حالة اردت معرفة الفائض المسحوب هذه حاسبة تستخدم في حالة اردت معرفة الفائض المسحوب وفي
+                حالة اردت معرفة الفائض المسحوب هذه حاسبة تستخدم في حالة اردت معرفة الفائض المسحوب.
+            </p>
+        </div> -->
+        <div class="licenses-group-data">
+            <div class="row g-4 row-cols-lg-3">
+                <div class="col-12 col-md-6 col-lg"
+                     *ngFor="let sale of SysLicenseRequestTypeGrouping.sale">
+                    <!-- <div class="card qualiication-card cursor-pointer">
+                    <div class="icon"><span class="material-icons-outlined">add_business</span></div>
+                    <div class="card-body"
+                         (click)="navogateToCreateRequest(sale.typeCode)">
+                        <h6 class="card-title">{{sale.name}}</h6>
+                    </div>
+                </div> -->
+                    <div class="card license-card">
+                        <div class="head">
+                            <div class="icon">
+                                <span class="material-icons-outlined">add_business</span>
+                            </div>
+                            <div class="title overflow-hidden">
+                                <h6 class="text-center">{{sale.name}}</h6>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="text text-center overflow-hidden">{{sale.description}}</p>
+                            <a (click)="navogateToCreateRequest(sale.typeCode)"
+                               class="btn-arrow">
+                                <img class="arrow"
+                                     src="assets/images/icons/btn-arrow.svg"
+                                     alt="">
+                                <img class="arrow-hover"
+                                     src="assets/images/icons/btn-arrow-hover.svg"
+                                     alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="licenses-group"
+         id="g-rent">
+        <!-- <div class="licenses-group-header">
+            <div class="page-title">
+                <h2 class="title fs-6">رخص تأجير على الخرطة</h2>
+            </div>
+        </div>
+        <div class="licenses-group-text">
+            <p class="text">
+                هذه رخصة تستخدم في حالة اردت معرفة الفائض المسحوب هذه حاسبة تستخدم في حالة اردت معرفة الفائض المسحوب وفي حالة اردت معرفة الفائض المسحوب هذه حاسبة تستخدم في حالة اردت معرفة الفائض المسحوب.
+            </p>
+        </div> -->
+        <div class="licenses-group-data">
+            <div class="row g-4 row-cols-lg-3">
+                <div class="col-12 col-md-6 col-lg"
+                     *ngFor="let rent of SysLicenseRequestTypeGrouping.rent">
+                    <!-- <div class="card qualiication-card cursor-pointer">
+            <div class="icon"><span class="material-icons-outlined">add_business</span></div>
+            <div class="card-body"
+                 (click)="navogateToCreateRequest(rent.typeCode)">
+                <h6 class="card-title">{{rent.name}}</h6>
+            </div>
+        </div> -->
+                    <div class="card license-card">
+                        <div class="head">
+                            <div class="icon">
+                                <span class="material-icons-outlined">add_business</span>
+                            </div>
+                            <div class="title overflow-hidden">
+                                <h6 class="text-center">{{rent.name}}</h6>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="text text-center overflow-hidden">{{rent.description}}</p>
+                            <a (click)="navogateToCreateRequest(rent.typeCode)"
+                               class="btn-arrow">
+                                <img class="arrow"
+                                     src="assets/images/icons/btn-arrow.svg"
+                                     alt="">
+                                <img class="arrow-hover"
+                                     src="assets/images/icons/btn-arrow-hover.svg"
+                                     alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="licenses-group"
+         id="g-marketing">
+        <!-- <div class="licenses-group-header">
+            <div class="page-title">
+                <h2 class="title fs-6">رخص التسويق</h2>
+            </div>
+        </div>
+        <div class="licenses-group-text">
+            <p class="text">
+                هذه رخصة تستخدم في حالة اردت معرفة الفائض المسحوب هذه حاسبة تستخدم في حالة اردت معرفة الفائض المسحوب وفي حالة اردت معرفة الفائض المسحوب هذه حاسبة تستخدم في حالة اردت معرفة الفائض المسحوب.
+            </p>
+        </div> -->
+        <div class="licenses-group-data">
+            <div class="row g-4 row-cols-lg-3">
+                <div class="col-12 col-md-6 col-lg"
+                     *ngFor="let market of SysLicenseRequestTypeGrouping.marketing">
+                    <!-- <div class="card qualiication-card cursor-pointer">
+            <div class="icon"><span class="material-icons-outlined">add_business</span></div>
+            <div class="card-body"
+                 (click)="navogateToCreateRequest(market.typeCode)">
+                <h6 class="card-title">{{market.name}}</h6>
+            </div>
+        </div> -->
+                    <div class="card license-card">
+                        <div class="head">
+                            <div class="icon">
+                                <span class="material-icons-outlined">add_business</span>
+                            </div>
+                            <div class="title overflow-hidden">
+                                <h6 class="text-center">{{market.name}}</h6>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="text text-center overflow-hidden">{{market.description}}</p>
+                            <a (click)="navogateToCreateRequest(market.typeCode)"
+                               class="btn-arrow">
+                                <img class="arrow"
+                                     src="assets/images/icons/btn-arrow.svg"
+                                     alt="">
+                                <img class="arrow-hover"
+                                     src="assets/images/icons/btn-arrow-hover.svg"
+                                     alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="licenses-group"
+         id="g-show">
+        <!-- <div class="licenses-group-header">
+            <div class="page-title">
+                <h2 class="title fs-6">رخص العرض</h2>
+            </div>
+        </div>
+        <div class="licenses-group-text">
+            <p class="text">
+                ههذه رخصة تستخدم في حالة اردت معرفة الفائض المسحوب هذه حاسبة تستخدم في حالة اردت معرفة الفائض المسحوب
+                وفي حالة اردت معرفة الفائض المسحوب هذه حاسبة تستخدم في حالة اردت معرفة الفائض المسحوب.
+            </p>
+        </div> -->
+        <div class="licenses-group-data">
+            <div class="row g-4 row-cols-lg-3">
+                <div class="col-12 col-md-6 col-lg"
+                     *ngFor="let show of SysLicenseRequestTypeGrouping.showing">
+                    <!-- <div class="card qualiication-card cursor-pointer">
+            <div class="icon"><span class="material-icons-outlined">add_business</span></div>
+            <div class="card-body"
+                 (click)="navogateToCreateRequest(show.typeCode)">
+                <h6 class="card-title">{{show.name}}</h6>
+            </div>
+        </div> -->
+                    <div class="card license-card">
+                        <div class="head">
+                            <div class="icon">
+                                <span class="material-icons-outlined">add_business</span>
+                            </div>
+                            <div class="title overflow-hidden">
+                                <h6 class="text-center">{{show.name}}</h6>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="text text-center overflow-hidden">{{show.description}}</p>
+                            <a (click)="navogateToCreateRequest(show.typeCode)"
+                               class="btn-arrow">
+                                <img class="arrow"
+                                     src="assets/images/icons/btn-arrow.svg"
+                                     alt="">
+                                <img class="arrow-hover"
+                                     src="assets/images/icons/btn-arrow-hover.svg"
+                                     alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

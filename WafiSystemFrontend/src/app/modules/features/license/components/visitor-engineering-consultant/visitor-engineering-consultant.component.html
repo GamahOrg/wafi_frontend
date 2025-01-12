@@ -1,0 +1,76 @@
+<ng-container>
+    <form class="d-flex flex-column h-100" id="form-licenseProjectVisitorEngineeringConsultantForm"
+          [formGroup]="licenseProjectVisitorEngineeringConsultantForm">
+        <div class="tab-data-header">
+            <div class="icon"><span class="material-icons">list_alt</span></div>
+            <h6 class="title fw-normal">{{localization.title}}</h6>
+        </div>
+
+        <div class="tab-data-section">
+            <div class="row mb-3">
+
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.commercialRegisterNumber}}</label>
+                        <input type="text" id="control-commercialRegisterNumber"
+                        placeholder="{{localization.commercialRegisterNumber}}"
+                        class="form-control"
+                        formControlName="commercialRegisterNumber">
+                        <mat-error
+                     *ngIf="controls.commercialRegisterNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.facilityName}}</label>
+                        <input type="text" id="control-facilityName"
+                        placeholder="{{localization.facilityName}}"
+                        class="form-control"
+                        formControlName="facilityName">
+                        <mat-error
+                     *ngIf="controls.facilityName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.facilityType}}</label>
+                        <input type="text" id="control-facilityType"
+                               placeholder="{{localization.facilityType}}"
+                               class="form-control"
+                               formControlName="facilityType">
+                        <mat-error
+                                   *ngIf="controls.facilityType?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.engineeringConsultantLicenseNumber}}</label>
+                        <input type="text" id="control-engineeringConsultantLicenseNumber"
+                               placeholder="{{localization.engineeringConsultantLicenseNumber}}"
+                               class="form-control"
+                               formControlName="engineeringConsultantLicenseNumber">
+                        <mat-error
+                                   *ngIf="controls.engineeringConsultantLicenseNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                    <div class="key">{{localization.agreementFile}}</div>
+                    <div class="value">
+                        <span class="icon material-icons-outlined">content_copy</span>
+                        <a target="_blank" id="link-agreementFile" *ngIf="visitorEngineeringConsultantDto && visitorEngineeringConsultantDto.agreementFile" [href]="baseUrl + visitorEngineeringConsultantDto.agreementFile.filePath">
+                            {{visitorEngineeringConsultantDto.agreementFile.fileDescription}}</a>
+                    </div>
+                        <app-file-uploader [data]="singleFilesUploaderData"
+                                           (fileUploaded)="onExistAgreementtFileUploaded($event)"></app-file-uploader>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    </form>
+</ng-container>
+
+

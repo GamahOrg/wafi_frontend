@@ -1,0 +1,89 @@
+<div class="row row-gap-4">
+    <div class="col-12">
+        <div class="filter">
+            <div class="row">
+                <!-- <div class="col-4">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1"><i
+                                class="material-icons-outlined">search</i></span>
+                        <input type="text" class="form-control" placeholder="بحث رقم الهوية" aria-label="search"
+                            aria-describedby="basic-addon1" />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="criteria-wrapper">
+                        <button type="button " class="toggle btn btn-primary">
+                            <span class="d-flex align-items-center column-gap-1">
+                                <i class="material-icons">filter_alt</i>
+                                بحث
+                            </span>
+                        </button>
+                    </div>
+                </div> -->
+                <div class="col-6 justify-content-end align-items-end">
+                    <button type="button"  color="primary" mat-flat-button
+                        class="addbtn  btn btn-outline-primary d-flex align-items-center column-gap-1 float-left"
+                        >
+                        إضافة مفوض جديد
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive mb-3">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th scope="col"><div> اسم المفوض</div></th>
+                    <th scope="col"> رقم الهوية</th>
+                    <th scope="col"> <div> رقم السجل التجاري</div></th>
+                    <th scope="col"> رقم الجوال </th>
+                    <th scope="col"> البريد الإلكتروني</th>
+                    <th scope="col"> الجنسية</th>
+                    <th scope="col"> العمليات</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of commissionersdata">
+                <tr>
+                    <td>
+                        <a class="underline fw-bold text-primary">
+                            {{comdata.name}}
+                        </a>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.identityNumber}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-dark" dir="ltr">{{comdata.employeeTypeId}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.mobileNumber}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.email}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.nationalityName}}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-outline-primary" style="background-color: white;"><span
+                                    class="material-icons">edit</span></button>
+                            <button class="btn deletbtn m-1"><mat-icon class="material-icons"></mat-icon></button>
+                            <button class="btn stopbtn"><mat-icon class="material-icons" (click)="DeleteCommissioners(comdata.id)">delete</mat-icon></button>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto">
+        <app-pagination></app-pagination>
+    </div>
+</div>

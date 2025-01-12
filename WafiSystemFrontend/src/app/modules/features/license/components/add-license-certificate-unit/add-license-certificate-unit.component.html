@@ -1,0 +1,200 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseCertificateUnitForm"
+id="form-licenseCertificateUnitForm">
+<div class="tab-data-section">
+    <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">اسم الزون</label>
+          <input type="text" id="control-zoneName" class="form-control" formControlName="zoneName"
+            placeholder="اسم الزون">
+          <mat-error
+            *ngIf="(controls.zoneName?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">النوع بلوك او عمارة</label>
+          <input type="text" id="control-unitTypeName" class="form-control" formControlName="unitTypeName"
+            placeholder="النوع بلوك او عمارة">
+          <mat-error
+            *ngIf="(controls.unitTypeName?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم البلوك او العمارة</label>
+          <input type="text" id="control-unitCode" class="form-control" formControlName="unitCode"
+            placeholder="رقم البلوك او العمارة">
+          <mat-error
+            *ngIf="(controls.unitCode?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">المرحلة</label>
+          <input type="text" id="control-stageName" class="form-control" formControlName="stageName"
+            placeholder="المرحلة">
+          <mat-error
+            *ngIf="(controls.stageName?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+    
+         
+    <div class="col-12 col-lg-6">
+        <label for=""
+               class="form-label">تاريخ بداية الانشاء</label>
+        <input type="date" id="control-constructionStartOn"
+               class="form-control"
+               formControlName="constructionStartOn"
+               value="{{ controls.constructionStartOn.value | date:'yyyy-MM-dd' }}">
+               <mat-error
+               *ngIf="(controls.constructionStartOn?.hasError('required')) && showValidation">حقل
+               مطلوب</mat-error>
+    </div>
+    <div class="col-12 col-lg-6">
+        <label for=""
+               class="form-label">تاريخ نهاية الانشاء</label>
+        <input type="date" id="control-constructionEndOn"
+               class="form-control"
+               formControlName="constructionEndOn"
+               value="{{ controls.constructionEndOn.value | date:'yyyy-MM-dd' }}">
+               <mat-error
+               *ngIf="(controls.constructionEndOn?.hasError('required')) && showValidation">حقل
+               مطلوب</mat-error>
+    </div>
+   
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label"> نوع الوحدة</label>
+          <input type="text" id="control-subUnitTypeName" class="form-control" formControlName="subUnitTypeName"
+            placeholder="نوع الوحدة">
+          <mat-error
+            *ngIf="(controls.subUnitTypeName?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+    
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">عدد الوحدات</label>
+          <input type="number" id="control-subUnitCount" class="form-control" formControlName="subUnitCount"
+            placeholder="عدد الوحدات">
+          <mat-error
+            *ngIf="(controls.subUnitCount?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">اسم نموذج الوحدة</label>
+          <input type="text" id="control-modelName" class="form-control" formControlName="modelName"
+            placeholder="اسم نموذج الوحدة">
+          <mat-error
+            *ngIf="(controls.subUnitCount?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+   
+    <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">اجمالى المساحة للوحدة </label>
+          <input type="number" id="control-space" class="form-control" formControlName="space"
+            placeholder="اجمالى المساحة للوحدة">
+            <mat-error
+            *ngIf="(controls.space?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">مساحة مسطح البناء للوحدة</label>
+          <input type="number" id="control-buildingFlatSpace" class="form-control" formControlName="buildingFlatSpace"
+            placeholder="مساحة مسطح البناء للوحدة">
+            <mat-error
+            *ngIf="(controls.buildingFlatSpace?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">عدد الوحدات</label>
+          <input type="number" id="control-unitsCount" class="form-control" formControlName="unitsCount"
+            placeholder="عدد الوحدات">
+            <mat-error
+            *ngIf="(controls.unitsCount?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label"> خصائص الوحدة </label>
+          <input type="text" id="control-properties" class="form-control" formControlName="properties"
+            placeholder="خصائص الوحدة">
+            <mat-error
+            *ngIf="(controls.properties?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">كود الوحدة</label>
+          <input type="text" id="control-code" class="form-control" formControlName="code"
+            placeholder="كود الوحدة">
+            <mat-error
+            *ngIf="(controls.code?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for=""
+               class="form-label">تاريخ التسليم</label>
+        <input type="date" id="control-deliveryOn"
+               class="form-control"
+               formControlName="deliveryOn"
+               value="{{ controls.deliveryOn.value | date:'yyyy-MM-dd' }}">
+               <mat-error
+               *ngIf="(controls.deliveryOn?.hasError('required')) && showValidation">حقل
+               مطلوب</mat-error>
+    </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">سعر التعاقد</label>
+          <input type="number" id="control-price" class="form-control" formControlName="price"
+            placeholder="سعر التعاقد">
+          <mat-error
+            *ngIf="(controls.price?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">الطابق</label>
+          <input type="number" id="control-floorNumber" class="form-control" formControlName="floorNumber"
+            placeholder="الطابق">
+          <mat-error
+            *ngIf="(controls.floorNumber?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+
+</div> 
+</div>
+</form>

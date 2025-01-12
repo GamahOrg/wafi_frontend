@@ -1,0 +1,79 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3">
+      <div
+        class="col-12 col-lg-6 d-flex justify-content-between align-items-center"
+      >
+        <div class="page-title mb-0">
+          <h5 class="title">جميع الطلبات</h5>
+        </div>
+
+        <!-- Button to open the dialog -->
+        <!-- <button mat-raised-button (click)="openDialog()" class="edit-icon">
+          <span class="material-icons">add</span>
+          إضافة طلب
+        </button> -->
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="reqList.totalCount > 0">
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">رقم الطلب</th>
+            <th scope="col">اسم المشروع</th>
+            <th scope="col">أسم المنشأة</th>
+            <th scope="col">
+              <div class="sortable">
+                تاريخ انشاء الطلب
+                <span class="icon material-icons">unfold_more</span>
+              </div>
+            </th>
+            <th scope="col">نوع الطلب</th>
+            <th scope="col">حالة الطلب</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of reqList.results"  (click)="redirectRequest(request.id,request.licenseProjectRequestTypeId,request.requestCode)">
+            <td>
+              <a             
+                class="text-dark"
+                style="cursor: pointer"
+              >
+                {{ request.requestCode }}
+              </a>
+            </td>
+            <td>
+              <div class="text-dark">
+                {{ request.licenseProjectName }}
+              </div>
+            </td>
+            <td>
+              <div class="text-dark">
+                {{ request.facilityName }}
+              </div>
+            </td>
+            <td>
+              <span class="text-dark" dir="ltr">{{
+                request.createdOn | date : "dd MMMM yyyy"
+              }}</span>
+            </td>
+            <td>
+              <span class="text-dark">{{
+                request.licenseProjectRequestTypeName
+              }}</span>
+            </td>
+            <td>
+              {{ request.externalRequestStatusName }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+</div>

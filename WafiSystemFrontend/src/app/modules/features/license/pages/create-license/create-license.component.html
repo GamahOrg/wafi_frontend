@@ -1,0 +1,126 @@
+<div class="page">
+
+    <div class="row row-gap-5">
+        <div class="col-12 col-md-9">
+            <div class="page-header mb-4">
+                <div class="page-title">
+                    <h2 class="title-bottom-line">
+                        <!--   <div class="icon">
+                <span
+                  class="material-icons-outlined"
+                  *ngIf="requestTypeCode == 'RED01'"
+                  >add_business</span
+                >
+                <span
+                  class="material-icons-outlined"
+                  *ngIf="requestTypeCode == 'RED02'"
+                  >local_convenience_store</span
+                >
+                <span
+                  class="material-icons-outlined"
+                  *ngIf="requestTypeCode == 'RED03'"
+                  >how_to_reg</span
+                >
+                <span class="material-icons-outlined" *ngIf="requestTypeCode == 'REM'"
+                  >local_convenience_store</span
+                >
+                <span class="material-icons-outlined" *ngIf="requestTypeCode == 'REB'"
+                  >how_to_reg</span
+                >
+                <span class="material-icons-outlined" *ngIf="requestTypeCode == 'EC'"
+                  >store</span
+                >
+                <span class="material-icons-outlined" *ngIf="requestTypeCode == 'Acc'"
+                  >credit_score</span
+                >
+              </div> -->
+                        {{ licenseRequestType.name }}
+                    </h2>
+                </div>
+                <p class="text opacity-75">{{ licenseRequestType.description }}</p>
+            </div>
+
+            <div class="page-section">
+                <div class="page-title">
+                    <h2 class="title">الشروط والمتطلبات</h2>
+                </div>
+
+                <ul class="order-list">
+                    <li *ngFor="let step of licenseRequestType.licenseRequestSteps; index as i">
+                        <span class="order">{{ i + 1 }}</span>
+                        <div class="d-flex flex-column justify-content-center">
+                            <p class="text">{{ step.discerption }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+            <div class="card brief-card" [formGroup]="createRequstForm" id="form-createRequstForm">
+                <div class="details">
+                    <div class="item">
+                        <div class="icon">
+                            <span class="material-icons-outlined">timer</span>
+                        </div>
+                        <div class="data">
+                            <span class="key">وقت استكمال الطلب</span>
+                            <div class="value">{{ licenseRequestType.requestStudyingDuration }}</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="icon">
+                            <span class="material-icons-outlined">money</span>
+                        </div>
+                        <div class="data">
+                            <span class="key">رسوم الخدمة</span>
+                            <div class="value">{{ price }}</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="icon">
+                            <span class="material-icons-outlined">credit_card</span>
+                        </div>
+                        <div class="data">
+                            <span class="key">طرق الدفع</span>
+                            <div class="value">
+                                <span *ngIf="price!=0" class="inline-block mr-2">تحويل بنكي</span>
+                                <span *ngIf="price==0" class="inline-block mr-2">لا يوجد</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="icon">
+                            <span class="material-icons-outlined">calendar_month</span>
+                        </div>
+                        <div class="data">
+                            <div class="form-group">
+                                <span class="key">مدة الترخيص</span>
+                                <select class="form-select form-select-sm" (change)="changePriod($event)"
+                                    id="control-priod" formControlName="priod">
+                                    <option value=null selected disabled>اختر المدة</option>
+                                    <option *ngFor="let item of licenseRequestType.licenseRequestPeriods"
+                                        [value]="item.period">
+                                        <p>
+                                            {{item.period>2?item.period:''}} {{item.sysPeriodType?.name}}
+                                        </p>
+                                    </option>
+
+                                </select>
+                                <mat-error *ngIf="controls.priod?.hasError('required') && showValidation">حقل
+                                    مطلوب</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+
+                    <button mat-flat-button color="primary" class="w-100" (click)="CreateOrRenewLicense()"
+                        id="btn-Create">
+                        <mat-icon>login</mat-icon> للتقديم على طلب الرخصة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

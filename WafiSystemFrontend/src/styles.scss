@@ -1,0 +1,70 @@
+// Angular Material Icon
+@import '/src/assets/fonts/angular-material-icons/Material+Icons.css';
+@import '/src/assets/fonts/angular-material-icons/Material+Icons+Outlined.css';
+@import '/src/assets/fonts/angular-material-icons/Material+Icons+Two+Tone.css';
+
+// Variables
+@import '/src/assets/styles/custom-variables';
+
+// Bootstrap 5.2.3
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+// Bootstrap Overrides
+@import '/src/assets/styles/bootstrap-custom/cards';
+@import '/src/assets/styles/bootstrap-custom/alerts';
+@import '/src/assets/styles/bootstrap-custom/buttons';
+@import '/src/assets/styles/bootstrap-custom/forms';
+@import '/src/assets/styles/bootstrap-custom/input-group';
+@import '/src/assets/styles/bootstrap-custom/dropdown';
+@import '/src/assets/styles/bootstrap-custom/pagination';
+@import '/src/assets/styles/bootstrap-custom/accordion';
+@import '/src/assets/styles/bootstrap-custom/datepicker';
+@import '/src/assets/styles/bootstrap-custom/carousel';
+
+// Material Theme
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+// Material Overrides
+@import '/src/assets/styles/material-custom/typography';
+@import '/src/assets/styles/material-custom/tabs';
+@import '/src/assets/styles/material-custom/buttons';
+@import '/src/assets/styles/material-custom/forms';
+@import '/src/assets/styles/material-custom/dialog';
+@import '/src/assets/styles/material-custom/stepper';
+
+// NGX Bootstrap Datepicker
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+// NGX Toaster
+@import 'ngx-toastr/toastr-bs5-alert';
+
+// NG OTP Input
+@import '/src/assets/styles/content/ng-otp-input';
+
+// Angular Editor
+// @import '/src/assets/styles/content/angular-editor';
+
+// Fonts
+@import '/src/assets/styles/fonts';
+
+// General
+@import '/src/assets/styles/helpers';
+@import '/src/assets/styles/general';
+// .upload-progress{
+//     display: none !important;
+// }
+// span.file-summary:nth-last-of-type(1){
+//     display: none !important;
+// }
+.mat-mdc-progress-bar{
+    display: none !important;
+}
+
+.upload-progress{
+    display: none !important;
+}
+.mat-mdc-card.mdc-card.ng-star-inserted{
+    span:nth-last-of-type(1), span:nth-last-of-type(2){
+        display: none !important;
+    }
+}

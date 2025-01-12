@@ -1,0 +1,64 @@
+<div class="page">
+    <ng-container *ngIf="approvalList.length>0">
+        <div class="table-responsive mb-3">
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <div class="sortable">
+                                سجل تجاري
+                            </div>
+                        </th>
+                        <th scope="col">منشأة</th>
+                        <th scope="col">
+                            <div class="sortable">
+                                مشروع
+                            </div>
+                        </th>
+
+                        <th scope="col">تمت الموافقة</th>
+                        <th scope="col">تاريخ الموافقة</th>
+                        <th scope="col">دور طرف المشروع</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let request of approvalList"
+                        (click)="navigateToDetails(request)">
+                        <td>
+                            <a class="underline fw-bold text-primary">
+                                {{ request.commercialRegisterNumber }}
+                            </a>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center column-gap-2">
+                                <span class="username">{{ request.facilityName }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            {{ request.projectName }}
+                        </td>
+
+                        <td>{{ request.isApproved ? "نعم" : "لا"}}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <span class="text-dark"
+                                      dir="ltr">{{
+                                    request.approvedOn | date : "dd MMMM yyyy"
+                                    }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            {{request.role}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="approvalList.length === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>

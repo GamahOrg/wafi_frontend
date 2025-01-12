@@ -1,0 +1,97 @@
+@import "/src/assets/styles/custom-variables";
+
+.mdc-dialog__title {
+    display: flex;
+    align-items: center;
+    margin-block: 1rem;
+    padding: 0 1rem;
+
+    button {
+        margin-inline-start: auto;
+    }
+}
+
+.mdc-icon-button {
+    background-color: rgba(#3A4742, .2);
+    visibility: hidden;
+
+    .mat-icon {
+        color: $white;
+    }
+}
+
+.symbol {
+    margin-bottom: 1rem;
+    text-align: center;
+
+    .symbol-text {
+        font-family: var(--bs-body-font-family);
+        font-size: 4.5rem;
+        // color: $darkgreen;
+        color: $theme-dark;
+
+        :host-context(.rega) & {
+            color: $theme-dark;
+        }
+    }
+
+    .symbol-image {
+        max-width: 50%;
+    }
+}
+
+.mdc-dialog__content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem 2rem;
+    letter-spacing: normal;
+}
+
+.mat-mdc-dialog-actions {
+    padding: 0 2rem 2rem;
+}
+
+.note-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 2.5rem;
+
+    .title {
+        text-align: center;
+        font-size: 1.125rem;
+        // color: $darkgreen;
+        color: $theme-dark;
+
+        :host-context(.rega) & {
+            color: $theme-dark;
+        }
+    }
+
+    .text {
+        text-align: center;
+        // color: $greengray;
+        color: $theme-mid;
+
+        :host-context(.validation-number) & {
+            font-size: 2rem;
+            line-height: 1.5;
+        }
+
+        :host-context(.rega) & {
+            color: $theme-mid;
+        }
+    }
+}
+
+.note-actions {
+    display: flex;
+    justify-content: center;
+    column-gap: 0.5rem;
+
+    width: 100%;
+
+    .btn {
+        width: 30%;
+    }
+}

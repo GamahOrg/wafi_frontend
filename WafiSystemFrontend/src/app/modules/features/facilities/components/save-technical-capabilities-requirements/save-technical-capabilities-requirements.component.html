@@ -1,0 +1,78 @@
+<form [formGroup]="editForm" id="form-editForm">
+    <!-- <div class="row row-gap-3 mb-3">
+        <div class="col-12">
+            <label for="licNum"
+                   class="form-label">هل لدية خبرات سابقة</label>
+            <input type="checkbox"
+                   formControlName="isPreviousExperienceExist" />
+        </div>
+    </div> -->
+    <div class="form-block mb-3">
+        <h6 class="title">أرقام شهادات تصنيف مقدمي خدمات المدن المنفذين للمشاريع</h6>
+        <div formArrayName="addedQualificationFacilityServiceProvidersCertificateNumbers">
+            <div class="row row-gap-3 mb-3" *ngFor="let certificate of addedQualificationFacilityServiceProvidersCertificateNumbers.controls; let i = index" [formGroupName]="i">
+                <div class="col-12 col-lg-5">
+                    <label class="form-label">رقم الشهادة </label>
+                    <input type="text" class="form-control" id="control-certificationNumber" formControlName="certificationNumber">
+                    <mat-error *ngIf="certificate.get('certificationNumber')?.hasError('required')">required</mat-error>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <label class="form-label">الوصف</label>
+                    <input type="text" class="form-control" id="control-description" formControlName="description">
+                </div>
+                <div class="col-auto">
+                    <div class="mt-4">
+                        <button mat-icon-button color="warn" id="btn-deleteCertificateNumbersControl" (click)="deleteCertificateNumbersControl(i)"><mat-icon>close</mat-icon></button>
+                    </div>
+                </div>
+            </div>
+    
+            <a class="add-array" id="btn-addServiceProvidersCertificateNumbersForm" (click)="addServiceProvidersCertificateNumbersForm(undefined)">+ اضافة شهادة</a>
+        </div>
+    </div>
+
+    <div class="row row-gap-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <label for="" class="form-label">شهادات تأهيل أو تصنيف حصلت علىها المنشأة</label>
+            <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onFacilityCertificationsFilesUploaded($event)"></app-file-uploader>
+        </div>
+        <div class="col-12">
+            <label for="prevExpert"
+                   class="form-label">هل لديك خبرات سابقة </label>
+        </div>
+        <div class="col-12">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input"
+                       type="radio" id="control-prevExpert"
+                       name="prevExpert"
+                       id="yes"
+                       value="1"
+                       [checked]="this.technicalCapabilities?.isPreviousExperienceExist" (change)="updateIsPreviousExperienceExist(true)">
+                <label class="form-check-label"
+                       for="yes">نعم</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input"
+                       type="radio" id="control-prevExpert"
+                       name="prevExpert"
+                       id="no"
+                       value="0"
+                       [checked]="!this.technicalCapabilities?.isPreviousExperienceExist"  (change)="updateIsPreviousExperienceExist(false)">
+                <label class="form-check-label"
+                       for="no">لا</label>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="form-group col-12">
+            <button type="button" mat-flat-button color="primary" (click)="save()">حفظ البيانات</button>
+        </div>
+    </div> -->
+    <!-- <div mat-dialog-actions
+         align="end">
+        <button type="button"
+                mat-flat-button
+                color="primary"
+                (click)="save()">حفظ البيانات</button>
+    </div> -->
+</form>

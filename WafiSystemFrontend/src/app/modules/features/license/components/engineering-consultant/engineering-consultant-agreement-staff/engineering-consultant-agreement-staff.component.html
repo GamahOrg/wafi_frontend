@@ -1,0 +1,114 @@
+<h6 class="form-subtitle">{{subHeader}}
+  <small class="text-success mx-2"
+         *ngIf="controls[propertyName+'Monthes'].value">{{localizations.Total}}:
+    {{controls[propertyName+'Monthes'].value.length}}</small>
+</h6>
+<div *ngIf="form"
+     [formGroup]="form" id="form-form">
+  <div class="row">
+    <div class="col-12 col-lg-3">
+      <div class="form-group mb-4">
+        <label [for]="propertyName + 'Number'"
+               class="form-label">{{localizations.Number}}</label>
+        <input [id]="propertyName + 'Number'"
+               [name]="propertyName + 'Number'"
+               type="number"
+               class="form-control"
+               [formControlName]="propertyName + 'Number'">
+        <div class="invalid-feedback d-block"
+             *ngIf="form.controls[propertyName + 'Number'].hasError('required') && form.controls[propertyName + 'Number'].touched">
+          {{localizations.NumberRequired}}
+        </div>
+        <div class="invalid-feedback d-block"
+             *ngIf="form.controls[propertyName + 'Number'].hasError('min') && form.controls[propertyName + 'Number'].touched">
+          {{localizations.MinValueError}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-3">
+      <div class="form-group mb-4">
+        <label [for]="propertyName + 'Experience'"
+               class="form-label">{{localizations.NumberOfExperience}}</label>
+        <input [id]="propertyName + 'Experience'"
+               [name]="propertyName + 'Experience'"
+               type="number"
+               class="form-control"
+               (ngModelChange)="ProjectManagerMaxChange($event,propertyName + 'Experience')"
+               [formControlName]="propertyName + 'Experience'">
+        <div class="invalid-feedback d-block"
+             *ngIf="form.controls[propertyName + 'Experience'].hasError('required') && form.controls[propertyName + 'Experience'].touched">
+          {{localizations.NumberOfExperienceRequired}}
+        </div>
+        <div class="invalid-feedback d-block"
+             *ngIf="form.controls[propertyName + 'Experience'].hasError('min') && form.controls[propertyName + 'Experience'].touched">
+          {{localizations.MinValueError}}
+        </div>
+        <div class="invalid-feedback d-block"
+             *ngIf="showPMValidation">
+          {{localizations.NumberOfExperienceProjectManagerMax}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-3">
+      <div class="form-group mb-4">
+        <label [for]="propertyName + 'StartDate'"
+               class="form-label">{{localizations.StartDate}}</label>
+
+        <div class="input-group">
+          <input bsDatepicker
+                 type="text"
+                 class="form-control"
+                 [formControlName]="propertyName + 'StartDate'"
+                 [min]="todayDate" />
+          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+        </div>
+
+        <div class="invalid-feedback d-block"
+             *ngIf="form.controls[propertyName + 'StartDate'].hasError('required') && form.controls[propertyName + 'StartDate'].touched">
+          {{localizations.StartDateRequired}}
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-3">
+      <div class="form-group mb-4">
+        <label [for]="propertyName + 'Monthes'"
+               class="form-label">{{localizations.NumberOfMonths}}</label>
+        <mat-select [formControlName]="propertyName + 'Monthes'"
+                    multiple
+                    class="form-select"
+                    [id]="propertyName + 'Monthes'"
+                    [placeholder]="localizations.SelectMonthes">
+          <mat-option *ngFor="let iterate of totalMonths"
+                      [value]="iterate">{{iterate}}</mat-option>
+        </mat-select>
+
+        <div class="invalid-feedback d-block"
+             *ngIf="form.controls[propertyName + 'Monthes'].hasError('required') && form.controls[propertyName + 'Monthes'].touched">
+          {{localizations.NumberOfMonthsRequired}}
+        </div>
+      </div>
+    </div>
+<!-- 
+    <div class="col-12 col-lg-6"
+         hidden>
+      <div class="form-group mb-4">
+        <label [for]="propertyName + 'Total'"
+               class="form-label">{{localizations.Total}}</label>
+        <input [id]="propertyName + 'Total'"
+               [name]="propertyName + 'Total'"
+               type="number"
+               class="form-control"
+               readonly
+               [formControlName]="propertyName + 'Total'">
+        <div class="invalid-feedback d-block"
+                     *ngIf="form.controls[propertyName + 'Total'].hasError('required') && form.controls[propertyName + 'Total'].touched">
+                    {{localizations.TotalRequired}}
+                </div>
+      </div>
+    </div> -->
+  </div>
+</div>

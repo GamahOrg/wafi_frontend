@@ -1,0 +1,583 @@
+<ng-container>
+  <form
+    class="d-flex flex-column h-100"
+    [formGroup]="contributionBasicDataForm"
+    id="form-contributionBasicDataForm"
+  >
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{ localization.title }}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.name }}</label>
+            <input
+              type="text"
+              id="control-contributionName"
+              placeholder="{{ localization.name }}"
+              class="form-control"
+              formControlName="contributionName"
+            />
+            <mat-error
+              *ngIf="
+                controls.contributionName?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.typeId }}</label>
+            <select
+              class="form-select"
+              id="control-contributionTypeId"
+              formControlName="contributionTypeId"
+            >
+              <option [label]="localization.typeId"></option>
+              <option *ngFor="let type of types" [value]="type.id">
+                {{ type.contributionType }}
+              </option>
+            </select>
+            <mat-error
+              *ngIf="
+                controls.contributionTypeId?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.categoryId }}</label>
+            <select
+              class="form-select"
+              id="control-contributionCategoryId"
+              formControlName="contributionCategoryId"
+            >
+              <option [label]="localization.categoryId"></option>
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.categoryName }}
+              </option>
+            </select>
+            <mat-error
+              *ngIf="
+                controls.contributionCategoryId?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.subCategoryId }}</label>
+            <select
+              class="form-select"
+              id="control-contributionSubCategoryId"
+              formControlName="contributionSubCategoryId"
+            >
+              <option [label]="localization.subCategoryId"></option>
+              <option
+                *ngFor="let subCategory of tempSubCategories"
+                [value]="subCategory.id"
+              >
+                {{ subCategory.subCategoryName }}
+              </option>
+            </select>
+            <mat-error
+              *ngIf="
+                controls.contributionSubCategoryId?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.startOn }}</label>
+            <div class="input-group">
+              <input
+                bsDatepicker
+                id="control-contributionStartDate"
+                type="text"
+                class="form-control"
+                formControlName="contributionStartDate"
+                value="{{
+                  controls.contributionStartDate.value | date : 'yyyy-MM-dd'
+                }}"
+              />
+              <span class="input-group-text"
+                ><i class="material-icons-outlined">calendar_today</i></span
+              >
+            </div>
+            <div>
+              <p
+                style="font-size: 10px; color: #b02a37"
+                *ngIf="
+                  controls.contributionStartDate?.hasError('required') &&
+                  showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </p>
+              <p
+                style="font-size: 10px; color: #b02a37"
+                *ngIf="
+                  contributionBasicDataForm.errors &&
+                  contributionBasicDataForm.errors!['dateValid'] &&
+                  showValidation
+                "
+              >
+                {{ localization.dateValidator }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.endOn }}</label>
+            <div class="input-group">
+              <input
+                bsDatepicker
+                id="control-contributionEndDate"
+                type="text"
+                class="form-control"
+                formControlName="contributionEndDate"
+                value="{{
+                  controls.contributionEndDate.value | date : 'yyyy-MM-dd'
+                }}"
+              />
+              <span class="input-group-text"
+                ><i class="material-icons-outlined">calendar_today</i></span
+              >
+            </div>
+            <mat-error
+              *ngIf="
+                controls.contributionEndDate?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div
+          class="col-12 col-lg-6"
+          *ngIf="
+            contributionBasicData && contributionBasicData.contributionDuration
+          "
+        >
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.contributionDuration
+            }}</label>
+            <input
+              type="text"
+              id="control-contributionDuration"
+              placeholder="{{ localization.contributionDuration }}"
+              class="form-control"
+              formControlName="contributionDuration"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.contributionSellingValue
+            }}</label>
+            <div class="input-group">
+              <input
+                type="number"
+                id="control-contributionSellingValue"
+                class="form-control"
+                formControlName="contributionSellingValue"
+              />
+            </div>
+            <mat-error
+              *ngIf="
+                controls.contributionSellingValue?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionSellingValue?.hasError('min') &&
+                showValidation
+              "
+              >{{ localization.MinValueError }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.contributionCapitalValue
+            }}</label>
+            <div class="input-group">
+              <input
+                type="number"
+                id="control-contributionCapitalValue"
+                class="form-control"
+                formControlName="contributionCapitalValue"
+              />
+            </div>
+            <mat-error
+              *ngIf="
+                controls.contributionCapitalValue?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionCapitalValue?.hasError('min') &&
+                showValidation
+              "
+              >{{ localization.MinValueError }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.contributionRealEstateEvaluation
+            }}</label>
+            <div class="input-group">
+              <input
+                type="number"
+                id="control-contributionRealEstateEvaluation"
+                class="form-control"
+                formControlName="contributionRealEstateEvaluation"
+              />
+            </div>
+            <mat-error
+              *ngIf="
+                controls.contributionRealEstateEvaluation?.hasError(
+                  'required'
+                ) && showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionRealEstateEvaluation?.hasError('min') &&
+                showValidation
+              "
+              >{{ localization.MinValueError }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.contributionDeveloperShare
+            }}</label>
+            <div class="input-group">
+              <input
+                type="number"
+                id="control-contributionDeveloperShare"
+                class="form-control"
+                formControlName="contributionDeveloperShare"
+              />
+              <span class="input-group-text"
+                ><i class="material-icons-outlined">percent</i></span
+              >
+            </div>
+            <mat-error
+              *ngIf="
+                controls.contributionDeveloperShare?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionDeveloperShare?.hasError('min') &&
+                showValidation
+              "
+              >{{ localization.MinValueError }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionDeveloperShare?.hasError('max') &&
+                showValidation
+              "
+              >{{ localization.MaxValueError }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.contributionLandOwnerShare
+            }}</label>
+            <div class="input-group">
+              <input
+                type="number"
+                id="control-contributionLandOwnerShare"
+                class="form-control"
+                formControlName="contributionLandOwnerShare"
+              />
+              <span class="input-group-text"
+                ><i class="material-icons-outlined">percent</i></span
+              >
+            </div>
+            <mat-error
+              *ngIf="
+                controls.contributionLandOwnerShare?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionLandOwnerShare?.hasError('min') &&
+                showValidation
+              "
+              >{{ localization.MinValueError }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionLandOwnerShare?.hasError('max') &&
+                showValidation
+              "
+              >{{ localization.MaxValueError }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.projectDescription
+            }}</label>
+            <textarea
+              class="form-control"
+              id="control-contributionDescription"
+              formControlName="contributionDescription"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                controls.contributionDescription?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.ProjectPlace }}</label>
+            <textarea
+              class="form-control"
+              id="control-contributionPlaceDescription"
+              formControlName="contributionPlaceDescription"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                controls.contributionPlaceDescription?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.projectServices }}</label>
+            <textarea
+              class="form-control"
+              id="control-contributionServices"
+              formControlName="contributionServices"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                controls.contributionServices?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <label>{{ localization.HasStarted }}</label>
+          <div class="form-group mb-4">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="isContributionStarted"
+                name="isContributionStarted"
+                id="control-yes"
+                [value]="true"
+              />
+              <label class="form-check-label" for="yes">{{
+                localization.Yes
+              }}</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="isContributionStarted"
+                formControlName="isContributionStarted"
+                id="control-no"
+                [value]="false"
+              />
+              <label class="form-check-label" for="no">{{
+                localization.No
+              }}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6" *ngIf="showRate">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.achievementRate }}</label>
+            <div class="input-group">
+              <input
+                type="number"
+                id="control-contributionCompletionRate"
+                class="form-control"
+                formControlName="contributionCompletionRate"
+              />
+              <span class="input-group-text"
+                ><i class="material-icons-outlined">percent</i></span
+              >
+            </div>
+            <mat-error
+              *ngIf="
+                controls.contributionCompletionRate?.hasError('required') &&
+                showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionCompletionRate?.hasError('min') &&
+                showValidation
+              "
+              >{{ localization.MinValueError }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                controls.contributionCompletionRate?.hasError('max') &&
+                showValidation
+              "
+              >{{ localization.MaxValueError }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.contributionCapitalValueFromEvaluators
+            }}</label>
+            <div class="col-12 col-lg-12">
+              <div
+                *ngIf="
+                  contributionBasicData &&
+                  contributionBasicData.contributionCapitalValueFromEvaluators
+                "
+              >
+                <div
+                  class="value"
+                  *ngFor="
+                    let CapitalValueFromEvaluator of contributionBasicData.contributionCapitalValueFromEvaluators
+                  "
+                >
+                  <a
+                    *ngIf="
+                      CapitalValueFromEvaluator &&
+                      CapitalValueFromEvaluator.contributionCapitalValueFromEvaluatorFile
+                    "
+                    [href]="
+                      baseUrl +
+                      CapitalValueFromEvaluator
+                        .contributionCapitalValueFromEvaluatorFile.filePath
+                    "
+                    target="_blank"
+                  >
+                    {{
+                      CapitalValueFromEvaluator
+                        .contributionCapitalValueFromEvaluatorFile
+                        .fileDescription
+                    }}</a
+                  >
+                </div>
+              </div>
+
+              <app-file-uploader
+                [data]="multipleFileUploaderData"
+                (fileUploaded)="
+                  onContributionCapitalValueFromEvaluatorFileUploaded($event)
+                "
+              ></app-file-uploader>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.contributionRealEstateEvaluationFromEvaluators
+            }}</label>
+            <div class="col-12 col-lg-12">
+              <div
+                *ngIf="
+                  contributionBasicData &&
+                  contributionBasicData.contributionRealEstateEvaluationFromEvaluators
+                "
+              >
+                <div
+                  class="value"
+                  *ngFor="
+                    let realEstateEvaluationFromEvaluator of contributionBasicData.contributionRealEstateEvaluationFromEvaluators
+                  "
+                >
+                  <a
+                    *ngIf="
+                      realEstateEvaluationFromEvaluator &&
+                      realEstateEvaluationFromEvaluator.contributionRealEstateEvaluationFromEvaluatorFile
+                    "
+                    [href]="
+                      baseUrl +
+                      realEstateEvaluationFromEvaluator
+                        .contributionRealEstateEvaluationFromEvaluatorFile
+                        .filePath
+                    "
+                    target="_blank"
+                  >
+                    {{
+                      realEstateEvaluationFromEvaluator
+                        .contributionRealEstateEvaluationFromEvaluatorFile
+                        .fileDescription
+                    }}</a
+                  >
+                </div>
+              </div>
+
+              <app-file-uploader
+                [data]="multipleFileUploaderData"
+                (fileUploaded)="
+                  onContributionRealEstateEvaluationFileUploaded($event)
+                "
+              ></app-file-uploader>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  </form>
+</ng-container>

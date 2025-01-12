@@ -1,0 +1,46 @@
+
+<div class="tab-data-section" *ngIf="licenseProjectRequestChangePlanFull">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+  <div class="col-12 col-md-6">
+    <div class="key"> اسباب و مبررات تغير خطة المشروع </div>
+    <div class="value">
+        {{licenseProjectRequestChangePlanFull?.reasonsAndJustificationsForChangingProjectPlan}}
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="key">ملف جدول زمني للمشروع</div>
+    <div class="value" *ngFor="let file of licenseProjectRequestChangePlanFull?.projecTimelineFileAttachments">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="file && file.documentFile" [href]="baseUrl + file?.documentFile?.filePath" target="_blank">
+            {{file?.documentFile?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="key">صور المشروع</div>
+    <div class="value" *ngFor="let file of licenseProjectRequestChangePlanFull?.licenseProjectRequestChangePlanProjectAttachments">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="file && file.documentFile" [href]="baseUrl + file?.documentFile?.filePath" target="_blank">
+            {{file?.documentFile?.fileDescription}}
+        </a>
+    </div>
+</div>
+
+
+<div class="col-12 col-md-6">
+    <div class="key">نسبة انجاز المشروع</div>
+    <div class="value">
+        {{licenseProjectRequestChangePlanFull?.achievementRate}}
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="key">أخر تقرير هندسي</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.lastEngineeringReport" [href]="baseUrl + licenseProjectRequestChangePlanFull?.lastEngineeringReport?.filePath" target="_blank">
+            {{licenseProjectRequestChangePlanFull?.lastEngineeringReport?.fileDescription}}
+        </a>
+    </div>
+</div> 
+</div>
+</div>

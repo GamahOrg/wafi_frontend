@@ -1,0 +1,393 @@
+<div class="card">
+  <div class="card-header">
+    <h6 class="card-title">طلب الغاء الترخيص</h6>
+  </div>
+
+  <div class="card-body">
+    <div class="update-clearance-engineering-form">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+
+              <select
+                class="form-select"
+                id="control-licenseProjectId"
+                aria-label="Default select example"
+                formControlName="licenseProjectId"
+              >
+                <option selected disabled>المشروع</option>
+
+                <option
+                  *ngFor="let licenseProject of licenseProjects"
+                  [ngValue]="licenseProject.id"
+                >
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="showValidation && form.get('licenseProjectId')?.invalid"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6"></div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group">
+              <label for="justificationsAndReasons"
+                >مبررات و مشفوعات الغاء الرخصة</label
+              >
+
+              <textarea
+                rows="6"
+                type="text"
+                id="control-justificationsAndReasons"
+                class="form-control"
+                [(ngModel)]="justificationsAndReasons"
+                formControlName="justificationsAndReasons"
+                placeholder="مبررات و مشفوعات الغاء الرخصة"
+              ></textarea>
+
+              <mat-error
+                *ngIf="
+                  showValidation &&
+                  form.get('justificationsAndReasons')?.invalid
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+
+              <!-- <input type="text" id="justificationsAndReasons" formControlName="justificationsAndReasons"
+        [(ngModel)]="justificationsAndReasons" class="form-control" /> -->
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-12">
+              <div class="form-group mb-4">
+                <label class="key">مستندات تثبت مبررات الغاء المشروع</label>
+                <!-- File Upload for Non-Clearance Documents -->
+                <app-file-uploader
+                  [data]="mueltiFilesUploaderData"
+                  (fileUploaded)="
+                    onDocumentSupportingJustificationFilesUpload($event)
+                  "
+                ></app-file-uploader>
+                <mat-error *ngIf="showValidation &&  (this.documentSupportingJustificationFiles==null||this.documentSupportingJustificationFiles.length==0)">
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-lg-6 mt-4">
+              <label for="clearance"
+                >هل تم المخالصة النهائية مع الاستشاري الهندسي؟</label
+              >
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="isClearanceEngineeringConsultantDone"
+                    [value]="true"
+                    (change)="onClearanceChangeEngineer(true)"
+                    [checked]="isClearanceEngineeringConsultantDone"
+                  />
+                  نعم
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="isClearanceEngineeringConsultantDone"
+                    [value]="false"
+                    (change)="onClearanceChangeEngineer(false)"
+                    [checked]="!isClearanceEngineeringConsultantDone"
+                  />
+                  لا
+                </label>
+              </div>
+
+              <mat-error
+                *ngIf="
+                  showValidation &&
+                  form.get('isClearanceEngineeringConsultantDone')?.invalid
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+
+              <!-- <div *ngIf="showValidation" class="error-message">
+
+            <p *ngIf="showValidation && form.get('isClearanceEngineeringConsultantDone')?.invalid">
+              حالة المخالصة مطلوبة.
+            </p>
+
+
+          </div> -->
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <!-- Conditionally Show File Upload if "Yes" is selected -->
+              <div
+                class="col-12 col-lg-12"
+                *ngIf="isClearanceEngineeringConsultantDone"
+              >
+                <div class="form-group mb-4">
+                  <label for="clearanceEngineeringConsultantFileId"
+                    >ملف المخالصة النهائية مع الاستشاري الهندسي</label
+                  >
+                  <!-- File Upload for updating -->
+                  <app-file-uploader
+                    [data]="singleFilesUploaderData"
+                    (fileUploaded)="
+                      clearanceEngineeringConsultantFileUpload($event)
+                    "
+                  ></app-file-uploader>
+                  <mat-error *ngIf="showValidation && (this.clearanceEngineeringConsultantFileId == null || this.clearanceEngineeringConsultantFileId == undefined || this.clearanceEngineeringConsultantFileId == '00000000-0000-0000-0000-000000000000')">
+                    {{ localization.requiredErrorMsg }}
+                  </mat-error>
+                </div>
+
+                <mat-error
+                  *ngIf="
+                    showValidation &&
+                    form.get('clearanceEngineeringConsultantFileId')?.invalid
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+
+                <!-- <div *ngIf="showValidation" class="error-message">
+
+              <p *ngIf="showValidation && form.get('clearanceEngineeringConsultantFileId')?.invalid">
+                معرف الملف مطلوب.
+              </p>
+
+            </div> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4" *ngIf="!isClearanceEngineeringConsultantDone">
+            <div class="col-12 col-lg-6">
+              <!-- Text Box for Reasons for Not Finalizing Clearance -->
+              <div class="form-group">
+                <label
+                  for="reasonsForNotFinalizingEngineeringConsultantClearance"
+                  >اسباب عدم اتمام المخالصة مع الاستشاري الهندسي</label
+                >
+
+                <textarea
+                  rows="6"
+                  type="text"
+                  id="control-reasonsForNotFinalizingEngineeringConsultantClearance"
+                  class="form-control"
+                  [(ngModel)]="
+                    reasonsForNotFinalizingEngineeringConsultantClearance
+                  "
+                  formControlName="reasonsForNotFinalizingEngineeringConsultantClearance"
+                  placeholder="اسباب عدم اتمام المخالصة مع الاستشاري الهندسي"
+                ></textarea>
+
+                <mat-error
+                  *ngIf="
+                    showValidation &&
+                    form.get(
+                      'reasonsForNotFinalizingEngineeringConsultantClearance'
+                    )?.invalid
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+
+                <!-- <div *ngIf="showValidation" class="error-message">
+
+              <p
+                *ngIf="showValidation && form.get('reasonsForNotFinalizingEngineeringConsultantClearance')?.invalid">
+                أسباب عدم إتمام المخالصة مطلوبة.
+              </p>
+
+            </div> -->
+
+                <!-- <input type="text" id="reasonsForNotFinalizingEngineeringConsultantClearance"
+        formControlName="reasonsForNotFinalizingEngineeringConsultantClearance"
+        [(ngModel)]="reasonsForNotFinalizingEngineeringConsultantClearance" class="form-control" /> -->
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <!-- File Upload for Documents Not Finalized with the Consultant -->
+              <div class="col-12 col-lg-12">
+                <div class="form-group mb-4">
+                  <label class="key"
+                    >مستندات عدم اتمام المخالصة مع الاستشاري الهندسي</label
+                  >
+                  <!-- File Upload for Non-Clearance Documents -->
+                  <app-file-uploader
+                    [data]="mueltiFilesUploaderData"
+                    (fileUploaded)="
+                      onNonClearanceDocumentEngineeringConsultantFilesUpload(
+                        $event
+                      )
+                    "
+                  ></app-file-uploader>
+                  <mat-error *ngIf="showValidation &&  (this.nonClearanceDocumentEngineeringConsultantFiles==null||this.nonClearanceDocumentEngineeringConsultantFiles.length==0)">
+                    {{ localization.requiredErrorMsg }}
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-12 col-lg-6">
+              <label for="clearance"
+                >هل تم المخالصة النهائية مع المحاسب القانوني؟</label
+              >
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="isClearanceAccountantDone"
+                    [value]="true"
+                    (change)="onClearanceChangeAccount(true)"
+                    [checked]="isClearanceAccountantDone"
+                  />
+                  نعم
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="isClearanceAccountantDone"
+                    [value]="false"
+                    (change)="onClearanceChangeAccount(false)"
+                    [checked]="!isClearanceAccountantDone"
+                  />
+                  لا
+                </label>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <!-- Conditionally Show File Upload if "Yes" is selected -->
+              <div class="col-12 col-lg-12" *ngIf="isClearanceAccountantDone">
+                <div class="form-group mb-4">
+                  <label for="clearanceAccountantFileId"
+                    >ملف المخالصة النهائية مع المحاسب القانوني</label
+                  >
+                  <!-- File Upload for updating -->
+                  <app-file-uploader
+                    [data]="singleFilesUploaderData"
+                    (fileUploaded)="clearanceAccountantFileUpload($event)"
+                  ></app-file-uploader>
+
+                  <mat-error *ngIf="showValidation && (this.clearanceAccountantFileId == null || this.clearanceAccountantFileId == undefined || this.clearanceAccountantFileId == '00000000-0000-0000-0000-000000000000')">
+                    {{ localization.requiredErrorMsg }}
+                  </mat-error>
+                </div>
+
+                <mat-error
+                  *ngIf="
+                    showValidation &&
+                    form.get('clearanceAccountantFileId')?.invalid
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+
+                <!-- <div *ngIf="showValidation" class="error-message">
+              <p *ngIf="form.get('isClearanceAccountantDone')?.invalid">
+                حالة المخالصة مطلوبة.
+              </p>
+            </div> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4" *ngIf="!isClearanceAccountantDone">
+            <div class="col-12 col-lg-6">
+              <!-- Text Box for Reasons for Not Finalizing Clearance -->
+              <div class="form-group">
+                <label for="reasonsForNotFinalizingAccountantClearance"
+                  >اسباب عدم اتمام المخالصة مع المحاسب القانوني</label
+                >
+                <!-- <input type="text" id="reasonsForNotFinalizingAccountantClearance"
+          formControlName="reasonsForNotFinalizingAccountantClearance"
+          [(ngModel)]="reasonsForNotFinalizingAccountantClearance" class="form-control" /> -->
+
+                <textarea
+                  rows="6"
+                  type="text"
+                  id="control-reasonsForNotFinalizingAccountantClearance"
+                  class="form-control"
+                  [(ngModel)]="reasonsForNotFinalizingAccountantClearance"
+                  formControlName="reasonsForNotFinalizingAccountantClearance"
+                  placeholder="اسباب عدم اتمام المخالصة مع المحاسب القانوني"
+                ></textarea>
+
+                <mat-error
+                  *ngIf="
+                    showValidation &&
+                    form.get('reasonsForNotFinalizingAccountantClearance')
+                      ?.invalid
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+
+                <!-- <div *ngIf="showValidation" class="error-message">
+              <p *ngIf="form.get('reasonsForNotFinalizingAccountantClearance')?.invalid">
+                أسباب عدم إتمام المخالصة مطلوبة.
+              </p>
+            </div> -->
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <!-- File Upload for Documents Not Finalized with the Consultant -->
+              <div class="col-12 col-lg-12">
+                <div class="form-group mb-4">
+                  <label class="key"
+                    >مستندات عدم اتمام المخالصة مع المحاسب القانوني</label
+                  >
+                  <!-- File Upload for Non-Clearance Documents -->
+                  <app-file-uploader
+                    [data]="mueltiFilesUploaderData"
+                    (fileUploaded)="
+                      onClearanceDocumentAccountantFilesUpload($event)
+                    "
+                  ></app-file-uploader>
+                  <mat-error *ngIf="showValidation &&  (this.nonClearanceDocumentAccountantFiles==null||this.nonClearanceDocumentAccountantFiles.length==0)">
+                    {{ localization.requiredErrorMsg }}
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            class="btn btn-outline-primary"
+            id="btn-cancelRequest"
+            (click)="cancelRequest()"
+          >
+            إلغاء
+          </button>
+          <button
+            class="btn btn-primary"
+            id="btn-creatRequest"
+            (click)="save()"
+          >
+            انشاء الطلب
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

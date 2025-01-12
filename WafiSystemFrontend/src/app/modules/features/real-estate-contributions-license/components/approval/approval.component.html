@@ -1,0 +1,21 @@
+<div class="row row-gap-3 mb-3" *ngFor="let item of approvalList; let i = index">
+    <div class="form-check">
+     <input class="form-check-input"
+            type="checkbox"
+            [value]="item.isChecked"
+            (change)="checkValue($event,i)"
+            id="item.discerption{{i}}" />
+     <label class="form-check-label"
+            for="chk1">
+            {{item.discerption}}
+     </label>
+ </div>
+ </div>
+ &nbsp;
+ <div class="col-12 col-lg-6">
+     <div class="alert alert-danger flex-column align-items-start row-gap-1" role="alert" *ngIf="showValidation">
+         <h6 class="alert-heading d-flex align-items-center column-gap-1"><i class="material-icons">warning</i> توجد أخطاء</h6>
+         يجب الموافقه على جميع الاقرارات الخاصة بالرخصه حتي يتم ارسال الطلب
+     </div>
+ </div>
+ 

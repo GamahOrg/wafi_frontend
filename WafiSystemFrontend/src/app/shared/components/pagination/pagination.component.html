@@ -1,0 +1,13 @@
+<div class="pagination" [ngClass]="currentLang">
+    <pagination [totalItems]="pagintationData.totalCount"
+        [(ngModel)]="currentPage" 
+        [previousText]="'السابق'"
+        [nextText]="'التالي'"
+        [maxSize]="pagintationData.pageSize"
+        (pageChanged)="pageChanged($event)"
+        [itemsPerPage]="pagintationData.pageSize"
+        [boundaryLinks]="false"
+        (click)="clickOnPagination($event)"
+        [rotate]="false" >
+    </pagination>
+</div>

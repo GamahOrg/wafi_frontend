@@ -1,0 +1,47 @@
+<form [formGroup]="additionTechnicalCapabilitiesRequirementsForm">
+
+    <div class="form-block mb-3">
+        <h6 class="title">شهادات تصنيف مقدمي خدمات المدن</h6>
+        <div formArrayName="addedQualificationContsAndDevsServiceProvidersCertificateNumbers">
+
+            <div class="row row-gap-3 mb-3" *ngFor="let certificate of addedQualificationContsAndDevsServiceProvidersCertificateNumbers.controls; let i = index" [formGroupName]="i">
+                <div class="col-12 col-lg-5">
+                    <label for="" class="form-label">رقم الشهادة</label>
+                    <input type="text" class="form-control" formControlName="certificateNumber">
+                    <mat-error *ngIf="certificate.get('certificateNumber')?.hasError('required')">required</mat-error>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <label for="" class="form-label">الوصف</label>
+                    <input type="text" class="form-control" formControlName="description">
+                </div>
+                <div class="col-auto">
+                    <div class="mt-4">
+                        <button mat-icon-button color="warn" (click)="deleteCertificateNumbersControl(i)"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <a class="add-array" (click)="addedQualificationContsAndDevsServiceProvidersCertificateNumbersForm(undefined)">+ اضافة شهادة</a>
+
+        </div>
+    </div>
+
+    <div class="row align-items-end row-gap-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <label for="" class="form-label"> رخصة لاحد مشاريع البيع على الخارطة</label>
+            <app-file-uploader [data]="singleFileUploaderData" (fileRemoved)="onFileRemoved($event)" (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for="" class="form-label"> رخص تسويق - بيع</label>
+            <app-file-uploader [data]="singleFileUploaderData" (fileUploaded)="onMarketingSellingLicenseFileUploaded($event)"></app-file-uploader>
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for="" class="form-label">ملفين لعدد (2) رخصة مشاريع صغيرة أو متوسطة منجزة</label>
+            <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onCompletedSmallOrMediumProjectsLicenseFilesUploaded($event)"></app-file-uploader>
+        </div>
+    </div>
+
+    <!-- <div mat-dialog-actions align="end">
+        <button type="button" mat-flat-button color="primary" (click)="save()" [disabled]="additionTechnicalCapabilitiesRequirementsForm.invalid">حفظ البيانات</button>
+    </div> -->
+</form>

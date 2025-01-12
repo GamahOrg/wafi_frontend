@@ -1,0 +1,18 @@
+<div class="table-responsive">
+    <table class="table table-light">
+        <thead>
+            <tr>
+                <th> اسم المفوض</th>
+                <th>البريد الإلكتروني</th>
+                <th>رقم الجوال</th>
+            </tr>
+        </thead>
+        <tbody  *ngIf="LicenseProjectRealStateMarketers && LicenseProjectRealStateMarketers.length>0">
+            <tr *ngFor="let sub of LicenseProjectRealStateMarketers">
+                <td>{{sub?.delegatorName}}</td>
+                <td>{{sub.delegatorEmail}}</td>
+                <td>{{sub.delegatorMobile}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

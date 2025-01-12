@@ -1,0 +1,18 @@
+{
+  "direction": "rtl",
+  "layout": {
+    "sidebar": {
+      "requests": "طلبات الترخيص",
+      "projects": "المشاريع",
+      "dashboard": "لوحة التحكم",
+      "default": "الافتراضي",
+      "currentRequests": "الطلبات الحالية",
+      "pages": "الصفحات",
+      "needToRenew": "يحتاج الي تجديد"
+    }
+  },
+  "HOME": {
+    "TITLE": "تست",
+    "SELECT": "تست"
+  }
+}

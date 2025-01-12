@@ -1,0 +1,282 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseProjectBuyerForm" id="form-licenseProjectBuyerForm">
+
+  <div class="tab-data-section">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label">نوع السجل</label>
+        <div class="col-12">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" (change)="onlicenseProjectypeChanged(1)" [value]="1"
+              id="control-licenseProjectBuyerTypeId" formControlName="licenseProjectBuyerTypeId">
+            <label class="form-check-label">أراضي</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" (change)="onlicenseProjectypeChanged(2)" [value]="2"
+              id="control-licenseProjectBuyerTypeId" formControlName="licenseProjectBuyerTypeId">
+            <label class="form-check-label">وحدات</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">طريقة الدفع</label>
+          <select
+            class="form-select"
+            id="control-paymentTypeId"
+            aria-label="Default select example"
+            formControlName="paymentTypeId"
+          >
+            <option selected disabled>
+              طريقة الدفع
+            </option>
+            <option
+              *ngFor="let paymentType of paymentTypes"
+              [ngValue]="paymentType.id"
+            >
+              {{ paymentType.name }}
+            </option>
+          </select>
+          <mat-error
+            *ngIf="
+              controls.paymentTypeId?.hasError('required') &&
+              showValidation
+            "
+            >
+            حقل مطلوب
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">اسم المشتري</label>
+          <input type="text" id="control-name" class="form-control" formControlName="name" placeholder="اسم المشتري">
+          <mat-error *ngIf="(controls.name?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الهوية</label>
+          <input type="text" id="control-nidNumber" class="form-control" formControlName="nidNumber"
+            placeholder="رقم الهوية">
+          <mat-error *ngIf="(controls.nidNumber?.hasError('required'))&& showValidation">حقل
+            مطلوب</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الجوال</label>
+          <input type="text" id="control-mobile" class="form-control" formControlName="mobile" placeholder="رقم الجوال">
+          <mat-error *ngIf="(controls.mobile?.hasError('required'))&& showValidation">حقل
+            مطلوب</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Lands">
+        <div class="form-group mb-4">
+          <label class="form-label">عدد الأراضى</label>
+          <input type="text" id="control-mobile" class="form-control" formControlName="landNumbers"
+            placeholder="عدد الأراضى">
+          <mat-error *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Lands && 
+            !controls.landNumbers.value && showValidation">حقل
+            مطلوب</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Units">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الوحدة </label>
+          <select class="form-select" formControlName="unitCodeId" (change)="loadAveragePrice()">
+            <option label="اختر رقم الوحدة" disabled></option>
+            <option *ngFor="let unit of projectUnitCodes" [value]="unit.id">
+              {{ unit.code }}
+            </option>
+          </select>
+          <div class="invalid-feedback d-block" *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Units && 
+            !controls.unitCodeId.value && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Lands" class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم البلوك او العمارة</label>
+          <select class="form-select" formControlName="blockId">
+            <option label="اختر او عمارة" disabled></option>
+            <option *ngFor="let type of projectUnits" [value]="type.id">
+              {{ type.code }}
+            </option>
+          </select>
+          <div class="invalid-feedback d-block" *ngIf="controls.blockId?.hasError('required') && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Units" class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم البلوك او العمارة</label>
+          <input type="number" id="control-averagePrice" class="form-control" readonly="readonly"
+          [value]="blockName" placeholder="رقم البلوك او العمارة">
+
+          <!-- <div id="control-block" class="form-control-plaintext">
+            {{ blockName }}
+          </div> -->
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم العقد</label>
+          <input type="text" id="control-contractNumber" class="form-control" formControlName="contractNumber"
+            placeholder="رقم العقد">
+          <mat-error *ngIf="(controls.contractNumber?.hasError('required'))&& showValidation">حقل
+            مطلوب</mat-error>
+        </div>
+      </div>
+
+      <!-- <div class="col-12 col-lg-6">
+        <label class="form-label">تاريخ البيع</label>
+        <input type="date" id="control-saleDate" class="form-control" formControlName="saleDate"
+          value="{{ controls.saleDate.value | date:'yyyy-MM-dd' }}">
+        <div class="invalid-feedback d-block" *ngIf="controls.saleDate.errors?.['required']">
+          هذا الحقل مطلوب
+        </div>
+      </div> -->
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">تاريخ البيع</label>
+          <div class="input-group">
+            <input
+              bsDatepicker
+              id="control-saleDate"
+              type="text"
+              class="form-control"
+              formControlName="saleDate"
+              value="{{ controls.saleDate.value | date : 'yyyy-MM-dd' }}"
+            />
+            <span class="input-group-text"
+              ><i class="material-icons-outlined">calendar_today</i></span
+            >
+          </div>
+
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="controls.saleDate?.hasError('required') && showValidation"
+          >
+          هذا الحقل مطلوب
+          </div>      
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">تاريخ التسليم</label>
+          <div class="input-group">
+            <input
+              bsDatepicker
+              id="control-deliveryDate"
+              type="text"
+              class="form-control"
+              formControlName="deliveryDate"
+              value="{{ controls.deliveryDate.value | date : 'yyyy-MM-dd' }}"
+            />
+            <span class="input-group-text"
+              ><i class="material-icons-outlined">calendar_today</i></span
+            >
+          </div>
+
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="controls.deliveryDate?.hasError('required') && showValidation"
+          >
+          هذا الحقل مطلوب
+          </div>      
+        </div>
+      </div>
+
+     
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">سعر الوحدة او الارض قبل ضريبة القيمة المضافة</label>
+          <input (change)="observelicenseProjectBuyerForm()" type="number" id="control-price" class="form-control"
+            formControlName="price" placeholder="سعر الوحدة او الارض قبل ضريبة القيمة المضافة">
+          <mat-error *ngIf="(controls.price?.hasError('required'))&& showValidation">حقل
+            مطلوب</mat-error>
+        </div>
+      </div>
+      <div *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Units" class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">متوسط سعر المتر</label>
+          <input type="number" id="control-averagePrice" class="form-control" readonly="readonly"
+        [value]="averagePrice" placeholder="متوسط سعر المتر">
+
+          <!-- <div id="control-averagePrice" class="form-control-plaintext">
+            {{ averagePrice }}
+          </div> -->
+        </div>
+      </div>      
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">نسبة الضريبة المضافة للأرض او الوحدة</label>
+          <input type="number" id="control-currentTax" class="form-control" readonly="readonly"
+            formControlName="currentTax" placeholder="نسبة الضريبة المضافة للأرض او الوحدة">
+
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">ضريبة القيمة المضافة من سعر البيع</label>
+          <input type="number" id="control-priceAfterTax" class="form-control" readonly="readonly"
+            formControlName="priceAfterTax" placeholder="ضريبة القيمة المضافة من سعر البيع">
+
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label"> قيمة البيع شاملة القيمة المضافة </label>
+          <input type="number" id="control-totalPrice" class="form-control" readonly="readonly"
+            formControlName="totalPrice" placeholder="قيمة البيع شاملة القيمة المضافة ">
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Lands">
+        <div class="form-group mb-4">
+          <label class="form-label">نسبة الرسوم للأراضي</label>
+          <input type="number" id="control-percentageSupervisionOrFees" class="form-control" readonly="readonly"
+            formControlName="percentageSupervisionOrFees" placeholder="نسبة الرسوم للأراضي">
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Lands">
+        <div class="form-group mb-4">
+          <label class="form-label">تكاليف رسوم الأراضي</label>
+          <input type="number" id="control-landFeeCosts" class="form-control" readonly="readonly"
+            formControlName="landFeeCosts" placeholder="تكاليف رسوم الأراضي">
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Units">
+        <div class="form-group mb-4">
+          <label class="form-label">نسبة الاشراف والمتابعة</label>
+          <input type="number" id="control-percentageSupervisionOrFees" class="form-control" readonly="readonly"
+            formControlName="percentageSupervisionOrFees" placeholder="نسبة الاشراف والمتابعة">
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Units">
+        <div class="form-group mb-4">
+          <label class="form-label">الأشراف والمتابعة منذ بداية المشروع</label>
+          <input type="number" id="control-supervisionFromProjectBeginning" class="form-control" readonly="readonly"
+            formControlName="supervisionFromProjectBeginning" placeholder="الأشراف والمتابعة منذ بداية المشروع">
+        </div>
+      </div>
+      <div class="col-12 col-lg-12">
+        <div class="form-group mb-4">
+          <div class="key">ملف العقد</div>
+          <app-file-uploader [data]="singleFilesUploaderData"
+            (fileUploaded)="onExistContractFileUploaded($event)"></app-file-uploader>
+          <div class="invalid-feedback d-block" *ngIf="!contractFileId && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

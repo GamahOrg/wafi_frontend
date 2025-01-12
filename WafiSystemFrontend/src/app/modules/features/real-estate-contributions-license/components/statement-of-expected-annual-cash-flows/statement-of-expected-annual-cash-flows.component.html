@@ -1,0 +1,82 @@
+<div class="d-flex flex-column h-100">
+
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">بيان بالتدفقات النقدية السنوية المتوقعة</h6>
+
+        <button mat-raised-button
+                class="edit-icon"
+                (click)="openDialog('')"><span class="material-icons">add</span></button>
+    </div>
+
+    <div class="tab-data-section">
+        <div class="table-responsive">
+            <table class="table table-light"
+                   *ngIf="licenseProjectAnnualCashFlows && licenseProjectAnnualCashFlows.length>0">
+                <thead>
+                    <tr>
+                        <th> السنة</th>
+                        <!-- <th>التدفقات النقدية المحصلة للمشروع</th>
+                        <th>المبالغ المحصلة من عمليات التشغيل(بيع وحدات)</th>
+                        <th>مجموع التدفقات النقديةالمحصلة</th>
+                        <th>التدفقات النقدية المدفوعة للمشروع</th>
+                        <th>دفعات المقاولين</th>
+                        <th>دفعات التسويق والدعاية</th>
+                        <th>دفعات التصميم </th>
+                        <th>دفعات الإشراف</th>
+                        <th>دفعات المصاريف الإدارية والعمومية</th>
+                        <th>دفعات تكلفه الأرض</th>
+                        <th>دفعات شراء أجهزة الكمبيوتر</th>
+                        <th>دفعات الزكاة</th>  -->
+                        <th> (مصاريف التمويل المتوقعة)القرض المدفوع لمالك المشروع</th>
+                        <th>مجموع التدفقات النقديةالمدفوعة</th>
+                        <th>صافي الزيادة(النقص) بالنقد</th>
+                        <th>رصيد النقد أول الفترة</th>
+                        <th>رصيد النقد والنقد المعادل آخر الفترة</th>
+                        <th class="w-25"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cash of licenseProjectAnnualCashFlows">
+                        <td>{{cash?.year?.name}}</td>
+                        <!-- <td>{{cash.cashFlowsCollectedForTheProject}}</td>   
+                         <td>{{cash.amountsCollectedFromOperationsSaleUnits}}</td>
+                        <td>{{cash.totalCashFlowsCollected}}</td>
+                        <td>{{cash.projectCashFlows}}</td>
+                        <td>{{cash.contractorPayments}}</td>
+                        <td>{{cash.marketingAndAdvertisingPayments}}</td> 
+                        <td>{{cash.designPayments}}</td>
+                        <td>{{cash.supervisionPayments}}</td>
+                        <td>{{cash.paymentsOfAdministrativeAndGeneralFees}}</td>
+                        <td>{{cash.landCostPayments}}</td>
+                        <td>{{cash.pcPurchasePayments}}</td>
+                        <td>{{cash.zakatPayments}}</td>  -->
+                        <td>{{cash.loanPaidToOwnerOfTheProjectExpectedFinancingFees}}</td>
+                        <td>{{cash.totalCashFlowPaid}}</td>
+                        <td>{{cash.netIncreaseDecreaseInCash}}</td>
+                        <td>{{cash.cashBalanceAtBeginningOfThePeriod}}</td>
+                        <td>{{cash.balanceOfCashAndCashEquivalentsAtTheEndOfThePeriod}}</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-end column-gap-2">
+                                <button mat-icon-button
+                                        color="warn"
+                                        (click)="delete(cash.id)"><mat-icon>delete</mat-icon></button>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        (click)="openDialog(cash.id)">تعديل</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
+        <button class="btn btn-outline-primary"
+                (click)="back()">{{localization.previous}}</button>
+        <button class="btn btn-outline-primary"
+                (click)="next()">{{localization.next}}</button>
+
+    </div> -->
+</div>

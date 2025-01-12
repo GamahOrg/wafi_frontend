@@ -1,0 +1,25 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/bootstrap-custom/tables";
+@import "/src/assets/styles/content/page";
+@import "/src/assets/styles/content/table-content";
+@import "/src/assets/styles/content/status";
+
+.date-range-result {
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+
+    padding: .5rem 1rem;
+    // color: $darkgreen;
+    color: $theme-dark;
+
+    // border: 1px solid $darkgreen;
+    border: 1px solid $theme-dark;
+    border-radius: $border-radius-sm;
+    box-shadow: 0px 0px 0px 4px rgba(0, 111, 67, 0.1);
+
+    span,
+    i {
+        color: #B4B4B4;
+    }
+}

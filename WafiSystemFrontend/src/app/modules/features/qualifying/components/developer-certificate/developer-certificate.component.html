@@ -1,0 +1,42 @@
+<div class="cetificate" dir="rtl">
+
+  <div class="cetificate-layout">
+    <div class="cert-header">
+      <div class="logo">
+        <img src="/assets/images/qualifying/certs/logo.svg" class="img-fluid" alt="">
+      </div>
+
+      <img src="/assets/images/qualifying/certs/top-pattern-mini.svg" class="top-pattern" alt="">
+    </div>
+
+    <div class="data-wrapper">
+      <div class="data text-center">
+        <h4 class="title text-darkteal">شهادة تأهيل مطور عقاري</h4>
+        <img src="/assets/images/qualifying/certs/developer-certificate/divider.svg" class="divider" alt="">
+        <p class="text text-gray">يسر الهيئة العامة للعقار أن تمنح هذه الشهادة</p>
+        <p class="text fw-bold text-teal">ل {{certificateData.facilityName}}</p>
+        <img src="/assets/images/qualifying/certs/developer-certificate/divider.svg" class="divider" alt="">
+        <p class="text fw-bold text-teal mt-4">لاجتيازها متطلبات التأهيل المعتمدة</p>
+        <p class="text text-teal">لممارسة نشاط بيع وتأجير مشروعات عقارية على الخارطة</p>
+        <span class="text text-teal mt-4">واعتمادها بتاريخ {{certificateData.committeeDecisionDate | date: 'yyyy/MM/dd'}} م</span>
+      </div>
+
+      <div class="expiration text-center">
+        <img src="/assets/images/qualifying/certs/stamp-pattern.png" class="stamp-pattern img-fluid" alt="">
+        <div class="info">
+          <h5 class="title text-teal">مؤهل لمدة {{getCertificatePeriod(certificateData.certificatePeriod)}}</h5>
+          <p class="text">شهادة رقم <span class="text-darkblue">{{certificateData.certificateNumber}}</span></p>
+          <p class="text">سارية حتى تاريخ {{certificateData.certificateExpirationDate | date: 'yyyy/MM/dd'}} م</p>
+          <p class="text">إصدار رقم <span class="count">1</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-footer">
+      <img src="/assets/images/qualifying/certs/footer.svg" class="img-fluid" alt="">
+    </div>
+
+    <img src="/assets/images/qualifying/certs/developer-certificate/center-pattern.png" class="center-pattern" alt="">
+  </div>
+
+</div>

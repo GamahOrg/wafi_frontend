@@ -1,0 +1,100 @@
+<app-login-layout>
+  <div class="register">
+    <h6 class="form-title mb-4">{{'إنشاء حساب جديد'}}</h6>
+    <h6 class="form-title mb-4">{{'يجب أن يكون منشئ الحساب احد ملّاك السجل التجاري (مطور عقاري - محاسب قانوني - استشاري هندسي)'}}</h6>
+    <form [formGroup]="registrationForm" id="form-registrationForm">
+      <div class="form-group">
+        <label for="nIdNumber"
+               class="form-label">{{localization.NIDNumberDisplayName}}</label>
+        <input type="text" id="control-nIdNumber"
+               formControlName="nIdNumber"
+               class="form-control"
+               placeholder="اكتب {{localization.NIDNumberDisplayName}}"
+               [ngClass]="{'is-invalid': controls.nIdNumber.errors && showValidation}" />
+
+        <div *ngIf="controls.nIdNumber.errors && showValidation"
+             class="invalid-feedback">
+          <div>
+            <ng-container *ngIf="controls.nIdNumber.errors?.['required']">
+              {{localization.requiredErrorMsg}}
+            </ng-container>
+            <ng-container *ngIf="controls.nIdNumber.errors?.['pattern']">
+              {{localization.pattern}}
+            </ng-container>
+            <ng-container *ngIf="controls.nIdNumber.errors?.['maxlength'] || controls.nIdNumber.errors?.['minlength']">
+              {{localization.maxLengthErrorMsg}}
+            </ng-container>
+          </div>
+        </div>
+        <div *ngIf="RegistrationResponse?.status == RegistrationStatus.wrongId"
+             class="invalid-feedback">
+          <div>{{errorFeedback}}</div>
+        </div>
+      </div>
+
+
+      <!-- <div class="form-group">
+        <label for="birthday"
+               class="form-label">{{controls.nIdType.value == nIdType.citizen ? localization.dateHejrie :
+          localization.date}}</label>
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            <select formControlName="month" id="control-month"
+                    class="form-control"
+                    [ngClass]="{'is-invalid':  controls.month.value == 0 && showValidation}">
+              <option selected
+                      disabled
+                      [value]="0">{{localization.month}}</option>
+              <option *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]">{{month}}</option>
+            </select>
+            <div *ngIf="controls.month.value == 0"
+                 class="invalid-feedback">
+              {{localization.requiredErrorMsg}}
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <input type="text"
+                   formControlName="year" id="control-year"
+                   class="form-control"
+                   placeholder="{{localization.year}}"
+                   [ngClass]="{'is-invalid':  controls.year.errors && showValidation}" />
+
+            <div *ngIf="controls.year.errors"
+                 class="invalid-feedback">
+              <div>
+
+                <ng-container *ngIf="controls.year.errors?.['required']">
+                  {{localization.requiredErrorMsg}}
+                </ng-container>
+
+                <ng-container *ngIf="controls.year.errors?.['pattern']">
+                  {{localization.pattern}}
+                </ng-container>
+                <ng-container
+                              *ngIf="controls.year.errors?.['maxlength'] || controls.year.errors?.['minlength']">
+                  {{localization.minLength4ErrorMsg}}
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+
+      <div class="actions mt-5">
+        <button class="btn btn-primary"
+                (click)="onClickOnVerification()">{{localization.verification}}</button>
+
+      </div>
+    </form>
+
+    <div class="redir-link">
+      اذا كنت تمتلك حسابا، قم
+      <a [routerLink]="[loginLink]">بتسجيل الدخول</a>
+      <a target="_blank" href="https://rega.gov.sa/media/kwrbhkn2/%D9%86%D8%B8%D8%A7%D9%85-%D8%A7%D9%84%D9%85%D8%B3%D8%A7%D9%87%D9%85%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A%D8%A9.pdf" class="d-block text-center" id="realEstateContributionsSystemsAndRegulationsLink">أنظمة ولوائح المساهمات العقارية</a>
+    </div>
+  </div>
+</app-login-layout>

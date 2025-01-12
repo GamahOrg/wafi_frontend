@@ -1,0 +1,316 @@
+
+<div class="tab-data-section" *ngIf="licenseCertificateTemplate">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم السجل التجارى</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.commercialRegisterNumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم هوية المطور</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.nidnumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم السجل التجارى للاستشارى</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.consultanatCommercialRegisterNumber}}
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم السجل التجارى للمحاسب</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.accountantCommercialRegisterNumber}}
+            </div>
+        </div>
+      
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم الرخصة</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.certificateNumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">تاريخ بداية الترخيص</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.certificateStartOn|date:'yyyy/MM/dd'}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">تاريخ نهاية الترخيص</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.certificateEndOn|date:'yyyy/MM/dd'}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">مدة الرخصة</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.certificatePeriod}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">نوع الرخصة</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.licenseType}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">اسم المشروع</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.projectOrContributionName}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">تاريخ بداية المشروع</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.projectOrContributionStartOn|date:'yyyy/MM/dd'}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">تاريخ نهاية المشروع</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.projectOrContributionEndOn|date:'yyyy/MM/dd'}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">وصف المشروع</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.projectOrContributionDescription}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">نوع المشروع</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.projectOrContributionType}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">تصنيف المشروع</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.categoryName}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">نطاق الأعمال</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.projectScopeName}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6" *ngIf="licenseCertificateTemplate.IsProjectOrContributionStarted">
+            <div class="key">نسبة الانجاز</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.achievementRate}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">مساحة مسطح البناء للمشروع</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.buildingFlatArea}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">مساحة المشروع حسب الصك</div>
+            <div class="value">
+                {{licenseCertificateTemplate?.landTotalSpace}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive mb-3" *ngIf="licenseCertificateTemplate && licenseCertificateTemplate.licenseCertifcateRelativeWeights 
+&& licenseCertificateTemplate.licenseCertifcateRelativeWeights.length >0">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">اسم الوزن</th>
+                <th scope="col">القيمة</th>
+                
+            </tr>
+        </thead>
+        <tbody *ngFor="let weight of licenseCertificateTemplate.licenseCertifcateRelativeWeights;let i=index;">
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center column-gap-2">
+                        {{weight.name}}
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center column-gap-2">
+                        {{weight.value}}
+                    </div>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<div class="table-responsive mb-3" *ngIf="licenseCertificateTemplate && licenseCertificateTemplate.licenseCertifcateDeedTemplates 
+&& licenseCertificateTemplate.licenseCertifcateDeedTemplates.length >0">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"> رقم الصك</th>
+                <th scope="col">نوع الصك</th>
+                <th scope="col">اليوم</th>
+                <th scope="col">الشهر</th>
+                <th scope="col"> السنة</th>                
+            </tr>
+        </thead>
+        <tbody *ngFor="let deed of licenseCertificateTemplate.licenseCertifcateDeedTemplates;let i=index;">
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center column-gap-2">
+                        {{deed.deedNumber}}
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center column-gap-2">
+                        {{deed.deedType}}
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center column-gap-2">
+                        {{deed.day}}
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center column-gap-2">
+                        {{deed.month}}
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center column-gap-2">
+                        {{deed.year}}
+                    </div>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">اسم الزون</th>
+                    <th scope="col">النوع بلوك او عمارة</th>
+                    <th scope="col">رقم البلوك او العمارة</th>
+                    <th scope="col"> المرحلة</th>
+                    <th scope="col">تاريخ بداية الانشاء</th>
+                    <th scope="col">تاريخ نهاية الانشاء</th>
+                    <th scope="col">نوع الوحدة</th>
+                    <th scope="col">عدد الوحدات</th>
+                    <th scope="col">اسم نموذج الوحدة</th>
+                    <th scope="col">اجمالى المساحة للوحدة</th>
+                    <th scope="col">مساحة مسطح البناء للوحدة</th>
+                    <th scope="col">عدد الوحدات</th>
+                    <th scope="col">خصائص الوحدة</th>
+                    <th scope="col">كود الوحدة</th>
+                    <th scope="col">تاريخ التسليم</th>
+                    <th scope="col">سعر التعاقد</th>
+                    <th scope="col">الدور</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.zoneName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.unitTypeName}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.unitCode}}</span>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.stageName}}</span>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.constructionStartOn|date:'yyyy/MM/dd'}}</span>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.constructionEndOn|date:'yyyy/MM/dd'}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.subUnitTypeName}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.subUnitCount}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.modelName}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.space}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.buildingFlatSpace}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.unitsCount}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.properties}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.code}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.deliveryOn|date:'yyyy/MM/dd'}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.price}}</span>
+                       
+                     </td>
+                     <td>
+                        <span class="d-flex align-items-center column-gap-2">
+                            {{comdata.floorNumber}}</span>
+                       
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>

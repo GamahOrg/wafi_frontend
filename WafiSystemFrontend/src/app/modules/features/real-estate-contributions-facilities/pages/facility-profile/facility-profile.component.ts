@@ -1,0 +1,119 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { customerResponse } from 'src/app/shared/models/customer.model';
+import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
+import { FacilityProfileService } from '../../services/facilityProfile/facility-profile.service';
+import { Subscription } from 'rxjs';
+import { FacilityDataComponent } from '../../components/facility-data/facility-data.component';
+import { QualificationCertificatesComponent } from '../../components/qualification-certificates/qualification-certificates.component';
+import { LicensesComponent } from '../../components/licenses/licenses.component';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { Tabs } from 'src/app/shared/models/tabs.model';
+import { Configuration } from 'src/app/core/configurations/shared.config';
+import { QualificationRequestData } from 'src/app/core/models/qualification-request-data.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RequestValidationService } from 'src/app/core/services/request-validation/request-validation.service';
+
+@Component({
+  selector: 'app-facility-profile',
+  templateUrl: './facility-profile.component.html',
+  styleUrls: ['./facility-profile.component.scss']
+})
+export class FacilityProfileComponent implements OnInit, OnDestroy {
+  userData: customerResponse | null = null;
+  subscriptions: Subscription[] = [];
+  localization = {
+    nationalId: "رقم الهوية ",
+    phone: "رقم الجوال",
+    nationality: "الجنسية",
+    commercialRegistrationNumber:
+      "رقم السجل التجاري"
+  }
+  tabContent: Tabs = {
+    verticalTabs: false,
+    activeTabIndex: 0,
+    tabsComponentList:
+      [
+        {
+          icon: '',
+          title: "بيانات المنشأة ",
+          Component: FacilityDataComponent,
+          disabled: false,
+          id: "FacilityData",
+          isVisible: true,
+        },
+        {
+          icon: '',
+          title: "شهادات التأهيل ",
+          Component: QualificationCertificatesComponent,
+          disabled: true,
+          id: "QualificationCertificates",
+          isVisible: true,
+        },
+        {
+          icon: '',
+          title: "التراخيص",
+          Component: LicensesComponent,
+          disabled: true,
+          id: "Licenses",
+          isVisible: true,
+        },
+      ]
+  }
+  qualificationRequestData: QualificationRequestData | null = null;
+  requestSummeryLink: string = `/${Configuration.modules.realEstateContributions}/${Configuration.modules.realEstateContributionsQualifying}/${Configuration.pages.realEstateContributionsQualifying.requestSummary}` as string;
+  renewRequestSummary: string = `/${Configuration.modules.realEstateContributions}/${Configuration.modules.realEstateContributionsQualifying}/${Configuration.pages.realEstateContributionsQualifying.renewRequestSummary}` as string;
+  renewRequest: boolean = false;
+  constructor(
+    private _userDataService: UserDataService,
+    private _tabsService: TabsService,
+    private _requestValidationService: RequestValidationService,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute
+    ) { }
+  ngOnInit(): void {
+    this.updateTabContent()
+    this.obseveCustomerData();
+    this.ObserveQualificationRequestData();
+    this.observeRouter();
+  }
+  observeRouter(): void {
+    this.subscriptions.push(
+      this._activatedRoute.params.subscribe(params => {
+        this.renewRequest = this._activatedRoute.snapshot.url[0].path == Configuration.pages.facilities.facilityProfileWithRenewRequest;
+        console.log("this._activatedRoute.snapshot.url[0].path", this._activatedRoute.snapshot.url[0].path)
+        console.log("Configuration.pages.facilities.facilityProfileWithRenewRequest", Configuration.pages.facilities.facilityProfileWithRenewRequest)
+        console.log("this.renewRequest", this.renewRequest);
+
+      })
+    )
+  }
+  private ObserveQualificationRequestData(): void {
+    this.subscriptions.push(
+      this._requestValidationService.getQualificationRequestData().subscribe((res: QualificationRequestData | null) => {
+        this.qualificationRequestData = res
+      })
+    )
+  }
+  private obseveCustomerData(): void {
+    this.subscriptions.push(
+      this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
+        this.userData = res
+        // console.log('userData', this.userData)
+      })
+    )
+  }
+  public navigateToRequestSummary():void {
+    // this._router.navigate([this.requestSummeryLink, this.qualificationRequestData?.type, this.qualificationRequestData?.period]);
+    if (this.renewRequest) {
+      this._router.navigate([this.renewRequestSummary, this.qualificationRequestData?.type, this.qualificationRequestData?.period]);
+    } else {
+      this._router.navigate([this.requestSummeryLink, this.qualificationRequestData?.type, this.qualificationRequestData?.period]);
+    }
+  }
+  private updateTabContent() {
+    this._tabsService.updateTabContent(this.tabContent)
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
+}

@@ -1,0 +1,42 @@
+<form [formGroup]="qualificatedAccountantsForm">
+  <div class="row row-gap-3 mb-3">
+    <!-- <select
+        class="custom-select mb-3"
+        formControlName="qualificationSocialInsuranceEmployeeListId"
+      >
+        <option value="">اختر محاسب</option>
+        <option *ngFor="let acc of socialInsuranceEmployeeList" [ngValue]="acc.id">
+          {{ acc.name }}
+        </option>
+      </select> -->
+
+    <div class="col-12 col-lg-12">
+      <div class="form-group">
+        <label for="" class="form-label">المحاسبين</label>
+        <select class="form-select" formControlName="qualificationCertifiedEngineerId">
+          <option label="اختار المحاسب"></option>
+          <option *ngFor="let item of qualificationCertifiedEngineers" [value]="item.id">
+            {{ item.engineerName }}
+          </option>
+        </select>
+        <mat-error *ngIf="controls.qualificationCertifiedEngineerId.errors?.['required'] && showValidation">حقل
+          مطلوب</mat-error>
+      </div>
+    </div>
+  </div>
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-12">
+      <div class="form-group">
+        <label>{{ "ملف شهادة التدريب" }}</label>
+        <app-file-uploader (fileRemoved)="onTrainingCertificateFileRemoved($event)"
+          (fileUploaded)="onTrainingCertificateFileUploaded($event)"></app-file-uploader>
+        <div *ngIf="
+            qualificatedAccountantDto?.trainingCertificateFileId == '' &&
+            showValidation
+          " class="invalid-feedback d-block">
+          <div>حقل مطلوب</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

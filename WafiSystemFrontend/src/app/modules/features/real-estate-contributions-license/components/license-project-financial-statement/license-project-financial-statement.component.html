@@ -1,0 +1,109 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseFinancialStatmenentForm">
+    <h6 class="title">{{localization.title}}</h6>
+
+    <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.projectCost}}</label>
+                <input type="text" placeholder="{{localization.projectCost}}" class="form-control"
+                    formControlName="projectCost">
+                <mat-error
+                    *ngIf="controls.projectCost?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                <mat-error *ngIf="controls.projectCost?.hasError('pattern')">{{localization.numberPattern}}</mat-error>
+                </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.projectSaleEstimatedValue}}</label>
+                <input type="text" placeholder="{{localization.projectSaleEstimatedValue}}" class="form-control"
+                    formControlName="projectSaleEstimatedValue">
+                <mat-error
+                    *ngIf="controls.projectSaleEstimatedValue?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                <mat-error
+                    *ngIf="controls.projectSaleEstimatedValue?.hasError('pattern')">{{localization.numberPattern}}</mat-error>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.cashSources}}</label>
+                <input type="text" placeholder="{{localization.cashSources}}" class="form-control"
+                    formControlName="cashSources">
+                <mat-error
+                    *ngIf="controls.cashSources?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.prepaidCost}}</label>
+                <input type="text" placeholder="{{localization.prepaidCost}}" class="form-control"
+                    formControlName="prepaidCost">
+                <mat-error
+                    *ngIf="controls.prepaidCost?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                <mat-error
+                    *ngIf="controls.prepaidCost?.hasError('pattern')">{{localization.numberPattern}}</mat-error>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.deficitCoveragePlanAndWaysToFinanceTheProject}}</label>
+                <input type="text" placeholder="{{localization.deficitCoveragePlanAndWaysToFinanceTheProject}}" class="form-control"
+                    formControlName="deficitCoveragePlanAndWaysToFinanceTheProject">
+                <mat-error
+                    *ngIf="controls.deficitCoveragePlanAndWaysToFinanceTheProject?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.landPrice}}</label>
+                <input type="text" placeholder="{{localization.landPrice}}" class="form-control"
+                    formControlName="landPrice">
+                <mat-error
+                    *ngIf="controls.landPrice?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                <mat-error
+                    *ngIf="controls.landPrice?.hasError('pattern')">{{localization.numberPattern}}</mat-error>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.financialObligations}}</label>
+                <input type="text" placeholder="{{localization.financialObligations}}" class="form-control"
+                    formControlName="financialObligations">
+                <mat-error
+                    *ngIf="controls.financialObligations?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.marketingPlanAndTargetSegment}}</label>
+                <input type="text" placeholder="{{localization.marketingPlanAndTargetSegment}}" class="form-control"
+                    formControlName="marketingPlanAndTargetSegment">
+                <mat-error
+                    *ngIf="controls.marketingPlanAndTargetSegment?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.expectedConstructionCost}}</label>
+                <input type="text" placeholder="{{localization.expectedConstructionCost}}" class="form-control"
+                    formControlName="expectedConstructionCost">
+                <mat-error
+                    *ngIf="controls.expectedConstructionCost?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                <mat-error
+                    *ngIf="controls.expectedConstructionCost?.hasError('pattern')">{{localization.numberPattern}}</mat-error>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.expectedProfitMargin}}</label>
+                <input type="text" placeholder="{{localization.expectedProfitMargin}}" class="form-control"
+                    formControlName="expectedProfitMargin">
+                <mat-error
+                    *ngIf="controls.expectedProfitMargin?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                <mat-error
+                    *ngIf="controls.expectedProfitMargin?.hasError('pattern')">{{localization.numberPattern}}</mat-error>
+            </div>
+        </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+</form>

@@ -1,0 +1,56 @@
+<div class="row row-gap-5">
+  <div class="col-12">
+    <accordion
+      [closeOthers]="AccordionContent.oneAtATime"
+      [isAnimated]="AccordionContent.isAnimated"
+    >
+      <ng-container
+        *ngFor="
+          let accordion of AccordionContent.accordionComponentList;
+          index as i
+        "
+      >
+        <accordion-group
+          [attr.heading]="accordion.title"
+          [id]="accordion.id"
+          [isDisabled]="accordion.disabled"
+          [isOpen]="accordion.isOpen!"
+          (isOpenChange)="onClickOnTitle($event, accordion)"
+          *ngIf="accordion.isVisible"
+        >
+          <div
+            class="accordion-heading"
+            accordion-heading
+            (click)="[updateisViewed(i), updateisRendered(i)]"
+          >
+            <h6 class="title">
+              <span class="icon"
+                ><i class="material-icons">content_paste</i></span
+              >
+              {{ accordion.title }}
+            </h6>
+            <button class="btn btn-outline-primary">
+              {{ accordion.isViewed ? "تم" : "عرض" }}
+              <i class="material-icons">{{
+                accordion.isViewed ? "arrow_drop_up" : "arrow_drop_down"
+              }}</i>
+            </button>
+            <button
+              class="btn btn-outline-primary"
+              *ngIf="accordion.isDeletebtn"
+              (click)="confirmDelete(accordion.id, i)"
+            >
+              حذف
+            </button>
+          </div>
+
+          <ng-container *ngIf="accordion.isRendered">
+            <ng-container
+              *ngComponentOutlet="accordion.component"
+            ></ng-container>
+          </ng-container>
+        </accordion-group>
+      </ng-container>
+    </accordion>
+  </div>
+</div>

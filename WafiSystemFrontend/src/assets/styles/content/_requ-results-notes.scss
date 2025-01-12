@@ -1,0 +1,103 @@
+.card {
+    &+.card {
+        margin-top: .5rem;
+    }
+}
+
+.card-title {
+    color: $title-color;
+}
+
+.results-wrapper {
+    &+.results-wrapper {
+        margin-top: 1rem;
+    }
+}
+
+.results-info {
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+
+    .image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 2rem;
+        height: 2rem;
+
+        border-radius: 50%;
+        overflow: hidden;
+
+        .avatar {
+            font-size: 2.5rem;
+        }
+    }
+
+    .title {
+        color: $black;
+
+        .name {
+            font-size: $font-size-sm;
+        }
+
+        .dept {
+            font-size: $font-size-xs;
+            font-weight: normal;
+        }
+    }
+
+    .date {
+        display: flex;
+        align-items: center;
+        column-gap: .5rem;
+
+        font-size: $font-size-xs;
+        color: $darkgray;
+
+        [class^=material-icons] {
+            font-size: $font-size-xs;
+        }
+    }
+}
+
+.notes,
+.certificates {
+    margin-top: 1rem;
+}
+
+.notes {
+    color: $darkgray;
+
+    .note {
+        &+.note {
+            margin-top: 1rem;
+        }
+    }
+}
+
+.certificates {
+    .file {
+        display: flex;
+        align-items: center;
+        column-gap: .5rem;
+
+        padding: 1.25rem;
+        border-radius: 1rem;
+        background-color: $light;
+
+        &+.file {
+            margin-top: 1rem;
+        }
+
+        [class^=material-icons] {
+            // color: $darkgreen;
+            color: $theme-dark;
+        }
+
+        .link {
+            color: $black;
+        }
+    }
+}

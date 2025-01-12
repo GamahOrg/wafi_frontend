@@ -1,0 +1,139 @@
+<div class="landing">
+  <div class="logo">
+    <img
+      src="/assets/images/real-estate-contributions/general/logo-rega-wide-white.svg"
+      alt=""
+      class="logo-img"
+    />
+  </div>
+
+  <div class="content">
+    <h2 class="title">{{ localization.title }}</h2>
+
+    <div class="tab-data-section mt-5">
+      <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 col-lg-6">
+          <div class="key">اسم الشركة</div>
+          <div class="value">
+            {{ licenseProjectLandOwnerInfoDto?.facility?.facilityName }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="key">رقم الصك</div>
+          <div class="value">
+            {{
+              (licenseProjectLandOwnerInfoDto?.licenseProjectLandOwner)!
+                .licenseProjectOwnerDeeds[0]!.licenseProjectDeed.number
+            }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="key">مساحة الصك</div>
+          <div class="value">
+            {{
+              (licenseProjectLandOwnerInfoDto?.licenseProjectLandOwner)!
+                .licenseProjectOwnerDeeds[0]!.licenseProjectDeed.space
+            }}
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="key">مالك الصك</div>
+          <div class="value">
+            {{
+              (licenseProjectLandOwnerInfoDto?.licenseProjectLandOwner)!.name
+            }}
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="key">رقم هوية مالك الصك</div>
+          <div class="value">
+            {{
+              (licenseProjectLandOwnerInfoDto?.licenseProjectLandOwner)!
+                .nationalIdOrCRA
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <form
+      class="d-flex flex-column h-100"
+      [formGroup]="projectLandOwnerForm"
+      id="form-projectLandOwnerForm"
+    >
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">{{ localization.agreement }}</label>
+          <div class="d-flex justify-content-between w-100">
+            <div class="form-check form-check-inline flex-nowrap">
+              <input
+                class="form-check-input"
+                id="control-yes"
+                type="radio"
+                formControlName="isApproved"
+                name="isApproved"
+                [value]="1"
+              />
+              <label class="form-check-label" for="control-yes">{{
+                localization.yes
+              }}</label>
+            </div>
+            <div class="form-check form-check-inline flex-nowrap">
+              <input
+                class="form-check-input"
+                id="control-no"
+                type="radio"
+                name="isApproved"
+                formControlName="isApproved"
+                [value]="0"
+              />
+              <label class="form-check-label" for="control-no">{{
+                localization.no
+              }}</label>
+            </div>
+          </div>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="controls.isApproved.value == null && showValidation"
+          >
+            {{ localization.requiredErrorMsg }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-12 mt-5">
+        <div class="form-group mb-4">
+          <label class="form-label">{{ localization.agreementFileId }}</label>
+          <app-file-uploader
+            [data]="singleFileUploaderData"
+            (fileUploaded)="onFileUploaded($event)"
+          ></app-file-uploader>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="controls.agreementFileId.value == null && showValidation"
+          >
+            {{ localization.requiredErrorMsg }}
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="actions"
+        *ngIf="
+          approve ||
+          (licenseProjectLandOwnerInfoDto?.licenseProjectLandOwner
+            ?.isApproved != null &&
+            licenseProjectLandOwnerInfoDto?.licenseProjectLandOwner
+              ?.isApproved != true)
+        "
+      >
+        <button class="btn btn-primary" (click)="save()">
+          {{ localization.save }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

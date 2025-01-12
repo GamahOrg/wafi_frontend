@@ -1,0 +1,28 @@
+@import '/src/assets/styles/custom-variables';
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    [class^="material-icons"] {
+        // color: $darkgreen;
+        color: $theme-dark;
+
+        :host-context(.rega) & {
+            color: $theme-dark;
+        }
+    }
+}
+
+.title {
+    margin-inline-start: .5rem;
+    font-size: $font-size-sm;
+    font-weight: bold;
+    // color: $darkgreen;
+    color: $theme-dark;
+
+    :host-context(.rega) & {
+        color: $theme-dark;
+    }
+}

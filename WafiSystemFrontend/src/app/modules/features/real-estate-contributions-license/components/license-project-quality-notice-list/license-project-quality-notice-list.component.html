@@ -1,0 +1,47 @@
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">رقم الأشعار</th>
+                    <th scope="col"> نوع الاشعار</th>
+                    <th scope="col">تاريخ الأغلاق</th>
+                    <th scope="col">العمليات</th>
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.code}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.isClosed ? "مغلق" : "مفتوح"}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.closedDate | date:'yyyy-MM-dd'}}</span>
+                    </td> 
+                 
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="getQualityNoticeDetails(comdata.id)">عرض التفاصيل</button>
+                </td>
+               
+                 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+
+

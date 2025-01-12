@@ -1,0 +1,25 @@
+<div class="tab-data-section">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <br>
+        <h6 class="title fw-normal">{{'مرفقات الطلب '}}</h6>
+        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6">
+            <div class="key">	ملف الالتزام بمدد الضمانات المحددة في قواعد البيع والتأجير على الخارطة (بالاتفاق بين المطور الرئيسي والمطور الفرعي)		Attachment		مقدم الطلب		 </div>
+            <div class="value">
+                <span class="icon material-icons">picture_as_pdf</span>
+                <a *ngIf="licenseProjectRequestAttachment && licenseProjectRequestAttachment.specifiedProtocolsDurationCommitmentFile" [href]="baseUrl + licenseProjectRequestAttachment?.specifiedProtocolsDurationCommitmentFile?.filePath" target="_blank">
+                    {{licenseProjectRequestAttachment?.specifiedProtocolsDurationCommitmentFile?.fileDescription}}
+                </a>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">ملف تسويق المشروع (بالاتفاق بين المطور الرئيسي والمطور الفرعي)</div>
+            <div class="value">
+                <span class="icon material-icons">picture_as_pdf</span>
+                <a *ngIf="licenseProjectRequestAttachment && licenseProjectRequestAttachment.projectMarketingFile" [href]="baseUrl + licenseProjectRequestAttachment?.projectMarketingFile?.filePath" target="_blank">
+                    {{licenseProjectRequestAttachment?.projectMarketingFile?.fileDescription}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

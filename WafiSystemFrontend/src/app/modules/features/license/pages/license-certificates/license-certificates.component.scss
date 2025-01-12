@@ -1,0 +1,39 @@
+@import "/src/assets/styles/custom-variables";
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 0.5rem;
+
+    font-size: 1rem;
+    color: $dark;
+}
+
+.card-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+
+.cert-name {
+    font-weight: bold;
+}
+
+.cert-number {
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1rem;
+    font-weight: normal;
+    color: $dark;
+}
+
+.value {
+
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+    color: $dark;
+    
+}

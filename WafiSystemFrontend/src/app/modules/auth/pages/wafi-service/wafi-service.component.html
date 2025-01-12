@@ -1,0 +1,27 @@
+<app-login-layout>
+    <h6 class="form-title">{{radioButtonsHeader }}</h6>
+    <mat-radio-group color="primary"
+                     [(ngModel)]="selectedService">
+        <mat-radio-button [value]="service" 
+                          disableRipple="true"
+                          class="d-block mb-5"
+                          id="btn-selectedService"
+                          *ngFor="let service of wafiServices">
+            <div class="d-flex flex-column">
+                <h6 class="form-label">{{service.name }}</h6>
+                <p>{{service.titl }}</p>
+                <p>{{service.subtitle }}</p>
+            </div>
+        </mat-radio-button>
+    </mat-radio-group>
+
+    <!-- <div>Your favorite season is: {{selectedService.name}}</div> -->
+    <div class="action">
+        <button class="d-block mx-auto" id="btn-navigateToRegistration"
+                type="button"
+                mat-raised-button
+                color="primary"
+                id="btn-navigateToRegistration"
+                (click)="navigateToRegistration()">{{linkTitle }}</button>
+    </div>
+</app-login-layout>

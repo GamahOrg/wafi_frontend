@@ -1,0 +1,67 @@
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">اسم المشروع</th>
+                    <th scope="col">كود المشروع</th>
+                    <th scope="col">تاريخ إصدار الرخصة</th>
+                    <th scope="col">تاريخ انتهاء الرخصة</th>
+                    <th scope="col">نوع الرخصة</th>
+                    <th scope="col">العمليات</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let project of reqList?.results">
+                <tr *ngIf="project">
+                    <td *ngIf="project.licenseProject">
+                        <span class="text-dark">{{project.licenseProject.name}}
+                        </span>
+                    </td>
+                    <td *ngIf="project.licenseProject">
+                        <span class="text-dark">{{project.licenseProject.projectCode}}
+                        </span>
+                    </td>
+                    <td *ngIf="project.licenseRequestVersions">
+                        <span class="text-dark">
+                            <div class="value">
+                                <span class="icon material-icons">calendar_today</span>
+                                {{project.licenseRequestVersions[0].startOn | date:'MMM d, y'}}
+                            </div>
+
+                        </span>
+                    </td>
+                    <td *ngIf="project.licenseRequestVersions">
+                        <span class="text-dark">
+                            <div class="value">
+                                <span class="icon material-icons">calendar_today</span>
+                                {{project.licenseRequestVersions[0].endOn | date:'MMM d, y'}}
+                            </div>
+
+                        </span>
+                    </td>
+                    <td *ngIf="project.licenseRequestType">
+                        <div class="text-daark">
+                            {{project.licenseRequestType.name}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    (click)="onClickOnRenewLicense(project)">تجديد الرخصة</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList?.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>

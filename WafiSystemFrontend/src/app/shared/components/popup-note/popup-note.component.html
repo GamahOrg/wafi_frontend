@@ -1,0 +1,41 @@
+<h6 mat-dialog-title>
+    <!-- Will be changed to another close button -->
+    <button mat-icon-button
+            mat-dialog-close
+            tabindex="-1" (click)="emitCancelEvent()">
+        <mat-icon>close</mat-icon>
+    </button>
+</h6>
+
+<div mat-dialog-content>
+    <div class="symbol">
+        <span *ngIf="_notePopupData.icon"
+              class="symbol-text">{{
+            _notePopupData.icon
+            }}</span>
+        <img *ngIf="_notePopupData.imagePath"
+             class="symbol-image"
+             src="{{ _notePopupData.imagePath }}" />
+        <!-- <span class="symbol-icon"><i class="material-icons">{{symbolIcon}}</i></span> -->
+    </div>
+
+    <!-- <ng-content select=".note-content"></ng-content> -->
+    <div class="note-content">
+        <h6 class="title">{{ _notePopupData.title }}</h6>
+        <p class="text">
+            {{ _notePopupData.staticMessage }} - {{ _notePopupData.dynamicMessage }} -
+            {{ _notePopupData.secondeStaticMessage }}
+        </p>
+    </div>
+</div>
+
+<div mat-dialog-actions
+     *ngIf="_notePopupData.buttonText">
+    <!-- <ng-content select=".note-actions"></ng-content> -->
+    <div class="note-actions">
+        <a (click)="navigatAndClose(_notePopupData.buttonLink!)"
+           class="btn btn-primary">
+            {{ _notePopupData.buttonText }}
+        </a>
+    </div>
+</div>

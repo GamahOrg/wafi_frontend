@@ -1,0 +1,128 @@
+<section *ngIf="filesData">
+  <div class="d-flex justify-content-between p-3  section timeschedule">
+    <div>
+      البرنامج الزمني
+    </div>
+    <div *ngIf="timeshecduleStatues">
+      <button class="statuesbtn"
+        [ngClass]="{'red' : timeshecdulestatuesId == statuesCode.UnderStudy, 'green' : timeshecdulestatuesId == statuesCode.Certified || timeshecdulestatuesId == statuesCode.New, 'orange' : timeshecdulestatuesId == statuesCode.Compile}">
+        {{timeshecduleStatues}}
+      </button>
+      <button class="note p-2 m-1" *ngIf="filesData.allowToEdit" (click)="openDialog()">إستيفاء الملاحظات</button>
+    </div>
+  </div>
+  <!-- <div class="notehint p-3" 
+  *ngIf="!filesData.allowToEdit"
+  >
+    <div class="d-flex justify-content-between">
+      <h5>تم رفض البرنامج الزمني</h5>
+      <button (click)="navigateToProjectNotes()" class="displaybtn" > عرض نتيجة المراجعة </button>
+    </div>
+     <span>يرجي عرض الملاحظات واستيفاءها بالضغط على الزر بالأعلى يساراً “استيفاء الملاحظات”</span> 
+    
+  </div> -->
+  <div class="row mt-3">
+    <div class="col-6">
+      <label for="" class="form-label"> {{localization.threeDReportFile}}</label>
+      <div class="value" *ngIf="filesData.threeDReportFileId">
+        <a [href]="baseUrl + filesData.threeDReportFile?.filePath" target="_blank">
+          {{filesData.threeDReportFile?.fileDescription}}
+        </a>
+      </div>
+    </div>
+    <div class="col-6 d-flex justify-content-between ">
+      <div>
+        <label for="" class="form-label"> {{localization.generalSitePlanFile}}</label>
+        <div class="value" *ngIf="filesData.generalSitePlanFileId">
+          <a [href]="baseUrl + filesData.generalSitePlanFile?.filePath" target="_blank">
+            {{filesData.generalSitePlanFile?.fileDescription}}
+          </a>
+        </div>
+
+      </div>
+      <!-- <button class="uploadbtn mt-3" (click)="openDialog()">
+        تعديل الملفات
+    </button> -->
+      <!-- <div *ngIf="filesData.allowToEdit">
+
+        <button mat-raised-button class="edit-icon" (click)="openDialog()"><span
+            class="material-icons">edit</span></button>
+      </div> -->
+    </div>
+
+  </div>
+  <div class="row mt-3">
+    <div class="col-6">
+      <label for="" class="form-label"> {{localization.primaveraFile}}</label>
+      <div class="value" *ngIf="filesData.primaveraFileId">
+        <a [href]="baseUrl + filesData.primaveraFile?.filePath" target="_blank">
+          {{filesData.primaveraFile?.fileDescription}}
+        </a>
+      </div>
+    </div>
+    <div class="col-6">
+      <label for="" class="form-label"> {{localization.scheduleFile}}</label>
+      <div class="value" *ngIf="filesData.scheduleFileId">
+        <a [href]="baseUrl + filesData.scheduleFile?.filePath" target="_blank">
+          {{filesData.scheduleFile?.fileDescription}}
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-6">
+      <label for="" class="form-label">
+        {{localization.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile}}</label>
+      <div class="value" *ngIf="filesData.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId">
+        <a [href]="baseUrl + filesData.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.filePath"
+          target="_blank">
+          {{filesData.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.fileDescription}}
+        </a>
+      </div>
+    </div>
+    <div class="col-6">
+      <label for="" class="form-label"> {{localization.cashFlowCurveFile}}</label>
+      <div class="value" *ngIf="filesData.cashFlowCurveFileId">
+        <a [href]="baseUrl + filesData.cashFlowCurveFile?.filePath" target="_blank">
+          {{filesData.cashFlowCurveFile?.fileDescription}}
+        </a>
+      </div>
+    </div>
+
+  </div>
+  <div class="row mt-3">
+    <div class="col-6">
+      <label for="" class="form-label"> {{localization.employmentCountCurveFile}}</label>
+      <div class="value" *ngIf="filesData.employmentCountCurveFileId">
+        <a [href]="baseUrl + filesData.employmentCountCurveFile?.filePath" target="_blank">
+          {{filesData.employmentCountCurveFile?.fileDescription}}
+        </a>
+      </div>
+    </div>
+    <div class="col-6">
+      <label for="" class="form-label"> {{localization.cashFlowCurveFile}}</label>
+      <div class="value" *ngIf="filesData.cashFlowCurveFileId">
+        <!-- <span class="delete" (click)="deletFile(facilityData.cashFlowCurveFile?.id)"><i
+                  class="material-icons text-danger">close</i></span> -->
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a [href]="baseUrl + filesData.cashFlowCurveFile?.filePath" target="_blank">
+          {{filesData.cashFlowCurveFile?.fileDescription}}
+        </a>
+      </div>
+    </div>
+    <div class="col-6 col-lg-6">
+      <label for="licNum" class="form-label">{{localization.licenseProjectTimeScheduleOtherAttachments}}</label>
+      <div class="value m-3" *ngIf="filesData.licenseProjectTimeScheduleOtherAttachments">
+        <ng-container *ngFor="let file of filesData.licenseProjectTimeScheduleOtherAttachments">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + file.otherAttachmentFile.filePath" target="_blank">
+            {{file.otherAttachmentFile.fileDescription}}
+          </a>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+</section>

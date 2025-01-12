@@ -1,0 +1,71 @@
+<div class="update-clearance-engineering-form">
+  <form [formGroup]="form" (ngSubmit)="save()">
+
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="key" for="justificationsAndReasons">مبررات و مشفوعات اعادة تفعيل الرخصة</label>
+          <textarea rows="6" type="text" id="control-justificationsAndReasons" class="form-control"
+            formControlName="justificationsAndReasons" placeholder="مبررات و مشفوعات اعادة تفعيل الرخصة"></textarea>
+          <mat-error *ngIf="showValidation && form.get('justificationsAndReasons')?.invalid"> {{
+            localization.requiredErrorMsg }}</mat-error>
+        </div>
+      </div>
+
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="key">مستندات تثبت ضبط اوضاع المشروع و اعادة الفعيل</label>
+          <div class="col-12 col-lg-12" *ngIf="
+              projectActiveRequestDetails &&
+              projectActiveRequestDetails.licenseProjectActivationRequestFiles
+            ">
+            <div *ngFor="let file of projectActiveRequestDetails.licenseProjectActivationRequestFiles" class="col-12">
+              <span class="delete"   (click)="deletFile(file?.id)"><i class="material-icons text-danger">close</i></span>
+              <span class="icon material-icons-outlined">content_copy</span>    
+              <a [href]="baseUrl + file.filePath" target="_blank">{{ file.fileDescription }}</a>
+            </div>
+          </div>
+          <app-file-uploader [data]="mueltiFilesUploaderData"
+            (fileUploaded)="onLicenseProjectActivationRequestFiles($event)"></app-file-uploader>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- <div class="form-group">
+      <label for="justificationsAndReasons">مبررات و مشفوعات اعادة تفعيل الرخصة</label>
+      <input type="text" id="justificationsAndReasons" formControlName="justificationsAndReasons"
+        class="form-control" />
+    </div>
+    <mat-error *ngIf="showValidation && form.get('justificationsAndReasons')?.invalid">
+      {{ localization.requiredErrorMsg }}
+    </mat-error>
+    <div class="col-12 col-lg-12">
+      <div class="form-group mb-4">
+        <label class="form-label">مستندات تثبت ضبط اوضاع المشروع و اعادة الفعيل</label>
+        <div class="col-12 col-lg-12" *ngIf="
+              projectActiveRequestDetails &&
+              projectActiveRequestDetails.licenseProjectActivationRequestFiles
+            ">
+          <a [href]="
+                baseUrl +
+                projectActiveRequestDetails.licenseProjectActivationRequestFiles
+                  .filePath
+              " id="link-licenseProjectActivationRequestFiles" target="_blank">
+            {{
+            projectActiveRequestDetails.licenseProjectActivationRequestFiles
+            .fileDescription
+            }}
+          </a>
+        </div>
+
+        
+        <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="
+            onLicenseProjectActivationRequestFiles($event)
+            "></app-file-uploader>
+      </div>
+    </div> -->
+  </form>
+</div>

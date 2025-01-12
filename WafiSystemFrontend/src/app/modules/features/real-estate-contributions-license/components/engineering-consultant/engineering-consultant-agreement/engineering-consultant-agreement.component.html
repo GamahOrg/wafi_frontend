@@ -1,0 +1,72 @@
+<h6 class="form-subtitle">{{header}}</h6>
+<div *ngIf="form"
+     [formGroup]="form" id="form-form">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label for="cityId"
+                       class="form-label">{{localizations.City}}</label>
+                <select id="cityId" id="control-cityId"
+                        name="cityId"
+                        class="form-select"
+                        formControlName="cityId">
+                    <option selected
+                            disabled>{{localizations.SelectCity}}</option>
+                    <option *ngFor="let city of (cities$ | async)?.data"
+                            [ngValue]="city.id">
+                        {{ city.cityName }}
+                    </option>
+                </select>
+                <span class="invalid-feedback d-block"
+                      *ngIf="form.controls['cityId'].hasError('required')
+                && form.controls['cityId'].touched">
+                    {{localizations.CityRequired}}
+                </span>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label for="workDaysCount"
+                       class="form-label">{{localizations.NumberOfWorkDaysForAgreement}}</label>
+                <input 
+                       name="workDaysCount" id="control-workDaysCount"
+                       type="number"
+                       class="form-control"
+                       formControlName="workDaysCount">
+                <div class="invalid-feedback d-block"
+                     *ngIf="form.controls['workDaysCount'].hasError('required')
+    && form.controls['workDaysCount'].touched">
+                    {{localizations.NumberOfWorkDaysForAgreementRequired}}
+                </div>
+                <div class="invalid-feedback d-block"
+                     *ngIf="form.controls['workDaysCount'].hasError('min')
+    && form.controls['workDaysCount'].touched">
+                    {{localizations.MinValueError}}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-12">
+            <div class="form-group mb-4">
+                <label for="optionalTerms"
+                       class="form-label">{{localizations.OptionalTerms}}
+                </label>
+
+                <app-rich-text-editor [form]="form"
+                                      id="optionalTerms"
+                                      [placeholder]="localizations.SelectOptionalTerms"
+                                      controlName="optionalTerms">
+                </app-rich-text-editor>
+
+                <div class="invalid-feedback d-block"
+                     *ngIf="form.controls['optionalTerms'].hasError('required')
+     && form.controls['optionalTerms'].touched">
+                    {{localizations.OptionalTermsRequired}}
+                </div>
+                <span class="text-danger mt-2 mb-2">
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

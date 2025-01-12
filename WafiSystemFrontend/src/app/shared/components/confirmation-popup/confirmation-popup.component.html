@@ -1,0 +1,35 @@
+<!-- <div class="confirm-container">
+  <h1 mat-dialog-title>{{confirmationPopupData.title}}</h1>
+
+  <div mat-dialog-actions style="float:right;margin:20px;">
+    <button mat-button [mat-dialog-close]="{ clicked: 'Ok' }">Ok</button>
+    <button mat-button [mat-dialog-close]="{ clicked: 'Cancel' }">
+      Cancel
+    </button>
+  </div>
+</div> -->
+<div class="d-flex flex-column h-100">
+  <h6 mat-dialog-title class="d-flex">
+    {{ confirmationPopupData.title }}
+    <button mat-icon-button mat-dialog-close tabindex="-1" class="close-icon">
+      <mat-icon>close</mat-icon>
+    </button>
+  </h6>
+
+  <div mat-dialog-content>
+    <div [innerHTML]="confirmationPopupData.staticMessage"></div>
+
+    <div>
+      {{ confirmationPopupData.dynamicMessage }}<br />
+      {{ confirmationPopupData.secondeStaticMessage }}<br />
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-flat-button class="primary" (click)="onClickOnCancel()">
+      إلغاء
+    </button>
+    <button mat-flat-button color="primary" (click)="onClickOnConfirm()">
+      {{confirmationPopupData.acceptButtonText??'حفظ البيانات'}}
+    </button>
+  </div>
+</div>

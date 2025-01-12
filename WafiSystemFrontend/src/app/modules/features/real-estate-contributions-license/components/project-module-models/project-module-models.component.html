@@ -1,0 +1,23 @@
+<div class="d-flex flex-column h-100">
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">{{localization.BlocksAndbuildingsAndunitsComponent}}</h6>
+    </div>
+    <div class="tab-data-section">
+        <div class="tab-data-section-title-subtitle">
+            <h6 class="title">إجمالي عدد انواع الوحدات المضافه {{accordionContent.accordionComponentList.length}} </h6>
+        </div>
+        <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+            <div class="col-12 ">
+                <app-accordion> </app-accordion>
+            </div>
+        </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
+        <button class="btn btn-outline-primary"
+                (click)="back()">{{localization.previous}}</button>
+        <button class="btn btn-outline-primary"
+                (click)="next()">{{localization.next}}</button>
+    </div> -->
+</div>

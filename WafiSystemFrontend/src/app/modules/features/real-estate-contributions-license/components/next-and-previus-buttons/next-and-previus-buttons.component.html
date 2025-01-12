@@ -1,0 +1,13 @@
+<div class="form-actions mt-auto">
+        <button class="btn btn-outline-primary"
+                (click)="back()"
+                *ngIf="previousBtnIsVisible">{{localization.previous}}</button>
+
+        <button class="btn btn-outline-primary"
+                *ngIf="saveAsDraftBtnIsVisible"
+                (click)="saveAsDraft()">{{localization.saveAsDraft}}</button>
+
+        <button class="btn btn-outline-primary"
+                (click)="next()"
+                *ngIf="nextBtnIsVisible">{{localization.next}}</button>
+</div>

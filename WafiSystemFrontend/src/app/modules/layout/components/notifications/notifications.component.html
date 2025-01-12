@@ -1,0 +1,77 @@
+<a data-bs-toggle="dropdown" 
+   class="nav-link dropdown-toggle">
+
+    <span class="notice" 
+          *ngIf="notViewedCount > 0">
+        <span>{{notViewedCount}}</span>
+    </span>
+
+    <i class="material-icons-outlined">notifications</i>
+</a>
+
+<div class="notification-menu dropdown-menu"
+     role="menu"
+     (click)="$event.stopPropagation()">
+
+    <div class="notification-header">
+        <div class="icon"><i class="material-icons-outlined">notifications</i></div>
+        <h5 class="title">الإشعارات</h5>
+        <span class="count">{{notViewedCount}}<i class="mx-1"></i>إشعارات جديدة</span>
+    </div>
+
+    <div class="notification-body">
+        <ng-container *ngIf="notificationList && notificationList.length > 0">
+            <!-- <div class="notification-filter mb-4">
+                <span class="filter-by active">الكل</span>
+                <span class="filter-by">الغير مقروءة</span>
+            </div> -->
+
+            <div class="notifications-list">
+
+                <div class="notification-item"
+                     *ngFor="let notification of notificationList"
+                     [ngClass]="{'new': !notification.isViewed}">
+
+                    <div class="item-header">
+                        <span class="icon"><i class="material-icons-outlined">notifications</i></span>
+                        <h6 class="title">إضافة طلب جديد</h6>
+                        <div class="timing">
+                            <i class="material-icons-outlined icon">calendar_month</i>
+
+                            <span class="time">
+                                {{notification.createdOn | date:'d/M/yyyy'}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="item-body">
+                        <a class="notification-link"
+                           (click)="onNotificationClicked(notification)">
+                            {{ notification.message.split('،', 2)[0] }}
+                        </a>
+
+                        <p class="note"
+                           *ngIf="notification.message.split('،', 2)[1]">
+                            {{ notification.message.split('،', 2)[1] }}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="notificationList && notificationList.length === 0">
+            <span class="notification-item text-center">
+                لا يوجد إشعارات
+            </span>
+        </ng-container>
+    </div>
+
+    <div class="notification-footer">
+        <div class="notification-item">
+            <a class="notification-link"
+               [routerLink]="Configuration.pages.notificationList">{{localization.seeAll}}</a>
+        </div>
+    </div>
+</div>
+
+<div class="backdrop"></div>

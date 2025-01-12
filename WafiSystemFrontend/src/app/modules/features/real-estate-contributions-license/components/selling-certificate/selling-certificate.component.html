@@ -1,0 +1,114 @@
+<div class="cetificate" dir="rtl">
+
+  <img src="/assets/images/licenses/certs/logo.svg" class="logo" alt="">
+
+  <img src="/assets/images/licenses/certs/top-pattern.svg" class="top-pattern" alt="">
+
+  <div class="cetificate-layout">
+    <div class="cert-header">
+      <h6 class="cert-title text-darkblue">
+        <span class="ar-title">{{certificateTemplateDate?.arabicTitle}}</span>
+        <span class="en-title">{{certificateTemplateDate?.englishTitle}}</span>
+      </h6>
+
+      <div class="cert-info">
+        <div class="info-row" *ngFor="let data of certificateTemplateDate?.headerData">
+          <span class="ar-title">{{data.arabicTitle}}:</span>
+          <span class="value">{{data.value??''}}</span>
+          <span class="en-title">{{data.englishTitle}}</span>
+        </div>
+
+        <!-- <div class="info-row" >
+          <span class="ar-title">رقم الترخيص:</span>
+          <span class="value">229</span>
+          <span class="en-title">License No.</span>
+        </div>
+        <div class="info-row">
+          <span class="ar-title">تاريخ الإصدار:</span>
+          <span class="value">21/07/2024</span>
+          <span class="en-title">Issue Date:</span>
+        </div>
+        <div class="info-row">
+          <span class="ar-title">تاريخ الانتهاء:</span>
+          <span class="value">20/07/2025</span>
+          <span class="en-title">Expiry Date:</span>
+        </div>
+        <div class="info-row">
+          <span class="ar-title">نوع الرخصة:</span>
+          <span class="value">سكني</span>
+          <span class="en-title">License Type:</span>
+        </div>
+         -->
+      </div>
+    </div>
+
+    <div class="cert-content">
+      <div class="content-row" *ngFor="let data of certificateTemplateDate?.bodyData">
+        <span class="ar-title fw-bold">{{data.arabicTitle}}</span>
+        <span class="value">{{data.value??''}}</span>
+        <span class="en-title fw-bold">{{data.englishTitle}}</span>
+      </div>
+      <!--       
+      <div class="content-row" >
+        <span class="ar-title fw-bold">المطور</span>
+        <span class="value">شركة الفهد للاستثمار</span>
+        <span class="en-title fw-bold">Developer</span>
+      </div>
+      <div class="content-row">
+        <span class="ar-title fw-bold">اسم المشروع</span>
+        <span class="value">بوابة المملكة</span>
+        <span class="en-title fw-bold">Project Name</span>
+      </div>
+      <div class="content-row">
+        <span class="ar-title fw-bold">عدد الوحدات</span>
+        <span class="value">إجمالي عدد 115 شقق سكنية</span>
+        <span class="en-title fw-bold">Number Of Units</span>
+      </div>
+      <div class="content-row">
+        <span class="ar-title fw-bold">حساب الضمان</span>
+        <span class="value">Lorem ipsum dolor sit amet consectetur</span>
+        <span class="en-title fw-bold">Escrow Account No.</span>
+      </div>
+      <div class="content-row">
+        <span class="ar-title fw-bold">المساحة</span>
+        <span class="value">Lorem ipsum dolor sit amet consectetur</span>
+        <span class="en-title fw-bold">Project Area</span>
+      </div>
+      <div class="content-row">
+        <span class="ar-title fw-bold">المنطقة / المدينة</span>
+        <span class="value">Lorem ipsum dolor sit amet consectetur</span>
+        <span class="en-title fw-bold">Region / City</span>
+      </div>
+      <div class="content-row">
+        <span class="ar-title fw-bold">المحاسب القانوني</span>
+        <span class="value">Lorem ipsum dolor sit amet consectetur</span>
+        <span class="en-title fw-bold">Account And Financial Auditor</span>
+      </div>
+      <div class="content-row">
+        <span class="ar-title fw-bold">المكتب الاستشاري</span>
+        <span class="value">Lorem ipsum dolor sit amet consectetur</span>
+        <span class="en-title fw-bold">Consultancy Office</span>
+      </div> -->
+
+      <hr class="m-0" />
+
+      <div class="signature">
+        <!-- <img src="/assets/images/licenses/certs/signature.svg" alt=""> -->
+        <!-- <span class="job">الرئيس التنفيذي للهيئة العامة للعقار</span>
+        <span class="name">عبد الله بن سعود الحماد</span> -->
+        <img src="/assets/images/licenses/certs/signature-1.svg" alt="">
+        <img src="/assets/images/licenses/certs/qr.svg" class="qr" alt="">
+        <!-- <img src="/assets/images/licenses/certs/signature-2.svg" alt=""> -->
+      </div>
+    </div>
+
+    <div class="cert-version">
+      نسخة رقم <span>1</span>
+    </div>
+
+    <div class="cert-footer">
+      <img src="/assets/images/licenses/certs/footer.svg" class="img-fluid" alt="">
+    </div>
+  </div>
+
+</div>

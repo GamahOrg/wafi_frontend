@@ -1,0 +1,15 @@
+.cdk-overlay-dark-backdrop {
+    background: rgba(0,0,0,.8);
+}
+
+.mat-mdc-dialog-container {
+    --mdc-dialog-subhead-font: "Almarai", sans-serif;
+    --mdc-dialog-subhead-size: 1rem;
+    --mdc-dialog-subhead-weight: 700;
+    --mdc-dialog-supporting-text-font: "Almarai", sans-serif;
+
+    .mdc-dialog__surface {
+        // padding: 0 3rem;
+        border-radius: $card-border-radius !important;
+    }
+}

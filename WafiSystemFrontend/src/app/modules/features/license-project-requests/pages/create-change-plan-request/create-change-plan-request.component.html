@@ -1,0 +1,118 @@
+<div class="card">
+
+  <div class="card-header">
+    <h6 class="card-title">طلب تغيير خطة مشروع</h6>
+  </div>
+
+  <div class="card-body">
+    <form class="d-flex flex-column h-100" [formGroup]="changePlanForRealEstateDeveloperForm"
+      id="form-licenseProjectProblemLogForm">
+      <div class="tab-data-section">
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+              <select class="form-select" id="control-licenseProjectId" aria-label="Default select example"
+                formControlName="licenseProjectId">
+                <option selected disabled>
+                  المشروع
+                </option>
+                <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error *ngIf="
+            controls.licenseProjectId?.hasError('required') &&
+            showValidation
+          "> حقل مطلوب
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">تاريخ نهاية المشروع الجديد</label>
+              <div class="input-group">
+                <input bsDatepicker type="text" id="control-projectEndDate" class="form-control"
+                  formControlName="projectEndDate" value="{{ controls.projectEndDate.value | date:'yyyy-MM-dd' }}">
+                <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+              </div>
+              <mat-error *ngIf="controls.projectEndDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+            </div>
+          </div>
+
+
+          <div class="col-12 col-lg-12">
+            <div class="form-group mb-4">
+              <label class="key">مبررات ومشفوعات تغيير خطة</label>
+              <textarea rows="4" type="text" id="control-justificationsAndReasons" class="form-control"
+                formControlName="justificationsAndReasons" placeholder="مبررات ومشفوعات تغيير خطة"></textarea>
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.justificationsAndReasons?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="row mb-3">
+
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <div class="value">
+                  <span class="icon material-icons-outlined">content_copy</span>
+                  <div class="key">خطاب موافقة المشترين</div>
+                  <!-- <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.buyersApprovalLetterFile"
+                    id="link-buyersApprovalLetterFile"
+                    [href]="baseUrl +licenseProjectRequestChangePlanFull.buyersApprovalLetterFile.filePath"
+                    target="_blank">
+                    {{licenseProjectRequestChangePlanFull.buyersApprovalLetterFile.fileDescription}}</a> -->
+                </div>
+                <app-file-uploader [data]="mueltiFilesUploaderData"
+                  (fileUploaded)="onExistBuyersApprovalLetterFilesUploaded($event)"></app-file-uploader>
+                <div class="invalid-feedback d-block" *ngIf="showValidation && !buyersApprovalLetterFileId">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <div class="value">
+                  <span class="icon material-icons-outlined">content_copy</span>
+                  <div class="key">خطاب اعتماد تاريخ بداية ونهاية المشروع بعد التعديل من الجهة الحكومية</div>
+                  <!-- <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.approvalLetterForStartEndDate"
+                    id="link-approvalLetterForStartEndDate"
+                    [href]="baseUrl +licenseProjectRequestChangePlanFull.approvalLetterForStartEndDate.filePath"
+                    target="_blank">
+                    {{licenseProjectRequestChangePlanFull.approvalLetterForStartEndDate.fileDescription}}</a> -->
+                </div>
+                <app-file-uploader [data]="mueltiFilesUploaderData"
+                  (fileUploaded)="onExistApprovalLetterForStartEndDateFilesUploaded($event)"></app-file-uploader>
+                <div class="invalid-feedback d-block" *ngIf="showValidation && !approvalLetterForStartEndDateId">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-10">
+
+            </div>
+            <!-- <div class="col-12 col-lg-2">
+              <button mat-flat-button color="primary" class="w-100" (click)="save()" id="btn-navigate">
+                <mat-icon>login</mat-icon> انشاء الطلب
+              </button>
+            </div> -->
+
+          </div>
+
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-outline-primary" id="btn-cancelRequest" (click)="cancelRequest()">إلغاء</button>
+        <button class="btn btn-primary" id="btn-creatRequest" (click)="save()">
+          انشاء الطلب
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

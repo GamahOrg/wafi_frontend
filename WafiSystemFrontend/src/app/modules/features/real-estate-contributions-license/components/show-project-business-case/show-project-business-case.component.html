@@ -1,0 +1,64 @@
+<div class="tab-data-section" *ngIf="projectBusinessCaseReport">
+    <button type="button" class="btn btn-primary my-4" *ngIf="projectBusinessCaseReport.externalStatusId===licenseProjectEngineeringRequestStatus.CustomerFeedback && projectBusinessCaseReport.ownerTypeId===ownerTypes.ProjectManager" (click)="openAddProjectBusinessCaseNotesDialog()">أستيفاء الطلب </button>
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">أسباب عدم البدء بالمشروع</label>
+  
+          {{projectBusinessCaseReport.projectNotStartingReason}}
+  
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">التاريخ المتوقع لبدء العمل</label>
+          {{projectBusinessCaseReport.projectExpectedWorkStartDate | date:'yyyy-MM-dd'}}
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">حالة الطلب</label>
+          {{projectBusinessCaseReport.externalStatus.name}}
+  
+        </div>
+      </div>
+      <div class="table-responsive mb-3" *ngIf="projectBusinessCaseReport.projectBusinessCaseReportNotes
+       && projectBusinessCaseReport.projectBusinessCaseReportNotes.length > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">الملاحظة</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let projectBusinessCaseReportNote of projectBusinessCaseReport.projectBusinessCaseReportNotes ;let i=index;">
+                <tr>
+                    <td>
+                        <div class="card-body">
+                            <div class="results-wrapper">
+                                <div class="results-info">
+                                  
+                                    <h6 class="title">
+                                         <span *ngIf="projectBusinessCaseReportNote.employeeId" >
+                                            ملاحظات المهندس المسئول 
+                                        </span>
+                                        <span *ngIf="!projectBusinessCaseReportNote.employeeId" >
+                                            ملاحظات مدير المشروع  
+                                        </span>
+                                    </h6>
+                                </div>
+                
+                                <div class="d-flex align-items-center column-gap-2">
+                                     {{projectBusinessCaseReportNote.notes}}
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                  
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+  </div>

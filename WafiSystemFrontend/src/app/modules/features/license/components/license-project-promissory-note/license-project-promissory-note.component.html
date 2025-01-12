@@ -1,0 +1,97 @@
+<div class="tab-data-section">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <br>
+        <h6 class="title fw-normal">{{'سند لأمر'}}</h6>
+        <div class="col-12 col-lg-6">
+            <div class="key">تاريخ الانشاء</div>
+            <div class="value">
+                {{licenseProjectPromissoryNote.creationDate}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">مكان الانشاء</div>
+            <div class="value">
+                {{licenseProjectPromissoryNote.creationPlace}}
+            </div>
+        </div>
+        <hr>
+        <div class="col-12 col-lg-6">
+            <div class="key">المبلغ المستحق (رقما)</div>
+            <div class="value">
+                {{licenseProjectPromissoryNote.value}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">المبلغ المستحق (كتابة)</div>
+            <div class="value">
+                {{licenseProjectPromissoryNote.valueToWords}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">ممثل المحرر</div>
+            <div class="value">
+                {{licenseProjectPromissoryNote.editor}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم الهوية الوطنية المحرر</div>
+            <div class="value">
+                {{licenseProjectPromissoryNote.editorIdentityNumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">صفة المحرر</div>
+            <div class="value">
+                {{licenseProjectPromissoryNote.editorTitle}}
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">ملف عقد تأسيس الشركة</div>
+            <div class="value" *ngFor="let contract of licenseProjectPromissoryNote?.licenseProjectPromissoryNoteIncorporationContracts">
+                <span class="icon material-icons">picture_as_pdf</span>
+                <a *ngIf="contract && contract.incorporationContractFile" [href]="baseUrl + contract?.incorporationContractFile?.filePath" target="_blank">
+                    {{contract?.incorporationContractFile?.fileDescription}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-data-section" *ngIf="licenseProjectPromissoryNote.licenseProjectPromissoryNotePowerOfAttorneies">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 col-lg-6">
+            <div class="key">اسم الوكيل الموقع على ملف سند لأمر</div>
+            <div class="value">
+                {{licenseProjectPromissoryNotePowerOfAttorneies.name}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">صفته الاعتبارية</div>
+            <div class="value">
+                {{licenseProjectPromissoryNotePowerOfAttorneies.legalStatus}}
+            </div>
+        </div>
+        <hr>
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم الهوية الموقع على ملف سند لأمر</div>
+            <div class="value">
+                {{licenseProjectPromissoryNotePowerOfAttorneies.identityNumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم جوال الموقع على ملف سند لأمر</div>
+            <div class="value">
+                {{licenseProjectPromissoryNotePowerOfAttorneies.mobile}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">ملف وكالة الموقع على سند لأمر</div>
+            <div class="value" *ngFor="let attorne of licenseProjectPromissoryNotePowerOfAttorneies?.licenseProjectPromissoryNotePowerOfAttorneyFiles">
+                <span class="icon material-icons">picture_as_pdf</span>
+                <a *ngIf="attorne && attorne.powerOfAttorneyFile" [href]="baseUrl + attorne?.powerOfAttorneyFile?.filePath" target="_blank">
+                    {{attorne?.powerOfAttorneyFile?.fileDescription}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

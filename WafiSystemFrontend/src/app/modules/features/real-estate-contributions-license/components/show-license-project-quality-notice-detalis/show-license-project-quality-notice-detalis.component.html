@@ -1,0 +1,141 @@
+  <div class="tab-data-section" *ngIf="licenseProjectQualityNoticeData">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">كود القطاع</label>
+    
+            {{licenseProjectQualityNoticeData.sectorCode}}
+    
+    
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">رقم إشعار ملاحظة الجودة</label>
+            {{licenseProjectQualityNoticeData.code}}
+    
+          </div>
+        </div>
+        <div class="col-12 col-lg-6"
+          *ngIf="licenseProjectQualityNoticeData.zone">
+          <div class="form-group mb-4">
+            <label class="form-label">الزون</label>
+            {{licenseProjectQualityNoticeData.zone.code}}
+    
+    
+          </div>
+        </div>
+        <div class="col-12 col-lg-6"
+          *ngIf="licenseProjectQualityNoticeData.licenseProjectUnit">
+          <div class="form-group mb-4">
+            <label class="form-label">البلوك</label>
+            {{licenseProjectQualityNoticeData.licenseProjectUnit.code}}
+    
+          </div>
+        </div>
+        <div class="col-12 col-lg-6"
+        *ngIf="licenseProjectQualityNoticeData.licenseProjectQualityNoticeFloors && licenseProjectQualityNoticeData.licenseProjectQualityNoticeFloors.length >0">
+        <div class="form-group mb-4">
+          <label class="form-label">الدور</label>
+          <div class="table-responsive mb-3">
+            <table class="table">
+              <tbody *ngFor="let floor of licenseProjectQualityNoticeData.licenseProjectQualityNoticeFloors;let i=index;">
+                <tr>
+                  <td>
+                    {{floor.licenseProjectUnit.floorNumber}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6"
+      *ngIf="licenseProjectQualityNoticeData.licenseProjectQualityNoticeUnits && licenseProjectQualityNoticeData.licenseProjectQualityNoticeUnits.length >0">
+      <div class="form-group mb-4">
+        <label class="form-label">الوحدات</label>
+        <div class="table-responsive mb-3">
+          <table class="table">
+            <tbody *ngFor="let floor of licenseProjectQualityNoticeData.licenseProjectQualityNoticeUnits;let i=index;">
+              <tr>
+                <td>
+                  {{floor.licenseProjectUnit.code}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">نوع الملاحظة</label>
+            {{licenseProjectQualityNoticeData.noteType.name}}
+    
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">الملاحظة</label>
+            {{licenseProjectQualityNoticeData.notes}}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">الملاحظة متعلقة</label>
+            {{licenseProjectQualityNoticeData.qualityNoticeRelatedNoteType.name}}
+    
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">الملاحظة متكررة</label>
+            {{licenseProjectQualityNoticeData.isRepeated ? "لا" : "نعم"}}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <div class="key">صور الملاحظة</div>
+            <div class="value"
+              *ngFor="let imageFile of licenseProjectQualityNoticeData.licenseProjectQualityNoticeImages">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a *ngIf="imageFile && imageFile.imageFile" id="link-imageFile"
+                [href]="baseUrl + imageFile.imageFile.filePath" target="_blank">
+                {{imageFile.imageFile.fileDescription}}</a>
+            </div>
+            
+          </div>
+        </div>
+    
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"> اسم المهندس المسؤول</label>
+            {{licenseProjectQualityNoticeData.employee.employeeName}}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">الإجراء التصحيحي المتخذ </label>
+            {{licenseProjectQualityNoticeData.correctiveActionTaken.name}}
+    
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">حالة الاشعار</label>
+            {{licenseProjectQualityNoticeData.isClosed ? "مفتوح" : "مغلق"}}
+    
+          </div>
+        </div>
+        <div class="col-12 col-lg-6" *ngIf="licenseProjectQualityNoticeData.closedDate">
+          <div class="form-group mb-4">
+            <label class="form-label">تاريخ إغلاق الإشعار</label>
+            {{licenseProjectQualityNoticeData.closedDate | date:'yyyy-MM-dd'}}
+    
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+  

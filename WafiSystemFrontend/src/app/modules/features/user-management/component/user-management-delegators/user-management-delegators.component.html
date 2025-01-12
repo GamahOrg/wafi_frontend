@@ -1,0 +1,52 @@
+<div class="row row-gap-4">
+  <div class="table-responsive mb-3">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">اسم المفوض</th>
+          <th scope="col">رقم الهوية</th>
+          <th scope="col">الجنسية</th>
+          <th scope="col">رقم الهاتف الأول</th>
+          <th scope="col">رقم الهاتف الثاني</th>
+          <th scope="col">البريد الإلكتروني</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let delegator of reqList.results">
+        <tr>
+          <td>
+            <div class="d-flex align-items-center column-gap-2">
+              {{ delegator.fullName }}
+            </div>
+          </td>
+          <td>
+            <span class="text-dark">{{ delegator.nidnumber }}</span>
+          </td>
+          <td>
+            <span class="text-dark">{{
+              delegator.nationality?.nationalityName
+            }}</span>
+          </td>
+          <td>
+            <span class="text-dark">{{ delegator.mobile1 }} </span>
+          </td>
+          <td>
+            <span class="text-dark">{{ delegator.mobile2 }} </span>
+          </td>
+          <td>
+            <span class="text-dark">{{ delegator.email }} </span>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-auto">
+    <app-pagination></app-pagination>
+  </div>
+  <ng-container *ngIf="reqList.totalCount === 0">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false"></app-no-data>
+    </div>
+  </ng-container>
+</div>

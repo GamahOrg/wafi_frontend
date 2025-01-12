@@ -1,0 +1,23 @@
+<div class="tab-data-section">
+    <h6 class="title">{{localization.title}}</h6>
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.licenseProjectPlanAccordingApprovedStandardsFiles}}</div>
+            <div class="value" *ngFor="let designFile of planFiles">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a *ngIf="designFile && designFile.filePath" [href]="baseUrl + designFile.filePath" target="_blank">
+                    {{designFile.fileDescription}}</a>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.licenseProjectDesignFiles}}</div>
+            <div class="value" *ngFor="let approvedStandardsFile of designFiles">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a *ngIf="approvedStandardsFile && approvedStandardsFile.filePath" [href]="baseUrl + approvedStandardsFile.filePath" target="_blank">
+                    {{approvedStandardsFile.fileDescription}}</a>
+            </div>
+        </div>
+    </div>
+</div>

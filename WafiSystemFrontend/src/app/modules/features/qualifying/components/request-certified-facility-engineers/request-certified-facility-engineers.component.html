@@ -1,0 +1,29 @@
+<div class="tab-data-section">
+    <div class="table-responsive">
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>اسم المهندس</th>
+                    <th>رقم  الهوية</th>
+                    <th>رقم الرخصة المهنية</th>
+                    <th class="w-25"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="certifiedEngineers && certifiedEngineers.length > 0">
+                    <tr *ngFor="let eng of certifiedEngineers">
+                        <td>{{ eng?.engineerName}}</td>
+                        <td>{{ eng?.identityNumber }}</td>
+                        <td>{{ eng?.professionalLicenseNumber }}</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-end column-gap-2"></div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <ng-container *ngIf="!certifiedEngineers">
+            <p class="text-danger text-center p-3">لا توجد بيانات</p>
+        </ng-container>
+    </div>
+</div>

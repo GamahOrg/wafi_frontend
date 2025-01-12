@@ -1,0 +1,1138 @@
+<form class="d-flex flex-column h-100" [formGroup]="PeriodicCharteredAccountantReportForm"
+  id="form-licenseProjectProblemLogForm">
+  <div class="tab-data-section">
+    <div class="row mb-3">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group mb-4">
+            <label class="form-label">نوع التقرير</label>
+            <select class="form-select" formControlName="reportTypeId">
+              <option label="اختر نوع التقرير" disabled></option>
+              <option *ngFor="let type of reportTypes" [value]="type.id">
+                {{ type.name }}
+              </option>
+            </select>
+            <div class="invalid-feedback d-block" *ngIf="controls.reportTypeId?.hasError('required') && showValidation">
+              حقل مطلوب
+            </div>
+          </div>
+        </div>
+       
+      </div>
+
+      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Quarter">
+        <div class="form-group mb-4">
+          <label class="form-label">تقرير الربع-في حالة نوع التقرير ربعي</label>
+          <select class="form-select" formControlName="quarterTypeId">
+            <option label="اختر نوع الربع" disabled></option>
+            <option *ngFor="let type of reportQuarterTypes" [value]="type.id">
+              {{ type.name }}
+            </option>
+          </select>
+
+        </div>
+      </div>
+    
+      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Monthly">
+        <div class="form-group mb-4">
+          <label class="form-label">الشهر في حالة التقرير شهري </label>
+          <select class="form-select" formControlName="month">
+            <option label="اختر الشهر" disabled></option>
+            <option *ngFor="let month of months" [value]="month.id">
+              {{ month.name }}
+            </option>
+          </select>
+
+        </div>
+      </div>
+      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value && controls.reportTypeId.value!=periodicCharteredAccountantReportType.Period">
+        <div class="form-group mb-4">
+          <label class="form-label">العام</label>
+          <select class="form-select" formControlName="year">
+            <option label="اختر العام" disabled></option>
+            <option *ngFor="let item of years" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+
+        </div>
+      </div>
+      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Period">
+        <div class="form-group mb-4">
+          <label class="form-label">من تاريخ</label>
+          <div class="input-group">
+            <input bsDatepicker type="text" id="control-fromDate" class="form-control" formControlName="fromDate"
+              value="{{ controls.fromDate.value | date:'yyyy-MM-dd' }}">
+            <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Period">
+        <div class="form-group mb-4">
+          <label class="form-label">الي تاريخ</label>
+          <div class="input-group">
+            <input bsDatepicker type="text" id="control-toDate" class="form-control" formControlName="toDate"
+              value="{{ controls.toDate.value | date:'yyyy-MM-dd' }}">
+            <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="d-flex justify-content-end">
+        <button type="button" style="width:200px" class="btn btn-primary"
+          (click)="createPeriodicCharteredAccountantReport()">عرض
+          التقرير</button>
+      </div>
+
+      <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+        <h6 class="title fw-normal">وثائق الصرف خلال فترة التقرير</h6>
+        <div class="table-responsive">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th>رقم الوثيقة</th>
+                <th>تاريخ الاعتماد</th>
+                <th>البيان</th>
+                <th>المستفيد</th>
+                <th>المبلغ</th>
+                <th>البند الرئيسي</th>
+                <th>البند الفرعي</th>
+                <th>تاريخ الصرف</th>
+              </tr>
+            </thead>
+            <tbody
+              *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.exchangeDocuments && periodicCharteredAccountantReport.exchangeDocuments.length >0">
+              <tr *ngFor="let exchangeDocument of periodicCharteredAccountantReport.exchangeDocuments">
+                <td>{{exchangeDocument.documnetNumber}}</td>
+                <td>{{exchangeDocument.approvalDate|date:'yyyy/MM/dd'}}</td>
+                <td>{{exchangeDocument.statment}}</td>
+                <td>{{exchangeDocument?.liceneProjectBeneficiaryType?.name}}</td>
+                <td>{{exchangeDocument.amount}}</td>
+                <td>{{exchangeDocument?.mainItem?.name}}</td>
+                <td>{{exchangeDocument?.subItem?.name}}</td>
+                <td>{{exchangeDocument.exchangeDate|date:'yyyy/MM/dd'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+        <h6 class="title fw-normal">البيانات الاساسية</h6>
+        <div class="row mb-3">
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">اسم مكتب المحاسب القانوني</div>
+              <div *ngIf="periodicCharteredAccountantReport.charteredAccountantOfficeName">
+                {{periodicCharteredAccountantReport.charteredAccountantOfficeName}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">نوع الوحدات</div>
+              <div *ngIf="periodicCharteredAccountantReport.unitType">{{periodicCharteredAccountantReport.unitType}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">اجمالى عدد الوحدات</div>
+              <div *ngIf="periodicCharteredAccountantReport.totalUnitNumber">
+                {{periodicCharteredAccountantReport.totalUnitNumber}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">أمين الحساب</div>
+              <div *ngIf="periodicCharteredAccountantReport.accountKeeper">
+                {{periodicCharteredAccountantReport.accountKeeper}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">رقم حساب الضمان</div>
+              <div *ngIf="periodicCharteredAccountantReport.accountNumber">
+                {{periodicCharteredAccountantReport.accountNumber}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">رقم ترخيص بيع وحدة على الخارطة</div>
+              <div *ngIf="periodicCharteredAccountantReport.certificateNumber">
+                {{periodicCharteredAccountantReport.certificateNumber}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">اسم معد التقرير</div>
+              <div *ngIf="periodicCharteredAccountantReport.customer?.fullName">
+                {{periodicCharteredAccountantReport.customer?.fullName}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">رقم جوال معد التقرير</div>
+              <div *ngIf="periodicCharteredAccountantReport.customer?.mobile1">
+                {{periodicCharteredAccountantReport.customer?.mobile1}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">البريد الألكتروني لمعد التقرير</div>
+              <div *ngIf="periodicCharteredAccountantReport.customer?.email">
+                {{periodicCharteredAccountantReport.customer?.email}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">سعر الارض</div>
+              <div *ngIf="periodicCharteredAccountantReport.landPrice">{{periodicCharteredAccountantReport.landPrice}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">إجمالي قيمة وحدات المشروع</div>
+              <div *ngIf="periodicCharteredAccountantReport.totalUnitsAmount">
+                {{periodicCharteredAccountantReport.totalUnitsAmount}}</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">اجمالى قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)</label>
+              <input type="number" id="control-totalCost" class="form-control" formControlName="totalCost"
+                placeholder="اجمالى قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)">
+              <div class="invalid-feedback d-block" *ngIf="controls.totalCost?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">التكلفة الانشائية المتوقعة</label>
+              <input type="number" id="control-expectedConstructionCost" class="form-control"
+                formControlName="expectedConstructionCost" placeholder="التكلفة الانشائية المتوقعة">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.expectedConstructionCost?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">هامش الربح المتوقع</label>
+              <input type="number" id="control-expectedProfile" class="form-control" formControlName="expectedProfile"
+                placeholder="هامش الربح المتوقع">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.expectedProfile?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-data-section"
+        *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount">
+        <h6 class="title fw-normal">العمليات المالية خلال الفترة (من حساب الضمان)</h6>
+        <div class="row mb-3">
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تكاليف إنشائية (من حساب الضمان)</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.constructionCosts">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.constructionCosts}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">مصاريف ادارية وتسويقية (من حساب الضمان)</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.administrativeMarketingExpenses">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.administrativeMarketingExpenses}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">ايداعات عملاء مستردة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.refundableCustomerDeposits">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.refundableCustomerDeposits}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">عمولات بنكية</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.bankCommissions">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.bankCommissions}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تكاليف انشائية - الحافز الوزارى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.constructionCostsMinisterialIncentiveBankFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.constructionCostsMinisterialIncentiveBankFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تكاليف انشائية - التمويل البنكى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.constructionCostsBankFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.constructionCostsBankFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">مصاريف ادارية وتسويقية - التمويل البنكى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.administrativeMarketingExpensesBankFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.administrativeMarketingExpensesBankFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">أخرى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.otherDebts">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.otherDebts}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">إجمالي العمليات المدينة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.totalDebtOperations">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.totalDebtOperations}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تحصيل من العملاء</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.collectionsFromCustomers">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.collectionsFromCustomers}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تمويل بنكى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.bankFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.bankFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تمويل ذاتى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.selfFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.selfFinancing}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key"> تمويل الوزارة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.ministryFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.ministryFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">أخرى دائنة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.otherCredits">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.otherCredits}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">إجمالى العمليات الدائنة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.totalCreditOperations">
+                {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.totalCreditOperations}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="tab-data-section"
+        *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount">
+        <h6 class="title fw-normal">العمليات المالية منذ البدأ في المشروع (من حساب الضمان)</h6>
+        <div class="row mb-3">
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تكاليف إنشائية (من حساب الضمان)</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.constructionCosts">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.constructionCosts}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">مصاريف ادارية وتسويقية (من حساب الضمان)</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.administrativeMarketingExpenses">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.administrativeMarketingExpenses}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">ايداعات عملاء مستردة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.refundableCustomerDeposits">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.refundableCustomerDeposits}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">عمولات بنكية</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.bankCommissions">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.bankCommissions}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تكاليف انشائية - الحافز الوزارى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.constructionCostsMinisterialIncentiveBankFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.constructionCostsMinisterialIncentiveBankFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تكاليف انشائية - التمويل البنكى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.constructionCostsBankFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.constructionCostsBankFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">مصاريف ادارية وتسويقية - التمويل البنكى</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.administrativeMarketingExpensesBankFinancing">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.administrativeMarketingExpensesBankFinancing}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">أخرى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.otherDebts">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.otherDebts}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">إجمالي العمليات المدينة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.totalDebtOperations">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.totalDebtOperations}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تحصيل من العملاء</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.collectionsFromCustomers">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.collectionsFromCustomers}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تمويل بنكى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.bankFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.bankFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">تمويل ذاتى</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.selfFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.selfFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key"> تمويل الوزارة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.ministryFinancing">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.ministryFinancing}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">أخرى دائنة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.otherCredits">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.otherCredits}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <div class="key">إجمالى العمليات الدائنة</div>
+              <div
+                *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.totalCreditOperations">
+                {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.totalCreditOperations}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+        <h6 class="title fw-normal">العمليات المالية خلال الفترة (من خارج حساب الضمان)</h6>
+        <div class="row mb-3">
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">تكاليف انشائية</label>
+              <input type="number" id="control-constructionCosts" class="form-control"
+                formControlName="constructionCosts" placeholder="تكاليف انشائية">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.constructionCosts?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">مصاريف ادارية وتسويقية</label>
+              <input type="number" id="control-administrativeMarketingExpenses" class="form-control"
+                formControlName="administrativeMarketingExpenses" placeholder="مصاريف ادارية وتسويقية">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.administrativeMarketingExpenses?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">ايداعات عملاء مستردة</label>
+              <input type="number" id="control-customerDepositRefunds" class="form-control"
+                formControlName="customerDepositRefunds" placeholder="ايداعات عملاء مستردة">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.customerDepositRefunds?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">عمولات بنكية</label>
+              <input type="number" id="control-bankCommissions" class="form-control" formControlName="bankCommissions"
+                placeholder="عمولات بنكية">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.bankCommissions?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">أخرى مدينة</label>
+              <input type="number" id="control-otherDebts" class="form-control" formControlName="otherDebts"
+                placeholder="أخرى مدينة">
+              <div class="invalid-feedback d-block" *ngIf="controls.otherDebts?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">إجمالى العمليات المدينة</label>
+              <input type="number" id="control-totalDebtOperations" class="form-control"
+                formControlName="totalDebtOperations" placeholder="إجمالى العمليات المدينة">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.totalDebtOperations?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">تحصيل من العملاء</label>
+              <input type="number" id="control-collectionsFromCustomers" class="form-control"
+                formControlName="collectionsFromCustomers" placeholder="تحصيل من العملاء">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.collectionsFromCustomers?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">تمويل بنكى</label>
+              <input type="number" id="control-bankFinancing" class="form-control" formControlName="bankFinancing"
+                placeholder="تمويل بنكى">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.bankFinancing?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">تمويل ذاتى</label>
+              <input type="number" id="control-selfFinancing" class="form-control" formControlName="selfFinancing"
+                placeholder="تمويل ذاتى">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.selfFinancing?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">تمويل الوزارة</label>
+              <input type="number" id="control-ministryFinancing" class="form-control"
+                formControlName="ministryFinancing" placeholder="تمويل الوزارة">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.ministryFinancing?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">أخرى دائنة</label>
+              <input type="number" id="control-otherCredits" class="form-control" formControlName="otherCredits"
+                placeholder="أخرى دائنة">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.otherCredits?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">إجمالى العمليات الدائنة</label>
+              <input type="number" id="control-totalCreditOperations" class="form-control"
+                formControlName="totalCreditOperations" placeholder="إجمالى العمليات الدائنة">
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.totalCreditOperations?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-data-section"
+        *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount">
+        <h6 class="title fw-normal">العمليات المالية منذ البدء بالمشروع (من خارج حساب الضمان)</h6>
+        <div class="row mb-3">
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف إنشائية </div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.constructionCosts">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.constructionCosts}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">مصاريف ادارية وتسويقية</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.administrativeMarketingExpenses">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.administrativeMarketingExpenses}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">ايداعات عملاء مستردة</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.customerDepositRefunds">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.customerDepositRefunds}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">عمولات بنكية</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.bankCommissions">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.bankCommissions}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">أخرى مدينة</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.otherDebts">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.otherDebts}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالي العمليات المدينة</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.totalDebtOperations">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.totalDebtOperations}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تحصيل من العملاء</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.collectionsFromCustomers">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.collectionsFromCustomers}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تمويل بنكى</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.bankFinancing">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.bankFinancing}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تمويل ذاتى</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.selfFinancing">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.selfFinancing}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key"> تمويل الوزارة</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.ministryFinancing">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.ministryFinancing}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">أخرى دائنة</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.otherCredits">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.otherCredits}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالى العمليات الدائنة</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.totalCreditOperations">
+              {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.totalCreditOperations}}
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+          <h6 class="title fw-normal">إجمالي العمليات المدينة والدائن (من داخل وخارج حساب الضمان)</h6>
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالى العمليات المدينة</div>
+            <div *ngIf="periodicCharteredAccountantReport.totalDebtOperations">
+              {{periodicCharteredAccountantReport.totalDebtOperations}}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالى العمليات الدائنة</div>
+            <div *ngIf="periodicCharteredAccountantReport.totalCreditOperations">
+              {{periodicCharteredAccountantReport.totalCreditOperations}}</div>
+          </div>
+        </div>
+        <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+          <h6 class="title fw-normal">حساب الضمان</h6>
+          <div class="col-12 col-md-6" *ngIf="!periodicCharteredAccountantReport.periodOpeningBalance">
+            <div class="form-group mb-4">
+              <label class="form-label">رصيد افتتاح الفترة</label>
+              <input type="number" id="control-periodOpeningBalance" class="form-control"
+                formControlName="periodOpeningBalance" placeholder="رصيد افتتاح الفترة">
+              <div class="invalid-feedback d-block"
+                *ngIf="!controls.periodOpeningBalance && !periodicCharteredAccountantReport.periodOpeningBalance && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6" *ngIf="periodicCharteredAccountantReport.periodOpeningBalance">
+            <div class="key">رصيد افتتاح الفترة</div>
+            <div>{{periodicCharteredAccountantReport.periodOpeningBalance}}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">رصيد اغلاق الفترة</div>
+            <div *ngIf="periodicCharteredAccountantReport.periodClosingBalance">
+              {{periodicCharteredAccountantReport.periodClosingBalance}}</div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+        <h6 class="title fw-normal">تحليل موقف وحدات المشروع</h6>
+        <div class="table-responsive">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th>نوع الوحدات</th>
+                <th>إجمالى وحدات المشروع -عدد</th>
+                <th>إجمالى وحدات المشروع - نسبة</th>
+                <th>إجمالى وحدات المشروع - قيمة</th>
+                <th>إجمالى الوحدات المباعة خلال الفترة - عدد</th>
+                <th>إجمالى الوحدات المباعة خلال الفترة - نسبة</th>
+                <th>إجمالى الوحدلات المباعة خلال الفترة - قيمة</th>
+                <th>إجمالى الوحدات المباعة منذ بداية المشروع -عدد</th>
+                <th>إجمالى الوحدات المباعة منذ بداية المشروع - قيمة</th>
+                <th>إجمالى الوحدات المباعة منذ بداية المشروع - نسبة</th>
+                <th>إجمالى الوحدات المتبقة للمشروع</th>
+                <th>إجمالى الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - قيمة</th>
+                <th>إجمالى الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - نسبة</th>
+                <th>إجمالى المبالغ المحصلة من الوحدات المباعة</th>
+                <th>نسبة التحصيل من إجمالى قيمة الوحدات المباعة</th>
+              </tr>
+            </thead>
+            <tbody
+              *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.projectUnitsPositionAnalysis && periodicCharteredAccountantReport.projectUnitsPositionAnalysis.length >0">
+              <tr *ngFor="let analysis of periodicCharteredAccountantReport.projectUnitsPositionAnalysis">
+                <td>{{analysis.unitsType}}</td>
+                <td>{{analysis.totalNumberLicenseProjectUnits}}</td>
+                <td>{{analysis.totalPercentageLicenseProjectUnits}}</td>
+                <td>{{analysis.totalValueLicenseProjectUnits}}</td>
+                <td>{{analysis.totalNumberLicenseProjectUnitsSold}}</td>
+                <td>{{analysis.totalPercentageLicenseProjectUnitsSold}}</td>
+                <td>{{analysis.totalValueLicenseProjectUnitsSold}}</td>
+                <td>{{analysis.totalNumberLicenseProjectUnitsSoldFromBeginning}}</td>
+                <td>{{analysis.totalValueLicenseProjectUnitsFromBeginning}}</td>
+                <td>{{analysis.totalPercentageLicenseProjectUnitsSoldFromBeginning}}</td>
+                <td>{{analysis.totalRemainingUnits}}</td>
+                <td>{{analysis.totalValueRemainingUnits}}</td>
+                <td>{{analysis.totalPercentageRemainingUnits}}</td>
+                <td>{{analysis.totalAmountForUnitsSold}}</td>
+                <td>{{analysis.percentageTotalValueOfUnitsSold}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+        <h6 class="title fw-normal">الدفعات المحصلة والخاصة بالوحدات المباعة الملغية</h6>
+        <div class="table-responsive">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th>اسم المشترى</th>
+                <th>رقم الوحدة</th>
+                <th>سعر الوحدة</th>
+                <th>تاريخ الالغاء</th>
+                <th>ما تم دفعة خلال الفترة - الدفعات التى تم ارجاعها</th>
+                <th>إجمالى الدفعات</th>
+                <th>المتبقى</th>
+              </tr>
+            </thead>
+            <tbody
+              *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.paymentsCollectedForCancelledUnitsSolds &&  periodicCharteredAccountantReport.paymentsCollectedForCancelledUnitsSolds.length >0">
+              <tr *ngFor="let payment of periodicCharteredAccountantReport.paymentsCollectedForCancelledUnitsSolds">
+                <td>{{payment.buyerName}}</td>
+                <td>{{payment.unitCode}}</td>
+                <td>{{payment.price}}</td>
+                <td>{{payment.cancelledDate|date:'yyyy/MM/dd'}}</td>
+                <td>{{payment.paidDuringPeriod}}</td>
+                <td>{{payment.totalPayments}}</td>
+                <td>{{payment.remainingUnitPrice}}</td>
+
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+        <h6 class="title fw-normal">الإيداعات والدفعات</h6>
+        <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+          <h6 class="title fw-normal">جدول ادناه يوضح الإيداعات التي لم تظهر في حساب البنك حتى تاريخه</h6>
+          <button type="button" class="btn btn-primary"
+            (click)="addPeriodicCharteredAccountantReportDeposit()">إضافة</button>
+          <div class="table-responsive">
+            <table class="table table-light">
+              <thead>
+                <tr>
+                  <th>رقم الوحدة السكنية/نوع التكاليف</th>
+                  <th>رقم الشيك</th>
+                  <th>تاريخ التوريد</th>
+                  <th>المبلغ بالريال</th>
+                  <th>تاريخ الايداع فى البنك</th>
+                  <th>العمليات</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="periodicCharteredAccountantReportDeposits">
+                <tr *ngFor="let item of periodicCharteredAccountantReportDepositsFormArr.controls; let i = index">
+                  <ng-container [formGroupName]="i">
+                    <td>
+                      <input type="text" id="control-unitCodeOrExpenseType{{i}}" class="form-control"
+                        formControlName="unitCodeOrExpenseType">
+                    </td>
+                    <td>
+                      <input type="number" id="control-checkNumber{{i}}" class="form-control"
+                        formControlName="checkNumber">
+
+                    </td>
+                    <td>
+                      <input bsDatepicker type="text" id="control-supplyDate{{i}}" class="form-control"
+                        formControlName="supplyDate"
+                        value="{{PeriodicCharteredAccountantReportForm.get('periodicCharteredAccountantReportDeposits.'+i+'.supplyDate')?.value | date:'yyyy-MM-dd'}} ">
+                    </td>
+                    <td>
+                      <input type="number" id="control-riyalsAmount{{i}}" class="form-control"
+                        formControlName="riyalsAmount">
+
+                    </td>
+                    <td>
+                      <input bsDatepicker type="text" id="control-depositDate{{i}}" class="form-control"
+                        formControlName="depositDate"
+                        value="{{PeriodicCharteredAccountantReportForm.get('periodicCharteredAccountantReportDeposits.'+i+'.depositDate')?.value | date:'yyyy-MM-dd'}} ">
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary"
+                        (click)="removePeriodicCharteredAccountantReportDeposits(i)">حذف</button>
+
+                    </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+          <h6 class="title fw-normal">جدول ادناه يوضح دفعات لم يتم خصمها في حساب البنك حتى تاريخه </h6>
+          <button type="button" class="btn btn-primary"
+            (click)="addPeriodicCharteredAccountantReportBatche()">إضافة</button>
+          <div class="table-responsive">
+            <table class="table table-light">
+              <thead>
+                <tr>
+                  <th>رقم الوحدة السكنية/نوع التكاليف</th>
+                  <th>رقم الشيك</th>
+                  <th>تاريخ التوريد</th>
+                  <th>المبلغ بالريال</th>
+                  <th>تاريخ الايداع فى البنك</th>
+                  <th>العمليات</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="periodicCharteredAccountantReportBatches">
+                <tr *ngFor="let item of periodicCharteredAccountantReportBatchesFormArr.controls; let i = index">
+                  <ng-container [formGroupName]="i">
+                    <td>
+                      <input type="text" id="control-unitCodeOrExpenseType" class="form-control"
+                        formControlName="unitCodeOrExpenseType">
+                    </td>
+                    <td>
+                      <input type="number" id="control-checkNumber" class="form-control" formControlName="checkNumber">
+
+                    </td>
+                    <td>
+                      <input bsDatepicker type="text" id="control-supplyDate" class="form-control"
+                        formControlName="supplyDate">
+                    </td>
+                    <td>
+                      <input type="number" id="control-riyalsAmount" class="form-control"
+                        formControlName="riyalsAmount">
+
+                    </td>
+                    <td>
+                      <input bsDatepicker type="text" id="control-bankDebitDate" class="form-control"
+                        formControlName="bankDebitDate">
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary"
+                        (click)="removePeriodicCharteredAccountantReportBatchesFormArr(i)">حذف</button>
+
+                    </td>
+                  </ng-container>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-data-section"
+        *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint">
+        <h6 class="title fw-normal">القيود المالية</h6>
+        <div class="row mb-3">
+          <div class="col-12 col-md-6">
+            <div class="key">النسبة المسموح بها للمصاريف الإدارية والتسويقية</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.allowablePercentageOfAdministrativeMarketingExpenses">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.allowablePercentageOfAdministrativeMarketingExpenses}}
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالي قيمة الوحدات المباعة والمحصل قيمتها</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.totalValueOfUnitsSoldAndCollected">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.totalValueOfUnitsSoldAndCollected}}
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="key">الحد المسموح التصرف به للمصاريف الإدارية والتسويقية</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.allowedLimitForAdministrativeMarketingExpenses">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.allowedLimitForAdministrativeMarketingExpenses}}
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالي المبالغ الإدارية والتسويقية التي تم صرفها منذ بداية المشروع</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.totalAdministrativeMarketingAmountsFromBeginningOfProject">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.totalAdministrativeMarketingAmountsFromBeginningOfProject}}
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="key">المبلغ المتبقى</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.remainingAmount">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.remainingAmount}}
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">النسبة الواجب توفرها بحساب الحفظ</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.percentageRequiredForSavingAccount">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.percentageRequiredForSavingAccount}}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-data-section"
+          *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint">
+          <h6 class="title fw-normal">حوافز التمويل لمشاريع وزارة الأسكان</h6>
+
+
+          <div class="col-12 col-md-6">
+            <div class="key">مبلغ الحافز</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.incentiveAmount">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.incentiveAmount}}
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="key">هل نسبة تحصيل المبيعات وصلت الى 80% من اجمالى قيمة المبيعات</div>
+            <span
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.salesRateReached80Percentage==true">
+              نعم
+            </span>
+            <span
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.salesRateReached80Percentage==false">
+              لا
+            </span>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="key">قيمة استرداد الدفعة الأولى</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.firstPaymentRefundValue">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.firstPaymentRefundValue}}
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="key">هل نسبة تحصيل المبيعات وصلت الى 90% من اجمالى قيمة المبيعات</div>
+            <span
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.salesRateReached90Percentage==true">
+              نعم
+            </span>
+            <span
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.salesRateReached90Percentage==false">
+              لا
+            </span>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="key">قيمة استرداد الدفعة الثانية</div>
+            <div
+              *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.secondPaymentRefundValue">
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.secondPaymentRefundValue}}
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+          <h6 class="title fw-normal">التوصيات والنتائج</h6>
+          <div class="col-12 col-md-6">
+            <div class="form-group mb-4">
+              <label class="form-label">التوصيات والنتائج</label>
+              <textarea type="number" id="control-resultsAndRecommendations" class="form-control"
+                formControlName="resultsAndRecommendations" placeholder="التوصيات والنتائج"></textarea>
+              <div class="invalid-feedback d-block"
+                *ngIf="controls.resultsAndRecommendations?.hasError('required')  && showValidation">
+                حقل مطلوب
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+        <h6 class="title fw-normal">قائمة المركز المالي </h6>
+        <div class="col-12 col-md-6">
+          <div class="form-group mb-4">
+            <label class="form-label">المركز المالي</label>
+            <app-file-uploader [data]="multipleFilesUploaderData"
+              (fileUploaded)="onExistFinancialCenterFileUploaded($event)"></app-file-uploader>
+            <div class="invalid-feedback d-block"
+              *ngIf="(!financialCenterFiles || financialCenterFiles.length == 0) && showValidation">
+              حقل مطلوب
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="save()" *ngIf="periodicCharteredAccountantReport">حفظ
+      التقرير</button>
+  </div>
+</form>

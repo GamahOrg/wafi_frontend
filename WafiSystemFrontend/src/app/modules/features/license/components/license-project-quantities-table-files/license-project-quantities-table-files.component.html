@@ -1,0 +1,63 @@
+<div class="tab-data-section"
+     *ngIf="mainData">
+
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-lg-12">
+      <div class="key">{{localization.quantitiesTableFileId}}</div>
+      <div class="value"
+           *ngFor="let quantityTableFile of mainData.licenseProjectQuantitiesTableFiles">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a *ngIf="quantityTableFile && quantityTableFile.quantitiesTableFile"
+           [href]="baseUrl + quantityTableFile.quantitiesTableFile.filePath"
+           target="_blank">
+          {{quantityTableFile.quantitiesTableFile.fileDescription}}</a>
+      </div>
+    </div>
+
+    <div class="tab-data-header">
+      <h6 class="title fw-normal">جدول الاوزان النسبيه</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th>{{localization.elementName}}</th>
+              <th>{{localization.elementValue}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of licenseProjectRelativeWeightList">
+              <td>{{item.sysLicenseRelativeWeight.elementName}}</td>
+              <td>{{item?.elementValue}}</td>
+            </tr>
+            <tr>
+              <td>{{localization.total}}</td>
+              <td>{{total}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-12">
+          <div class="col-12 col-lg-12">
+            <div class="form-check form-check-inline">
+              <input type="checkbox"
+                     [checked]="licenseProjectData && licenseProjectData.quantitiesTableAcknowledgment? true : false"
+                     disabled="true"
+                     id="beneficiaryContractFormApproval"
+                     class="form-check-input" />
+              <label for="beneficiaryContractFormApproval"
+                     class="form-check-label">
+                الموافقه على اقرار جدول الكميات
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

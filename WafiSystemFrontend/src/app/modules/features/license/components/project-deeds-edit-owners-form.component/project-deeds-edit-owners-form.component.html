@@ -1,0 +1,42 @@
+<ng-container>
+  <form class="d-flex flex-column h-100" [formGroup]="deedOwnerForm">
+    <label class="form-label">مُلاك الصك</label>
+    <div class="tab-data-section">
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th> {{localization.ownerNationalId}}</th>
+              <th>{{localization.ownerName}}</th>
+              <th> {{localization.owningArea}}</th>
+              <th> {{localization.ownerMobileNumber}}</th>
+            </tr>
+          </thead>
+
+          <tbody formArrayName="Rows">
+            <tr *ngFor="let itemrow of formArr.controls
+              let i=index;let l=last" [formGroupName]="i">
+              <td>
+                <input formControlName="idNumber" class="form-control">
+              </td>
+              <td>
+                <input formControlName="ownerName" class="form-control">
+              </td>
+              <td>
+                <input formControlName="owningArea" class="form-control">
+              </td>
+              <td>
+                <input formControlName="mobileNo" class="form-control">
+              </td>
+              <td [hidden]="true">
+                <input formControlName="licenseRelativeWeightId" class="form-control">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </form>
+</ng-container>

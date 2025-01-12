@@ -1,0 +1,133 @@
+<div class="tab-data-section" *ngIf="licenseProjectRiskData">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectRiskData.licenseProject">
+        <div class="form-group mb-4">
+          <label class="form-label"> اسم المشروع</label>
+  
+          {{licenseProjectRiskData.licenseProject.name}}
+  
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectRiskData.licenseProject">
+        <div class="form-group mb-4">
+          <label class="form-label"> كود المشروع</label>
+          {{licenseProjectRiskData.licenseProject.projectCode}}
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6"
+        *ngIf="licenseProjectRiskData.licenseProject && licenseProjectRiskData.licenseProject.licenseProjectAddresses && licenseProjectRiskData.licenseProject.licenseProjectAddresses.length > 0">
+        <div class="form-group mb-4">
+          <label class="form-label">المنطقه</label>
+          {{licenseProjectRiskData.licenseProject.licenseProjectAddresses[0].areas.areaName}}
+  
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6"
+        *ngIf="licenseProjectRiskData.licenseProject && licenseProjectRiskData.licenseProject.licenseProjectAddresses && licenseProjectRiskData.licenseProject.licenseProjectAddresses.length > 0">
+        <div class="form-group mb-4">
+          <label class="form-label">المدينة</label>
+          {{licenseProjectRiskData.licenseProject.licenseProjectAddresses[0].cities.cityName}}
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الخطر</label>
+          {{licenseProjectRiskData.riskNumber}}
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label"> وصف الخطر</label>
+          {{licenseProjectRiskData.description}}
+  
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label"> نوع الخطر</label>
+          {{licenseProjectRiskData.riskType.name}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">الأستمراريه</label>
+          {{licenseProjectRiskData.continuity.name}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">التأثير</label>
+          {{licenseProjectRiskData.effect}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">الاحتمالية</label>
+          {{licenseProjectRiskData.probability}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">الأولويه</label>
+          <span style="font-weight: bold;">
+            {{priorityValue}}
+          </span>
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label"> وصف التأثير</label>
+          {{licenseProjectRiskData.effectDescription}}
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">خطة الاستجابة واستراتيجية الاحتواء</label>
+          {{licenseProjectRiskData.responsePlanContainmentStrategy}}
+  
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">مالك الحل</label>
+          {{licenseProjectRiskData.solutionOwner.name}}
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-6"
+        *ngIf="licenseProjectRiskData.licenseProjectRiskResponsibleParties && licenseProjectRiskData.licenseProjectRiskResponsibleParties.length >0">
+        <div class="form-group mb-4">
+          <label class="form-label"> الجهات المسؤولة عن الحل في حالة الحدوث</label>
+          <div class="table-responsive mb-3">
+            <table class="table">
+  
+              <tbody *ngFor="let party of licenseProjectRiskData.licenseProjectRiskResponsibleParties;let i=index;">
+                <tr>
+                  <td>
+                    {{party.responsibleParty.name}}
+  
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">الحالة</label>
+          {{licenseProjectRiskData.riskStatus.name}}
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,115 @@
+
+
+<div class="row">
+    <div class="col-12 col-md-8">
+        <div class="card dashboard-card">
+            <div class="card-header">
+                <h6 class="card-title">{{localization.welcome}} {{userData?.fullName}}</h6>
+            </div>
+            <div class="row g-0">
+                <div class="col-md-9 order-2 order-md-1">
+                    <div class="card-body h-100">
+                        <p class="card-text">
+                            {{localization.PleaseCompleteAccountInformation}}
+                            {{userData? userData.facilities[0].commercialRegisterNumber: ""}}
+                        </p>
+                        <!-- <a [routerLink]="facilityProfileLink"
+                           mat-flat-button
+                           color="primary">
+                            {{localization.CompleteDataLinkText}}
+                        </a> -->
+                    </div>
+                </div>
+                <div class="col-md-3 order-1 order-md-2">
+                    <div class="card-image">
+                        <img [src]="imageUrl"
+                             class="img-fluid"
+                             alt="...">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{localization.welcome}} {{userData?.FullName}} </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{localization.PleaseCompleteAccountInformation}}
+                    {{userData? userData.facilities[0].CommercialRegisterNumber: ""}}
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <a mat-button mat-raised-button color="primary" [routerLink]="facilityProfileLink">
+                    {{localization.CompleteDataLinkText}}
+                </a>
+            </mat-card-actions>
+        </mat-card>  -->
+    </div>
+</div>
+<div class="row my-5">
+    <div class="col-12 col-md-12">
+        <div class="card dashboard-card">
+            <div class="row g-0">
+                <app-qualification-request-list></app-qualification-request-list>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row my-5">
+    <div class="col-12 col-md-12">
+        <div class="card dashboard-card">
+            <div class="row g-0">
+                <app-license-list></app-license-list>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row mt-5 row-gap-5">
+    <div class="col-md-3">
+        <app-file-uploader></app-file-uploader>
+    </div>
+
+    <div class="col-md-3">
+        <button mat-raised-button (click)="openDialog()">Open dialog without animation</button>
+    </div>
+
+    <div class="col-12">
+        <div class="bg-white p-5">
+            <div class="tab-data-section">
+                <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+                    <div class="col-12 col-md-6">
+                        <div class="key"> برامج المسؤولية الاجتماعية</div>
+                        <div class="value"><span class="icon material-icons-outlined">picture_as_pdf</span> <a href="http://file-name.pdf">file-name.pdf</a><span class="delete"><i class="material-icons text-danger">close</i></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="key">رقم شهادة الذكاه والتدخل</div>
+                        <div class="value fw-bold">289421</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="key">فاكس</div>
+                        <div class="value"><span class="icon material-icons flipped-x">phone</span> +996 559 248**</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="key">نشاط / انشطة المنشأه</div>
+                        <div class="value"><span class="icon material-icons flipped-x">blinds</span> تأحير وبيع على الخارطة </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="key">تاريخ إصدار السجل التجاري</div>
+                        <div class="value"><span class="icon material-icons flipped-x">calendar_today</span> 25 فبراير 2020 </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="key">الموقع الإلكتروني</div>
+                        <div class="value"><span class="icon material-icons flipped-x">language</span> <a href="https://madar.sa">https://madar.sa</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <app-no-data></app-no-data>
+            </div>
+        </div>
+    </div>
+</div> -->

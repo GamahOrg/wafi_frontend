@@ -1,0 +1,32 @@
+
+<div class="tab-data-section">
+    <h6 class="title">بيانات المفوضون للتوقيع على وثيقه الصرف</h6>
+<div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5" *ngIf=" licenseProjectDelegators.length > 0">
+    <div class="col-12 ">
+        <div class="table-responsive">
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th>اسم المفوض  </th>
+                        <th>رقم هوية المفوض</th>
+                        <th>نموذج التوقيع</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let delegator of licenseProjectDelegators; let i = index;">
+                        <td>{{delegator?.delegatorCustomer?.fullName}}</td>
+                        <td>{{delegator?.delegatorCustomer?.nidnumber}}</td>
+                        <td>
+                              <span class="icon material-icons-outlined">content_copy</span>
+                              <a *ngIf="delegator && delegator.delegatorSignModelFile" target="_blank" [href]="baseUrl + delegator.delegatorSignModelFile.filePath" target="_blank">
+                                  {{delegator.delegatorSignModelFile.fileDescription}}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+

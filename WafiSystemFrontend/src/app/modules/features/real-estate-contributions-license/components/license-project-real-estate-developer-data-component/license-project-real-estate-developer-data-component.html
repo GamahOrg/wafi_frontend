@@ -1,0 +1,228 @@
+<div class="tab-data-section"
+     *ngIf="dataSection[tabCode.facilityInfo]">
+  <h6 class="title">{{localization.facilityData}}</h6>
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5"
+       *ngIf="request && request.facility">
+    <div class="col-12 col-lg-6">
+      <div class="key">رقم السجل التجاري</div>
+      <div class="value">
+        {{request.facility.commercialRegisterNumber}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">اسم الشركة</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{request.facility.facilityName}}
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="key">رأس مال المنشأة</div>
+      <div class="value">{{ request.facility.capitalNumber }}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">تاريخ إصدار السجل التجاري</div>
+      <div class="value">
+        <span class="icon material-icons">calendar_today</span>
+        {{request.facility.commercialRegisterStartDate | date:"MM/dd/yyyy"}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">تاريخ انتهاء السجل التجاري</div>
+      <div class="value">
+        <span class="icon material-icons">calendar_today</span>
+        {{request.facility.commercialRegisterEndDate | date:"MM/dd/yyyy"}}
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6"
+         *ngIf="request.facility.website">
+      <div class="key">الموقع الإلكتروني</div>
+      <div class="value">
+        <span class="icon material-icons">language</span>
+        {{request.facility.website}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-data-section">
+  <h6 class="title">ملاك</h6>
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-md-6">
+      <table class="facility-owner-table" border="1">
+        <thead>
+          <tr>
+            <th>رقم الهوية</th>
+            <th>اسم مالك</th>
+            <th>نوع العلاقة</th>
+            <th>الجنسية</th>
+            <th>رقم التليفون</th>
+            <th>الايميل</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let owner of request.facility.facilityOwners; let i = index"
+          >
+            <td class="facility-owner-body">{{ owner.nidnumber }}</td>
+            <td class="facility-owner-body">{{ owner.ownerName }}</td>
+            <td class="facility-owner-body">{{ owner.relationType }}</td>
+            <td class="facility-owner-body">{{ owner.ownerNationalityAR }}</td>
+            <td class="facility-owner-body">{{ owner.mobile }}</td>
+            <td class="facility-owner-body">{{ owner.email }}</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="tab-data-section"
+     *ngIf="dataSection[tabCode.licenseProjectFacilityAddress]">
+  <h6 class="title">{{localization.facilityAddress}}</h6>
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-lg-6"
+         *ngIf="request.facility.qualificationNationalAddressDetails && request.facility.qualificationNationalAddressDetails.length>0">
+      <div class="key">المنطقة</div>
+      <div class="value">
+        <span class="icon material-icons"></span>
+        {{request.facility.qualificationNationalAddressDetails[0].areas.areaName}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+         *ngIf="request.facility.qualificationNationalAddressDetails && request.facility.qualificationNationalAddressDetails.length>0">
+      <div class="key">المدينة</div>
+      <div class="value">
+        <span class="icon material-icons"></span>
+        {{request.facility.qualificationNationalAddressDetails[0].sysCity.cityName}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-data-section"
+     *ngIf="dataSection[tabCode.customerInfo]">
+  <h6 class="title">{{localization.applicantData}}</h6>
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-lg-6"
+         *ngIf="request.customer && request.customer.fullName">
+      <div class="key">{{localization.applicantName}}</div>
+      <div class="value">
+        <span class="icon material-icons"></span>
+        {{request.customer.fullName}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+         *ngIf="request.customer && request.customer.jobTitle">
+      <div class="key">{{localization.applicantJobTitle}}</div>
+      <div class="value">
+        <span class="icon material-icons"></span>
+        {{request.customer.jobTitle}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+         *ngIf="request.customer && request.customer.mobile1">
+      <div class="key">{{localization.mobile}}</div>
+      <div class="value">
+        <span class="icon material-icons"></span>
+        {{request.customer.mobile1}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+         *ngIf="request.customer && request.customer.email">
+      <div class="key">{{localization.email}}</div>
+      <div class="value">
+        <span class="icon material-icons"></span>
+        {{request.customer.email}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="tab-data-section"
+     *ngIf="realEstatDeveloper && dataSection[tabCode.licenseProjectExecutiveDirector]">
+  <h6 class="title">{{localization.delegator}}</h6>
+
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-lg-6">
+      <div class="key">{{localization.selectDelegator}}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{realEstatDeveloper?.delegatorCustomer?.fullName}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="tab-data-section"
+     *ngIf="realEstatDeveloper && dataSection[tabCode.licenseProjectExecutiveDirector]">
+  <h6 class="title">{{localization.executiveDirectorData}}</h6>
+
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-lg-6">
+      <div class="key">{{localization.name}}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{realEstatDeveloper.executiveDirectorName}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">{{localization.mobile}}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{realEstatDeveloper.executiveDirectorMobile}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">{{localization.email}}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{realEstatDeveloper.executiveDirectorEmail}}
+      </div>
+    </div>
+  </div>
+</div>
+<div
+class="tab-data-section"
+>
+<h6 class="title">{{ localization.paymentReciept }}</h6>
+<div class="col-12 col-lg-6">
+  <div class="form-group mb-4">
+    <span class="icon material-icons-outlined">content_copy</span>    
+    <a *ngIf="realEstatDeveloper.paymentReceiptFile" [href]="baseUrl + realEstatDeveloper.paymentReceiptFile.filePath" target="_blank">
+      {{ realEstatDeveloper.paymentReceiptFile.fileDescription }}
+    </a>   
+  </div>
+
+</div>
+</div>
+<div class="tab-data-section"
+     *ngIf="realEstatDeveloper && dataSection[tabCode.licenseProjectContactOfficer]">
+  <h6 class="title">{{localization.contactOfficerData}}</h6>
+
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-lg-6">
+      <div class="key">{{localization.name}}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{realEstatDeveloper.contactOfficerName}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">{{localization.mobile}}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{realEstatDeveloper.contactOfficerMobile}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">{{localization.email}}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{realEstatDeveloper.contactOfficerEmail}}
+      </div>
+    </div>
+  </div>
+</div>

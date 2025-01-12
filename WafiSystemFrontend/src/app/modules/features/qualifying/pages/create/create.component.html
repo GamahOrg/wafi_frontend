@@ -1,0 +1,171 @@
+<div class="page">
+
+    <div class="row row-gap-5">
+        <div class="col-12 col-md-9">
+            <div class="page-header mb-4">
+                <div class="page-title">
+                    <h2 class="title-bottom-line">
+                        <div class="icon">
+                            <span class="material-icons-outlined" *ngIf="requestTypeCode == 'RED01'">add_business</span>
+                            <span class="material-icons-outlined" *ngIf="requestTypeCode == 'RED02'">local_convenience_store</span>
+                            <span class="material-icons-outlined" *ngIf="requestTypeCode == 'RED03'">how_to_reg</span>
+                            <span class="material-icons-outlined" *ngIf="requestTypeCode == 'REM'">local_convenience_store</span>
+                            <span class="material-icons-outlined" *ngIf="requestTypeCode == 'REB'">how_to_reg</span>
+                            <span class="material-icons-outlined" *ngIf="requestTypeCode == 'EC'">store</span>
+                            <span class="material-icons-outlined" *ngIf="requestTypeCode == 'Acc'">credit_score</span>
+                        </div>
+                        {{renewRequest?'تجديد':''}} 
+                        {{ model.typeName }}
+                    </h2>
+                </div>
+                <p class="text opacity-75">{{ model.discerption }}</p>
+            </div>
+
+            <div class="page-section">
+                <div class="page-title">
+                    <h2 class="title">الشروط والمتطلبات</h2>
+                </div>
+
+                <ul class="order-list">
+                    <li *ngFor="let step of model.qualificationSteps; index as i">
+                        <span class="order">{{ i + 1 }}</span>
+                        <div class="d-flex flex-column justify-content-center">
+                            <p class="text">{{ step.discerption }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+            <div class="card brief-card" [formGroup]="createRequstForm"  id="form-createRequstForm">
+                <!-- <div class="card brief-card"> -->
+                <div class="details">
+                    <div class="item">
+                        <div class="icon">
+                            <span class="material-icons-outlined">group</span>
+                        </div>
+                        <div class="data">
+                            <span class="key">الفئة المستهدفة</span>
+                            <div class="value">{{ model.typeName }}</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="icon">
+                            <span class="material-icons-outlined">timer</span>
+                        </div>
+                        <div class="data">
+                            <span class="key">وقت استكمال الطلب</span>
+                            <div class="value">{{ model.requestStudyingDuration }}</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="icon">
+                            <span class="material-icons-outlined">money</span>
+                        </div>
+                        <div class="data">
+                            <span class="key">رسوم الخدمة</span>
+                            <div class="value">{{ price }}</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="icon">
+                            <span class="material-icons-outlined">credit_card</span>
+                        </div>
+                        <div class="data">
+                            <span class="key">طرق الدفع</span>
+                            <div class="value">
+                                <span class="inline-block mr-2">تحويل بنكي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <!-- *ngIf="requestTypeCode != 'EC' && requestTypeCode != 'Acc'" -->
+                        <div class="icon">
+                            <span class="material-icons-outlined">calendar_month</span>
+                        </div>
+                        <div class="data">
+                            <!-- <div class="data"> -->
+                            <div class="form-group">
+                                <span class="key">مدة التأهيل</span>
+                                <select class="form-select form-select-sm"  id="control-priod" (change)="changePriod($event)" formControlName="priod">
+                                    <option value=null selected disabled>اختر المدة</option>
+                                    <option value="1">سنه واحدة</option>
+                                    <option value="2">سنتين</option>
+                                    <option value="3">ثلاث سنوات</option>
+                                </select>
+                                <mat-error *ngIf="controls.priod?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <!-- <button mat-flat-button
+                            color="primary"
+                            class="w-100"
+                            (click)="creatRequest()"><mat-icon>login</mat-icon> التقديم على التأهيل</button> -->
+                    <button mat-flat-button color="primary" class="w-100" (click)="navigate()" id="btn-navigate">
+                        <mat-icon>login</mat-icon> التقديم على التأهيل
+                    </button>
+                </div>
+            </div>
+            <!-- 
+            <div class="alert alert-danger flex-column align-items-start row-gap-1 mt-5"
+                 role="alert"
+                 *ngIf="data && data.length > 0 ">
+                
+                <h6 class="alert-heading d-flex align-items-center column-gap-1 w-100">
+                    <i class="material-icons">warning</i> توجد أخطاء
+                    <button type="button" class="btn-close me-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                </h6>
+                <ul>
+                    <li *ngFor="let error of data">{{error.errorMessage}}</li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<!-- <div class="card p-3">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <form [formGroup]="createRequstForm">
+                <h6 class="form-title">
+                    <span class="icon"><i class="material-icons">list_alt</i></span>
+                    <span>نموذج إنشاء</span>
+                </h6>
+
+                <div class="row row-gap-3 mb-3" *ngIf="requestTypeCode != 'EC' && requestTypeCode != 'Acc'">
+                    <div class="col-12 col-lg-12">
+                        <label for="" class="form-label">المدة</label>
+                        <select class="form-select" formControlName="priod">
+                            <option value="">اختر المدة</option>
+                            <option ngValue="3">
+                                ثلاث سنوات
+                            </option>
+                            <option ngValue="2">
+                                سنتين
+                            </option>
+                            <option ngValue="1">
+                                سنه واحدة
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button mat-flat-button color="primary" (click)="creatRequest()">Create</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="alert alert-danger flex-column align-items-start row-gap-1" role="alert" *ngIf="data && data.length > 0 ">
+                <h6 class="alert-heading d-flex align-items-center column-gap-1"><i class="material-icons">warning</i> توجد أخطاء</h6>
+                <ul>
+                    <li *ngFor="let error of data">{{error.errorMessage}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> -->

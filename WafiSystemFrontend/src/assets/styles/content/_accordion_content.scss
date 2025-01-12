@@ -1,0 +1,95 @@
+.accordion-heading {
+    display: flex;
+    align-items: center;
+
+    .title {
+        display: flex;
+        align-items: center;
+        column-gap: .5rem;
+
+        // color: $darkgreen;
+        color: $theme-dark;
+
+        :host-context(.rega) & {
+            color: $theme-dark;
+        }
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            // background-color: rgba($darkgreen, .08);
+            background-color: rgba($theme-dark, .08);
+
+            :host-context(.rega) & {
+                background-color: rgba($theme-dark, .08);
+            }
+
+            [class^="material-icons"] {
+                font-size: $body-font-size;
+                // color: $darkgreen;
+                color: $theme-dark;
+
+                :host-context(.rega) & {
+                    color: $theme-dark;
+                }
+            }
+        }
+    }
+
+    .btn {
+        --bs-btn-color: #{$theme-dark};
+        --bs-btn-border-color: #{$theme-dark};
+
+        --bs-btn-active-border-color: #{$theme-dark};
+        --bs-btn-active-bg: #{$theme-dark};
+
+        --bs-btn-hover-border-color: #{$theme-dark};
+        --bs-btn-hover-bg: #{$theme-dark};
+
+        display: flex;
+        align-items: center;
+        margin-inline-start: auto;
+        border-radius: $card-border-radius;
+
+        &:not(:hover) {
+            // background-color: $lightgreen;
+            background-color: $theme-light;
+
+            :host-context(.rega) & {
+                background-color: $theme-light;
+            }
+        }
+
+        :host-context(.rega) & {
+            --bs-btn-color: #{$theme-dark};
+            --bs-btn-border-color: #{$theme-dark};
+
+            --bs-btn-active-border-color: #{$theme-dark};
+            --bs-btn-active-bg: #{$theme-dark};
+
+            --bs-btn-hover-border-color: #{$theme-dark};
+            --bs-btn-hover-bg: #{$theme-dark};
+        }
+    }
+}
+
+.panel-open {
+    .accordion-heading {
+        .title {
+            .icon {
+                // background-color: $orange;
+                background-color: $theme-light;
+
+                :host-context(.rega) & {
+                    background-color: $theme-light;
+                }
+            }
+        }
+    }
+}

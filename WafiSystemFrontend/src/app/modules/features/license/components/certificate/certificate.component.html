@@ -1,0 +1,190 @@
+<div class="cetificate"
+     dir="rtl"
+     [ngClass]="className">
+    <div class="cert-slogan"
+         [ngClass]="'ar'">
+        <div class="icon"><i class="fa fa-map-marker"></i></div>
+        <h6 class="slogan">...عقودٌ للوفاء</h6>
+        <div class="line"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-auto">
+            <div class="cert-side">
+                <div class="arrow"><i class="fa fa-angle-down"></i></div>
+
+                <div class="logo"><img src="/assets/images/general/logo-vertical.svg"
+                         alt=""></div>
+
+                <div class="verification">
+                    <label class="label">رابط التحقق</label>
+                    <div class="square"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="cert-header">
+                <div class="row justify-content-between">
+                    <div class="col-12 col-lg col-xxl-6">
+                        <h4 class="title">{{certificateTemplateDate?.arabicTitle}}</h4>
+                        <h4 class="title">{{certificateTemplateDate?.englishTitle}}</h4>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-xxl-5"
+                         *ngIf="certificateTemplateDate!.headerData!.length>0">
+                        <div class="cert-form">
+                            <div class="row"
+                                 *ngFor="let data of certificateTemplateDate?.headerData">
+                                <label for=""
+                                       class="col-auto form-label">{{data.arabicTitle}}</label>
+                                <div class="col">
+                                    <!-- <label for=""
+                                    class="col-auto form-label">{{data.value}}</label> -->
+
+                                    <input type="text"
+                                           class="form-control"
+                                           readonly
+                                           disabled
+                                           [value]="data.value">
+                                </div>
+                                <label for=""
+                                       class="col-auto form-label"
+                                       dir="ltr">{{data.englishTitle}}</label>
+                            </div>
+                            <!-- <div class="row">
+                                <label for=""
+                                       class="col-auto form-label">تاريخ الإصدار</label>
+                                <div class="col">
+                                    <div class="d-flex align-items-baseline">
+                                        <input type="text"
+                                               class="form-control">
+                                        <span class="mx-1">/</span>
+                                        <input type="text"
+                                               class="form-control">
+                                        <span class="mx-1">/</span>
+                                        <input type="text"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <label for=""
+                                       class="col-auto form-label"
+                                       dir="ltr">Issue Date:</label>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cert-body">
+                <div class="cert-form">
+                    <div class="row"
+                         *ngFor="let data of certificateTemplateDate?.bodyData">
+                        <label for=""
+                               class="col-auto form-label">{{data.arabicTitle}}</label>
+                        <div class="col">
+                            <input type="text"
+                                   class="form-control"
+                                   readonly
+                                   disabled
+                                   [value]="data.value">
+                        </div>
+                        <label for=""
+                               class="col-auto form-label"
+                               dir="ltr">{{data.englishTitle}}</label>
+                    </div>
+                    <!-- <div class="row">
+                        <label for=""
+                               class="col-auto form-label">اسم المنشأة</label>
+                        <div class="col">
+                            <input type="text"
+                                   class="form-control">
+                        </div>
+                        <label for=""
+                               class="col-auto form-label"
+                               dir="ltr">Organization Name</label>
+                    </div> -->
+                    <!-- <div class="row">
+                        <label for=""
+                               class="col-auto form-label">اسم المنشأة</label>
+                        <div class="col">
+                            <input type="text"
+                                   class="form-control">
+                        </div>
+                        <label for=""
+                               class="col-auto form-label"
+                               dir="ltr">Organization Name</label>
+                    </div> -->
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <div class="cert-signature">
+                        <h6 class="role">رئيس مجلس إدارة الهيئة العامة للعقار</h6>
+                        <h6 class="name">ماجد بن عبدالله الحقيل</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cert-footer">
+        <div class="cert-notes">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="cert-form">
+                        <div class="row">
+                            <label for=""
+                                   class="col-auto form-label">نسخة رقم:</label>
+                            <div class="col">
+                                <input type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg">
+                    <div class="d-flex justify-content-between column-gap-5"
+                         *ngFor="let data of certificateTemplateDate?.footerData">
+                        <p class="text"
+                           [ngClass]="data.className">{{data.arabicTitle}}</p>
+                        <p class="text"
+                           [ngClass]="data.className"
+                           dir="ltr">{{data.englishTitle}}</p>
+                    </div>
+                    <!-- <div class="d-flex justify-content-between column-gap-3">
+                        <p class="text text-success">من قيمة الوحدة على أن يتم الإيداع بحساب الضمان رقم :</p>
+                        <div class="cert-form flex-fill">
+                            <input type="text"
+                                   class="form-control text-center">
+                        </div>
+                        <p class="text text-danger"
+                           dir="ltr">amount of the reservation should be deposited in the escrow account No:</p>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <hr class="footer-spacer">
+
+        <div class="d-flex justify-content-between">
+            <div class="info">
+                <div class="website">wafi.rega.gov.sa</div>
+                <div class="phone">920004831</div>
+            </div>
+
+            <div class="logo">
+                <img src="/assets/images/general/logo-wide.svg"
+                     alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="lines">
+        <img class="top-right"
+             src="/assets/images/qualifying/cert-lines-top-right.svg"
+             alt="">
+        <img class="bottom-left"
+             src="/assets/images/qualifying/cert-lines-bottom-left.svg"
+             alt="">
+    </div>
+</div>

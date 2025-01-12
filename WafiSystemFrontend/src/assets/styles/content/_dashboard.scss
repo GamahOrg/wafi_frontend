@@ -1,0 +1,131 @@
+.announcement {
+    padding: .5rem 1rem;
+    margin-bottom: 2rem;
+    // border-bottom: 3px solid $orange;
+    border-bottom: 5px solid $theme-mid;
+    // background: linear-gradient(270deg, $success 0%, rgba($success, .5) 100%);
+    background: linear-gradient(270deg, $theme-dark 0%, rgba($theme-dark, .75) 100%);
+
+    .text,
+    .link {
+        color: $white;
+    }
+
+    .text {
+        text-align: center;
+        font-size: .8rem;
+    }
+
+    .link {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+// .announcement {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-between;
+//     column-gap: 3rem;
+
+//     padding: 1rem;
+//     margin-bottom: 2rem;
+//     border-bottom: 4px solid $success;
+//     border-radius: $border-radius-sm;
+//     background: $white;
+//     box-shadow: 0px 4px 12px 0px rgba($black, 0.15);
+
+//     .text,
+//     .link {
+//         color: $success;
+//     }
+
+//     .text {
+//         text-align: center;
+//     }
+
+//     .link {
+//         font-size: $font-size-sm;
+
+//         &:hover {
+//             text-decoration: none;
+//         }
+//     }
+// }
+
+.dashboard-card {
+    --bs-card-cap-bg: $white;
+
+    box-shadow: 0px 4px 24px 0px rgba($black, 0.15);
+
+    .card-header {
+        position: relative;
+        overflow: hidden;
+
+        min-height: 5rem;
+        padding: 1.5rem 2rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            z-index: 1;
+            transform: rotate(1.5deg) translateY(-1rem);
+
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            border-radius: $card-border-radius;
+            // background: #33C68B;
+            background: $theme-mid;
+
+            :host-context(.rega) & {
+                background: $theme-mid;
+            }
+        }
+
+        .card-title {
+            position: relative;
+            z-index: 2;
+
+            margin-bottom: 0;
+            color: $white;
+        }
+    }
+
+    .card-body {
+        padding: 1.5rem 2rem;
+        font-size: $font-size-sm;
+
+        @media (max-width: 767px) {
+            padding: .5rem 1rem 1rem;
+        }
+
+        .mdc-button {
+            margin-top: 1rem;
+        }
+    }
+
+    .card-image {
+        position: relative;
+        z-index: 3;
+        text-align: end;
+
+        margin-top: -4rem;
+
+        @media (max-width: 767px) {
+            margin-top: -4.5rem;
+        }
+
+        img {
+            margin-inline-end: 2rem;
+
+            @media (max-width: 767px) {
+                max-width: 30%;
+                margin-inline-end: 1rem;
+            }
+        }
+    }
+}

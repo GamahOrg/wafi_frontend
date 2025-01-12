@@ -1,0 +1,195 @@
+<div class="" *ngIf="entity$ | async as engineeringConsultant">
+  <div *ngIf="form" class="d-flex flex-column h-100" [formGroup]="form">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">
+        {{ localizations.EngineeringConsultantTitle }}
+      </h6>
+    </div>
+    <div class="tab-data-section">
+      <!-- *ngIf="!facility$.value"> -->
+
+      <app-engineering-consultant-customer-info
+        [form]="form"
+        [requiredMessage]="localizations.EngineeringConsultantRequired"
+        [label]="localizations.EngineeringConsultant"
+        [buttonName]="localizations.ValidateConsultant"
+        (onChange)="setFacility($event)"
+      >
+      </app-engineering-consultant-customer-info>
+    </div>
+    <ng-container *ngIf="facility$.value">
+      <div class="tab-data-section">
+        <div class="row">
+          <div class="tab-data-section">
+            <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+              <div class="col-12 col-lg-6">
+                <div class="key">رقم السجل التجاري</div>
+                <div class="value">
+                  <span class="icon material-icons">blinds</span>
+                  {{
+                    facility$.value.commercialRegisterNumber
+                      ? facility$.value.commercialRegisterNumber
+                      : facility.commercialRegisterNumber
+                  }}
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="key">نوع الشركة</div>
+                <div class="value">
+                  <span class="icon material-icons">language</span>
+                  {{
+                    facility$.value.facilityType
+                      ? facility$.value.facilityType
+                      : facility.facilityType
+                  }}
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="key">اسم الشركة</div>
+                <div class="value">
+                  <span class="icon material-icons">blinds</span>
+                  {{
+                    facility$.value.facilityName
+                      ? facility$.value.facilityName
+                      : facility.facilityName
+                  }}
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <div class="key">رقم شهادة التأهيل</div>
+                <div class="value">
+                  <span class="icon material-icons">blinds</span>
+                  {{
+                    facility$.value.certificateNumber
+                      ? facility$.value.certificateNumber
+                      : facility.certificateNumber
+                  }}
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="key">رقم الرخصه</div>
+                <div class="value">
+                  <span class="icon material-icons">blinds</span>
+                  {{
+                    facility$.value.saudiAuthorityOfEngineersLicenseNumber
+                      ? facility$.value.saudiAuthorityOfEngineersLicenseNumber
+                      : facility.saudiAuthorityOfEngineersLicenseNumber
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--    <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label for="engineeringConsultantLicenseNumber"
+                                   class="form-label">رقم السجل التجاري</label>
+
+                                   {{facility.commercialRegisterNumber}}
+                        </div>
+                    </div> -->
+          <!--                     <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label for="engineeringConsultantLicenseNumber"
+                                   class="form-label">{{localizations.EngineeringConsultantLicenseNumber}}</label>
+                            <input id="engineeringConsultantLicenseNumber"
+                                   name="engineeringConsultantLicenseNumber"
+                                   type="number"
+                                   class="form-control"
+                                   formControlName="engineeringConsultantLicenseNumber">
+                            <div class="invalid-feedback d-block"
+                                 *ngIf="controls['engineeringConsultantLicenseNumber'].hasError('required')
+             && controls['engineeringConsultantLicenseNumber'].touched">
+                                {{localizations.EngineeringConsultantLicenseNumberRequired}}
+                            </div>
+                        </div>
+                    </div> -->
+          <!--
+          <div class="col-12 col-lg-12">
+            <app-engineering-consultant-upload [form]="form"
+                                               [label]="localizations.ConsultantEngineeringAttachmentLabel"
+                                               [requiredMessage]="localizations.ConsultantEngineeringAttachmentRequired"
+                                               [propertyFile]="'engineeringConsultantDelegatorSignModelFile'"
+                                               [propertyName]="'engineeringConsultantDelegatorSignModelFileId'"
+                                               [entity]="engineeringConsultant"></app-engineering-consultant-upload>
+          </div> -->
+        </div>
+      </div>
+
+      <div class="tab-data-section">
+        <app-engineering-consultant-agreement
+          [form]="form"
+          [header]="localizations.AgreementSection"
+        >
+        </app-engineering-consultant-agreement>
+      </div>
+      <h6 class="title fw-normal">ملفات الاتفاقيه</h6>
+      <div class="col-12 col-lg-12">
+        <div class="form-group mb-4">
+          <div
+            class="value"
+            *ngFor="let proposedFile of saveEngineeringConsultantFiles"
+          >
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a
+              *ngIf="proposedFile && proposedFile.id"
+              id="link-proposedScheduleFile"
+              [href]="baseUrl + proposedFile.filePath"
+              target="_blank"
+            >
+              {{ proposedFile.fileDescription }}</a
+            >
+            <span class="delete"
+            (click)="deletFile(proposedFile.id)"><i
+             class="icon material-icons text-danger">close</i></span>
+          </div>
+          <app-file-uploader
+            [data]="multiFilesUploaderData"
+            (fileUploaded)="onEngineeringConsultantFileUploaded($event)"
+          ></app-file-uploader>
+        </div>
+      </div>
+
+      <div class="tab-data-section">
+        <h6 class="form-title">{{ localizations.FirstStaffAgreement }}</h6>
+        <ng-container *ngFor="let iterate of types.firstSection">
+          <app-engineering-consultant-agreement-staff
+            [form]="form"
+            [totalMonths]="entity.numberOfMonths"
+            [propertyName]="iterate.id"
+            [subHeader]="iterate.header"
+          >
+          </app-engineering-consultant-agreement-staff>
+        </ng-container>
+      </div>
+
+      <div class="tab-data-section">
+        <h6 class="form-title">{{ localizations.SecondStaffAgreement }}</h6>
+        <ng-container *ngFor="let iterate of types.secondSection">
+          <app-engineering-consultant-agreement-staff
+            [form]="form"
+            [totalMonths]="entity.numberOfMonths"
+            [propertyName]="iterate.id"
+            [subHeader]="iterate.header"
+          >
+          </app-engineering-consultant-agreement-staff>
+        </ng-container>
+      </div>
+
+      <div class="tab-data-section">
+        <h6 class="form-title">{{ localizations.ThirdStaffAgreement }}</h6>
+        <ng-container *ngFor="let iterate of types.thirdSection">
+          <app-engineering-consultant-agreement-staff
+            [form]="form"
+            [totalMonths]="entity.numberOfMonths"
+            [propertyName]="iterate.id"
+            [subHeader]="iterate.header"
+          >
+          </app-engineering-consultant-agreement-staff>
+        </ng-container>
+      </div>
+      <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseProjectBuyerForm"
+  id="form-licenseProjectBuyerForm">
+  
+  <div class="tab-data-section">
+    <div class="row mb-3">
+    
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">اسم المشتري</label>
+          <input type="text" id="control-name" class="form-control" formControlName="name"
+            placeholder="اسم المشتري">
+          <mat-error
+            *ngIf="(controls.name?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الهوية</label>
+          <input type="text" id="control-nIDNumber" class="form-control"
+            formControlName="nIDNumber" placeholder="رقم الهوية">
+          <mat-error
+            *ngIf="(controls.nIDNumber?.hasError('required'))&& showValidation">حقل
+            مطلوب</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الجوال</label>
+          <input type="text" id="control-mobile" class="form-control"
+            formControlName="mobile" placeholder="رقم الجوال">
+          <mat-error
+            *ngIf="(controls.mobile?.hasError('required'))&& showValidation">حقل
+            مطلوب</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <div class="key">ملف العقد</div>
+         
+          <app-file-uploader [data]="singleFilesUploaderData"
+            (fileUploaded)="onExistContractFileUploaded($event)"></app-file-uploader>
+          <div class="invalid-feedback d-block"
+            *ngIf="!contractFileId && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+    
+
+
+    </div>
+  </div>
+ 
+</form>
+
+

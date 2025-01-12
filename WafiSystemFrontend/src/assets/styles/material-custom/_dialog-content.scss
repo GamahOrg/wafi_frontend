@@ -1,0 +1,42 @@
+.mdc-dialog__title {
+    display: flex;
+    align-items: center;
+
+    margin-inline: 2rem;
+    padding: 1rem 0;
+
+    color: rgba($black, .5);
+    border-bottom: 3px solid #E4E4E4;
+
+    button {
+        margin-inline-start: auto;
+    }
+
+    &+.mdc-dialog__content {
+        margin-top: 1rem;
+    }
+}
+
+.mdc-dialog__content {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    margin-inline: 1rem;
+    padding-inline: 1rem;
+
+    letter-spacing: normal;
+    overflow-x: hidden;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.mdc-dialog__actions {
+    margin-inline: 2rem;
+    padding: 1rem 0;
+    border-top: 3px solid #E4E4E4;
+}

@@ -1,0 +1,35 @@
+<div class="rega d-flex flex-column justify-content-between h-100">
+  <app-auth-topbar></app-auth-topbar>
+
+  <div class="flex-fill">
+    <div class="page-header">
+      <div class="container">
+        <div class="page-header-content">
+          <div class="logo">
+            <img
+              src="assets/images/general/logo-rega-wide-white.svg"
+              alt=""
+              class="logo-img"
+            />
+          </div>
+          <div class="page-title">
+            <h6 class="title">{{ title }}</h6>
+            <h6 class="subtitle">{{ subtitle }}</h6>
+          </div>
+          <div class="logo">
+            <img src="assets/images/general/logo-2030.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+
+  <app-real-estate-contribution-footer></app-real-estate-contribution-footer>
+</div>
+<!-- <app-loader></app-loader> -->

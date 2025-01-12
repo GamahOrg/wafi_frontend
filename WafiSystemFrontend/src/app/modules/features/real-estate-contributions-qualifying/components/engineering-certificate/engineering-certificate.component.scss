@@ -1,0 +1,105 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/certs/qualifying-certificates";
+
+.cetificate {
+  .cetificate-layout {
+    row-gap: 1rem;
+
+    @media print {
+      row-gap: 3.8rem;
+    }
+
+    .data {
+      display: flex;
+      flex-direction: column;
+      row-gap: .5rem;
+
+      position: relative;
+      z-index: 2;
+
+      @media print {
+        row-gap: 1rem;
+      }
+
+      .title {
+        font-size: .8vw;
+
+        @media print {
+          font-size: 3vw;
+        }
+      }
+
+      .text {
+        font-size: .6vw;
+        font-weight: bold;
+
+        @media print {
+          font-size: 2.25vw;
+        }
+      }
+
+      .date {
+        font-size: .5vw;
+        font-weight: bold;
+
+        @media print {
+          font-size: 1.8vw;
+        }
+      }
+    }
+
+    .expiration {
+      position: relative;
+      width: fit-content;
+      padding-inline: 3%;
+
+      .stamp-pattern {
+        position: absolute;
+        z-index: 1;
+        right: 50%;
+        bottom: 50%;
+        transform: translate(50%, 50%);
+        width: 75%;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+
+        position: relative;
+        z-index: 2;
+
+        .title,
+        .text {
+          font-size: .25vw;
+          font-weight: bold;
+
+          @media print {
+            font-size: 1.25vw;
+          }
+        }
+
+        .text {
+          span {
+            &.count {
+              margin-inline-start: .25rem;
+              padding: .25rem;
+              color: #fff;
+              border-radius: 3px;
+              background-color: #001f5f;
+            }
+          }
+        }
+      }
+    }
+
+    .cert-footer {
+      justify-content: end;
+
+      img {
+        width: 50%;
+      }
+    }
+  }
+}

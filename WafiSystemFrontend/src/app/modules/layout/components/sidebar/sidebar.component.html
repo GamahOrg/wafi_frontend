@@ -1,0 +1,581 @@
+<div class="sidebar-content">
+  <div class="logo d-flex justify-content-center align-items-center">
+    <a routerLink="" routerLinkActive="">
+      <img
+        [src]="baseImagePath + 'REGA_LOGO_Dark.svg'"
+        alt=""
+        class="img-fluid logo-img"
+      />
+      <!-- <img [src]="baseImagePath + 'logo-herizontal.png'" alt="" class="img-fluid"> -->
+    </a>
+  </div>
+  <div class="profile">
+    <div class="image">
+      <img
+        *ngIf="userData?.profileImageFile == null"
+        src="assets/images/general/static-person.jpeg"
+        alt=""
+        class="d-block w-100"
+      />
+      <img
+        *ngIf="userData?.profileImageFile != null"
+        [src]="baseUrl + userData?.profileImageFile?.filePath"
+        alt=""
+        class="d-block w-100"
+      />
+    </div>
+
+    <!-- <div class="image" *ngIf="userData?.profileImageFile">
+            <img width="200" height="200" [src]="baseUrl + userData?.profileImageFile?.filePath"
+                class="d-block w-100 h-100" />
+        </div> -->
+
+    <h5 class="name">{{ userData?.fullName }}</h5>
+
+    <div
+      *ngIf="
+        !this.userData?.isEmployee &&
+        loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
+      "
+      class="reg-record"
+    >
+      <a
+        class="dropdown-toggle"
+        href="#"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        السجل التجاري
+        {{
+          userData && userData.facilities.length > 0
+            ? userData.facilities[0].commercialRegisterNumber
+            : "0"
+        }}
+        <i class="icon material-icons-outlined">expand_more</i>
+      </a>
+      <ul
+        class="dropdown-menu"
+        *ngIf="userData && userData.facilities.length > 0"
+      >
+        <li
+          *ngFor="
+            let facility of userData.facilities;
+            let first = first;
+            let i = index
+          "
+        >
+          <a
+            class="dropdown-item"
+            (click)="updateDefaultFacility(facility, i)"
+            [ngClass]="{ 'disabled active': first }"
+            >{{ facility.commercialRegisterNumber }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="nav flex-column" [ngClass]="currentLang">
+    <div
+      *ngIf="
+        !this.userData?.isEmployee &&
+        loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
+      "
+      class="link-group"
+    >
+      <a
+        class="nav-link"
+        [routerLink]="'/' + links.facilities"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+      >
+        <span class="icon"
+          ><i class="material-icons-outlined">dashboard</i></span
+        >
+        الصفحة الرئيسية
+      </a>
+    </div>
+    <!-- <div class="link-group">
+      <a
+        class="nav-link"
+        [routerLink]="'/' + links.dashboard"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+      >
+        Dashboard
+      </a>
+    </div> -->
+    <div
+      *ngIf="
+        !this.userData?.isEmployee &&
+        loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
+      "
+      class="link-group"
+    >
+      <a
+        class="nav-link"
+        [routerLink]="'/' + links.facilityProfile"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+      >
+        ملف المنشأة
+      </a>
+    </div>
+
+    <!-- <div class="link-group">
+            <accordion [closeOthers]="false"
+                       [isAnimated]="true"
+                       class="simple menu-accordion">
+                <ng-container>
+                    <accordion-group [isOpen]="currentUrl.includes('/'+links.training)">
+                        <div class="accordion-heading"
+                             accordion-heading>
+                            <h6 class="title">
+                                <span class="icon"><i class="material-icons-outlined">tab</i></span>
+                                الدورات التدريبية
+                            </h6>
+                            <div class="icon">
+                                <i class="open material-icons-outlined">chevron_left</i>
+                                <i class="close material-icons-outlined">expand_less</i>
+                            </div>
+                        </div>
+
+                        <a class="nav-link"
+                           [routerLink]="'/'+links.training+'/'+links.trainingTypes"
+                           routerLinkActive="active">
+                            إنشاء طلب جديد
+                        </a>
+
+                        <a class="nav-link"
+                           [routerLink]="'/'+links.training+'/'+links.trainingList"
+                           routerLinkActive="active">
+                            قائمة الطلبات
+                        </a>
+
+                        <a class="nav-link"
+                           [routerLink]="'/'+links.training+'/'+links.trainingCertificates"
+                           routerLinkActive="active">
+                            شهادات التدريب
+                        </a>
+                    </accordion-group>
+                </ng-container>
+            </accordion>
+        </div> -->
+
+    <div
+      *ngIf="
+        !this.userData?.isEmployee &&
+        loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
+      "
+      class="link-group"
+    >
+      <accordion
+        [closeOthers]="false"
+        [isAnimated]="true"
+        class="simple menu-accordion"
+      >
+        <ng-container>
+          <accordion-group
+            [isOpen]="currentUrl.includes('/' + links.qualifying)"
+            [isOpen]="true"
+          >
+            <div class="accordion-heading" accordion-heading>
+              <h6 class="title">
+                <span class="icon"
+                  ><i class="material-icons-outlined">card_membership</i></span
+                >
+                التأهيل
+              </h6>
+              <div class="icon">
+                <i class="open material-icons-outlined">chevron_left</i>
+                <i class="close material-icons-outlined">expand_less</i>
+              </div>
+            </div>
+
+            <a
+              class="nav-link"
+              [routerLink]="'/' + links.qualifying + '/' + links.qualifyingReqs"
+              routerLinkActive="active"
+            >
+              إنشاء طلب جديد
+            </a>
+
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' + links.qualifying + '/' + links.qualifyingReqList
+              "
+              routerLinkActive="active"
+            >
+              قائمة الطلبات
+            </a>
+
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' + links.qualifying + '/' + links.qualifyingCertificates
+              "
+              routerLinkActive="active"
+            >
+              شهادات التأهيل
+            </a>
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' + links.qualifying + '/' + links.renewQualifyingList
+              "
+              routerLinkActive="active"
+            >
+              تجديد التأهيل
+            </a>
+          </accordion-group>
+        </ng-container>
+      </accordion>
+    </div>
+
+    <div
+      *ngIf="
+        !this.userData?.isEmployee &&
+        loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
+      "
+      class="link-group"
+    >
+      <accordion
+        [closeOthers]="false"
+        [isAnimated]="true"
+        class="simple menu-accordion"
+      >
+        <ng-container>
+          <accordion-group
+            [isOpen]="currentUrl.includes('/' + links.license)"
+            [isOpen]="true"
+          >
+            <div class="accordion-heading" accordion-heading>
+              <h6 class="title">
+                <span class="icon"
+                  ><i class="material-icons-outlined">local_police</i></span
+                >
+                الترخيص
+              </h6>
+              <div class="icon">
+                <i class="open material-icons-outlined">chevron_left</i>
+                <i class="close material-icons-outlined">expand_less</i>
+              </div>
+            </div>
+
+            <a
+              class="nav-link"
+              [routerLink]="'/' + links.license + '/' + links.licenseTypes"
+              routerLinkActive="active"
+            >
+              إنشاء طلب جديد
+            </a>
+
+            <a
+              class="nav-link"
+              [routerLink]="'/' + links.license + '/' + links.lincenseList"
+              routerLinkActive="active"
+            >
+              قائمة الطلبات
+            </a>
+
+
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' + links.license + '/' + links.lincenseCertificates
+              "
+              routerLinkActive="active"
+            >
+              شهادات الترخيص
+            </a>
+            <a
+            class="nav-link"
+            [routerLink]="'/' + links.license + '/' + links.renewLicensesList"
+            routerLinkActive="active"
+          >
+            تجديد الرخص
+          </a>
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' + links.license + '/' + links.lincenseRequestApprovals
+              "
+              routerLinkActive="active"
+            >
+              الموافقات
+            </a>
+            <a *ngIf="isEngineer"
+              class="nav-link"
+              [routerLink]="'/' + links.license + '/' + links.projectList"
+              routerLinkActive="active"
+            >
+              قائمة المشاريع
+            </a>
+
+            <!-- <a
+              *ngIf="isAccountant"
+              class="nav-link"
+              [routerLink]="'/' + links.license + '/' + links.buyerList"
+              routerLinkActive="active"
+            >
+              قائمة سجل المشترين
+            </a>            -->
+            <!-- <a *ngIf="isDeveloper"
+              class="nav-link"
+              [routerLink]="
+                '/' + links.license + '/' + links.licensecertificatetemplate
+              "
+              routerLinkActive="active"
+            >
+              قائمة المشاريع السابقة
+            </a> -->
+            <a
+              *ngIf="isAccountant"
+              class="nav-link"
+              [routerLink]="'/' + links.charteredaccountprojectlist"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+            >
+              مشاريع المحاسب القانوني
+            </a>
+          </accordion-group>
+        </ng-container>
+      </accordion>
+    </div>
+
+    <div
+      *ngIf="
+        !this.userData?.isEmployee &&
+        loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
+      "
+      class="link-group"
+    >
+      <accordion
+        [closeOthers]="false"
+        [isAnimated]="true"
+        class="simple menu-accordion"
+      >
+        <ng-container>
+          <accordion-group
+            [isOpen]="currentUrl.includes('/' + links.lincenceProjectRequest)"
+            [isOpen]="true"
+          >
+            <div class="accordion-heading" accordion-heading>
+              <h6 class="title">
+                <span class="icon"
+                  ><i class="material-icons-outlined">card_membership</i></span
+                >
+                الطلبات الأعتيادية والغير اعتيادية
+              </h6>
+              <div class="icon">
+                <i class="open material-icons-outlined">chevron_left</i>
+                <i class="close material-icons-outlined">expand_less</i>
+              </div>
+            </div>
+
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' +
+                links.lincenceProjectRequest +
+                '/' +
+                links.createLincenceProjectRequestList
+              "
+              routerLinkActive="active"
+            >
+              إنشاء طلب جديد
+            </a>
+
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' +
+                links.lincenceProjectRequest +
+                '/' +
+                links.lincenceProjectRequestList
+              "
+              routerLinkActive="active"
+            >
+              قائمة الطلبات
+            </a>
+
+
+
+
+          </accordion-group>
+        </ng-container>
+      </accordion>
+    </div>
+
+    <div
+      *ngIf="
+        this.userData?.isEmployee &&
+        loginUserTypeEnum == LoginUserTypeEnum.Employee
+      "
+      class="link-group"
+    >
+      <accordion
+        [closeOthers]="false"
+        [isAnimated]="true"
+        class="simple menu-accordion"
+      >
+        <ng-container>
+          <accordion-group
+            [isOpen]="currentUrl.includes('/' + links.license)"
+            [isOpen]="true"
+          >
+            <div class="accordion-heading" accordion-heading>
+              <h6 class="title">
+                <span class="icon"
+                  ><i class="material-icons-outlined">local_police</i></span
+                >
+                تراخيص الموظف
+              </h6>
+              <div class="icon">
+                <i class="open material-icons-outlined">chevron_left</i>
+                <i class="close material-icons-outlined">expand_less</i>
+              </div>
+            </div>
+
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' + links.license + '/' + links.employeeCreateLicense
+              "
+              routerLinkActive="active"
+            >
+              إنشاء طلب جديد
+            </a>
+
+            <a
+              class="nav-link"
+              [routerLink]="
+                '/' + links.license + '/' + links.employeeLicenseList
+              "
+              routerLinkActive="active"
+            >
+              قائمة الطلبات
+            </a>
+
+            <!-- <a
+            class="nav-link"
+            [routerLink]="'/' + links.license + '/' + links.licenseUnderStudy"
+            routerLinkActive="active"
+          >
+            تحديث الطلبات
+          </a> -->
+
+            <!-- <a class="nav-link" [routerLink]="
+                '/' + links.license + '/' + links.lincenseCertificates
+              " routerLinkActive="active">
+              شهادات الترخيص
+            </a> -->
+          </accordion-group>
+        </ng-container>
+      </accordion>
+    </div>
+
+    <!-- <div class="link-group">
+            <accordion [closeOthers]="false"
+                       [isAnimated]="true"
+                       class="simple menu-accordion">
+                <ng-container>
+                    <accordion-group [isOpen]="currentUrl.includes('/'+links.engineeringManagement)"
+                                     [isOpen]="true">
+                        <div class="accordion-heading"
+                             accordion-heading>
+                            <h6 class="title">
+                                <span class="icon"><i class="material-icons-outlined">local_police</i></span>
+                                الإدارة الهندسية
+                            </h6>
+                            <div class="icon">
+                                <i class="open material-icons-outlined">chevron_left</i>
+                                <i class="close material-icons-outlined">expand_less</i>
+                            </div>
+                        </div>
+
+                        <a class="nav-link"
+                           [routerLink]="'/'+links.engineeringManagement+'/'+links.projectList"
+                           routerLinkActive="active">
+                            قائمة المشاريع
+                        </a>
+
+                    </accordion-group>
+                </ng-container>
+            </accordion>
+        </div> -->
+
+    <div
+      *ngIf="loginUserTypeEnum == LoginUserTypeEnum.finalBeneficiary"
+      class="link-group"
+    >
+      <a
+        [routerLink]="'/' + links.license + '/' + links.contractdocumentation"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        <span class="icon"
+          ><i class="material-icons-outlined">dashboard</i></span
+        >
+        توثيق العقود
+      </a>
+    </div>
+
+    <!-- <div *ngIf="isAccountant" class="link-group">
+      <a
+        [routerLink]="'/' + links.license + '/' + links.buyerList"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        <span class="icon"
+          ><i class="material-icons-outlined">dashboard</i></span
+        >
+        سجل المشترين
+      </a>
+    </div> -->
+
+    <div
+      *ngIf="
+        !this.userData?.isEmployee &&
+        loginUserTypeEnum == LoginUserTypeEnum.wafiPartner
+      "
+      class="link-group"
+    >
+      <a
+        [routerLink]="'/' + links.userManagement + '/' + links.userProfile"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        <span class="icon"
+          ><i class="material-icons-outlined">dashboard</i></span
+        >
+        إدارة المنشأة
+      </a>
+    </div>
+
+    <div
+      *ngIf="
+        !this.userData?.isEmployee &&
+        loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
+      "
+      class="link-group"
+    >
+      <a
+        [routerLink]="
+          '/' + links.complaintsAndReport + '/' + links.complaintsReports
+        "
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        <span class="icon"
+          ><i class="material-icons-outlined">dashboard</i></span
+        >
+        الشكاوي والبلاغات
+      </a>
+    </div>
+  </nav>
+</div>
+<!-- </nav>
+</div> -->

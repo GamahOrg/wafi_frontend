@@ -1,0 +1,100 @@
+<div class="col-12 col-md-12">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-lg-6">
+        <div class="key">المشروع</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.licenseProject.name}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">المفوض</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.delegatorCustomer?.fullName}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">رقم السجل التجاري</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.facility.commercialRegisterNumber}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">اسم الشركة</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.facility.facilityName}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">البريد الإلكتروني</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.facility.email}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">رقم الجوال</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.facility.telephone}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="mainRealStateDeveloperApproval.isApproved">
+        <div class="key">تاريخ الموافقة</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.approvedOn | date:"MM/dd/yyyy"}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">هل تمت الموافقة</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.isApproved ? 'نعم' : 'لا'}}
+        </div>
+      </div>
+    </div>
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-lg-6">
+        <div class="key">رقم رخصة المطور العقاري</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.mainRealStateDeveloperLicenseNumber}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="mainRealStateDeveloperApproval.mainRealStateDeveloperAgreementIsApproved">
+        <div class="key">تاريخ الموافقة</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.mainRealStateDeveloperAgreementApprovedOn | date:"MM/dd/yyyy"}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">هل تمت الموافقة؟</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.mainRealStateDeveloperAgreementIsApproved ? 'نعم' : 'لا'}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">تاريخ الاتفاقية</div>
+        <div class="value">
+          {{mainRealStateDeveloperApproval.agreementDate | date:"MM/dd/yyyy"}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">ملف الاتفاقية</div>
+        <div class="value">
+          <a [href]="baseUrl + mainRealStateDeveloperApproval.mainRealStateDeveloperAgreementFile.filePath"
+            target="_blank">
+            {{mainRealStateDeveloperApproval.mainRealStateDeveloperAgreementFile.fileDescription}}</a>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key"> اسم المفوض </div>
+        <div class="value">{{mainRealStateDeveloperApproval.delegatorCustomer?.fullName}}</div>
+    </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

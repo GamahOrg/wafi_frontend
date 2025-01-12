@@ -1,0 +1,51 @@
+
+<div class="d-flex flex-column h-100">
+    
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">قائمةالمفوضون بالتوقيع على وثيقة الصرف</h6>
+    
+        <button mat-raised-button class="edit-icon" (click)="openDialog()"><span class="material-icons">add</span></button>
+    </div>
+    
+    <div class="tab-data-section">
+        <div class="table-responsive">
+            <table class="table table-light" *ngIf="licenseProjectDelegators && licenseProjectDelegators.length>0">
+                <thead>
+                    <tr>
+                        <th>اسم المفوض  </th>
+                        <th>رقم هوية المفوض</th>
+                        <th>نموذج التوقيع</th>
+                          <th>العمليات</th>
+                      </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let delegator of licenseProjectDelegators; let i = index;">
+                        <td>{{delegator?.delegatorCustomer?.fullName}}</td>
+                        <td>{{delegator?.delegatorCustomer?.nidnumber}}</td>
+                        <td>
+                              <span class="icon material-icons-outlined">content_copy</span>
+                              <a *ngIf="delegator && delegator.delegatorSignModelFile" target="_blank" [href]="baseUrl + delegator.delegatorSignModelFile.filePath">
+                                  {{delegator.delegatorSignModelFile.fileDescription}}</a>
+                        </td>
+                          
+                          <td>
+                              <div class="d-flex align-items-center justify-content-end column-gap-2">
+                                  <button mat-icon-button
+                                          color="warn"
+                                          (click)="deleteDelegator(i)"><mat-icon>delete</mat-icon></button>
+                              </div> 
+                          </td>
+                      </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
+        <button class="btn btn-outline-primary"
+        (click)="back()">{{localization.previous}}</button>
+        <button class="btn btn-outline-primary"
+                (click)="next()">{{localization.next}}</button>
+    </div> -->
+</div>

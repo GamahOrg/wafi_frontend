@@ -1,0 +1,270 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseProjectFeasibilityStudyForm"
+  id="form-licenseProjectFeasibilityStudyForm">
+  <div class="tab-data-header">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title fw-normal">{{'دراسة الجدوى الخاصة بالمشروع'}}</h6>
+  </div>
+  <br>
+  <h6 class="title fw-normal">{{'جدول المساحات الأساسية'}}</h6>
+  <div class="tab-data-section">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label"> المساحة الإجمالية للمشروع </label>
+          <input type="number" id="control-landTotalSpace" class="form-control" formControlName="landTotalSpace"
+            [disabled]="false" placeholder=" المساحة الإجمالية للمشروع ">
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">مساحة الأرض </label>
+          <input type="number" id="control-landSpace" class="form-control" formControlName="landSpace"
+            placeholder="مساحة الأرض ">
+          <mat-error
+            *ngIf="(controls.landSpace?.hasError('required') || controls.landSpace?.value == 0) && showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.landSpace?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+          <mat-error *ngIf="controls.landSpace?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">مساحة أرض سكنية</label>
+          <input type="number" id="control-residentialLandSpace" class="form-control"
+            formControlName="residentialLandSpace" placeholder="مساحة الأرض سكنية">
+          <mat-error
+            *ngIf="(controls.residentialLandSpace?.hasError('required') || controls.residentialLandSpace?.value == 0)&& showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.residentialLandSpace?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله
+            العشريه</mat-error>
+          <mat-error *ngIf="controls.residentialLandSpace?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+      <hr>
+
+      <h6 class="title fw-normal">{{'التحليل المالي للأسعار'}}</h6>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">إجمالي قيمة المشروع</label>
+          <input type="number" id="control-totalProjectValue" class="form-control" formControlName="totalProjectValue"
+            placeholder="إجمالي قيمة المشروع">
+          <mat-error
+            *ngIf="(controls.totalProjectValue?.hasError('required') || controls.totalProjectValue?.value == 0) && showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.totalProjectValue?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله
+            العشريه</mat-error>
+          <mat-error *ngIf="controls.totalProjectValue?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">تكلفة البناء</label>
+          <input type="number" id="control-constructionCost" class="form-control" formControlName="constructionCost"
+            placeholder="تكلفة البناء">
+          <mat-error
+            *ngIf="(controls.constructionCost?.hasError('required') || controls.constructionCost?.value == 0) && showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.constructionCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله
+            العشريه</mat-error>
+          <mat-error *ngIf="controls.constructionCost?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">تكلفة استشاري</label>
+          <input type="number" id="control-consultantCost" class="form-control" formControlName="consultantCost"
+            placeholder="تكلفة استشاري">
+          <mat-error
+            *ngIf="(controls.consultantCost?.hasError('required') || controls.consultantCost?.value == 0) && showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.consultantCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله
+            العشريه</mat-error>
+          <mat-error *ngIf="controls.consultantCost?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">سعر الأرض</label>
+          <input type="number" id="control-landPrice" class="form-control" formControlName="landPrice"
+            placeholder="سعر الأرض">
+          <mat-error
+            *ngIf="(controls.landPrice?.hasError('required') || controls.landPrice?.value == 0) && showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.landPrice?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+          <mat-error *ngIf="controls.landPrice?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">الرسوم الإدارية</label>
+          <input type="number" id="control-administrativeFees" class="form-control" formControlName="administrativeFees"
+            placeholder="الرسوم الإدارية">
+          <mat-error
+            *ngIf="(controls.administrativeFees?.hasError('required') || controls.administrativeFees?.value == 0)&& showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.administrativeFees?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله
+            العشريه</mat-error>
+          <mat-error *ngIf="controls.administrativeFees?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رسوم التسويق</label>
+          <input type="number" id="control-marketingFees" class="form-control" formControlName="marketingFees"
+            placeholder="رسوم التسويق">
+          <mat-error
+            *ngIf="(controls.marketingFees?.hasError('required') || controls.marketingFees?.value == 0)&& showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.marketingFees?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله
+            العشريه</mat-error>
+          <mat-error *ngIf="controls.marketingFees?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">أرباح</label>
+          <input type="number" id="control-profits" class="form-control" formControlName="profits" placeholder="أرباح">
+          <mat-error
+            *ngIf="(controls.profits?.hasError('required') || controls.profits?.value == 0)&& showValidation">حقل
+            مطلوب</mat-error>
+          <mat-error *ngIf="controls.constructionCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله
+            العشريه</mat-error>
+          <mat-error *ngIf="controls.constructionCost?.hasError('min')">قيمة الحقل يجب الا تقل عن واحد</mat-error>
+        </div>
+      </div>
+      <hr>
+      <h6 class="title fw-normal">{{'المرفقات'}}</h6>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <div class="key">الجدول الزمني المقترح</div>
+          <div class="value"
+            *ngFor="let proposedFile of licenseProjectFeasibilityStudyDto.licenseProjectProposedScheduleFiles">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a *ngIf="proposedFile && proposedFile.proposedScheduleFile" id="link-proposedScheduleFile"
+              [href]="baseUrl + proposedFile.proposedScheduleFile.filePath" target="_blank">
+              {{proposedFile.proposedScheduleFile.fileDescription}}</a>
+          </div>
+          <app-file-uploader [data]="mueltiFilesUploaderData"
+            (fileUploaded)="onExistProjectProposedScheduleFilesUploaded($event)"></app-file-uploader>
+          <div class="invalid-feedback d-block"
+            *ngIf="(!licenseProjectProposedScheduleFiles || licenseProjectProposedScheduleFiles.length == 0) && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <div class="key">الخطة التسويقية</div>
+          <div class="value"
+            *ngFor="let marketingFile of licenseProjectFeasibilityStudyDto.licenseProjectMarketingPlanFiles">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a *ngIf="marketingFile && marketingFile.marketingPlanFile" id="link-marketingPlanFile"
+              [href]="baseUrl + marketingFile.marketingPlanFile.filePath" target="_blank">
+              {{marketingFile.marketingPlanFile.fileDescription}}</a>
+          </div>
+          <app-file-uploader [data]="mueltiFilesUploaderData"
+            (fileUploaded)="onExistProjectMarketingPlanFilesUploaded($event)"></app-file-uploader>
+          <div class="invalid-feedback d-block"
+            *ngIf="(!licenseProjectMarketingPlanFiles || licenseProjectMarketingPlanFiles.length == 0) && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <div class="key">ملفات دراسة الجدوى</div>
+          <div class="value"
+            *ngFor="let file of licenseProjectFeasibilityStudyDto.licenseProjectFeasibilityStudyFiles">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a *ngIf="file && file.feasibilityStudyFile" id="link-feasibilityStudyFile"
+              [href]="baseUrl + file.feasibilityStudyFile.filePath" target="_blank">
+              {{file.feasibilityStudyFile.fileDescription}}</a>
+          </div>
+          <app-file-uploader [data]="mueltiFilesUploaderData"
+            (fileUploaded)="onExistLicenseProjectFeasibilityStudyFilesUploaded($event)"></app-file-uploader>
+          <div class="invalid-feedback d-block"
+            *ngIf="(!licenseProjectFeasibilityStudyFiles || licenseProjectFeasibilityStudyFiles.length == 0) && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h6 class="title fw-normal">{{'الافتراضات التي تستند إلى الدراسة'}}</h6>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <textarea type="text" id="control-assumptionsOnWhichTheStudyIsBased"
+            placeholder="{{'الافتراضات التي تستند إلى الدراسة'}}" class="form-control"
+            formControlName="assumptionsOnWhichTheStudyIsBased"
+            placeholder="الافتراضات التي تستند إلى الدراسة"></textarea>
+          <div class="invalid-feedback d-block"
+            *ngIf="controls.assumptionsOnWhichTheStudyIsBased?.hasError('required') && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h6 class="title fw-normal">{{'الجهة المعدة لدراسة الجدوى'}}</h6>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">اسم الجهة</label>
+          <input type="text" id="control-entityName" placeholder="اسم الجهة" class="form-control"
+            formControlName="entityName">
+          <div class="invalid-feedback d-block" *ngIf="controls.entityName?.hasError('required') && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الجوال</label>
+          <input type="text" id="control-mobileNumber" class="form-control" formControlName="mobileNumber"
+            placeholder="رقم الجوال">
+          <div class="invalid-feedback d-block" *ngIf="controls.mobileNumber?.hasError('required') && showValidation">
+            حقل مطلوب
+          </div>
+          <mat-error *ngIf="controls.mobileNumber?.hasError('pattern')">من فضلك ادخل رقم جوال صحيح</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الهاتف</label>
+          <input type="text" id="control-phoneNumber" class="form-control" formControlName="phoneNumber"
+            placeholder="رقم الهاتف">
+          <div class="invalid-feedback d-block" *ngIf="controls.phoneNumber?.hasError('required') && showValidation">
+            حقل مطلوب
+          </div>
+          <mat-error *ngIf="controls.phoneNumber?.hasError('pattern')">من فضلك ادخل رقم هاتف صحيح</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label"> البريد الإلكتروني</label>
+          <input type="text" id="control-emailAddress" class="form-control" formControlName="emailAddress"
+            placeholder=" البريد الإلكتروني">
+          <div class="invalid-feedback d-block" *ngIf="controls.emailAddress?.hasError('required') && showValidation">
+            حقل مطلوب
+          </div>
+          <mat-error *ngIf="controls.emailAddress?.hasError('pattern')">من فضلك ادخل البريد الإلكتروني صحيح</mat-error>
+          <!--                    <mat-error *ngIf="controls.emailAddress?.hasError('min')">
+                       قيمة الحقل يجب الا تقل عن واحد
+                   </mat-error> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  <!-- <div class="form-actions mt-auto">
+        <button class="btn btn-outline-primary"
+                (click)="back()">{{localization.previous}}</button>
+        <button class="btn btn-outline-primary"
+                (click)="save(true)">{{localization.next}}</button>
+
+    </div> -->
+</form>

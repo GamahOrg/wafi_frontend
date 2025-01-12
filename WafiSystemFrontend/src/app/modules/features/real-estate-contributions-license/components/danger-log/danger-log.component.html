@@ -1,0 +1,82 @@
+<h5 class="title fw-normal text-center my-4" *ngIf="licenseProjectRiskCounts">{{'معلومات سجل المخاطر '}}</h5>
+<table class="table" *ngIf="licenseProjectRiskCounts">
+    <thead>
+        <tr class="text-center">
+            <th scope="col"> عدد المخاطر المغلقة </th>
+            <th scope="col"> عدد المخاطر المتوقعة</th>
+            <th scope="col">عدد المخاطر المتحولة لمشكلة</th>
+            <th scope="col">عدد المخاطر  الكلي</th>           
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center">
+            <td>{{licenseProjectRiskCounts.closedRisksNumber}}</td>
+            <td>{{licenseProjectRiskCounts.expectedRisksNumber}}</td>
+            <td>{{licenseProjectRiskCounts.turningIntoProblemRisksNumber}}</td>        
+            <td>{{licenseProjectRiskCounts.turningIntoProblemRisksNumber + licenseProjectRiskCounts.expectedRisksNumber + licenseProjectRiskCounts.closedRisksNumber}}</td>
+        </tr>
+    </tbody>
+</table>
+<button type="button" class="btn btn-primary my-4" (click)="openEditDangerLogDialog('')">إضافة خطر </button>
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">رقم الخطر</th>
+                    <th scope="col"> النوع</th>
+                    <th scope="col">الأستمرارية</th>
+                    <th scope="col">التأثير</th>
+                    <th scope="col">الاحتمال</th>
+                    <th scope="col">الأولوية</th>
+                    <th scope="col">الحالة</th>
+                    <th scope="col">العمليات</th>
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.riskNumber}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.riskType.name}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.continuity.name}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.effect}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.probability}}</span>
+                    </td>
+                    <td [ngClass]="comdata.priorityClassValue">
+                        <span class="text-dark">{{comdata.probability * comdata.effect}}</span>
+                    </td>
+                    <td [ngClass]="comdata.statusClassValue">
+                        <span class="text-dark">{{comdata.riskStatus.name}}</span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary mx-4" (click)="openEditDangerLogDialog(comdata.id)">تعديل </button>
+                        <button type="button" class="btn btn-outline-primary" (click)="openShowDangerLogDialog(comdata.id)">عرض </button>
+                       
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+
+

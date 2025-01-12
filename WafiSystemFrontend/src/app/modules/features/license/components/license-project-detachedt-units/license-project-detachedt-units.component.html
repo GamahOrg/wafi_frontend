@@ -1,0 +1,21 @@
+<div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5"
+*ngIf="detachedUnits && detachedUnits.length>0">
+<div class="col-12 ">
+<div class="table-responsive">
+ <table class="table table-light">
+   <thead>
+     <tr>
+       <th>{{localization.subUnitsType}}</th>
+       <th>{{localization.subUnitCount}}</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr *ngFor="let subUnit of detachedUnits; let i = index;">
+       <td>{{subUnit.subUnitType.name}}</td>
+       <td>{{subUnit.subUnitCount}}</td>
+     </tr>
+   </tbody>
+ </table>
+</div>
+</div>
+</div>

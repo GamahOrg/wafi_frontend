@@ -1,0 +1,19 @@
+  <div class="tab-data-section">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <div class="key">نسبة انجاز المشروع</div>
+        <div class="value">{{ projectDetails?.achievementRate }}</div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">اخر تقرير هندسي</div>
+        <a
+          *ngIf="projectDetails?.lastEngineeringReport != null"
+          [href]="baseUrl + projectDetails?.lastEngineeringReport?.filePath"
+          id="link-lastEngineeringReportFile"
+          target="_blank"
+        >
+          {{ projectDetails?.lastEngineeringReport?.fileDescription }}
+        </a>
+      </div>
+    </div>
+  </div>

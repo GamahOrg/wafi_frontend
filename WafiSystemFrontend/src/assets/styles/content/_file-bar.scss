@@ -1,0 +1,44 @@
+@import "/src/assets/styles/custom-variables";
+
+.file-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.75rem;
+    border-radius: $border-radius-sm;
+    // background-color: $success-bg;
+    background-color: $theme-light;
+
+    &+.file-bar {
+        margin-top: 1rem;
+    }
+
+    [class^="material-icons"] {
+        // color: $darkgreen;
+        color: $theme-dark;
+    }
+
+    .details,
+    .actions .btn {
+        display: flex;
+        align-items: center;
+        column-gap: .25rem;
+    }
+
+    .details {
+        font-weight: bold;
+        // color: $darkgreen;
+        color: $theme-dark;
+    }
+
+    .actions {
+        .btn {
+            // color: $darkgreen;
+            color: $theme-dark;
+            // border-color: $darkgreen;
+            border-color: $theme-dark;
+        }
+    }
+
+}

@@ -1,0 +1,48 @@
+<div class="tab-data-header">
+  <div class="icon"><span class="material-icons">list_alt</span></div>
+  <h6 class="title fw-normal">البيانات من المطور</h6>
+
+  <button *ngIf="showButton"  mat-raised-button class="edit-icon" (click)="openDialog()">
+    <span class="material-icons">edit</span>
+  </button>
+</div>
+
+<div class="tab-data-section" *ngIf="licenseProjectRequestChangePlanFull">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+  
+  <div class="col-12 col-md-6">
+    <div class="key">تاريخ نهاية المشروع الجديد</div>
+    <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{licenseProjectRequestChangePlanFull?.projectEndDate |date:'yyyy/MM/dd'}}
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="key"> مبررات ومشفوعات تغير الخطة </div>
+    <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{licenseProjectRequestChangePlanFull?.justificationsAndReasons}}
+    </div>
+</div>
+
+
+<div class="col-12 col-md-6">
+    <div class="key">خطاب موافقة المشترين</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.buyersApprovalLetterFile" [href]="baseUrl + licenseProjectRequestChangePlanFull?.buyersApprovalLetterFile?.filePath" target="_blank">
+            {{licenseProjectRequestChangePlanFull?.buyersApprovalLetterFile?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="key">خطاب اعتماد تاريخ بداية ونهاية المشروع بعد التعديل من الجهة الحكومية</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.approvalLetterForStartEndDate" [href]="baseUrl + licenseProjectRequestChangePlanFull?.approvalLetterForStartEndDate?.filePath" target="_blank">
+            {{licenseProjectRequestChangePlanFull?.approvalLetterForStartEndDate?.fileDescription}}
+        </a>
+    </div>
+</div>
+</div>
+</div>

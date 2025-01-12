@@ -1,0 +1,18 @@
+<div class="table-responsive">
+    <table class="table table-light">
+        <thead>
+            <tr>
+                <th>الخدمه</th>
+                <th> المده </th>
+                <th> السعر </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let service of additionalServices">
+                <td>{{service?.sysLicenseProjectService?.name}}</td>
+                <td>{{service?.period}}</td>
+                <td>{{service?.price}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

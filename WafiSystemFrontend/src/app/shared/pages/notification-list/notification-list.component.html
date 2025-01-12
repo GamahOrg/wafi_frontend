@@ -1,0 +1,61 @@
+<div class="page">
+    <div class="page-header with-abstract mb-3">
+        <div class="row row-gap-3">
+            <div class="col-12 col-lg-6">
+                <div class="page-title mb-0">
+                    <h5 class="title">{{localization.notifications}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="notifications-list"
+         *ngIf="notificationList.totalCount > 0">
+
+        <ng-container *ngFor="let notification of notificationList.results">
+            <div class="notifications-item"
+                 [ngClass]="{'new': !notification.isViewed}"
+                 (click)="navigateToDetails(notification)">
+
+                <div class="content">
+                    <span class="icon">
+                        <i class="material-icons-outlined">notifications</i>
+                    </span>
+
+                    <div class="details">
+                        <h6 class="title">
+                            {{ notification.message.split('،', 2)[0] }}
+                        </h6>
+
+                        <p class="note"
+                           *ngIf="notification.message.split('،', 2)[1]">
+                            {{ notification.message.split('،', 2)[1] }}
+                        </p>
+
+                        <!-- <span>
+                        {{notification.viewedOn ? (notification.viewedOn | date) : "--"}}
+                    </span>
+
+                    <span>
+                        {{notification.isViewed ? localization.yes : localization.no}}
+                    </span> -->
+                    </div>
+                </div>
+
+                <div class="timing">
+                    <i class="material-icons-outlined icon">calendar_month</i>
+
+                    <span class="time">
+                        {{notification.createdOn | date:'d/M/yyyy'}}
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+
+    <div class="mt-auto">
+        <app-pagination></app-pagination>
+    </div>
+</div>

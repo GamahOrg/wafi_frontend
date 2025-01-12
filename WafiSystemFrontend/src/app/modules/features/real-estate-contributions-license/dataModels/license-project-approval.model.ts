@@ -1,0 +1,25 @@
+import { ApprovalRole } from "./approval-role.model";
+
+export interface LicenseProjectApproval {
+    id: string;
+    projectId: string;
+    facilityId: string;
+    commercialRegisterNumber: string;
+    facilityName: string;
+    projectName: string;
+    isApproved: boolean | null;
+    approvedOn: string | null;
+    role: string;
+    approvalRole: ApprovalRole;
+}
+export interface SaveApproval {
+    id: string;
+    delegatorCustomerId:string;
+    isApproved: boolean | null;
+    approvalRole: ApprovalRole;
+}
+export interface UpdateApproval {
+    id: string;
+    delegatorCustomerId:string;
+    approvalRole: ApprovalRole;
+}

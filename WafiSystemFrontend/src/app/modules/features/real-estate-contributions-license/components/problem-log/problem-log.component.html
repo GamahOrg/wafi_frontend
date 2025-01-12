@@ -1,0 +1,99 @@
+<h5 class="title fw-normal text-center my-4" *ngIf="licenseProjectProblemCounts">{{'معلومات سجل المشاكل '}}</h5>
+<table class="table" *ngIf="licenseProjectProblemCounts">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">عدد المشاكل المغلقة</th>
+            <th scope="col"> عدد المشاكل المفتوحة</th>
+            <th scope="col"> عدد المشاكل  الكلي</th>           
+        </tr>
+    </thead>
+<tbody>
+    <tr class="text-center">
+        <td>{{licenseProjectProblemCounts.closedProblemsNumber}}</td>
+        <td>{{licenseProjectProblemCounts.openedProblemsNumber}}</td>
+        <td>{{licenseProjectProblemCounts.closedProblemsNumber + licenseProjectProblemCounts.openedProblemsNumber}}</td>
+    </tr>
+</tbody>
+</table>
+<!-- <div class="tab-data-section" *ngIf="licenseProjectProblemCounts">
+  <div class="row mb-3" >
+      <div class="col-12 col-lg-6" >
+          <div class="key"> عدد المشاكل المغلقة</div>
+          <div class="value">{{licenseProjectProblemCounts.closedProblemsNumber}}</div>
+      </div>
+    
+      <div class="col-12 col-lg-6">
+          <div class="key"> عدد المشاكل المفتوحة</div>
+          <div class="value">{{licenseProjectProblemCounts.openedProblemsNumber}}</div>
+      </div>
+       
+      <div class="col-12 col-lg-6">
+        <div class="key"> عدد المشاكل  الكلي</div>
+        <div class="value">{{licenseProjectProblemCounts.closedProblemsNumber + licenseProjectProblemCounts.openedProblemsNumber}}</div>
+    </div>
+  </div>
+</div>  -->
+<button type="button" class="btn btn-primary my-4" (click)="openEditProblemLogDialog('')">إضافة مشكلة </button>
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">رقم المشكلة</th>
+                    <th scope="col"> النوع</th>
+                    <th scope="col">تاريخ الحدوث</th>
+                    <th scope="col">الشدة</th>
+                    <th scope="col">الأيام المنقضية</th>
+                    <th scope="col">مالك الحل</th>
+                    <th scope="col">الحالة</th>
+                    <th scope="col">العمليات</th>
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.number}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.problemType.name}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.issueDate | date:'yyyy-MM-dd'}}</span>
+                    </td>
+                    <td [ngClass]="comdata.levelClassValue">
+                        <span class="text-dark">{{comdata.levelType.name}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.daysPassed}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.riskOwner.name}}</span>
+                    </td>
+               
+                    <td [ngClass]="comdata.statusClassValue">
+                        <span class="text-dark">{{comdata.status.name}}</span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary mx-4" (click)="openEditProblemLogDialog(comdata.id)">تعديل </button>
+                        <button type="button" class="btn btn-outline-primary" (click)="openShowProblemLogDialog(comdata.id)">عرض </button>
+                       
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+
+

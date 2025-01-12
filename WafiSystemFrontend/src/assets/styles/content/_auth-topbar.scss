@@ -1,0 +1,53 @@
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    padding: .75rem;
+
+    font-size: $font-size-xs;
+    // color: $darkgreen;
+    color: $theme-dark;
+
+    background: #FFFFFF;
+    box-shadow: 0px 2px 10px rgba($black, .03);
+
+    :host-context(.rega) & {
+        color: $theme-dark;
+    }
+
+    .info {
+        display: flex;
+        align-items: center;
+
+        .date {
+            display: flex;
+            align-items: center;
+            padding-inline-end: 2rem;
+
+            .divider {
+                margin-inline: .25rem;
+                font-size: 1.5rem;
+            }
+
+            &+.contact {
+                padding-inline-start: 2rem;
+                // border-inline-start: 2px solid $darkgreen;
+                border-inline-start: 2px solid $theme-dark;
+
+                :host-context(.rega) & {
+                    border-color: $theme-dark;
+                }
+            }
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            column-gap: .5rem;
+        }
+    }
+
+    .actions {
+        display: flex;
+        justify-content: end;
+    }
+}

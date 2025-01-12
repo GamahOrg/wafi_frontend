@@ -1,0 +1,155 @@
+<div class="d-flex flex-column h-100">
+    <h6 mat-dialog-title>
+        {{popupData.title}}
+        <button mat-icon-button
+                mat-dialog-close
+                tabindex="-1">
+            <mat-icon>close</mat-icon>
+        </button>
+    </h6>
+
+    <div mat-dialog-content>
+        <ng-container *ngComponentOutlet="popupData.component"></ng-container>
+
+        <!-- <h6 class="form-title">
+            <span class="icon"><i class="material-icons">list_alt</i></span>
+            <span>متطلبات القدرات المؤسسية والموارد البشرية</span>
+        </h6>
+
+        <div class="row row-gap-3 mb-3">
+            <div class="col-12">
+                <label for="prevExpert"
+                       class="form-label">هل لديك خبرات سابقة </label>
+            </div>
+            <div class="col-12">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input"
+                           type="radio"
+                           name="prevExpert"
+                           id="yes"
+                           value="1">
+                    <label class="form-check-label"
+                           for="yes">نعم</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input"
+                           type="radio"
+                           name="prevExpert"
+                           id="no"
+                           value="0">
+                    <label class="form-check-label"
+                           for="no">لا</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-gap-3 mb-3">
+            <div class="col-12 col-lg-6">
+                <label for=""
+                       class="form-label">رقم رخصة المحاسب القانوني المعتمد</label>
+                <input type="text"
+                       class="form-control"
+                       id=""
+                       value="">
+                <div class="form-note text-danger">
+                    <i class="material-icons">fiber_manual_record</i>
+                    <p class="text">
+                        Please provide a valid input.
+                    </p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div id="Help"
+                     class="form-text">
+                    <i class="material-icons">fiber_manual_record</i>
+                    <p class="text">
+                        يتم التكامل مع الهيئة السعودية للمراجعين والمحاسبين لاستخراج معلومات رخصه المحاسب القانوني للتحقق من اعتماد من قبل الهيئة
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-gap-3 mb-3">
+            <div class="col-12 col-lg-6">
+                <label for=""
+                       class="form-label">ملف شهادة سلامة السجل الائتمانيملف شهادة سلامة السجل الائتماني</label>
+                <app-file-uploader></app-file-uploader>
+            </div>
+        </div>
+
+        <div class="form-block mb-3">
+            <h6 class="title">بيانات المشروع</h6>
+            <div class="row row-gap-3 mb-3">
+                <div class="col-12 col-lg-6">
+                    <label for=""
+                           class="form-label">تصنيف المشروع</label>
+                    <select class="form-select"
+                            aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <label for=""
+                           class="form-label">نوع المشروع</label>
+                    <input type="text"
+                           class="form-control"
+                           id=""
+                           value="">
+                </div>
+            </div>
+            <div class="row row-gap-3 mb-3">
+                <div class="col-12 col-lg-6">
+                    <label for=""
+                           class="form-label">اسم المشروع</label>
+                    <input type="text"
+                           class="form-control"
+                           id=""
+                           value="">
+                </div>
+                <div class="col-12 col-lg-6">
+                    <label for=""
+                           class="form-label">مالك المشروع</label>
+                    <input type="text"
+                           class="form-control"
+                           id=""
+                           value="">
+                </div>
+            </div>
+        </div>
+
+        <a href=""
+           class="add-array">+ اضافة مشروع جديد</a> -->
+
+    </div>
+
+    <div mat-dialog-actions
+         align="end">
+        <!-- <button mat-flat-button
+                class="primary"
+                (click)="onClickOnCancel()">إلغاء</button>
+
+        <button mat-flat-button
+                color="primary"
+                (click)="onClickOnConfirm()">حفظ البيانات</button> -->
+
+        <ng-container *ngFor="let button of popupActionsButtons">
+
+            <button mat-flat-button *ngIf="button.isVisable && button.actionType=='cancel'"
+                    [disabled]="button.isDisables"
+                    class="primary"
+                    (click)="onClickOnPopupActionButton(button.actionType)">
+                {{button.title}}
+            </button>
+
+            <button mat-flat-button *ngIf="button.isVisable && button.actionType=='confirm'"
+                    [disabled]="button.isDisables"
+                    color="primary"
+                    (click)="onClickOnPopupActionButton(button.actionType)">
+                {{button.title}}
+            </button>
+        </ng-container>
+    </div>
+</div>

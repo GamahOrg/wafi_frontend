@@ -1,0 +1,32 @@
+@for $i from 0 through 100 {
+    .w-#{$i} {
+        width: #{$i}#{"%"} !important;
+    }
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.flipped-x {
+    transform: scaleX(-1);
+}
+
+// $icons: "home",
+// "manage_accounts",
+// "assessment",
+// "email",
+// "info",
+// "assignment_turned_in",
+// "campaign",
+// "help",
+// "language",
+// "arrow_drop_down"; // Add each icon string separated by a comma
+
+// @each $icon in $icons {
+//     .icon-#{$icon} {
+//         &::after {
+//             content: $icon;
+//         }
+//     }
+// }

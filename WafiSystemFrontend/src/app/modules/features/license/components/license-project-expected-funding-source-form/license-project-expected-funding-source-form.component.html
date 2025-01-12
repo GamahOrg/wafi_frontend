@@ -1,0 +1,65 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseProjectExpectedFundingSourceForm ">
+    <div class="tab-data-section">
+        <div class="row mb-3">
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">نوع التمويل</label>
+                    <select class="form-select"
+                            formControlName="fundingTypeId">
+                        <option value=""> نوع التمويل</option>
+                        <option *ngFor="let Funding of sysFundingTypes"
+                                [ngValue]="Funding.id">
+                            {{ Funding.name }}
+                        </option>
+                    </select>
+                    <mat-error *ngIf="controls.fundingTypeId?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">مصادر التمويل المتوقعة </label>
+                    <input placeholder="مصادر التمويل المتوقعة "
+                           type="text"
+                           class="form-control"
+                           formControlName="financingTypeDescription">
+                    <mat-error *ngIf="controls.financingTypeDescription?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">رقم هوية مفوض الممول</label>
+                    <input placeholder="رقم هوية مفوض الممول"
+                           type="text"
+                           class="form-control"
+                           formControlName="funderNationalNumber">
+                    <mat-error *ngIf="controls.funderNationalNumber?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">البريد الإلكتروني لمفوض الممول</label>
+                    <input placeholder="البريد الإلكتروني لمفوض الممول"
+                           type="text"
+                           class="form-control"
+                           formControlName="funderEmailAddress">
+                    <mat-error *ngIf="controls.funderEmailAddress?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.funderEmailAddress?.hasError('pattern')">من فضلك ادخل البريد الإلكتروني صحيح</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">رقم جوال مفوض الممول</label>
+                    <input placeholder="رقم جوال مفوض الممول"
+                           type="text"
+                           class="form-control"
+                           formControlName="funderPhoneNumber">
+                    <mat-error *ngIf="controls.funderPhoneNumber?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,92 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/material-custom/dialog-content";
+
+.roadmap {
+    position: relative;
+    padding-block: 5rem;
+    padding-inline-start: calc(2rem + 1px);
+    font-size: $font-size-xs;
+
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        bottom: 0;
+        inset-inline-start: 1rem;
+
+        width: 1px;
+        background-color: $success;
+
+    }
+
+    .roadmap-body {
+        position: relative;
+        z-index: 2;
+
+        .phase {
+            &+.phase {
+                margin-top: 2.5rem;
+            }
+
+            .title {
+                font-size: $font-size-xs;
+                font-weight: normal;
+                color: $dark;
+            }
+
+            .sub-title {
+                font-size: $font-size-xs;
+                color: $black;
+            }
+
+            .iconed-content {
+                display: flex;
+                align-items: center;
+
+                &.iconed {
+                    column-gap: 1rem;
+
+                    &:not(.done) {
+                        margin-inline-start: calc(-1rem - 10px);
+                    }
+
+                    &.done {
+                        margin-inline-start: -2rem;
+                    }
+
+                    &+.dotted {
+                        margin-top: 1rem;
+                    }
+                }
+
+                &.dotted {
+                    column-gap: .75rem;
+                    margin-inline-start: calc(-1rem - 5px);
+
+                    [class^="material-icons"] {
+                        font-size: $font-size-xxs;
+                        color: $success;
+                    }
+                }
+            }
+
+            .list {
+                margin-top: 1.5rem;
+                list-style: disc;
+                list-style-position: inside;
+
+                margin-inline-start: 2rem;
+                padding-left: 0;
+                font-size: $font-size-xs;
+
+                .list-item {
+
+                    &+.list-item {
+                        margin-top: .25rem;
+                    }
+                }
+            }
+        }
+    }
+}

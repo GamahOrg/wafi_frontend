@@ -1,0 +1,71 @@
+<div class="page">
+    <div class="page-title">
+        <h2 class="title">ملاحظات الطلب الحالية {{requestNotes && '('+requestNotes.length+')'}}</h2>
+    </div>
+    <div class="page-content">
+        <ng-container *ngIf="requestNotes && requestNotes.length>0">
+            <div class="card"
+                 *ngFor="let note of requestNotes">
+                <div class="card-body">
+                    <div class="results-wrapper">
+                        <div class="results-info">
+                            <div class="image">
+                                <!-- <span class="avatar material-icons">person</span> -->
+                                <img src="assets/images/general/static-person.jpeg"
+                                     alt=""
+                                     class="d-block w-100">
+                            </div>
+                            <h6 class="title">ملاحظات الطلب</h6>
+                            <span class="date">
+                                <i class="material-icons">calendar_month</i>
+                                {{note.createdOn | date:"MM/dd/yyyy"}}
+                            </span>
+                        </div>
+
+                        <div class="notes"
+                             *ngIf="note.isWithNotes">
+                            <div class="note"
+                                 [innerHTML]="note.notes"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="qualificationRequestCertificate">
+            <div class="card">
+                <div class="card-body">
+                    <div class="results-wrapper">
+                        <div class="results-info">
+                            <h6 class="title">الشهادة</h6>
+                            <!-- <span class="key">تاريخ الإرسال </span> -->
+                            <span class="value">
+                                <i class="material-icons">calendar_month</i>
+                                {{'12/12/2022' | date:"MM/dd/yyyy"}}
+                            </span>
+                        </div>
+
+                        <div class="certificates">
+                            <div class="file">
+                                <span class="material-icons">attachment</span>
+                                <a [href]="baseUrl + qualificationRequestCertificate.certificateFile"
+                                   class="link"
+                                   [download]="qualificationRequestCertificate.certificateFile" target="_blank">شاهدة التأهيل
+                                    ل{{qualificationRequestCertificate &&
+                                    qualificationRequestCertificate.qualificationRequestType ?
+                                    qualificationRequestType(qualificationRequestCertificate.qualificationRequestType):
+                                    ""}}-
+                                    {{qualificationRequestCertificate.certificateNumber}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <p class="text-success mt-3"
+           *ngIf="!requestNotes && !qualificationRequestCertificate">لا يوجد ملاحظات على الطلب
+        </p>
+    </div>
+</div>

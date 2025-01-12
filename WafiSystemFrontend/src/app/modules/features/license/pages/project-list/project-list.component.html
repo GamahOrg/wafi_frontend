@@ -1,0 +1,78 @@
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">اسم المشروع</th>
+                    <th scope="col">كود المشروع</th>
+                    <th scope="col">تاريخ إصدار الرخصة</th>
+                    <th scope="col">اسم مدير المشروع</th>
+                    <th scope="col">العمليات</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let project of reqList?.results">
+                <tr *ngIf="project && project.licenseProject">
+                    <td>
+                        <span class="text-dark" *ngIf="project.licenseProject.name">{{project.licenseProject.name}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark"
+                            *ngIf="project.licenseProject.projectCode">{{project.licenseProject.projectCode}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark">
+                            <div class="value"
+                                *ngIf="project.licenseRequestVersions && project.licenseRequestVersions.length != 0  && project.licenseRequestVersions[0].initialCertificateDate ">
+                                <span class="icon material-icons">calendar_today</span>
+                                {{project.licenseRequestVersions[0].initialCertificateDate | date:'MMM d, y'}}
+                            </div>
+
+                        </span>
+                    </td>
+                    <td>
+                        <div class="text-daark"
+                            *ngIf="project.licenseProject.licenseProjectEngineeringConsultants &&
+                        project.licenseProject.licenseProjectEngineeringConsultants.length != 0  && project.licenseProject.licenseProjectEngineeringConsultants[0].projectManagerCustomer ">
+                            {{project.licenseProject.licenseProjectEngineeringConsultants[0].projectManagerCustomer.fullName}}
+                        </div>
+                    </td>
+                    <!-- <td>
+                        <button type="button" class="btn btn-primary mx-4"
+                            (click)="showProjectDetails(project.licenseProject.id)"> تفاصيل المشروع </button>
+                    </td> -->
+                    <td>
+
+                        <div class="d-flex align-items-center" >
+                            <button type="button" class="btn btn-primary" (click)="openDialog(project)"
+                                *ngIf=" !(project && project.licenseProject && project.licenseProject.licenseProjectEngineeringConsultants &&
+                                project.licenseProject.licenseProjectEngineeringConsultants.length != 0  && project.licenseProject.licenseProjectEngineeringConsultants[0].projectManagerCustomer)">
+                               تعيين مدير مشروع
+                            </button>
+
+                            <button type="button" class="btn btn-primary" (click)="openDialog(project)"
+                                *ngIf=" (project && project.licenseProject && project.licenseProject.licenseProjectEngineeringConsultants &&
+                                project.licenseProject.licenseProjectEngineeringConsultants.length != 0  && project.licenseProject.licenseProjectEngineeringConsultants[0].projectManagerCustomer)">
+                               اعادة تعيين مدير مشروع
+                            </button>
+
+                            
+
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList?.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>

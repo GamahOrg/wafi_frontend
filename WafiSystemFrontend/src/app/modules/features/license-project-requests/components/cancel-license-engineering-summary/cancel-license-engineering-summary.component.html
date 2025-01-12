@@ -1,0 +1,43 @@
+<div class="tab-data-header">
+  <div class="icon"><span class="material-icons">list_alt</span></div>
+  <h6 class="title fw-normal">
+    البيانات من الأستشارى الهندسى (يتم ادخال البيانات من قبل مدير المشروع
+    للاستشارى الهندسى)
+  </h6>
+
+  <button
+    *ngIf="showButton"
+    mat-raised-button
+    (click)="openClearanceEngineeringDialog()"
+    class="edit-icon"
+  >
+    <span class="material-icons">edit</span>
+  </button>
+</div>
+
+<div class="tab-data-section">
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-md-6">
+      <div class="key">نسبة انجاز المشروع</div>
+      <div class="value">{{ projectDetails.achievementRate }}</div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="key">اخر تقرير هندسي</div>
+      <span  *ngIf="projectDetails.lastEngineeringReport != null"
+        class="delete"
+        (click)="deletFile(projectDetails.lastEngineeringReport?.id)"
+        ><i class="material-icons text-danger">close</i></span
+      >
+      <span class="icon material-icons-outlined">content_copy</span>
+
+      <a
+        *ngIf="projectDetails.lastEngineeringReport != null"
+        [href]="baseUrl + projectDetails.lastEngineeringReport.filePath"
+        id="link-lastEngineeringReportFile"
+        target="_blank"
+      >
+        {{ projectDetails.lastEngineeringReport.fileDescription }}
+      </a>
+    </div>
+  </div>
+</div>

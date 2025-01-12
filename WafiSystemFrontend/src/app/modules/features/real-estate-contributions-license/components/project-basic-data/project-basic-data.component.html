@@ -1,0 +1,236 @@
+<ng-container>
+  <form class="d-flex flex-column h-100"
+        [formGroup]="projectBasicDataForm" id="form-projectBasicDataForm">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.name}}</label>
+            <input type="text"
+                   id="control-name"
+                   placeholder="{{localization.name}}"
+                   class="form-control"
+                   formControlName="name">
+            <mat-error
+                       *ngIf="controls.name?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.categoryId}}</label>
+            <select class="form-select"  
+                    id="control-categoryId"
+                    formControlName="categoryId">
+              <option [label]="localization.categoryId"></option>
+              <option *ngFor="let category of categories"
+                      [value]="category.id">{{category.categoryName}}</option>
+            </select>
+            <mat-error
+                       *ngIf="controls.categoryId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.subCategoryId}}</label>
+            <select class="form-select"  
+                   id="control-subCategoryId"
+                    formControlName="subCategoryId">
+              <option [label]="localization.subCategoryId"></option>
+              <option *ngFor="let subCategory of tempSubCategories"
+                      [value]="subCategory.id">{{subCategory.subCategoryName}}</option>
+            </select>
+            <mat-error
+                       *ngIf="controls.subCategoryId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.typeId}}</label>
+            <select class="form-select" 
+                    id="control-typeId"
+                    formControlName="typeId">
+              <option [label]="localization.typeId"></option>
+              <option *ngFor="let type of types"
+                      [value]="type.id">{{type.name}}</option>
+            </select>
+            <mat-error
+                       *ngIf="controls.typeId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.startOn}}</label>
+            <div class="input-group">
+              <input bsDatepicker 
+                    id="control-startOn"
+                     type="text"
+                     class="form-control"
+                     formControlName="startOn"
+                     value="{{ controls.startOn.value | date:'yyyy-MM-dd' }}">
+              <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+            </div>
+            <mat-error
+                       *ngIf="controls.startOn?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error class="mt-2"
+                       *ngIf="projectBasicDataForm.errors && projectBasicDataForm.errors!['dateValid'] && showValidation">{{localization.dateValidator}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.endOn}}</label>
+            <div class="input-group">
+              <input bsDatepicker 
+                    id="control-endOn"
+                     type="text"
+                     class="form-control"
+                     formControlName="endOn"
+                     value="{{ controls.endOn.value | date:'yyyy-MM-dd' }}">
+              <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+            </div>
+            <mat-error
+                       *ngIf="controls.endOn?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.ProjectSize}}</label>
+            <div class="d-flex justify-content-between w-100">
+              <div class="form-check form-check-inline flex-nowrap">
+                <input class="form-check-input" id="control-sizeSmall"
+                       type="radio"
+                       formControlName="projectSize"
+                       name="projectSize"
+                       [value]="projectSizeType.Small">
+                <label class="form-check-label"
+                       for="sizeSmall">{{localization.ProjectSizeSmall}}</label>
+              </div>
+              <div class="form-check form-check-inline flex-nowrap">
+                <input class="form-check-input"  id="control-sizeMedium"
+                       type="radio"
+                       name="projectSize"
+                       formControlName="projectSize"
+                       [value]="projectSizeType.Medium">
+                <label class="form-check-label"
+                       for="sizeMedium">{{localization.ProjectSizeMedium}}</label>
+              </div>
+              <div class="form-check form-check-inline flex-nowrap">
+                <input class="form-check-input"
+                       type="radio"
+                       name="projectSize"
+                       formControlName="projectSize"
+                       id="control-projectSize"
+                       [value]="projectSizeType.Large">
+                <label class="form-check-label"
+                       for="sizeLarge">{{localization.ProjectSizeLarge}}</label>
+              </div>
+            </div>
+          </div>
+
+          <mat-error
+                     *ngIf="controls.projectSize?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.licenseProjectScopeId}}</label>
+            <select class="form-select" id="control-licenseProjectScopeId"
+                    formControlName="licenseProjectScopeId">
+              <option [label]="localization.licenseProjectScopeId"></option>
+              <option *ngFor="let scope of licenseProjectScopes"
+                      [value]="scope.id">{{scope.name}}</option>
+            </select>
+            <mat-error
+                       *ngIf="controls.licenseProjectScopeId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.projectDescription}}</label>
+            <textarea class="form-control"  id="control-projectDescription"
+                      formControlName="projectDescription"></textarea>
+            <mat-error
+                       *ngIf="controls.projectDescription?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.projectServices}}</label>
+            <textarea class="form-control"  id="control-projectServices"
+                      formControlName="projectServices"></textarea>
+            <mat-error
+                       *ngIf="controls.projectServices?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+
+
+
+        <div class="col-12 col-lg-6">
+          <label>{{localization.HasStarted}}</label>
+          <div class="form-group mb-4">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input"
+                     type="radio"
+                     formControlName="hasStarted"
+                     name="hasStarted"
+                     id="control-yes"
+                     [value]="true">
+              <label class="form-check-label"
+                     for="yes">{{localization.Yes}}</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input"
+                     type="radio"
+                     name="hasStarted"
+                     formControlName="hasStarted"
+                     id="control-no"
+                     [value]="false">
+              <label class="form-check-label"
+                     for="no">{{localization.No}}</label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-lg-6"
+             *ngIf="isProjectStarted()">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.achievementRate}}</label>
+            <div class="input-group">
+              <input type="number"
+                    id="control-achievementRate"
+                     class="form-control"
+                     formControlName="achievementRate">
+              <span class="input-group-text"><i class="material-icons-outlined">percent</i></span>
+            </div>
+            <mat-error
+                       *ngIf="controls.achievementRate?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error
+                       *ngIf="controls.achievementRate?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-12"
+             *ngIf="isProjectStarted()">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.engineeringConsultantReportFileId}}</label>
+            <div class="col-12 col-lg-12"
+                 *ngIf="projectBasicData && projectBasicData.engineeringConsultantReportFile">
+              <a [href]="baseUrl + projectBasicData.engineeringConsultantReportFile.filePath"  id="link-engineeringConsultantReportFile" target="_blank">
+                {{projectBasicData.engineeringConsultantReportFile.fileDescription}}</a>
+            </div>
+            <app-file-uploader [data]="singleFileUploaderData"
+                               (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+            <mat-error
+                       *ngIf="controls.engineeringConsultantReportFileId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  </form>
+</ng-container>

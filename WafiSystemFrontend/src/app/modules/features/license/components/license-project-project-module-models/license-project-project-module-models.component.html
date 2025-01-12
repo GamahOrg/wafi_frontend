@@ -1,0 +1,33 @@
+<div class="tab-data-section" *ngFor="let unit of units">
+    <h6 class="title">{{unit.unitTypeName}} </h6>
+
+    <div class="table-responsive">
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>اسم النموذج</th>
+                    <th>المساحه الاجماليه</th>
+                    <th>مساحة مسطح ابناء</th>
+                    <th>عدد الوحدات</th>
+                    <th>ملفات التصميم</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let model of getModels(unit.licenseProjectSubUnits)">
+                    <td>{{model.name}}</td>
+                    <td>{{model.space}}</td>
+                    <td>{{model.buildingFlatSpace}}</td>
+                    <td>{{model.unitsCount}}</td>
+                    <td>
+                        <div class="value"  *ngFor="let file of model.licenseProjectModelDesignFiles">
+                            <span class="icon material-icons-outlined">content_copy</span>
+                            <a *ngIf="file && file.designFile"  id="link-file" [href]="baseUrl + file.designFile.filePath" target="_blank">
+                                {{file.designFile.fileDescription}}</a>
+                        </div>
+                </td>
+               
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

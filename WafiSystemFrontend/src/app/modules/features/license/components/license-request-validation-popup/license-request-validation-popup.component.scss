@@ -1,0 +1,89 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/cards";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.error-title {
+    margin-bottom: 2rem;
+    font-size: $font-size-sm;
+}
+
+.card {
+    box-shadow: 0px 4px 14px rgba($black, .08);
+    border-radius: .75rem;
+
+    .card-body {
+        display: flex;
+        column-gap: .5rem;
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background-color: $orange;
+
+            [class^=material-icons] {
+                font-size: small;
+                // color: $darkgreen;
+                color: $theme-dark;
+            }
+        }
+
+        .title,
+        .status-text {
+            font-size: $font-size-sm;
+        }
+
+        .title {
+            // color: $darkgreen;
+            color: $theme-dark;
+        }
+
+        .symbol {
+            display: flex;
+            align-items: center;
+            width: 15%;
+            margin-inline-start: auto;
+
+            .count,
+            .checked {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+
+                width: 1.5rem;
+                height: 1.5rem;
+
+                border-radius: 50%;
+            }
+
+
+            .checked {
+                background-color: $midgreen;
+
+                [class^="material-icons"] {
+                    font-size: 1rem;
+                    color: $white;
+                }
+            }
+
+            .count {
+                color: $white;
+                background-color: $midred;
+            }
+
+            .status-text {
+                margin-inline-start: 1rem;
+            }
+        }
+    }
+}

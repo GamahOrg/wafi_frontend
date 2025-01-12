@@ -1,0 +1,26 @@
+<div class="tab-data-section" *ngFor="let zone of zones">
+    <h6 class="title">زون رقم - {{zone.code}}</h6>
+
+    <div class="table-responsive">
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>النوع</th>
+                    <th>رقم البلوك / رقم العمارة</th>
+                    <th>تاريخ بداية الإنشاء </th>
+                    <th>تاريخ نهاية الانشاء </th>
+                    <th>عدد أنواع الوحدات </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let unit of zone.licenseProjectUnits">
+                    <td>{{unit.unitTypeName}}</td>
+                    <td>{{unit.code}}</td>
+                    <td>{{unit.constructionStartOn | date:'yyyy-MM-dd'}}</td>
+                    <td>{{unit.constructionEndOn | date:'yyyy-MM-dd'}}</td>
+                    <td>{{unit.licenseProjectSubUnits.length}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

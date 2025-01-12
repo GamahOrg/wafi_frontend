@@ -1,0 +1,132 @@
+<ng-container *ngIf="accountKeeper && accountKeeper.id">
+  <form class="d-flex flex-column h-100" [formGroup]="accountKeeperForm" id="form-accountKeeperForm">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div>
+
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.accountNumber}}</label>
+            <input type="text" id="control-accountNumber" placeholder="{{localization.accountNumber}}"
+              class="form-control" formControlName="accountNumber">
+            <mat-error
+              *ngIf="controls.accountNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <!-- <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.accountKeeperName}}</label>
+                        <input type="text"
+                               placeholder="{{localization.accountKeeperName}}"
+                               class="form-control"
+                               formControlName="accountKeeperName">
+                        <mat-error
+                                   *ngIf="controls.accountKeeperName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div> -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.accountKeeperMobile}}</label>
+            <input type="text" id="control-accountKeeperMobile" placeholder="{{localization.accountKeeperMobile}}"
+              class="form-control" formControlName="accountKeeperMobile">
+            <mat-error
+              *ngIf="controls.accountKeeperMobile?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error
+              *ngIf="controls.accountKeeperMobile?.hasError('pattern') && showValidation">{{localization.phoneNumberPattern}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.accountKeeperTelephone}}</label>
+            <input type="text" id="control-accountKeeperTelephone" placeholder="{{localization.accountKeeperTelephone}}"
+              class="form-control" formControlName="accountKeeperTelephone">
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.accountKeeperExtentionNumber}}</label>
+            <input type="text" id="control-accountKeeperExtentionNumber"
+              placeholder="{{localization.accountKeeperExtentionNumber}}" class="form-control"
+              formControlName="accountKeeperExtentionNumber">
+            <mat-error
+              *ngIf="controls.accountKeeperExtentionNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.accountKeeperEmail}}</label>
+            <input type="text" id="control-accountKeeperEmail" placeholder="{{localization.accountKeeperEmail}}"
+              class="form-control" formControlName="accountKeeperEmail">
+            <mat-error
+              *ngIf="controls.accountKeeperEmail?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error
+              *ngIf="controls.accountKeeperEmail?.hasError('pattern') && showValidation">{{localization.emailPattern}}</mat-error>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.accountKeeperJobTitle}}</label>
+            <input type="text" id="control-accountKeeperJobTitle" placeholder="{{localization.accountKeeperJobTitle}}"
+              class="form-control" formControlName="accountKeeperJobTitle">
+            <mat-error
+              *ngIf="controls.accountKeeperJobTitle?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.bankName}}</label>
+            <select class="form-select" id="control-bankId" formControlName="bankId">
+              <option [label]="localization.selectBankName"></option>
+              <option *ngFor="let bank of banks" [value]="bank.id">{{bank.name}}</option>
+            </select>
+            <mat-error
+              *ngIf="controls.bankId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.accountKeeperFax}}</label>
+            <input type="text" id="control-accountKeeperFax" placeholder="{{localization.accountKeeperFax}}"
+              class="form-control" formControlName="accountKeeperFax">
+          </div>
+          <div class="invalid-feedback d-block"
+            *ngIf="controls.accountKeeperFax?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}
+          </div>
+
+        </div>
+
+        <div class="col-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.accountKeeperAgreementFileId}}</label>
+
+            <div class="col-12 col-lg-6" *ngIf="accountKeeper && accountKeeper.accountKeeperAgreementFile">
+              <a [href]="baseUrl + accountKeeper.accountKeeperAgreementFile.filePath" target="_blank"
+                id="link-accountKeeperAgreementFile">
+                {{accountKeeper.accountKeeperAgreementFile.fileDescription}}</a>
+            </div>
+
+            <app-file-uploader [data]="singleFileUploaderData"
+              (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+            <mat-error
+              *ngIf="controls.accountKeeperAgreementFileId?.hasError('required')&& showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
+            <button class="btn btn-outline-primary"
+                    (click)="back()">{{localization.previous}}</button>
+            <button class="btn btn-outline-primary"
+                    (click)="save(true)">{{localization.next}}</button>
+
+        </div> -->
+  </form>
+</ng-container>

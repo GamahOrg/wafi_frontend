@@ -1,0 +1,56 @@
+<div class="page">
+    <app-breadcrumb></app-breadcrumb>
+    <div class="page-header">
+        <div class="page-title">
+            <h2 class="title-bottom-line">تأكيد بيانات طلب {{renewRequest?'تجديد':''}} {{RequestCode}} </h2>
+        </div>
+        <p class="text opacity-75">مدة التأهيل الذي تريد الحصول علىه - {{periodString}}</p>
+    </div>
+
+    <div class="page-section">
+        <div class="page-title">
+            <h2 class="title">بيانات الحساب الشخصى</h2>
+        </div>
+
+        <div class="page-content mb-5">
+            <app-accordion></app-accordion>
+        </div>
+    </div>
+
+    <div class="page-section mt-auto">
+        <div class="page-title">
+            <h2 class="title">اقرار بصحة البيانات وتحمل المسؤلية</h2>
+        </div>
+
+        <div class="page-content">
+            <form [formGroup]="declarationForm" id="form-declarationForm">
+                <div class="form-check">
+                    <input class="form-check-input" id="control-data" type="checkbox"  formControlName="data" />
+                    <label class="form-check-label" for="data">
+                        أقر بصحة البيانات والمستندات المقدمة منّا لطلب التأهيل ومطابقتها للواقع
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input"  id="control-resposability" type="checkbox"  formControlName="resposability" />
+                    <label class="form-check-label" for="resposability">
+                        نتحمل كامل المسؤولية في حال عدم صحة المستندات ومطابقتها معايير وتعلىمات
+                        الهيئة العامة للعقار
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" id="control-promise" type="checkbox"  formControlName="promise" />
+                    <label class="form-check-label" for="promise">
+                        نتعهد بإخطار الهيئة العامة للعقار عن أي تغيير يطرأ بعد ذلك في البيانات الخاصة
+                        بالتأهيل"
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-outline-primary" id="btn-cancelRequest" (click)="cancelRequest()">إلغاء</button>
+                    <button class="btn btn-primary" id="btn-creatRequest" [disabled]="!declarationForm.valid" (click)="createOrRenewRequest()">
+                        إرسال الطلب
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

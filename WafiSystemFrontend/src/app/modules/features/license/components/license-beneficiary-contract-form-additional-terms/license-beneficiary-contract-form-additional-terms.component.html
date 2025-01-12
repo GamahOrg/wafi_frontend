@@ -1,0 +1,29 @@
+<div class="d-flex flex-column h-100">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th>{{localization.licenseBeneficiaryContractFormId}}</th>
+              <th>{{localization.itemNumber}}</th>
+              <th> {{localization.itemText}}</th>
+              <th class="w-25"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let beneficiary of beneficiaryContractFormAdditionalTermsList">
+              <td>
+                {{beneficiary?.licenseBeneficiaryContractForm?.description}}
+              </td>
+              <td>{{beneficiary?.itemNumber}}</td>
+              <td>{{beneficiary?.itemText}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>    
+  </div>

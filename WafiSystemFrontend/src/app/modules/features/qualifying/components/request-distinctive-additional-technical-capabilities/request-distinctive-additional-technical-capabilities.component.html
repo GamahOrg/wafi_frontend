@@ -1,0 +1,72 @@
+<div class="tab-data-section" *ngIf="additionTechnicalCapability">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 col-md-6" *ngIf="
+        additionTechnicalCapability &&
+        additionTechnicalCapability.wafiProjectLicenseFile
+      ">
+            <div class="key">
+                ملف رخصة لاحد مشاريع البيع على الخارطة
+            </div>
+            <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a [href]="
+            baseUrl +
+            additionTechnicalCapability.wafiProjectLicenseFile.filePath
+          " target="_blank">
+                    {{additionTechnicalCapability.wafiProjectLicenseFile.fileDescription}}</a>
+                <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+            </div>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="
+        additionTechnicalCapability.qualificationContsAndDevsServiceProvidersCertificateNumbers &&
+        additionTechnicalCapability
+          .qualificationContsAndDevsServiceProvidersCertificateNumbers.length >
+          0
+      ">
+            <div class="key">
+                أرقام شهادات مزودي خدمات المؤهلات والمطورين
+            </div>
+            <div class="value" *ngFor="
+          let contsAndDevsServiceProviders of additionTechnicalCapability.qualificationContsAndDevsServiceProvidersCertificateNumbers
+        ">
+                <span class="icon material-icons">blinds</span>
+                {{ contsAndDevsServiceProviders.certificateNumber }}
+                <span *ngIf="contsAndDevsServiceProviders.description">
+                    ({{ contsAndDevsServiceProviders.description }})
+                </span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="
+        additionTechnicalCapability.qualificationCompletedSmallOrMediumProjectsLicenses &&
+        additionTechnicalCapability
+          .qualificationCompletedSmallOrMediumProjectsLicenses.length > 0
+      ">
+            <div class="key">
+                رخص مشاريع صغيرة أو متوسطة منجزة
+            </div>
+            <div class="value" *ngFor="
+          let licenses of additionTechnicalCapability.qualificationCompletedSmallOrMediumProjectsLicenses
+        ">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a *ngIf="licenses && licenses.sysFileManager" [href]="baseUrl + licenses.sysFileManager.filePath" target="_blank">
+                    {{ licenses.sysFileManager.fileDescription }}</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="
+        additionTechnicalCapability &&
+        additionTechnicalCapability.marketingSellingLicenseFile
+      ">
+            <div class="key"> رخص تسويق - بيع</div>
+            <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a [href]="
+            baseUrl +
+            additionTechnicalCapability.marketingSellingLicenseFile.filePath" target="_blank">
+                    {{
+                    additionTechnicalCapability.marketingSellingLicenseFile
+                    .fileDescription
+                    }}</a>
+            </div>
+        </div>
+    </div>
+</div>

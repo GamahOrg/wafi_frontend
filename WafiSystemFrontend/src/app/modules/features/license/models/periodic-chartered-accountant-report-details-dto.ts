@@ -1,0 +1,425 @@
+import { LicenseProjectBuyerDto } from '../dataModels/license-project-buyer-dto';
+import {
+  LiceneProjectBeneficiaryTypeDto,
+  LiceneProjectBeneficiaryTypeEnum,
+  LicenseProjectExchangeDocumentMainItemDto,
+  LicenseProjectExchangeDocumentSubItemDto,
+} from '../dataModels/license-project-exchange-document-paging-dto';
+import { CustomerShortDto } from './facility-short-dto';
+import { SysFileManagerCreateUpdateDto } from './license-request-project-details-dto';
+import {
+  PeriodicCharteredAccountantReportQuarterTypeDto,
+  PeriodicCharteredAccountantReportQuarterTypeEnum,
+  PeriodicCharteredAccountantReportTypeDto,
+  PeriodicCharteredAccountantReportTypeEnum,
+} from './periodic-chartered-accountant-report-paging-list-dto';
+
+export interface PeriodicCharteredAccountantReportDetailsDto {
+  id: string;
+  licenseProjectName: string;
+  facilityName: string;
+  depositDate: Date;
+  reportTypeId: PeriodicCharteredAccountantReportTypeEnum;
+  quarterTypeId?: PeriodicCharteredAccountantReportQuarterTypeEnum;
+  year?: number;
+  month?: number;
+  fromDate: Date;
+  toDate: Date;
+  createdOn: Date;
+  exchangeDocuments: PeriodicCharteredAccountantReportExchangeDocumentDto[];
+  //ملحق رقم 1 البيانات الاساسية
+  charteredAccountantOfficeName: string;
+  // نوع الوحدات
+  unitType?: string;
+  // اجمالى عدد الوحدات
+  totalUnitNumber?: number;
+  // أمين الحساب
+  accountKeeper?: string;
+  // رقم حساب الضمان
+  accountNumber?: string;
+  // رقم ترخيص بيع وحدة على الخارطة
+  certificateNumber?: string;
+  // بيانات معد التقرير
+  customerId: string;
+  customer: CustomerShortDto;
+  // سعر الأرض
+  landPrice?: number;
+  // اجمالى قيمة وحدات المشروع
+  totalUnitsAmount?: number;
+  // اجمالى قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)
+  totalCost?: number;
+  // التكلفة الانشائة المتوقعة
+  expectedConstructionCost?: number;
+  // هامش الربح المتوقع
+  expectedProfile?: number;
+
+  // العمليات المالية خلال الفترة (من حساب الضمان)
+  financialTransactionsDuringPeriodFromEscrowAccountId?: string;
+  financialTransactionsDuringPeriodFromEscrowAccount?: FinancialTransactionsDuringPeriodFromEscrowAccountDto;
+
+  // العمليات المالية منذ البدء بالمشروع (من حساب الضمان)
+  financialTransactionsBeginningOfProjectFromEscrowAccountId?: string;
+  financialTransactionsBeginningOfProjectFromEscrowAccount?: FinancialTransactionsBeginningOfProjectFromEscrowAccountDto;
+
+  // العمليات المالية خلال الفترة (من خارج حساب الضمان)
+  financialTransactionsDuringPeriodOutEscrowAccountId?: string;
+  financialTransactionsDuringPeriodOutEscrowAccount?: FinancialTransactionsDuringPeriodOutEscrowAccountDto;
+
+  // العمليات المالية منذ البدء بالمشروع (من خارج حساب الضمان)
+  financialTransactionsBeginningOfProjectOutEscrowAccountId?: string;
+  financialTransactionsBeginningOfProjectOutEscrowAccount?: FinancialTransactionsBeginningOfProjectOutEscrowAccountDto;
+
+  // إجمالي العمليات المدينة والدائن
+  totalDebtOperations?: number;
+  totalCreditOperations?: number;
+
+  // حساب الضمان
+  periodOpeningBalance?: number;
+  periodClosingBalance?: number;
+
+  // تحليل موقف وحدات المشروع
+  projectUnitsPositionAnalysis: ProjectUnitsPositionAnalysisDto[];
+
+  // الدفعات المحصلة والخاصة بالوحدات المباعة الملغية
+  paymentsCollectedForCancelledUnitsSolds: PaymentsCollectedForCancelledUnitsSoldDto[];
+
+  // الإيداعات والدفعات
+  periodicCharteredAccountantReportDeposits: PeriodicCharteredAccountantReportDepositDto[];
+  periodicCharteredAccountantReportBatches: PeriodicCharteredAccountantReportBatchDto[];
+
+  // القيود المالية
+  periodicCharteredAccountantReportFinancialConstraintId?: string;
+  periodicCharteredAccountantReportFinancialConstraint?: PeriodicCharteredAccountantReportFinancialConstraintDto;
+
+  // النتائج والتوصيات
+  resultsAndRecommendations?: string;
+
+  // قائمة المركز المالي
+  financialCenterFiles: FinancialCenterFileDto[];
+
+  // روابط الكيانات الأخرى
+  licenseProject: LicenseProjectDto;
+  reportType: PeriodicCharteredAccountantReportTypeDto;
+  quarterType: PeriodicCharteredAccountantReportQuarterTypeDto;
+}
+//وثائق الصرف خلال فترة التقرير
+export interface PeriodicCharteredAccountantReportExchangeDocumentDto {
+  mainItemId: LicenseProjectExchangeDocumentMainItemEnum;
+  subItemId: LicenseProjectExchangeDocumentSubItemEnum;
+  documnetNumber: string;
+  exchangeDate: Date;
+  amount: number;
+  approvalDate: Date;
+  statment: string;
+  liceneProjectBeneficiaryTypeId: LiceneProjectBeneficiaryTypeEnum;
+  beneficiaryDescription: string;
+  liceneProjectBeneficiaryType: LiceneProjectBeneficiaryTypeDto;
+  mainItem: LicenseProjectExchangeDocumentMainItemDto;
+  subItem: LicenseProjectExchangeDocumentSubItemDto;
+  licenseProjectBuyer: LicenseProjectBuyerDto;
+}
+export enum LicenseProjectExchangeDocumentMainItemEnum {
+  //تكاليف انشائية
+  ConstructionCosts = 1,
+  //مصاريف ادارية و تسويقية
+  AdministrativeAndMarketingExpenses = 2,
+  //حساب الحفظ
+  CustodyAccount = 3,
+  //ايداعات عملاء مستردة
+  RefundableCustomerDeposits = 4,
+  //عمولات بنكية
+  BankCommissions = 5,
+}
+export enum LicenseProjectExchangeDocumentSubItemEnum {
+  //حافز وزارى
+  MinisteriaIncentive = 1,
+  //تمويل بنكى
+  BankFinancing = 2,
+  //تمويل ذاتى
+  SelfFinancing = 3,
+  //حساب الضمان
+  EscrowAccount = 4,
+  //أعمال
+  Business = 5,
+}
+export interface FinancialTransactionsDuringPeriodFromEscrowAccountDto {
+  id: string; // Unique identifier
+  periodicCharteredAccountantReportId: string; // Reference to Periodic Chartered Accountant Report
+
+  // تكاليف إنشائية (من حساب الضمان)
+  constructionCosts?: number;
+  // مصاريف ادارية وتسويقية (من حساب الضمان)
+  administrativeMarketingExpenses?: number;
+  // ايداعات عملاء مستردة
+  refundableCustomerDeposits?: number;
+  // عمولات بنكية
+  bankCommissions?: number;
+  // تكاليف انشائية - الحافز الوزارى
+  constructionCostsMinisterialIncentiveBankFinancing?: number;
+  // تكاليف انشائية - التمويل البنكى
+  constructionCostsBankFinancing?: number;
+  // مصاريف ادارية وتسويقية - التمويل البنكى
+  administrativeMarketingExpensesBankFinancing?: number;
+  // أخرى
+  otherDebts?: number;
+
+  // إجمالي العمليات المدينة
+  totalDebtOperations?: number;
+  // تحصيل من العملاء
+  collectionsFromCustomers?: number;
+  // تمويل بنكى
+  bankFinancing?: number;
+  // تمويل ذاتى
+  selfFinancing?: number;
+  // تمويل الوزارة
+  ministryFinancing?: number;
+  // أخرى دائنة
+  otherCredits?: number;
+
+  // إجمالى العمليات الدائنة
+  totalCreditOperations?: number;
+}
+
+export interface FinancialTransactionsBeginningOfProjectFromEscrowAccountDto {
+  // تكاليف إنشائية (من حساب الضمان)
+  constructionCosts?: number;
+  // مصاريف إدارية وتسويقية (من حساب الضمان)
+  administrativeMarketingExpenses?: number;
+  // ايداعات عملاء مستردة
+  refundableCustomerDeposits?: number;
+  // عمولات بنكية
+  bankCommissions?: number;
+  // تكاليف انشائية - الحافز الوزارى
+  constructionCostsMinisterialIncentiveBankFinancing?: number;
+  // تكاليف انشائية - التمويل البنكى
+  constructionCostsBankFinancing?: number;
+  // مصاريف ادارية وتسويقية - التمويل البنكى
+  administrativeMarketingExpensesBankFinancing?: number;
+  // أخرى
+  otherDebts?: number;
+
+  // إجمالى العمليات المدينة
+  totalDebtOperations?: number;
+  // تحصيل من العملاء
+  collectionsFromCustomers?: number;
+  // تمويل بنكى
+  bankFinancing?: number;
+  // تمويل ذاتى
+  selfFinancing?: number;
+  // تمويل الوزارة
+  ministryFinancing?: number;
+  // أخرى دائنة
+  otherCredits?: number;
+
+  // إجمالى العمليات الدائنة
+  totalCreditOperations?: number;
+}
+
+export interface FinancialTransactionsDuringPeriodOutEscrowAccountDto {
+  // تكاليف انشائية
+  constructionCosts?: number;
+  // مصاريف ادارية وتسويقية
+  administrativeMarketingExpenses?: number;
+  // ايداعات عملاء مستردة
+  customerDepositRefunds?: number;
+  // عمولات بنكية
+  bankCommissions?: number;
+  // أخرى مدينة
+  otherDebts?: number;
+
+  // إجمالى العمليات المدينة
+  totalDebtOperations?: number;
+  // تحصيل من العملاء
+  collectionsFromCustomers?: number;
+  // تمويل بنكى
+  bankFinancing?: number;
+  // تمويل ذاتى
+  selfFinancing?: number;
+  // تمويل الوزارة
+  ministryFinancing?: number;
+  // أخرى دائنة
+  otherCredits?: number;
+
+  // إجمالى العمليات الدائنة
+  totalCreditOperations?: number;
+}
+
+export interface FinancialTransactionsBeginningOfProjectOutEscrowAccountDto {
+  // تكاليف انشائية
+  constructionCosts?: number;
+  // مصاريف ادارية وتسويقية
+  administrativeMarketingExpenses?: number;
+  // ايداعات عملاء مستردة
+  customerDepositRefunds?: number;
+  // عمولات بنكية
+  bankCommissions?: number;
+  // أخرى مدينة
+  otherDebts?: number;
+
+  // إجمالى العمليات المدينة
+  totalDebtOperations?: number;
+
+  // تحصيل من العملاء
+  collectionsFromCustomers?: number;
+  // تمويل بنكى
+  bankFinancing?: number;
+  // تمويل ذاتى
+  selfFinancing?: number;
+  // تمويل الوزارة
+  ministryFinancing?: number;
+  // أخرى دائنة
+  otherCredits?: number;
+
+  // إجمالى العمليات الدائنة
+  totalCreditOperations?: number;
+}
+
+export interface ProjectUnitsPositionAnalysisDto {
+  // نوع الوحدات
+  unitsType?: string;
+
+  // إجمالى وحدات المشروع - عدد
+  totalNumberLicenseProjectUnits?: number;
+
+  // إجمالى وحدات المشروع - نسبة
+  totalPercentageLicenseProjectUnits?: number;
+
+  // إجمالى وحدات المشروع - قيمة
+  totalValueLicenseProjectUnits?: number;
+
+  // إجمالى الوحدات المباعة خلال الفترة - عدد
+  totalNumberLicenseProjectUnitsSold?: number;
+
+  // إجمالى الوحدات المباعة خلال الفترة - نسبة
+  totalPercentageLicenseProjectUnitsSold?: number;
+
+  // إجمالى الوحدلات المباعة خلال الفترة - قيمة
+  totalValueLicenseProjectUnitsSold?: number;
+
+  // إجمالى الوحدات المباعة منذ بداية المشروع -عدد
+  totalNumberLicenseProjectUnitsSoldFromBeginning?: number;
+
+  // إجمالى الوحدات المباعة منذ بداية المشروع - قيمة
+  totalValueLicenseProjectUnitsFromBeginning?: number;
+
+  // إجمالى الوحدات المباعة منذ بداية المشروع - نسبة
+  totalPercentageLicenseProjectUnitsSoldFromBeginning?: number;
+
+  // إجمالى الوحدات المتبقة للمشروع
+  totalRemainingUnits?: number;
+
+  // إجمالى الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - قيمة
+  totalValueRemainingUnits?: number;
+
+  // إجمالى الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - نسبة
+  totalPercentageRemainingUnits?: number;
+
+  // إجمالى المبالغ المحصلة من الوحدات المباعة
+  totalAmountForUnitsSold?: number;
+
+  // نسبة التحصيل من إجمالى قيمة الوحدات المباعة
+  percentageTotalValueOfUnitsSold?: number;
+}
+
+export interface PaymentsCollectedForCancelledUnitsSoldDto {
+  // اسم المشترى
+  buyerName: string;
+
+  // رقم الوحدة
+  unitCode: string;
+
+  // سعر الوحدة
+  price: number;
+
+  // تاريخ الإلغاء
+  cancelledDate?: Date;
+
+  // ما تم دفعة خلال الربع - الدفعات التى تم ارجاعها
+  paidDuringQuarter?: number;
+
+  // إجمالى الدفعات
+  totalPayments: number;
+
+  // المتبقى
+  remainingUnitPrice: number;
+}
+
+export interface PeriodicCharteredAccountantReportDepositDto {
+  // رقم الوحدة السكنية/نوع التكاليف
+  unitCodeOrExpenseType: string;
+
+  // رقم الشيك
+  checkNumber: number;
+
+  // تاريخ التوريد
+  supplyDate: Date;
+
+  // المبلغ بالريال
+  riyalsAmount: number;
+
+  // تاريخ الإيداع في البنك
+  depositDate: Date;
+}
+
+export interface PeriodicCharteredAccountantReportBatchDto {
+  // رقم الوحدة السكنية/نوع التكاليف
+  unitCodeOrExpenseType: string;
+
+  // رقم الشيك
+  checkNumber: number;
+
+  // تاريخ التوريد
+  supplyDate: Date;
+
+  // المبلغ بالريال
+  riyalsAmount: number;
+
+  // تاريخ الخصم في البنك
+  bankDebitDate: Date;
+}
+
+export interface PeriodicCharteredAccountantReportFinancialConstraintDto {
+  // النسبة المسموح بها للمصاريف الإدارية والتسويقية
+  allowablePercentageOfAdministrativeMarketingExpenses?: number;
+
+  // إجمالي قيمة الوحدات المباعة والمحصل قيمتها
+  totalValueOfUnitsSoldAndCollected?: number;
+
+  // الحد المسموح التصرف به للمصاريف الإدارية والتسويقية
+  allowedLimitForAdministrativeMarketingExpenses?: number;
+
+  // إجمالي المبالغ الإدارية والتسويقية التي تم صرفها منذ بداية المشروع
+  totalAdministrativeMarketingAmountsFromBeginningOfProject?: number;
+
+  // المبلغ المتبقى
+  remainingAmount?: number;
+
+  // النسبة الواجب توفرها بحساب الحفظ
+  percentageRequiredForSavingAccount?: number;
+
+  // مبلغ الحافز
+  incentiveAmount?: number;
+
+  // هل نسبة تحصيل المبيعات وصلت الى 80% من اجمالى قيمة المبيعات
+  salesRateReached80Percentage?: number;
+
+  // قيمة استرداد الدفعة الأولى
+  firstPaymentRefundValue?: number;
+
+  // هل نسبة تحصيل المبيعات وصلت الى 90% من اجمالى قيمة المبيعات
+  salesRateReached90Percentage?: number;
+
+  // قيمة استرداد الدفعة الثانية
+  secondPaymentRefundValue?: number;
+}
+
+export interface FinancialCenterFileDto {
+  id: string;
+  periodicCharteredAccountantReportId: string;
+  fileId: string;
+  file: SysFileManagerCreateUpdateDto;
+}
+
+export interface LicenseProjectDto {
+  name: string;
+}

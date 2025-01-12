@@ -1,0 +1,22 @@
+<div class="table-responsive">
+    <table class="table table-light" >
+        <thead>
+            <tr>
+                <th>نوع التمويل</th>
+                <th>مصادر التمويل المتوقعة </th>
+                <th>رقم هوية مفوض الممول </th>
+                <th>البريد الإلكتروني لمفوض الممول </th>
+                <th>رقم جوال مفوض الممول </th>
+            </tr>
+        </thead>
+        <tbody *ngIf="licenseProjectExpectedFundingSources && licenseProjectExpectedFundingSources.length>0">
+            <tr *ngFor="let expected of licenseProjectExpectedFundingSources">
+                <td>{{expected?.fundingType?.name}}</td>
+                <td>{{expected.financingTypeDescription}}</td>
+                <td>{{expected.funderNationalNumber}}</td>
+                <td>{{expected.funderEmailAddress}}</td>
+                <td>{{expected.funderPhoneNumber}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

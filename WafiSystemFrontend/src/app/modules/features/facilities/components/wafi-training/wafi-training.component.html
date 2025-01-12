@@ -1,0 +1,52 @@
+<app-no-data (onNoDataButtonClicked)="openDialog()"
+             *ngIf="!wafiTraining || !wafiTraining.id"></app-no-data>
+
+<ng-container *ngIf="wafiTraining && wafiTraining.id">
+
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">تدريب الهيئة العامة للعقار للبيع على الخارطة</h6>
+
+        <button mat-raised-button
+                (click)="openDialog()"
+                class="edit-icon"><span class="material-icons">edit</span></button>
+    </div>
+
+    <div class="tab-data-section">
+        <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+
+            <div class="col-12 col-md-6">
+                <div class="key">شهادة اجتياز دورة التسويق للبيع على الخارطة من الهيئة العامة للعقار</div>
+                <ng-container *ngIf="wafiTraining && wafiTraining.marketerTrainingCertificateFile">
+                    <div class="value">
+                        <span class="icon material-icons-outlined">content_copy</span>
+                        <a [href]="baseUrl + wafiTraining.marketerTrainingCertificateFile.filePath"
+                           target="_blank">
+                            {{wafiTraining.marketerTrainingCertificateFile.fileDescription}}</a>
+                    </div>
+                    <div class="value">
+                        <span class="delete"
+                              (click)="deletFile(wafiTraining.marketerTrainingCertificateFile.id)"><i
+                               class="material-icons text-danger">close</i></span>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="key">شهادة اجتياز دورة التطوير العقاري لمشاريع البيع على الخارطة</div>
+                <div class="value"
+                     *ngIf="wafiTraining && wafiTraining.realEstateDevelopmentTrainingCertificateFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + wafiTraining.realEstateDevelopmentTrainingCertificateFile.filePath"
+                       target="_blank">
+                        {{wafiTraining.realEstateDevelopmentTrainingCertificateFile.fileDescription}}</a>
+                    <div class="value">
+                        <span class="delete"
+                              (click)="deletFile(wafiTraining.realEstateDevelopmentTrainingCertificateFile.id)"><i
+                               class="material-icons text-danger">close</i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

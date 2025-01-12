@@ -1,0 +1,40 @@
+<ng-container>
+
+    <a class="nav-link dropdown-toggle"
+       href="#"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+        <span class="notice" *ngIf="notViewedCount>0">
+            <span>{{notViewedCount}}</span>
+        </span>
+
+        <i class="material-icons-outlined">notifications</i>
+    </a>
+
+    <ul class="dropdown-menu"
+        *ngIf="notificationList && notificationList.length>0; else noNotification">
+        <li *ngFor="let notification of notificationList">
+            <a class="dropdown-item px-2"
+               [ngClass]="{'newNotification': !notification.isViewed}"
+               (click)="onNotificationClicked(notification)">{{notification.message}}</a>
+        </li>
+        <li>
+            <a class="dropdown-item px-2 text-center"
+               [routerLink]="Configuration.pages.notificationList">{{localization.seeAll}}</a>
+        </li>
+
+    </ul>
+
+    <ng-template #noNotification>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item px-2 text-center">
+                    لا يوجد إشعارات
+                </a>
+            </li>
+        </ul>
+    </ng-template>
+
+</ng-container>

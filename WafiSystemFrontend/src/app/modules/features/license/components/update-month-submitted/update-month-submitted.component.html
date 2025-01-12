@@ -1,0 +1,20 @@
+<form [formGroup]="updateMonthSubmittedForm"
+      id="form-updateMonthSubmittedForm">
+    <div class="row row-gap-3 mb-3">
+        <div class="col-12 col-lg-12">
+            <label for="licNum"
+                   class="form-label">شهور تقرير الإشراف الهندسي(القيم الفعلىة)</label>
+            <select class="form-select"
+                    id="control-actualValueReportId"
+                    formControlName="actualValueReportId"
+                    >
+                <option *ngFor="let item of actualValueReportList"
+                        [value]="item.id">{{item.monthName}}</option>
+            </select>
+            <div class="invalid-feedback d-block"
+                 *ngIf="controls['actualValueReportId'].errors?.['required'] && showValidation">
+                حقل مطلوب
+            </div>
+        </div>
+    </div>
+</form>

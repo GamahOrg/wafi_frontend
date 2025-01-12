@@ -1,0 +1,24 @@
+<div class="tab-data-section" *ngFor="let unit of units">
+    <h6 class="title">
+        <!-- اسم الوحدة -  -->
+        {{unit.code}} - {{unit.unitTypeName}} </h6>
+
+    <div class="table-responsive">
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>كود الوحدة</th>
+                    <th>تاريخ التسليم </th>
+                    <th>سعر التعاقد </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let code of unit.licenseProjectSubUnitsListCodes">
+                    <td>{{code.code}}</td>
+                    <td>{{code.deliveryOn | date:'yyyy-MM-dd'}}</td>
+                    <td>{{code.price}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

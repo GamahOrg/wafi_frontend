@@ -1,0 +1,90 @@
+<app-no-data (onNoDataButtonClicked)="openDialog()" *ngIf="!institutionalCapacityAndHrRequirements || !institutionalCapacityAndHrRequirements.id"></app-no-data>
+
+<ng-container *ngIf="institutionalCapacityAndHrRequirements && institutionalCapacityAndHrRequirements.id">
+
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">متطلبات القدرات المؤسسية والموارد البشرية</h6>
+
+        <button mat-raised-button (click)="openDialog()" class="edit-icon"><span class="material-icons">edit</span></button>
+    </div>
+
+    <div class="tab-data-section">
+        <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+
+            <div class="col-12 col-md-6">
+                <div class="key">ملف الهيكل التنظيمي</div>
+                <div class="value" *ngIf="institutionalCapacityAndHrRequirements && institutionalCapacityAndHrRequirements.organizationalStructureFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + institutionalCapacityAndHrRequirements.organizationalStructureFile.filePath" target="_blank">
+                        {{institutionalCapacityAndHrRequirements.organizationalStructureFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(institutionalCapacityAndHrRequirements.organizationalStructureFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="key"> شهادة لائحة تنظيم العمل</div>
+                <div class="value" *ngIf="institutionalCapacityAndHrRequirements && institutionalCapacityAndHrRequirements.laborRegulationCertificateFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + institutionalCapacityAndHrRequirements.laborRegulationCertificateFile.filePath" target="_blank">
+                        {{institutionalCapacityAndHrRequirements.laborRegulationCertificateFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(institutionalCapacityAndHrRequirements.laborRegulationCertificateFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="key"> لائحة إدارة السلامة والصحة المهنية</div>
+                <div class="value" *ngIf="institutionalCapacityAndHrRequirements && institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFile.filePath" target="_blank">
+                        {{institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="key"> شهادة نطاق السعودة</div>
+                <div class="value" *ngIf="institutionalCapacityAndHrRequirements && institutionalCapacityAndHrRequirements.saudizationCertificateFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + institutionalCapacityAndHrRequirements.saudizationCertificateFile.filePath" target="_blank">
+                        {{institutionalCapacityAndHrRequirements.saudizationCertificateFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(institutionalCapacityAndHrRequirements.saudizationCertificateFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="key">ملفات برامج المسؤولية الاجتماعية</div>
+                <div class="value" *ngFor="let files of institutionalCapacityAndHrRequirements.socialResponsibilityProgramsFiles">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a *ngIf="files && files.socialResponsibilityProgramFile" [href]="baseUrl + files.socialResponsibilityProgramFile.filePath">
+                        {{files.socialResponsibilityProgramFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile( files.socialResponsibilityProgramFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

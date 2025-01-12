@@ -1,0 +1,76 @@
+<div  class="d-flex flex-column h-100">
+
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">الميزانية العمومية السنوية المتوقعة'</h6>
+    
+        <button mat-raised-button class="edit-icon" (click)="openDialog('')"><span class="material-icons">add</span></button>
+    </div>
+
+    <div class="tab-data-section">
+        <div class="table-responsive">
+            <table class="table table-light" *ngIf="licenseProjectAnnualBalanceSheets && licenseProjectAnnualBalanceSheets.length>0">
+                <thead>
+                    <tr>
+                        <th> السنة</th>
+                        <!-- <th>الموجودات</th>
+                        <th>الموجودات المتداولة</th>
+                        <th>النقد والنقد المعادل</th>
+                        <th>الموجودات غير المتداولة</th>
+                        <th>مصاريف ما قبل التشغيل</th>
+                        <th>صافي الموجودات المتداولة</th>
+                        <th>مخصص نهايه خدمه الموظفين</th>
+                        <th>مخصص الإجازات للموظفين</th>
+                        <th>مخلص الطوارئ</th>
+                        <th>حقوق ملكية المشروع</th>
+                        <th>رأس المال</th>
+                        <th>الأرباح (الخسائر المنجزة)</th> -->
+                        <th>مجموع الموجوات المتداولة</th>
+                        <th>مجموع المتداولة الغير متداولة</th>
+                        <th>مجموع الموجودات</th>
+                        <th>المجموع</th>
+                        <th>مجموع المطلوبات وحقوق الملكية</th>
+                        <th class="w-25"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sheet of licenseProjectAnnualBalanceSheets">
+                         <td>{{sheet?.year?.name}}</td>
+                       <!-- <td>{{sheet.findings}}</td>   
+                         <td>{{sheet.currentAssets}}</td>
+                        <td>{{sheet.cashAndCashEquivalents}}</td>
+                        <td>{{sheet.nonCurrentAssets}}</td>
+                        <td>{{sheet.netCurrentAssets}}</td>
+                        <td>{{sheet.preOperatingExpenses}}</td> 
+                        <td>{{sheet.employeeEndOfServiceAllowance}}</td>
+                        <td>{{sheet.leaveAllowanceForEmployees}}</td>
+                        <td>{{sheet.emergencyAllowance}}</td>
+                        <td>{{sheet.projectPropertyRights}}</td>
+                        <td>{{sheet.capital}}</td>
+                        <td>{{sheet.profitsLossesMade}}</td> -->
+                        <td>{{sheet.groupOfCurrentAssets}}</td>
+                        <td>{{sheet.totalCurrentAndNonCurrent}}</td>
+                        <td>{{sheet.totalAssets}}</td>
+                        <td>{{sheet.total}}</td>
+                        <td>{{sheet.totalLiabilitiesAndRightsProperty}}</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-end column-gap-2">
+                                <button mat-icon-button color="warn" (click)="delete(sheet.id)"><mat-icon>delete</mat-icon></button>
+                                <button type="button" class="btn btn-primary" (click)="openDialog(sheet.id)">تعديل</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
+        <button class="btn btn-outline-primary"
+        (click)="back()">{{localization.previous}}</button>
+        <button class="btn btn-outline-primary"
+                (click)="next()">{{localization.next}}</button>
+
+    </div> -->
+</div>
+

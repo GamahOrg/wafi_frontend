@@ -1,0 +1,32 @@
+<div class="table-responsive">
+    <table class="table table-light" >
+        <thead>
+            <tr>
+                <th> السنة</th>
+                <!--  <th>مجمل الربح</th>
+                    <th>صافي الربح</th>
+                    <th>العائد على حقوق الملكية بالمشروع</th>
+                    <th>العائد على موجودات المشروع</th>
+                    <th>متوسط صافي الربح (الخسارة)</th>
+                    <th>الموجودات (من عام الي عام)</th> -->
+                <th>صافي الإيراد</th>
+                <th>صافي الزيادة(بالنقص) بالنقد والنقد المعادل خلال السنة المالية</th>
+                <th>صافي القيمة الحالية</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="licenseProjectFinancialIndicators && licenseProjectFinancialIndicators.length>0">
+            <tr *ngFor="let financial of licenseProjectFinancialIndicators">
+                <td>{{financial?.year?.name}}</td>
+                <!-- <td>{{financial.totalProfit}}</td>
+                    <td>{{financial.netProfit}}</td>
+                    <td>{{financial.returnOnEquityInTheProject}}</td>
+                    <td>{{financial.returnOnProjectAssets}}</td>
+                    <td>{{financial.averageNetProfitLoss}}</td>
+                    <td>{{financial.assetsYearToYear}}</td> -->
+                <td>{{financial.netRevenue}}</td>
+                <td>{{financial.netIncreaseDecreaseInCashAndCashEquivalentsDuringTheFiscalYear}}</td>
+                <td>{{financial.netPresentValue}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

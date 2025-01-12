@@ -1,0 +1,72 @@
+<ng-container>
+  <form class="d-flex flex-column h-100" [formGroup]="licenseProjectExhibitionDataForm" id="form-addingZoneForm">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div>
+
+    <div class="tab-data-section">
+      <div class="row mb-3">
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.exhibitionName}}</label>
+            <input type="text" id="control-exhibitionName" placeholder="{{localization.exhibitionName}}"
+              class="form-control" formControlName="exhibitionName">
+            <mat-error
+              *ngIf="controls.exhibitionName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.participationDate}}</label>
+            <div class="input-group">
+              <input bsDatepicker type="text" id="control-participationDate" class="form-control"
+                formControlName="participationDate" value="{{ controls.participationDate.value | date:'yyyy-MM-dd' }}">
+              <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+            </div>
+            <mat-error
+              *ngIf="controls.participationDate?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.headquarter}}</label>
+            <input type="text" id="control-headquarter" placeholder="{{localization.headquarter}}" class="form-control"
+              formControlName="headquarter">
+            <mat-error
+              *ngIf="controls.headquarter?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.showPeriod}}</label>
+            <input type="number" id="control-showPeriod" placeholder="{{localization.showPeriod}}" class="form-control"
+              formControlName="showPeriod">
+            <mat-error
+              *ngIf="controls.showPeriod?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <div class="key">{{localization.leaseContractFile}}</div>
+            <div class="value">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a target="_blank" *ngIf="licenseProjectExhibitionDto && licenseProjectExhibitionDto.leaseContractFile"
+                [href]="baseUrl + licenseProjectExhibitionDto.leaseContractFile.filePath">
+                {{licenseProjectExhibitionDto.leaseContractFile.fileDescription}}</a>
+            </div>
+            <app-file-uploader [data]="singleFilesUploaderData"
+              (fileUploaded)="onExistLeaseContractFileUploaded($event)"></app-file-uploader>
+          </div>
+          <div class="invalid-feedback d-block"
+            *ngIf="controls.leaseContractFileId?.hasError('required') && showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  </form>
+</ng-container>

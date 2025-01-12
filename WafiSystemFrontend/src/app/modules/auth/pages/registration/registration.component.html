@@ -1,0 +1,37 @@
+<app-auth-layout [title]="localization.title" [subtitle]="subtitle">
+
+    <div class="registration" [dir]="bodyDirection">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="user-data">
+                    <h6 class="title">{{localization.natinalIdData}}</h6>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="key mb-2">{{localization.nationalID}}</div>
+                            <div class="value fw-normal">
+                                {{yaqeenUserData?.nidnumber? yaqeenUserData?.nidnumber:
+                                  userData?.nidnumber}}
+                            </div>
+                        </div>
+                        <div *ngIf="userData?.fullName|| yaqeenUserData?.fullName" class="col-12 col-md-4">
+                            <div class="key mb-2">{{localization.fullName}}</div>
+                            <div class="value">{{yaqeenUserData?.fullName ?  yaqeenUserData?.fullName  :userData?.fullName}}
+                            </div>
+                        </div>
+                        <div *ngIf="userData?.nationality|| yaqeenUserData?.nationality" class="col-12 col-md-4">
+                            <div class="key mb-2">{{localization.nationality}}</div>
+                            <div class="value">{{yaqeenUserData?.nationality ?  yaqeenUserData?.nationality  :userData?.nationality}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr *ngIf="userData" class="mt-4">
+
+        <div class="stepper">
+            <app-stepper></app-stepper>
+        </div>
+    </div>
+
+</app-auth-layout>

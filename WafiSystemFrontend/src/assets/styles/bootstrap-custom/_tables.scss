@@ -1,0 +1,55 @@
+.table-responsive {
+    border: 1px solid #D6D6D6;
+    border-radius: $card-border-radius;
+}
+
+.table {
+    font-size: $font-size-sm;
+    margin-bottom: 0;
+
+    >thead,
+    >tbody {
+        vertical-align: middle;
+    }
+
+    >thead {
+        th {
+            padding-block: .75rem;
+            font-size: $font-size-sm;
+            font-weight: normal;
+            color: #798B83;
+            background-color: rgba(#89AA9D, .08);
+
+            .sortable {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .icon {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    >tbody {
+        tr:last-child {
+            td {
+                border-bottom: none;
+            }
+        }
+
+        td {
+            background-color: $white;
+        }
+    }
+}
+
+.table-light {
+    border-color: rgba(#89AA9D, .08);
+    color: #798B83;
+
+    .text-dark {
+        color: $title-color;
+    }
+}

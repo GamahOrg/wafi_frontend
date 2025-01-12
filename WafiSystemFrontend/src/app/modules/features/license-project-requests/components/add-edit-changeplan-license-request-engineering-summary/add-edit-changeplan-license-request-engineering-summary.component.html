@@ -1,0 +1,108 @@
+<form class="d-flex flex-column h-100" [formGroup]="changePlanForEngineeringConsultantForm"
+id="form-licenseProjectProblemLogForm">
+<div class="tab-data-section">
+  <div class="row mb-3">
+  
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">أسباب ومبررات تغيير خطة المشروع</label>
+      <textarea type="text" id="control-reasonsAndJustificationsForChangingProjectPlan" class="form-control" formControlName="reasonsAndJustificationsForChangingProjectPlan"
+        placeholder="أسباب ومبررات تغيير خطة المشروع"></textarea>
+      <div class="invalid-feedback d-block" *ngIf="controls.reasonsAndJustificationsForChangingProjectPlan?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  
+    </div>
+    
+  </div> 
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">نسبة إنجاز المشروع</label>
+      <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate"
+        placeholder="رصيد حساب الضمان">
+      <div class="invalid-feedback d-block" *ngIf="controls.achievementRate?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  
+    </div>
+  </div>
+  
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <div class="key">ملف جدول زمني للمشروع</div>
+      <div class="value"
+        *ngFor="let file of licenseProjectRequestChangePlanFull?.projecTimelineFileAttachments">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a *ngIf="file && file.documentFile" id="link-documentFile"
+          [href]="baseUrl + file.documentFile.filePath" target="_blank">
+          {{file.documentFile.fileDescription}}</a>
+      </div>
+      <app-file-uploader [data]="mueltiFilesUploaderData"
+        (fileUploaded)="onExistProjecTimelineFileAttachmentsFilesUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block"
+        *ngIf="(!projecTimelineFileAttachments || projecTimelineFileAttachments.length == 0) && showValidation">
+        حقل مطلوب
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <div class="key">صور للمشروع</div>
+      <div class="value"
+        *ngFor="let image of licenseProjectRequestChangePlanFull?.licenseProjectRequestChangePlanProjectAttachments">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a *ngIf="image && image.documentFile" id="link-marketingPlanFile"
+          [href]="baseUrl + image.documentFile.filePath" target="_blank">
+          {{image.documentFile.fileDescription}}</a>
+      </div>
+      <app-file-uploader [data]="mueltiFilesUploaderData"
+        (fileUploaded)="onExistlicenseProjectRequestChangePlanProjectAttachmentFilesUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block"
+        *ngIf="(!licenseProjectRequestChangePlanProjectAttachments || licenseProjectRequestChangePlanProjectAttachments.length == 0) && showValidation">
+        حقل مطلوب
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+<div class="page-content">
+    <div class="form-check">
+        <input class="form-check-input"
+               type="checkbox" id="control-isProjectStartedForEngineeringConsultant"
+               formControlName="isProjectStartedForEngineeringConsultant" />
+        <label class="form-check-label"
+               for="isProjectStartedForEngineeringConsultant">
+              لم يتم البدأ في المشروع
+        </label>
+    </div>
+
+</div>
+</div>
+</div>
+  <div class="col-12 col-lg-12" *ngIf="!controls.isProjectStartedForEngineeringConsultant.value">
+    <div class="form-group mb-4">
+      <div class="key">أخر تقرير مالي</div>
+      <div class="value">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.lastEngineeringReport" id="link-buyersApprovalLetterFile"
+          [href]="baseUrl +licenseProjectRequestChangePlanFull.lastEngineeringReport.filePath" target="_blank">
+          {{licenseProjectRequestChangePlanFull.lastEngineeringReport.fileDescription}}</a>
+      </div>
+      <app-file-uploader [data]="singleFilesUploaderData"
+        (fileUploaded)="onExistLastEngineeringReportFilesUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block"
+        *ngIf="showValidation && !controls.isProjectStartedForEngineeringConsultant.value">
+        حقل مطلوب
+      </div>
+    </div>
+  </div>
+</div> 
+</div>
+</form>
+
+
+
+

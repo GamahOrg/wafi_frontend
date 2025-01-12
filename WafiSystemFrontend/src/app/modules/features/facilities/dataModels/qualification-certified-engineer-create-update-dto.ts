@@ -1,0 +1,7 @@
+export class QualificationCertifiedEngineerCreateUpdateDto {
+          id:string="";
+          facilityId :string="";
+          engineerName:string="";
+          identityNumber :string="";
+          professionalLicenseNumber:string="";
+}

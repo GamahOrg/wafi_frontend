@@ -1,0 +1,74 @@
+
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                     <th scope="col">نوع السجل</th>
+                    <th scope="col">اسم المشترى</th>
+                    <th scope="col"> رقم هوية المشترى</th>
+                    <th scope="col"> رقم الجوال</th>
+                    <th scope="col">رقم العقد</th>
+                    <th scope="col">ملف العقد</th>
+                    <th scope="col">الحالة</th>
+                    <th scope="col">العمليات</th>
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                     <td>
+                        <span class="text-dark">{{comdata.licenseProjectBuyerType.name}}</span>
+                    </td> 
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.name}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.nidNumber}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">{{comdata.mobile}}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.contractNumber}}
+                        </div>
+                    </td>
+                   <td>
+                        <span class="text-dark">
+                            <a
+                            [href]="baseUrl + comdata.contractFile.filePath"
+                            id="link-contractFile"
+                            target="_blank"
+                          >
+                            {{ comdata.contractFile.fileDescription }}
+                          </a>
+                        </span>
+                    </td> 
+                    <td>
+                        <span class="text-dark">{{comdata.status.name}}</span>
+                    </td>
+                    <td>
+                       <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary mx-4" (click)="confirmAccepted(comdata)">قبول توثيق العقد</button>
+                        <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary" (click)="confirRejected(comdata)">رفض توثيق العقد</button> 
+                        <button type="button"  class="btn btn-outline-primary" (click)="showDetailDialog(comdata.id)">التفاصيل</button> 
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+

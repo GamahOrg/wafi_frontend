@@ -1,0 +1,70 @@
+<app-no-data (onNoDataButtonClicked)="openDialog()"
+             *ngIf="!financialCapability || !financialCapability.Id"></app-no-data>
+
+<ng-container *ngIf="financialCapability && financialCapability.Id">
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">متطلبات القدرات المالية </h6>
+
+        <button mat-raised-button
+                (click)="openDialog()"
+                class="edit-icon"><span class="material-icons">edit</span></button>
+    </div>
+
+    <div class="tab-data-section">
+        <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+            <div class="col-12 col-md-4">
+                <div class="key">رقم رخصة المحاسب القانوني المعتمد</div>
+                <div class="value fw-bold">{{financialCapability.CpalicenseNumber}}</div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="key">رقم هوية المحاسب القانوني المعتمد</div>
+                <div class="value fw-bold">{{financialCapability.CpaIdentityNumber}}</div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="key">تاريخ إصدار شهادة سلامة السجل الائتماني</div>
+                <div class="value col-12 col-md-6 col-xl-8">
+                    <span class="icon material-icons-outlined">calendar_today</span>
+                    {{financialCapability.CreditRecordIntegrityCertificateDate | date: 'dd/MM/yyyy'}}
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="key"> شهادة السجل الائتماني</div>
+                <div class="value" *ngIf="financialCapability && financialCapability.CreditRecordIntegrityCertificateFile && financialCapability.CreditRecordIntegrityCertificateFile.FilePath"
+                     >
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + financialCapability.CreditRecordIntegrityCertificateFile.FilePath"
+                       target="_blank">
+                        {{financialCapability.CreditRecordIntegrityCertificateFile.FileDescription}}</a>
+                    <div class="value">
+                        <span class="delete"
+                              (click)="deletFile(financialCapability.CreditRecordIntegrityCertificateFile.Id)"><i
+                               class="material-icons text-danger">close</i></span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="key">رقم شهادة الزكاة والدخل</div>
+                <div class="value fw-bold">{{financialCapability.CertificateOfZakatIncome}}</div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="key">القوائم المالية للسنه الميلادية السابقة</div>
+                <div class="value"
+                     *ngFor="let financialStatment of financialCapability.QualificationFinancialStatements">
+                    <ng-container *ngIf="financialStatment && financialStatment.FinancialStatementFile ">
+                        <span class="icon material-icons-outlined">content_copy</span>
+                        <a [href]="baseUrl + financialStatment.FinancialStatementFile.FilePath"
+                           target="_blank">
+                            {{financialStatment.FinancialStatementFile.FileDescription}}</a>
+                        <div class="value">
+                            <span class="delete"
+                                  (click)="deletFile(financialStatment.FinancialStatementFile.Id)"><i
+                                   class="material-icons text-danger">close</i></span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

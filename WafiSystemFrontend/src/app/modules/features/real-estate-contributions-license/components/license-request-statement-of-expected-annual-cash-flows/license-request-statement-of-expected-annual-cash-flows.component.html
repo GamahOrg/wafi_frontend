@@ -1,0 +1,48 @@
+<div class="table-responsive">
+    <table class="table table-light" >
+        <thead>
+            <tr>
+                <th> السنة</th>
+                <!-- <th>التدفقات النقدية المحصلة للمشروع</th>
+                    <th>المبالغ المحصلة من عمليات التشغيل(بيع وحدات)</th>
+                    <th>مجموع التدفقات النقديةالمحصلة</th>
+                    <th>التدفقات النقدية المدفوعة للمشروع</th>
+                    <th>دفعات المقاولين</th>
+                    <th>دفعات التسويق والدعاية</th>
+                    <th>دفعات التصميم </th>
+                    <th>دفعات الإشراف</th>
+                    <th>دفعات المصاريف الإدارية والعمومية</th>
+                    <th>دفعات تكلفه الأرض</th>
+                    <th>دفعات شراء أجهزة الكمبيوتر</th>
+                    <th>دفعات الزكاة</th>  -->
+                <th> (مصاريف التمويل المتوقعة)القرض المدفوع لمالك المشروع</th>
+                <th>مجموع التدفقات النقديةالمدفوعة</th>
+                <th>صافي الزيادة(النقص) بالنقد</th>
+                <th>رصيد النقد أول الفترة</th>
+                <th>رصيد النقد والنقد المعادل آخر الفترة</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="licenseProjectAnnualCashFlows && licenseProjectAnnualCashFlows.length>0">
+            <tr *ngFor="let cash of licenseProjectAnnualCashFlows">
+                <td>{{cash?.year?.name}}</td>
+                <!-- <td>{{cash.cashFlowsCollectedForTheProject}}</td>   
+                     <td>{{cash.amountsCollectedFromOperationsSaleUnits}}</td>
+                    <td>{{cash.totalCashFlowsCollected}}</td>
+                    <td>{{cash.projectCashFlows}}</td>
+                    <td>{{cash.contractorPayments}}</td>
+                    <td>{{cash.marketingAndAdvertisingPayments}}</td> 
+                    <td>{{cash.designPayments}}</td>
+                    <td>{{cash.supervisionPayments}}</td>
+                    <td>{{cash.paymentsOfAdministrativeAndGeneralFees}}</td>
+                    <td>{{cash.landCostPayments}}</td>
+                    <td>{{cash.pcPurchasePayments}}</td>
+                    <td>{{cash.zakatPayments}}</td>  -->
+                <td>{{cash.loanPaidToOwnerOfTheProjectExpectedFinancingFees}}</td>
+                <td>{{cash.totalCashFlowPaid}}</td>
+                <td>{{cash.netIncreaseDecreaseInCash}}</td>
+                <td>{{cash.cashBalanceAtBeginningOfThePeriod}}</td>
+                <td>{{cash.balanceOfCashAndCashEquivalentsAtTheEndOfThePeriod}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

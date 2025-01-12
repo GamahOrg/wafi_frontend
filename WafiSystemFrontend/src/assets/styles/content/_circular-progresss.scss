@@ -1,0 +1,18 @@
+.circularProgress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 1rem;
+
+    margin-inline-end: .25rem;
+    padding: .3rem 1rem;
+    font-size: $font-size-xs;
+    color: $darkorange;
+
+    border-radius: $border-radius-sm;
+    background-color: $lightOrange;
+
+    @media (min-width: 1400px) {
+        font-size: $font-size-sm;
+    }
+}

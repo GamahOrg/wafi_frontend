@@ -1,0 +1,109 @@
+<ng-container *ngIf="projectLand && projectLand.id">
+  <form class="d-flex flex-column h-100" [formGroup]="projectLandForm" id="form-projectLandForm">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{ localization.title }}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label ml-3">{{ localization.qualificationDegree }} : </label>
+              <label class="form-label"> {{ qualificationDegree}} نقطة</label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.landValue }}</label>
+            <input type="number" id="control-landValue" class="form-control" formControlName="landValue" />
+            <mat-error *ngIf="controls.landValue?.hasError('required') && showValidation">{{
+              localization.requiredErrorMsg }}</mat-error>
+            <mat-error *ngIf="controls.landValue?.hasError('min') && showValidation">{{ localization.MinValueError
+              }}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.landTotalSpace }}</label>
+            <input type="number" id="control-landTotalSpace" placeholder="{{ localization.landTotalSpace }}"
+              class="form-control" formControlName="landTotalSpace" />
+            <mat-error *ngIf="
+                controls.landTotalSpace?.hasError('required') && showValidation
+              ">{{ localization.requiredErrorMsg }}</mat-error>
+            <mat-error *ngIf="controls.landTotalSpace?.hasError('min') && showValidation">{{ localization.MinValueError
+              }}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{
+              localization.buildingFlatArea
+              }}</label>
+            <input type="number" id="control-buildingFlatArea" placeholder="{{ localization.buildingFlatArea }}"
+              class="form-control" formControlName="buildingFlatArea" />
+            <mat-error *ngIf="
+                controls.buildingFlatArea?.hasError('required') &&
+                showValidation
+              ">{{ localization.requiredErrorMsg }}</mat-error>
+            <mat-error *ngIf="
+                controls.buildingFlatArea?.hasError('min') && showValidation
+              ">{{ localization.MinValueError }}</mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.sellingSpace }}</label>
+            <input type="number" id="control-sellingSpace" placeholder="{{ localization.sellingSpace }}"
+              class="form-control" formControlName="sellingSpace" />
+            <mat-error *ngIf="
+                controls.sellingSpace?.hasError('required') && showValidation
+              ">{{ localization.requiredErrorMsg }}</mat-error>
+            <mat-error *ngIf="controls.sellingSpace?.hasError('min') && showValidation">{{ localization.MinValueError
+              }}</mat-error>
+          </div>
+        </div>
+        <!-- <div class="col-12 col-lg-12">
+          <label for="prevExpert"
+                 class="form-label">{{localization.landOwnerApproval}}</label>
+        </div> -->
+        <!-- <div class="col-12 col-lg-12">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input"
+                   type="radio"
+                   name="beforAfter"
+                   id="accept"
+                   value="1"
+                   [checked]="projectLand.landOwnerApproval"
+                   (change)="setApproval(true)">
+            <label class="form-check-label"
+                   for="before7">{{localization.accept}}</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input"
+                   type="radio"
+                   name="beforAfter"
+                   id="addanotherinsurance"
+                   value="0"
+                   [checked]="!projectLand.landOwnerApproval"
+                   (change)="setApproval(false)">
+            <label class="form-check-label"
+                   for="after7">{{localization.addanotherinsurance}}</label>
+          </div> -->
+        <!-- </div> -->
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
+      <button class="btn btn-outline-primary"
+              (click)="back()">{{localization.previous}}</button>
+
+      <button class="btn btn-outline-primary"
+              (click)="save(true)">{{localization.next}}</button>
+    </div> -->
+  </form>
+</ng-container>

@@ -1,0 +1,24 @@
+<div class="tab-data-section" *ngIf="licenseProjectQualityNoticeReplyList && licenseProjectQualityNoticeReplyList.length > 0
+    && checkAddingRepling &&
+     !checkAddingRepling.isClosed && checkAddingRepling.ownerTypeId===licenseProjectTimeScheduleOwnerType.ProjectManager">
+     <button type="button" class="btn btn-primary" (click)="openAddReplayFromProjectMangerDialog()">إضافة رد </button>
+   
+   </div>
+   
+   <div class="tab-data-section"*ngIf="licenseProjectQualityNoticeReplyList && licenseProjectQualityNoticeReplyList.length > 0">
+     <div class="table-responsive">
+         <table class="table table-light">
+           
+           <tbody>
+             <tr *ngFor="let replay of licenseProjectQualityNoticeReplyList">
+                 
+               <td>
+                 {{replay.notes}}
+               </td>
+               
+             </tr>
+           </tbody>
+         </table>
+       </div>
+     </div>
+   

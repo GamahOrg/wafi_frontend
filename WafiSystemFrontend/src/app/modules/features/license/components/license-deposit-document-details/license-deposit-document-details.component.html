@@ -1,0 +1,146 @@
+<div class="modal-body">
+    <div class="tab-data-section">
+        <div class="row mb-3">
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">رقم الهوية</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.nidNumber }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> البند</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.mainItem }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> وصف البند</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.mianItemDescription }}
+                      </span>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> رقم الحساب الرئيسي</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.accountNumber }}
+                      </span>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> اسم المشروع</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.licenseProjectName }}
+                      </span>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> اسم المشتري</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.buyerName }}
+                      </span>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> رقم الوحدة</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.unitCode }}
+                      </span>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> رقم البلوك</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.blockCode }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> رقم العقد</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.contractNumber }}
+                      </span>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> رقم الدفعة</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.batchNumber }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> البيان </label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.statment }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> المبلغ </label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.amount }}
+                      </span>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">الرقم المرجعى للايداع</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.referenceNumber }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">تاريخ الإيداع </label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.depositDate | date: 'yyyy-MM-dd' }}
+                      </span>
+                    </div>
+                </div>
+            </div>        
+        </div>
+    </div>  
+</div>

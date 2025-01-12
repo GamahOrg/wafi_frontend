@@ -1,0 +1,222 @@
+<div class="update-clearance-engineering-form">
+  <form [formGroup]="form">
+    <div class="form-group">
+      <div class="commercial-register">
+        <div class="row mb-3">
+          <div class="col-12 col-lg-12">
+            <div class="form-group mb-4">
+              <label for="commercialRegister" class="form-label"
+                >رقم السجل التجاري</label
+              >
+              <div class="input-group">
+                <input
+                  id="commercialRegister"
+                  id="control-commercialRegister"
+                  name="commercialRegister"
+                  type="number"
+                  class="form-control"
+                  formControlName="commercialRegister"
+                />
+                <button
+                  [disabled]="!controls['commercialRegister'].value"
+                  (click)="validate()"
+                  class="btn btn-primary"
+                  type="button"
+                >
+                  تحقق
+                </button>
+              </div>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  controls['commercialRegister'].hasError('required') &&
+                  controls['commercialRegister'].touched
+                "
+              >
+                حقل مطلوب
+              </div>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="controls['commercialRegister'].hasError('min')"
+              >
+                قيمة الحقل يجب الا تقل عن صفر
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="showCommercialRegister">
+      <label for="workingDays">
+        عدد أيام عمل لمراجعة و اعتماد وثيقة الصرف المقدمة من المطور</label
+      >
+      <input
+        type="number"
+        id="workingDays"
+        formControlName="workingDays"
+        [(ngModel)]="workingDays"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group" *ngIf="showCommercialRegister">
+      <label for="optionalTerms"> الشروط الاختيارية </label>
+      <input
+        type="number"
+        id="optionalTerms"
+        formControlName="optionalTerms"
+        [(ngModel)]="optionalTerms"
+        class="form-control"
+      />
+    </div>
+    <div class="col-12 col-lg-12" *ngIf="showCommercialRegister">
+      <div class="form-group mb-4">
+        <label for="agreementDocumentFileId">ملف الاتفاقية</label>
+        <!-- File Upload for updating -->
+        <app-file-uploader
+          [data]="singleFilesUploaderData"
+          (fileUploaded)="agreementDocumentFileIdFileUpload($event)"
+        ></app-file-uploader>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="showCommercialRegister">
+      <label for="justificationsAndReasons"
+        >مبررات و مشفوعات الغاء الرخصة</label
+      >
+      <input
+        type="text"
+        id="justificationsAndReasons"
+        formControlName="justificationsAndReasons"
+        [(ngModel)]="justificationsAndReasons"
+        class="form-control"
+      />
+    </div>
+    <div class="col-12 col-lg-6" *ngIf="showCommercialRegister">
+      <div class="form-group mb-4">
+        <label class="key">المشروع</label>
+        <select
+          class="form-select"
+          id="control-licenseProjectId"
+          aria-label="Default select example"
+          formControlName="licenseProjectId"
+        >
+          <option selected disabled>المشروع</option>
+          <option
+            *ngFor="let licenseProject of licenseProjects"
+            [ngValue]="licenseProject.licenseProjectId"
+          >
+            {{ licenseProject.licenseProjectName }}
+          </option>
+        </select>
+      </div>
+      <div class="col-12 col-lg-3" *ngIf="accountNameDto">
+        {{ accountNameDto?.name }}
+      </div>
+      <div class="col-12 col-lg-3" *ngIf="accountNameDto">
+        {{ accountNameDto?.facilityName }}
+      </div>
+    </div>
+
+    <div
+      *ngIf="showValidation && form.get('licenseProjectId')?.invalid"
+      class="error"
+    >
+      الرجاء تحديد اسم المشروع.
+    </div>
+
+    <label for="clearance" *ngIf="showCommercialRegister"
+      >هل تم المخالصة النهائية مع المحاسب القانوني؟</label
+    >
+    <div *ngIf="showCommercialRegister">
+      <label>
+        <input
+          type="radio"
+          formControlName="isClearanceAccountantDone"
+          [value]="true"
+          (change)="onClearanceChangeAccount(true)"
+          [checked]="isClearanceAccountantDone"
+        />
+        نعم
+      </label>
+      <label>
+        <input
+          type="radio"
+          formControlName="isClearanceAccountantDone"
+          [value]="false"
+          (change)="onClearanceChangeAccount(false)"
+          [checked]="!isClearanceAccountantDone"
+        />
+        لا
+      </label>
+    </div>
+
+    <!-- Text Box for Reasons for Not Finalizing Clearance -->
+    <div class="form-group" *ngIf="showCommercialRegister">
+      <label for="reasonsForNotFinalizingAccountantClearance"
+        >اسباب عدم اتمام المخالصة مع المحاسب القانوني</label
+      >
+      <input
+        type="text"
+        id="reasonsForNotFinalizingAccountantClearance"
+        formControlName="reasonsForNotFinalizingAccountantClearance"
+        [(ngModel)]="reasonsForNotFinalizingAccountantClearance"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Conditionally Show File Upload if "Yes" is selected -->
+    <div
+      class="col-12 col-lg-12"
+      *ngIf="isClearanceAccountantDone && showCommercialRegister"
+    >
+      <div class="form-group mb-4">
+        <label for="clearanceAccountantFileId"
+          >ملف هل تم المخالصة النهائية مع المحاسب القانوني</label
+        >
+        <!-- File Upload for updating -->
+        <app-file-uploader
+          [data]="singleFilesUploaderData"
+          (fileUploaded)="clearanceAccountantFileUpload($event)"
+        ></app-file-uploader>
+      </div>
+    </div>
+
+    <!-- File Upload for Documents Not Finalized with the Consultant -->
+    <div class="col-12 col-lg-12" *ngIf="showCommercialRegister">
+      <div class="form-group mb-4">
+        <label class="form-label"
+          >مستندات عدم اتمام المخالصة مع المحاسب القانوني</label
+        >
+        <!-- File Upload for Non-Clearance Documents -->
+        <app-file-uploader
+          [data]="mueltiFilesUploaderData"
+          (fileUploaded)="
+            onNonClearanceDocumentAccountConsultantFilesUpload($event)
+          "
+        ></app-file-uploader>
+      </div>
+    </div>
+
+    <!-- Validation Error Messages -->
+    <div *ngIf="showValidation" class="error-message">
+      <p *ngIf="form.get('isClearanceAccountantDone')?.invalid">
+        حالة المخالصة مطلوبة.
+      </p>
+      <p
+        *ngIf="form.get('reasonsForNotFinalizingAccountantClearance')?.invalid"
+      >
+        أسباب عدم إتمام المخالصة مطلوبة.
+      </p>
+    </div>
+    <div class="col-12 col-lg-2" *ngIf="showCommercialRegister">
+      <button
+        mat-flat-button
+        color="primary"
+        class="w-100"
+        (click)="save()"
+        id="btn-navigate"
+      >
+        <mat-icon>login</mat-icon> انشاء الطلب
+      </button>
+    </div>
+  </form>
+</div>

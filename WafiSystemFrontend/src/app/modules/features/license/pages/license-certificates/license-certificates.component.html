@@ -1,0 +1,97 @@
+<div class="row"
+     *ngIf="licenseCertificates.length > 0; else NoCertificate">
+  <div class="col-12 col-md-6 col-lg-4 mb-2"
+       *ngFor="let certificate of licenseCertificates">
+    <!-- <div class="card" *ngIf="certificate.isFinalCertification"> -->
+    <div class="card">
+      <div class="card-body">
+        <h6 class="cert-number mb-2"
+            (click)="navigateToRequestDetails(certificate.licenseRequestHeaderId)">#{{certificate.requestCode}}</h6>
+
+        <!-- <app-certificate *ngIf="licenseRequestTypeTypeCode.RealEstateShareholdingLicense !== certificate.licenseRequestTypeTypeCode" [className]="'thumbnail'" [id]="'print-section'+certificate.requestCode" [certificateData]="certificate"></app-certificate> -->
+
+
+        <!-- <app-realstatecontributecertificate *ngIf="licenseRequestTypeTypeCode.RealEstateShareholdingLicense === certificate.licenseRequestTypeTypeCode" [className]="'thumbnail'" [id]="'print-section'+certificate.requestCode" [certificateData]="certificate"></app-realstatecontributecertificate> -->
+
+        <!-- <app-realstatecontributecertificate [id]="'print-section'+certificate.requestCode"
+                                            [certificateData]="certificate"></app-realstatecontributecertificate> -->
+        <app-selling-certificate [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-selling-certificate>
+
+        <div class="d-flex flex-column justify-content-between my-3">
+          <h5 class="card-title mb-0">
+            <span class="cert-name">
+              شهادة
+              <!-- {{qualificationRequestType(certificate.qualificationRequestType)}} -->
+              {{certificate.licenseRequestTypeName}}
+            </span>
+
+            <!-- [styleSheetFile] -->
+            <!-- <button class="p-0 border-0 bg-transparent" styleSheetFile="assets/styles/bootstrap.min.css, assets/styles/font-awesome.min.css, assets/styles/license-certificate.css" [printSectionId]="'print-section'+certificate.requestCode" [printTitle]="certificate.licenseRequestTypeName" ngxPrint>
+                            <span class="icon material-icons">download</span>
+                        </button> -->
+
+            <!-- [useExistingCss]="true" & [previewOnly]="false" -->
+            <button class="p-0 border-0 bg-transparent"
+                    ngxPrint
+                    [previewOnly]="false"
+                    [useExistingCss]="true"
+                    [printSectionId]="'print-section'+certificate.requestCode"
+                    [printTitle]="certificate.licenseRequestTypeName">
+              <span class="icon material-icons">download</span>
+            </button>
+          </h5>
+        </div>
+
+        <div class="card-text">
+          <div class="key">تاريخ إصدار الشهادة</div>
+          <div class="value"
+               dir="ltr">
+            {{certificate.finishedOn | date : "dd MMMM yyyy"}}
+            <span class="icon material-icons">calendar_month</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="card" *ngIf="!certificate.isFinalCertification">
+            <div class="card-body">
+                <h6 class="cert-number mb-2" (click)="navigateToRequestDetails(certificate.licenseRequestHeaderId)">#{{certificate.requestCode}}</h6>
+
+                <app-initial-certificate [className]="'thumbnail'" [id]="'print-section'+certificate.requestCode" [certificateData]="certificate"></app-initial-certificate>
+
+                <div class="d-flex flex-column justify-content-between my-3">
+                    <h5 class="card-title mb-0">
+                        <span class="cert-name">
+                            شهادة
+                            <!- - {{qualificationRequestType(certificate.qualificationRequestType)}} - ->
+                            {{certificate.licenseRequestTypeName}}
+                        </span>
+
+                        <!- - [useExistingCss]="true" - ->
+                        <button class="p-0 border-0 bg-transparent" styleSheetFile="assets/styles/bootstrap.min.css, assets/styles/font-awesome.min.css, assets/styles/license-certificate.css" [printSectionId]="'print-section'+certificate.requestCode" [printTitle]="certificate.licenseRequestTypeName" ngxPrint>
+                            <span class="icon material-icons">download</span>
+                        </button>
+                    </h5>
+                </div>
+
+                <div class="card-text">
+                    <div class="key">تاريخ إصدار الشهادة</div>
+                    <div class="value" dir="ltr">
+                        {{certificate.finishedOn | date : "dd MMMM yyyy"}}
+                        <span class="icon material-icons">calendar_month</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+  </div>
+
+</div>
+
+<ng-template #NoCertificate>
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-center">
+        لا توجد شهادات ترخيص
+      </h3>
+    </div>
+  </div>
+</ng-template>

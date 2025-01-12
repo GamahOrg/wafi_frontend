@@ -1,0 +1,65 @@
+<app-no-data (onNoDataButtonClicked)="openDialog()" *ngIf="!additionTechnicalCapability || !additionTechnicalCapability.id"></app-no-data>
+
+<ng-container *ngIf="additionTechnicalCapability && additionTechnicalCapability.id">
+
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">القدارت الفنية الإضافية</h6>
+
+        <button mat-raised-button (click)="openDialog()" class="edit-icon"><span class="material-icons">edit</span></button>
+    </div>
+
+    <div class="tab-data-section">
+        <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+            <div class="col-12 col-md-6">
+                <div class="key">ملف رخصة لاحد مشاريع البيع على الخارطة </div>
+                <div class="value" *ngIf="additionTechnicalCapability && additionTechnicalCapability.wafiProjectLicenseFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + additionTechnicalCapability.wafiProjectLicenseFile.filePath" target="_blank">
+                        {{additionTechnicalCapability.wafiProjectLicenseFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(additionTechnicalCapability.wafiProjectLicenseFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="key">أرقام شهادات مزودي خدمات المؤهلات والمطورين </div>
+                <div class="value" *ngFor="let contsAndDevsServiceProviders of additionTechnicalCapability.qualificationContsAndDevsServiceProvidersCertificateNumbers">
+                    {{contsAndDevsServiceProviders.certificateNumber}}
+                    <span *ngIf="contsAndDevsServiceProviders.description">
+                        ({{contsAndDevsServiceProviders.description}})
+                    </span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="key">رخص مشاريع صغيرة أو متوسطة منجزة </div>
+                <div class="value" *ngFor="let licenses of additionTechnicalCapability.qualificationCompletedSmallOrMediumProjectsLicenses">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a *ngIf="licenses && licenses.sysFileManager" [href]="baseUrl + licenses.sysFileManager.filePath">
+                        {{licenses.sysFileManager.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(licenses.sysFileManager.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="key"> رخص تسويق - بيع </div>
+                <div class="value" *ngIf="additionTechnicalCapability && additionTechnicalCapability.marketingSellingLicenseFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + additionTechnicalCapability.marketingSellingLicenseFile.filePath">
+                        {{additionTechnicalCapability.marketingSellingLicenseFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(additionTechnicalCapability.marketingSellingLicenseFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

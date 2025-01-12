@@ -1,0 +1,35 @@
+<div class="d-flex flex-column h-100">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th>{{localization.name}}</th>
+              <th>{{localization.typeId}}</th>
+              <th> {{localization.nationalId}}</th>
+              <th> {{localization.mobileNumber}}</th>
+              <th>{{localization.agreementFileId}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="projectLandDeed  && licenseProjectOwnerDeeds && licenseProjectOwnerDeeds.length">
+            <tr *ngFor="let owner of licenseProjectOwnerDeeds">
+              <td>{{owner.licenseProjectLandOwner.name}}</td>
+              <td>{{owner.licenseProjectLandOwner.type.name}}</td>
+              <td>{{owner.licenseProjectLandOwner.nationalIdOrCRA}}</td>
+              <td>{{owner.licenseProjectLandOwner.mobileNumber}}</td>
+              <td>
+                <div class="col-12 col-lg-6" *ngIf="owner && owner.licenseProjectLandOwner && owner.licenseProjectLandOwner.agreementFile">
+               <a [href]="baseUrl + owner.licenseProjectLandOwner.agreementFile.filePath"  id="link-agreementFile" target="_blank">
+                   {{owner.licenseProjectLandOwner.agreementFile.fileDescription}}</a>
+               </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

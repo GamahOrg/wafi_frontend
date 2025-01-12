@@ -1,0 +1,93 @@
+<ng-container>
+  <form
+    class="d-flex flex-column h-100"
+    [formGroup]="certifiedLicenseDataForm"
+    id="form-certifiedLicenseDataForm"
+  >
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{ localization.title }}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.certifiedNumber }}</label>
+            <input
+              type="text"
+              id="control-certifiedNumber"
+              placeholder="{{ localization.certifiedNumber }}"
+              class="form-control"
+              formControlName="certifiedNumber"
+            />
+            <mat-error
+              *ngIf="
+                controls.certifiedNumber?.hasError('required') && showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">{{ localization.startOn }}</label>
+              <div class="input-group">
+                <input
+                  bsDatepicker
+                  id="control-startOn"
+                  type="text"
+                  class="form-control"
+                  formControlName="startOn"
+                  value="{{ controls.startOn.value | date : 'yyyy-MM-dd' }}"
+                />
+                <span class="input-group-text"
+                  ><i class="material-icons-outlined">calendar_today</i></span
+                >
+              </div>
+  
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="controls.startOn?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </div>
+              <!-- <mat-error class="d-block"
+                         *ngIf="controls.startOn?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error> -->
+              <mat-error
+                class="d-block"
+                *ngIf="
+                certifiedLicenseDataForm.errors &&
+                certifiedLicenseDataForm.errors!['dateValid'] &&
+                  showValidation
+                "
+                >{{ localization.dateValidator }}</mat-error
+              >
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">{{ localization.endOn }}</label>
+              <div class="input-group">
+                <input
+                  bsDatepicker
+                  id="control-endOn"
+                  type="text"
+                  class="form-control"
+                  formControlName="endOn"
+                  value="{{ controls.endOn.value | date : 'yyyy-MM-dd' }}"
+                />
+                <span class="input-group-text"
+                  ><i class="material-icons-outlined">calendar_today</i></span
+                >
+              </div>
+              <mat-error
+                *ngIf="controls.endOn?.hasError('required') && showValidation"
+                >{{ localization.requiredErrorMsg }}</mat-error
+              >
+            </div>
+          </div>
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  </form>
+</ng-container>

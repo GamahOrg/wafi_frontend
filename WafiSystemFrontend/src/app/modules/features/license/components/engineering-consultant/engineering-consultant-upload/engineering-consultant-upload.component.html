@@ -1,0 +1,26 @@
+<div class="col-12 col-lg-12"
+     *ngIf="entity[this.propertyName]; else showUploader">
+    <div class="key">{{label}}</div>
+    <div class="value">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a [href]="baseUrl + entity[this.propertyFile].filePath" target="_blank">
+            {{entity[this.propertyFile].fileDescription}}</a>
+        <span class="delete"
+              (click)="onUpload(null, true)">
+            <i class="material-icons text-danger">close</i></span>
+    </div>
+</div>
+
+<ng-template #showUploader>
+    <div class="col-12 col-lg-12">
+        <label class="form-label">{{label}}</label>
+        <app-file-uploader [data]="uploadConfig"
+                           (fileUploaded)="onUpload($event)"
+                           (fileRemoved)="onUpload($event)"></app-file-uploader>
+        <div class="invalid-feedback d-block"
+             *ngIf="controls[this.propertyName].hasError('required')
+       && controls[this.propertyName].touched">
+            {{requiredMessage}}
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,61 @@
+<div class="rega">
+  <app-pilot-launch-hint></app-pilot-launch-hint>
+</div>
+
+<div class="landing">
+  <div class="logo">
+    <img
+      src="/assets/images/real-estate-contributions/general/logo-rega-wide-white.svg"
+      alt=""
+      class="logo-img"
+    />
+  </div>
+
+  <div class="content">
+    <h2 class="title">{{ localization.pleaseChoose }}</h2>
+    <h6 class="or">{{ localization.or }}</h6>
+
+    <div class="cards">
+      <!-- <div class="card wafi">
+                <div class="card-body">
+                    <h5 class="card-title"><img src="/assets/images/general/logo-wide.svg" alt=""></h5> -->
+      <!-- <h5 class="card-title">{{localization.beta}}</h5> -->
+      <!-- <a class="btn btn-primary w-100" (click)="navigateToWafiLogin()">{{localization.enter}}</a> -->
+      <!-- <h5 class="card-title">قريبا</h5> -->
+      <!-- </div>
+            </div> -->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img
+              src="/assets/images/general/REGA_LOGO_Dark.svg"
+              alt=""
+              class="logo-img"
+            />
+            {{ localization.wafi }}
+          </h5>
+          <a class="btn btn-primary w-100" (click)="navigateToWafiLogin()">{{
+            localization.enter
+          }}</a>
+        </div>
+      </div>
+      <div class="card rega">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img
+              src="/assets/images/general/REGA_LOGO_Dark.svg"
+              alt=""
+              class="logo-img"
+            />
+            {{ localization.realEstateContributions }}
+          </h5>
+          <a
+            class="btn btn-primary w-100"
+            (click)="navigateToRealEstateContributionsLogin()"
+            >{{ localization.enter }}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

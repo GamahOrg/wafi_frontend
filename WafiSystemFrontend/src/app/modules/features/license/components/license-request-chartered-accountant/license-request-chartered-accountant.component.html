@@ -1,0 +1,45 @@
+<h6 class="title fw-normal">ملفات الاتفاقيه</h6>
+<div class="col-12 col-lg-12">
+  <div class="form-group mb-4">
+    <div
+      class="value"
+      *ngFor="
+        let proposedFile of LicenseProjectCharteredAccountants[0]
+          ?.licenseProjectCharteredAccountantFiles
+      "
+    >
+      <span class="icon material-icons-outlined">content_copy</span>
+      <a
+        *ngIf="proposedFile && proposedFile.id"
+        id="link-proposedScheduleFile"
+        [href]="baseUrl + proposedFile.filePath"
+        target="_blank"
+      >
+        {{ proposedFile.fileDescription }}</a
+      >
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table table-light">
+    <thead>
+      <tr>
+        <th>المدينه</th>
+        <th>رقم رخصه المحاسب القانوني</th>
+        <th>شروط اختيارية</th>
+      </tr>
+    </thead>
+    <tbody
+      *ngIf="
+        LicenseProjectCharteredAccountants &&
+        LicenseProjectCharteredAccountants.length > 0
+      "
+    >
+      <tr *ngFor="let acc of LicenseProjectCharteredAccountants">
+        <td>{{ acc?.city?.cityName }}</td>
+        <td>{{ acc?.charteredAccountantLicenseNumber }}</td>
+        <td [innerHTML]="acc?.optionalTerms"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

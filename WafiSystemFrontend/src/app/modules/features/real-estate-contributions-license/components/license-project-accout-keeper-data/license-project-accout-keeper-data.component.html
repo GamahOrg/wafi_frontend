@@ -1,0 +1,50 @@
+<div class="tab-data-section" *ngIf="accountKeeper">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.accountNumber}}</div>
+            <div>{{accountKeeper.accountNumber}}</div>
+        </div>
+        <!-- <div class="col-12 col-lg-6">
+            <div class="key">{{localization.accountKeeperName}}</div>
+            <div>{{accountKeeper.accountKeeperName}}</div>
+        </div> -->
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.accountKeeperMobile}}</div>
+            <div>{{accountKeeper.accountKeeperMobile}}</div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.accountKeeperTelephone}}</div>
+            <div>{{accountKeeper.accountKeeperTelephone}}</div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.accountKeeperExtentionNumber}}</div>
+            <div>{{accountKeeper.accountKeeperExtentionNumber}}</div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.accountKeeperEmail}}</div>
+            <div>{{accountKeeper.accountKeeperEmail}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.accountKeeperJobTitle}}</div>
+            <div>{{accountKeeper.accountKeeperJobTitle}}</div>
+        </div>
+
+        <div *ngIf="accountKeeper.sysBank" class="col-12 col-lg-6">
+            <div class="key">{{localization.bankName}}</div>
+            <div>{{accountKeeper.sysBank!.name}}</div>
+        </div>
+        <div *ngIf="accountKeeper.accountKeeperFax" class="col-12 col-lg-6">
+            <div class="key">{{localization.accountKeeperFax}}</div>
+            <div>{{accountKeeper.accountKeeperFax}}</div>
+        </div>
+
+        <div class="col-12">
+            <div class="key">{{localization.accountKeeperAgreementFileId}}</div>
+            <div class="value" *ngIf="accountKeeper && accountKeeper.accountKeeperAgreementFile">
+                <a [href]="baseUrl + accountKeeper.accountKeeperAgreementFile.filePath" target="_blank">
+                    {{accountKeeper.accountKeeperAgreementFile.fileDescription}}</a>
+            </div>
+        </div>
+    </div>
+</div>

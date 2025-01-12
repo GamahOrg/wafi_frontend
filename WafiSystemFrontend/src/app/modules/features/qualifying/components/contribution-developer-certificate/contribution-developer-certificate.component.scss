@@ -1,0 +1,71 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/certs/qualifying-certificates";
+
+.cetificate {
+  .cetificate-layout {
+    row-gap: 1rem;
+
+    @media print {
+      row-gap: 4.25rem;
+    }
+
+    .data {
+      display: flex;
+      flex-direction: column;
+      row-gap: .5rem;
+
+      position: relative;
+      z-index: 2;
+
+      @media print {
+        row-gap: 1rem;
+        padding-block: 30%;
+      }
+
+      .title {
+        font-size: .8vw;
+
+        @media print {
+          font-size: 4vw;
+        }
+      }
+
+      .text {
+        font-size: .6vw;
+
+        @media print {
+          font-size: 3vw;
+        }
+      }
+
+      .date {
+        font-size: .5vw;
+        font-weight: bold;
+
+        @media print {
+          margin-top: 5%;
+          font-size: 2vw;
+        }
+      }
+    }
+
+    .cert-number {
+      .text {
+        font-size: .25vw;
+        font-weight: bold;
+
+        @media print {
+          font-size: 1.5vw;
+        }
+      }
+    }
+
+    .cert-footer {
+      justify-content: center;
+
+      img {
+        width: 75%;
+      }
+    }
+  }
+}

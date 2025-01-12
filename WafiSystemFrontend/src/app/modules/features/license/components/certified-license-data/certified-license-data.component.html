@@ -1,0 +1,20 @@
+<div class="tab-data-section" *ngIf="certifiedLicenseData">
+
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-lg-12">
+          <div class="key">{{localization.certifiedNumber}}</div>
+          <div class="value">{{certifiedLicenseData.certificateNumber}}</div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+          <div class="key">{{localization.startOn}}</div>
+          <div class="value">{{ certifiedLicenseData.startOn | date:'yyyy-MM-dd' }}</div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+          <div class="key">{{localization.endOn}}</div>
+          <div class="value">{{ certifiedLicenseData.endOn | date:'yyyy-MM-dd' }}</div>
+      </div>
+
+  </div>
+</div>

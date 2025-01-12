@@ -1,0 +1,139 @@
+<div class="RequestDetails h-100">
+  <div class="d-flex flex-column row-gap-3 h-100">
+    <div class="row">
+      <div class="col-md-12">
+        <app-breadcrumb></app-breadcrumb>
+      </div>
+    </div>
+
+    <div class="card qualiication-reqest-card">
+      <div class="card-body">
+        <div class="card-title">
+          <div class="row">
+            <div class="col-12 col-lg-3">
+              <h6 class="title">
+                {{ selectedRequest?.licenseProjectRequestType?.name }}
+              </h6>
+            </div>
+            <div class="col-12 col-lg-3">
+              <h6>{{ selectedRequest?.requestCode }}</h6>
+              <div class="date">
+                <span class="key">تاريخ تقديم الطلب</span>
+                <span class="value"><i class="icon material-icons">calendar_month</i>
+                  {{ selectedRequest?.sendDate | date : "dd MMMM yyyy" }}</span>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <!-- buttons -->
+              <div class="actions">
+                <ng-container *ngFor="let button of clientActionsButtons">
+                  <button *ngIf="button.isVisable" [disabled]="button.isDisables"
+                    class="btn d-flex align-items-center justify-content-between" (click)="button.onclick()"
+                    type="button" [ngClass]="button.classes">
+                    {{ button.title }}
+                  </button>
+                </ng-container>
+                <button *ngIf="selectedRequest?.externalRequestStatusId==externalStatusId.CustomerFeedback"
+                  class="btn d-flex align-items-center justify-content-between btn-primary" (click)="editRequest()"
+                  type="button">
+                  {{ localization.editButtonTitle }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12 col-xxl">
+            <div class="applicant">
+              <div class="row">
+                <div class="col-auto">
+                  <span class="key">مقدم من</span>
+                </div>
+
+                <div class="col">
+                  <div class="value">
+                    <div class="image">
+                      <span class="avatar material-icons">person</span>
+                    </div>
+                    <span
+                      class="name">{{selectedRequest?.customer?.fullName??selectedRequest?.facility?.facilityName}}</span>
+                  </div>
+
+                  <div class="details">
+                    <div class="row mt-3">
+                      <div class="col-12 col-lg-6">
+                        <div class="row">
+                          <label class="col-5">رقم الهوية </label>
+                          <span
+                            class="col-auto">{{selectedRequest?.customer?.nidnumber??selectedRequest?.facility?.commercialRegisterNumber}}</span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="row">
+                          <label class="col-5">الجنسية </label>
+                          <span class="col-auto">{{
+                            selectedRequest?.customer?.nationality
+                            ?.nationalityName
+                            }}</span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="row">
+                          <label class="col-5">رقم الجوال</label>
+                          <span class="col-auto">{{
+                            selectedRequest?.customer?.mobile1
+                            }}</span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="row">
+                          <label class="col-5">البريد الإلكتروني</label>
+                          <span class="col-auto">{{
+                            selectedRequest?.customer?.email
+                            }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-xxl-5">
+            <div class="d-flex justify-content-end align-items-end h-100">
+              <!-- <div class="circularProgress" *ngIf="
+                  selectedRequest &&
+                  !selectedRequest.isFinished
+                ">
+                <p>{{ localization.remainingDaysToStudy }}</p>
+                <app-circular-progress [circularProgressSetting]="StudyDaysProgressSetting"></app-circular-progress>
+              </div> -->
+              <!-- 
+                            <div class="circularProgress"
+                                 *ngIf="selectedRequest && selectedRequest.licenseRequestCustomerHeaderEventStatus.allowCompileConditionalApprovalPeriod !=-1">
+                                <p>{{localization.remainingDaysToCompile}}</p>
+                                <app-circular-progress
+                                                       [circularProgressSetting]="allowCompileConditionalApprovalProgressSetting"></app-circular-progress>
+                            </div> -->
+
+
+
+
+
+              <span class="status-pill" [class]="
+                  selectedRequest && selectedRequest.externalRequestStatus? externalStatusId[selectedRequest.externalRequestStatusId!]
+                  : ''
+                ">
+                {{ selectedRequest?.externalRequestStatus?.name }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-wrapper flex-fill">
+      <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
+    </div>
+  </div>
+</div>

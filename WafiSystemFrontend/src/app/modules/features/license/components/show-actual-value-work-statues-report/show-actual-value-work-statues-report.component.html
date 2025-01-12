@@ -1,0 +1,341 @@
+
+<h6 class="title fw-normal">{{'معلومات المشروع '}}</h6>
+<div class="tab-data-section">
+  <div class="row mb-3">
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+          <div class="key">اسم المشروع</div>
+          <div class="value">{{licenseProjectEngineeringActualReportDetails.name}}</div>
+      </div>
+    
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+          <div class="key">كود المشروع</div>
+          <div class="value">{{licenseProjectEngineeringActualReportDetails.projectCode}}</div>
+      </div>
+       
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails && 
+      licenseProjectEngineeringActualReportDetails.licenseProjectAddresses && 
+      licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 && 
+      licenseProjectEngineeringActualReportDetails.licenseProjectAddresses[0].cities">
+          <div class="key"> المدينه</div>
+          <div class="value">{{licenseProjectEngineeringActualReportDetails.licenseProjectAddresses[0].cities.cityName}}</div>
+      </div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails && 
+licenseProjectEngineeringActualReportDetails.licenseProjectAddresses && 
+licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 ">
+  <div class="key"> القطاع</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.licenseProjectAddresses[0].neighborhoodName}}</div>
+</div>
+<div class="col-12 col-lg-6"  *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key"> اسم المطور</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.developerName}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key"> الاستشاري الهندسي</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.engineeringConsultantName}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key"> مساحه الأرض</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.landTotalSpace}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key"> مدير المشروع</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.projectManagerCustomerName}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">المقاولون</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.contractor}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">التكلفه الانشائية المتوقعة</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.expectedConstructionCost}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">القاول</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.infrastructureContractor}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">عدد الزونات</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.zonesCount}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">عدد الوحدات</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.uniteCount}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">عدد البلوكات</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.blockCount}}</div>
+</div>
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">عدد العمائر</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.buildingsCount}}</div>
+</div>
+
+
+
+  </div>
+</div> 
+
+
+<h6 class="title fw-normal">{{' البرنامج الزمني '}}</h6>
+<div class="tab-data-section">
+  <div class="row mb-3">
+
+
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">تاريخ بدايه المشروع التعاقدي</div>
+  <div class="value">{{ licenseProjectEngineeringActualReportDetails.startOn | date:'yyyy-MM-dd' }}</div>
+ </div>
+
+
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key">تاريخ نهايه المشروع التعاقدي</div>
+  <div class="value">{{ licenseProjectEngineeringActualReportDetails.endOn | date:'yyyy-MM-dd' }}</div>
+ </div>
+ 
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
+  <div class="key"> مدة المشروع التعاقدي</div>
+  <div class="value">{{ licenseProjectEngineeringActualReportDetails.monthsCount }}</div>
+ </div>
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionPlannedReportDetails">
+  <div class="key">التمديد المتعمد</div>
+  <div class="value">{{ licenseProjectEngineeringSupervisionPlannedReportDetails.approvedExtensionPerDay }}</div>
+ </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionPlannedReportDetails">
+  <div class="key">تاريخ النهاية التعاقدي المعدل بناء على التمديد المعتمد</div>
+  <div class="value">{{ licenseProjectEngineeringSupervisionPlannedReportDetails.contractualEndDateAdjustedBasedOnApprovedExtension | date:'yyyy-MM-dd' }}</div>
+ </div> 
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionPlannedReportDetails && licenseProjectEngineeringSupervisionPlannedReportDetails.actualStartDate">
+  <div class="key">تاريخ البداية الفعلى</div>
+  <div class="value">{{ licenseProjectEngineeringSupervisionPlannedReportDetails.actualStartDate | date:'yyyy-MM-dd' }}</div>
+ </div>
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionPlannedReportDetails">
+  <div class="key">تاريخ النهاية المتوقع من تحديث البرنامج الزمني</div>
+  <div class="value">{{ licenseProjectEngineeringSupervisionPlannedReportDetails.expectedEndDateFromTimelineUpdate | date:'yyyy-MM-dd' }}</div>
+ </div>
+
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionPlannedReportDetails">
+  <div class="key">أسباب التأخير (ان وجد)</div>
+  <div class="value">{{ licenseProjectEngineeringSupervisionPlannedReportDetails.delayReasons}}</div>
+ </div>
+  </div>
+</div> 
+
+<div  *ngIf="showRateFlag">
+<div class="tab-data-section" *ngIf="years">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+    <select class="form-select" [(ngModel)]="currenrYear" (change)="onChangeYear($event)">
+      <option label="اختار سنه"></option>
+      <option *ngFor="let item of years" [value]="item">
+        {{ item }}
+      </option>
+    </select>
+  </div>
+  <div class="col-12 col-lg-6">
+    <button type="button" class="btn btn-primary" (click)="openAddEditActualValueWorkStatuesReportDialog()">تعديل بيانات الشهر</button>
+ </div> 
+  </div>
+</div> 
+<h6 class="title fw-normal">{{'نسبة الانجاز '}}</h6>
+<div class="tab-data-section">
+  <div class="row mb-3">
+    <table class="table table-light" style="width:100%">
+
+      <tbody>
+          <tr>
+              <th> الشهر:</th>
+              <td
+              *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+              let i=index;">
+              {{detail.monthName}}</td>
+          </tr>
+          <tr>
+              <th> نسبه الانجاز المخططه الشهريه : </th>
+              <td
+              *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+              let i=index;">
+              {{detail.projectMonthlyPlannedCompletionRate}}</td>
+          </tr>
+          <tr>
+            <th> نسبه الانجاز الفعلىة الشهريه : </th>
+            <td
+            *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+            let i=index;">
+            {{detail.projectMonthlyActualCompletionRate}}</td>
+        </tr>
+        <tr>
+          <th>   التباين : </th>
+          <td
+          *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+          let i=index;">
+          {{detail.projectMonthlyActualCompletionRate - detail.projectMonthlyPlannedCompletionRate}}</td>
+      </tr>
+      
+      </tbody>
+  </table> 
+
+  </div>
+
+</div>
+<h6 class="title fw-normal">{{'نسبة الانجاز '}}</h6>
+<div class="tab-data-section">
+  <div class="row mb-3">
+    <table class="table table-light" style="width:100%">
+
+      <tbody>
+          <tr>
+              <th> الشهر:</th>
+              <td
+              *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+              let i=index;">
+              {{detail.monthName}}</td>
+          </tr>
+          <tr>
+              <th>نسبه الانجاز المخططه التراكميه:</th>
+              <td
+              *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+              let i=index;">
+              {{detail.cumulativeplannedcompletionpercentage}}</td>
+          </tr>
+          
+          <tr>
+            <th>نسبه الانجاز الفعلىه التراكميه:</th>
+            <td
+            *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+            let i=index;">
+            {{detail.cumulativeAcualcompletionpercentage}}</td>
+        </tr>
+        <tr>
+          <th>   التباين : </th>
+          <td
+          *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+          let i=index;">
+          {{detail.cumulativeAcualcompletionpercentage - detail.cumulativeplannedcompletionpercentage}}</td>
+      </tr> 
+      </tbody>
+  </table> 
+
+  </div>
+
+</div>
+ <h6 class="title fw-normal">{{' العماله'}}</h6>
+ <div class="tab-data-section">
+  <div class="row mb-3">
+   <div class="table-responsive">
+      <table class="table table-light" style="width:100%">
+
+        <tbody>
+            <tr>
+                <th> الشهر:</th>
+                <td
+                *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+                let i=index;">
+                {{detail.monthName}}</td>
+            </tr>
+            <tr>
+                <th> إجمالي عدد العماله المخطط للشهر : </th>
+                <td
+                *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+                let i=index;">
+                {{detail.monthlyTotalPlannedEmployees}}</td>
+            </tr>
+            <tr>
+              <th>   متوسط عدد العمالة الفعلى للشهر : </th>
+              <td
+              *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+              let i=index;">
+              {{detail.monthlyTotalActualEmployees}}</td>
+          </tr>
+          <tr>
+            <th>   التباين : </th>
+            <td
+            *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+            let i=index;">
+            {{detail.monthlyTotalActualEmployees - detail.monthlyTotalPlannedEmployees}}</td>
+        </tr>
+        
+        </tbody>
+    </table> 
+  </div> 
+  </div>
+ </div>
+
+
+ 
+
+
+
+ <h6 class="title fw-normal">{{'المرفقات '}}</h6>
+<div class="tab-data-section">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <div class="key">صور المشروع</div>
+        <div *ngIf=" 
+        licenseProjectEngineeringSupervisionPlannedReportDetailImages && licenseProjectEngineeringSupervisionPlannedReportDetailImages.length != 0">
+        <div class="value"
+          *ngFor="let file of licenseProjectEngineeringSupervisionPlannedReportDetailImages">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a *ngIf="file && file.imageFile" id="link-file"
+            [href]="baseUrl + file.imageFile.filePath" target="_blank">
+            {{file.imageFile.fileDescription}}</a>
+            <div class="value">
+                <span class="delete" 
+                    (click)="deletFile(file.imageFile.id)"><i
+                        class="material-icons text-danger">close</i></span>
+            </div>
+        </div>
+      </div>
+      </div>
+    </div> 
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <div class="key">فديو المشروع</div>
+        <div *ngIf=" 
+        licenseProjectEngineeringSupervisionPlannedReportDetailVideos && licenseProjectEngineeringSupervisionPlannedReportDetailVideos.length != 0">
+        <div class="value"
+          *ngFor="let file of licenseProjectEngineeringSupervisionPlannedReportDetailVideos">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a *ngIf="file && file.videoFile" id="link-file"
+            [href]="baseUrl + file.videoFile.filePath" target="_blank">
+            {{file.videoFile.fileDescription}}</a>
+            <div class="value">
+                <span class="delete" 
+                    (click)="deletFile(file.videoFile.id)"><i
+                        class="material-icons text-danger">close</i></span>
+            </div>
+        </div>
+      </div>
+      </div>
+    </div> 
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <div class="key">خريطة موقع عام</div>
+        <div *ngIf=" 
+        licenseProjectEngineeringSupervisionPlannedReportDetailMaps && licenseProjectEngineeringSupervisionPlannedReportDetailMaps.length != 0">
+        <div class="value"
+          *ngFor="let file of licenseProjectEngineeringSupervisionPlannedReportDetailMaps">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a *ngIf="file && file.mapFile" id="link-file"
+            [href]="baseUrl + file.mapFile.filePath" target="_blank">
+            {{file.mapFile.fileDescription}}</a>
+            <div class="value">
+                <span class="delete" 
+                    (click)="deletFile(file.mapFile.id)"><i
+                        class="material-icons text-danger">close</i></span>
+            </div>
+        </div>
+      </div>
+      </div>
+    </div> 
+  </div>
+</div> 
+</div>
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+<div class="tab-data-section">
+  <div
+    class="table-responsive"
+    *ngIf="QualifiedEngineers && QualifiedEngineers.length > 0"
+  >
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th>اسم المهندس</th>
+          <th>شهادة التدريب</th>
+          <th class="w-25"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let eng of QualifiedEngineers">
+          <td>{{eng?.engineerName}}</td>
+          <td>
+            <div class="value">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a [href]="eng?.trainingCertificateFile?.filePath" target="_blank">
+                {{ eng?.trainingCertificateFile?.fileDescription }}</a
+              >
+            </div>
+          </td>
+          <td>
+            <div
+              class="d-flex align-items-center justify-content-end column-gap-2"
+            ></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

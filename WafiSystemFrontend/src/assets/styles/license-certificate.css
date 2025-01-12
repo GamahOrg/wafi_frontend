@@ -1,0 +1,218 @@
+.cetificate {
+  height: 100%;
+  position: relative;
+  padding-inline: 2rem;
+  padding-bottom: 2rem;
+  border: 1rem solid #076f42;
+  background-image: url("../images/qualifying/subtract.svg");
+  background-repeat: repeat;
+  background-color: #fff;
+  overflow: hidden;
+}
+.rega.cetificate {
+  border: 1rem solid #1c365c;
+}
+.cetificate .cert-side,
+.cetificate .cert-body,
+.cetificate .cert-footer {
+  position: relative;
+  z-index: 2;
+}
+.cetificate .cert-slogan {
+  display: flex;
+  align-items: baseline;
+  position: absolute;
+  top: 1rem;
+  right: 0;
+}
+.cetificate .cert-slogan .icon .fa {
+  font-size: 2.25rem;
+  color: #ffc635;
+}
+.rega.cetificate .cert-slogan .icon .fa {
+  color: #4D93C6;
+}
+.cetificate .cert-slogan .slogan {
+  font-size: 1.25rem;
+  color: #076f42;
+}
+.rega.cetificate .cert-slogan .slogan {
+  color: #1c365c;
+}
+.cetificate .cert-slogan .line {
+  width: 5rem;
+  height: 1rem;
+  margin-inline-start: 0.5rem;
+  background-color: #ffc635;
+}
+.rega.cetificate .cert-slogan .line {
+  background-color: #4D93C6;
+}
+.cetificate .cert-slogan.ar {
+  left: 0;
+  right: auto;
+}
+.cetificate .cert-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 5rem;
+  position: relative;
+  height: 100%;
+  padding-top: 3.5rem;
+  overflow: hidden;
+}
+.cetificate .cert-side .arrow {
+  position: absolute;
+  top: -1rem;
+  right: 50%;
+  transform: translateX(50%);
+}
+.cetificate .cert-side .arrow .fa {
+  line-height: 3.5rem;
+  font-size: 10rem;
+  color: #ffc635;
+}
+.rega.cetificate .cert-side .arrow .fa {
+  color: #4D93C6;
+}
+.cetificate .cert-side .verification {
+  display: flex;
+  align-items: baseline;
+  column-gap: 0.5rem;
+}
+.cetificate .cert-side .verification .label {
+  transform: rotate(180deg);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: small;
+  font-weight: bold;
+  color: #076f42;
+}
+.rega.cetificate .cert-side .verification .label {
+  color: #1c365c;
+}
+.cetificate .cert-side .verification .square {
+  width: 8rem;
+  height: 8rem;
+  border: 2px solid #ffc635;
+}
+.rega.cetificate .cert-side .verification .square {
+  border: 2px solid #4D93C6;
+}
+.cetificate .cert-form {
+  display: flex;
+  flex-direction: column;
+}
+.cetificate .cert-form label {
+  margin-bottom: 0;
+  font-weight: bold;
+  color: #06281b;
+}
+.cetificate .cert-form input {
+  padding: 0;
+  text-align: center;
+  border: none;
+  border-radius: 0;
+}
+.cetificate .cert-form input:read-only,
+.cetificate .cert-form input:disabled {
+  background-color: #fff;
+}
+.cetificate .cert-header {
+  padding-top: 4rem;
+}
+.cetificate .cert-header .title {
+  text-align: justify;
+  color: #076f42;
+}
+.rega.cetificate .cert-header .title {
+  color: #1C365C;
+}
+.cetificate .cert-header .cert-form label {
+  padding-bottom: 0;
+  font-weight: bold;
+  color: #06281b;
+}
+.cetificate .cert-body {
+  margin-top: 1.5rem;
+}
+.cetificate .cert-body .cert-form {
+  row-gap: 0.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #06281b;
+}
+.cetificate .cert-body .cert-form input {
+  border-bottom: 1px dashed #adafb2;
+}
+.cetificate .cert-body .cert-signature {
+  margin-top: 1rem;
+  text-align: center;
+}
+.cetificate .cert-body .cert-signature .name {
+  margin-top: 2rem;
+}
+.cetificate .cert-footer {
+  margin-top: 1rem;
+}
+.cetificate .cert-footer .cert-notes {
+  padding-inline-start: 3.5rem;
+  padding-inline-end: 1rem;
+}
+.cetificate .cert-footer .cert-notes .text {
+  font-size: 0.75rem;
+}
+.cetificate .cert-footer .footer-spacer {
+  margin: 0.5rem 0;
+  border-color: #ffc635;
+  border-width: 3px;
+  opacity: 1;
+}
+.rega.cetificate .cert-footer .footer-spacer {
+  border-color: #4D93C6;
+}
+.cetificate .cert-footer .info {
+  text-align: end;
+}
+.cetificate .cert-footer .info .website {
+  font-size: 0.75rem;
+}
+.cetificate .cert-footer .info .phone {
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #076f42;
+}
+.rega.cetificate .cert-footer .info .phone {
+  color: #1C365C;
+}
+.cetificate .cert-footer .logo img {
+  height: 3rem;
+}
+.rega.cetificate .cert-footer .logo img {
+  height: 6rem;
+}
+.cetificate .lines img {
+  position: absolute;
+  z-index: 1;
+  max-width: 100%;
+}
+.cetificate .lines img.top-right {
+  top: 1rem;
+  right: 1rem;
+}
+.cetificate .lines img.bottom-left {
+  bottom: 1rem;
+  left: 1rem;
+}
+
+.initial-cert p,
+.initial-cert th,
+.initial-cert td,
+.initial-cert dt,
+.initial-cert dd {
+  font-size: 0.8rem !important;
+}
+.initial-cert p {
+  margin-bottom: 0.8rem;
+}

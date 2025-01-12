@@ -1,0 +1,112 @@
+<ng-container *ngIf="licenseProjectQuantitiesTableFileAndRelativeWeight">
+  <div class="d-flex flex-column h-100">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.quantitiesTableFileId}}</label>
+            <div class="col-12 col-lg-12">
+              <div class="value"
+                *ngFor="let quantityTableFile of licenseProjectQuantitiesTableFileAndRelativeWeight?.licenseProjectQuantitiesTableFileList">
+                <ng-container *ngIf="quantityTableFile && quantityTableFile.quantitiesTableFile &&
+                                 quantityTableFile.quantitiesTableFile.fileDescription">
+                  <span class="icon material-icons-outlined">content_copy</span>
+                  <a [href]="baseUrl + quantityTableFile.quantitiesTableFile.filePath" target="_blank">
+                    {{quantityTableFile.quantitiesTableFile.fileDescription}}</a>
+                    <span class="delete"
+                    (click)="deletFile(quantityTableFile.quantitiesTableFileId)"><i
+                     class="icon material-icons text-danger">close</i></span>
+                </ng-container>
+              </div>
+              <app-file-uploader [data]="multipleFileUploaderData"
+                (fileUploaded)="onQuantitiesTableFileUploaded($event)"></app-file-uploader>
+            </div>
+            <div class="invalid-feedback d-block"
+            *ngIf="(!this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList ||
+            !this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList.length ) &&
+            (!this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectQuantitiesTableFileList ||
+            !this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectQuantitiesTableFileList.length)
+             && showValidation">{{localization.requiredErrorMsg}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tab-data-section">
+      <div class="table-responsive">
+        <div class="tab-data-header">
+          <div class="icon"><span class="material-icons">list_alt</span></div>
+          <h6 class="title fw-normal">{{localization.relativeWeight}}</h6>
+        </div>
+        <form [formGroup]="licenseProjectRelativeWeightForm" (ngSubmit)="save()"
+          id="form-licenseProjectRelativeWeightForm">
+          <table class="table table-light mb-3">
+            <thead>
+              <tr>
+                <th>البند</th>
+                <th> النسبة </th>
+              </tr>
+            </thead>
+            <tbody formArrayName="Rows">
+              <tr *ngFor="let itemrow of formArr.controls
+                let i=index;let l=last" [formGroupName]="i">
+                <td>
+                  <input formControlName="elementName" class="form-control">
+                </td>
+                <td>
+                  <input formControlName="elementValue" class="form-control">
+                </td>
+                <td [hidden]="true">
+                  <input formControlName="licenseRelativeWeightId" class="form-control">
+                </td>
+              </tr>
+              <tr>
+                <td>الاجمالي</td>
+                <td>{{total}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </div>
+
+    <!-- <app-next-and-previus-buttons *ngIf="showTabsButton"></app-next-and-previus-buttons> -->
+    <!-- <div class="form-actions mt-auto" *ngIf="showTabsButton">
+
+   <div class="tab-data-section-title-subtitle">
+      <h6 class="title">
+        <button class="btn btn-link" (click)="addItemToList()">
+          <span class="material-icons-outlined">add_circle_outline</span>
+          {{localization.saveItem}}
+        </button>
+      </h6>
+    </div> -->
+    <!-- <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-12">
+          <div class="col-12 col-lg-12">
+            <div class="form-check form-check-inline">
+              <input type="checkbox" [(ngModel)]="licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.quantitiesTableAcknowledgment"
+                id="beneficiaryContractFormApproval" class="form-check-input" />
+              <label for="beneficiaryContractFormApproval" class="form-check-label">
+                <a (click)="openDialog()"> الموافقه على اقرار جدول الكميات </a>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <app-next-and-previus-buttons *ngIf="showTabsButton"></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto" *ngIf="showTabsButton">
+      <button class="btn btn-outline-primary" (click)="back()">{{localization.previous}}</button>
+
+      <button class="btn btn-outline-primary" (click)="save(true)">{{localization.next}}</button>
+    </div>  -->
+  </div>
+</ng-container>

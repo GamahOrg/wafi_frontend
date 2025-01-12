@@ -1,0 +1,15 @@
+<form class="d-flex flex-column h-100" [formGroup]="addingZoneForm" id="form-addingZoneForm">
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.addingNewZone}}</label>
+                <input type="text" id="control-code"
+                       placeholder="{{localization.addingNewZone}}"
+                       class="form-control"
+                       formControlName="code"
+                       [placeholder]="localization.addingNewZonePlaceholder" />
+                <div class="form-text">{{localization.addingNewZoneHint}}</div>
+            </div>
+        </div>
+    </div>
+</form>

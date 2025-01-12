@@ -1,0 +1,66 @@
+<ng-container *ngIf="realEstateContribution && realEstateContribution.id" >
+    <form class="d-flex flex-column h-100">
+        <div class="tab-data-header">
+            <div class="icon"><span class="material-icons">list_alt</span></div>
+            <h6 class="title fw-normal">عقد المستفيد</h6>
+        </div>
+
+        <div class="tab-data-section">
+            <div class="row mb-3">
+               
+                <div class="col-12">
+                    <div class="form-group mb-4">
+                        <label class="form-label"> اتفاقية مدير المساهمه</label>
+
+                        <div class="col-12 col-lg-6"
+                             *ngIf="realEstateContribution && realEstateContribution.contributorDirectorAgreementFile">
+                            <a [href]="baseUrl + realEstateContribution.contributorDirectorAgreementFile.filePath" target="_blank" id="link-contributorDirectorAgreementFile">
+                                {{realEstateContribution.contributorDirectorAgreementFile.fileDescription}}</a>
+                        </div>
+
+                        <app-file-uploader [data]="singleFileUploaderData"
+                                           (fileUploaded)="onContributorDirectorAgreementFileUploaded($event)"></app-file-uploader>
+                        <mat-error
+                                   *ngIf="showContributorValidation">حقل مطلوب</mat-error>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group mb-4">
+                        <label class="form-label"> اتفاقية مؤسسة سوق مالية</label>
+
+                        <div class="col-12 col-lg-6"
+                             *ngIf="realEstateContribution && realEstateContribution.financialMarketInstitutionAgreementFile">
+                            <a [href]="baseUrl + realEstateContribution.financialMarketInstitutionAgreementFile.filePath" target="_blank" id="link-financialMarketInstitutionAgreementFile">
+                                {{realEstateContribution.financialMarketInstitutionAgreementFile.fileDescription}}</a>
+                        </div>
+
+                        <app-file-uploader [data]="singleFileUploaderData"
+                                           (fileUploaded)="onFinancialMarketInstitutionAgreementFileUploaded($event)"></app-file-uploader>
+                        <mat-error
+                                   *ngIf="showfinancialValidation">حقل مطلوب</mat-error>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group mb-4">
+                        <label class="form-label">نموذج عقد المساهم</label>
+
+                        <div class="col-12 col-lg-6"
+                             *ngIf="realEstateContribution && realEstateContribution.shareholderContractFormFile">
+                            <a [href]="baseUrl + realEstateContribution.shareholderContractFormFile.filePath" target="_blank" id="link-shareholderContractFormFile">
+                                {{realEstateContribution.shareholderContractFormFile.fileDescription}}</a>
+                        </div>
+
+                        <app-file-uploader [data]="singleFileUploaderData"
+                                           (fileUploaded)="onShareholderContractFormFileUploaded($event)"></app-file-uploader>
+                        <mat-error
+                                   *ngIf="showfinancialValidation">حقل مطلوب</mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-next-and-previus-buttons></app-next-and-previus-buttons>
+       
+    </form>
+</ng-container>

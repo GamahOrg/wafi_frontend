@@ -1,0 +1,302 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3">
+      <div class="col-12 col-lg-6">
+        <div class="page-title mb-0">
+          <h5 class="title">الطلبات الجاري دراستها</h5>
+        </div>
+      </div>
+      <ng-container *ngIf="reqList.totalCount > 0">
+        <div class="col-12 col-lg-6">
+          <div class="date-range"></div>
+        </div>
+        <div class="col-12">
+          <div class="filter">
+            <div class="row">
+              <div class="col-4">
+                <div class="input-group">
+                  <span class="input-group-text" id="basic-addon1"><i class="material-icons-outlined">search</i></span>
+                  <input type="text" id="control-search" class="form-control" placeholder="بحث"  (input)="getSearchText($event)"/>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="criteria-wrapper">
+                  <button type="button" id="btn-stopPropagation" class="toggle btn btn-outline-primary"
+                  (click)="search()">
+                    <span class="d-flex align-items-center column-gap-1">
+                      <i class="material-icons-outlined">filter_alt</i>
+                      بحث
+                    </span>
+                  </button>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+
+      <ng-container *ngIf="reqList.totalCount > 0 && false">
+        <div class="col-12 col-lg-6">
+          <div class="date-range"></div>
+        </div>
+        <div class="col-12">
+          <div class="filter">
+            <div class="row">
+              <div class="col-4">
+                <div class="input-group">
+                  <span class="input-group-text" id="basic-addon1"><i class="material-icons-outlined">search</i></span>
+                  <input type="text" id="control-search" class="form-control" placeholder="search" aria-label="search"
+                    aria-describedby="basic-addon1" />
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="criteria-wrapper">
+                  <button type="button" id="btn-stopPropagation" class="toggle btn btn-outline-primary"
+                    (click)="$event.stopPropagation(); showFilter = !showFilter">
+                    <span class="d-flex align-items-center column-gap-1">
+                      <i class="material-icons-outlined">filter_alt</i>
+                      بحث
+                    </span>
+                  </button>
+                  <div class="criteria" (click)="$event.stopPropagation()" id="control-stopPropagation"
+                    [hidden]="!showFilter">
+                    <h6 class="title">بحث</h6>
+
+                    <accordion [closeOthers]="false" [isAnimated]="true" class="simple">
+                      <ng-container>
+                        <accordion-group [isOpen]="true">
+                          <div class="accordion-heading" accordion-heading>
+                            <h6 class="title">حالة الطلب</h6>
+                            <div class="icon">
+                              <i class="open material-icons">expand_more</i>
+                              <i class="close material-icons">expand_less</i>
+                            </div>
+                          </div>
+
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="control-chk1" value="" />
+                            <label class="form-check-label" for="chk1">
+                              تحت الدراسة
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="control-chk2" value="" />
+                            <label class="form-check-label" for="chk2">
+                              معالجة الملاحظات
+                            </label>
+                          </div>
+
+                          <div class="date-range-result my-3">
+                            <span class="icon">
+                              <i class="material-icons-outlined">calendar_today</i>
+                            </span>
+                            <span>من</span>
+                            {{ bsInlineRangeValue[0] | date : "dd MMMM" }}
+                            <span>إلى</span>
+                            {{ bsInlineRangeValue[1] | date : "dd MMMM" }}
+                          </div>
+
+                          <bs-daterangepicker-inline [bsValue]="bsInlineRangeValue"
+                            [bsConfig]="bsConfig"></bs-daterangepicker-inline>
+
+                          <!-- <mat-form-field appearance="fill">
+                                                    <mat-date-range-input [formGroup]="range"
+                                                                          [rangePicker]="rangePicker">
+                                                        <input matStartDate
+                                                               formControlName="start"
+                                                               placeholder="Start date">
+                                                        <input matEndDate
+                                                               formControlName="end"
+                                                               placeholder="End date">
+                                                    </mat-date-range-input>
+                                                    <mat-datepicker-toggle matIconSuffix
+                                                                           [for]="rangePicker"></mat-datepicker-toggle>
+                                                    <mat-date-range-picker #rangePicker>
+                                                        <mat-date-range-picker-actions>
+                                                            <button mat-button
+                                                                    matDateRangePickerCancel>Cancel</button>
+                                                            <button mat-raised-button
+                                                                    color="primary"
+                                                                    matDateRangePickerApply>Apply</button>
+                                                        </mat-date-range-picker-actions>
+                                                    </mat-date-range-picker>
+                                                </mat-form-field> -->
+
+                          <!-- <div class="mb-3"
+                                                     *ngIf="range.value.start">
+                                                    <span>من {{range.value.start | date:'dd MMMM'}}</span> إلى <span>{{range.value.end | date:'dd MMMM'}}</span>
+                                                </div> -->
+
+                          <!-- <bs-daterangepicker-inline [bsValue]="bsInlineRangeValue"></bs-daterangepicker-inline> -->
+                        </accordion-group>
+
+                        <accordion-group>
+                          <div class="accordion-heading" accordion-heading>
+                            <h6 class="title">نوع الطلب</h6>
+                            <div class="icon">
+                              <i class="open material-icons">expand_more</i>
+                              <i class="close material-icons">expand_less</i>
+                            </div>
+                          </div>
+
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="control-chk3" value="" />
+                            <label class="form-check-label" for="chk3">
+                              تم رفض الطلب
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="control-chk4" value="" />
+                            <label class="form-check-label" for="chk4">
+                              تم القبول وإصدار الشهادة
+                            </label>
+                          </div>
+                        </accordion-group>
+                      </ng-container>
+                    </accordion>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <ng-container *ngIf="reqList.totalCount > 0">
+    <!-- <ng-container> -->
+    <!-- <div class="row mb-3">
+            <div class="col-12 col-lg-6">
+                <h6>{{ reqList.results.length }} طلبات يتم عرضهم</h6>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="view-mode d-flex justify-content-end">
+                    <div class="form-check form-check-reverse form-check-inline">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               value=""
+                               checked
+                               id="reverseCheck1" />
+                        <label class="form-check-label"
+                               for="reverseCheck1">
+                            عرض الطلبات التي تم تعيني علىها فقط
+                        </label>
+                    </div>
+                    <div class="form-check form-check-reverse form-check-inline">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               value=""
+                               id="reverseCheck2" />
+                        <label class="form-check-label"
+                               for="reverseCheck2">
+                            عرض جميع الطلبات
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">
+              <div (click)="sortData('RequestCode')" class="sortable">
+                رقم الطلب
+                <span class="icon material-icons">unfold_more</span>
+              </div>
+            </th>
+            <th scope="col">مقدم الطلب</th>
+            <th scope="col">أسم المنشأة</th>
+            <th scope="col">
+              <div (click)="sortData('CreatedOn')" class="sortable">
+                تاريخ التقديم
+                <span class="icon material-icons">unfold_more</span>
+              </div>
+            </th>
+            <th scope="col">رقم السجل التجاري</th>
+            <th scope="col">نوع الطلب</th>
+            <th scope="col">حالة الطلب</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of reqList.results">
+            <td>
+              <a class="underline fw-bold text-primary" id="link-navigateToDetails"
+                (click)="navigateToDetails(request)">
+                {{ request.requestCode }}
+              </a>
+            </td>
+            <td>
+              <div class="d-flex align-items-center column-gap-2">
+                <!-- <div class="image">
+                                    <span class="avatar material-icons">person</span> -->
+                <!-- <img src="/assets/images/general/static-person.jpeg" id="control-image"
+                                         alt=""
+                                         class="img-fluid" /> -->
+                <!-- </div> -->
+                <div class="image" *ngIf="request.customers?.profileImageFile">
+                  <img width="200" height="200" [src]="baseUrl + request.customers.profileImageFile?.filePath"
+                    class="d-block w-100 h-100" />
+                </div>
+                <span class="username">{{ request.customers.fullName }}</span>
+              </div>
+            </td>
+            <td class="text-dark">
+              {{ request.facilities.facilityName }}
+            </td>
+            <td>
+              <span class="text-dark" dir="ltr">{{
+                request.requestOn | date : "dd MMMM yyyy"
+                }}</span>
+            </td>
+            <td>
+              <span class="text-dark">{{
+                request.facilities.commercialRegisterNumber
+                }}</span>
+            </td>
+            <td>
+              {{request.isRenewal ? "تجديد": ""}}
+              {{ request.qualificationRequestType.typeName }} -
+              {{request.qualificationRequestType.showForWafi?'لجنة البيع على الخارطة':'المساهمات العقارية'}}
+
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <span class="status-dot" [ngClass]="externalStatusId[request.externalStatusId]"
+                  *ngIf="request.externalStatus">
+                  <i class="icon material-icons">fiber_manual_record</i>
+                  {{ request.externalStatus }}
+                  <!-- {{internalStatusId[request.internalStatusId]}} -->
+                </span>
+                <!-- <i class="mx-auto"></i>
+                <app-tooltip
+                  type="icon"
+                  color="success"
+                  text="error_outline"
+                  tooltipText="الوقت المتبقي لمعالجة الطب {{
+                    request.period
+                  }} يوم"
+                ></app-tooltip> -->
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="reqList.totalCount === 0">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false"></app-no-data>
+    </div>
+  </ng-container>
+</div>

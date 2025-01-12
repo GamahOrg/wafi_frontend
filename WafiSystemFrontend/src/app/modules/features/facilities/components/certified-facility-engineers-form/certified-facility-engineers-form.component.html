@@ -1,0 +1,39 @@
+<form [formGroup]="qualificationCertifiedEngineersForm" id="form-qualificationCertifiedEngineersForm">
+    <div class="row row-gap-3 mb-3">
+        
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+            <label for="" class="form-label">الاسم</label>
+            <input type="text" class="form-control" formControlName="engineerName" id="control-engineerName">
+
+            <mat-error *ngIf="controls.engineerName.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
+
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="form-group">
+        <label for="" class="form-label">رقم الهوية </label>
+        <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber">
+
+        <mat-error *ngIf="controls.identityNumber.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
+
+    </div>
+</div>
+        <div class="col-12 col-lg-6">
+            <div class="form-group">
+            <label for="" class="form-label">رقم الرخصة المهنية</label>
+            <input type="text" class="form-control" formControlName="professionalLicenseNumber" id="control-professionalLicenseNumber">
+
+            <mat-error *ngIf="controls.professionalLicenseNumber.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
+
+        </div>
+    </div>
+    </div>
+
+    <!-- <div class="row row-gap-3 mb-3">
+        <div class="col-12 col-lg-12">
+            <label for="" class="form-label"> شهادة التدريب</label>
+            <app-file-uploader (fileRemoved)="onTrainingCertificateFileRemoved($event)" (fileUploaded)="onTrainingCertificateFileUploaded($event)"></app-file-uploader>
+        </div>
+    </div> -->
+</form>

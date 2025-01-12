@@ -1,0 +1,34 @@
+@import "/src/assets/styles/custom-variables";
+
+:host {
+    display: block;
+    // height: 100%;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-inline-end: .5rem;
+
+    border-radius: 50%;
+    background-color: $lightergray;
+
+    :host-context(.rega) & {
+        background-color: #E0F2FE;
+    }
+
+    [class^="material-icons"] {
+        font-size: $body-font-size;
+        // color: $darkgreen;
+        color: $white;
+
+        :host-context(.rega) & {
+            color: $white;
+        }
+    }
+}

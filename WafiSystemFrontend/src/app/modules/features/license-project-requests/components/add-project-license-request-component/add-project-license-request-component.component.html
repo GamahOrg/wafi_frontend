@@ -1,0 +1,49 @@
+<div class="popup">
+  <h2>إضافة طلب ترخيص المشروع</h2>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="form-group">
+      <label for="requestType">نوع الطلب </label>
+      <select
+        id="requestType"
+        formControlName="requestType"
+        class="form-control"
+      >
+        <option value="" disabled>حدد نوع الطلب</option>
+        <option
+          *ngFor="let requestType of requestTypes"
+          [value]="requestType.id | number"
+        >
+          {{ requestType.name }}
+        </option>
+      </select>
+      <div
+        *ngIf="showValidation && form.get('requestType')?.invalid"
+        class="error"
+      >
+        الرجاء تحديد نوع الطلب.
+      </div>
+      <label for="licenseProject">اسم مشروع</label>
+
+      <select
+        id="licenseProject"
+        formControlName="licenseProject"
+        class="form-control"
+      >
+        <option value="" disabled>حدد اسم مشروع</option>
+        <option
+          *ngFor="let licenseProject of licenseProjects"
+          [value]="licenseProject.licenseProjectId"
+        >
+          {{ licenseProject.licenseProjectName }}
+        </option>
+      </select>
+
+      <div
+        *ngIf="showValidation && form.get('licenseProject')?.invalid"
+        class="error"
+      >
+        الرجاء تحديد اسم المشروع.
+      </div>
+    </div>
+  </form>
+</div>

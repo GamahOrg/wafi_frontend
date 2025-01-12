@@ -1,0 +1,333 @@
+<form
+  class="d-flex flex-column h-100"
+  [formGroup]="licenseProjectExchangeDocumentForm"
+  id="form-licenseProjectExchangeDocumentForm"
+>
+  <div class="tab-data-section">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label for="" class="form-label">البند الرئيسي</label>
+          <select
+            class="form-select"
+            formControlName="mainItemId"
+            (change)="mainItemChanges()"
+          >
+            <option label="اختر البند الرئيسي" disabled></option>
+            <option *ngFor="let main of mainItems" [value]="main.id">
+              {{ main.name }}
+            </option>
+          </select>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="controls.mainItemId?.hasError('required') && showValidation"
+          >
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          controls.mainItemId.value ==
+            licenseProjectExchangeDocumentMainItemEnum.ConstructionCosts ||
+          controls.mainItemId.value ==
+            licenseProjectExchangeDocumentMainItemEnum.AdministrativeAndMarketingExpenses
+        "
+      >
+        <div class="form-group mb-4">
+          <label for="" class="form-label">البند الفرعي</label>
+          <select class="form-select" formControlName="subItemId">
+            <option label="اختر البند الرئيسي" disabled></option>
+            <option *ngFor="let sub of subItems" [value]="sub.id">
+              {{ sub.name }}
+            </option>
+          </select>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              (controls.mainItemId.value ==
+                licenseProjectExchangeDocumentMainItemEnum.ConstructionCosts ||
+                (controls.mainItemId.value ==
+                  licenseProjectExchangeDocumentMainItemEnum.AdministrativeAndMarketingExpenses &&
+                  !controls.subItemId.value)) &&
+              showValidation
+            "
+          >
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الوثيقة</label>
+          <input
+            type="text"
+            id="control-documnetNumber"
+            class="form-control"
+            formControlName="documnetNumber"
+            placeholder="رقم الوثيقة"
+          />
+          <mat-error
+            *ngIf="
+              controls.documnetNumber?.hasError('required') && showValidation
+            "
+            >حقل مطلوب</mat-error
+          >
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label">تاريخ الصرف</label>
+        <div class="input-group">
+          <input
+            bsDatepicker
+            id="control-exchangeDate"
+            type="text"
+            class="form-control"
+            formControlName="exchangeDate"
+            value="{{ controls.exchangeDate.value | date : 'yyyy-MM-dd' }}"
+          />
+          <span class="input-group-text"
+            ><i class="material-icons-outlined">calendar_today</i></span
+          >
+        </div>
+        <mat-error
+          *ngIf="controls.exchangeDate?.hasError('required') && showValidation"
+          >حقل مطلوب</mat-error
+        >
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">المبلغ</label>
+          <input
+            type="number"
+            id="control-amount"
+            class="form-control"
+            formControlName="amount"
+            placeholder="المبلغ"
+          />
+          <mat-error
+            *ngIf="controls.amount?.hasError('required') && showValidation"
+            >حقل مطلوب</mat-error
+          >
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label">تاريخ الأعتماد</label>
+        <div class="input-group">
+          <input
+            bsDatepicker
+            id="control-approvalDate"
+            type="text"
+            class="form-control"
+            formControlName="approvalDate"
+            value="{{ controls.approvalDate.value | date : 'yyyy-MM-dd' }}"
+          />
+          <span class="input-group-text"
+            ><i class="material-icons-outlined">calendar_today</i></span
+          >
+        </div>
+        <mat-error
+          *ngIf="controls.approvalDate?.hasError('required') && showValidation"
+          >حقل مطلوب</mat-error
+        >
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الحساب الرئيسي</label>
+          {{ licenseProject?.accountNumber }}
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">البيان</label>
+          <textarea
+            type="text"
+            id="control-statment"
+            class="form-control"
+            formControlName="statment"
+            placeholder="البيان"
+          ></textarea>
+          <mat-error
+            *ngIf="controls.statment?.hasError('required') && showValidation"
+            >حقل مطلوب</mat-error
+          >
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label for="" class="form-label">المستفيد</label>
+          <select
+            class="form-select"
+            formControlName="liceneProjectBeneficiaryTypeId"
+            (change)="liceneProjectBeneficiaryTypeIdChanges()"
+          >
+            <option label="اختر المستفيد" disabled></option>
+            <option
+              *ngFor="let beneficiary of beneficiaryTypes"
+              [value]="beneficiary.id"
+            >
+              {{ beneficiary.name }}
+            </option>
+          </select>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              controls.liceneProjectBeneficiaryTypeId?.hasError('required') &&
+              showValidation
+            "
+          >
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          controls.liceneProjectBeneficiaryTypeId.value ==
+          liceneProjectBeneficiaryTypeEnum.Others
+        "
+      >
+        <div class="form-group mb-4">
+          <label class="form-label">وصف المستفيد</label>
+          <textarea
+            type="text"
+            id="control-beneficiaryDescription"
+            class="form-control"
+            formControlName="beneficiaryDescription"
+            placeholder="وصف المستفيد"
+          ></textarea>
+          <mat-error
+            *ngIf="
+              controls.liceneProjectBeneficiaryTypeId.value ==
+                liceneProjectBeneficiaryTypeEnum.Others &&
+              !controls.beneficiaryDescription.value &&
+              showValidation
+            "
+            >حقل مطلوب</mat-error
+          >
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          controls.liceneProjectBeneficiaryTypeId.value ==
+          liceneProjectBeneficiaryTypeEnum.Buyer
+        "
+      >
+        <div class="form-group mb-4">
+          <label class="form-label">اسم المشتري</label>
+          <select
+            class="form-select"
+            formControlName="nidNumber"
+            (change)="nidNumberChange()"
+          >
+            <option label="اختر مشتري" disabled></option>
+            <option *ngFor="let nid of buters" [value]="nid.nidNumber">
+              {{ nid.name }}
+            </option>
+          </select>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              controls.liceneProjectBeneficiaryTypeId.value ==
+                liceneProjectBeneficiaryTypeEnum.Buyer &&
+              !controls.nidNumber.value &&
+              showValidation
+            "
+          >
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          controls.liceneProjectBeneficiaryTypeId.value ==
+          liceneProjectBeneficiaryTypeEnum.Buyer
+        "
+      >
+        <div class="form-group mb-4">
+          <label class="form-label">رقم هوية المشتري</label>
+          {{ controls.nidNumber.value }}
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          controls.liceneProjectBeneficiaryTypeId.value ==
+          liceneProjectBeneficiaryTypeEnum.Buyer
+        "
+      >
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الوحدة </label>
+          <select
+            class="form-select"
+            formControlName="licenseProjectBuyerId"
+            (change)="licenseProjectBuyerIdChange()"
+          >
+            <option label="اختر رقم الوحدة" disabled></option>
+            <option
+              *ngFor="let unit of licenseProjectBuyerDetails"
+              [value]="unit.id"
+            >
+              {{ unit.unitCodeFullName }}
+            </option>
+          </select>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              controls.liceneProjectBeneficiaryTypeId.value ==
+                liceneProjectBeneficiaryTypeEnum.Buyer &&
+              !controls.licenseProjectBuyerId.value &&
+              showValidation
+            "
+          >
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          controls.liceneProjectBeneficiaryTypeId.value ==
+          liceneProjectBeneficiaryTypeEnum.Buyer
+        "
+      >
+        <div class="form-group mb-4">
+          <label class="form-label">رقم البلوك او العمارة</label>
+          {{ buyerRecord?.blockCode }}
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          controls.liceneProjectBeneficiaryTypeId.value ==
+          liceneProjectBeneficiaryTypeEnum.Buyer
+        "
+      >
+        <div class="form-group mb-4">
+          <label class="form-label">رقم العقد</label>
+          {{ buyerRecord?.contractNumber }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الدفعة</label>
+          <input
+            type="text"
+            id="control-batchNumber"
+            class="form-control"
+            formControlName="batchNumber"
+            placeholder="رقم الدفعة"
+          />
+          <mat-error
+            *ngIf="controls.batchNumber?.hasError('required') && showValidation"
+            >حقل مطلوب</mat-error
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

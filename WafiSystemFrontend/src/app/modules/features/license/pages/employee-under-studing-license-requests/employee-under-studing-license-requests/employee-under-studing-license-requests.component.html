@@ -1,0 +1,123 @@
+<div class="page">
+    <div class="page-header mb-3">
+      <div class="row row-gap-3">
+        <div class="col-12 col-lg-6">
+          <div class="page-title mb-0">
+            <h5 class="title">الطلبات</h5>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="date-range"></div>
+        </div>
+        <div class="col-12">
+          <div class="filter">
+            <div class="row">
+              <div class="col-4">
+                <div class="input-group">
+                  <span class="input-group-text" id="basic-addon1"
+                    ><i class="material-icons-outlined">search</i></span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="بحث"
+                    (input)="getSearchText($event)"
+                  />
+                </div>
+              </div>
+              <div class="col-2">
+                <button
+                  type="button"
+                  (click)="search()"
+                  class="btn btn-outline-primary"
+                >
+                  <span class="d-flex align-items-center column-gap-1">
+                    <i class="material-icons-outlined">filter_alt</i>
+                    بحث
+                    <i class="material-icons-outlined">add</i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <h6>
+          {{
+            requestList.results && requestList.results.length > 0
+              ? requestList.results.length
+              : 0
+          }}
+          طلبات يتم عرضهم
+        </h6>
+      </div>
+    </div>
+    <div class="table-responsive mb-3" *ngIf="requestList.totalCount > 0">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">رقم الطلب</th>
+            <th scope="col">تاريخ التقديم</th>
+            <th scope="col">نوع الطلب</th>
+            <th scope="col">اسم المنشأة</th>
+            <th scope="col">تاريخ التعيين</th>
+            <!-- <th scope="col">مدة الترخيص</th> -->
+            <th scope="col">حالة الطلب</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of requests">
+            <td>
+              <a
+                class="underline fw-bold text-primary"
+                (click)="navigateTorequestDetails(request)"
+              >
+                {{ request.requestCode }}
+              </a>
+            </td>
+            <td>
+              <span class="text-dark">{{
+                request.sentOn | date : "dd/MM/yyyy"
+              }}</span>
+            </td>
+            <td>
+              {{ request.isRenewal ? "تجديد " : "" }}
+              {{ request.licenseRequestType.name }}
+            </td>
+            <td>{{ request.facility.facilityName }}</td>
+            <td>
+              <span class="text-dark">{{
+                request.assignedOn | date : "dd/MM/yyyy"
+              }}</span>
+            </td>
+  
+            <td>
+              <span
+                class="status-dot"
+                [ngClass]="internalStatusId[request.internalStatusId]"
+                *ngIf="request.internalStatus"
+              >
+                <i class="icon material-icons">fiber_manual_record</i>
+                {{ request.internalStatus }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="mt-auto" *ngIf="requestList.totalCount > 0">
+      <app-pagination></app-pagination>
+    </div>
+  
+    <ng-container *ngIf="requestList.totalCount == 0">
+      <div class="mt-4">
+        <app-no-data></app-no-data>
+      </div>
+    </ng-container>
+  </div>
+  

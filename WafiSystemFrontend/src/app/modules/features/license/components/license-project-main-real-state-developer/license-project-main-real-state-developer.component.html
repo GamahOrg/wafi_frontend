@@ -1,0 +1,38 @@
+<div class="tab-data-section">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <br>
+        <h6 class="title fw-normal">المطور الرئيسي</h6>
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم رخصة بيع المطور الرئيسي</div>
+            <div class="value">
+                {{licenseProjectMainRealStateDeveloper.mainRealStateDeveloperLicenseNumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">سجل تجاري المطور الرئيسي </div>
+            <div class="value">
+                {{licenseProjectMainRealStateDeveloper?.mainRealStateDeveloper?.commercialRegisterNumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">اسم منشأة المطور الرئيسي</div>
+            <div class="value">
+                {{licenseProjectMainRealStateDeveloper?.mainRealStateDeveloper?.facilityName}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">العقد/اتفاقية مع المطور الرئيسي </div>
+            <div class="value">
+                
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a target="_blank" [href]="baseUrl + licenseProjectMainRealStateDeveloper?.mainRealStateDeveloperAgreementFile?.filePath" >
+                        {{licenseProjectMainRealStateDeveloper?.mainRealStateDeveloperAgreementFile?.fileDescription}}</a>
+               
+            </div>
+        </div>
+     
+   
+    
+     
+    </div>
+</div>

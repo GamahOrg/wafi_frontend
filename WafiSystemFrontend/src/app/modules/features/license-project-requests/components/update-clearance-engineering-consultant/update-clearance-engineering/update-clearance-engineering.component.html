@@ -1,0 +1,38 @@
+<div class="update-clearance-engineering-form">
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label for="achievementRate">نسبة الإنجاز </label>
+          <input type="number" id="achievementRate" formControlName="achievementRate" class="form-control" />
+          <mat-error *ngIf="showValidation && form.get('achievementRate')?.invalid">
+            {{ localization.requiredErrorMsg }}
+          </mat-error>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label for="lastEngineeringReportId">أخر تقرير هندسي</label>
+          <div class="col-12 col-lg-12" *ngIf="projectDetails && projectDetails.lastEngineeringReport">
+            <span class="delete"   (click)="deletFile(projectDetails.lastEngineeringReport?.id)"><i class="material-icons text-danger">close</i></span>
+            <span class="icon material-icons-outlined">content_copy</span>    
+            <a [href]="baseUrl + projectDetails.lastEngineeringReport.filePath"
+              id="link-engineeringConsultantReportFile" target="_blank">
+              {{ projectDetails.lastEngineeringReport.fileDescription }}
+            </a>
+          </div>
+          <app-file-uploader [data]="singleFilesUploaderData"
+            (fileUploaded)="clearanceEngineeringConsultantFileUpload($event)"></app-file-uploader>
+            <mat-error *ngIf="showValidation && (lastEngineeringReportId==null || lastEngineeringReportId=='')">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+        </div>     
+      </div>
+    </div>
+
+
+  </form>
+</div>

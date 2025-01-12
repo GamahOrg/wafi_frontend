@@ -1,0 +1,89 @@
+<ng-container>
+  <form class="d-flex flex-column h-100" [formGroup]="projectModelForm" id="form-projectModelForm">
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.name}}</label>
+            <input type="text" id="control-name" placeholder="{{localization.name}}" class="form-control"
+              formControlName="name">
+            <mat-error
+              *ngIf="controls.name?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.space}}</label>
+            <input type="number" id="control-space" class="form-control" formControlName="space">
+
+            <div class="invalid-feedback d-block"
+              *ngIf="(controls.space?.hasError('required') || controls.space?.value == 0 )&& showValidation">
+              {{localization.requiredErrorMsg}}
+            </div>
+            <!-- <mat-error
+              *ngIf="controls.space?.hasError('required') &&  controls.space?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</mat-error> -->
+            <mat-error
+              *ngIf="controls.space?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.buildingFlatSpace}}</label>
+            <input type="number" id="control-buildingFlatSpace" class="form-control"
+              formControlName="buildingFlatSpace">
+
+            <div class="invalid-feedback d-block"
+              *ngIf="(controls.buildingFlatSpace?.hasError('required') ||  controls.buildingFlatSpace?.value == 0) && showValidation">
+              {{localization.requiredErrorMsg}}
+            </div>
+            <!-- <mat-error
+              *ngIf="controls.buildingFlatSpace?.hasError('required') &&  controls.buildingFlatSpace?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</mat-error> -->
+            <mat-error
+              *ngIf="controls.buildingFlatSpace?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.unitsCount}}</label>
+            <input type="number" id="control-unitsCount" class="form-control" formControlName="unitsCount">
+
+            <div class="invalid-feedback d-block"
+              *ngIf="(controls.unitsCount?.hasError('required') ||  controls.unitsCount?.value == 0) && showValidation">
+              {{localization.requiredErrorMsg}}
+            </div>
+            <!-- <mat-error
+              *ngIf="(controls.unitsCount?.hasError('required') ||  controls.unitsCount?.value == 0) && showValidation">{{localization.requiredErrorMsg}}</mat-error> -->
+            <mat-error
+              *ngIf="controls.unitsCount?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.properties}}</label>
+            <textarea class="form-control" id="control-properties" formControlName="properties"> </textarea>
+            <mat-error
+              *ngIf="controls.properties?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.licenseProjectModelDesignFiles}}</label>
+            <div class="value" *ngFor="let file of licenseProjectModelDesignFiles">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a *ngIf="file && file.designFile" id="link-licenseProjectModelDesignFiles"
+                [href]="baseUrl + file.designFile.filePath" target="_blank">
+                {{file.designFile.fileDescription}}</a>
+            </div>
+            <app-file-uploader [data]="multipleFileUploaderData"
+              (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

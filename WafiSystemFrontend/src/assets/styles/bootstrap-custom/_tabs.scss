@@ -1,0 +1,135 @@
+.nav[role="tablist"],
+.tab-content {
+    min-height: 100%;
+    padding: 1rem;
+    border-radius: $card-border-radius;
+    background-color: $white;
+}
+
+.nav[role="tablist"] {
+    --bs-nav-link-padding-y: 0;
+    --bs-nav-link-padding-x: 0;
+    --bs-nav-pills-link-active-bg: transparent;
+
+    .title {
+        font-size: $font-size-sm;
+        // color: $lightgray;
+        color: $headings-color;
+
+        &+.nav-link {
+            margin-top: 2rem;
+        }
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+
+        text-align: start;
+        font-size: $font-size-sm;
+        color: $headings-color;
+
+        .icon,
+        .count,
+        .checked {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+
+            width: 1.5rem;
+            height: 1.5rem;
+
+            border-radius: 50%;
+        }
+
+        .icon {
+            margin-inline-end: .5rem;
+            background-color: rgba($black, .05);
+
+            [class^="material-icons"] {
+                font-size: small;
+                // color: $darkgreen;
+                color: $theme-dark;
+
+                :host-context(.rega) & {
+                    color: $theme-dark;
+                }
+            }
+        }
+
+        .count,
+        .checked {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-inline-start: auto;
+        }
+
+        .count {
+            color: $white;
+            background-color: $darkred;
+        }
+
+        .checked {
+            display: none;
+            // background-color: $darkgreen;
+            background-color: $theme-dark;
+
+            :host-context(.rega) & {
+                background-color: $theme-dark;
+            }
+
+            [class^="material-icons"] {
+                font-size: 1rem;
+                color: $white;
+            }
+        }
+
+        &:hover,
+        &.active {
+
+            .title {
+                // color: $darkgreen;
+                color: $theme-dark;
+
+                :host-context(.rega) & {
+                    color: $theme-dark;
+                }
+            }
+
+            .icon {
+                // background-color: $orange;
+                background-color: $theme-light;
+
+                :host-context(.rega) & {
+                    background-color: $theme-light;
+                }
+            }
+        }
+
+        &.active {
+            .count {
+                // display: none;
+            }
+
+            .checked {
+                // display: inline-flex;
+            }
+        }
+
+        &+.nav-link {
+            margin-top: 2rem;
+        }
+    }
+}
+
+.tab-content {
+    @media (min-width: 1200px) {
+        height: 67vh;
+        overflow-y: auto;
+    }
+
+    .tab-pane {
+        height: 100%;
+    }
+}

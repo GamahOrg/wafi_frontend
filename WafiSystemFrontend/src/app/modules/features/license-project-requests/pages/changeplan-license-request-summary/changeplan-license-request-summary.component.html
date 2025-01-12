@@ -1,0 +1,25 @@
+<div class="col-12" *ngIf="!availabilityToUpdate">
+  <div class="buttona bg-white px-3 py-2 mb-1 d-flex justify-content-end">
+    <div>
+      <div>
+        <button *ngIf="requestUserType==userRequestTypeEnum.RealEstateDeveloper && request.externalRequestStatusId==licenseProjectRequestStatusEnum.PartiesStudyFinished"
+          type="button"
+          mat-flat-button
+          color="primary"
+        (click)="create()"
+        >
+          {{ localization.send }}
+        </button>     
+        <button *ngIf="requestUserType==userRequestTypeEnum.RealEstateDeveloper && request.externalRequestStatusId==licenseProjectRequestStatusEnum.UnderCreation"
+          type="button"
+          mat-flat-button
+          color="primary"
+        (click)="sendToParties()"
+        >
+          {{ localization.sendToParties }}
+        </button>       
+    </div>
+  </div>
+</div>
+
+<app-tabs></app-tabs>

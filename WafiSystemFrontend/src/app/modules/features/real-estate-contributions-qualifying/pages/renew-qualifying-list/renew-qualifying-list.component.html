@@ -1,0 +1,56 @@
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">اسم الشركة</th>
+                    <th scope="col">تاريخ بدأ التأهيل</th>
+                    <th scope="col">تاريخ نهاية التأهيل</th>
+                    <th scope="col">نوع التأهيل</th>
+                    <th scope="col">العمليات</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let qualifying of reqList?.results">
+                <tr *ngIf="qualifying">
+                    <td *ngIf="qualifying.facilities">
+                        <span class="text-dark">{{qualifying.facilities.facilityName}}
+                        </span>
+                    </td>
+                    <td *ngIf="qualifying.qualificationRequestVersions && qualifying.qualificationRequestVersions.length > 0">
+                        <span class="text-dark" dir="ltr">{{qualifying.qualificationRequestVersions[0].requestFrom| date : "dd MMMM yyyy"}}
+                        </span>
+                    </td>
+                    <td *ngIf="qualifying.qualificationRequestVersions && qualifying.qualificationRequestVersions.length > 0">
+                        <span class="text-dark" dir="ltr">{{qualifying.qualificationRequestVersions[0].requestTo| date : "dd MMMM yyyy"}}
+                        </span>
+                    </td>
+                
+                 
+                    <td *ngIf="qualifying.qualificationRequestType">
+                        <div class="text-daark">
+                            {{qualifying.qualificationRequestType.typeName}} -
+                            {{qualifying.qualificationRequestType.showForWafi?'لجنة البيع على الخارطة':'المساهمات العقارية'}}
+              
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    (click)="onClickOnRenewLicense(qualifying)">تجديد التأهيل</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList?.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>

@@ -1,0 +1,30 @@
+<form class="d-flex flex-column h-100" [formGroup]="projectBusinessCaseReportForm"
+id="form-projectBusinessCaseReportForm">
+<div class="tab-data-section">
+  <div class="row mb-3">
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">التاريخ المتوقع لبدء العمل</label>
+      <div class="input-group">
+        <input bsDatepicker type="text" id="control-projectExpectedWorkStartDate" class="form-control"
+          formControlName="projectExpectedWorkStartDate" value="{{ controls.projectExpectedWorkStartDate.value | date:'yyyy-MM-dd' }}">
+        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+      </div>
+      <mat-error
+        *ngIf="controls.projectExpectedWorkStartDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">أسباب عدم البدء بالمشروع</label>
+      <textarea type="text" id="control-projectNotStartingReason" class="form-control" formControlName="projectNotStartingReason"
+        placeholder="أسباب عدم البدء بالمشروع"></textarea>
+      <div class="invalid-feedback d-block" *ngIf="controls.projectNotStartingReason?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  
+    </div>
+  </div> 
+  </div>
+</div>
+</form>

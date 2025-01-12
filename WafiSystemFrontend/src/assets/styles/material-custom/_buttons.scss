@@ -1,0 +1,14 @@
+.mdc-button {
+    font-family: "Almarai", sans-serif;
+    font-size: $font-size-sm;
+    letter-spacing: normal;
+
+    &.mat-primary:not([disabled]) {
+        // background: linear-gradient(266.42deg, #1EA064 6.77%, $darkgreen 89.72%), #26B4B0;
+        background: linear-gradient(266.42deg, rgba($theme-dark, 1) 6.77%, #3088C8 89.72%), #26B4B0;
+
+        .rega & {
+            background: linear-gradient(266.42deg, rgba($theme-dark, 1) 6.77%, #3088C8 89.72%), #26B4B0;
+        }
+    }
+}

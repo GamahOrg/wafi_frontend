@@ -1,0 +1,24 @@
+<ng-container>
+    <form class="d-flex flex-column h-100" [formGroup]="ProjectManagerForm" id="form-ProjectManagerForm">
+        <div class="tab-data-section">
+            <div class="row mb-3">
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">اختر مدير</label>
+                        <select class="form-select"
+                                formControlName="managerId">
+                            <option value="">اختر مدير</option>
+                            <option *ngFor="let manager of customers"
+                                    [ngValue]="manager.id">
+                                {{ manager.fullName }}
+                            </option>
+                        </select>
+                        <mat-error *ngIf="controls.managerId?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-container>
+
+

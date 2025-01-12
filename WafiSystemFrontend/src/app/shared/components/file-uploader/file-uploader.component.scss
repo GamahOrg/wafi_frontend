@@ -1,0 +1,84 @@
+@import "/src/assets/styles/custom-variables";
+
+.file-upload {
+    // border: 2px dashed $darkgreen;
+    border: 2px dashed $theme-dark;
+    border-radius: $card-border-radius;
+    // background-color: $lightgreen;
+    background-color: $theme-light;
+
+    :host-context(.rega) & {
+        border-color: $theme-dark;
+        background-color: $theme-light;
+    }
+
+    .upload-drop-zone,
+    .upload-queue {
+        padding: 1rem;
+    }
+
+    .upload-drop-zone {
+        display: flex;
+        flex-direction: column;
+        row-gap: .5rem;
+
+        text-align: center;
+
+        .upload-text,
+        .upload-hints {
+            p+p {
+                margin-top: .25rem;
+            }
+        }
+
+        .upload-text {
+            font-size: $font-size-xs;
+            // color: $darkgreen;
+            color: $theme-dark;
+
+            :host-context(.rega) & {
+                color: $theme-dark;
+            }
+        }
+
+        .upload-button {
+            .mdc-button {}
+        }
+
+        .upload-hints {
+            font-size: $font-size-xxs;
+        }
+    }
+
+    .upload-queue {
+        padding-top: 0;
+
+        .mat-file-upload-queue {
+            display: flex;
+            flex-direction: column;
+            row-gap: .5rem;
+
+            .mdc-card {
+                padding: .25rem;
+
+                .upload-progress {
+                    height: auto;
+                }
+            }
+
+            br {
+                display: none;
+            }
+        }
+    }
+}
+
+// .file-summary{
+//     display: none !important;
+// }
+// .mat-mdc-progress-bar{
+//     display: none !important;
+// }
+// .upload-progress{
+//     display: none !important;
+// }

@@ -1,0 +1,31 @@
+<div class="no-data">
+    <img src="assets/images/general/folder-search.svg"
+         class="img-fluid"
+         alt="">
+    <img src="assets/images/general/folder-search-rega.svg"
+         class="img-fluid rega"
+         alt="">
+    <div class="text">
+        <h6 class="title">{{title}}</h6>
+        <p *ngIf="showCompleteBtn"
+           class="desc">يُمكنك ملء البيانات لمساعدتك في إرسال طلباتك الخاصة.</p>
+    </div>
+    <div class="actions">
+        <button *ngIf="showCompleteBtn"
+                mat-flat-button
+                color="primary"
+                (click)="noDataButtonClicked()"
+                class="mx-1">إستكمال البيانات</button>
+        <ng-container *ngFor="let button of noDataActionsButtons">
+            <button mat-flat-button
+                    *ngIf="button.isVisable"
+                    [disabled]="button.isDisables"
+                    class="primary mx-1"
+                    color="primary"
+                    (click)="button.onclick()">
+                {{button.title}}
+            </button>
+        </ng-container>
+    </div>
+
+</div>

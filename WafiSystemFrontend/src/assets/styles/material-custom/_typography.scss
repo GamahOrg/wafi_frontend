@@ -1,0 +1,29 @@
+.mat-typography {
+
+    .mat-body,
+    .mat-body-2,
+    p,
+    h6,
+    h5,
+    h4,
+    h3,
+    h2,
+    h1 {
+        margin-bottom: 0;
+        font-family: "Almarai", sans-serif;
+    }
+}
+
+.mat-body,
+.mat-body-2 {
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.mat-stepper-vertical,
+.mat-stepper-horizontal,
+.mat-mdc-select,
+.mdc-form-field {
+    font-family: "Almarai", sans-serif;
+}

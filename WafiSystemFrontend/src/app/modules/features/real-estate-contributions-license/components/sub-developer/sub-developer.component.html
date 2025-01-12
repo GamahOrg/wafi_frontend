@@ -1,0 +1,56 @@
+<div class="d-flex flex-column h-100">
+
+  <div class="tab-data-header">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title fw-normal">{{localization.SubDeveloper}}</h6>
+  </div>
+  <ng-container *ngIf="form"
+                [formGroup]="form">
+    <div class="tab-data-section">
+      <span>{{localization.HasSubDevelopers}}</span>
+      <br>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input"
+               type="radio"
+               formControlName="hasSubDevelopers"
+               name="hasSubDevelopers"
+               id="yes"
+               [value]="true">
+        <label class="form-check-label"
+               for="yes">{{localization.Yes}}</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input"
+               type="radio"
+               name="hasSubDevelopers"
+               formControlName="hasSubDevelopers"
+               id="no"
+               [value]="false">
+        <label class="form-check-label"
+               for="no">{{localization.No}}</label>
+      </div>
+    </div>
+    <div class="tab-data-section">
+      <ng-container *ngIf="(listSubject | async) as list">
+        <ng-container *ngIf="form.controls['hasSubDevelopers']?.value === true">
+          <button class="btn btn-primary d-flex mb-2"
+                  (click)="open()">
+            {{localization.AddNewSubDeveloper}}
+          </button>
+          <div class="row">
+            <app-sub-developer-list [list]="list.data"
+                                    (onDelete)="delete($event)"></app-sub-developer-list>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+  <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  <!-- <div class="form-actions mt-auto">
+    <button class="btn btn-outline-primary"
+            (click)="back()">{{localization.previous}}</button>
+    <button class="btn btn-outline-primary"
+            (click)="next()">{{localization.next}}</button>
+
+  </div> -->
+</div>

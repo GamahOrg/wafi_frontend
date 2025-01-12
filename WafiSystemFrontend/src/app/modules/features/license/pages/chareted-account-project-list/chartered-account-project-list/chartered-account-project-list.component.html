@@ -1,0 +1,52 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3">
+      <div
+        class="col-12 col-lg-6 d-flex justify-content-between align-items-center"
+      >
+        <div class="page-title mb-0">
+          <h5 class="title">جميع الطلبات</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="projectList.totalCount > 0">
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        .
+        <thead>
+          <tr>
+            <th scope="col">اسم المشروع</th>
+            <th scope="col">تاريخ البداية</th>
+            <th scope="col">تاريخ النهاية</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of projectList.results">
+            <td>
+              <div class="text-dark">
+                {{ request.name }}
+              </div>
+            </td>
+            <td>
+              <span class="text-dark" dir="ltr">{{
+                request.startDate | date : "dd MMMM yyyy"
+              }}</span>
+            </td>
+            <td>
+              <span class="text-dark" dir="ltr">{{
+                request.endDate | date : "dd MMMM yyyy"
+              }}</span>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-primary mx-4" (click)="showDetails(request.licenseProjectId)"> تفاصيل المشروع</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+</div>

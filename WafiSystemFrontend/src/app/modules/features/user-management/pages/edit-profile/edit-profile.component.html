@@ -1,0 +1,78 @@
+<form [formGroup]="editForm" id="form-editForm">
+
+    <div class="row row-gap-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <label for="licNum" class="form-label">  {{localization.nidnumber}}</label>
+            <input type="text" class="form-control" id="control-projectName" formControlName="nidnumber"
+                placeholder="رقم  الهوية" />
+            <!-- <div class="invalid-feedback d-block"
+                 *ngIf="controls['projectName'].errors?.['required'] && showValidation">
+                حقل مطلوب
+            </div> -->
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for="licNum" class="form-label">  {{localization.fullName}}</label>
+            <input type="text" class="form-control" id="control-projectOwner" formControlName="fullName"
+                placeholder=" الاسم بالكامل" />
+
+        </div>
+    </div>
+    <div class="row row-gap-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <label for="licNum" class="form-label"> {{localization.nationality}}</label>
+            <input type="text" class="form-control" id="control-executingContractor" formControlName="nationality"
+                placeholder="الجنسية" />
+
+        </div>
+    </div>
+
+    <div class="row row-gap-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <label for="licNum" class="form-label"> {{localization.Mobile1}}</label>
+            <input type="text" class="form-control" id="control-contractorClassification" formControlName="mobile1"
+                placeholder="رقم الجوال " />
+                <div *ngIf="controls['mobile1'].errors" class="invalid-feedback d-block">
+                     <div *ngIf="controls['mobile1'].errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                     <div *ngIf="controls['mobile1'].errors?.['pattern']">{{localization.phoneNumberPattern}}</div>
+
+                </div>
+           
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for="mobile2" class="form-label"> {{localization.Mobile2}}</label>
+            <input type="text" class="form-control" formControlName="mobile2" placeholder="رقم الجوال " />
+            <div *ngIf="controls['mobile2'].errors" class="invalid-feedback d-block">
+                <div *ngIf="controls['mobile2'].errors?.['pattern']">{{localization.phoneNumberPattern}}</div>
+
+           </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for="licNum" class="form-label">  {{localization.email}}</label>
+            <input type="text" class="form-control" id="control-projectLocation" formControlName="email"
+                placeholder=" البريد الإلكتروني" />
+            <div *ngIf="controls['email'].errors" class="invalid-feedback d-block">
+                <div>
+                    <div *ngIf="controls['email'].errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                    <div *ngIf="controls['email'].errors?.['pattern']">{{localization.emailPattern}}</div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="row row-gap-3 mb-3">
+        <div class="col-6 col-lg-6">
+            <label for="licNum" class="form-label"> {{localization.profilePic}}</label>
+            <app-file-uploader [data]="singleFileUploaderData"
+                (fileUploaded)="onFileUpload($event)"></app-file-uploader>
+
+        </div>
+       
+    </div>
+</form>
+<div mat-dialog-actions align="end">
+    <button mat-flat-button class="primary">إلغاء</button>
+    <button mat-flat-button color="primary" (click)="submit()">{{localization.save}}</button>
+</div>

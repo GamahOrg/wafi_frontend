@@ -1,0 +1,17 @@
+export interface UpdateRealEstateDeveloperRequestDto
+{
+isClearanceEngineeringConsultantDone: boolean  
+clearanceEngineeringConsultantFileId: string 
+reasonsForNotFinalizingEngineeringConsultantClearance: string
+isClearanceAccountantDone: boolean  
+clearanceAccountantFileId: string 
+reasonsForNotFinalizingAccountantClearance: string
+nonClearanceDocumentEngineeringConsultantFiles?:  LicenseProjectCancellationRequestFileDto[]
+nonClearanceDocumentAccountantFiles?:  LicenseProjectCancellationRequestFileDto[]
+documentSupportingJustificationFiles:  LicenseProjectCancellationRequestFileDto[]
+justificationsAndReasons: string
+}
+export interface LicenseProjectCancellationRequestFileDto{
+    licenseProjectCancellationRequestId? : string
+    documentId: string
+}

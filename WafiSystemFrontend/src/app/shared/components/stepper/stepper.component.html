@@ -1,0 +1,15 @@
+<mat-stepper [linear]="true"
+             [disableRipple]="true"
+             orientation="horizontal"
+             #stepper
+             dir="rtl">
+    <ng-container *ngFor="let step of steps;">
+        <mat-step [hasError]="step.hasError"
+                  [completed]="step.completed">
+            <ng-template matStepLabel> {{step.title}}</ng-template>
+            <ng-template matStepContent>
+                <ng-container *ngComponentOutlet="step.Component"></ng-container>
+            </ng-template>
+        </mat-step>
+    </ng-container>
+</mat-stepper>

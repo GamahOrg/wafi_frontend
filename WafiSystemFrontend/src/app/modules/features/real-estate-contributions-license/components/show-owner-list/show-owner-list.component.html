@@ -1,0 +1,44 @@
+<div class="d-flex flex-column h-100">
+  <div class="tab-data-header">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title fw-normal">{{localization.title}}</h6>
+  </div>
+  <div class="tab-data-section">
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>{{localization.name}}</th>
+            <th>{{localization.typeId}}</th>
+            <th> {{localization.nationalId}}</th>
+            <th> {{localization.mobileNumber}}</th>
+            <th>{{localization.agreementFileId}}</th>
+            <th>{{localization.deedMarginalizationFile}}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="projectLandDeed  && projectLandDeed.data">
+          <tr *ngFor="let owner of projectLandDeed.data.deedOwners">
+            <td>{{owner.ownerName}}</td>
+            <td>{{owner.ownerType}}</td>
+            <td>{{owner.idNumber}}</td>
+            <td>{{owner.mobileNo}}</td>
+            <td>
+              <div class="col-12 col-lg-6"
+                *ngIf="owner && owner.agreementFile">
+                <a [href]="baseUrl + owner.agreementFile.filePath" id="link-agreementFile" target="_blank">
+                  {{owner.agreementFile.fileDescription}}</a>
+              </div>
+            </td>
+            <td>
+              <div class="col-12 col-lg-6"
+                *ngIf="owner && owner.deedMarginalizationFile">
+                <a [href]="baseUrl + owner.deedMarginalizationFile.filePath" id="link-deedMarginalizationFile" target="_blank">
+                  {{owner.deedMarginalizationFile.fileDescription}}</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

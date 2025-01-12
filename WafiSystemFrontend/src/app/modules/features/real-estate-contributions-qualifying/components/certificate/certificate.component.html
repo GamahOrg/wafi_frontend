@@ -1,0 +1,71 @@
+<div class="cetificate" dir="rtl">
+    <img src="assets/images/real-estate-contributions/content/license/cert-bg.svg" class="w-100" alt="">
+
+    <div class="cetificate-layout">
+        <div class="license-logo">
+            <img src="assets/images/real-estate-contributions/content/license/cert-rega-logo.svg" alt="">
+        </div>
+
+
+        <div class="data">
+            
+            <h6  class="intro">
+                تمنح الهيئة العامة للعقار شهادة تأهيل {{certificateData.qualificationRequestTypeName}} لمشاريع للبيع على الخارطة لـ  {{certificateData.facilityName}}
+                <br />
+                 وذلك حسب البيانات أدناه :
+            </h6>
+
+            <div class="info">
+                <div class="row g-1">
+                    <div class="col-4">
+                        <div class="box label">شهادة رقم </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="box justify-content-center">{{certificateData.certificateNumber}}</div>
+                    </div>
+                    <div class="col-2">
+                        <div class="box label">بتاريخ</div>
+                    </div>
+                    <div class="col-2">
+                        <div class="box">{{certificateData.committeeDecisionDate | date: 'dd/MM/yyyy'}}</div>
+                    </div>
+
+                    <!-- <ng-container *ngFor="let field of fieldsCertificateData">
+                        <div class="col-4">
+                            <div class="box label">{{field.arabicTitle}}</div>
+                        </div>
+                        <div class="col-8">
+                            <div class="box">{{field.value}}</div>
+                        </div>
+                    </ng-container> -->
+                    <!-- <div class="col-4">
+                        <div class="box label">اسم المرخص</div>
+                    </div>
+                    <div class="col-8">
+                        <div class="box">xxxxxxxx xxxxxxxx</div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="box label">النشاط العقاري</div>
+                    </div>
+                    <div class="col-8">
+                        <div class="box">فال للوساطة والتسويق</div>
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- <div class="box square mx-auto"></div> -->
+
+            <h6 class="outro">
+                هذه الوثيقة صادرة من النظام الإلكتروني ولا تحتاج إلى توقيع
+                <br />
+                وتعتبر هذه الشهادة سارية حتى تاريخ {{certificateData.certificateExpirationDate| date: 'dd/MM/yyyy'}}
+            </h6>
+        </div>
+
+
+        <div class="rega-logo">
+            <img src="assets/images/real-estate-contributions/content/license/cert-rega-logo.svg" alt="">
+        </div>
+    </div>
+</div>

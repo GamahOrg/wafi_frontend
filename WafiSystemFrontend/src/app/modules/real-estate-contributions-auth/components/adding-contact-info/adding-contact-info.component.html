@@ -1,0 +1,219 @@
+<div class="contactInfoForm"
+     id="form-contactInfoForm">
+    <form [formGroup]="contactInfoForm"
+          id="form-contactInfoForm">
+        <h6 class="form-title">البيانات الشخصية</h6>
+        <div class="row row-gap-3">
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label class="form-label"
+                           for="userName">{{localization.userName}}</label>
+                    <input type="text"
+                           id="control-userName"
+                           formControlName="userName"
+                           class="form-control"
+                           [ngClass]="{'is-invalid': showValidation && controls.userName.errors}" />
+                    <div *ngIf="controls.userName.errors"
+                         class="invalid-feedback">
+                        <div *ngIf="controls.userName.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="firstName"
+                           class="form-label">{{localization.shortName}}</label>
+                    <input type="text"
+                           formControlName="shortName"
+                           id="control-shortName"
+                           class="form-control"
+                           placeholder="اكتب {{localization.shortName}}"
+                           [ngClass]="{'is-invalid': showValidation && controls.shortName.errors}" />
+                    <div *ngIf="controls.shortName.errors"
+                         class="invalid-feedback">
+                        <div *ngIf="controls.shortName.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div *ngIf="contactInfoValues.fullName==null|| contactInfoValues.fullName == ''"
+                 class="col-12 col-md-6">
+                <div class="form-group">
+                    <label class="form-label"
+                           for="fullName">{{localization.fullName}}</label>
+                    <input type="text"
+                           id="control-fullName"
+                           formControlName="fullName"
+                           class="form-control"
+                           [ngClass]="{'is-invalid': showValidation && controls.fullName.errors}" />
+                    <div *ngIf="controls.fullName.errors"
+                         class="invalid-feedback">
+                        <div *ngIf="controls.fullName.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="controls.nationality.value!=null && controls.nationality.value!='' " class="col-12 col-md-6">
+                <div class="form-group">
+                    <label class="form-label" for="nationality">{{localization.nationality}}</label>
+                    <input type="text" id="control-nationality" formControlName="nationality" class="form-control"
+                        [ngClass]="{'is-invalid': showValidation && controls.nationality.errors}" />
+                    <div *ngIf="controls.nationality.errors" class="invalid-feedback">
+                        <div *ngIf="controls.nationality.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="controls.nationality.value==null && controls.nationality.value==''" class="col-12 col-md-6">
+                <div class="form-group">
+                    <label class="form-label" for="nationality">{{localization.nationality}}</label>
+                    <select class="form-select" formControlName="nationality"
+                        [ngClass]="{'is-invalid': showValidation && controls.nationality.errors}">
+                        <option label="{{localization.selectNationalErrorMsg}}"></option>
+                        <option *ngFor="let nationality of nationalities" [value]="nationality.nationalityName">
+                            {{nationality.nationalityName}}</option>
+                    </select>
+                    <div *ngIf="controls.nationality.errors" class="invalid-feedback">
+                        <div *ngIf="controls.nationality.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="Mobile"
+                           class="form-label">{{localization.Mobile1}}</label>
+                    <input type="text"
+                           formControlName="mobile1"
+                           class="form-control"
+                           id="control-mobile1"
+                           placeholder="اكتب {{localization.Mobile1}}"
+                           [ngClass]="{'is-invalid': showValidation && controls.mobile1.errors}" />
+                    <div *ngIf="controls.mobile1.errors"
+                         class="invalid-feedback">
+                        <div *ngIf="controls.mobile1.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                        <div *ngIf="controls.mobile1.errors?.['pattern']">{{localization.phoneNumberPattern}}</div>
+                        <div *ngIf="controls.mobile1.errors?.['maxlength'] || controls.mobile1.errors?.['minlength']">
+                            {{localization.maxLengthErrorMsg}}</div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="Mobile2"
+                           class="form-label">{{localization.Mobile2}}</label>
+                    <input type="text"
+                           formControlName="mobile2"
+                           class="form-control"
+                           id="control-mobile2"
+                           placeholder="اكتب {{localization.Mobile2}}"
+                           [ngClass]="{'is-invalid': showValidation && controls.mobile2.errors}" />
+                    <div *ngIf="controls.mobile2.errors"
+                         class="invalid-feedback">
+                        <div *ngIf="controls.mobile2.errors?.['pattern']">{{localization.phoneNumberPattern}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="email"
+                           class="form-label">{{localization.Email}}</label>
+                    <input type="email"
+                           formControlName="email"
+                           id="control-email"
+                           class="form-control"
+                           placeholder="اكتب {{localization.Email}}"
+                           [ngClass]="{'is-invalid': showValidation && controls.email.errors}" />
+                    <div *ngIf="controls.email.errors"
+                         class="invalid-feedback">
+                        <div *ngIf="controls.email.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                        <div *ngIf="controls.email.errors?.['pattern']">{{localization.emailPattern}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div *ngIf="loginUserEnum != LoginUserTypeEnum.finalBeneficiary" class="form-group">
+                    <label for="jobTitle" class="form-label">{{localization.JobTitle}}</label>
+                    <input type="text" formControlName="jobTitle" id="control-jobTitle" class="form-control"
+                        placeholder="اكتب {{localization.JobTitle}}"
+                        [ngClass]="{'is-invalid': showValidation && controls.jobTitle.errors}" />
+                    <div *ngIf="controls.jobTitle.errors" class="invalid-feedback">
+                        <div *ngIf="controls.jobTitle.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- <h6 class="form-title">تعيين كلمة المرور</h6>
+        <div class="row row-gap-3">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="password"
+                           class="form-label">{{localization.Password}}</label>
+                    <div class="input-group">
+                        <input type="{{!showPassword? 'password' : 'text'}}"
+                               formControlName="password"
+                               id="control-password"
+                               class="form-control"
+                               [ngClass]="{'is-invalid': showValidation && controls.password.errors}" />
+                        <span class="input-group-text"
+                              (click)="showPassword = !showPassword">
+                            <i class="material-icons-outlined">{{!showPassword? 'visibility' : 'visibility_off'}}</i>
+                        </span>
+                    </div>
+                    <div *ngIf="showValidation && controls.password.errors"
+                         class="invalid-feedback d-block">
+                        <div *ngIf="controls.password.errors?.['required']">نأمل اكمال البيانات</div>
+                        <div *ngIf="controls.password.errors?.['pattern']">{{localization.noArabicLettersError}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="confirmPassword"
+                           class="form-label">{{localization.ConfirmPassword}}</label>
+                    <div class="input-group">
+                        <input type="{{!showPassword? 'password' : 'text'}}"
+                               formControlName="confirmPassword"
+                               id="control-confirmPassword"
+                               class="form-control"
+                               [ngClass]="{'is-invalid': showValidation && controls.confirmPassword.errors}" />
+                        <span class="input-group-text"
+                              (click)="showPassword = !showPassword">
+                            <i class="material-icons-outlined">{{!showPassword? 'visibility' : 'visibility_off'}}</i>
+                        </span>
+                    </div>
+                    <div *ngIf="showValidation && controls.confirmPassword.errors"
+                         class="invalid-feedback d-block">
+                        <div *ngIf="controls.confirmPassword.errors?.['required']">نأمل اكمال البيانات</div>
+                        <div *ngIf="controls.confirmPassword.errors?.['pattern']">{{localization.noArabicLettersError}}
+                        </div>
+                    </div>
+                    <div class="invalid-feedback d-block"
+                         *ngIf="showValidation && contactInfoForm.errors?.['isMatchedError']">
+                        {{localization.isMatchedError}}</div>
+
+                </div>
+            </div> 
+        </div>-->
+
+        <div class="actions">
+            <!-- <button class="btn btn-outline-primary"
+                    (click)="onClickOnPrevious()">{{localization.previous}}</button> -->
+            <button class="btn btn-primary"
+                    id="btn-onClickOnNext"
+                    (click)="onClickOnNext()">{{localization.next}}</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,9 @@
+<button type="button" class="btn btn-primary"  (click)="addReport()" *ngIf="!showAddComponant">إضافة</button>
+
+
+<app-periodic-chartered-accountant-report-list *ngIf="!showAddComponant">
+
+</app-periodic-chartered-accountant-report-list>
+ <app-add-periodic-chartered-accountant-report *ngIf="showAddComponant"  (dataEmitter)="receiveData($event)">
+
+</app-add-periodic-chartered-accountant-report> 

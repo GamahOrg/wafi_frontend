@@ -1,0 +1,79 @@
+<div class="update-clearance-engineering-form">
+  <form [formGroup]="form" (ngSubmit)="save()">
+
+    <div class="row mb-5">
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label for="escrowAccountBalance">رصيد حساب الضمان</label>
+          <input
+            type="number"
+            id="escrowAccountBalance"
+            formControlName="escrowAccountBalance"           
+            class="form-control"
+          />
+          <mat-error *ngIf="showValidation && form.get('escrowAccountBalance')?.invalid">
+            {{ localization.requiredErrorMsg }}
+          </mat-error>
+        </div>
+      
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="lastFinancialReportId">اخر تقرير مالي</label>
+            <div *ngIf="projectDetails?.lastFinancialReport">
+              <span class="delete"   (click)="deletLastFinancialReportFile(projectDetails?.lastFinancialReport?.id)"><i class="material-icons text-danger">close</i></span>
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a
+                [href]="baseUrl + projectDetails.lastFinancialReport.filePath"
+                id="link-lastFinancialReportFile"
+                target="_blank"
+              >
+                {{ projectDetails.lastFinancialReport.fileDescription }}
+              </a>
+            </div>
+            <app-file-uploader
+              [data]="singleFilesUploaderData"
+              (fileUploaded)="clearanceLastFinancialReportIdFileUpload($event)"
+            ></app-file-uploader>
+
+            <mat-error *ngIf="showValidation && (this.lastFinancialReportId == null || this.lastFinancialReportId == '00000000-0000-0000-0000-000000000000')">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>  
+
+          </div>
+
+                
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">قائمة بالوحدات العقارية المباعة</label>
+            <div *ngFor="let file of projectDetails.licenseProjectSoldUnitAttachmentFiles">
+              <span class="delete"   (click)="deletLicenseProjectSoldUnitAttachmentFile(file?.id)"><i class="material-icons text-danger">close</i></span>
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a
+                *ngIf="projectDetails?.licenseProjectSoldUnitAttachmentFiles"
+                [href]="baseUrl + file.filePath"
+                id="link-licenseProjectSoldUnitAttachmentFiles"
+                target="_blank"
+              >
+                {{ file.fileDescription }}
+              </a>
+            </div>
+            <app-file-uploader
+              [data]="mueltiFilesUploaderData"
+              (fileUploaded)="onLicenseProjectSoldUnitAttachmentFilesUpload($event)"
+            ></app-file-uploader>
+            <mat-error *ngIf="showValidation && (this.licenseProjectSoldUnitAttachmentFiles == null || this.licenseProjectSoldUnitAttachmentFiles.length == 0)">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+        </div>
+    
+  </form>
+</div>

@@ -1,0 +1,48 @@
+<div class="table-responsive">
+    <table class="table table-light" >
+        <thead>
+            <tr>
+                <th> السنة</th>
+                <!-- <th>الموجودات</th>
+                    <th>الموجودات المتداولة</th>
+                    <th>النقد والنقد المعادل</th>
+                    <th>الموجودات غير المتداولة</th>
+                    <th>مصاريف ما قبل التشغيل</th>
+                    <th>صافي الموجودات المتداولة</th>
+                    <th>مخصص نهايه خدمه الموظفين</th>
+                    <th>مخصص الإجازات للموظفين</th>
+                    <th>مخلص الطوارئ</th>
+                    <th>حقوق ملكية المشروع</th>
+                    <th>رأس المال</th>
+                    <th>الأرباح (الخسائر المنجزة)</th> -->
+                <th>مجموع الموجوات المتداولة</th>
+                <th>مجموع المتداولة الغير متداولة</th>
+                <th>مجموع الموجودات</th>
+                <th>المجموع</th>
+                <th>مجموع المطلوبات وحقوق الملكية</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="licenseProjectAnnualBalanceSheets && licenseProjectAnnualBalanceSheets.length>0">
+            <tr *ngFor="let sheet of licenseProjectAnnualBalanceSheets">
+                <td>{{sheet?.year?.name}}</td>
+                <!-- <td>{{sheet.findings}}</td>   
+                     <td>{{sheet.currentAssets}}</td>
+                    <td>{{sheet.cashAndCashEquivalents}}</td>
+                    <td>{{sheet.nonCurrentAssets}}</td>
+                    <td>{{sheet.netCurrentAssets}}</td>
+                    <td>{{sheet.preOperatingExpenses}}</td> 
+                    <td>{{sheet.employeeEndOfServiceAllowance}}</td>
+                    <td>{{sheet.leaveAllowanceForEmployees}}</td>
+                    <td>{{sheet.emergencyAllowance}}</td>
+                    <td>{{sheet.projectPropertyRights}}</td>
+                    <td>{{sheet.capital}}</td>
+                    <td>{{sheet.profitsLossesMade}}</td> -->
+                <td>{{sheet.groupOfCurrentAssets}}</td>
+                <td>{{sheet.totalCurrentAndNonCurrent}}</td>
+                <td>{{sheet.totalAssets}}</td>
+                <td>{{sheet.total}}</td>
+                <td>{{sheet.totalLiabilitiesAndRightsProperty}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

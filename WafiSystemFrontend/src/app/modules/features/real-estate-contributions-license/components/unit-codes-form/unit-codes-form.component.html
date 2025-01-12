@@ -1,0 +1,76 @@
+<ng-container>
+    <!-- <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div> -->
+    <!-- (ngModelChange)="ProjectModelChange($event)" -->
+    <form class="d-flex flex-column h-100"
+          [formGroup]="codeForm"  id="form-codeForm">
+        <div class="row mb-3">
+            <div class="col-12 col-lg-12">
+                <div class="form-group mb-4">
+                    <label for=""
+                           class="form-label">{{localization.projectModelId}}</label>
+                    <select class="form-select" id="control-projectModelId"
+                            formControlName="projectModelId">
+                        <option [label]="localization.projectModelId"></option>
+                        <option *ngFor="let type of models"
+                                [value]="type.id">{{type.name}}</option>
+                    </select>
+                    <mat-error *ngIf="controls.projectModelId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label for=""
+                           class="form-label">{{localization.code}}</label>
+                    <input type="text" id="control-code"
+                           class="form-control"
+                           formControlName="code">
+                    <mat-error *ngIf="controls.code?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label for=""
+                           class="form-label">{{localization.deliveryOn}}</label>
+                    <div class="input-group">
+                        <input bsDatepicker
+                               type="text" id="control-deliveryOn"
+                               class="form-control"
+                               formControlName="deliveryOn"
+                               value="{{ controls.deliveryOn.value | date:'yyyy-MM-dd' }}">
+                        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                    </div>
+                    <mat-error *ngIf="controls.deliveryOn?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label for=""
+                           class="form-label">{{localization.price}}</label>
+                    <input type="number" id="control-price"
+                           class="form-control"
+                           formControlName="price">
+                    <mat-error *ngIf="controls.price?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    <mat-error *ngIf="controls.price?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6" *ngIf="showfloorNumber">
+                <div class="form-group mb-4">
+                    <label for=""
+                           class="form-label">{{localization.floorNumber}}</label>
+                    <input type="number" id="control-floorNumber"
+                           class="form-control"
+                           formControlName="floorNumber">
+                    <mat-error *ngIf="controls.floorNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    <mat-error *ngIf="controls.floorNumber?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-container>

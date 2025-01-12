@@ -1,0 +1,177 @@
+<div class="tab-data-header">
+  <div class="icon"><span class="material-icons">list_alt</span></div>
+  <h6 class="title fw-normal">البيانات من المطور</h6>
+
+  <button
+    *ngIf="showButton"
+    (click)="openRealEstateDialog()"
+    mat-raised-button
+    class="edit-icon"
+  >
+    <span class="material-icons">edit </span>
+  </button>
+</div>
+
+<div class="tab-data-section">
+  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="col-12 col-md-6">
+      <div class="key">مبررات و مشفوعات الغاء الرخصة</div>
+      <div class="value">
+        {{ projectDetails.justificationsAndReasons }}
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div
+        *ngIf="projectDetails.documentSupportingJustificationFiles != null"
+        class="key"
+      >
+        مستندات تثبت مبررات الغاء الرخصة
+      </div>
+      <div
+        *ngFor="let file of projectDetails.documentSupportingJustificationFiles"
+      >
+        <span class="delete" (click)="deletFile(file?.id)"
+          ><i class="material-icons text-danger">close</i></span
+        >
+        <span class="icon material-icons-outlined">content_copy</span>
+
+        <a
+          [href]="baseUrl + file.filePath"
+          id="link-documentSupportingJustificationFiles"
+          target="_blank"
+        >
+          {{ file.fileDescription }}
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="key">تمت المخالصة مع الاستشاري الهندسي</div>
+      <div class="value">
+        {{ projectDetails.isClearanceEngineeringConsultantDone ? "نعم" : "لا" }}
+      </div>
+    </div>
+    <div
+      class="col-12 col-md-6"
+      *ngIf="projectDetails.isClearanceEngineeringConsultantDone"
+    >
+      <div class="key">ملف المخالصة النهائية مع الاستشاري الهندسي</div>
+      <span *ngIf="projectDetails.clearanceEngineeringConsultantFile != null"
+        class="delete"
+        (click)="
+          deletFile(projectDetails.clearanceEngineeringConsultantFile?.id)
+        "
+        ><i class="material-icons text-danger">close</i></span
+      >
+      <span class="icon material-icons-outlined">content_copy</span>
+
+      <a
+        *ngIf="projectDetails.clearanceEngineeringConsultantFile != null"
+        [href]="
+          baseUrl + projectDetails.clearanceEngineeringConsultantFile.filePath
+        "
+        id="link-engineeringConsultantReportFile"
+        target="_blank"
+      >
+        {{ projectDetails.clearanceEngineeringConsultantFile.fileDescription }}
+      </a>
+    </div>
+    <div
+      class="col-12 col-md-6"
+      *ngIf="!projectDetails.isClearanceEngineeringConsultantDone"
+    >
+      <div class="key">اسباب عدم اتمام المخالصةمع الاستشاري الهندسي</div>
+      <div class="value">
+        {{
+          projectDetails.reasonsForNotFinalizingEngineeringConsultantClearance
+        }}
+      </div>
+    </div>
+    <div
+      class="col-12 col-md-6"
+      *ngIf="!projectDetails.isClearanceEngineeringConsultantDone"
+    >
+      <div class="key">مستندات عدم اتمام المخالصة مع الاستشاري الهندسي</div>
+      <div
+        *ngFor="
+          let file of projectDetails.nonClearanceDocumentEngineeringConsultantFiles
+        "
+      >
+        <span class="delete" (click)="deletFile(file?.id)"
+          ><i class="material-icons text-danger">close</i></span
+        >
+        <span class="icon material-icons-outlined">content_copy</span>
+
+        <a
+          *ngIf="
+            projectDetails.nonClearanceDocumentEngineeringConsultantFiles !=
+            null
+          "
+          [href]="baseUrl + file.filePath"
+          id="link-nonClearanceDocumentEngineeringConsultantFile"
+          target="_blank"
+        >
+          {{ file.fileDescription }}
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="key">تمت المخالصة مع المحاسب القانوني</div>
+      <div class="value">
+        {{ projectDetails.isClearanceAccountantDone ? "نعم" : "لا" }}
+      </div>
+    </div>
+    <div
+      class="col-12 col-md-6"
+      *ngIf="projectDetails.isClearanceAccountantDone"
+    >
+      <div class="key">ملف المخالصة النهائية مع المحاسب القانوني</div>
+      <span *ngIf="projectDetails.clearanceAccountantFile != null"
+        class="delete"
+        (click)="deletFile(projectDetails.clearanceAccountantFile?.id)"
+        ><i class="material-icons text-danger">close</i></span
+      >
+      <span class="icon material-icons-outlined">content_copy</span>
+
+      <a
+        *ngIf="projectDetails.clearanceAccountantFile != null"
+        [href]="baseUrl + projectDetails.clearanceAccountantFile.filePath"
+        id="link-clearanceAccountantFile"
+        target="_blank"
+      >
+        {{ projectDetails.clearanceAccountantFile.fileDescription }}
+      </a>
+    </div>
+    <div
+      class="col-12 col-md-6"
+      *ngIf="!projectDetails.isClearanceAccountantDone"
+    >
+      <div class="key">اسباب عدم اتمام المخالصة مع المحاسب القانوني</div>
+      <div class="value">
+        {{ projectDetails.reasonsForNotFinalizingAccountantClearance }}
+      </div>
+    </div>
+    <div
+      class="col-12 col-md-6"
+      *ngIf="!projectDetails.isClearanceAccountantDone"
+    >
+      <div class="key">مستندات عدم اتمام المخالصة مع المحاسب القانوني</div>
+      <div
+        *ngFor="let file of projectDetails.nonClearanceDocumentAccountantFiles"
+      >
+        <span class="delete" (click)="deletFile(file?.id)"
+          ><i class="material-icons text-danger">close</i></span
+        >
+        <span class="icon material-icons-outlined">content_copy</span>
+
+        <a
+          *ngIf="projectDetails.nonClearanceDocumentAccountantFiles != null"
+          [href]="baseUrl + file.filePath"
+          id="link-nonClearanceDocumentAccountantFile"
+          target="_blank"
+        >
+          {{ file.fileDescription }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

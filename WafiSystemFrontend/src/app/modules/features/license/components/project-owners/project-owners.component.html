@@ -1,0 +1,47 @@
+
+<ng-container>
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div>
+    <div class="tab-data-section">
+        <div class="table-responsive">
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th>{{localization.typeId}}</th>
+                        <th>{{localization.nationalId}}</th>
+                        <th> {{localization.name}}</th>
+                        <th> {{localization.mobileNumber}}</th>
+                        <th> {{localization.agreementFileId}}</th>
+                        <th class="w-25"></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="projectOwners && projectOwners.length">
+                    <tr *ngFor="let owner of projectOwners">
+                        <td>{{owner.typeName}}</td>
+                        <td>{{owner?.nationalIdOrCRA}}</td>
+                        <td>{{owner?.name}}</td>
+                        <th>{{owner?.mobileNumber}}</th>
+                        <td>
+                            <div *ngIf="owner && owner.agreementFile">
+                                <a [href]="baseUrl + owner.agreementFile.filePath" target="_blank">
+                                    {{owner.agreementFile.fileDescription}}</a>
+                            </div>
+                        </td> 
+                        <td>
+                            <div class="d-flex align-items-center justify-content-end column-gap-2">
+                                <button *ngIf="!owner.selected" type="button" class="btn btn-primary"
+                                 (click)="selectOwner(owner.id,true)">{{localization.addOwnerFromList}}</button>
+                                <button *ngIf="owner.selected" disabled type="button" class="btn btn-primary" >
+                                    {{localization.ownerAdded}}</button>
+                                <button mat-icon-button color="warn"*ngIf="owner.selected" (click)="selectOwner(owner.id,false)"><mat-icon>delete</mat-icon></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-container>
+

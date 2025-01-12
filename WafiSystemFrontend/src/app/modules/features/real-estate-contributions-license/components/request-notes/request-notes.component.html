@@ -1,0 +1,43 @@
+<div class="page">
+    <div class="page-title">
+        <h2 class="title">ملاحظات الطلب الحالية {{processingRequestNotes && '('+processingRequestNotes.length+')'}}</h2>
+    </div>
+    <div class="page-content">
+        <ng-container *ngIf="processingRequestNotes && processingRequestNotes.length > 0">
+            <div class="card"
+                 *ngFor="let note of processingRequestNotes">
+                <div class="card-body">
+                    <div class="results-wrapper">
+                        <div class="results-info">
+                            <div class="image">
+                                <!-- <span class="avatar material-icons">person</span> -->
+                                <img src="assets/images/general/static-person.jpeg"
+                                     alt=""
+                                     class="d-block w-100">
+                            </div>
+                            <h6 class="title">
+                                <span class="name">{{note.employeeName || "مقدم الطلب"}}</span>
+                                <span class="dept"
+                                      *ngIf="note.departmentName"> - {{note.departmentName}}</span>
+                            </h6>
+                            <span class="date">
+                                <i class="material-icons">calendar_month</i>
+                                {{note.createdOn | date:"MM/dd/yyyy"}}
+                            </span>
+                        </div>
+
+                        <div class="notes"
+                             *ngIf="note.isWithNotes">
+                            <div class="note"
+                                 [innerHTML]="note.notes"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <p class="text-success mt-3"
+           *ngIf="!processingRequestNotes">لا يوجد ملاحظات على الطلب
+        </p>
+    </div>
+</div>

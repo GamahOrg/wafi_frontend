@@ -1,0 +1,189 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseProjectAnnualBalanceSheetForm" 
+id="form-licenseProjectAnnualBalanceSheetForm">
+    <div class="tab-data-section">
+        <div class="row mb-3">
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">السنوات</label>
+                    <select class="form-select" id="control-yearId"
+                            formControlName="yearId">
+                        <option value="">اختر السنة</option>
+                        <option *ngFor="let year of sysYears"
+                                [ngValue]="year.id">
+                            {{ year.name }}
+                        </option>
+                    </select>
+                    <mat-error *ngIf="controls.yearId?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">الموجودات</label>
+                    <input placeholder="الموجودات"
+                           type="number" id="control-findings"
+                           class="form-control"
+                           formControlName="findings">
+                    <mat-error *ngIf="controls.findings?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.findings?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.findings?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">الموجودات المتداولة</label>
+                    <input placeholder="الموجودات المتداولة"
+                           type="number" id="control-currentAssets"
+                           class="form-control"
+                           formControlName="currentAssets">
+                    <mat-error *ngIf="controls.currentAssets?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.currentAssets?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.currentAssets?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">النقد والنقد المعادل</label>
+                    <input placeholder="النقد والنقد المعادل"
+                           type="number" id="control-cashAndCashEquivalents"
+                           class="form-control"
+                           formControlName="cashAndCashEquivalents">
+                    <mat-error *ngIf="controls.cashAndCashEquivalents?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.cashAndCashEquivalents?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.cashAndCashEquivalents?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">الموجودات غير المتداولة</label>
+                    <input placeholder="الموجودات غير المتداولة"
+                           type="number" id="control-nonCurrentAssets"
+                           class="form-control"
+                           formControlName="nonCurrentAssets">
+                    <mat-error *ngIf="controls.nonCurrentAssets?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.nonCurrentAssets?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.nonCurrentAssets?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> مصاريف ما قبل التشغيل</label>
+                    <input placeholder="مصاريف ما قبل التشغيل"
+                           type="number" id="control-netCurrentAssets"
+                           class="form-control"
+                           formControlName="netCurrentAssets">
+                    <mat-error *ngIf="controls.netCurrentAssets?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.netCurrentAssets?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.netCurrentAssets?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">صافي الموجودات المتداولة</label>
+                    <input placeholder="صافي الموجودات المتداولة"
+                           type="number" id="control-preOperatingExpenses"
+                           class="form-control"
+                           formControlName="preOperatingExpenses">
+                    <mat-error *ngIf="controls.preOperatingExpenses?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.preOperatingExpenses?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.preOperatingExpenses?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">مخصص نهايه خدمه الموظفين</label>
+                    <input placeholder="مخصص نهايه خدمه الموظفين"
+                           type="number" id="control-employeeEndOfServiceAllowance"
+                           class="form-control"
+                           formControlName="employeeEndOfServiceAllowance">
+                    <mat-error *ngIf="controls.employeeEndOfServiceAllowance?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.employeeEndOfServiceAllowance?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.employeeEndOfServiceAllowance?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">مخصص الإجازات للموظفين</label>
+                    <input placeholder="مخصص الإجازات للموظفين"
+                           type="number" id="control-leaveAllowanceForEmployees"
+                           class="form-control"
+                           formControlName="leaveAllowanceForEmployees">
+                    <mat-error *ngIf="controls.leaveAllowanceForEmployees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.leaveAllowanceForEmployees?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.leaveAllowanceForEmployees?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">مخلص الطوارئ</label>
+                    <input placeholder="مخلص الطوارئ"
+                           type="number" id="control-emergencyAllowance"
+                           class="form-control"
+                           formControlName="emergencyAllowance">
+                    <mat-error *ngIf="controls.emergencyAllowance?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.emergencyAllowance?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.emergencyAllowance?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">حقوق ملكية المشروع</label>
+                    <input placeholder="حقوق ملكية المشروع"
+                           type="number" id="control-projectPropertyRights"
+                           class="form-control"
+                           formControlName="projectPropertyRights">
+                    <mat-error *ngIf="controls.projectPropertyRights?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.projectPropertyRights?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.projectPropertyRights?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">رأس المال</label>
+                    <input placeholder="{{'رأس المال'}}"
+                           type="number" id="control-capital"
+                           class="form-control"
+                           formControlName="capital">
+                    <mat-error *ngIf="controls.capital?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.capital?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.capital?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">الأرباح (الخسائر المنجزة)</label>
+                    <input placeholder="الأرباح (الخسائر المنجزة)"
+                           type="number" id="control-profitsLossesMade"
+                           class="form-control"
+                           formControlName="profitsLossesMade">
+                    <mat-error *ngIf="controls.profitsLossesMade?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    <mat-error *ngIf="controls.profitsLossesMade?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
+                    <mat-error *ngIf="controls.profitsLossesMade?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

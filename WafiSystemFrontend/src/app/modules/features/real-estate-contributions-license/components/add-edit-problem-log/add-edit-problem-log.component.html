@@ -1,0 +1,171 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseProjectProblemLogForm"
+id="form-licenseProjectProblemLogForm">
+<div class="tab-data-section">
+  <div class="row mb-3">
+ <!-- <div class="col-12 col-lg-6">
+  <div class="form-group mb-4">
+    <label class="form-label">  اسم المشروع</label>
+    <input type="text" id="control-projectName" class="form-control" formControlName="projectName"
+      placeholder="" readonly="readonly">
+  </div>
+</div> 
+<div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">  كود المشروع</label>
+      <input type="text" id="control-projectCode" class="form-control" formControlName="projectCode"
+        placeholder="" readonly="readonly">   
+    </div>
+  </div> 
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">المنطقه</label>
+      <input type="text" id="control-area" class="form-control" formControlName="area"
+        placeholder="" readonly="readonly">   
+    </div>
+  </div> 
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">المدينة</label>
+      <input type="text" id="control-city" class="form-control" formControlName="city"
+        placeholder="" readonly="readonly">
+    </div>
+  </div>  -->
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+        <label class="form-label">النوع</label>
+    <select class="form-select" formControlName="problemTypeId">
+      <option label= "اختر نوع المشكلة" disabled></option>
+      <option *ngFor="let type of licenseProjectProblemTypeList" [value]="type.id">
+        {{ type.name }}
+      </option>
+    </select>
+    <div class="invalid-feedback d-block" *ngIf="controls.problemTypeId?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  </div> 
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">  وصف المشكلة</label>
+      <input type="text" id="control-description" class="form-control" formControlName="description"
+        placeholder="وصف المشكلة">
+      <div class="invalid-feedback d-block" *ngIf="controls.description?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  
+    </div>
+  </div> 
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">تاريخ الحدوث</label>
+      <div class="input-group">
+        <input bsDatepicker type="text" id="control-issueDate" class="form-control"
+          formControlName="issueDate" value="{{ controls.issueDate.value | date:'yyyy-MM-dd' }}">
+        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+      </div>
+      <mat-error
+        *ngIf="controls.issueDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+        <label class="form-label">الشدة</label>
+    <select class="form-select" formControlName="levelTypeId">
+      <option label= "اختر نوع الشدة" disabled></option>
+      <option *ngFor="let level of SysLevelTypeList" [value]="level.id">
+        {{ level.name }}
+      </option>
+    </select>
+    <div class="invalid-feedback d-block" *ngIf="controls.levelTypeId?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  </div> 
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+        <label class="form-label">المالك</label>
+    <select class="form-select" formControlName="riskOwnerId">
+      <option label= "اختر نوع المالك" disabled></option>
+      <option *ngFor="let owner of ownerTypeList" [value]="owner.id">
+        {{ owner.name }}
+      </option>
+    </select>
+    <div class="invalid-feedback d-block" *ngIf="controls.riskOwnerId?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  </div> 
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="form-group">
+        <label for=""
+               class="form-label">الجهة المسؤولة عن الحل في حالة الحدوث</label>
+        <mat-select formControlName="licenseProjectProblemResponsiblePartyIds"
+                    multiple
+                    class="form-select">
+            <mat-select-trigger>
+                {{licenseProjectProblemResponsiblePartyIds.value?.[0] || ''}}
+                <span *ngIf="(licenseProjectProblemResponsiblePartyIds.value?.length || 0) > 1"
+                      class="example-additional-selection">
+                    (+{{(licenseProjectProblemResponsiblePartyIds.value?.length || 0) - 1}} {{licenseProjectProblemResponsiblePartyIds.value?.length === 2 ?
+                    'other' : 'others'}})
+                </span>
+            </mat-select-trigger> 
+            <mat-option *ngFor="let responsibleParty of responsiblePartyList"
+                        [value]="responsibleParty.id">{{ responsibleParty.name }}</mat-option>
+        </mat-select>
+    </div>
+</div>
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">الحل المقترح </label>
+      <input type="text" id="control-recommendedAction" class="form-control" formControlName="recommendedAction"
+        placeholder="وصف المشكلة">
+      <div class="invalid-feedback d-block" *ngIf="controls.recommendedAction?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  
+    </div>
+  </div> 
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">تاريخ الأغلاق المقترح</label>
+      <div class="input-group">
+        <input bsDatepicker type="text" id="control-expectedClosureDate" class="form-control"
+          formControlName="expectedClosureDate" value="{{ controls.expectedClosureDate.value | date:'yyyy-MM-dd' }}">
+        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+      </div>
+      <mat-error
+        *ngIf="controls.expectedClosureDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+        <label class="form-label">الحالة</label>
+    <select class="form-select" formControlName="statusId" >
+      <option label="اخترالحالة" disabled></option>
+      <option *ngFor="let status of ProblemStatusList" [value]="status.id">
+        {{ status.name }}
+      </option>
+    </select>
+    <div class="invalid-feedback d-block" *ngIf="controls.statusId?.hasError('required') && showValidation">
+        حقل مطلوب
+      </div>
+  </div> 
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <label class="form-label">تاريخ الأغلاق الفعلى</label>
+      <div class="input-group">
+        <input bsDatepicker type="text" id="control-actualClosureDate" class="form-control"
+          formControlName="actualClosureDate" value="{{ controls.actualClosureDate.value | date:'yyyy-MM-dd' }}">
+        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+      </div>
+      <mat-error
+        *ngIf="controls.actualClosureDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+    </div>
+  </div>
+</div> 
+</div>
+</form>
+
+

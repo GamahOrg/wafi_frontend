@@ -1,0 +1,52 @@
+@import "/src/assets/styles/custom-variables";
+
+.loader,
+.bg {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1030;
+
+    .bg {
+        background: rgba(18, 22, 18, 0.7);
+        backdrop-filter: blur(7.5px);
+        z-index: 1031;
+    }
+
+    .spinner {
+        position: relative;
+        z-index: 1032;
+
+        img {
+            animation: 1s rotate infinite linear;
+        }
+    }
+}
+
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*
+  Set the color of the icon
+*/
+svg path,
+svg rect {
+    // fill: $darkgreen;
+    fill: $theme-dark;
+}

@@ -1,0 +1,25 @@
+<div class="table-responsive">
+    <table class="table table-light">
+        <thead>
+            <tr>
+                <th> {{localization.constructionLicensetype}} </th>
+                <th> {{localization.licenseNumber}} </th>
+                <th> {{localization.issueOn}} </th>
+                <th> {{localization.licenseFile}} </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let license of constructionLicenses">
+                <td>
+                    <span *ngIf="license.before7">{{localization.before7}}</span>
+                    <span *ngIf="!license.before7">{{localization.after7}}</span>
+                </td>
+                <td>{{license?.licenseNumber}}</td>
+                <td>{{license?.issueOn | date:'yyyy-MM-dd'}}</td>
+                <td><a *ngIf="license && license.licenseFile" [href]="baseUrl + license.licenseFile.filePath" target="_blank">
+                        {{license.licenseFile.fileDescription}}</a></td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

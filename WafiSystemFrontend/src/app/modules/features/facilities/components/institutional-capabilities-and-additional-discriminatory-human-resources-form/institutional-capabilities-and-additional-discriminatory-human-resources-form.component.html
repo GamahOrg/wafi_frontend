@@ -1,0 +1,25 @@
+<form [formGroup]="qualificationAdditionHRForm" id="form-qualificationAdditionHRForm">
+    <div class="row align-items-end row-gap-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <label for="" class="form-label">ملف الإشراف الهندسي لمشاريع البيع على الخارطة</label>
+            <app-file-uploader (fileRemoved)="onEngineeringSupervisionForWafiSalesProjectsFileRemoved($event)" (fileUploaded)="onEngineeringSupervisionForWafiSalesProjectsFileUploaded($event)"></app-file-uploader>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <label for="" class="form-label">الإشراف المحاسبي لملف مشاريع البيع على الخارطة</label>
+            <app-file-uploader (fileRemoved)="onAccountingSupervisionForWafiSalesProjectsFileRemoved($event)" (fileUploaded)="onAccountingSupervisionForWafiSalesProjectsFileUploaded($event)"></app-file-uploader>
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for="" class="form-label">شهادات اعتماد الأنظمة الموجودة</label>
+            <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onExistSystemsApprovalCertificationsFilesUploaded($event)"></app-file-uploader>
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for="" class="form-label">شهادات مهنية صادرة من الجهات المعتمدة محلية وعالمية</label>
+            <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onLocalAndInternationalIssuedCertificationsUploaded($event)"></app-file-uploader>
+        </div>
+    </div>
+    <!-- <div mat-dialog-actions align="end">
+        <button type="button" mat-flat-button color="primary" (click)="save()" [disabled]="false">حفظ البيانات</button>
+    </div> -->
+    <!--  [disabled]="qualificationAdditionHRForm.invalid" -->
+</form>

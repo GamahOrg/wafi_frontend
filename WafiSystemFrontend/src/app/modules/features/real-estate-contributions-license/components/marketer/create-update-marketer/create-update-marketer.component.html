@@ -1,0 +1,135 @@
+<div class="d-flex flex-column h-100">
+  <h6 mat-dialog-title>
+    {{localizations.AddNewMarketer}}
+    <button mat-icon-button
+            mat-dialog-close
+            tabindex="-1">
+      <mat-icon>close</mat-icon>
+    </button>
+  </h6>
+
+  <div mat-dialog-content
+       *ngIf="form && form.controls">
+    <ng-container [formGroup]="form">
+      <div class="row mb-3">
+
+        <app-engineering-consultant-customer-info [form]="form"
+                                                  [buttonName]="localizations.ValidateConsultant"
+                                                  [code]="code.Marketer"
+                                                  (onChange)="setFacility($event)"
+                                                  [label]="localizations.DeveloperLabel"
+                                                  [requiredMessage]="localizations.DeveloperRequired">
+        </app-engineering-consultant-customer-info>
+
+        <ng-container *ngIf="facility$ | async">
+          <div class="tab-data-section">
+            <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+              <div class="col-12 col-lg-6">
+                <div class="key">نوع الشركة</div>
+                <div class="value">
+                  <span class="icon material-icons">language</span>
+                  {{facility$?.value?.facilityType?facility$?.value?.facilityType:facility.facilityType}}
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="key">اسم الشركة</div>
+                <div class="value">
+                  <span class="icon material-icons">blinds</span>
+                  {{facility$?.value?.facilityName?facility$?.value?.facilityName:facility.facilityName}}
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="key"> رقم شهادة التأهيل </div>
+                <div class="value">
+                  <span class="icon material-icons">blinds</span>
+                  {{facility$?.value?.certificateNumber?facility$?.value?.certificateNumber:facility.certificateNumber}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--     <div class="col-12 col-md-6">
+            <label for="delegatorName" class="form-label">{{localizations.DeveloperName}}</label>
+            <input id="delegatorName" name="delegatorName"
+                   type="text"
+                   class="form-control" formControlName="delegatorName">
+            <div class="invalid-feedback d-block" *ngIf="controls['delegatorName'].hasError('required')
+            && controls['delegatorName'].touched">
+              {{localizations.DeveloperNameRequired}}
+            </div>
+          </div> -->
+
+          <div class="col-12 col-md-6">
+            <label for="licenseNumber"
+                   class="form-label">{{localizations.LicenseNumber}}</label>
+            <input id="licenseNumber"
+                   name="licenseNumber"
+                   type="text"
+                   class="form-control"
+                   formControlName="licenseNumber">
+            <div class="invalid-feedback d-block"
+                 *ngIf="controls['licenseNumber'].hasError('required')
+            && controls['licenseNumber'].touched">
+              {{localizations.LicenseNumberRequired}}
+            </div>
+            <div class="invalid-feedback d-block"
+                 *ngIf="controls['licenseNumber'].hasError('min')
+            && controls['licenseNumber'].touched">
+              {{localizations.MinValueError}}
+            </div>
+          </div>
+
+          <!--     <div class="col-12 col-md-6">
+            <label for="delegatorEmail" class="form-label">{{localizations.DeveloperEmail}}</label>
+            <input id="delegatorEmail" name="delegatorEmail"
+                   type="text"
+                   class="form-control" formControlName="delegatorEmail">
+            <div class="invalid-feedback d-block" *ngIf="controls['delegatorEmail'].hasError('required')
+            && controls['delegatorEmail'].touched">
+              {{localizations.DeveloperEmailRequired}}
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="controls['delegatorEmail'].hasError('pattern')">
+              {{localizations.DeveloperEmailNoCorrect}}
+            </div>
+          </div> -->
+
+          <!--  <div class="col-12 col-md-6">
+            <label for="delegatorMobile" class="form-label">{{localizations.DeveloperMobile}}
+            </label>
+            <input id="delegatorMobile" name="delegatorMobile"
+                   type="text"
+                   class="form-control" formControlName="delegatorMobile">
+            <div class="invalid-feedback d-block" *ngIf="controls['delegatorMobile'].hasError('required')
+            && controls['delegatorMobile'].touched">
+              {{localizations.DeveloperMobileRequired}}
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="controls['delegatorMobile'].hasError('pattern')">
+              {{localizations.DeveloperMobileNotCorrect}}
+            </div>
+          </div> -->
+
+          <div class="col-12 col-md-6">
+            <label class="form-label">{{localizations.AgreementFile}}</label>
+            <app-file-uploader [data]="mueltiFilesUploaderData"
+                               (fileUploaded)="onUpload($event)"></app-file-uploader>
+            <div class="invalid-feedback d-block"
+                 *ngIf="controls['realStateMarketerAgreementFiles'].hasError('required') &&
+                 controls['realStateMarketerAgreementFiles'].touched">
+              {{localizations.AgreementFileRequired}}
+            </div>
+          </div>
+
+          <div class="form-actions mt-auto">
+            <button mat-flat-button
+                    color="primary"
+                    (click)="save()">
+              {{localizations.Save}}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+
+    </ng-container>
+  </div>
+
+
+</div>

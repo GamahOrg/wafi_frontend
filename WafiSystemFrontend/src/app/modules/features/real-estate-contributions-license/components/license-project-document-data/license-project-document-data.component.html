@@ -1,0 +1,55 @@
+<ng-container>
+  <div class="tab-data-section">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-12">
+        <div class="form-group mb-4">
+          <label class="form-label">{{localization.LicenseProjectOwnershipApprovedDocument}}</label>
+          <div class="col-12 col-lg-12">
+            <div class="value" *ngFor="let file of licenseProjectOwnershipApprovedDocuments">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a *ngIf="file && file.ownershipApprovedDocumentFile.filePath"
+                [href]="baseUrl + file.ownershipApprovedDocumentFile.filePath" target="_blank">
+                {{file.ownershipApprovedDocumentFile.fileDescription}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-data-section">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-12">
+        <div class="form-group mb-4">
+          <label class="form-label">{{localization.LicenseProjectLicenseDocument}}</label>
+          <div class="col-12 col-lg-12">
+            <div class="value" *ngFor="let file of licenseProjectLicenseDocuments">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a *ngIf="file && file.licenseDocumentFile" [href]="baseUrl + file.licenseDocumentFile.filePath" target="_blank">
+                {{file.licenseDocumentFile.fileDescription}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-data-section">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-12">
+        <div class="form-group mb-4">
+          <label class="form-label">{{localization.RightOfSaudisToOwnRealEstateFile}}</label>
+          <div class="col-12 col-lg-12">
+            <div class="value" *ngFor="let file of licenseProjectRightOfSaudisToOwnRealEstateFiles">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a *ngIf="file && file.rightOfSaudisToOwnRealEstateFile.filePath"
+                [href]="baseUrl + file.rightOfSaudisToOwnRealEstateFile.filePath" target="_blank">
+                {{file.rightOfSaudisToOwnRealEstateFile.fileDescription}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</ng-container>

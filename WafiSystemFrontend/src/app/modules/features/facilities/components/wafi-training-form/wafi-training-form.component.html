@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="row row-gap-3 mb-3">
+            <div class="col-12 col-lg-6">
+                <label for="" class="form-label">شهادة اجتياز دورة التسويق للبيع على الخارطة من الهيئة العامة للعقار</label>
+                <app-file-uploader [data]="singleFileUploaderData"
+                    (fileUploaded)="onMarketerFileUploaded($event)"></app-file-uploader>
+            </div>
+            <div class="col-12 col-lg-6">
+                <label for="" class="form-label">شهادة اجتياز دورة التطوير العقاري لمشاريع البيع على الخارطة</label>
+                <app-file-uploader [data]="singleFileUploaderData"
+                    (fileUploaded)="onRealEstateDevelopmentFileUploaded($event)"></app-file-uploader>
+            </div>
+        </div>
+    </div>
+  
+</div>

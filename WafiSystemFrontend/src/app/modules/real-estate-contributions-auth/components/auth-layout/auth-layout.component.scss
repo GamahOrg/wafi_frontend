@@ -1,0 +1,51 @@
+@import "/src/assets/styles/custom-variables";
+
+.page-header {
+    padding: 2.5rem 0 6rem;
+
+    background-image: url('/assets/images/auth/auth-header-bg-rega.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+
+    .page-header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: .2rem;
+
+        .logo {
+            img {
+                max-width: 12rem;
+            }
+        }
+
+        .page-title {
+            .title,
+            .subtitle {
+                text-align: center;
+                color: $white;
+            }
+
+            .title {
+                font-size: $size-xl;
+            }
+
+            .subtitle {
+                margin-top: 1.25rem;
+                font-size: $size-lg;
+                font-weight: normal;
+                color: #F3F7F5;
+            }
+        }
+    }
+}
+
+.content {
+    margin-top: -3.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    
+    border-radius: $border-radius;
+    background-color: $white;
+}

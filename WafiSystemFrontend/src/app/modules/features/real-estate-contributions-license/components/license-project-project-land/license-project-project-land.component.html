@@ -1,0 +1,34 @@
+<div class="tab-data-section" *ngIf="projectLand">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.landValue}}</div>
+            <div class="value">{{projectLand.landValue}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.landTotalSpace}}</div>
+            <div class="value">{{projectLand.landTotalSpace}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.buildingFlatArea}}</div>
+            <div class="value">{{projectLand.buildingFlatArea}}</div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">{{localization.sellingSpace}}</div>
+            <div class="value">{{projectLand.sellingSpace}}</div>
+        </div>
+        <!-- <div class="col-12 col-lg-12">
+            <label for="prevExpert" class="form-label d-block">{{localization.landOwnerApproval}}</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="beforAfter" id="accept" value="1" disabled [checked]="projectLand.landOwnerApproval">
+                <label class="form-check-label" for="before7">{{localization.accept}}</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="beforAfter" id="addanotherinsurance" value="0" disabled [checked]="!projectLand.landOwnerApproval">
+                <label class="form-check-label" for="after7">{{localization.addanotherinsurance}}</label>
+            </div>
+        </div> -->
+    </div>
+</div>

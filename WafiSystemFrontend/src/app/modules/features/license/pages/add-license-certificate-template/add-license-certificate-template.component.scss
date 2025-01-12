@@ -1,0 +1,60 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/tab-content";
+@import "/src/assets/styles/content/form-conent";
+@import "/src/assets/styles/bootstrap-custom/buttons";
+@import "/src/assets/styles/content/page";
+@import "/src/assets/styles/content/cards";
+@import "/src/assets/styles/content/status";
+@import "/src/assets/styles/content/circular-progresss";
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+
+.addbtn{
+    color: white;
+    border-color: var(--bs-btn-hover-border-color);
+    align-items: end;
+    
+}
+table{
+    border: 1px solid lightgray;
+}
+
+button.btn-secondary{
+    border-color: lightgrey;
+    background-color: white;
+}
+button.btn-secondary:hover{
+    color:#076F42 ;
+    background-color: white;
+
+}
+.deletbtn{
+    color: #FC1D00;
+    border-color: #FC1D00;
+    background-color: white;
+
+}
+.stopbtn{
+    color: red;
+    border-color: #FF7A69;
+    background-color: white;
+}
+
+table{
+    border: 1px solid lightgray;
+}
+
+.edit:hover{
+  color: #076F42;
+  
+}

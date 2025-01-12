@@ -1,0 +1,134 @@
+<div class="tab-data-section">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <br>
+        <h6 class="title fw-normal">{{'جدول المساحات الأساسية'}}</h6>
+
+        <div class="col-12 col-lg-6">
+            <div class="key"> المساحة الإجمالية للمشروع  </div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.landTotalSpace}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">مساحة الأرض </div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.landSpace}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">مساحة الأرض سكنية</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.residentialLandSpace}}
+            </div>
+        </div>
+        <hr>
+        <h6 class="title fw-normal">{{'التحليل المالي للأسعار'}}</h6>
+        <div class="col-12 col-lg-6">
+            <div class="key">إجمالي قيمة المشروع</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.totalProjectValue}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">تكلفة البناء</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.constructionCost}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">تكلفة استشاري</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.consultantCost}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">سعر الأرض</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.landPrice}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">الرسوم الإدارية</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.administrativeFees}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">رسوم التسويق</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.marketingFees}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">أرباح</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.profits}}
+            </div>
+        </div>
+        <hr>
+        <h6 class="title fw-normal">{{'المرفقات'}}</h6>
+        <div class="col-12 col-lg-6">
+            <div class="key">الجدول الزمني المقترح</div>
+            <div class="value" *ngFor="let activity of licenseProjectFeasibilityStudyFullDto?.licenseProjectProposedScheduleFiles">
+                <span class="icon material-icons">picture_as_pdf</span>
+                <a *ngIf="activity && activity.proposedScheduleFile" [href]="baseUrl + activity?.proposedScheduleFile?.filePath" target="_blank">
+                    {{activity?.proposedScheduleFile?.fileDescription}}
+                </a>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">الخطة التسويقية</div>
+            <div class="value" *ngFor="let activity of licenseProjectFeasibilityStudyFullDto?.licenseProjectMarketingPlanFiles">
+                <span class="icon material-icons">picture_as_pdf</span>
+                <a *ngIf="activity && activity.marketingPlanFile" [href]="baseUrl + activity?.marketingPlanFile?.filePath" target="_blank">
+                    {{activity?.marketingPlanFile?.fileDescription}}
+                </a>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">ملفات دراسة الجدوي</div>
+            <div class="value" *ngFor="let activity of licenseProjectFeasibilityStudyFullDto?.licenseProjectFeasibilityStudyFiles">
+                <span class="icon material-icons">picture_as_pdf</span>
+                <a *ngIf="activity && activity.feasibilityStudyFile" [href]="baseUrl + activity?.feasibilityStudyFile?.filePath" target="_blank">
+                    {{activity?.feasibilityStudyFile?.fileDescription}}
+                </a>
+            </div>
+        </div>
+        <hr>
+        <h6 class="title fw-normal">{{'الافتراضات التي تستند إلى الدراسة'}}</h6>
+        <div class="col-12 col-lg-6">
+            <div class="key"></div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.assumptionsOnWhichTheStudyIsBased}}
+            </div>
+        </div>
+        <hr>
+        <h6 class="title fw-normal">{{'الجهة المعدة لدراسة الجدوى'}}</h6>
+        <div class="col-12 col-lg-6">
+            <div class="key">اسم الجهة</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.entityName}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم الجوال</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.mobileNumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key">رقم الهاتف</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.phoneNumber}}
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="key"> البريد الإلكتروني</div>
+            <div class="value">
+                {{licenseProjectFeasibilityStudyFullDto?.emailAddress}}
+            </div>
+        </div>
+        <hr>
+
+    </div>
+</div>

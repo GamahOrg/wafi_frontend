@@ -1,0 +1,69 @@
+<ng-container>
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">list_alt</span></div>
+      <h6 class="title fw-normal">{{localization.title}}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.LicenseProjectOwnershipApprovedDocument}}</label>
+            <div class="col-12 col-lg-12">
+              <div class="value"
+                   *ngFor="let shipApprovedDocument of projectDocumentData.licenseProjectOwnershipApprovedDocuments">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a *ngIf="shipApprovedDocument && shipApprovedDocument.ownershipApprovedDocumentFile"
+                   [href]="baseUrl + shipApprovedDocument.ownershipApprovedDocumentFile.filePath" target="_blank">
+                  {{shipApprovedDocument.ownershipApprovedDocumentFile.fileDescription}}</a>
+              </div>
+              <app-file-uploader [data]="multipleFileUploaderData"
+                                 (fileUploaded)="onOwnershipApprovedDocumentFileUploaded($event)"></app-file-uploader>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.LicenseProjectLicenseDocument}}</label>
+            <div class="col-12 col-lg-12">
+              <div class="value"
+                   *ngFor="let licenseProjectLicenseDocument of projectDocumentData.licenseProjectLicenseDocuments">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a *ngIf="licenseProjectLicenseDocument && licenseProjectLicenseDocument.licenseDocumentFile"
+                   [href]="baseUrl + licenseProjectLicenseDocument.licenseDocumentFile.filePath" target="_blank">
+                  {{licenseProjectLicenseDocument.licenseDocumentFile.fileDescription}}</a>
+              </div>
+              <app-file-uploader [data]="multipleFileUploaderData"
+                                 (fileUploaded)="onLicenseDocumentFileUploaded($event)"></app-file-uploader>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.RightOfSaudisToOwnRealEstateFile}}</label>
+            <div class="col-12 col-lg-12">
+              <div class="value"
+                   *ngFor="let rightOfSaudis of projectDocumentData.licenseProjectRightOfSaudisToOwnRealEstateFiles">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a *ngIf="rightOfSaudis && rightOfSaudis.rightOfSaudisToOwnRealEstateFile"
+                   [href]="baseUrl + rightOfSaudis.rightOfSaudisToOwnRealEstateFile.filePath" target="_blank">
+                  {{rightOfSaudis.rightOfSaudisToOwnRealEstateFile.fileDescription}}</a>
+              </div>
+              <app-file-uploader [data]="multipleFileUploaderData"
+                                 (fileUploaded)="onRightOfSaudisToOwnRealEstateFileUploaded($event)"></app-file-uploader>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+   
+  </ng-container>

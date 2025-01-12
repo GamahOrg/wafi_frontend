@@ -1,0 +1,59 @@
+
+<div class="tab-data-header">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title fw-normal">{{'مرفقات الطلب'}}</h6>
+</div>
+
+
+
+    <form class="d-flex flex-column h-100">
+    <div class="tab-data-section" >
+        <div  class="row" [formGroup]="form"  id="form-form">
+        <div class="row mb-3">
+         
+         
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                <div class="key">ملف الالتزام بمدد الضمانات المحددة في قواعد البيع والتأجير على الخارطة (بالاتفاق بين المطور الرئيسي والمطور الفرعي)</div>
+                <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a target="_blank"  id="link-specifiedProtocolsDurationCommitmentFile" [href]="baseUrl + licenseProjectRequestAttachmentDto?.specifiedProtocolsDurationCommitmentFile?.filePath">
+                        {{licenseProjectRequestAttachmentDto?.specifiedProtocolsDurationCommitmentFile?.fileDescription}}</a>
+                </div>
+                    <app-file-uploader [data]="singleFileUploaderData"
+                                       (fileUploaded)="onExistSpecifiedProtocolsDurationCommitmentFilesUploaded($event)"></app-file-uploader>
+
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                <div class="key">ملف تسويق المشروع (بالاتفاق بين المطور الرئيسي والمطور الفرعي)</div>
+                <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a target="_blank" id="link-projectMarketingFile" [href]="baseUrl + licenseProjectRequestAttachmentDto?.projectMarketingFile?.filePath">
+                        {{licenseProjectRequestAttachmentDto?.projectMarketingFile?.fileDescription}}</a>
+                </div>
+                    <app-file-uploader [data]="singleFileUploaderData"
+                                       (fileUploaded)="onExistMarketingFilesUploaded($event)"></app-file-uploader>
+
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="page-content">
+                    <div class="form-check">
+                        <input class="form-check-input"  id="control-operationAndMaintenanceAcknowledgment" type="checkbox"  formControlName="operationAndMaintenanceAcknowledgment" />
+                        <label class="form-check-label" for="operationAndMaintenanceAcknowledgment">
+                            إقرار بتشغيل وصيانة المناطق المشتركة في المشروع (ان وجدت) أو التعاقد مع شركة للقيام بذلك (بالاتفاق بين المطور الرئيسي والمطور الفرعي)
+                             </label>
+                    </div>
+                
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+
+  </form>
+   
+

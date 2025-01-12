@@ -1,0 +1,149 @@
+<div class="tab-data-section" *ngIf="licenseProjectBuyer">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">نوع السجل</label>
+        <div *ngIf="licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Lands">
+          أراضي
+        </div>
+        <div *ngIf="licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
+          وحدات
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">طريقة الدفع</label>
+        {{licenseProjectBuyer.paymentType.name}}
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">اسم المشتري</label>
+        {{licenseProjectBuyer.name}}
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">رقم الهوية</label>
+        {{licenseProjectBuyer.nidNumber}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">رقم الجوال</label>
+        {{licenseProjectBuyer.mobile}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Lands">
+      <div class="form-group mb-4">
+        <label class="form-label">عدد الأراضى</label>
+        {{licenseProjectBuyer.landNumbers}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
+      <div class="form-group mb-4">
+        <label class="form-label">رقم الوحدة </label>
+        {{licenseProjectBuyer.unitCode}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">رقم البلوك او العمارة</label>
+        {{licenseProjectBuyer.blockCode}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">رقم العقد</label>
+        {{licenseProjectBuyer.contractNumber}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">تاريخ البيع</label>
+        {{licenseProjectBuyer.saleDate | date:'yyyy-MM-dd'}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">تاريخ التسليم</label>
+        {{licenseProjectBuyer.deliveryDate | date:'yyyy-MM-dd'}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">سعر الوحدة او الارض قبل ضريبة القيمة المضافة</label>
+        {{licenseProjectBuyer.price}}
+      </div>
+    </div>
+    <div *ngIf="licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units"
+      class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">متوسط سعر المتر</label>
+        {{averagePricePerMeter}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">نسبة الضريبة المضافة للأرض او الوحدة</label>
+        {{licenseProjectBuyer.currentTax}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">ضريبة القيمة المضافة من سعر البيع</label>
+        {{licenseProjectBuyer.priceAfterTax}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">قيمة البيع شاملة القيمة المضافة </label>
+        {{licenseProjectBuyer.totalPrice}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Lands">
+      <div class="form-group mb-4">
+        <label class="form-label">نسبة الرسوم للأراضي</label>
+        {{licenseProjectBuyer.percentageSupervisionOrFees}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Lands">
+      <div class="form-group mb-4">
+        <label class="form-label">تكاليف رسوم الأراضي</label>
+        {{licenseProjectBuyer.landFeeCosts}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="userType != '0' && licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
+      <div class="form-group mb-4">
+        <label class="form-label">نسبة الاشراف والمتابعة</label>
+        {{licenseProjectBuyer.percentageSupervisionOrFees}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="userType != '0' && licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
+      <div class="form-group mb-4">
+        <label class="form-label">الأشراف والمتابعة منذ بداية المشروع</label>
+        {{licenseProjectBuyer.supervisionFromProjectBeginning}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">ملف العقد</label>
+
+        <a *ngIf="licenseProjectBuyer.contractFile && licenseProjectBuyer.contractFile.filePath"
+          [href]="baseUrl + licenseProjectBuyer.contractFile.filePath" id="link-contractFile" target="_blank">
+          {{ licenseProjectBuyer.contractFile.fileDescription }}
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>

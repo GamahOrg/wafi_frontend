@@ -1,0 +1,19 @@
+<div class="page">
+  <div class="page-header mb-4">
+      <div class="page-title">
+          <h2 class="title">إنشاء طلب جديد</h2>
+      </div>
+  </div>
+
+  <div class="row g-4 row-cols-lg-5" *ngIf="requestTypes && requestTypes.length>0">
+      <div class="col-12 col-md-6 col-lg" *ngFor="let requestType of requestTypes">
+          <div class="card qualiication-card cursor-pointer">
+              <div class="icon"><span class="material-icons-outlined"></span></div>
+              <div class="card-body"
+                   (click)="navigateToCreateRequest(requestType.id)">
+                  <h6 class="card-title">{{requestType.name}}</h6>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

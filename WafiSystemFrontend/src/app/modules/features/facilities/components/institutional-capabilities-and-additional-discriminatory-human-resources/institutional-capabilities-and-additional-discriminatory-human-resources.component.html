@@ -1,0 +1,90 @@
+<app-no-data (onNoDataButtonClicked)="openDialog('')"
+             *ngIf="!model || !model.id"></app-no-data>
+
+<ng-container *ngIf="model && model.id">
+
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">القدرات المؤسسية والموارد الإضافية</h6>
+
+        <button mat-raised-button
+                (click)="openDialog(model.id)"
+                class="edit-icon"><span class="material-icons">edit</span></button>
+    </div>
+
+    <div class="tab-data-section">
+        <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+            <div class="col-12 col-md-6">
+                <div class="key">ملف الإشراف المحاسبي لمشاريع البيع على الخارطة ''</div>
+                <div class="value"
+                     *ngIf="model && model.accountingSupervisionForWafiSalesProjectsFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + model.accountingSupervisionForWafiSalesProjectsFile.filePath"
+                       target="_blank">
+                        {{model.accountingSupervisionForWafiSalesProjectsFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(model.accountingSupervisionForWafiSalesProjectsFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                  
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="key">ملف الإشراف الهندسي لمشاريع البيع على الخارطة''</div>
+                <div class="value"
+                     *ngIf="model && model.engineeringSupervisionForWafiSalesProjectsFile">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a [href]="baseUrl + model.engineeringSupervisionForWafiSalesProjectsFile.filePath"
+                       target="_blank">
+                        {{model.engineeringSupervisionForWafiSalesProjectsFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(model.engineeringSupervisionForWafiSalesProjectsFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="key">شهادات اعتماد الأنظمة الموجودة'' </div>
+                <div class="value"
+                     *ngFor="let files of model.existSystemsApprovalCertifications">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a *ngIf="files && files.existSystemsApprovalCertificationFile"
+                       [href]="baseUrl + files.existSystemsApprovalCertificationFile.filePath"
+                       target="_blank">
+                        {{files.existSystemsApprovalCertificationFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(files.existSystemsApprovalCertificationFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="key">شهادات مهنية صادرة من الجهات المعتمدة محلية وعالمية'' </div>
+                <div class="value"
+                     *ngFor="let files of model.localAndInternationalIssuedCertifications">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <a *ngIf="files && files.localAndInternationalIssuedCertificationFile"
+                       [href]="baseUrl + files.localAndInternationalIssuedCertificationFile.filePath"
+                       target="_blank">
+                        {{files.localAndInternationalIssuedCertificationFile.fileDescription}}</a>
+                        <div class="value">
+                            <span class="delete" 
+                                (click)="deletFile(files.localAndInternationalIssuedCertificationFile.id)"><i
+                                    class="material-icons text-danger">close</i></span>
+                        </div>
+                    <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-container>

@@ -1,0 +1,677 @@
+
+
+<div class="container">
+  <!-- Header and Download Button -->
+  <div class="d-flex justify-content-between align-items-center my-4">
+    <h1>{{ reportDetails?.licenseProject?.name }} - تقرير المحاسب القانوني</h1>
+    <button mat-raised-button color="primary" class="btn-download" (click)="generateExcel()">
+      تحميل التقرير
+      <span class="material-icons">download</span>
+    </button>
+  </div>
+
+  <!-- Project Information -->
+  <div class="card mt-3">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">info</span></div>
+      <h6 class="title fw-normal">معلومات المشروع</h6>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="key">اسم المشروع</div>
+          <div class="value">{{ reportDetails?.licenseProject?.name }}</div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="key">اسم الشركة</div>
+          <div class="value">{{ reportDetails?.charteredAccountantOfficeName }}</div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="key">تاريخ التقرير</div>
+          <div class="value">{{ reportDetails?.createdOn | date }}</div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="key">رقم الترخيص</div>
+          <div class="value">{{ reportDetails?.certificateNumber }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--ملحق رقم 2 العمليات المالية-->
+  <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal">الاجراءات التي تم تنفيذها</h6>
+      </div>
+      <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="key">نوع التقرير</div>
+              <div class="value">{{ reportDetails?.reportType?.name }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">ربعي</div>
+              <div class="value">{{ reportDetails?.quarterType?.name }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">شهري</div>
+              <div class="value">{{ reportDetails?.month }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">من تاريخ التقرير</div>
+              <div class="value">{{ reportDetails?.fromDate | date}}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">الي تاريخ التقرير</div>
+              <div class="value">{{ reportDetails?.toDate| date }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">العام</div>
+              <div class="value">{{ reportDetails?.year }}</div>
+            </div>
+          </div>
+  </div>
+  </div>
+  <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal">وثائق الصرف علي المشروع خلال فترة التقرير</h6>
+      </div>
+      <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>رقم وثيقة الصرف</th>
+                <th>البيان</th>
+                <th>المستفيد</th>
+                <th>المبلغ</th>
+                <th>البند الرئيسي التي تم صرف منة</th>
+                <th>البند الفرعي التي تم صرف منة</th>
+                <th>تاريخ الصرف</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let exchangeDocument of reportDetails?.exchangeDocuments">
+                <td>{{ exchangeDocument?.documnetNumber }}</td>
+                <td>{{ exchangeDocument?.statment }}</td>
+                <td>{{ exchangeDocument?.liceneProjectBeneficiaryType?.name }}</td>
+                <td>{{ exchangeDocument?.amount }}</td>
+                <td>{{ exchangeDocument?.mainItem?.name }}</td>
+                <td>{{ exchangeDocument?.subItem?.name }}</td>
+                <td>{{ exchangeDocument?.exchangeDate }}</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal">ملحق رقم 1 البيانات الاساسية</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">اسم مكتب المحاسب القانونى</div>
+            <div class="value">{{ reportDetails?.charteredAccountantOfficeName }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">نوع الوحدات</div>
+            <div class="value">{{ reportDetails?.unitType }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">اجمالى عدد الوحدات</div>
+            <div class="value">{{ reportDetails?.totalUnitNumber }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">أمين الحساب</div>
+            <div class="value">{{ reportDetails?.accountKeeper }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">رقم حساب الضمان</div>
+            <div class="value">{{ reportDetails?.accountNumber }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">رقم ترخيص بيع وحدة على الخارطة</div>
+            <div class="value">{{ reportDetails?.certificateNumber }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+              <div class="key">اجمالى قيمة وحدات المشروع</div>
+              <div class="value">{{ reportDetails?.totalUnitsAmount }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">سعر الأرض</div>
+              <div class="value">{{ reportDetails?.landPrice }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">اجمالى قيمة تكاليف المشروع المتوقعة</div>
+              <div class="value">{{ reportDetails?.totalCost }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">التكلفة الانشائة المتوقعة</div>
+              <div class="value">{{ reportDetails?.expectedConstructionCost }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">هامش الربح المتوقع</div>
+              <div class="value">{{ reportDetails?.expectedProfile }}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal">العمليات المالية خلال الفترة من حساب الضمان</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف إنشائية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.constructionCosts }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">مصاريف ادارية وتسويقية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.administrativeMarketingExpenses }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">ايداعات عملاء مستردة</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.refundableCustomerDeposits }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">عمولات بنكية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.bankCommissions }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف انشائية - الحافز الوزارى</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.constructionCostsMinisterialIncentiveBankFinancing }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف انشائية - التمويل البنكى</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.constructionCostsBankFinancing }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+              <div class="key">مصاريف ادارية وتسويقية - التمويل البنكى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.administrativeMarketingExpensesBankFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">أخرى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.otherDebts }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالي العمليات المدينة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.totalDebtOperations }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تحصيل من العملاء</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.collectionsFromCustomers }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تمويل بنكى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.bankFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تمويل الوزارة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.ministryFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">أخرى دائنة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.otherCredits }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالى العمليات الدائنة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodFromEscrowAccount?.totalCreditOperations }}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal">العمليات المالية منذ البدء بالمشروع من حساب الضمان</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف إنشائية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.constructionCosts }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">مصاريف ادارية وتسويقية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.administrativeMarketingExpenses }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">ايداعات عملاء مستردة</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.refundableCustomerDeposits }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">عمولات بنكية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.bankCommissions }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف انشائية - الحافز الوزارى</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.constructionCostsMinisterialIncentiveBankFinancing }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف انشائية - التمويل البنكى</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.constructionCostsBankFinancing }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+              <div class="key">مصاريف ادارية وتسويقية - التمويل البنكى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.administrativeMarketingExpensesBankFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">أخرى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.otherDebts }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالي العمليات المدينة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.totalDebtOperations }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تحصيل من العملاء</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.collectionsFromCustomers }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تمويل بنكى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.bankFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تمويل الوزارة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.ministryFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">أخرى دائنة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.otherCredits }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالى العمليات الدائنة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectFromEscrowAccount?.totalCreditOperations }}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal"> العمليات المالية خلال الفترة من خارج حساب الضمان</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف إنشائية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.constructionCosts }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">مصاريف ادارية وتسويقية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.administrativeMarketingExpenses }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">ايداعات عملاء مستردة</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.customerDepositRefunds }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">عمولات بنكية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.bankCommissions }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف انشائية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.constructionCosts }}</div>
+          </div>
+            <div class="col-12 col-md-6">
+              <div class="key">أخرى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.otherDebts }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالي العمليات المدينة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.totalDebtOperations }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تحصيل من العملاء</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.collectionsFromCustomers }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تمويل بنكى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.bankFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تمويل الوزارة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.ministryFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">أخرى دائنة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.otherCredits }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالى العمليات الدائنة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsDuringPeriodOutEscrowAccount?.totalCreditOperations }}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal"> العمليات المالية منذ البدء بالمشروع من خارج حساب الضمان</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف إنشائية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.constructionCosts }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">مصاريف ادارية وتسويقية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.administrativeMarketingExpenses }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">ايداعات عملاء مستردة</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.customerDepositRefunds }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">عمولات بنكية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.bankCommissions }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">تكاليف انشائية</div>
+            <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.constructionCosts }}</div>
+          </div>
+            <div class="col-12 col-md-6">
+              <div class="key">أخرى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.otherDebts }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالي العمليات المدينة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.totalDebtOperations }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تحصيل من العملاء</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.collectionsFromCustomers }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تمويل بنكى</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.bankFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">تمويل الوزارة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.ministryFinancing }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">أخرى دائنة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.otherCredits }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالى العمليات الدائنة</div>
+              <div class="value">{{ reportDetails?.financialTransactionsBeginningOfProjectOutEscrowAccount?.totalCreditOperations }}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal"> إجمالي العمليات المدينة والدائن من داخل وخارج حساب الضمان</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالى العمليات المدينة</div>
+            <div class="value">{{ reportDetails?.totalDebtOperations }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالى العمليات الدائنة</div>
+            <div class="value">{{ reportDetails?.totalCreditOperations }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- ملحق 3: حساب الضمان -->
+  <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal"> حساب الضمان</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">رصيد افتتاح الفترة</div>
+            <div class="value">{{ reportDetails?.periodOpeningBalance }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">رصيد اغلاق الفترة</div>
+            <div class="value">{{ reportDetails?.periodClosingBalance }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="card mt-3" *ngIf="reportDetails?.projectUnitsPositionAnalysis?.length">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">table_view</span></div>
+      <h6 class="title fw-normal">تحليل موقف وحدات المشروع</h6>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>نوع الوحدات</th>
+            <th>إجمالي عدد الوحدات</th>
+            <th>إجمالي قيمة الوحدات</th>
+            <th>إجمالي الوحدات المباعة</th>
+            <th>إجمالي الوحدات المتبقية</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let unit of reportDetails?.projectUnitsPositionAnalysis">
+            <td>{{ unit?.unitsType }}</td>
+            <td>{{ unit?.totalNumberLicenseProjectUnits }}</td>
+            <td>{{ unit?.totalValueLicenseProjectUnits | currency }}</td>
+            <td>{{ unit?.totalNumberLicenseProjectUnitsSold }}</td>
+            <td>{{ unit?.totalRemainingUnits }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Cancelled Units Payments -->
+  <div class="card mt-3" *ngIf="reportDetails?.paymentsCollectedForCancelledUnitsSolds?.length">
+    <div class="tab-data-header">
+      <div class="icon"><span class="material-icons">receipt</span></div>
+      <h6 class="title fw-normal">الدفعات المحصلة للوحدات المباعة الملغية</h6>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>اسم المشتري</th>
+            <th>رقم الوحدة</th>
+            <th>سعر الوحدة</th>
+            <th>إجمالي الدفعات</th>
+            <th>المتبقي</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of reportDetails?.paymentsCollectedForCancelledUnitsSolds">
+            <td>{{ payment?.buyerName }}</td>
+            <td>{{ payment?.unitCode }}</td>
+            <td>{{ payment?.price | currency }}</td>
+            <td>{{ payment?.totalPayments | currency }}</td>
+            <td>{{ payment?.remainingUnitPrice | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--ملحق رقم 6: الإيداعات والدفعات-->
+  <div class="card mt-3" *ngIf="reportDetails?.periodicCharteredAccountantReportDeposits?.length">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">receipt</span></div>
+        <h6 class="title fw-normal">جدول ادناه يوضح الإيداعات التي لم تظهر في حساب البنك حتى تاريخه “يستطيع إضافة أكثر من عنصر</h6>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>رقم الوحدة السكنية/نوع التكاليف</th>
+              <th>رقم الشيك</th>
+              <th>تاريخ التوريد</th>
+              <th>المبلغ بالريال</th>
+              <th>تاريخ الايداع فى البنك</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of reportDetails?.periodicCharteredAccountantReportDeposits">
+              <td>{{ payment?.unitCodeOrExpenseType }}</td>
+              <td>{{ payment?.checkNumber }}</td>
+              <td>{{ payment?.supplyDate | date }}</td>
+              <td>{{ payment?.riyalsAmount | currency }}</td>
+              <td>{{ payment?.depositDate | date }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card mt-3" *ngIf="reportDetails?.periodicCharteredAccountantReportBatches?.length">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">receipt</span></div>
+        <h6 class="title fw-normal">جدول ادناه يوضح دفعات لم يتم خصمها في حساب البنك حتى تاريخه “يستطيع إضافة أكثر من عنصر</h6>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>رقم الوحدة السكنية/نوع التكاليف</th>
+              <th>رقم الشيك</th>
+              <th>تاريخ التوريد</th>
+              <th>المبلغ بالريال</th>
+              <th>تاريخ الخصم فى البنك</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of reportDetails?.periodicCharteredAccountantReportBatches">
+              <td>{{ payment?.unitCodeOrExpenseType }}</td>
+              <td>{{ payment?.checkNumber }}</td>
+              <td>{{ payment?.supplyDate | date }}</td>
+              <td>{{ payment?.riyalsAmount | currency }}</td>
+              <td>{{ payment?.bankDebitDate | date }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--ملحق رقم 7: القيود المالية-->
+    <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal"> إجمالي العمليات المدينة والدائن من داخل وخارج حساب الضمان</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">النسبة المسموح بها للمصاريف الإدارية والتسويقية</div>
+            <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.allowablePercentageOfAdministrativeMarketingExpenses }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="key">إجمالي قيمة الوحدات المباعة والمحصل قيمتها</div>
+            <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.totalValueOfUnitsSoldAndCollected }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+              <div class="key">الحد المسموح التصرف به للمصاريف الإدارية والتسويقية</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.allowedLimitForAdministrativeMarketingExpenses }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">إجمالي المبالغ الإدارية والتسويقية التي تم صرفها منذ بداية المشروع</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.totalAdministrativeMarketingAmountsFromBeginningOfProject }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">المبلغ المتبقى</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.remainingAmount }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">النسبة الواجب توفرها بحساب الحفظ</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.percentageRequiredForSavingAccount }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">مبلغ الحافز</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.incentiveAmount }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">هل نسبة تحصيل المبيعات وصلت الى 80% من اجمالى قيمة المبيعات</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.salesRateReached80Percentage }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">قيمة استرداد الدفعة الأولى</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.firstPaymentRefundValue }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">هل نسبة تحصيل المبيعات وصلت الى 90% من اجمالى قيمة المبيعات</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.salesRateReached90Percentage }}</div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="key">قيمة استرداد الدفعة الثانية</div>
+              <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.secondPaymentRefundValue }}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+   <!--ملحق رقم 8: النتائج والتوصيات-->
+   <div class="card mt-3">
+      <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">attach_money</span></div>
+        <h6 class="title fw-normal"> ملحق رقم 8: النتائج والتوصيات</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="key">النتائج والتوصيات</div>
+            <div class="value">{{ reportDetails?.resultsAndRecommendations }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--ملحق رقم 9: قائمة المركز المالي-->
+    <div class="card mt-3" *ngIf="reportDetails?.financialCenterFiles?.length">
+      <div class="card-header">
+        <h3>قائمة المركز المالي</h3>
+      </div>
+      <div class="card-body">
+        <div *ngFor="let file of reportDetails?.financialCenterFiles">
+          <a 
+          *ngIf="file?.file?.filePath" 
+          [href]="baseUrl + file?.file?.filePath" target="_blank"
+        >
+        {{ file?.file?.fileDescription }}
+        </a>
+        </div>
+        <!-- <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>رقم التقرير</th>
+              <th>رقم الملف</th>
+              <th>وصف الملف</th>
+              <th>تحميل الملف</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let file of reportDetails?.financialCenterFiles">
+              <td>{{ file?.periodicCharteredAccountantReportId }}</td>
+              <td>{{ file?.fileId }}</td>
+              <td>{{ file?.file?.fileDescription }}</td>
+              <td>
+                <a 
+                  *ngIf="file?.file?.filePath" 
+                  [href]="baseUrl + file?.file?.filePath" target="_blank"
+                >
+                {{ file?.file?.fileDescription }}
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+      </div>
+    </div>
+    
+</div>

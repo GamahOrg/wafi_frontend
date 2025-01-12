@@ -1,0 +1,40 @@
+
+<div class="tab-data-section" *ngIf="licenseProjectRequestChangePlanFull">
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+  <div class="col-12 col-md-6">
+    <div class="key">التكاليف الأجمالية للمشروع (غير شاملة ثمن الأرض) مُحدثة لتاريخ الطلب</div>
+    <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{licenseProjectRequestChangePlanFull?.totalProjectCosts}}
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="key">رصيد حساب الضمان</div>
+    <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{licenseProjectRequestChangePlanFull?.escrowAccountBalance}}
+    </div>
+</div>
+
+
+<div class="col-12 col-md-6">
+    <div class="key">أخر تقرير مالي</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.lastFinancialReport" [href]="baseUrl + licenseProjectRequestChangePlanFull?.lastFinancialReport?.filePath" target="_blank">
+            {{licenseProjectRequestChangePlanFull?.lastFinancialReport?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="key">قائمة الوحدات المباعة</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.soldUnitsAttachment" [href]="baseUrl + licenseProjectRequestChangePlanFull?.soldUnitsAttachment?.filePath" target="_blank">
+            {{licenseProjectRequestChangePlanFull?.soldUnitsAttachment?.fileDescription}}
+        </a>
+    </div>
+</div>
+</div>
+</div>
+

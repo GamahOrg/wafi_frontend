@@ -1,0 +1,47 @@
+<div class="row gx-3">
+    <div class="col-12 col-md-3">
+        <div class="nav flex-column nav-pills"
+             role="tablist"
+             aria-orientation="vertical">
+            <span class="title"
+                  *ngIf="tabContent.tabTitle">{{tabContent.tabTitle}}</span>
+            <ng-container *ngFor="let tab of tabContent.tabsComponentList; index as i">
+                <button *ngIf="tab.isVisible"
+                        class="nav-link"
+                        [ngClass]="{ active: i == tabContent.activeTabIndex }"
+                        [id]="tab.id"
+                        data-bs-toggle="pill"
+                        [attr.data-bs-target]="'#' + i"
+                        type="button"
+                        role="tab"
+                        [attr.aria-controls]="i"
+                        [attr.aria-selected]="i ==  tabContent.activeTabIndex? 'true' : 'false'"
+                        (click)="updateActiveTabIndex(i)">
+                    <span class="icon"><i class="material-icons">list_alt</i></span>
+                    <span class="title">{{ tab.title }}</span>
+                    <span class="count"
+                          *ngIf="tab.errNum">{{ tab.errNum }}</span>
+                    <span class="checked"
+                          *ngIf="tab.errNum"><i class="material-icons">check</i></span>
+                </button>
+            </ng-container>
+        </div>
+    </div>
+    <div class="col-12 col-md-9">
+        <div class="tab-content">
+            <div *ngFor="let tab of tabContent.tabsComponentList; index as i"
+                 class="tab-pane"
+                 [ngClass]="{ 'show active': i ==  tabContent.activeTabIndex }"
+                 [id]="i"
+                 role="tabpanel"
+                 [attr.aria-labelledby]="tab.id">
+                <ng-container *ngIf="tab.isVisible">
+                    <ng-container *ngIf="i == tabContent.activeTabIndex &&  tab.Component">
+                        <ng-container *ngComponentOutlet="tab.Component"></ng-container>
+                    </ng-container>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>

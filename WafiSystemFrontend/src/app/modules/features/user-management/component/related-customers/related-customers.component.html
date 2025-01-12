@@ -1,0 +1,61 @@
+<div class="form-block mb-3" [formGroup]="assignedSubCustomerForm">
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6">
+      <label class="form-label">رقم هوية المفوض</label>
+      <input
+        type="text"
+        formControlName="nidNumber"
+        id="control-nidNumber"
+        class="form-control"
+      />
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="addRow()">
+    اضافة
+  </button>
+
+  <div
+    class="tab-data-section"
+    *ngIf="
+      relatedCustomerCreateUpdateDtos &&
+      relatedCustomerCreateUpdateDtos.length > 0
+    "
+  >
+    <div class="table-responsive">
+      <table class="table table-light mb-3">
+        <thead>
+          <tr>
+            <th>اسم المفوض</th>
+            <th>العمليات</th>
+            <th class="w-25"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let customer of relatedCustomerCreateUpdateDtos;
+              let i = index
+            "
+          >
+            <td>
+              {{ customer.subCustomerName }}
+            </td>
+            <td>
+              <div
+                class="d-flex align-items-center justify-content-end column-gap-2"
+              >
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="delete(customer.id, i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

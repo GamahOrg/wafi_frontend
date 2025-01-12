@@ -1,0 +1,251 @@
+<div class="landing">
+  <div class="logo">
+    <img
+      src="/assets/images/real-estate-contributions/general/logo-rega-wide-white.svg"
+      alt=""
+      class="logo-img"
+    />
+  </div>
+
+  <div class="content">
+    <h2 class="title mb-5">تقديم طلب شكوى أو بلاغ</h2>
+
+    <div class="complaintRequestForm" id="form-complaintRequestForm">
+      <form [formGroup]="complaintRequestForm" id="form-complaintRequestForm">
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label" for="complaintRequestTypeId"
+                >نوع الطلب</label
+              >
+              <select
+                class="form-select"
+                formControlName="complaintRequestTypeId"
+                [ngClass]="{
+                  'is-invalid':
+                    showValidation && controls.complaintRequestTypeId.errors
+                }"
+              >
+                <option label="نوع الطلب" disabled></option>
+                <option
+                  *ngFor="let complaintRequestType of complaintRequestTypes"
+                  [value]="complaintRequestType.id"
+                >
+                  {{ complaintRequestType.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="controls.complaintRequestTypeId.errors"
+                class="invalid-feedback"
+              >
+                <div
+                  *ngIf="controls.complaintRequestTypeId.errors?.['required']"
+                >
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label" for="customerName"
+                >اسم مقدم الشكوي او البلاغ</label
+              >
+              <input
+                type="text"
+                id="control-customerName"
+                formControlName="customerName"
+                placeholder="اسم مقدم الشكوي او البلاغ"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': showValidation && controls.customerName.errors
+                }"
+              />
+              <div
+                *ngIf="controls.customerName.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="controls.customerName.errors?.['required']">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="firstName" class="form-label">رقم الهوية</label>
+              <input
+                type="text"
+                formControlName="nIDNumber"
+                id="control-nIDNumber"
+                class="form-control"
+                placeholder="رقم الهوية"
+                [ngClass]="{
+                  'is-invalid': showValidation && controls.nIDNumber.errors
+                }"
+              />
+              <div *ngIf="controls.nIDNumber.errors" class="invalid-feedback">
+                <div *ngIf="controls.nIDNumber.errors?.['required']">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label" for="facilityName">اسم الشركة</label>
+              <input
+                type="text"
+                id="control-facilityName"
+                formControlName="facilityName"
+                placeholder="اسم الشركة"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': showValidation && controls.facilityName.errors
+                }"
+              />
+              <div
+                *ngIf="controls.facilityName.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="controls.facilityName.errors?.['required']">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label" for="commercialRegisterNumber"
+                >رقم سجل التجاري</label
+              >
+              <input
+                type="text"
+                id="control-commercialRegisterNumber"
+                formControlName="commercialRegisterNumber"
+                placeholder="رقم سجل التجاري"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    showValidation && controls.commercialRegisterNumber.errors
+                }"
+              />
+              <div
+                *ngIf="controls.commercialRegisterNumber.errors"
+                class="invalid-feedback"
+              >
+                <div
+                  *ngIf="controls.commercialRegisterNumber.errors?.['required']"
+                >
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="email" class="form-label">البريد الإلكتروني</label>
+              <input
+                type="email"
+                formControlName="email"
+                id="control-email"
+                class="form-control"
+                placeholder="البريد الإلكتروني"
+                [ngClass]="{
+                  'is-invalid': showValidation && controls.email.errors
+                }"
+              />
+              <div *ngIf="controls.email.errors" class="invalid-feedback">
+                <div *ngIf="controls.email.errors?.['required']">حقل مطلوب</div>
+                <div *ngIf="controls.email.errors?.['pattern']">
+                  من فضلك ادخل البريد الإلكتروني صحيح
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="Mobile" class="form-label">رقم الجوال</label>
+              <input
+                type="text"
+                formControlName="phone"
+                class="form-control"
+                id="control-phone"
+                placeholder="رقم الجوال"
+                [ngClass]="{
+                  'is-invalid': showValidation && controls.phone.errors
+                }"
+              />
+              <div *ngIf="controls.phone.errors" class="invalid-feedback">
+                <div *ngIf="controls.phone.errors?.['required']">حقل مطلوب</div>
+                <div *ngIf="controls.phone.errors?.['pattern']">
+                  من فضلك ادخل رقم جوال صحيح
+                </div>
+                <div
+                  *ngIf="controls.phone.errors?.['maxlength'] || controls.phone.errors?.['minlength']"
+                >
+                  طول الرقم يجب الا يزيد عن 10 ارقام
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="description" class="form-label"
+                >وصف البلاغ او الشكوي</label
+              >
+              <textarea
+                type="text"
+                formControlName="description"
+                id="control-description"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': showValidation && controls.description.errors
+                }"
+              ></textarea>
+              <div *ngIf="controls.description.errors" class="invalid-feedback">
+                <div *ngIf="controls.description.errors?.['required']">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="key">ملفات الشكوي او البلاغ</div>
+              <app-file-uploader
+                [data]="multiFilesUploaderData"
+                (fileUploaded)="onExistComplaintFilesUploaded($event)"
+              ></app-file-uploader>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  (!complaintRequestFileList ||
+                    complaintRequestFileList.length == 0) &&
+                  showValidation
+                "
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mt-5">
+            <div class="actions">
+              <button class="btn btn-primary" id="btn-save" (click)="save()">
+                ارسال الطلب
+              </button>
+              <a class="mx-5" [routerLink]="[loginLink]" id="link-fogotPassword"
+                >الرجوع لتسجل الدخول</a
+              >
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="d-flex flex-column h-100">
+
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">مصادر التمويل المتوقعة</h6>
+
+        <button mat-raised-button
+                class="edit-icon"
+                (click)="openDialog('')"><span class="material-icons">add</span></button>
+    </div>
+
+    <div class="tab-data-section">
+        <div class="table-responsive">
+            <table class="table table-light"
+                   *ngIf="licenseProjectExpectedFundingSources && licenseProjectExpectedFundingSources.length>0">
+                <thead>
+                    <tr>
+                        <th>نوع التمويل</th>
+                        <th>مصادر التمويل المتوقعة </th>
+                        <th>رقم هوية مفوض الممول </th>
+                        <th>البريد الإلكتروني لمفوض الممول </th>
+                        <th>رقم جوال مفوض الممول </th>
+                        <th class="w-25"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let expected of licenseProjectExpectedFundingSources">
+                        <td>{{expected?.fundingType?.name}}</td>
+                        <td>{{expected.financingTypeDescription}}</td>
+                        <td>{{expected.funderNationalNumber}}</td>
+                        <td>{{expected.funderEmailAddress}}</td>
+                        <td>{{expected.funderPhoneNumber}}</td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-end column-gap-2">
+                                <button mat-icon-button
+                                        color="warn"
+                                        (click)="delete(expected.id)"><mat-icon>delete</mat-icon></button>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        (click)="openDialog(expected.id)">تعديل</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
+        <button class="btn btn-outline-primary"
+                (click)="back()">{{localization.previous}}</button>
+        <button class="btn btn-outline-primary"
+                (click)="next()">{{localization.next}}</button>
+
+    </div> -->
+</div>

@@ -1,0 +1,38 @@
+<app-no-data (onNoDataButtonClicked)="openDialog()" *ngIf="!models || !models.length"></app-no-data>
+<div *ngIf="models && models.length">
+    <div class="tab-data-header">
+        <div class="icon"><span class="material-icons">list_alt</span></div>
+        <h6 class="title fw-normal">شهادات تأهيل حصلت علىها المنشأه</h6>
+    
+        <button mat-raised-button class="edit-icon" (click)="openDialog()"><span class="material-icons">add</span></button>
+    </div>
+    
+    <div class="tab-data-section">
+        <div class="table-responsive">
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th> شهادة التأهيل</th>
+                        <th class="w-25"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let certificate of models">
+                        <td>
+                            <div class="value">
+                                <span class="icon material-icons-outlined">content_copy</span>
+                                <a [href]="baseUrl + certificate.certificationFile.filePath" target="_blank">
+                                    {{certificate.certificationFile.fileDescription}}</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-end column-gap-2">
+                                <button mat-icon-button color="warn" (click)="delete(certificate)"><mat-icon>delete</mat-icon></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

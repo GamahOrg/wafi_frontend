@@ -1,0 +1,80 @@
+<ng-container *ngIf="bankingAccountDto && bankingAccountDto.id">
+    <form class="d-flex flex-column h-100" id="form-licenseProjectBankingAccountForm"
+          [formGroup]="licenseProjectBankingAccountForm">
+        <div class="tab-data-header">
+            <div class="icon"><span class="material-icons">list_alt</span></div>
+            <h6 class="title fw-normal">{{localization.title}}</h6>
+        </div>
+
+        <div class="tab-data-section">
+            <div class="row mb-3">
+
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.bankName}}</label>
+                        <select class="form-select"
+                                formControlName="bankId" id="control-bankId">
+                            <option [label]="localization.selectBankName"></option>
+                            <option *ngFor="let bank of banks"
+                                    [value]="bank.id">{{bank.name}}</option>
+                        </select>
+                        <mat-error
+                     *ngIf="controls.bankId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.accountNumber}}</label>
+                        <input type="text" id="control-accountNumber"
+                               placeholder="{{localization.accountNumber}}"
+                               class="form-control"
+                               formControlName="accountNumber">
+                        <mat-error
+                                   *ngIf="controls.accountNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.bankAccountDelegatorName}}</label>
+                        <input type="text" id="control-bankAccountDelegatorName"
+                               placeholder="{{localization.bankAccountDelegatorName}}"
+                               class="form-control"
+                               formControlName="bankAccountDelegatorName">
+                        <mat-error
+                                   *ngIf="controls.bankAccountDelegatorName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.bankAccountDelegatorMobile}}</label>
+                        <input type="text" id="control-bankAccountDelegatorMobile"
+                               placeholder="{{localization.bankAccountDelegatorMobile}}"
+                               class="form-control"
+                               formControlName="bankAccountDelegatorMobile">
+                        <mat-error
+                                   *ngIf="controls.bankAccountDelegatorMobile?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                        <mat-error
+                                   *ngIf="controls.bankAccountDelegatorMobile?.hasError('pattern') && showValidation">{{localization.phoneNumberPattern}}</mat-error>
+                    </div>
+                </div>
+               
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.bankAccountDelegatorEmail}}</label>
+                        <input type="text" id="control-bankAccountDelegatorEmail"
+                               placeholder="{{localization.bankAccountDelegatorEmail}}"
+                               class="form-control"
+                               formControlName="bankAccountDelegatorEmail">
+                        <mat-error
+                                   *ngIf="controls.bankAccountDelegatorEmail?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                        <mat-error
+                                   *ngIf="controls.bankAccountDelegatorEmail?.hasError('pattern') && showValidation">{{localization.emailPattern}}</mat-error>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    </form>
+</ng-container>

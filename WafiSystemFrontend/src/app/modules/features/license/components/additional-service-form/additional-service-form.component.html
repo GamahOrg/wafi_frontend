@@ -1,0 +1,47 @@
+<ng-container>
+    <form class="d-flex flex-column h-100" [formGroup]="projectAdditionalServicesForm" id="form-projectAdditionalServicesForm">
+        <!-- <div class="tab-data-header">
+            <div class="icon"><span class="material-icons">list_alt</span></div>
+            <h6 class="title fw-normal">{{localization.title}}</h6>
+        </div> -->
+
+        <div class="tab-data-section">
+            <div class="row mb-3">
+                <div class="col-12 col-lg-12">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.sysLicenseProjectServiceId}}</label>
+                        <select class="form-select" id="control-sysLicenseProjectServiceId"
+                                formControlName="sysLicenseProjectServiceId">
+                            <option [label]="localization.sysLicenseProjectServiceId"></option>
+                            <option *ngFor="let sysLicenseProjectService of sysProjectServices"
+                                    [value]="sysLicenseProjectService.id">{{sysLicenseProjectService.name}}</option>
+                        </select>
+                        <mat-error *ngIf="controls.sysLicenseProjectServiceId?.hasError('required') &&showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-12">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.period}}</label>
+                        <select class="form-select" id="control-period"
+                                formControlName="period">
+                            <option [label]="localization.period" disabled></option>
+                            <option *ngFor="let period of getServicePeriods()"
+                                    [value]="period.period">{{period.period}}</option>
+                        </select>
+                        <mat-error *ngIf="controls.period?.hasError('required') &&showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+                 <div class="col-12 col-lg-12" *ngIf="currentPrice">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.price}}</label>
+                        <input type="number" disabled id="control-currentPrice"
+                        class="form-control"
+                        [value]="currentPrice"
+                        [placeholder]="localization.price" />
+                     </div>
+                </div> 
+            </div>
+        </div>
+    </form>
+
+</ng-container>

@@ -1,0 +1,40 @@
+<div class="tab-data-header">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title fw-normal">مهندسي الشركة الحاصلين على برنامج تدريب الهيئة العامة للعقار للبيع على الخارطة للاستشاري الهندسي </h6>
+
+    <button mat-raised-button class="edit-icon" (click)="openDialog('')"><span class="material-icons">add</span></button>
+</div>
+
+<div class="tab-data-section">
+    <div class="table-responsive">
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>اسم المهندس</th>
+                    <th> شهادة التدريب</th>
+                    <th class="w-25"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let eng of models">
+                    <td>{{eng?.engineerName}}</td>
+                    <td>
+                        <div class="value">
+                            <span class="icon material-icons-outlined">content_copy</span>
+                            <a *ngIf="eng && eng.trainingCertificateFile" [href]="baseUrl + eng?.trainingCertificateFile?.filePath" target="_blank">
+                                {{eng?.trainingCertificateFile?.fileDescription}}
+                            </a>
+                            
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center justify-content-end column-gap-2">
+<!--                             <button mat-icon-button color="primary" (click)="openDialog(eng.id)"><mat-icon>edit</mat-icon></button>
+ -->                            <button mat-icon-button color="warn" (click)="delete(eng.id)"><mat-icon>delete</mat-icon></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

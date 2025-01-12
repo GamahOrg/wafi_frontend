@@ -1,0 +1,40 @@
+<div class="d-flex flex-column h-100" [formGroup]="addForm">
+
+  <div mat-dialog-content>
+    <div class="row mb-3">
+      <div class="col-6">
+        <label for="identityNumber" class="form-label">رقم الهوية </label>
+        <input type="text" formControlName="identityNumber" name="identityNumber"  class="form-control" 
+        placeholder="اكتب {{localization.identityNumber}}"
+        [ngClass]="{'is-invalid': showValidation && controls.identityNumber.errors}"/>
+        <div class="invalid-feedback">
+          <div *ngIf="controls.identityNumber.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+          <div *ngIf="controls.identityNumber.errors?.['maxLength']">{{localization.maxLengthErrorMsg}}</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="mane" class="form-label "> رقم الجوال </label>
+        <input type="text form-control" formControlName="mobileNumber" name="mane" class="form-control"
+          placeholder="اكتب {{localization.phoneNumber}}"
+          [ngClass]="{'is-invalid': showValidation && controls.mobileNumber.errors}" />
+        <div class="invalid-feedback">
+          <div *ngIf="controls.mobileNumber.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+          <div *ngIf="controls.mobileNumber.errors?.['pattern']">{{localization.phoneNumberPattern}}</div>
+          <div *ngIf="controls.mobileNumber.errors?.['maxlength'] || controls.mobileNumber.errors?.['minlength']">{{localization.maxLengthPhoneErrorMsg}}</div>
+
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-6">
+        <label for="email" class="form-label "> البريد الإلكتروني </label>
+        <input type="text" name="email" formControlName="email" class="form-control"
+          placeholder="اكتب {{localization.Email}}"
+          [ngClass]="{'is-invalid': showValidation && controls.email.errors}" />
+        <div class="invalid-feedback">
+          <div *ngIf="controls.email.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+          <div *ngIf="controls.email.errors?.['pattern']">{{localization.emailPattern}}</div>
+        </div>
+      </div>
+    </div>
+  </div>

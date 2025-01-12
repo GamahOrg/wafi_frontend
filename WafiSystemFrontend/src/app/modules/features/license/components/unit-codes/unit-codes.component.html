@@ -1,0 +1,67 @@
+<div class="tab-data-section">
+    <div class="tab-data-section-title-subtitle">
+        <h6 class="title">
+            {{localization.totalNumberOfUnitCodes}}
+            {{projectUnitCodes.length}}
+
+            <button class="btn btn-link"
+                    (click)="openDialog(undefined)">
+                <span class="material-icons-outlined">add_circle_outline</span>
+                {{localization.addingNewCode}}
+            </button>
+        </h6>
+    </div>
+
+    <div *ngIf="projectUnitCodes && projectUnitCodes.length"
+         class="table-responsive">
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>{{localization.code}}</th>
+                    <th>{{localization.deliveryOn}}</th>
+                    <th> {{localization.price}}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let code of projectUnitCodes">
+                    <td> {{code.code}}</td>
+
+                    <td>{{code.deliveryOn | date:'yyyy-MM-dd'}}</td>
+                    <td> {{code.price}}</td>
+                    <td>
+                        <div class="table-actions">
+                            <div class="menu-trigger">
+                                <button mat-mini-fab
+                                        [matMenuTriggerFor]="tableActions">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                            </div>
+                            <mat-menu #tableActions="matMenu">
+                                <button mat-menu-item
+                                        (click)="openDialog(code)">
+                                    <mat-icon color="primary">edit</mat-icon>
+                                    <span>تعديل البيانات</span>
+                                </button>
+                                <button mat-menu-item
+                                        (click)="delete(code.id)">
+                                    <mat-icon color="warn">delete</mat-icon>
+                                    <span>حذف نموذج</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                        <!-- <div class="d-flex align-items-center justify-content-end column-gap-2">
+                            <button mat-icon-button
+                                    color="primary"
+                                    (click)="openDialog(code)"><mat-icon>edit</mat-icon></button>
+                            <button mat-icon-button
+                                    color="warn"
+                                    (click)="delete(code.id)"><mat-icon>delete</mat-icon></button>
+                        </div> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div> -

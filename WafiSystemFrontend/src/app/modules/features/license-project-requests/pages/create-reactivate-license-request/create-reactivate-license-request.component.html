@@ -1,0 +1,61 @@
+<div class="card">
+
+  <div class="card-header">
+    <h6 class="card-title">طلب إعادة تفعيل الرخصة</h6>
+  </div>
+  <div class="card-body">
+    <div class="update-clearance-engineering-form">
+      <form [formGroup]="form">
+
+
+        <div class="row mb-3">
+
+          <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+              <select class="form-select" id="control-licenseProjectId" aria-label="Default select example"
+                formControlName="licenseProjectId">
+                <option selected disabled>المشروع</option>
+                <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error *ngIf="showValidation && form.get('licenseProjectId')?.invalid">حقل مطلوب</mat-error>            
+
+            </div>
+          </div>
+        </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group">
+              <label class="key" for="justificationsAndReasons">مبررات و مشفوعات اعادة تفعيل الرخصة</label>
+              <textarea  rows="6" type="text" id="control-justificationsAndReasons" class="form-control"
+              formControlName="justificationsAndReasons" placeholder="مبررات و مشفوعات اعادة تفعيل الرخصة"></textarea>
+              <mat-error *ngIf="showValidation && form.get('justificationsAndReasons')?.invalid">حقل مطلوب</mat-error>           
+            </div>
+          </div>
+
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">مستندات تثبت ضبط اوضاع المشروع و اعادة الفعيل</label>           
+              <app-file-uploader [data]="mueltiFilesUploaderData"
+                (fileUploaded)="onLicenseProjectActivationRequestFiles($event)"></app-file-uploader>
+              <mat-error *ngIf="showValidation && licenseProjectActivationRequestFiles.length==0">حقل مطلوب</mat-error>           
+            </div>
+          </div>
+          
+        </div>
+
+
+        <div class="form-actions">
+          <button class="btn btn-outline-primary" id="btn-cancelRequest" (click)="cancelRequest()">إلغاء</button>
+          <button class="btn btn-primary" id="btn-creatRequest" (click)="save()">
+            انشاء الطلب
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

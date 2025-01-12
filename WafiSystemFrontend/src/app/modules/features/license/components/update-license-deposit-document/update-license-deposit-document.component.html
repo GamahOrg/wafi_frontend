@@ -1,0 +1,172 @@
+<div class="modal-body">
+  <form [formGroup]="formGroup">
+    <div class="tab-data-section">
+      <div class="row mb-3">
+
+        <div class="row">
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="mainItemId" class="form-label">البند</label>
+              <select id="mainItemId" formControlName="mainItemId" class="form-select"
+                (change)="onMainItemChange($event)">
+                <option *ngFor="let item of mainItemsDto" [value]="item.id">
+                  {{ item.name }}
+                </option>
+              </select>
+              <mat-error *ngIf="
+                controls.mainItemId?.hasError('required') && showValidation
+              ">حقل مطلوب</mat-error>
+            </div>
+          </div>
+
+          <div *ngIf="showDescriptionField" class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="mianItemDescription" class="form-label">وصف البند</label>
+              <input id="mianItemDescription" formControlName="mianItemDescription" type="text" class="form-control" />
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="row">
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="referenceNumber" class="form-label">الرقم المرجعى للايداع</label>
+              <input id="referenceNumber" formControlName="referenceNumber" type="text" class="form-control" />
+              <mat-error *ngIf="
+                controls.referenceNumber?.hasError('required') && showValidation
+              ">حقل مطلوب</mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="depositDate" class="form-label">تاريخ الإيداع</label>
+              <div class="input-group">
+                <input bsDatepicker id="control-depositDate" type="text" class="form-control"
+                  formControlName="depositDate" value="{{ controls.depositDate.value | date : 'yyyy-MM-dd' }}" />
+                <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+              </div>
+              <mat-error *ngIf="
+                controls.depositDate?.hasError('required') && showValidation
+              ">حقل مطلوب</mat-error>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">رقم الحساب</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ selectedRequest?.accountNumber }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="amount" class="form-label">المبلغ</label>
+              <input id="amount" formControlName="amount" type="number" class="form-control" />
+              <mat-error *ngIf="controls.amount?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="showOtherField" class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="licenseProjectBuyerId" class="form-label">اسم المشتري</label>
+            <select id="licenseProjectBuyer" formControlName="licenseProjectBuyer" class="form-select"
+              [(ngModel)]="selectedBuyer" (change)="onBuyerSelect()">
+              <option *ngFor="let buyer of buyerDto" [ngValue]="buyer">
+                {{ buyer.name }}
+              </option>
+            </select>
+            <mat-error *ngIf="
+                controls.licenseProjectBuyer?.hasError('required') &&
+                showValidation
+              ">حقل مطلوب</mat-error>
+          </div>
+        </div>
+        <div *ngIf="showOtherField && showBuyerDetails" class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="licenseProjectBuyerId-Id" class="form-label">سجل المشترين</label>
+            <select id="licenseProjectBuyerId-Id" class="form-select" formControlName="licenseProjectBuyerId"
+              (change)="onBuyerTypeSelect()">
+              <option label="اختر سجل المشترين" disabled></option>
+              <option *ngFor="let type of buyerDetailsDto" [value]="type.id">
+                {{
+                type.licenseProjectBuyerType.id === licenseBuyerTypeEnum.Lands
+                ? type.licenseProjectBuyerType.name + ' - ' + type.blockCode
+                : type.licenseProjectBuyerType.name + ' - ' + type.unitCode
+                }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="showOtherField && showBuyerDetails && showBuyerType" class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">رقم الهوية</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ selectedBuyerType?.nidNumber }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="showOtherField && showBuyerDetails && showBuyerType" class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">رقم البلوك او العمارة</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ selectedBuyerType?.blockCode }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="showOtherField && showBuyerDetails && showBuyerType" class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">رقم العقد</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ selectedBuyerType?.contractNumber }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="showOtherField && showBuyerDetails && showBuyerType" class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="batchNumber" class="form-label">رقم الدفعة</label>
+            <input id="batchNumber" formControlName="batchNumber" type="text" class="form-control" />
+            <mat-error *ngIf="
+                controls.batchNumber?.hasError('required') && showValidation
+              ">حقل مطلوب</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="statment" class="form-label">البيان</label>
+            <textarea id="statment" formControlName="statment" class="form-control"></textarea>
+            <mat-error *ngIf="controls.statment?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </form>
+</div>

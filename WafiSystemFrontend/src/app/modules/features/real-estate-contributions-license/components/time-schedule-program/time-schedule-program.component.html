@@ -1,0 +1,50 @@
+<div  class="p-3" style="background-color: white;">
+    <div class="d-flex justify-content-between p-3 rred section timeschedule">
+        <div>
+           البرنامج الزمني " الخط الأساسي"
+        </div>
+        <button   class="statuesbtn" *ngIf="!mainfileShecduleData ">
+            وجب التسجيل
+           </button>
+        <button   class="uploadbtn" *ngIf="mainfileShecduleData " (click)="updateTimeSchedule(true)">
+            تحديث البرنامج الزمني
+        </button>
+      </div>
+      <section class="row mt-5 " *ngIf="!mainfileShecduleData">
+        <div class="col-12 d-flex align-items-center flex-column">
+          <img src="assets/images/general/location.svg" alt="localization">
+          <p class="mt-3">تم إصدار رخصة المشروع ويجب رفع البرنامج الزمني “خط الأساس”</p>
+          <button class="uploadbtn mt-3" (click)="updateTimeSchedule(false)" >
+            ارسال البرنامج الزمني
+          </button>
+        </div>
+      </section>
+
+      <section *ngIf="mainfileShecduleData">
+        <div class="d-flex justify-content-between align-items-center   p-3 mt-5 m-3 timeschedule" >
+          <div>
+            <h5>خط الأساس</h5>
+             <span>{{mainfileShecduleData?.externalStatus?.name}}</span>
+          </div>
+          <div>
+            <button class="hintbtn"  [ngClass]="{'red' : mainfileShecduleData.externalStatus?.id == statuesCode.UnderStudy, 'green' : mainfileShecduleData.externalStatus?.id == statuesCode.Certified || mainfileShecduleData.externalStatus?.id == statuesCode.New, 'orange' : mainfileShecduleData.externalStatus?.id == statuesCode.Compile}">{{mainfileShecduleData?.externalStatus?.name}}</button>
+            <button class="detailbtn" (click)="getTimeShecduledDetails(mainfileShecduleData.id)">عرض التفاصيل</button>
+          </div>
+        </div>
+      </section>
+      <section *ngIf="MonthlyfileShecduleData.results">
+        <div class="d-flex justify-content-between align-items-center   p-3 mt-5 m-3 timeschedule" *ngFor="let monthlyfiledata of monthlytimeschecduledprogram">
+          <div>
+            <h5>    البرنامج الزمني<small>  ({{monthlyfiledata.formatedmonthDate}}) </small>  </h5>
+             <span>{{monthlyfiledata?.externalStatus?.name}}</span>
+          </div>
+          <div>
+            <button class="hintbtn" style="color: #b8b5b5;" [ngClass]="{'red' : mainfileShecduleData.externalStatus?.id == statuesCode.UnderStudy, 'green' : mainfileShecduleData.externalStatus?.id == statuesCode.Certified || mainfileShecduleData.externalStatus?.id == statuesCode.New, 'orange' : mainfileShecduleData.externalStatus?.id == statuesCode.Compile}">{{monthlyfiledata?.externalStatus?.name}}</button>
+            <button class="detailbtn" (click)="getTimeShecduledDetails(monthlyfiledata.id)">عرض التفاصيل</button>
+          </div>
+        </div>
+      </section>
+      <div class="mt-auto" *ngIf="MonthlyfileShecduleData.results && MonthlyfileShecduleData.results.length > 0">
+        <app-pagination></app-pagination>
+    </div>
+</div>

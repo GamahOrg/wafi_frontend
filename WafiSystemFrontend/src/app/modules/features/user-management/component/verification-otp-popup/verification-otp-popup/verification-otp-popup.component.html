@@ -1,0 +1,24 @@
+<div class="verification-otp">
+    <div class="image">
+        <img src="/assets/images/auth/otp-icon.svg" alt="">
+    </div>
+
+    <h5 class="title">إدخل رمز التحقق</h5>
+    <p class="text">من فضلك تفقد جوالك ,لقد تم ارسال رمز التحقق على هذا رقم جوال -
+        {{customerMobile}}
+    </p>
+    <!-- إرسال
+      ارسال الكود مرة اخري -->
+    <app-otp-input></app-otp-input>
+
+    <div class="d-flex align-items-center column-gap-3">
+        <button class="btn btn-link text-dark" (click)="sendNewOtp()" id="btn-sendNewOtp"
+            >
+            {{localization.sendNewOtp}}
+        </button>
+        <span class="remaining">
+            {{min}}
+            <!-- : 00  -->
+        </span>
+    </div>
+</div>

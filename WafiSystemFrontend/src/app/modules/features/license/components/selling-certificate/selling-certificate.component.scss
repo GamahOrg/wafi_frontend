@@ -1,0 +1,20 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/certs/license-certificates";
+
+.cetificate {
+  .cetificate-layout {
+    row-gap: 1rem;
+
+    @media print {
+      row-gap: 1rem;
+    }
+
+    .cert-footer {
+      justify-content: center;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,470 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseCertificateTemplateForm"
+id="form-licenseCertificateTemplateForm">
+<div class="tab-data-section">
+    <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم السجل التجاري</label>
+          <input type="text" id="control-commercialRegisterNumber" class="form-control" formControlName="commercialRegisterNumber"
+            placeholder="رقم السجل التجاري">
+          <mat-error
+            *ngIf="(controls.commercialRegisterNumber?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم  الهوية</label>
+          <input type="text" id="control-nidnumber" class="form-control" formControlName="nidnumber"
+            placeholder="رقم  الهوية">
+          <mat-error
+            *ngIf="(controls.nidnumber?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم السجل التجارى للاستشارى</label>
+          <input type="text" id="control-consultanatCommercialRegisterNumber" class="form-control" formControlName="consultanatCommercialRegisterNumber"
+            placeholder="رقم السجل التجارى للاستشارى">
+          <mat-error
+            *ngIf="(controls.consultanatCommercialRegisterNumber?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم السجل التجارى للمحاسب</label>
+          <input type="text" id="control-accountantCommercialRegisterNumber" class="form-control" formControlName="accountantCommercialRegisterNumber"
+            placeholder="رقم السجل التجارى للمحاسب">
+          <mat-error
+            *ngIf="(controls.accountantCommercialRegisterNumber?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الرخصة</label>
+          <input type="text" id="control-certificateNumber" class="form-control" formControlName="certificateNumber"
+            placeholder="رقم الرخصة">
+          <mat-error
+            *ngIf="(controls.certificateNumber?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">مدة الرخصة</label>
+          <input type="number" id="control-certificatePeriod" class="form-control" formControlName="certificatePeriod"
+            placeholder="مدة الرخصة">
+          <mat-error
+            *ngIf="(controls.certificatePeriod?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+         
+    <div class="col-12 col-lg-6">
+        <label for=""
+               class="form-label">تاريخ بداية الترخيص</label>
+        <input type="date" id="control-certificateStartOn"
+               class="form-control"
+               formControlName="certificateStartOn"
+               value="{{ controls.certificateStartOn.value | date:'yyyy-MM-dd' }}">
+        <div class="invalid-feedback d-block"
+            *ngIf="controls.certificateStartOn.errors?.['required']">
+            هذا الحقل مطلوب
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <label for=""
+               class="form-label">تاريخ نهاية الترخيص</label>
+        <input type="date" id="control-certificateEndOn"
+               class="form-control"
+               formControlName="certificateEndOn"
+               value="{{ controls.certificateEndOn.value | date:'yyyy-MM-dd' }}">
+        <div class="invalid-feedback d-block"
+            *ngIf="controls.certificateEndOn.errors?.['required']">
+            هذا الحقل مطلوب
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label for=""
+             class="form-label">تاريخ بداية المشروع</label>
+      <input type="date" id="control-projectOrContributionStartOn"
+             class="form-control"
+             formControlName="projectOrContributionStartOn"
+             value="{{ controls.projectOrContributionStartOn.value | date:'yyyy-MM-dd' }}">
+      <div class="invalid-feedback d-block"
+          *ngIf="controls.projectOrContributionStartOn.errors?.['required']">
+          هذا الحقل مطلوب
+      </div>
+  </div>
+  <div class="col-12 col-lg-6">
+      <label for=""
+             class="form-label">تاريخ نهاية المشروع</label>
+      <input type="date" id="control-projectOrContributionEndOn"
+             class="form-control"
+             formControlName="projectOrContributionEndOn"
+             value="{{ controls.projectOrContributionEndOn.value | date:'yyyy-MM-dd' }}">
+      <div class="invalid-feedback d-block"
+          *ngIf="controls.projectOrContributionEndOn.errors?.['required']">
+          هذا الحقل مطلوب
+      </div>
+  </div>
+    
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+            <label class="form-label">نوع الرخصة</label>
+        <select class="form-select" formControlName="licenseType">
+          <option label="نوع الرخصة" disabled></option>
+          <option *ngFor="let item of licenseTypes" [value]="item.name">
+            {{ item.name }}
+          </option>
+        </select>
+      </div> 
+       </div> 
+   
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">اسم المشروع</label>
+          <input type="text" id="control-projectOrContributionName" class="form-control" formControlName="projectOrContributionName"
+            placeholder="اسم المشروع">
+          <mat-error
+            *ngIf="(controls.projectOrContributionName?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">وصف المشروع</label>
+          <input type="text" id="control-projectOrContributionDescription" class="form-control" formControlName="projectOrContributionDescription"
+            placeholder="وصف المشروع">
+          <mat-error
+            *ngIf="(controls.projectOrContributionDescription?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+          <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+            <label class="form-label">نوع المشروع</label>
+        <select class="form-select" formControlName="projectOrContributionType">
+          <option label="نوع المشروع" disabled></option>
+          <option *ngFor="let item of types" [value]="item.name">
+            {{ item.name }}
+          </option>
+        </select>
+      </div> 
+       </div> 
+      
+           <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+            <label class="form-label">تصنيف المشروع</label>
+        <select class="form-select" formControlName="categoryName">
+          <option label="تصنيف المشروع" disabled></option>
+          <option *ngFor="let item of categories" [value]="item.categoryName">
+            {{ item.categoryName }}
+          </option>
+        </select>
+      </div> 
+       </div> 
+     
+             <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+            <label class="form-label">نطاق الأعمال</label>
+        <select class="form-select" formControlName="projectScopeName">
+          <option label="نطاق الأعمال" disabled></option>
+          <option *ngFor="let item of licenseProjectScopes" [value]="item.name">
+            {{ item.name }}
+          </option>
+        </select>
+      </div> 
+       </div> 
+     
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+    <div class="page-content">
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="checkbox" id="control-isProjectOrContributionStarted"
+                   formControlName="isProjectOrContributionStarted" />
+            <label class="form-check-label"
+                   for="isProjectOrContributionStarted">
+                   هل المشروع او المساهمة بدات
+            </label>
+        </div>
+    
+    </div>
+    </div>
+    </div>
+    <div class="col-12 col-lg-6" *ngIf="controls.isProjectOrContributionStarted.value">
+        <div class="form-group mb-4">
+          <label class="form-label">نسبة الانجاز</label>
+          <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate"
+            placeholder="نسبة الانجاز">
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">مساحة مسطح البناء للمشروع</label>
+          <input type="number" id="control-buildingFlatArea" class="form-control" formControlName="buildingFlatArea"
+            placeholder="مساحة مسطح البناء للمشروع">
+          <mat-error
+            *ngIf="(controls.buildingFlatArea?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">مساحة المشروع حسب الصك</label>
+          <input type="number" id="control-landTotalSpace" class="form-control" formControlName="landTotalSpace"
+            placeholder="مساحة المشروع حسب الصك">
+          <mat-error
+            *ngIf="(controls.landTotalSpace?.hasError('required')) && showValidation">حقل
+            مطلوب</mat-error>
+         
+        </div>
+      </div>
+</div> 
+</div>
+ 
+ <div class="tab-data-section">
+
+  <div class="row mb-3">
+    <table class="table-responsive" style="width:100%">
+      <tbody formArrayName="licenseCertifcateRelativeWeights">
+        <tr>
+            <th> البند</th>
+            <th> القيمة</th>
+        </tr>
+        <tr *ngFor="let detail of licenseCertifcateRelativeWeightsFormArr.controls
+              let i=index;let l=last" [formGroupName]="i">
+            <td>
+              <div class="form-group d-flex align-items-center">
+              <input formControlName="name" class="form-control" readonly="readonly"/>
+                </div>
+
+              </td>
+              <td>
+                <div class="form-group d-flex align-items-center">
+                <input id="control-value" class="form-control"
+                formControlName="value"  type="number"/>
+                </div>
+          </td>
+        </tr>
+    </tbody>
+</table>
+
+  </div>
+</div> 
+ <div class="tab-data-section">
+  <button type="button" class="btn btn-primary my-4" (click)="addDeedTemplatestItem()">إضافة صك</button>
+
+    <div class="row mb-3">
+      <table class="table-responsive" style="width:100%">
+        <tbody formArrayName="licenseCertifcateDeedTemplates">
+          <tr>
+            <th>نوع الصك </th>
+            <th>رقم الصك</th>
+            <th> يوم</th>
+            <th> شهر</th>
+            <th> سنة </th>
+            <th> العمليات </th>
+          </tr>
+          <tr *ngFor="let detail of licenseCertifcateDeedTemplatesFormArr.controls
+              let i=index;let l=last" [formGroupName]="i">
+              <td>
+                <select class="form-select" formControlName="deedType">
+                  <option label="نوع الصك" disabled></option>
+                  <option *ngFor="let deed of deedTypes" [value]="deed.name">
+                    {{ deed.name }}
+                  </option>
+                </select>
+                </td>
+              <td>
+                 <div class="form-group d-flex align-items-center">
+                  <input id="control-deedNumber" class="form-control"
+                  formControlName="deedNumber"  type="text"/>
+                 </div>
+              </td>
+            <td>
+               <div class="form-group d-flex align-items-center">
+                <input id="control-day" class="form-control"
+                formControlName="day"  type="number"/>
+               </div>
+            </td>
+          
+            <td>
+               <div class="form-group d-flex align-items-center">
+                <input id="control-month" class="form-control"
+                formControlName="month"  type="number"/>
+               </div>
+            </td>
+           
+            <td>
+               <div class="form-group d-flex align-items-center">
+                <input id="control-year" class="form-control"
+                formControlName="year"  type="number"/>
+               </div>
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary my-4" (click)="removeDeedTemplatesItem(i)">حذف</button>
+            </td>
+          </tr>
+         
+        
+      </tbody>
+  </table>
+  
+    </div>
+  </div>   
+  <div class="tab-data-section">
+  <button type="button" class="btn btn-primary my-4" (click)="save()">حفظ </button>
+  </div>
+
+
+  <div class="tab-data-section" *ngIf="licenseCertificateTemplateId && licenseCertificateTemplateId != 0">
+    <div class="tab-data-section">
+      <button type="button" class="btn btn-primary my-4" (click)="openDialog()">إضافة زون</button>
+          </div>
+    
+    <div class="row row-gap-4">
+      <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th scope="col">اسم الزون</th>
+                      <th scope="col">النوع بلوك او عمارة</th>
+                      <th scope="col">رقم البلوك او العمارة</th>
+                      <th scope="col"> المرحلة</th>
+                      <th scope="col">تاريخ بداية الانشاء</th>
+                      <th scope="col">تاريخ نهاية الانشاء</th>
+                      <th scope="col">نوع الوحدة</th>
+                      <th scope="col">عدد الوحدات</th>
+                      <th scope="col">اسم نموذج الوحدة</th>
+                      <th scope="col">اجمالى المساحة للوحدة</th>
+                      <th scope="col">مساحة مسطح البناء للوحدة</th>
+                      <th scope="col">عدد الوحدات</th>
+                      <th scope="col">خصائص الوحدة</th>
+                      <th scope="col">كود الوحدة</th>
+                      <th scope="col">تاريخ التسليم</th>
+                      <th scope="col">سعر التعاقد</th>
+                      <th scope="col">الدور</th>
+                      <th scope="col">العمليات</th>
+                  </tr>
+              </thead>
+              <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                  <tr>
+                      <td>
+                          <div class="d-flex align-items-center column-gap-2">
+                              {{comdata.zoneName}}
+                          </div>
+                      </td>
+                      <td>
+                          <div class="d-flex align-items-center column-gap-2">
+                              {{comdata.unitTypeName}}
+                          </div>
+                      </td>
+                      <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.unitCode}}</span>
+                      </td>
+                      <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.stageName}}</span>
+                      </td>
+                      <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.constructionStartOn|date:'yyyy/MM/dd'}}</span>
+                      </td>
+                      <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.constructionEndOn|date:'yyyy/MM/dd'}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.subUnitTypeName}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.subUnitCount}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.modelName}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.space}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.buildingFlatSpace}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.unitsCount}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.properties}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.code}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.deliveryOn|date:'yyyy/MM/dd'}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.price}}</span>
+                         
+                       </td>
+                       <td>
+                          <span class="d-flex align-items-center column-gap-2">
+                              {{comdata.floorNumber}}</span>
+                         
+                       </td>
+                       <td>
+                        <button type="button" class="btn btn-primary my-4" (click)="removeLicenseCertificateUnitAsync(comdata.id)">حذف</button>
+                     </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+    
+      <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+          <app-pagination></app-pagination>
+      </div>
+      <ng-container *ngIf="reqList.totalCount === 0">
+          <div class="mt-4">
+              <app-no-data [showCompleteBtn]="false"></app-no-data>
+          </div>
+      </ng-container>
+    </div>
+    </div>
+
+</form>

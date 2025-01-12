@@ -1,0 +1,322 @@
+<div *ngIf="facilityData">
+  <div class="tab-data-header">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title fw-normal">البيانات الأساسية</h6>
+
+    <button mat-raised-button (click)="openDialog()" class="edit-icon">
+      <span class="material-icons">edit</span>
+    </button>
+  </div>
+
+  <div class="tab-data-section">
+    <h6 class="title">بيانات السجل التجاري</h6>
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <div class="key">رقم السجل التجاري</div>
+        <div class="value">{{ facilityData.commercialRegisterNumber }}</div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">الرقم الموحد</div>
+        <div class="value">{{ facilityData.crNationalNumber }}</div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">تاريخ إصدار السجل التجاري</div>
+        <div class="value">
+          <span class="icon material-icons">calendar_today</span>
+          {{ facilityData.commercialRegisterStartDate | date : "MM/dd/yyyy" }}
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">تاريخ انتهاء السجل التجاري</div>
+        <div class="value">
+          <span class="icon material-icons">calendar_today</span>
+          {{ facilityData.commercialRegisterEndDate | date : "MM/dd/yyyy" }}
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">اسم الشركة</div>
+        <div class="value">
+          <span class="icon material-icons">blinds</span
+          >{{ facilityData.facilityName }}
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">رأس مال المنشأة</div>
+        <div class="value">{{ facilityData.capitalNumber }}</div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">نشاط/أنشطة السجل التجاري</div>
+        <div
+          class="value"
+          *ngFor="
+            let facilityBusinessType of facilityData.facilityBusinessTypes
+          "
+        >
+          {{ facilityBusinessType.businessType }}
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">
+          رقم شهادة التأمينات الاجتماعية لقائمة المشتركين على رأس العمل
+        </div>
+        <div class="value">
+          {{ facilityData.socialInsuranceCertificateNumber }}
+        </div>
+      </div>
+      <!--     <div class="col-12 col-md-6">
+                <div class="key">قائمة المشتركين على رأس العمل </div>
+                <div class="value"
+                     *ngFor="let employee of facilityData.qualificationSocialInsuranceEmployeeLists">{{employee.name}}
+                </div>
+            </div> -->
+      <div class="col-12 col-md-6">
+        <div class="key">قائمة المشتركين على رأس العمل</div>
+        <a
+          download
+          *ngIf="facilityData.socialInsuranceEmployeesListFileManager"
+          [href]="
+            baseUrl +
+            facilityData.socialInsuranceEmployeesListFileManager.filePath
+          "
+        >
+          {{
+            facilityData.socialInsuranceEmployeesListFileManager.fileDescription
+          }}
+        </a>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">الموقع الإلكتروني</div>
+        <div class="value" *ngIf="facilityData.website">
+          <span class="icon material-icons">language</span
+          >{{ facilityData.website }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-data-section">
+    <h6 class="title">ملاك</h6>
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <table class="facility-owner-table" border="1">
+          <thead>
+            <tr>
+              <th>رقم الهوية</th>
+              <th>اسم مالك</th>
+              <th>نوع العلاقة</th>
+              <th>الجنسية</th>
+              <th>رقم التليفون</th>
+              <th>الايميل</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let owner of facilityData.facilityOwners; let i = index"
+            >
+            <td class="facility-owner-body">{{ owner.nidnumber }}</td>
+            <td class="facility-owner-body">{{ owner.ownerName }}</td>
+            <td class="facility-owner-body">{{ owner.relationType }}</td>
+            <td class="facility-owner-body">{{ owner.ownerNationalityAR }}</td>
+            <td class="facility-owner-body">{{ owner.mobile }}</td>
+            <td class="facility-owner-body">{{ owner.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="tab-data-section">
+    <h6 class="title">بيانات أساسية (مطور عقاري مستقل)</h6>
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <div class="key">نوع المنشأة</div>
+        <div class="value">{{ facilityData.facilityType }}</div>
+      </div>
+      <div
+        class="col-12 col-md-6"
+        *ngIf="
+          userData &&
+          userData.facilities.length > 0 &&
+          userData.facilities[0].facilityType == 'جمعية'
+        "
+      >
+        <div class="key">الترخيص للجمعية التعاونية</div>
+        <div
+          class="value"
+          *ngIf="facilityData.cooperativeSocietyLicensingFileManager"
+        >
+          <a
+            download
+            [href]="
+              baseUrl +
+              facilityData.cooperativeSocietyLicensingFileManager.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.cooperativeSocietyLicensingFileManager
+                .fileDescription
+            }}
+          </a>
+
+          <!-- <span class="delete" (click)="confirmDelete(facilityData.cooperativeSocietyLicensingFileManager)"><i class="material-icons text-danger">close</i></span> -->
+        </div>
+      </div>
+
+      <!-- <div class="col-12 col-md-6">
+                <div class="key">رقم شهادات تصنيف مقدمي خدمات المدن المنفذين للمشاريع
+                </div>
+                <div class="value"
+                     *ngFor="let number of facilityData.qualificationFacilityServiceProvidersCertificateNumbers">
+                    {{number.description}}
+                </div>
+            </div> -->
+      <!--      <div class="col-12 col-md-6">
+                <div class="key">ملفات شهادات تأهيل أو تصنيف حصلت علىها المنشأة</div>
+                <div class="value"
+                     *ngFor="let certificate of facilityData.qualificationFacilityCertifications">
+                    <a download
+                       *ngIf="certificate.certificationFile"
+                       [href]="baseUrl + certificate.certificationFile.filePath">
+                        {{certificate.certificationFile.fileDescription}}
+                    </a>
+                </div>
+            </div> -->
+      <div class="col-12 col-md-6">
+        <div class="key">هل يوجد بيان بالقضايا أم لا</div>
+        <div class="value">
+          {{ facilityData.isIssuesExist ? "نعم" : "لا" }}
+        </div>
+      </div>
+      <div class="col-12 col-md-6" *ngIf="facilityData.isIssuesExist">
+        <div class="key">مرفقات القضايا</div>
+        <ng-container
+          *ngIf="
+            facilityData.qualificationIssuesDocuments &&
+            facilityData.qualificationIssuesDocuments.length > 0
+          "
+        >
+          <div
+            class="value"
+            *ngFor="
+              let qualificationIssuesDocument of facilityData.qualificationIssuesDocuments
+            "
+          >
+            <a
+              download
+              [href]="
+                baseUrl + qualificationIssuesDocument.fileManager?.filePath
+              "
+              class="d-block"
+              target="_blank"
+            >
+              {{ qualificationIssuesDocument.fileManager?.fileDescription }}
+            </a>
+            <!-- <span class="delete" (click)="confirmDelete(qualificationIssuesDocument.fileManager)"><i class="material-icons text-danger">close</i></span> -->
+          </div>
+        </ng-container>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">رقم عضوية الغرفة التجارية</div>
+        <div class="value">
+          {{ facilityData.chamberOfCommerceMembershipNumber }}
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">مدينة إصدار عضوية الغرفة التجارية</div>
+        <div class="value">{{ facilityData.city?.cityName }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-data-section">
+    <h6 class="title">بيانات أساسية (مطور عقاري متحالف مع شركة مؤهلة)</h6>
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <div class="key">رقم السجل التجاري للشركة المؤهلة سابقا</div>
+        <div class="value">
+          {{
+            facilityData.previouslyQualifiedFacilityCommercialRegistrationNumber
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-data-section">
+    <h6 class="title">بيانات أساسية (مطور العقاري مدرج في سوق المال)</h6>
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <div class="key">رمز الشركة في السوق المالية</div>
+        <div class="value">{{ facilityData.companyCodeInFinancialMarket }}</div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key">عقد تأسيس الشركة</div>
+        <div
+          class="value"
+          *ngIf="facilityData.companyEstablishingContractFileManager"
+        >
+          <a
+            download
+            [href]="
+              baseUrl +
+              facilityData.companyEstablishingContractFileManager.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.companyEstablishingContractFileManager
+                .fileDescription
+            }}
+          </a>
+          <div class="value">
+            <span
+              class="delete"
+              (click)="
+                deletFile(
+                  facilityData.companyEstablishingContractFileManager.id
+                )
+              "
+              ><i class="material-icons text-danger">close</i></span
+            >
+          </div>
+          <!-- <span class="delete" (click)="confirmDelete(facilityData.companyEstablishingContractFileManager)"><i class="material-icons text-danger">close</i></span> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-data-section">
+    <h6 class="title">بيانات أساسية (الاستشاري الهندسي)</h6>
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <div class="key">رقم ترخيص الهيئة السعودية للمهندسين</div>
+        <div class="value">
+          {{ facilityData.saudiAuthorityOfEngineersLicenseNumber }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-data-section">
+    <h6 class="title">بيانات أساسية (المحاسب القانوني)</h6>
+
+    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="col-12 col-md-6">
+        <div class="key">رقم ترخيص الهيئة السعودية للمراجعين والمحاسبين</div>
+        <div class="value">
+          {{ facilityData.saudiAuthorityForAuditorsAndAccountants }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-no-data
+  (onNoDataButtonClicked)="openDialog()"
+  *ngIf="!facilityData"
+></app-no-data>

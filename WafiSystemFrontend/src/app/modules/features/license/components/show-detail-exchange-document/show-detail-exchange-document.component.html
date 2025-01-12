@@ -1,0 +1,99 @@
+<div class="tab-data-section" *ngIf="licenseProjectExchangeDocument && licenseProject">
+    <div class="row mb-3">
+   
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">البند الرئيسي</label>
+          {{licenseProjectExchangeDocument.mainItem.name}}
+  
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.subItem">
+        <div class="form-group mb-4">
+          <label class="form-label">البند الفرعي</label>
+          {{licenseProjectExchangeDocument.subItem.name}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الوثيقة</label>
+          {{licenseProjectExchangeDocument.documnetNumber}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">تاريخ الصرف</label>
+          {{licenseProjectExchangeDocument.exchangeDate | date:'yyyy-MM-dd'}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">المبلغ</label>
+          {{licenseProjectExchangeDocument.amount}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">تاريخ الاعتماد</label>
+          {{licenseProjectExchangeDocument.approvalDate | date:'yyyy-MM-dd'}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">البيان</label>
+          {{licenseProjectExchangeDocument.statment}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.liceneProjectBeneficiaryType">
+        <div class="form-group mb-4">
+          <label class="form-label">المستفيد</label>
+          {{licenseProjectExchangeDocument.liceneProjectBeneficiaryType.name}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.beneficiaryDescription">
+        <div class="form-group mb-4">
+          <label class="form-label">وصف المستفيد</label>
+          {{licenseProjectExchangeDocument.beneficiaryDescription}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer">
+        <div class="form-group mb-4">
+          <label class="form-label">اسم المشتري</label>
+          {{licenseProjectExchangeDocument.licenseProjectBuyer.name}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم هوية المشتري</label>
+          {{licenseProjectExchangeDocument.licenseProjectBuyer.nidNumber}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer && licenseProjectExchangeDocument.licenseProjectBuyer.unitCode">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الوحدة</label>
+          {{licenseProjectExchangeDocument.licenseProjectBuyer.unitCode}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم البلوك</label>
+          {{licenseProjectExchangeDocument.licenseProjectBuyer.blockCode}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم العقد</label>
+          {{licenseProjectExchangeDocument.licenseProjectBuyer.contractNumber}}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الدفعة</label>
+          {{licenseProjectExchangeDocument.batchNumber}}
+        </div>
+      </div>
+   
+
+   
+    </div>
+  </div>

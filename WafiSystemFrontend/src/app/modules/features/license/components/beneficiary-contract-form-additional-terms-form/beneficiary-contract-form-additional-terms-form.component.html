@@ -1,0 +1,60 @@
+<ng-container>
+    <form class="d-flex flex-column h-100" id="form-addingZoneForm"
+          [formGroup]="beneficiaryContractFormAdditionalTermsForm">
+
+        <div class="tab-data-section">
+            <div class="row mb-3">
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.itemNumber}}</label>
+                        <div class="input-group">
+                            <input  id="control-itemNumber"
+                                   type="number"
+                                   class="form-control"
+                                   formControlName="itemNumber">
+                        </div>
+                        <mat-error *ngIf="controls.itemNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.licenseBeneficiaryContractFormId}}</label>
+                        <select class="form-select"  id="control-licenseBeneficiaryContractFormId"
+                        formControlName="licenseBeneficiaryContractFormId">
+                    <option value="">اختر البند</option>
+                    <option *ngFor="let beneficiary of sysLicenseBeneficiaryContractFormList"
+                            [ngValue]="beneficiary.id">
+                        {{ beneficiary.description }}
+                    </option>
+                </select>
+
+                    </div>
+
+                        <mat-error *ngIf="controls.licenseBeneficiaryContractFormId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                <div class="col-12 col-lg-12">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.itemText}}</label>
+                        <textarea type="text"  id="control-itemText"
+                               placeholder="{{localization.itemText}}"
+                               class="form-control"
+                               formControlName="itemText"></textarea>
+                        <mat-error *ngIf="controls.itemText?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-12">
+                <div class="page-content">
+                    <div class="form-check">
+                        <input class="form-check-input"  id="control-additionalTermsAcknowledgment" type="checkbox"  formControlName="additionalTermsAcknowledgment" />
+                        <label class="form-check-label" for="additionalTermsAcknowledgment">
+                            أقر بعدم إضافة بنود إضافية تتعأرض مع البنود الأساسية للعقد التي تم اعدادها من قبل "البيع على الخارطة" كما تم ذكرها فى نموذج العقد
+                             </label>
+                    </div>
+
+            </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</ng-container>

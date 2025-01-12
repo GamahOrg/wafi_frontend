@@ -1,0 +1,53 @@
+<button type="button" class="btn btn-primary my-4" (click)="openDialog('')">إضافة </button>
+
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">البند</th>
+                    <th scope="col">وصف البند</th>
+                    <th scope="col">رقم المرجع</th>
+                    <th scope="col">تاريخ الإيداع</th>
+                    <th scope="col">المبلغ</th>
+                    <th scope="col">العمليات</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let deposit of reqList.results; let i = index;">
+                <tr>
+                  
+                    <td>
+                        <span class="text-dark">{{ deposit.item }}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{ deposit.mianItemDescription }}</span>
+                    </td>
+                  
+                    <td>
+                        <span class="text-dark">{{ deposit.referenceNumber }}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{ deposit.depositDate | date: 'yyyy-MM-dd' }}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{ deposit.amount}}</span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary" (click)="showDetailDialog(deposit.id)">التفاصيل</button>
+                        <button type="button" class="btn btn-outline-primary" (click)="editDialog(deposit.id)">تعديل</button>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>

@@ -1,0 +1,57 @@
+.status-dot,
+.status-pill {
+    display: flex;
+    align-items: center;
+    border-radius: $border-radius-sm;
+
+    &.RequestAccepted,
+    &.RequestVerifiedAssignedToAdmin,
+    &.RequestIsBeingProcessed,
+    &.RequestHasBeenSentForReview {
+        //1-2-3-4
+        color: $success;
+        background-color: $success-bg;
+    }
+
+    &.None,
+    &.RequestProcessedAndFeedbackSent {
+        //0-5
+        color: $primary;
+        background-color: $primary-bg;
+    }
+
+    &.FeedbackProcessedAndRequestSent {
+        //6
+        color: $warning;
+        background-color: $warning-bg;
+    }
+
+    &.RequestRejected {
+        //7
+        color: $danger;
+        background-color: $danger-bg;
+    }
+
+    &.RequTheRequestHasBeenApproved,
+    &.QualificationCertificateIssued {
+        //8-9
+        color: $mintgreen;
+        background-color: $mintgreen-bg;
+    }
+}
+
+.status-dot {
+    font-size: $font-size-sm;
+    background-color: transparent !important;
+
+    .icon {
+        margin-inline-end: .5rem;
+        font-size: $font-size-xxs;
+    }
+}
+
+.status-pill {
+    padding: .625rem;
+    font-size: $font-size-xs;
+    background-color: $primary-bg;
+}

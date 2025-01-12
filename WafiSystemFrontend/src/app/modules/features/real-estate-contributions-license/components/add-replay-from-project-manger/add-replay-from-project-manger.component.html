@@ -1,0 +1,19 @@
+<form class="d-flex flex-column h-100" [formGroup]="replayFromProjectMangerForm"
+id="form-replayFromProjectMangerForm">
+<div class="tab-data-section">
+  <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">الرد او الملاحظة</label>
+          <textarea type="text" id="control-area" class="form-control" formControlName="notes"
+            placeholder="رد  مدير المشروع" ></textarea>
+            <div class="invalid-feedback d-block"
+            *ngIf="controls.notes.errors?.['required'] && showValidation">
+          حقل مطلوب
+       </div>
+        </div>
+      </div>
+ 
+</div> 
+</div>
+</form>

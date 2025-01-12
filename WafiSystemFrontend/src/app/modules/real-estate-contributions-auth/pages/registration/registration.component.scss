@@ -1,0 +1,23 @@
+@import "/src/assets/styles/custom-variables";
+
+.user-data {
+    .title {
+        margin-bottom: 1.5rem;
+        // color: $darkblue;
+        color: $theme-dark;
+    }
+
+    .key {
+        font-size: $font-size-sm;
+        // color: $blue;
+        color: $theme-main;
+        opacity: .5;
+    }
+
+    .value {
+        font-size: $font-size-sm;
+        font-weight: bold;
+        // color: $darkblue;
+        color: $theme-dark;
+    }
+}

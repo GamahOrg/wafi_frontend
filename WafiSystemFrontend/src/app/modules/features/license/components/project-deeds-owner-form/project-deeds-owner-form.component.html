@@ -1,0 +1,74 @@
+<ng-container>
+
+    <form class="d-flex flex-column h-100" [formGroup]="projectLandOwnerForm" id="form-projectLandOwnerForm">
+        <div class="tab-data-header">
+            <div class="icon"><span class="material-icons">list_alt</span></div>
+            <h6 class="title fw-normal">{{localization.title}}</h6>
+        </div>
+
+        <div class="tab-data-section">
+            <div class="row mb-3">
+                <div class="col-12 col-lg-12">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.typeId}}</label>
+                        <select class="form-select"
+                                id="control-typeId"
+                                formControlName="typeId"
+                                (change)="changeFormValidations()">
+                            <option [label]="localization.typeId"></option>
+                            <option *ngFor="let type of types"
+                                    [value]="type.id">{{type.name}}</option>
+                        </select>
+                        <mat-error *ngIf="controls.typeId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+
+                <div *ngIf="ownerType == 0 || ownerType == 3 || ownerType == 4 || ownerType == 5"
+                     class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label *ngIf="ownerType == 3"
+                               class="form-label">{{localization.nationalId}}</label>
+                        <label *ngIf="ownerType == 0 || ownerType == 4 || ownerType == 5"
+                               class="form-label">{{localization.CRA}}</label>
+                        <input type="text"
+                               id="control-nationalIdOrCRA"
+                               placeholder="{{localization.nationalId}}"
+                               class="form-control"
+                               formControlName="nationalIdOrCRA">
+                        <mat-error *ngIf="controls.nationalIdOrCRA?.hasError('pattern')">{{localization.numberPattern}}</mat-error>
+                        <mat-error *ngIf="controls.nationalIdOrCRA?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+
+                <div *ngIf="ownerType != 2"
+                     class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.name}}</label>
+                        <input type="text"
+                              id="control-name"
+                               placeholder="{{localization.name}}"
+                               class="form-control"
+                               formControlName="name">
+                        <mat-error *ngIf="controls.name?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+
+                <div *ngIf="ownerType == 0 || ownerType == 3 || ownerType == 4 || ownerType == 5"
+                     class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">{{localization.mobileNumber}}</label>
+                        <input type="text"
+                              id="control-mobileNumber"
+                               placeholder="{{localization.mobileNumber}}"
+                               class="form-control"
+                               formControlName="mobileNumber">
+                        <mat-error *ngIf="controls.mobileNumber?.hasError('pattern')">{{localization.numberPattern}}</mat-error>
+                        <mat-error *ngIf="controls.mobileNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                    </div>
+                </div>
+
+                 
+            </div>
+        </div>
+    </form>
+</ng-container>

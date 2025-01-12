@@ -1,0 +1,29 @@
+@import "/src/assets/styles/custom-variables";
+
+.pilot-launch-hint {
+    position: absolute;
+    inset-inline-end: 20%;
+
+    width: fit-content;
+    margin-inline: auto;
+    padding: .5rem 1rem;
+
+    font-size: $font-size-xs;
+    // color: $darkgreen;
+    color: $white;
+
+    border-radius: 0 0 .5rem .5rem;
+    // background-color: $orange;
+    background-color: $theme-dark;
+
+    transition: all ease-in-out .3s;
+
+    :host-context(.rega) & {
+        color: $white;
+        background-color: $theme-dark;
+    }
+
+    @media (max-width: 767px) {
+        inset-inline-end: 1rem;
+    }
+}

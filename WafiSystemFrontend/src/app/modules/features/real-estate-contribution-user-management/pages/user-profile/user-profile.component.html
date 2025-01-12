@@ -1,0 +1,73 @@
+<div class="card qualiication-reqest-card mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-9">
+        <div class="row">
+          <div class="col-3 col-lg-auto">
+            <div class="image">
+              <img src="../../../../../../assets/images/general/static-person.jpeg"
+                   alt=""
+                   class="d-block w-100">
+            </div>
+          </div>
+          <div class="col-6 col-lg-auto">
+            <div class="row col-lg-auto py-2">
+              <div class="col-8 col-lg-auto">
+                <h6 class="bold"> {{userData?.fullName}} </h6>
+              </div>
+              <!-- <div class="col-3 col-lg-auto">
+                              <small> مالك حساب </small>
+                          </div> -->
+            </div>
+
+            <div class="row col-lg-auto">
+              <div class="col-5 ">
+                <label> رقم الهوية </label>
+              </div>
+              <div class="col-7 ">
+                <span> {{userData?.nidnumber}} </span>
+              </div>
+            </div>
+            <div class="row col-lg-auto">
+              <div class="col-5 ">
+                <label>رقم الجوال </label>
+              </div>
+              <div class="col-7 ">
+                <span> {{userData?.mobile1}}</span>
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col-5 ">
+                <label> الجنسية </label>
+              </div>
+              <div class="col-7 ">
+                <span> {{userData?.nationality}} </span>
+              </div>
+            </div>
+            <div class="row col-lg-auto">
+              <div class="col-5 ">
+                <label>البريد الإلكتروني</label>
+              </div>
+              <div class="col-7 ">
+                <span>{{userData?.email}}</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-end align-items-start">
+        <!-- <button type="button"
+                  class="toggle btn btn-outline-primary">
+            <span class="material-icons">edit</span>
+          </button> -->
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="tab-wrapper flex-fill">
+  <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
+</div>
