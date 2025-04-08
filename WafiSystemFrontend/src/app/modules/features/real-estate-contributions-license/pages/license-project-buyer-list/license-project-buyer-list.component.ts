@@ -66,7 +66,7 @@ export class LicenseProjectBuyerListComponent {
   getFacilityBuyers(): void {
     this.subscriptions.push(
       this._licenseProjectBuyerService.getFacilityBuyers(this.facilityId as string,this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseProjectBuyerListPagingDto[]> | null) => {
-        debugger;
+        
        this.updateRequestList(res as Pagination<LicenseProjectBuyerListPagingDto[]>);
       })
     )

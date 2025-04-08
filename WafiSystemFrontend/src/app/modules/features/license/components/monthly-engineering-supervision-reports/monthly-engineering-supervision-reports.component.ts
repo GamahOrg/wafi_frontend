@@ -8,6 +8,10 @@ import { MonthlyEngineeringSupervisionReportsRisksAndSafetyComponent } from '../
 import { MonthlyengineeringSupervisionReportsProjectDetailsComponent } from '../monthlyengineering-supervision-reports-project-details/monthlyengineering-supervision-reports-project-details.component';
 import { MonthlyEngineeringSupervisionReportsQualityAndBusinessProgressComponent } from '../monthly-engineering-supervision-reports-quality-and-business-progress/monthly-engineering-supervision-reports-quality-and-business-progress.component';
 import { MonthlyEngineeringSupervisionReportsWorkStatusReportsComponent } from '../monthly-engineering-supervision-reports-work-status-reports/monthly-engineering-supervision-reports-work-status-reports.component';
+import { ShowActualValueWorkStatuesReportComponent } from '../show-actual-value-work-statues-report/show-actual-value-work-statues-report.component';
+import { ActualNotesComponent } from '../actual-notes/actual-notes.component';
+import { DangerLogComponent } from '../danger-log/danger-log.component';
+import { ProblemLogComponent } from '../problem-log/problem-log.component';
 
 @Component({
   selector: 'app-monthly-engineering-supervision-reports',
@@ -23,20 +27,24 @@ export class MonthlyEngineeringSupervisionReportsComponent implements OnInit, On
     MonthlyengineeringSupervisionReportsProjectDetails: "تفاصيل المشروع",
     MonthlyEngineeringSupervisionReportsRisksAndSafety: "المخاطر والسلامة",
     MonthlyEngineeringSupervisionReportsInfraStructure: "البنية التحتية",
-    positionOfTheRequiredAppropriationsFromTheAuthorities: "موقف الاعتمادات المطلوبة من الجهات"
+    positionOfTheRequiredAppropriationsFromTheAuthorities: "موقف الاعتمادات المطلوبة من الجهات",
+    ProjectStatusSummary:'ملخص حالة المشروع',  
+    DangerLog:"سجل المخاطر",
+    ProblemLog:"سجل المشاكل",
+    ProjectNotesSummary:'الملاحظات', 
   };
 
   tabContent: Tabs = {
     verticalTabs: false,
     activeTabIndex: 0,
-    tabsComponentList: [
+    tabsComponentList: [ 
       {
         icon: '',
-        title: this.localization.MonthlyEngineeringSupervisionReportsWorkStatusReports,
-        Component: MonthlyEngineeringSupervisionReportsWorkStatusReportsComponent,
+        title: this.localization.ProjectStatusSummary,
+        Component: ShowActualValueWorkStatuesReportComponent,
         disabled: false,
         isVisible: true,
-      },
+      },      
       {
         icon: '',
         title: this.localization.MonthlyEngineeringSupervisionReportsQualityAndBusinessProgress,
@@ -50,7 +58,7 @@ export class MonthlyEngineeringSupervisionReportsComponent implements OnInit, On
         Component: MonthlyengineeringSupervisionReportsProjectDetailsComponent,
         disabled: false,
         isVisible: true,
-      },
+      },     
       {
         icon: '',
         title: this.localization.MonthlyEngineeringSupervisionReportsRisksAndSafety,
@@ -69,6 +77,29 @@ export class MonthlyEngineeringSupervisionReportsComponent implements OnInit, On
         icon: '',
         title: this.localization.positionOfTheRequiredAppropriationsFromTheAuthorities,
         Component: PositionOfTheRequiredAppropriationsFromTheAuthoritiesComponent,
+        disabled: false,
+        isVisible: true,
+      },
+      {
+        icon: '',
+        title: this.localization.DangerLog,
+        Component: DangerLogComponent,
+        disabled: false,
+        isVisible: true,
+      },
+ 
+      {
+        icon: '',
+        title: this.localization.ProblemLog,
+        Component: ProblemLogComponent,
+        disabled: false,
+        isVisible: true,
+      },
+
+      {
+        icon: '',
+        title: this.localization.ProjectNotesSummary,
+        Component: ActualNotesComponent,
         disabled: false,
         isVisible: true,
       },

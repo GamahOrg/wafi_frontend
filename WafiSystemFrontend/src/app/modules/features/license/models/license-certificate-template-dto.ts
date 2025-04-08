@@ -1,12 +1,12 @@
 export interface LicenseCertificateTemplateDto {
     id:number;
-    //رقم السجل التجارى
+    //رقم السجل التجاري
 commercialRegisterNumber :string;
 //رقم هوية المطور
  nidnumber :string;
-//رقم السجل التجارى للاستشارى
+//رقم السجل التجاري للإستشاري
 consultanatCommercialRegisterNumber :string;
-//رقم السجل التجارى للمحاسب
+//رقم السجل التجاري للمحاسب
 accountantCommercialRegisterNumber :string;
 //رقم الرخصة
  certificateNumber :string;
@@ -47,7 +47,7 @@ achievementRate :number;
 buildingFlatArea :string;
 //مساحة المشروع حسب الصك
 landTotalSpace :string;
-////قيمة الارض التقديرية
+////قيمة الأرض التقديرية
 //public decimal? LandValue :string;
 //public Guid? LicenseRequestTypeId :string;
 

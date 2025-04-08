@@ -93,7 +93,7 @@ export class MainDataComponent implements OnInit, OnDestroy {
     this.observeValidationError();
   }
   private getDataVisibilityOfLicenseProject() {
-    this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProjectForCertainTab(this.subscriptions, this.mainTabsComponentList, false, true)
+    this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProjectForCertainTab(this.subscriptions, this.mainTabsComponentList, true, true)
   }
 
 

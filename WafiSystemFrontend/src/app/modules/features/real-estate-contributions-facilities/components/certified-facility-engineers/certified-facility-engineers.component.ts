@@ -8,6 +8,7 @@ import { UserDataService } from 'src/app/core/services/user-data/user-data.servi
 import { CertifiedEngineerService } from '../../services/QualificationCertifiedEngineer/certified-engineer.service';
 import { CertifiedFacilityEngineersFormComponent } from '../certified-facility-engineers-form/certified-facility-engineers-form.component';
 import { environment } from 'src/environments/environment';
+import { QualificationEngineerType } from '../../dataModels/qualification-engineer-type.model';
 
 @Component({
   selector: 'app-certified-facility-engineers',
@@ -47,7 +48,7 @@ export class CertifiedFacilityEngineersComponent {
   GetByFacilityId() {
     this.subscriptions.push(
       this._certifiedEngineerService
-        .GetFacilityById(this.userData?.facilities[0].id as string)
+        .GetAllFacilityById(this.userData?.facilities[0].id as string)
         .subscribe((res) => {
           this.models = res as CertifiedEngineerDto[];
         })

@@ -1,161 +1,124 @@
 <div class="page">
-    <div class="filter mb-5">
-        <div class="page-header mb-4">
-            <div class="page-title">
-                <h2 class="title">{{localization.createTraining}}</h2>
+  <div class="page-title">
+    <h2 class="title">{{localization.createTraining}}</h2>
+  </div>
+
+  <div class="page-content d-flex flex-column gap-3">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="d-flex align-items-center gap-3">
+          <a routerLink="." fragment="videoTraining" (click)="showTrainingByIndex(0)">
+            <div class="type-item h-100" [ngClass]="{'active': currentTraining === 0}">
+              <div class="title">{{localization.videoTraining}}</div>
             </div>
+          </a>
+
+          <a routerLink="." fragment="siteTraining" (click)="showTrainingByIndex(1)">
+            <div class="type-item h-100" [ngClass]="{'active': currentTraining === 1}">
+              <div class="title">{{localization.siteTraining}}</div>
+            </div>
+          </a>
+
+          <a routerLink="." fragment="onlineTraining" (click)="showTrainingByIndex(2)">
+            <div class="type-item h-100" [ngClass]="{'active': currentTraining === 2}">
+              <div class="title">{{localization.onlineTraining}}</div>
+            </div>
+          </a>
         </div>
 
-        <div class="container mb-4">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a routerLink="."
-                       fragment="videoTraining"
-                       (click)="showTrainingByIndex(0)">
-                        <div class="type-item h-100"
-                             [ngClass]="{'active': currentTraining === 0}">
-                            <div class="title">{{localization.videoTraining}}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a routerLink="."
-                       fragment="siteTraining"
-                       (click)="showTrainingByIndex(1)">
-                        <div class="type-item h-100"
-                             [ngClass]="{'active': currentTraining === 1}">
-                            <div class="title">{{localization.siteTraining}}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a routerLink="."
-                       fragment="onlineTraining"
-                       (click)="showTrainingByIndex(2)">
-                        <div class="type-item h-100"
-                             [ngClass]="{'active': currentTraining === 2}">
-                            <div class="title">{{localization.onlineTraining}}</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-        
-    <div class="licenses-group"
-         id="videoTraining">
-        <div class="licenses-group-header">
-            <div class="page-title">
-                <h2 class="title fs-6">{{localization.videoTraining}}</h2>
-            </div>
-        </div>
-        <div class="licenses-group-data">
-            <div class="row g-4 row-cols-lg-3">
-                <div class="col-12 col-md-6 col-lg"
-                     *ngFor="let training of trainings.videoTrainings">
-                    <div class="card license-card">
-                        <div class="head">
-                            <div class="icon">
-                                <span class="material-icons-outlined">tab</span>
-                            </div>
-                            <div class="title overflow-hidden">
-                                <h6 class="text-center">{{training.trainingName}}</h6>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <p class="text text-center overflow-hidden">{{training.trainingDescription}}</p>
-                            <a (click)="navogateToCreateRequest(training.trainingCode)"
-                               class="btn-arrow">
-                                <img class="arrow"
-                                     src="assets/images/icons/btn-arrow.svg"
-                                     alt="">
-                                <img class="arrow-hover"
-                                     src="assets/images/icons/btn-arrow-hover.svg"
-                                     alt="">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 
-    <div class="licenses-group"
-         id="siteTraining">
-        <div class="licenses-group-header">
-            <div class="page-title">
-                <h2 class="title fs-6">{{localization.siteTraining}}</h2>
+  <div class="licenses-group p-3 rounded-2 bg-white" id="videoTraining">
+    <div class="page-header">
+      <div class="page-title">
+        <h2 class="title">{{localization.videoTraining}}</h2>
+      </div>
+    </div>
+    <div class="licenses-group-data">
+      <div class="row row-gap-4 w-75 mx-auto">
+        <div class="col-12 col-lg-6" *ngFor="let training of trainings.videoTrainings">
+          <div class="card license-card h-100">
+            <div class="card-header">
+              <div class="icon">
+                <span class="material-icons-outlined">tab</span>
+              </div>
+              <div class="title overflow-hidden">
+                <h6 class="text-center">{{training.trainingName}}</h6>
+              </div>
             </div>
-        </div>
-        <div class="licenses-group-data">
-            <div class="row g-4 row-cols-lg-3">
-                <div class="col-12 col-md-6 col-lg"
-                     *ngFor="let training of trainings.siteTrainings">
-                    <div class="card license-card">
-                        <div class="head">
-                            <div class="icon">
-                                <span class="material-icons-outlined">add_business</span>
-                            </div>
-                            <div class="title overflow-hidden">
-                                <h6 class="text-center">{{training.trainingName}}</h6>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <p class="text text-center overflow-hidden">{{training.trainingDescription}}</p>
-                            <a (click)="navogateToCreateRequest(training.trainingCode)"
-                               class="btn-arrow">
-                                <img class="arrow"
-                                     src="assets/images/icons/btn-arrow.svg"
-                                     alt="">
-                                <img class="arrow-hover"
-                                     src="assets/images/icons/btn-arrow-hover.svg"
-                                     alt="">
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body">
+              <p class="card-text">{{training.trainingDescription}}</p>
+              <span (click)="navogateToCreateRequest(training.trainingCode)">
+                <i class="material-icons">west</i>
+              </span>
             </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="licenses-group p-3 rounded-2 bg-white" id="siteTraining">
+    <div class="page-header">
+      <div class="page-title">
+        <h2 class="title">{{localization.siteTraining}}</h2>
+      </div>
+    </div>
+    <div class="licenses-group-data">
+      <div class="row justify-content-center row-gap-4">
+        <div class="col-12 col-lg-6" *ngFor="let training of trainings.siteTrainings">
+          <div class="card license-card h-100">
+            <div class="card-header">
+              <div class="icon">
+                <span class="material-icons-outlined">add_business</span>
+              </div>
+              <div class="title overflow-hidden">
+                <h6 class="text-center">{{training.trainingName}}</h6>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{training.trainingDescription}}</p>
+              <span (click)="navogateToCreateRequest(training.trainingCode)">
+                <i class="material-icons">west</i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="licenses-group p-3 rounded-2 bg-white" id="onlineTraining">
+    <div class="page-header">
+      <div class="page-title">
+        <h2 class="title">{{localization.onlineTraining}}</h2>
+      </div>
     </div>
 
-    <div class="licenses-group"
-         id="onlineTraining">
-        <div class="licenses-group-header">
-            <div class="page-title">
-                <h2 class="title fs-6">{{localization.onlineTraining}}</h2>
+    <div class="licenses-group-data">
+      <div class="row row-gap-4 w-75 mx-auto">
+        <div class="col-12 col-lg-6" *ngFor="let training of trainings.onlineTrainings">
+          <div class="card license-card h-100">
+            <div class="card-header">
+              <div class="icon">
+                <span class="material-icons-outlined">add_business</span>
+              </div>
+              <div class="title overflow-hidden">
+                <h6 class="text-center">{{training.trainingName}}</h6>
+              </div>
             </div>
-        </div>
-
-        <div class="licenses-group-data">
-            <div class="row g-4 row-cols-lg-3">
-                <div class="col-12 col-md-6 col-lg"
-                     *ngFor="let training of trainings.onlineTrainings">
-                    <div class="card license-card">
-                        <div class="head">
-                            <div class="icon">
-                                <span class="material-icons-outlined">add_business</span>
-                            </div>
-                            <div class="title overflow-hidden">
-                                <h6 class="text-center">{{training.trainingName}}</h6>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <p class="text text-center overflow-hidden">{{training.trainingDescription}}</p>
-                            <a (click)="navogateToCreateRequest(training.trainingCode)"
-                               class="btn-arrow">
-                                <img class="arrow"
-                                     src="assets/images/icons/btn-arrow.svg"
-                                     alt="">
-                                <img class="arrow-hover"
-                                     src="assets/images/icons/btn-arrow-hover.svg"
-                                     alt="">
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body">
+              <p class="card-text">{{training.trainingDescription}}</p>
+              <span (click)="navogateToCreateRequest(training.trainingCode)">
+                <i class="material-icons">west</i>
+              </span>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-
-
+  </div>
 </div>

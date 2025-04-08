@@ -54,11 +54,8 @@ export class ChangeplanLicenseRequestAccountantSummaryComponent implements OnIni
     this.showEditButton();
   }
   showEditButton() {
-    this.showButton =
-      this.requestType === UserRequestTypeEnum.Accountant &&
-      (this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.New ||
-        this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.PartyStudyFinished ||
-        this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.PartiesStudyFinished ||
+    this.showButton =(
+        this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.UnderCreation ||
         this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.CustomerFeedback);
   }
 

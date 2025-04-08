@@ -6,6 +6,7 @@ export interface CertifiedEngineerDto {
     id: string;
     facilityId: string;
     professionalLicenseNumber: string;
+    qualificationEngineerType?:number;
     engineerName: string;
     identityNumber:string;
     trainingCertificateFile: SysFileManagerCreateUpdateDto;

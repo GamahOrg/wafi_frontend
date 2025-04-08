@@ -58,10 +58,7 @@ export class CancelLicenseEngineeringSummaryComponent implements OnInit {
   showButton: boolean = false;
   showEditButton() {
     this.showButton =
-      this.requestType === UserRequestTypeEnum.ProjectManager &&
-      (this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.New ||
-        this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.PartyStudyFinished ||
-        this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.PartiesStudyFinished ||
+        (this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.UnderCreation ||
         this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.CustomerFeedback);
   }
   deletFile(id: any) {

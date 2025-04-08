@@ -7,6 +7,7 @@ export interface PeriodicCharteredAccountantReportPagingListDto{
     customerId:string;
     depositDate:Date;
     reportTypeId:PeriodicCharteredAccountantReportTypeEnum;
+    reportStatusId?:PeriodicCharteredAccountantReportStatusEnum;
     quarterTypeId?:PeriodicCharteredAccountantReportQuarterTypeEnum;
     year?:number;
     month?:number;
@@ -15,6 +16,7 @@ export interface PeriodicCharteredAccountantReportPagingListDto{
     createdOn:Date;
     reportType:PeriodicCharteredAccountantReportTypeDto;
     quarterType:PeriodicCharteredAccountantReportQuarterTypeDto;
+    reportStatus:PeriodicCharteredAccountantReportStatusDto;
     customer: CustomerShortDto;
 }
 export interface PeriodicCharteredAccountantReportTypeDto{
@@ -22,6 +24,10 @@ export interface PeriodicCharteredAccountantReportTypeDto{
     name: string
 }
 export interface PeriodicCharteredAccountantReportQuarterTypeDto{
+    id:number
+    name: string
+}
+export interface PeriodicCharteredAccountantReportStatusDto{
     id:number
     name: string
 }
@@ -38,4 +44,9 @@ export enum PeriodicCharteredAccountantReportQuarterTypeEnum{
     Second = 2,
     Third = 3,
     Fourth = 4
+}
+export enum PeriodicCharteredAccountantReportStatusEnum{
+    New = 1,
+    Approve = 2,
+    Reject = 3
 }

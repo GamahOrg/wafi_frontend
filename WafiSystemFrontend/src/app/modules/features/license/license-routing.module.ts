@@ -24,6 +24,7 @@ import { CharteredAccountProjectListComponent } from './pages/chareted-account-p
 import { LicenseProjectAccountantComponent } from './pages/License-project-accountant/License-project-accountant.component';
 import { AddPeriodicCharteredAccountantReportComponent } from './components/add-periodic-chartered-accountant-report/add-periodic-chartered-accountant-report.component';
 import { PeriodicCharteredAccountantReportComponent } from './components/periodic-chartered-accountant-report/periodic-chartered-accountant-report.component';
+import { LincenseProjectZonesComponent } from './components/Zones/lincense-project-zones/lincense-project-zones.component';
 
 const routes: Routes = [
   {
@@ -140,12 +141,17 @@ const routes: Routes = [
   {
     path: Configuration.pages.license.charteredaccount,
     component: CharteredAccountProjectListComponent,
-    data: { breadcrumb: 'مشاريع المحاسب القانوني' },
+    data: { breadcrumb: 'قائمة مشاريع المحاسب القانوني' },
   },
   {
     path: Configuration.pages.license.licenseProjectsAccountantDetails,
     component: LicenseProjectAccountantComponent,
-    data: { breadcrumb: 'مشاريع المحاسب القانوني' },
+    data: { breadcrumb: 'تفاصيل مشاريع المحاسب القانوني' },
+  },
+  {
+    path: Configuration.pages.license.zones,
+    component: LincenseProjectZonesComponent,
+    data: { breadcrumb: 'النطاقات' },
   },
 ];
 //

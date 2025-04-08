@@ -9,6 +9,7 @@ import { SignalRService } from 'src/app/core/services/signalR/signal-r.service';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
+import { LincenseRequestProjectService } from 'src/app/modules/features/license-project-requests/services/lincense-request-project.service';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
@@ -20,6 +21,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   notificationList: Notification[] | null = null;
   qualifyingRequestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requestDetails}`;
   licenseRequestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
+  licenseRequestTypeDeatilsRoute = `/${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestDetails}`
   notViewedCount: number = 0;
   Configuration = Configuration;
   userData: customerResponse | null = null;
@@ -33,7 +35,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _signalRService: SignalRService,
     private _userDataService: UserDataService,
-    private _toastrNotificatioService: ToastrNotificatioService
+    private _toastrNotificatioService: ToastrNotificatioService,
+    private licenseProjectService: LincenseRequestProjectService,
   ) { }
 
   get RequestType(): typeof RequestType {
@@ -73,12 +76,23 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             case this.RequestType.services:
               this.navigateToServicesDetails(notification)
               break;
+            case this.RequestType.LicenseProjectRequest:
+              this.navigateToLicenseRequestTypeDetails(notification)
+              break;
           }
         }
       })
     )
   }
 
+  navigateToLicenseRequestTypeDetails(notification: Notification) {
+    this.licenseProjectService.setSelectedActiveProjectRequestIdInLocalStorage(notification.requestId);
+    if (this._router.url == this.licenseRequestTypeDeatilsRoute) {
+      location.reload();
+    } else {
+      this._router.navigate([this.licenseRequestTypeDeatilsRoute]);
+    }
+  }
   private navigateToServicesDetails(notification: Notification) {
     // set request id in local storage 
     // navigate to services page enshallah :D 
@@ -115,11 +129,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   private setLicenseRequestIdInLocalStorage(licenseRequestId: string): void {
     localStorage.setItem('licenseRequestId', licenseRequestId)
- }
+  }
 
 
- 
- 
+
+
   private observeNotifyCustomer(): void {
     this.subscriptions.push(
       this._signalRService.NotifyCustomer$.subscribe((res: Notification) => {

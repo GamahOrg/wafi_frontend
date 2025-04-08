@@ -7,6 +7,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { MasterLicenseProjectEngineeringSupervisionPlannedReportDto } from '../dataModels/master-license-project-engineering-supervision-planned-report-dto';
 import { LicenseProjectEngineeringActualReportMonthDetailsDto } from '../dataModels/license-project-engineering-actual-report-month-details-dto';
 import { LicenseProjectEngineeringActualReportMonthDetailsCreateUpdateDto } from '../dataModels/license-project-engineering-actual-report-month-details-create-update-dto';
+import { ActualValueReportPagingListDto } from '../models/actual-value-report-paging-list-dto';
 
 @Injectable()
 export class EngineeringSupervisionReportActualProjectStatusSummaryService {
@@ -15,13 +16,14 @@ export class EngineeringSupervisionReportActualProjectStatusSummaryService {
   constructor(private _httpClient: HttpClient) { }
 
   submitSuccessfullyEventEmitter : EventEmitter<null> = new EventEmitter();
-  private monthDate= new BehaviorSubject<Date|null>(null);
+
+  private monthDate= new BehaviorSubject<ActualValueReportPagingListDto|null>(null);
 
   private monthDate$ = this.monthDate.asObservable();
-  getmonthDate(): Observable<Date|null> {
+  getmonthDate(): Observable<ActualValueReportPagingListDto|null> {
    return this.monthDate$;
  }
- setmonthDate(LatestValue: Date) {
+ setmonthDate(LatestValue: ActualValueReportPagingListDto) {
    return this.monthDate.next(LatestValue);
  }
   getActualProjectStatusDetails(licenseProjectId: string,monthDate:Date,currenrYear:number): Observable<LicenseProjectEngineeringActualReportDetailsDto | null> {

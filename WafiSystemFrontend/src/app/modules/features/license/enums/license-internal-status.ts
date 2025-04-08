@@ -9,13 +9,13 @@ export enum LicenseInternalStatus {
     ProcessingNotes = 4,
     ///<summary>إلغاء الطلب</summary>
     RequestCanceled = 5,
-    ///<summary>تم قبول الطلب وإصدار الرخصه المبدائية وإستكمال الرخصه</summary>
+    ///<summary>تم قبول الطلب وإصدار الرخصة المبدائية وإستكمال الرخصة</summary>
     RequestApprovedAndInitialLicenseIssuedAndBeingCompleted = 6,
-    ///<summary>تم قبول الطلب وإصدار الرخصه وجارى إعتمادها</summary>
+    ///<summary>تم قبول الطلب وإصدار الرخصة وجارى إعتمادها</summary>
     RequestApprovedAndLicenseIssuedAndBeingCertified = 7,
     ///<summary>رفض الطلب</summary>
     RequestRejected = 8,
-    ///<summary>استكمال إجراءات ما بعد الرخصه المبدئية</summary>
+    ///<summary>استكمال إجراءات ما بعد الرخصة المبدئية</summary>
     CompleteProceduresAfterInitialLicenseIssued = 9,
     ///<summary>الموافقة المشروطة</summary>
     ConditionalApproval = 10,
@@ -33,7 +33,7 @@ export enum LicenseInternalStatus {
     ConditionalApprovalProcessingNotes = 16,
     ///<summary>إعتماد الطلب</summary>
     RequestCertified = 17,
-    ///<summary>تم إعتماد الطلب وإصدار الرخصه</summary>
+    ///<summary>تم إعتماد الطلب وإصدار الرخصة</summary>
     RequestCertifiedAndFinallicenseIssued = 18
  }
  

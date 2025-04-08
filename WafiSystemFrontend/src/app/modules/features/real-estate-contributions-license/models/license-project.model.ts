@@ -68,9 +68,9 @@ id:string;
   licenseProjectSubUnits: LicenseProjectDetachedUnitRequestDetails[]
   licenseProjectFinancialStatements :LicenseProjectFinancialStatementDto[];
   licenseProjectPromissoryNotes:LicenseProjectPromissoryNoteDto[];
-  //بيانات عقد المستفيد الخاص بالمساهامه العقاريه
+  //بيانات عقد المستفيد الخاص بالمساهامه عقاريه
   realEstateContribution:RealEstateContributionDto;
-   //بيانات المساهمه العقاريه
+   //بيانات المساهمه عقاريه
    mainContributionData: FullContributionDataDto
 
 }

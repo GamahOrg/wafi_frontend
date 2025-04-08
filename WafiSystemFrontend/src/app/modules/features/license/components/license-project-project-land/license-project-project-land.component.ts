@@ -14,7 +14,7 @@ export class LicenseProjectProjectLandComponent implements OnInit {
     title: 'بيانات أرض المشروع',
     buildingFlatArea: 'مساحة مسطح البناء للمشروع',
     landTotalSpace: 'مساحة المشروع حسب الصك',
-    landValue: 'قيمة الأرض التقديريه',
+    landValue: 'قيمة الأرض التقديرية',
     landOwnerApproval: 'موافقة مالك الأرض / مالك منفعتها على تهميش صك الأرض',
     accept: 'موافق',
     addanotherinsurance: 'تقديم ضمانات اخرى',

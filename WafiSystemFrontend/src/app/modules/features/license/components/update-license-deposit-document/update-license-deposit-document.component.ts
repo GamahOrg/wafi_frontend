@@ -141,7 +141,7 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
     this._licenseProjectBuyerService
       .GetBuyersBylicenseProjectId(licenseProjectId)
       .subscribe((result) => {
-        debugger
+        
         this.buyerDto = result;
         if (this.selectedRequest?.nidNumber) {
           const defaultBuyer = this.buyerDto?.find((buyer) => buyer.nidNumber === this.selectedRequest?.nidNumber);
@@ -160,7 +160,7 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
         this.licenseProjectId as string
       )
       .subscribe((result) => {
-        debugger;
+        
         this.buyerDetailsDto = result;
         if (this.buyerDetailsDto) {
           if (this.formGroup.controls?.licenseProjectBuyerId.value)
@@ -186,7 +186,7 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
       this.showValidation = true;
       return;
     }
-    debugger
+    
     const model: AddUpdateLicenseProjectDepositDto = this.formGroup
       .value as {} as AddUpdateLicenseProjectDepositDto;
     model.id = this.licenseDepositDocumentId

@@ -74,7 +74,7 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
       'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     title: 'بيانات أرض المشروع',
     landTotalSpace: 'مساحة المشروع حسب الصك',
-    landValue: 'قيمة الأرض التقديريه',
+    landValue: 'قيمة الأرض التقديرية',
     buildingFlatArea: ' مساحة مسطح البناء للمشروع ',
     landOwnerApproval: 'موافقة مالك الأرض / مالك منفعتها على تهميش صك الأرض',
     accept: 'موافق',
@@ -118,6 +118,7 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
       this.showValidation = true;
       return;
     }
+    
     if (!this.projectLand.id) this.projectLand.id = '00000000-0000-0000-0000-000000000000';
 
     if (this.facilityId)

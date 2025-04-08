@@ -93,7 +93,7 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     this.getDataVisibilityOfDataSection();
   }
   onFileUploaded(file: any) {
-    debugger
+    
     this.projectRealStateDeveloperForm.controls.paymentReceiptFileId.setValue(file.eventRes.data[0].id);
   }
   getCustomerData() {
@@ -134,7 +134,7 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     identityNumberecommerceroom : 'رقم عضوية الغرفة التجارية',
     CreatDate  : 'تاريخ إصدار شهادة سلامة السجل الائتماني',
     finalBeneficiaryContactDetail: 'بيانات  التواصل للمستفيد النهائي',
-    facilityAddress: "عنوان شركة المطور العقاري",
+    facilityAddress: "عنوان شركة المطور عقاري",
     applicantData: "بيانات مقدم الطلب (مالك الحساب /مفوض)",
     applicantName: "اسم مقدم الطلب (المفوض)",
     applicantJobTitle: "منصب المفوض",

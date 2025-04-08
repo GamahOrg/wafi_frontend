@@ -7,7 +7,7 @@ export interface UpdateChangePlanForCharteredAccountantDto {
     escrowAccountBalance :number;
       //حالة بدا المشروع الخاصه بالمحاسب القانوني
  isProjectStartedCharteredAccountant :boolean;
- //أخر تقرير مالي
+ //آخرتقرير مالي
   lastFinancialReportId:string;
  //حالة وجود وحدات مباعة
    isThereUnitsSold:boolean;

@@ -1,2 +1,8 @@
 <app-actual-value-report-paging-list *ngIf="!showDetails" ></app-actual-value-report-paging-list>
+<button type="button" class="btn btn-primary" (click)="sendMonthToStudy()" *ngIf="showDetails && 
+actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+ actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New">إرسال التقرير الشهري للدراسة</button>
+
+<button type="button" class="btn btn-primary" (click)="openNotesDialog()" *ngIf="showDetails && 
+actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback">تسجيل نتيجة الملاحظات</button>
   <app-vertical-tabs *ngIf="showDetails"></app-vertical-tabs>

@@ -9,6 +9,7 @@ import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { LoginUserTypeEnum } from 'src/app/modules/real-estate-contributions-auth/models/login.model';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { QualificationType } from 'src/app/modules/features/qualifying/dataModels/enum/qualification-request-type';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,7 +17,9 @@ import { QualificationType } from 'src/app/modules/features/qualifying/dataModel
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  currentLang: string = '';
+  hideSideBar: boolean = true;
+  
+  currentLang: string = '';  baseUrl = `${environment.baseURL}/`;
   currentUrl: string = '';
   isAccountant: boolean = false;
   isEngineer: boolean = false;

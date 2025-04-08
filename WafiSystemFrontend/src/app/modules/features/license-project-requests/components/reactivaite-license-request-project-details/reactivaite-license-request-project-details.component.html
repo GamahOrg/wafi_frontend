@@ -1,44 +1,44 @@
-<div class="tab-data-section">
-  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-  <div class="col-12 col-md-6">
+<div class="tab-data-section bg-white p-5">
+  <div class="row row-gap-4">
+  <div class="col-12 col-lg-6">
     <div class="key">رقم السجل التجاري</div>
     <div class="value">
       {{ projectActiveRequestDetails?.commercialRegisterNumber }}
     </div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">اسم المنشأة</div>
     <div class="value">{{ projectActiveRequestDetails?.facilityName }}</div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">رقم الرخصة</div>
     <div class="value">
       {{ projectActiveRequestDetails?.certificateNumber }}
     </div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">تاريخ انتهاء الرخصة</div>
     <span class="value" dir="ltr">{{
       projectActiveRequestDetails?.projectEndDate | date : "dd MMMM yyyy"
     }}</span>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">اسم المشروع</div>
     <div class="value">
       {{ projectActiveRequestDetails?.licenseProjectName }}
     </div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">مدينة المشروع</div>
     <div class="value">{{ projectActiveRequestDetails?.cityName }}</div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">انواع وحدات المشروع</div>
     <div class="value">
       {{ projectActiveRequestDetails?.licenseProjectSubUnitType }}
     </div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">انواع وحدات المشروع</div>
     <div
       class="value"
@@ -49,17 +49,17 @@
       {{ projectDetail }}
     </div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">عدد وحدات المشروع</div>
     <div class="value">{{ projectActiveRequestDetails?.subUnitCount }}</div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">تاريخ بداية المشروع</div>
     <span class="value" dir="ltr">{{
       projectActiveRequestDetails?.projectStartDate | date : "dd MMMM yyyy"
     }}</span>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <div class="key">تاريخ نحاية المشروع</div>
     <span class="value" dir="ltr">{{
       projectActiveRequestDetails?.projectEndDate | date : "dd MMMM yyyy"

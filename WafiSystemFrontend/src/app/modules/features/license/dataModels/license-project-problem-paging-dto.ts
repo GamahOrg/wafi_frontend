@@ -4,6 +4,7 @@ export interface LicenseProjectProblemPagingDto {
     id:string;
     createdOn:Date;
     licenseProjectId :string;
+    licenseProjectEngineeringSupervisionPlannedReportDetailId :string;
     //الرقم
     number :string;
     //نوع المشكلة

@@ -83,7 +83,7 @@ export class RequestAttachmentsComponent implements OnInit, OnDestroy {
       return;
     }
     if (!this.form.controls.operationAndMaintenanceAcknowledgment.value) {
-      this._toastrNotificationService.showError("نأمل الموافقه على الاقرار حتي يتم التسجيل ");
+      this._toastrNotificationService.showError("نأمل الموافقه على الاقرار حتى يتم التسجيل ");
       return;
     }
   }

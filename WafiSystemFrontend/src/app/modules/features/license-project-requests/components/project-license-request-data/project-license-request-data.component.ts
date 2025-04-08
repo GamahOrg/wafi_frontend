@@ -22,9 +22,11 @@ export class ProjectLicenseRequestDataComponent implements OnInit {
     return LicenseProjectRequestTypeEnum;
   }
   private observeSelectedRequest() {
+    
     this.subscriptions.push(
       this._projectLicenseServiceDetailsService.selectRequest$.subscribe(
         (res: LicenseProjectRequestDto | null) => {
+          
           if (res) {
             this.selectedRequest = res;
           }

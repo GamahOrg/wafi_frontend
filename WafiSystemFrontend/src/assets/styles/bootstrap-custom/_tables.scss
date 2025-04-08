@@ -1,55 +1,59 @@
-.table-responsive {
-    border: 1px solid #D6D6D6;
-    border-radius: $card-border-radius;
-}
-
 .table {
-    font-size: $font-size-sm;
-    margin-bottom: 0;
+  font-size: $font-size-sm;
+  margin-bottom: 0;
 
-    >thead,
-    >tbody {
-        vertical-align: middle;
-    }
+  >thead,
+  >tbody {
+    vertical-align: middle;
+  }
 
-    >thead {
-        th {
-            padding-block: .75rem;
-            font-size: $font-size-sm;
-            font-weight: normal;
-            color: #798B83;
-            background-color: rgba(#89AA9D, .08);
+  >thead {
+    th {
+      padding-block: .75rem 1rem;
+      font-size: $font-size-sm;
+      font-weight: 500;
 
-            .sortable {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+      &:first-child {
+        border-start-start-radius: $border-radius-xs;
+        border-end-start-radius: $border-radius-xs;
+      }
 
-                .icon {
-                    font-size: 1rem;
-                }
-            }
+      &:last-child {
+        border-start-end-radius: $border-radius-xs;
+        border-end-end-radius: $border-radius-xs;
+      }
+
+      .sortable {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .icon {
+          font-size: 1rem;
         }
+      }
     }
-
-    >tbody {
-        tr:last-child {
-            td {
-                border-bottom: none;
-            }
-        }
-
-        td {
-            background-color: $white;
-        }
-    }
+  }
 }
 
 .table-light {
-    border-color: rgba(#89AA9D, .08);
-    color: #798B83;
+  border-color: $lightergray;
 
-    .text-dark {
-        color: $title-color;
+  >thead {
+    th {
+      color: $headings-color;
+      background-color: #F4F6F6;
     }
+  }
+
+  >tbody {
+    td {
+      color: $lightgray;
+      background-color: $white;
+    }
+  }
+
+  .text-dark {
+    color: $dark;
+  }
 }

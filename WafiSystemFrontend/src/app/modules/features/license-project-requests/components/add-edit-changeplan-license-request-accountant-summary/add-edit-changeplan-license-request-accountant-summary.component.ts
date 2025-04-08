@@ -51,7 +51,7 @@ export class AddEditChangeplanLicenseRequestAccountantSummaryComponent {
     this.observePopupEvents();
   }
   getSelectedRequestIdFromLocalStorage(): void {
-    debugger;
+    
     this.licenseProjectRequestId = this._projectRequestLocalStorageService.getSelectedProjectLicenseRequestIdFromLocalStorage() as string;
 
   }
@@ -84,7 +84,7 @@ export class AddEditChangeplanLicenseRequestAccountantSummaryComponent {
     });
   }
   save(): void {
-    debugger;
+    
     if (!this.changePlanForCharteredAccountantForm.valid) {
       this.showValidation = true;
       return;
@@ -112,7 +112,7 @@ export class AddEditChangeplanLicenseRequestAccountantSummaryComponent {
       this._cahngePlaneRequestDetailsService.updateChangePlanForCharteredAccountant(this.updateChangePlanForCharteredAccountant).subscribe((res) => {
 
         if (res?.isDone) {
-          debugger;
+          
           this._cahngePlaneRequestDetailsService.setLicenseProjectRequestChangePlan(res.data as LicenseProjectRequestChangePlanFullDto);
           this._toastrNotificationService.showSuccess('تم الحفظ');
           this.closeDialog();

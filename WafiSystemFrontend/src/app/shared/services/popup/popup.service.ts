@@ -28,6 +28,8 @@ export class PopupService {
     PopupData | confirmationPopupData | notePopupData
   > = new EventEmitter<PopupData | confirmationPopupData | notePopupData>();
 
+  
+
   constructor(public dialog: MatDialog) {}
   updatePopupData(data: PopupData) {
     this.popupData.next(data);
@@ -79,5 +81,9 @@ export class PopupService {
   }
   dismissDialog(): void {
     this.closeDialog.emit();
+  }
+
+  dismissDialogWithData(data:any): void {
+    this.closeDialog.emit(data);
   }
 }

@@ -106,7 +106,7 @@ export class ComplaintsReportsComponent {
   public openDialog(): void {
     let Data = {
       id: "",
-      title: "اضافة شكوي او بلاغ",
+      title: "اضافة شكوى او بلاغ",
       component: AddComplaintsReportsComponent
     } as PopupData;
     this.updateAndOpenData(Data);
@@ -116,7 +116,7 @@ export class ComplaintsReportsComponent {
     this._complaintsReportsService.setRequest(request);
     let Data = {
       id: "",
-      title: "عرض شكوي او بلاغ",
+      title: "عرض شكوى او بلاغ",
       component: ShowComplaintsReportsComponent,
       buttons: [{
         icon: "",
@@ -137,11 +137,11 @@ export class ComplaintsReportsComponent {
     this.subscriptions.push(
       this._complaintsReportsService.Delete(id).subscribe((res:CoreResponseDTO<any>) => {
         if (res.isDone) {
-          this._toastrNotificationService.showSuccess(" تم حذف الشكوي او البلاغ");
+          this._toastrNotificationService.showSuccess(" تم حذف الشكوى او البلاغ");
           this.getComplaintRequestCustomerPagingList();
         }
         else
-          this._toastrNotificationService.showError(" لم يتم حذف الشكوي او البلاغ");
+          this._toastrNotificationService.showError(" لم يتم حذف الشكوى او البلاغ");
 
 
       })

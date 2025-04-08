@@ -27,7 +27,7 @@ export class ReactivaiteLicenseRequestProjectSummaryComponent implements OnInit,
   ObserveSelectedRequest() {
     this.subscriptions.push(
       this.reactivateLicenseService.selectedRequest$.subscribe((res: licenseActivationRequestDetailsDto | null) => {
-        debugger
+        
         console.log(res);
         
         this.projectActiveRequestDetails = res;

@@ -123,7 +123,7 @@ export class RenewLicensesListComponent {
    * onClickOnRenewLicense
    */
   public onClickOnRenewLicense(project: ExpiredLicenseProjectDto): void {
-    debugger;
+    
     console.log("project", project);
     //  set project id in local storage : id:string;
     this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(project.licenseProject.id)

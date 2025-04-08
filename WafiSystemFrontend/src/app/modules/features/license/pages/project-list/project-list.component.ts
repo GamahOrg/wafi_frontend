@@ -12,6 +12,8 @@ import { customerResponse } from 'src/app/shared/models/customer.model';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 import { Router } from '@angular/router';
 import { Configuration } from 'src/app/core/configurations/shared.config';
+import { SysProjectStatusService } from 'src/app/shared/services/sysProjectStatus/sys-projectstatus.service';
+import { ProjectStatusUpdateComponent } from '../Project-status-update/project-status-update.component';
 
 @Component({
   selector: 'app-project-list',
@@ -35,6 +37,7 @@ export class ProjectListComponent {
     private _projectMangerService: ProjectListService,
     private _paginationService: PaginationService,
     private _popupService: PopupService,
+    private _sysProjectStatusService:SysProjectStatusService,
     private _userDataService: UserDataService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _router: Router
@@ -146,9 +149,19 @@ export class ProjectListComponent {
     } as PopupData;
     this.updateAndOpenData(Data);
   }
+  openStatusDialog(project: LicenseRequestHeaderDto): void {
+    this._projectMangerService.setProject(project);
+    let Data = {
+      id: '',
+      component: ProjectStatusUpdateComponent, 
+    } as PopupData;
+  
+    this.updateAndOpenData(Data);
+  }
   private updateAndOpenData(data: PopupData) {
     this._popupService.updatePopupData(data);
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

@@ -9,6 +9,7 @@ import { QualificatedEngineerService } from '../../services/QualificationQualifi
 import { EngineersWithSufficientTrainingForTheEngineeringConsultantFormComponent } from '../engineers-with-sufficient-training-for-the-engineering-consultant-form/engineers-with-sufficient-training-for-the-engineering-consultant-form.component';
 import { environment } from 'src/environments/environment';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { QualificationEngineerType } from '../../dataModels/qualification-engineer-type.model';
 
 @Component({
   selector: 'app-engineers-with-sufficient-training-for-the-engineering-consultant',

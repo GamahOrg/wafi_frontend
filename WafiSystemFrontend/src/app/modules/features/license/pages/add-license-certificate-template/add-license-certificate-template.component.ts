@@ -104,7 +104,7 @@ export class AddLicenseCertificateTemplateComponent implements OnInit, OnDestroy
     ) as FormArray;
   }
   private getLicenseCertificateTemplateIdFromLocalStorage(): void {
-    debugger;
+    
     let id = this._licenseCertificateTemplateService.getLicenseCertificateTemplateIdFromLocalStorage();
     this.licenseCertificateTemplateId = Number(id);
       
@@ -124,7 +124,7 @@ export class AddLicenseCertificateTemplateComponent implements OnInit, OnDestroy
     ];
 
     const subscriptions = forkJoin(requests).subscribe((results) => {
-      debugger;
+      
       this.licenseRelativeWeights=results[5] as SysLicenseRelativeWeightDto[];
       if(results[0] != null)
         {
@@ -156,7 +156,7 @@ export class AddLicenseCertificateTemplateComponent implements OnInit, OnDestroy
   addValuesToArrayForm(
     licenseCertificateTemplate: LicenseCertificateTemplateDto)
      {
-      debugger;
+      
       //patch Value For Dates And Main Form
       this.licenseCertificateTemplateId=licenseCertificateTemplate.id;
       licenseCertificateTemplate.certificateStartOn = this.datePipe.transform(licenseCertificateTemplate.certificateStartOn, 'yyyy-MM-dd') as any;
@@ -219,7 +219,7 @@ export class AddLicenseCertificateTemplateComponent implements OnInit, OnDestroy
   getlicenseCertificateUnitList(): void {
     this.subscriptions.push(
       this._licenseCertificateTemplateService.getlicenseCertificateUnitList(this.licenseCertificateTemplateId as number,this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseCertificateUnitDto[]> | null) => {
-        debugger;
+        
        this.updateRequestList(res as Pagination<LicenseCertificateUnitDto[]>);
       })
     )
@@ -267,7 +267,7 @@ export class AddLicenseCertificateTemplateComponent implements OnInit, OnDestroy
     this.getlicenseCertificateUnitList()
   }
   save(): void {
-    debugger;
+    
     if (!this.licenseCertificateTemplateForm.valid) {
       this.showValidation = true;
       this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
@@ -286,7 +286,7 @@ if(this.licenseCertificateTemplateCreateUpdateDto?.IsProjectOrContributionStarte
     this.subscriptions.push(
       this._licenseCertificateTemplateService.Save(this.licenseCertificateTemplateCreateUpdateDto as LicenseCertificateTemplateDto).subscribe(res => {
         if (res.isDone) {
-          debugger;
+          
           this.licenseCertificateTemplateId=res.data.id;
           this._toastrNotificationService.showSuccess('تم الحفظ');
         }
@@ -299,7 +299,7 @@ if(this.licenseCertificateTemplateCreateUpdateDto?.IsProjectOrContributionStarte
   removeLicenseCertificateUnitAsync(id:number): void {
     this.subscriptions.push(
       this._licenseCertificateTemplateService.RemoveLicenseCertificateUnitAsync(id as number).subscribe((res:any) => {
-        debugger;
+        
         if( res && res.isDone)
           {
             this._toastrNotificationService.showSuccess('تم الحذف');

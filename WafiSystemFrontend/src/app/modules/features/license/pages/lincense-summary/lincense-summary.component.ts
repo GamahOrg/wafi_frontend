@@ -301,7 +301,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   openApprovalDialog(): void {
 
     let Data = {
-      title: "يجب الموافقه على جميع الاقرارات الخاصة بالرخصه حتي يتم ارسال الطلب",
+      title: "يجب الموافقه على جميع الاقرارات الخاصة بالرخصة حتى يتم ارسال الطلب",
       component: ApprovalComponent,
       id: "ApprovalComponent"
     } as PopupData;

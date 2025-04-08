@@ -16,4 +16,14 @@ export class ProjectRequestLocalStorageService {
     localStorage.setItem('licenseProjectRequestId', id);
   }
 
+  getSelectedLicenseRequestTypeFromLocalStorage(): string | null {
+    let projectDetails = localStorage.getItem('typeId');
+    return projectDetails;
+  }
+  clearSelectedLicenseRequestTypeFromLocalStorage(): void {
+    localStorage.removeItem('typeId');
+  }
+  setSelectedSelectedLicenseRequestTypeInLocalStorage(id: string): void {
+    localStorage.setItem('typeId', id);
+  }
 }

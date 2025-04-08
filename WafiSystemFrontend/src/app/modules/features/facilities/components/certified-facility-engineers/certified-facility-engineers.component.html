@@ -1,8 +1,8 @@
 <div class="tab-data-header">
     <div class="icon"><span class="material-icons">list_alt</span></div>
-    <h6 class="title fw-normal">مهندسي الشركة المعتمدين </h6>
+    <h6 class="title">موظفين الشركة المعتمدين </h6>
 
-    <button mat-raised-button class="edit-icon" (click)="openDialog('')"><span class="material-icons">add</span></button>
+    <button class="edit-icon btn btn-link" (click)="openDialog('')"><span class="material-icons">add</span></button>
 </div>
 
 <div class="tab-data-section">
@@ -10,9 +10,10 @@
         <table class="table table-light" *ngIf="models && models.length>0">
             <thead>
                 <tr>
-                    <th>اسم المهندس</th>
+                    <th>الاسم</th>
                     <th>رقم  الهوية</th>
                     <th>رقم الرخصة المهنية</th>
+                    <th>المهنة</th>
                     <th class="w-25"></th>
                 </tr>
             </thead>
@@ -21,6 +22,7 @@
                     <td>{{eng.engineerName}}</td>
                     <td>{{eng.identityNumber}}</td>
                     <td>{{eng?.professionalLicenseNumber}}</td>
+                    <td>{{eng?.qualificationEngineerType==null?'':eng?.qualificationEngineerType==1?'استشارى هندسى':'محاسب قانونى'}}</td>
                     <td>
                         <div class="d-flex align-items-center justify-content-end column-gap-2">
                          <button mat-icon-button color="warn" (click)="delete(eng.id)"><mat-icon>delete</mat-icon></button>

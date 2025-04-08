@@ -1,0 +1,188 @@
+<div class="card">
+  <form [formGroup]="changeCharteredAccountantForm">
+    <div class="row">     
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <div class="commercial-register">
+            <div class="row mb-3">
+              <div class="col-12 col-lg-12">
+                <div class="form-group mb-4">
+                  <label for="commercialRegister" class="key">السجل التجاري للمحاسب القانونى الجديد</label>
+                  <div class="input-group">
+                    <input
+                      id="control-commercialRegister"
+                      name="commercialRegister"
+                      type="number"
+                      class="form-control"
+                      formControlName="commercialRegister"
+                    />
+                    <button
+                      [disabled]="!controls['commercialRegister'].value"
+                      (click)="validate()"
+                      class="btn btn-primary"
+                      type="button"
+                    >
+                      تحقق
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback d-block"
+                    *ngIf="
+                      controls['commercialRegister'].hasError('required') &&
+                      controls['commercialRegister'].touched
+                    "
+                  >
+                    حقل مطلوب
+                  </div>
+                  <div
+                    class="invalid-feedback d-block"
+                    *ngIf="controls['commercialRegister'].hasError('min')"
+                  >
+                    قيمة الحقل يجب الا تقل عن صفر
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-gap-4">
+
+        <div *ngIf="showDetails" class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <div class="key">اسم منشأة المحاسب القانونى </div>
+            <div class="value">
+              <span class="icon material-icons">blinds</span>
+              {{ facility?.facilityName }}
+            </div>
+            
+          </div>
+        </div>
+       
+      </div>
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="changeReason" class="key">أسباب طلب التغيير</label>
+            <div class="input-group">
+              <textarea
+                rows="5"
+                type="text"
+                id="changeReason"
+                class="form-control"
+                formControlName="reasons"
+              ></textarea>
+            </div>
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="showValidation && !controls.reasons?.value"
+            >
+              حقل مطلوب
+            </div>
+          </div>
+        </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="alternativeCharteredAccountantAgreementId"
+                >اتفاقية المحاسب القانونى البديل</label
+              >
+              <a
+                [href]="
+                  baseUrl +
+                  changeRequestDetails?.alternativeCharteredAccountantAgreement
+                    ?.filePath
+                "
+                target="_blank"
+              >
+                {{
+                  changeRequestDetails?.alternativeCharteredAccountantAgreement
+                    ?.fileDescription
+                }}
+              </a>
+              <app-file-uploader
+                [data]="singleFilesUploaderData"
+                (fileUploaded)="
+                  alternativeCharteredAccountantAgreementUpload($event)
+                "
+              ></app-file-uploader>
+              <mat-error
+                *ngIf="
+                  controls.alternativeCharteredAccountantAgreementId?.hasError(
+                    'required'
+                  ) && showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="previousCharteredAccountantReportId"
+                >تقرير المحاسب القانونى السابق عن حالة المشروع</label
+              >
+              <a
+                [href]="
+                  baseUrl +
+                  changeRequestDetails?.previousCharteredAccountantReport
+                    ?.filePath
+                "
+                target="_blank"
+              >
+                {{
+                  changeRequestDetails?.previousCharteredAccountantReport
+                    ?.fileDescription
+                }}
+              </a>
+              <app-file-uploader
+                [data]="singleFilesUploaderData"
+                (fileUploaded)="previousCharteredAccountantReportUpload($event)"
+              ></app-file-uploader>
+              <mat-error
+                *ngIf="
+                  controls.previousCharteredAccountantReportId?.hasError(
+                    'required'
+                  ) && showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="clearanceCharteredAccountantFileId"
+                >اقرار مخالصة المحاسب القانونى السابق</label
+              >
+              <a
+                [href]="
+                  baseUrl +
+                  changeRequestDetails?.clearanceCharteredAccountantFile
+                    ?.filePath
+                "
+                target="_blank"
+              >
+                {{
+                  changeRequestDetails?.clearanceCharteredAccountantFile
+                    ?.fileDescription
+                }}
+              </a>
+              <app-file-uploader
+                [data]="singleFilesUploaderData"
+                (fileUploaded)="clearanceCharteredAccountantFileUpload($event)"
+              ></app-file-uploader>
+              <mat-error
+                *ngIf="
+                  controls.clearanceCharteredAccountantFileId?.hasError(
+                    'required'
+                  ) && showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+  </form>
+</div>

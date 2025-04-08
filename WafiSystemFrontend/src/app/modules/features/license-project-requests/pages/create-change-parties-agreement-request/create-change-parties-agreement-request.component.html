@@ -1,0 +1,108 @@
+<div class="card">
+  <div class="card-header">
+    <h6 class="card-title">
+      طلب تغيير في الاتفاقيات المعتمدة لأحد أطراف المشروع
+    </h6>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="changePartiesAgreementForm">
+      <div class="tab-data-section">
+        <div class="row mb-3">
+          <!-- License Project Selection -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+              <select
+                class="form-select"
+                id="control-licenseProjectId"
+                aria-label="Default select example"
+                formControlName="licenseProjectId"
+              >
+                <option selected disabled>المشروع</option>
+
+                <option
+                  *ngFor="let licenseProject of licenseProjects"
+                  [ngValue]="licenseProject.id"
+                >
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="
+                  controls.licenseProjectId?.hasError('required') &&
+                  showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key">الرسوم</div>
+            <div class="value">
+              {{ price ? price : 'لا يوجد' }} 
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <div class="value">
+                  <span class="icon material-icons-outlined">content_copy</span>
+                  <div class="key">
+                    نموذج الطلب، موضحاً به أسباب طلب التغيير
+                  </div>
+                </div>
+                <app-file-uploader
+                  [data]="singleFilesUploaderData"
+                  (fileUploaded)="applicationFormFileUpload($event)"
+                ></app-file-uploader>
+                <mat-error
+                  *ngIf="
+                    controls.applicationFormFileId?.hasError('required') &&
+                    showValidation
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <div class="value">
+                  <span class="icon material-icons-outlined">content_copy</span>
+                  <div class="key">نسخة من الاتفاقية الجديدة المبرمة</div>
+                </div>
+                <app-file-uploader
+                  [data]="singleFilesUploaderData"
+                  (fileUploaded)="newAgreementCopyUpload($event)"
+                ></app-file-uploader>
+                <mat-error
+                  *ngIf="
+                    controls.newAgreementCopyId?.hasError('required') &&
+                    showValidation
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          class="btn btn-outline-primary"
+          id="btn-cancelRequest"
+          (click)="cancelRequest()"
+        >
+          إلغاء
+        </button>
+        <button class="btn btn-primary" id="btn-creatRequest" (click)="save()">
+          انشاء الطلب
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

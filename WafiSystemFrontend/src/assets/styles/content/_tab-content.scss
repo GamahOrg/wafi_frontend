@@ -1,169 +1,102 @@
 .tab-data-header {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $lightergray;
+
+  .icon {
     display: flex;
+    justify-content: center;
     align-items: center;
-    column-gap: 1rem;
+    flex-shrink: 0;
 
-    padding: 1.5rem;
-    border-radius: $card-border-radius;
-    background-color: $white;
-    box-shadow: 0px 4px 4px rgba($black, .06);
+    width: 1.5rem;
+    height: 1.5rem;
 
-    .icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
+    border-radius: 50%;
+    background-color: $theme-light;
 
-        width: 1.5rem;
-        height: 1.5rem;
-
-        border-radius: 50%;
-        // background-color: $orange;
-        background-color: $theme-light;
-
-        :host-context(.rega) & {
-            background-color: $theme-light;
-        }
-
-        [class^="material-icons"] {
-            font-size: small;
-            // color: $darkgreen;
-            color: $theme-dark;
-
-            :host-context(.rega) & {
-                color: $theme-dark;
-            }
-        }
+    [class^="material-icons"] {
+      color: $theme-dark;
     }
+  }
 
-    .title {
-        font-size: $font-size-sm;
-        // color: $darkgreen;
-        color: $theme-dark;
+  .edit-icon {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+  }
 
-        :host-context(.rega) & {
-            color: $theme-dark;
-        }
-    }
-
-    .edit-icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-
-        width: 3rem;
-        height: 3rem;
-        margin-inline-start: auto;
-
-        text-decoration: none;
-        border-radius: $card-border-radius;
-        background-color: $white;
-        box-shadow: 0px 2px 10px rgba($darkgray, 0.13);
-
-        @media (max-width: 767px) {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
-
-        [class^="material-icons"] {
-            font-size: 1.25rem;
-            // color: $darkgreen;
-            color: $theme-dark;
-
-            :host-context(.rega) & {
-                color: $theme-dark;
-            }
-        }
-    }
-
-    &+.tab-data-section {
-        margin-top: 2rem;
-    }
+  &~.tab-data-section {
+    margin-top: 2rem;
+  }
 }
 
 .tab-data-section {
-    // padding: 2rem;
-    // border-radius: $card-border-radius;
-    // background-color: rgba($bluegray, .2);
+  &+.tab-data-section {
+    padding-top: 2rem;
+    border-top: 1px solid $lightergray;
+  }
 
-    // @media (max-width: 767px) {
-    //     padding: 1rem;
-    // }
+  .tab-data-section-title-subtitle {
+    display: flex;
+    flex-direction: column;
 
-    &+.tab-data-section {
-        margin-top: 2rem;
-        padding-top: 1rem;
-        border-top: 4px solid #F7FAFB;
-    }
-
-    &:not(:last-child) {}
-
-    .tab-data-section-title-subtitle {
-        display: flex;
-        flex-direction: column;
-
-        margin-bottom: 1rem;
-
-        .title {
-            margin-bottom: 0;
-        }
-    }
+    margin-bottom: 1rem;
 
     .title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+      margin-bottom: 0;
+    }
+  }
 
-        margin-bottom: 1rem;
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 1rem;
+    font-size: $font-size-sm;
+  }
+
+  .subtitle {
+    font-size: $font-size-sm;
+    color: $darkgray;
+  }
+
+  .key {
+    font-size: $font-size-xs;
+    font-weight: 500;
+    color: $lightgray;
+
+    &+.value {
+      margin-top: .5rem;
+    }
+  }
+
+  .value {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $headings-color;
+
+    &+.value {
+      margin-top: .5rem;
+    }
+
+    .icon {
+      color: $lightgray;
+    }
+
+    .delete {
+      cursor: pointer;
+
+      [class^="material-icons"] {
         font-size: $font-size-sm;
-        // color: $darkgreen;
-        color: $theme-dark;
-
-        :host-context(.rega) & {
-            color: $theme-dark;
-        }
+      }
     }
-
-    .subtitle {
-        font-size: $font-size-sm;
-        color: $darkgray;
-    }
-
-    .key {
-        font-size: $font-size-sm;
-
-        &+.value {
-            margin-top: 1rem;
-        }
-    }
-
-    .value {
-        display: flex;
-        align-items: center;
-        column-gap: .5rem;
-
-        color: $headings-color;
-
-        .icon {
-            // color: $darkgreen;
-            color: $theme-dark;
-
-            :host-context(.rega) & {
-                color: $theme-dark;
-            }
-        }
-
-        .delete {
-            cursor: pointer;
-
-            [class^="material-icons"] {
-                font-size: $font-size-xs;
-            }
-        }
-
-        &+.value {
-            margin-top: .5rem;
-        }
-    }
+  }
 }

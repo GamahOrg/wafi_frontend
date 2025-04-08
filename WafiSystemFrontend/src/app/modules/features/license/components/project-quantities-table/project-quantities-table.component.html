@@ -2,7 +2,7 @@
   <div class="d-flex flex-column h-100">
     <div class="tab-data-header">
       <div class="icon"><span class="material-icons">list_alt</span></div>
-      <h6 class="title fw-normal">{{localization.title}}</h6>
+      <h6 class="title">{{localization.title}}</h6>
     </div>
     <div class="tab-data-section">
       <div class="row mb-3">
@@ -17,16 +17,14 @@
                   <span class="icon material-icons-outlined">content_copy</span>
                   <a [href]="baseUrl + quantityTableFile.quantitiesTableFile.filePath" target="_blank">
                     {{quantityTableFile.quantitiesTableFile.fileDescription}}</a>
-                    <span class="delete"
-                    (click)="deletFile(quantityTableFile.quantitiesTableFileId)"><i
-                     class="icon material-icons text-danger">close</i></span>
+                  <span class="delete" (click)="deletFile(quantityTableFile.quantitiesTableFileId)"><i
+                      class="icon material-icons text-danger">close</i></span>
                 </ng-container>
               </div>
               <app-file-uploader [data]="multipleFileUploaderData"
                 (fileUploaded)="onQuantitiesTableFileUploaded($event)"></app-file-uploader>
             </div>
-            <div class="invalid-feedback d-block"
-            *ngIf="(!this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList ||
+            <div class="invalid-feedback d-block" *ngIf="(!this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList ||
             !this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList.length ) &&
             (!this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectQuantitiesTableFileList ||
             !this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectQuantitiesTableFileList.length)
@@ -42,11 +40,33 @@
       <div class="table-responsive">
         <div class="tab-data-header">
           <div class="icon"><span class="material-icons">list_alt</span></div>
-          <h6 class="title fw-normal">{{localization.relativeWeight}}</h6>
+          <h6 class="title">{{localization.relativeWeight}}</h6>
         </div>
         <form [formGroup]="licenseProjectRelativeWeightForm" (ngSubmit)="save()"
           id="form-licenseProjectRelativeWeightForm">
-          <table class="table table-light mb-3">
+          <div class="row p-4" formArrayName="Rows">
+
+
+            <ng-container *ngFor="let itemrow of formArr.controls let i=index;let l=last" [formGroupName]="i">
+              <div class="col-6 col-lg-6">
+                <div class="form-group mb-4">
+                  <label class="form-label">{{ itemrow.get('elementName')?.value }}</label>
+                  <input type="number" class="form-control" formControlName="elementValue" />
+                  <!-- <mat-error *ngIf="">{{ localization.requiredErrorMsg }}</mat-error>
+                <mat-error *ngIf="">{{ localization.MinValueError }}</mat-error> -->
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="row text-center">
+              <p>الاجمالى :{{total}}</p>
+            </div>
+
+          </div>
+
+
+
+          <!-- <table class="table table-light mb-3">
             <thead>
               <tr>
                 <th>البند</th>
@@ -71,7 +91,7 @@
                 <td>{{total}}</td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
         </form>
       </div>
     </div>

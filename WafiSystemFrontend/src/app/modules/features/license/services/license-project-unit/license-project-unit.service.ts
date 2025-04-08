@@ -120,4 +120,12 @@ export class LicenseProjectUnitService {
         })
       )
   }
+
+  deleteUnit(id: string): Observable<CoreResponseDTO<ProjectUnit[] | null>> {
+    return this._httpClient.delete<CoreResponseDTO<ProjectUnit[]>>(`${Configuration.APIs.LicenseProjectUnit.Delete}?id=${id}`).pipe(
+        map((res: CoreResponseDTO<ProjectUnit[]>) => {
+          return res;
+        })
+      )
+  }
 }

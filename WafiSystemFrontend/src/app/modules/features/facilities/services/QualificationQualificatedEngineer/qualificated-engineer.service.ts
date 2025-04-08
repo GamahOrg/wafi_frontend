@@ -5,6 +5,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { QualificationQualifiedEngineerCreateUpdateDto } from '../../dataModels/qualification-qualified-engineer-create-update-dto';
 import { QualifiedEngineersDto } from '../../dataModels/qualified-engineers-dto';
+import { QualificationEngineerType } from '../../dataModels/qualification-engineer-type.model';
 
 @Injectable()
 export class QualificatedEngineerService {

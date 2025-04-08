@@ -53,7 +53,7 @@ export class AddEditChangeplanLicenseRequestDeveloperSummaryComponent {
     this.observePopupEvents();
   }
   getSelectedRequestIdFromLocalStorage(): void {
-    debugger;
+    
     this.licenseProjectRequestId = this._projectRequestLocalStorageService.getSelectedProjectLicenseRequestIdFromLocalStorage() as string;
 
   }
@@ -62,7 +62,7 @@ export class AddEditChangeplanLicenseRequestDeveloperSummaryComponent {
     this.subscriptions.push(
       this._cahngePlaneRequestDetailsService.getLicenseProjectRequestChangePlan().subscribe((res: LicenseProjectRequestChangePlanFullDto | null) => {
         if (res) {
-          debugger;
+          
           this.licenseProjectRequestChangePlanFull = res;
           this.approvalLetterForStartEndDateId=this.licenseProjectRequestChangePlanFull.approvalLetterForStartEndDateId;
           this.buyersApprovalLetterFileId=this.licenseProjectRequestChangePlanFull.buyersApprovalLetterFileId;
@@ -88,7 +88,7 @@ export class AddEditChangeplanLicenseRequestDeveloperSummaryComponent {
     });
   }
   save(): void {
-    debugger;
+    
     if (!this.changePlanForRealEstateDeveloperForm.valid) {
       this.showValidation = true;
       return;
@@ -116,7 +116,7 @@ export class AddEditChangeplanLicenseRequestDeveloperSummaryComponent {
       this._cahngePlaneRequestDetailsService.createOrUpdateChangePlanForRealEstateDeveloper(this.createUpdateChangePlanForRealEstateDeveloper).subscribe((res) => {
 
         if (res?.isDone) {
-          debugger;
+          
           this._cahngePlaneRequestDetailsService.setLicenseProjectRequestChangePlan(res.data as LicenseProjectRequestChangePlanFullDto);
           this._toastrNotificationService.showSuccess('تم الحفظ');
           this.closeDialog();

@@ -1,7 +1,7 @@
 <div class="tab-data-section"
      *ngIf="wafiTraining">
-    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-        <div class="col-12 col-md-6"
+    <div class="row row-gap-4">
+        <div class="col-12 col-lg-6"
              *ngIf="wafiTraining && wafiTraining.marketerTrainingCertificateFile">
             <div class="key">شهادة اجتياز دورة التسويق للبيع على الخارطة من الهيئة العامة للعقار</div>
             <div class="value">
@@ -11,9 +11,9 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-6"
+        <div class="col-12 col-lg-6"
              *ngIf="wafiTraining && wafiTraining.realEstateDevelopmentTrainingCertificateFile">
-            <div class="key">شهادة اجتياز دورة التطوير العقاري لمشاريع البيع على الخارطة</div>
+            <div class="key">شهادة اجتياز دورة التطوير عقاري لمشاريع البيع على الخارطة</div>
             <div class="value">
                 <span class="icon material-icons-outlined">content_copy</span>
                 <a [href]="baseUrl + wafiTraining.realEstateDevelopmentTrainingCertificateFile.filePath" target="_blank">

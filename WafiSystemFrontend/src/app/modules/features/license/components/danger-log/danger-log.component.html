@@ -21,7 +21,10 @@
     </tbody>
 </table>
 
-<button type="button" class="btn btn-primary my-4" (click)="openEditDangerLogDialog('')">إضافة خطر </button>
+<button type="button" class="btn btn-primary my-4"*ngIf="
+actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+ actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+ || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"  (click)="openEditDangerLogDialog('')">إضافة خطر </button>
 
 <div class="row row-gap-4">
     <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
@@ -66,7 +69,10 @@
                         <span class="text-dark">{{comdata.riskStatus.name}}</span>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-primary mx-4" (click)="openEditDangerLogDialog(comdata.id)">تعديل </button>
+                        <button type="button" class="btn btn-outline-primary mx-4" *ngIf="
+                        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+                         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                         || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="openEditDangerLogDialog(comdata.id)">تعديل </button>
                         <button type="button" class="btn btn-outline-primary" (click)="openShowDangerLogDialog(comdata.id)">عرض </button>
                        
                      </td>

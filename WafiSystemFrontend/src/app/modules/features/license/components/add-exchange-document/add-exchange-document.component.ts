@@ -161,7 +161,7 @@ export class AddExchangeDocumentComponent {
     this.subscriptions.push(subscriptions);
   }
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectExchangeDocumentForm.valid) {
       this.showValidation = true;
       return;

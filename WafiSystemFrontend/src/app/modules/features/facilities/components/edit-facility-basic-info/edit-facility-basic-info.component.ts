@@ -32,6 +32,8 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
 
   singleFileUploaderData: FileUploader = {
     multiple: false,
+    allowedExtensions: ['.pdf'],
+    allowedExtensionsText: '.pdf'
   } as FileUploader;
   mueltiFilesUploaderData: FileUploader = {
     multiple: true

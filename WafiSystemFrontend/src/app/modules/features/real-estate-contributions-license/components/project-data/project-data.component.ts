@@ -106,7 +106,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'المطور العقاري',
+      title: 'المطور عقاري',
       Component: ProjectDeveloperComponent,
       disabled: false,
       id: 'ProjectDeveloperComponent',
@@ -117,7 +117,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'البيانات الاساسيه للمساهمه العقاريه',
+      title: 'البيانات الأساسية للمساهمه عقاريه',
       Component: MainContributionDataComponent,
       disabled: false,
       id: 'MainContributionDataComponent',
@@ -194,7 +194,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'ملفات التصميم المعمارية للمشروع',
+      title: 'ملفات التصاميم المعمارية للمشروع',
       Component: ArchitecturalDesignFilesComponent,
       disabled: false,
       id: 'ArchitecturalDesignFilesComponent',

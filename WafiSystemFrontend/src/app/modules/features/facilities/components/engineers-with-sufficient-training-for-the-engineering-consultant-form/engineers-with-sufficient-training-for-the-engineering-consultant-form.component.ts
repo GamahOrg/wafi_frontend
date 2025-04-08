@@ -13,6 +13,7 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { QualifiedEngineersDto } from '../../dataModels/qualified-engineers-dto';
 import { CertifiedEngineerDto } from '../../dataModels/certified-engineer-dto';
 import { CertifiedEngineerService } from '../../services/QualificationCertifiedEngineer/certified-engineer.service';
+import { QualificationEngineerType } from '../../dataModels/qualification-engineer-type.model';
 
 @Component({
   selector: 'app-engineers-with-sufficient-training-for-the-engineering-consultant-form',
@@ -99,7 +100,7 @@ export class EngineersWithSufficientTrainingForTheEngineeringConsultantFormCompo
 
   getQualificationCertifiedEngineers() {
     this.subscriptions.push(
-      this._certifiedEngineerService.GetFacilityById(this.userData?.facilities[0].id as string).subscribe(res => {
+      this._certifiedEngineerService.GetFacilityById(this.userData?.facilities[0].id as string,QualificationEngineerType.Engineering).subscribe(res => {
         this.qualificationCertifiedEngineers = res;
       })
     );

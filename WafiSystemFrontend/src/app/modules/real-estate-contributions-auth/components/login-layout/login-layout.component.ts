@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 export class LoginLayoutComponent {
   baseURl: string = '../assets/images/';
   wafiLogo: string = 'layout/sidebar/logo-herizontal.png';
-  title: string = 'منصة المساهمات العقارية';
+  title: string = 'منصة المساهمات عقارية';
   subtitle: string = '';
 }

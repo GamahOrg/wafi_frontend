@@ -8,7 +8,7 @@ export interface LicenseProjectBuyerDto {
     nidNumber: string;
     mobile: string;
     contractFileId: string;
-    //عدد الأراضى
+    //عدد الأراضي
     landNumbers: number;
     //رقم الوحدة
     unitCodeId: string;
@@ -37,11 +37,11 @@ export interface LicenseProjectBuyerDto {
     totalPrice: number;
     //تكاليف رسوم الاراضي
     landFeeCosts: number;
-    //نسبة الاشراف او نسبة الرسوم
+    //نسبة الإشراف او نسبة الرسوم
     percentageSupervisionOrFees: number;
-    //نسبة الاشراف او نسبة الرسوم للأرض
+    //نسبة الإشراف او نسبة الرسوم للأرض
     percentageSupervisionOrFeesForLand: number;
-    //نسبة الاشراف او نسبة الرسوم للوحدة
+    //نسبة الإشراف او نسبة الرسوم للوحدة
     percentageSupervisionOrFeesForUnit: number;
     supervisionFromProjectBeginning: number;
     projectDayCounts: number;
@@ -76,7 +76,7 @@ export class LicenseProjectBuyerSettingDto {
     // نسبة الرسوم للأرض
     percentageSupervisionOrFeesForLand: number = 0;
 
-    //نسبة الاشراف او نسبة الرسوم للوحدة
+    //نسبة الإشراف او نسبة الرسوم للوحدة
     percentageSupervisionOrFeesForUnit: number = 0;
     supervisionFromProjectBeginning: number = 0;
     projectDayCounts: number = 0;
@@ -97,7 +97,7 @@ export interface LicenseProjectBuyerDetailsDto {
     name: string;
     nidNumber: string;
     mobile: string;
-    //عدد الأراضى
+    //عدد الأراضي
     landNumbers: number;
     //رقم الوحدة
     unitCodeId: string;

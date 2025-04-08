@@ -113,7 +113,7 @@ export class RequestSummaryComponent implements OnDestroy {
       },
       {
         icon: '', // index = 5
-        title: 'مهندسي الشركة المعتمدين',
+        title: 'موظفين الشركة المعتمدين',
         component: RequestCertifiedFacilityEngineersComponent,
         id: 'RequestCertifiedFacilityEngineersComponent',
         disabled: false,
@@ -518,7 +518,7 @@ export class RequestSummaryComponent implements OnDestroy {
   openValidationDialog(): void {
     let Data = {
       panelClass: ['rega'],
-      title: `التحقق من بيانات طلب 
+      title: `التحقق من بيانات طلب
           ${this.RequestCode} `,
       component: RequestValidationPopupComponent,
       buttons: [

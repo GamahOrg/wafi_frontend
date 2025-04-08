@@ -8,6 +8,7 @@
                 <tr>
                     <th scope="col">التاريخ</th>
                     <th scope="col"> الشهر</th>
+                    <th scope="col"> الحالة</th>
                     <th>العمليات</th>
 
                    
@@ -22,7 +23,10 @@
                         <span class="text-dark">{{comdata.monthName}}</span>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" (click)="getActualValueReportDetails(comdata.monthDate)" >عرض التفاصيل</button>
+                        <span class="text-dark">{{comdata?.supervisionPlannedReportStatus?.name}}</span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="getActualValueReportDetails(comdata)" >عرض التفاصيل</button>
                     </td>
                 </tr>
             </tbody>

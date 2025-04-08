@@ -135,7 +135,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
     this._dataVisibilityOfLicenseProjectService.updateDataVisibilityOfLicenseProject(data)
   }
   private getLicenseProjectIdStorage(): void {
-    debugger;
+    
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId) this.GetLicenseRequestHeadersByLicenseProjectId()
   }
@@ -143,7 +143,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
     this._dataVisibilityOfLicenseProjectService.resetDataVisibilityOfLicenseProject()
   }
   send() {
-    debugger;
+    
     let licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (!licenseProjectId) return;
     this.subscriptions.push(
@@ -245,7 +245,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   openApprovalDialog(): void {
 
     let Data = {
-      title: "يجب الموافقه على جميع الاقرارات الخاصة بالرخصه حتي يتم ارسال الطلب",
+      title: "يجب الموافقه على جميع الاقرارات الخاصة بالرخصة حتى يتم ارسال الطلب",
       component: ApprovalComponent,
       id: "ApprovalComponent"
     } as PopupData;

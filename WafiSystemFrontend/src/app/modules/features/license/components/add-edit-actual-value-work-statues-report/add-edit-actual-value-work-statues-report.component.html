@@ -1,7 +1,8 @@
 <form class="d-flex flex-column h-100" [formGroup]="licenseProjectEngineeringSupervisionActualReportForm"
 id="form-licenseProjectEngineeringSupervisionActualReportForm">
-
-    <h6 class="title fw-normal">{{'معلومات المشروع '}}</h6>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+    <h3 class="title">{{'معلومات المشروع '}}</h3>
 <div class="tab-data-section">
     <div class="row mb-3">
         <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
@@ -18,7 +19,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
         licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses && 
         licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses.length !=0 && 
         licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].cities">
-            <div class="key"> المدينه</div>
+            <div class="key"> المدينة</div>
             <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].cities.cityName}}</div>
         </div>
   <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails && 
@@ -75,20 +76,24 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
     </div>
 </div> 
-
-<h6 class="title fw-normal">{{' البرنامج الزمني '}}</h6>
+</div>
+</div>
+<hr>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+<h3 class="title">{{' البرنامج الزمني '}}</h3>
   <div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
  <div class="row mb-3">
 
 
  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
- <div class="key">تاريخ بدايه المشروع التعاقدي</div>
+ <div class="key">تاريخ بداية المشروع التعاقدي</div>
  <div class="value">{{ licenseProjectEngineeringActualReportMonthDetails.contractualStartDate | date:'yyyy-MM-dd' }}</div>
 </div>
 
 
 <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
- <div class="key">تاريخ نهايه المشروع التعاقدي</div>
+ <div class="key">تاريخ نهاية المشروع التعاقدي</div>
  <div class="value">{{ licenseProjectEngineeringActualReportMonthDetails.contractualFinishDate | date:'yyyy-MM-dd' }}</div>
 </div>
 
@@ -107,7 +112,8 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
    </div>
  </div>
 </div> 
-
+</div>
+</div>
 
 <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj">
  <div class="key">تاريخ النهاية التعاقدي المعدل بناء على التمديد المعتمد</div>
@@ -138,8 +144,10 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
  </div>
  </div> 
 
-
-<h6 class="title fw-normal">{{'نسب الأنجاز '}}</h6>
+ <hr>
+<h3 class="title">{{'نسب الأنجاز '}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
 <div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
  <div class="row mb-3">
 
@@ -192,8 +200,12 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
  </div>
 </div> 
-
-<h6 class="title fw-normal">{{'التكاليف الانشائية المعتمدة'}}</h6>
+</div>
+</div>
+<hr>
+<h3 class="title">{{'التكاليف الانشائية المعتمدة'}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
 <div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
  <div class="row mb-3">
  <div class="col-12 col-lg-6">
@@ -214,8 +226,12 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
  </div>
 </div> 
-
-<h6 class="title fw-normal">{{'معدلات الأداء'}}</h6>
+</div>
+</div>
+<hr>
+<h3 class="title">{{'معدلات الأداء'}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
 <div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
  <div class="row mb-3">
 
@@ -238,9 +254,12 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
  </div>
  </div>
 </div>
-
-
-<h6 class="title fw-normal">{{'العمالة'}}</h6>
+</div>
+</div>
+<hr>
+<h3 class="title">{{'العمالة'}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
 <div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
  <div class="row mb-3">
 
@@ -268,26 +287,33 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
  </div>
 </div> 
 
-
-
-<h6 class="title fw-normal">{{'ملاحظات  '}}</h6>
+</div>
+</div>
+<hr>
+<h3 class="title">{{'ملاحظات  '}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
 <div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
  <div class="row mb-3">
  
  <div class="col-12 col-lg-6">
   <div class="form-group mb-4">
-    <label class="form-label">أسباب التأخير (ان وجد)</label>
+    <label class="form-label">أسباب التأخير (أن وجد)</label>
     <textarea type="text" id="control-delayReasons" class="form-control" formControlName="delayReasons"
-      placeholder="أسباب التأخير (ان وجد)"></textarea>
+      placeholder="أسباب التأخير (أن وجد)"></textarea>
 
   </div>
+</div>
+</div>
 </div>
 
 
  </div>
 </div> 
-
-<h6 class="title fw-normal">{{'المرفقات'}}</h6>
+<hr>
+<h3 class="title">{{'المرفقات'}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
 <div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
  <div class="row mb-3">
   <div class="col-12 col-lg-6">
@@ -350,6 +376,8 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
  </div>
 </div> 
+</div>
+</div>
 
 </form>
 

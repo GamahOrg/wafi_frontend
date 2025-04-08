@@ -24,17 +24,17 @@ export class ProjectLicenseRequestTimeLineComponent implements OnInit {
     this.getSelectedRequestIdFromLocalStorage();
   }
   getSelectedRequestIdFromLocalStorage(): void {
-    debugger;
+    
     this.licenseProjectRequestId = this._projectRequestLocalStorageService.getSelectedProjectLicenseRequestIdFromLocalStorage() as string;
     if (this.licenseProjectRequestId) this.GetRequestNotesByRequestId();
   }
 
   private GetRequestNotesByRequestId(): void {
-    debugger;
+    
         this.subscriptions.push(
           this._licenseProjectRequestLogService.getLicenseProjectRequestLogs(this.licenseProjectRequestId as string).subscribe((res: LicenseProjectRequestLogDto[] | null) => {
             if (res) {
-              debugger;
+              
               this.requestLogs = res;    
             }
           }),

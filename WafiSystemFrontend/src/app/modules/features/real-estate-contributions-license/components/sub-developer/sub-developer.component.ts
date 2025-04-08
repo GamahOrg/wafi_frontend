@@ -39,7 +39,7 @@ export class SubDeveloperComponent implements OnInit {
     AgreementFile: "ملف الاتفاقية",
     AgreementFileRequired: "هذا الحقل مطلوب",
     NoData: "لا توجد بيانات",
-    DeveloperLabel: "ادخل السجل التجاري للمطور العقاري",
+    DeveloperLabel: "ادخل السجل التجاري للمطور عقاري",
     DeveloperRequired: "هذا الحقل مطلوب",
     DeveloperEmailNoCorrect: "هذا الحقل غير صحيح",
     DeveloperMobileNotCorrect: "هذا الحقل غير صحيح",

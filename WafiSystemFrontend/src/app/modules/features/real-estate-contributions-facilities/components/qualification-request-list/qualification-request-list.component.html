@@ -1,5 +1,5 @@
 <div class="page">
-  <div class="page-header m-3">
+  <div class="page-header">
     <div class="row row-gap-3">
       <div class="col-12 col-lg-6">
         <div class="page-title mb-0">
@@ -15,45 +15,22 @@
             <div class="row">
               <div class="col-4">
                 <div class="input-group">
-                  <span class="input-group-text" id="basic-addon1"
-                    ><i class="material-icons-outlined">search</i></span
-                  >
-                  <input
-                    type="text"
-                    id="control-search"
-                    class="form-control"
-                    placeholder="search"
-                    aria-label="search"
-                    aria-describedby="basic-addon1"
-                  />
+                  <span class="input-group-text" id="basic-addon1"><i class="material-icons-outlined">search</i></span>
+                  <input type="text" id="control-search" class="form-control" placeholder="search" aria-label="search" aria-describedby="basic-addon1" />
                 </div>
               </div>
               <div class="col-2">
                 <div class="criteria-wrapper">
-                  <button
-                    type="button"
-                    id="btn-stopPropagation"
-                    class="toggle btn btn-outline-primary"
-                    (click)="$event.stopPropagation(); showFilter = !showFilter"
-                  >
+                  <button type="button" id="btn-stopPropagation" class="toggle btn btn-outline-primary" (click)="$event.stopPropagation(); showFilter = !showFilter">
                     <span class="d-flex align-items-center column-gap-1">
                       <i class="material-icons-outlined">filter_alt</i>
                       بحث
                     </span>
                   </button>
-                  <div
-                    class="criteria"
-                    (click)="$event.stopPropagation()"
-                    id="control-stopPropagation"
-                    [hidden]="!showFilter"
-                  >
+                  <div class="criteria" (click)="$event.stopPropagation()" id="control-stopPropagation" [hidden]="!showFilter">
                     <h6 class="title">بحث</h6>
 
-                    <accordion
-                      [closeOthers]="false"
-                      [isAnimated]="true"
-                      class="simple"
-                    >
+                    <accordion [closeOthers]="false" [isAnimated]="true" class="simple">
                       <ng-container>
                         <accordion-group [isOpen]="true">
                           <div class="accordion-heading" accordion-heading>
@@ -65,23 +42,13 @@
                           </div>
 
                           <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="control-chk1"
-                              value=""
-                            />
+                            <input class="form-check-input" type="checkbox" id="control-chk1" value="" />
                             <label class="form-check-label" for="chk1">
                               تحت الدراسة
                             </label>
                           </div>
                           <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="control-chk2"
-                              value=""
-                            />
+                            <input class="form-check-input" type="checkbox" id="control-chk2" value="" />
                             <label class="form-check-label" for="chk2">
                               معالجة الملاحظات
                             </label>
@@ -89,9 +56,7 @@
 
                           <div class="date-range-result my-3">
                             <span class="icon">
-                              <i class="material-icons-outlined"
-                                >calendar_today</i
-                              >
+                              <i class="material-icons-outlined">calendar_today</i>
                             </span>
                             <span>من</span>
                             {{ bsInlineRangeValue[0] | date : "dd MMMM" }}
@@ -99,10 +64,7 @@
                             {{ bsInlineRangeValue[1] | date : "dd MMMM" }}
                           </div>
 
-                          <bs-daterangepicker-inline
-                            [bsValue]="bsInlineRangeValue"
-                            [bsConfig]="bsConfig"
-                          ></bs-daterangepicker-inline>
+                          <bs-daterangepicker-inline [bsValue]="bsInlineRangeValue" [bsConfig]="bsConfig"></bs-daterangepicker-inline>
 
                           <!-- <mat-form-field appearance="fill">
                                                     <mat-date-range-input [formGroup]="range"
@@ -145,23 +107,13 @@
                           </div>
 
                           <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="control-chk3"
-                              value=""
-                            />
+                            <input class="form-check-input" type="checkbox" id="control-chk3" value="" />
                             <label class="form-check-label" for="chk3">
                               تم رفض الطلب
                             </label>
                           </div>
                           <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="control-chk4"
-                              value=""
-                            />
+                            <input class="form-check-input" type="checkbox" id="control-chk4" value="" />
                             <label class="form-check-label" for="chk4">
                               تم القبول وإصدار الشهادة
                             </label>
@@ -212,7 +164,7 @@
             </div>
         </div> -->
 
-    <div class="table-responsive m-3">
+    <div class="table-responsive mt-3">
       <table class="table table-light">
         <thead>
           <tr>
@@ -237,11 +189,7 @@
         <tbody>
           <tr *ngFor="let request of reqList.results">
             <td>
-              <a
-                class="underline fw-bold text-primary"
-                id="link-navigateToDetails"
-                (click)="navigateToDetails(request)"
-              >
+              <a class="underline fw-bold text-primary" id="link-navigateToDetails" (click)="navigateToDetails(request)">
                 {{ request.requestCode }}
               </a>
             </td>
@@ -249,12 +197,7 @@
               <div class="d-flex align-items-center column-gap-2">
                 <div class="image">
                   <!-- <span class="avatar material-icons">person</span> -->
-                  <img
-                    src="/assets/images/general/static-person.jpeg"
-                    id="control-image"
-                    alt=""
-                    class="img-fluid"
-                  />
+                  <img src="/assets/images/general/static-person.jpeg" id="control-image" alt="" class="img-fluid" />
                 </div>
                 <span class="username">{{ request.customers.fullName }}</span>
               </div>
@@ -262,29 +205,25 @@
             <td>
               <span class="text-dark" dir="ltr">{{
                 request.requestOn | date : "dd MMMM yyyy"
-              }}</span>
+                }}</span>
             </td>
             <td>
               <span class="text-dark">{{
                 request.facilities.commercialRegisterNumber
-              }}</span>
+                }}</span>
             </td>
             <td>
               {{ request.isRenewal ? "تجديد" : "" }}
               {{ request.qualificationRequestType.typeName }} -
               {{
-                request.qualificationRequestType.showForWafi
-                  ? "لجنة البيع على الخارطة"
-                  : "المساهمات العقارية"
+              request.qualificationRequestType.showForWafi
+              ? "لجنة البيع على الخارطة"
+              : "المساهمات عقارية"
               }}
             </td>
             <td>
               <div class="d-flex align-items-center">
-                <span
-                  class="status-dot"
-                  [ngClass]="externalStatusId[request.externalStatusId]"
-                  *ngIf="request.externalStatus"
-                >
+                <span class="status-dot" [ngClass]="externalStatusId[request.externalStatusId]" *ngIf="request.externalStatus">
                   <i class="icon material-icons">fiber_manual_record</i>
                   {{ request.externalStatus }}
                   <!-- {{internalStatusId[request.internalStatusId]}} -->
@@ -305,7 +244,7 @@
       </table>
     </div>
 
-    <div class="m-2">
+    <div class="mt-3">
       <app-pagination></app-pagination>
     </div>
   </ng-container>

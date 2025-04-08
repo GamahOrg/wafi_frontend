@@ -46,7 +46,7 @@ export class LicenseProjectBuyerListComponent {
   }
 
   private getLicenseProjectIdStorage(): void {
-    debugger;
+    
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId)
       this.getBuyersOnProject();
@@ -55,7 +55,7 @@ export class LicenseProjectBuyerListComponent {
   getBuyersOnProject(): void {
     this.subscriptions.push(
       this._licenseProjectBuyerService.getBuyersOnProject(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseProjectBuyerListPagingDto[]> | null) => {
-        debugger;
+        
         this.updateRequestList(res as Pagination<LicenseProjectBuyerListPagingDto[]>);
       })
     )

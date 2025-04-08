@@ -1,7 +1,9 @@
+import { FacilityShortDto } from "./facility-short-dto"
+
 export interface LincenseProjectRequest{
     id:string,
     requestCode?: string,
-    facilityName: string,
+    facility: FacilityShortDto,
     licenseProjectName:string,
     externalRequestStatusName: string,
     licenseProjectRequestTypeName: string,

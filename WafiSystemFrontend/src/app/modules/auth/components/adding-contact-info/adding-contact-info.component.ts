@@ -270,7 +270,7 @@ export class AddingContactInfoComponent implements OnInit {
   observeUserTypeStatus(): void {
     this._registrationService.registrationStatus.subscribe(
       (status: RegistrationStatus | null) => {
-        debugger;
+        
         if (status) {
           switch (status) {
             case this.RegistrationStatusEnum.finalBeneficiary:
@@ -289,7 +289,7 @@ export class AddingContactInfoComponent implements OnInit {
       this._registrationService
         .updateContact(this.contactInfoValues)
         .subscribe((res: any) => {
-          debugger
+          
           if (res) {
             console.log('updateContact');
             console.log(res);
@@ -308,7 +308,7 @@ export class AddingContactInfoComponent implements OnInit {
                 this._userDataService.updateCustomerData(this.userData);
               }
               //this.showNotificationForEmailVerification();
-              debugger
+              
               if (
                 this.loginUserEnum == LoginUserTypeEnum.delegateWafiPartner
               ) {
@@ -510,7 +510,7 @@ export class AddingContactInfoComponent implements OnInit {
       this._OTPService
         .ValidateOTP(mobileNumber, OTP)
         .subscribe((res: boolean) => {
-          debugger
+          
           if (res) {
             this.closeDialog();
             this._toastrNotificatioService.showSuccess(

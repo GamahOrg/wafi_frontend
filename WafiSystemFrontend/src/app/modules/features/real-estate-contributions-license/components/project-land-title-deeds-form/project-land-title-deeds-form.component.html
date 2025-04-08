@@ -9,7 +9,7 @@
       <div class="form-check form-check-inline">
         <input class="form-check-input" id="control-prevExpert" formControlName="integrationType" type="radio"
           name="integrationType" id="no" [value]="1" (change)="hideDeedType(false)">
-        <label class="form-check-label" for="no">السجل العقاري</label>
+        <label class="form-check-label" for="no">السجل عقاري</label>
       </div>
     </div>
 
@@ -80,7 +80,7 @@
         <div class="col-12 col-md-12" *ngIf="hasOwnerData">
           <!-- *ngIf="deedFromIntegration.data" -->
           <label class="form-label">بيانات الصك</label>
-          <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+          <div class="row row-gap-4">
             <div class="col-12 col-lg-6">
               <div class="key">مساحة الصك</div>
               <div class="value">

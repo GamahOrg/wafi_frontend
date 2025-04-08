@@ -5,8 +5,10 @@ import { Tabs } from '../../models/tabs.model';
 @Injectable()
 export class TabsService {
   tabContent: BehaviorSubject<Tabs>=new BehaviorSubject<Tabs>(new Tabs)
+  secondTabContent: BehaviorSubject<Tabs>=new BehaviorSubject<Tabs>(new Tabs)
   verticalTabContent: BehaviorSubject<Tabs>=new BehaviorSubject<Tabs>(new Tabs)
   activeTabIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  activeSecondTabIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   activeVerticalTabIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   constructor() { }
     // update 
@@ -19,6 +21,17 @@ export class TabsService {
     // get 
     getTabContent(): Observable<Tabs> {
       return this.tabContent.asObservable()
+    }
+
+      updateSecondTabContent(tabs: Tabs) {
+      this.secondTabContent.next(tabs)
+    }
+    resetSecondTabContent() {
+      this.secondTabContent.next(new Tabs)
+    }
+    // get 
+    getSecondTabContent(): Observable<Tabs> {
+      return this.secondTabContent.asObservable()
     }
     // update 
     updateVerticalTabContent(tabs: Tabs) {
@@ -34,6 +47,13 @@ export class TabsService {
     // get 
     getActiveTabIndex(): Observable<number> {
       return this.activeTabIndex.asObservable()
+    }
+    updateActiveSecondTabIndex(index: number) {
+      this.activeSecondTabIndex.next(index)
+    }
+    // get 
+    getActiveSecondTabIndex(): Observable<number> {
+      return this.activeSecondTabIndex.asObservable()
     }
     updateActiveVerticalTabIndex(index: number) {
       this.activeVerticalTabIndex.next(index)

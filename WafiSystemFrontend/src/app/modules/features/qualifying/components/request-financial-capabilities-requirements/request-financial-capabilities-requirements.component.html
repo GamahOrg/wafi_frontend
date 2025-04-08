@@ -1,7 +1,7 @@
 <div class="tab-data-section"
      *ngIf="financialCapability">
-    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-        <div class="col-12 col-md-6"
+    <div class="row row-gap-4">
+        <div class="col-12 col-lg-6"
              *ngIf="financialCapability.cpalicenseNumber">
             <div class="key">رقم رخصة المحاسب القانوني المعتمد</div>
             <div class="value fw-bold">
@@ -9,7 +9,7 @@
                 {{financialCapability.cpalicenseNumber}}
             </div>
         </div>
-        <div class="col-12 col-md-6"
+        <div class="col-12 col-lg-6"
              *ngIf="financialCapability.creditRecordIntegrityCertificateDate">
             <div class="key">تاريخ إصدار شهادة سلامة السجل الائتماني</div>
             <div class="value col-12 col-md-6 col-xl-8">
@@ -17,7 +17,7 @@
                 {{financialCapability.creditRecordIntegrityCertificateDate | date: 'dd/MM/yyyy'}}
             </div>
         </div>
-        <div class="col-12 col-md-6"
+        <div class="col-12 col-lg-6"
              *ngIf="financialCapability && financialCapability.creditRecordIntegrityCertificateFile">
             <div class="key"> شهادة السجل الائتماني</div>
             <div class="value">
@@ -27,7 +27,7 @@
                     {{financialCapability.creditRecordIntegrityCertificateFile.fileDescription}}</a>
             </div>
         </div>
-        <div class="col-12 col-md-6"
+        <div class="col-12 col-lg-6"
              *ngIf="financialCapability.certificateOfZakatIncome">
             <div class="key">رقم شهادة الزكاة والدخل</div>
             <div class="value fw-bold">
@@ -35,7 +35,7 @@
                 {{financialCapability.certificateOfZakatIncome}}
             </div>
         </div>
-        <div class="col-12 col-md-6"
+        <div class="col-12 col-lg-6"
              *ngIf="financialCapability.qualificationFinancialStatements && financialCapability.qualificationFinancialStatements.length > 0 ">
             <div class="key">القوائم المالية للسنه الميلادية السابقة</div>
             <div class="value"

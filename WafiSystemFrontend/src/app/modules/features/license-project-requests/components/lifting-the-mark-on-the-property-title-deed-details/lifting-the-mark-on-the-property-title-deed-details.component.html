@@ -1,0 +1,92 @@
+<div class="tab-data-section bg-white p-5">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <div class="key">اسم المشروع</div>
+      <div class="value">{{ changeRequestDetails?.projectName }}</div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="licenseProjectDetails">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="key">اسم المطور العقاري</div>
+        <div class="value">{{ licenseProjectDetails.facilityName }}</div>
+      </div>
+      <div class="col-md-6">
+        <div class="key">رقم السجل التجاري الخاص بالمطور</div>
+        <div class="value">{{ licenseProjectDetails.commercialRegisterNumber }}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="key">رقم شهادة تأهيل المطور العقاري</div>
+        <div class="value">{{ licenseProjectDetails?.developerCertifiedNumber }}</div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="key">رقم ترخيص المطور</div>
+        <div class="value">{{ licenseProjectDetails.certifiedNumber }}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="key">تاريخ انتهاء الترخيص</div>
+        <div class="value">{{ licenseProjectDetails.endOn | date: "dd MMMM yyyy" }}</div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="key">موقع المشروع</div>
+        <div class="value">{{ licenseProjectDetails.cityName }} {{ licenseProjectDetails.areaName }}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="key">نوع وحدات المشروع</div>
+        <div class="value">{{ licenseProjectDetails.unitTypeName }}</div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="key">عدد وحدات المشروع</div>
+        <div class="value">{{ licenseProjectDetails.subUnitCount }}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="key">عدد الوحدات المباعة</div>
+        <div class="value">{{ licenseProjectDetails.unitsSellCount }}</div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="key">سبب رفع التأشير </div>
+        <div class="value">{{ changeRequestDetails?.liftingDeedReason.name }}</div>
+      </div>
+      
+    </div>
+  </ng-container>
+  
+  
+    <div class="col-md-6 mb-3">
+      <div class="key">نماذج الفرز او الدمج</div>
+      <div class="value">
+        <a [href]="baseUrl + changeRequestDetails?.applicationFormFile?.filePath" target="_blank">
+          {{ changeRequestDetails?.applicationFormFile?.fileDescription }}
+        </a>
+      </div>
+    </div>
+    <div class="col-md-12 mb-3">
+      <div class="key">صكوك المشروع المراد رفع التأشير عنها</div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>رقم الصك</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let deed of changeRequestDetails?.liftingDeeds; let i = index">
+            <td>{{ deed.number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+</div>

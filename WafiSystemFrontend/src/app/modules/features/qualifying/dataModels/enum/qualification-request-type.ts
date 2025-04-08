@@ -5,8 +5,10 @@ export enum QualificationRequestTypeCode
     RealStateDeveloperQualifiedCompanyAlliance = 'RED03',
     RealStateMarketer =  'REM',
     RealStateBroker = 'REB',
-    Accountant = 'Acc', 
+    Accountant = 'Acc',
     EngineeringConsultant = 'EC',
+    ContributionAccountant = 'Acc-REEM',
+    ContributionEngineeringConsultant = 'EC-REEM',
 }
 
 
@@ -18,5 +20,7 @@ export enum QualificationType {
     realStateBrokerQualificationRequest="REB",
     accountantQualificationRequest="Acc",
     engineeringConsultantQualificationRequest="EC",
+    contributionAccountantQualificationRequest="Acc-REEM",
+    contributionEngineeringConsultantQualificationRequest="EC-REEM",
     realEstateDeveloperSpecializingInRealEstateParticipation="REEM",
 }

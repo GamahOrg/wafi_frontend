@@ -1,0 +1,58 @@
+<div class="tab-data-header" *ngIf="changeLicenseProjectBuyerOrTenantContractRequest && changeLicenseProjectBuyerOrTenantContractRequest.licenseProjectRequest
+    && (changeLicenseProjectBuyerOrTenantContractRequest.licenseProjectRequest.externalRequestStatusId==LicenseProjectRequestStatusEnum.New || changeLicenseProjectBuyerOrTenantContractRequest.licenseProjectRequest.externalRequestStatusId==LicenseProjectRequestStatusEnum.CustomerFeedback)">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title">تفاصيل الطلب</h6>
+  
+    <button class="edit-icon btn btn-outline-primary" (click)="openDialog()">
+      <span class="material-icons">edit</span>
+    </button>
+  </div>
+  
+  <div class="tab-data-section bg-white p-5" *ngIf="changeLicenseProjectBuyerOrTenantContractRequest">
+      <div class="row row-gap-4">
+  <div class="col-12 col-lg-6">
+      <div class="key">نموذج الطلب، موضحاً به أسباب طلب التغيير</div>
+      <div class="value">
+          <span class="icon material-icons">picture_as_pdf</span>
+          <a *ngIf="changeLicenseProjectBuyerOrTenantContractRequest && changeLicenseProjectBuyerOrTenantContractRequest.applicationFormFile" [href]="baseUrl + changeLicenseProjectBuyerOrTenantContractRequest?.applicationFormFile?.filePath" target="_blank">
+              {{changeLicenseProjectBuyerOrTenantContractRequest?.applicationFormFile?.fileDescription}}
+          </a>
+      </div>
+  </div>
+  <div class="col-12 col-lg-6">
+      <div class="key">نسخة من العقد</div>
+      <div class="value">
+          <span class="icon material-icons">picture_as_pdf</span>
+          <a *ngIf="changeLicenseProjectBuyerOrTenantContractRequest && changeLicenseProjectBuyerOrTenantContractRequest.contarctCopy" [href]="baseUrl + changeLicenseProjectBuyerOrTenantContractRequest?.contarctCopy?.filePath" target="_blank">
+              {{changeLicenseProjectBuyerOrTenantContractRequest?.contarctCopy?.fileDescription}}
+          </a>
+      </div>
+  </div>
+
+
+  <div class="col-12 col-lg-6">
+    <div class="key">موافقة مكتوبة من المشترين او المستاجرين على التغيير فى عقودهم</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="changeLicenseProjectBuyerOrTenantContractRequest && changeLicenseProjectBuyerOrTenantContractRequest.writtenAgreementFromBuyerOrTenant" [href]="baseUrl + changeLicenseProjectBuyerOrTenantContractRequest?.writtenAgreementFromBuyerOrTenant?.filePath" target="_blank">
+            {{changeLicenseProjectBuyerOrTenantContractRequest?.writtenAgreementFromBuyerOrTenant?.fileDescription}}
+        </a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  </div>
+  
+

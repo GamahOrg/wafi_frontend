@@ -1,32 +1,25 @@
 <ng-container *ngIf="projectRealStateDeveloper && projectRealStateDeveloper.id">
-  <form
-    class="d-flex flex-column h-100"
-    id="form-projectRealStateDeveloperForm"
-    [formGroup]="projectRealStateDeveloperForm"
-  >
+  <form class="d-flex flex-column h-100" id="form-projectRealStateDeveloperForm" [formGroup]="projectRealStateDeveloperForm">
     <div class="tab-data-header">
       <div class="icon"><span class="material-icons">list_alt</span></div>
-      <h6 class="title fw-normal">{{ localization.title }}</h6>
+      <h6 class="title">{{ localization.title }}</h6>
     </div>
 
     <div class="tab-data-section" *ngIf="dataSection[tabCode.facilityInfo]">
       <h6 class="title">{{ localization.facilityData }}</h6>
-      <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+      <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
           <div class="key">{{ localization.orderDate }}</div>
-          <div
-            class="value"
-            *ngIf="
+          <div class="value" *ngIf="
               projectRealStateDeveloper &&
               projectRealStateDeveloper.licenseRequestHeaders &&
               projectRealStateDeveloper.licenseRequestHeaders[0]
                 .licenseRequestVersions
-            "
-          >
+            ">
             <span class="icon material-icons">calendar_today</span>
             {{
-              projectRealStateDeveloper.licenseRequestHeaders[0]
-                .licenseRequestVersions[0].requestOn | date : "MM/dd/yyyy"
+            projectRealStateDeveloper.licenseRequestHeaders[0]
+            .licenseRequestVersions[0].requestOn | date : "MM/dd/yyyy"
             }}
           </div>
         </div>
@@ -51,7 +44,7 @@
             {{ facilityFullData.facilityName }}
           </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
           <div class="key">رأس مال المنشأة</div>
           <div class="value">{{ facilityFullData.capitalNumber }}</div>
         </div>
@@ -72,17 +65,14 @@
         </div>
         <div class="col-12 col-lg-6">
           <div class="key">{{ localization.CreatDate }}</div>
-          <div
-            class="value"
-            *ngIf="
+          <div class="value" *ngIf="
               facilityFullData &&
               facilityFullData.qualificationFinancialCapabilityRequirements
-            "
-          >
+            ">
             <span class="icon material-icons">blinds</span>
             {{
-              facilityFullData.qualificationFinancialCapabilityRequirements[0]
-                ?.creditRecordIntegrityCertificateDate | date : "MM/dd/yyyy"
+            facilityFullData.qualificationFinancialCapabilityRequirements[0]
+            ?.creditRecordIntegrityCertificateDate | date : "MM/dd/yyyy"
             }}
           </div>
         </div>
@@ -90,97 +80,83 @@
           <div class="key">{{ localization.identityFile }}</div>
           <div class="value">
             <span class="icon material-icons-outlined">content_copy</span>
-            <a
-              target="_blank"
-              *ngIf="
+            <a target="_blank" *ngIf="
                 facilityFullData &&
                 facilityFullData.qualificationFinancialCapabilityRequirements &&
                 facilityFullData.qualificationFinancialCapabilityRequirements[0]
                   ?.creditRecordIntegrityCertificateFile
-              "
-              [href]="
+              " [href]="
                 baseUrl +
                 facilityFullData.qualificationFinancialCapabilityRequirements[0]
                   .creditRecordIntegrityCertificateFile.filePath
-              "
-            >
+              ">
               {{
-                facilityFullData.qualificationFinancialCapabilityRequirements[0]
-                  ?.creditRecordIntegrityCertificateFile?.fileDescription
-              }}</a
-            >
+              facilityFullData.qualificationFinancialCapabilityRequirements[0]
+              ?.creditRecordIntegrityCertificateFile?.fileDescription
+              }}</a>
           </div>
         </div>
       </div>
     </div>
     <div class="tab-data-section" *ngIf="dataSection[tabCode.facilityInfo]">
       <h6 class="title">الملاك</h6>
-      <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-        <div class="col-12 col-md-6">
-          <table class="facility-owner-table" border="1">
-            <thead>
-              <tr>
-                <th>رقم الهوية</th>
-                <th>اسم مالك</th>
-                <th>نوع العلاقة</th>
-                <th>الجنسية</th>
-                <th>رقم التليفون</th>
-                <th>الايميل</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                *ngFor="
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="table-responsive">
+            <table class="table table-light">
+              <thead>
+                <tr>
+                  <th>رقم الهوية</th>
+                  <th>اسم مالك</th>
+                  <th>نوع العلاقة</th>
+                  <th>الجنسية</th>
+                  <th>رقم التليفون</th>
+                  <th>الايميل</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="
                   let owner of facilityFullData.facilityOwners;
                   let i = index
-                "
-              >
-              <td class="facility-owner-body">{{ owner.nidnumber }}</td>
-              <td class="facility-owner-body">{{ owner.ownerName }}</td>
-              <td class="facility-owner-body">{{ owner.relationType }}</td>
-              <td class="facility-owner-body">{{ owner.ownerNationalityAR }}</td>
-              <td class="facility-owner-body">{{ owner.mobile }}</td>
-              <td class="facility-owner-body">{{ owner.email }}</td>
-              </tr>
-            </tbody>
-          </table>
+                ">
+                  <td class="facility-owner-body">{{ owner.nidnumber }}</td>
+                  <td class="facility-owner-body">{{ owner.ownerName }}</td>
+                  <td class="facility-owner-body">{{ owner.relationType }}</td>
+                  <td class="facility-owner-body">{{ owner.ownerNationalityAR }}</td>
+                  <td class="facility-owner-body">{{ owner.mobile }}</td>
+                  <td class="facility-owner-body">{{ owner.email }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-    <div
-      class="tab-data-section"
-      *ngIf="dataSection[tabCode.licenseProjectFacilityAddress]"
-    >
+    <div class="tab-data-section" *ngIf="dataSection[tabCode.licenseProjectFacilityAddress]">
       <h6 class="title">{{ localization.facilityAddress }}</h6>
-      <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-        <div
-          class="col-12 col-lg-6"
-          *ngIf="
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6" *ngIf="
             facilityFullData.qualificationNationalAddressDetails &&
             facilityFullData.qualificationNationalAddressDetails.length > 0
-          "
-        >
+          ">
           <div class="key">{{ localization.area }}</div>
           <span class="icon material-icons"></span>
           {{
-            facilityFullData.qualificationNationalAddressDetails[0].areas
-              .areaName
+          facilityFullData.qualificationNationalAddressDetails[0].areas
+          .areaName
           }}
         </div>
       </div>
-      <div
-        class="col-12 col-lg-6"
-        *ngIf="
+      <div class="col-12 col-lg-6" *ngIf="
           facilityFullData.qualificationNationalAddressDetails &&
           facilityFullData.qualificationNationalAddressDetails.length > 0
-        "
-      >
+        ">
         <div class="key">{{ localization.city }}</div>
         <div class="value">
           <span class="icon material-icons"></span>
           {{
-            facilityFullData.qualificationNationalAddressDetails[0].sysCity
-              .cityName
+          facilityFullData.qualificationNationalAddressDetails[0].sysCity
+          .cityName
           }}
         </div>
       </div>
@@ -188,31 +164,22 @@
 
     <div class="tab-data-section" *ngIf="dataSection[tabCode.customerInfo]">
       <h6 class="title">{{ localization.applicantData }}</h6>
-      <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-        <div
-          class="col-12 col-lg-6"
-          *ngIf="customerDate && customerDate.fullName"
-        >
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6" *ngIf="customerDate && customerDate.fullName">
           <div class="key">{{ localization.applicantName }}</div>
           <div class="value">
             <span class="icon material-icons"></span>
             {{ customerDate.fullName }}
           </div>
         </div>
-        <div
-          class="col-12 col-lg-6"
-          *ngIf="customerDate && customerDate.jobTitle"
-        >
+        <div class="col-12 col-lg-6" *ngIf="customerDate && customerDate.jobTitle">
           <div class="key">{{ localization.applicantJobTitle }}</div>
           <div class="value">
             <span class="icon material-icons"></span>
             {{ customerDate.jobTitle }}
           </div>
         </div>
-        <div
-          class="col-12 col-lg-6"
-          *ngIf="customerDate && customerDate.mobile1"
-        >
+        <div class="col-12 col-lg-6" *ngIf="customerDate && customerDate.mobile1">
           <div class="key">{{ localization.mobile }}</div>
           <div class="value">
             <span class="icon material-icons"></span>
@@ -236,28 +203,18 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.selectDelegator }}</label>
-            <select
-              class="form-select"
-              id="control-delegatorCustomerId"
-              aria-label="Default select example"
-              formControlName="delegatorCustomerId"
-            >
+            <select class="form-select" id="control-delegatorCustomerId" aria-label="Default select example" formControlName="delegatorCustomerId">
               <option selected disabled>
                 {{ localization.selectDelegator }}
               </option>
-              <option
-                *ngFor="let customer of subCustomerList"
-                [ngValue]="customer.id"
-              >
+              <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>
             </select>
-            <mat-error
-              *ngIf="
+            <mat-error *ngIf="
                 controls.delegatorCustomerId?.hasError('required') &&
                 showValidation
-              "
-            >
+              ">
               {{ localization.requiredErrorMsg }}
             </mat-error>
           </div>
@@ -265,227 +222,126 @@
       </div>
     </div>
 
-    <div
-      class="tab-data-section"
-      *ngIf="dataSection[tabCode.licenseProjectExecutiveDirector]"
-    >
+    <div class="tab-data-section" *ngIf="dataSection[tabCode.licenseProjectExecutiveDirector]">
       <h6 class="title">{{ localization.executiveDirectorData }}</h6>
 
       <div class="row mb-3">
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.name }}</label>
-            <input
-              type="text"
-              id="control-executiveDirectorName"
-              [placeholder]="localization.name"
-              class="form-control"
-              formControlName="executiveDirectorName"
-            />
-            <mat-error
-              *ngIf="
+            <input type="text" id="control-executiveDirectorName" [placeholder]="localization.name" class="form-control" formControlName="executiveDirectorName" />
+            <mat-error *ngIf="
                 controls.executiveDirectorName?.hasError('required') &&
                 showValidation
-              "
-              >{{ localization.requiredErrorMsg }}</mat-error
-            >
+              ">{{ localization.requiredErrorMsg }}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.mobile }}</label>
-            <input
-              type="text"
-              id="control-executiveDirectorMobile"
-              [placeholder]="localization.mobile"
-              class="form-control"
-              formControlName="executiveDirectorMobile"
-            />
-            <mat-error
-              *ngIf="
+            <input type="text" id="control-executiveDirectorMobile" [placeholder]="localization.mobile" class="form-control" formControlName="executiveDirectorMobile" />
+            <mat-error *ngIf="
                 controls.executiveDirectorMobile?.hasError('required') &&
                 showValidation
-              "
-              >{{ localization.requiredErrorMsg }}</mat-error
-            >
-            <mat-error
-              *ngIf="controls.executiveDirectorMobile?.hasError('pattern')"
-              >{{ localization.phoneNumberPattern }}</mat-error
-            >
-            <mat-error
-              *ngIf="
+              ">{{ localization.requiredErrorMsg }}</mat-error>
+            <mat-error *ngIf="controls.executiveDirectorMobile?.hasError('pattern')">{{ localization.phoneNumberPattern }}</mat-error>
+            <mat-error *ngIf="
                 controls.executiveDirectorMobile?.hasError('maxlength') ||
                 controls.executiveDirectorMobile?.hasError('minlength')
-              "
-              >{{ localization.maxLengthErrorMsg }}</mat-error
-            >
+              ">{{ localization.maxLengthErrorMsg }}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.email }}</label>
-            <input
-              type="text"
-              id="control-executiveDirectorEmail"
-              [placeholder]="localization.email"
-              class="form-control"
-              formControlName="executiveDirectorEmail"
-            />
-            <mat-error
-              *ngIf="
+            <input type="text" id="control-executiveDirectorEmail" [placeholder]="localization.email" class="form-control" formControlName="executiveDirectorEmail" />
+            <mat-error *ngIf="
                 controls.executiveDirectorEmail?.hasError('required') &&
                 showValidation
-              "
-              >{{ localization.requiredErrorMsg }}</mat-error
-            >
-            <mat-error
-              *ngIf="controls.executiveDirectorEmail?.hasError('pattern')"
-              >{{ localization.emailPattern }}</mat-error
-            >
+              ">{{ localization.requiredErrorMsg }}</mat-error>
+            <mat-error *ngIf="controls.executiveDirectorEmail?.hasError('pattern')">{{ localization.emailPattern }}</mat-error>
           </div>
         </div>
       </div>
     </div>
 
-    <div
-      class="tab-data-section"
-      *ngIf="dataSection[tabCode.licenseProjectContactOfficer]"
-    >
+    <div class="tab-data-section" *ngIf="dataSection[tabCode.licenseProjectContactOfficer]">
       <h6 class="title">{{ localization.contactOfficerData }}</h6>
       <div class="row mb-3">
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.name }}</label>
-            <input
-              type="text"
-              id="control-contactOfficerName"
-              [placeholder]="localization.name"
-              class="form-control"
-              formControlName="contactOfficerName"
-            />
-            <mat-error
-              *ngIf="
+            <input type="text" id="control-contactOfficerName" [placeholder]="localization.name" class="form-control" formControlName="contactOfficerName" />
+            <mat-error *ngIf="
                 controls.contactOfficerName?.hasError('required') &&
                 showValidation
-              "
-              >{{ localization.requiredErrorMsg }}</mat-error
-            >
+              ">{{ localization.requiredErrorMsg }}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.mobile }}</label>
-            <input
-              type="text"
-              id="control-contactOfficerMobile"
-              [placeholder]="localization.mobile"
-              class="form-control"
-              formControlName="contactOfficerMobile"
-            />
-            <mat-error
-              *ngIf="
+            <input type="text" id="control-contactOfficerMobile" [placeholder]="localization.mobile" class="form-control" formControlName="contactOfficerMobile" />
+            <mat-error *ngIf="
                 controls.contactOfficerMobile?.hasError('required') &&
                 showValidation
-              "
-              >{{ localization.requiredErrorMsg }}</mat-error
-            >
-            <mat-error
-              *ngIf="controls.contactOfficerMobile?.hasError('pattern')"
-              >{{ localization.phoneNumberPattern }}</mat-error
-            >
+              ">{{ localization.requiredErrorMsg }}</mat-error>
+            <mat-error *ngIf="controls.contactOfficerMobile?.hasError('pattern')">{{ localization.phoneNumberPattern }}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.email }}</label>
-            <input
-              type="text"
-              id="control-contactOfficerEmail"
-              [placeholder]="localization.email"
-              class="form-control"
-              formControlName="contactOfficerEmail"
-            />
-            <mat-error
-              *ngIf="
+            <input type="text" id="control-contactOfficerEmail" [placeholder]="localization.email" class="form-control" formControlName="contactOfficerEmail" />
+            <mat-error *ngIf="
                 controls.contactOfficerEmail?.hasError('required') &&
                 showValidation
-              "
-              >{{ localization.requiredErrorMsg }}</mat-error
-            >
-            <mat-error
-              *ngIf="controls.contactOfficerEmail?.hasError('pattern')"
-              >{{ localization.emailPattern }}</mat-error
-            >
+              ">{{ localization.requiredErrorMsg }}</mat-error>
+            <mat-error *ngIf="controls.contactOfficerEmail?.hasError('pattern')">{{ localization.emailPattern }}</mat-error>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="tab-data-section"
-    >
+    <div class="tab-data-section">
       <h6 class="title">{{ localization.paymentReciept }}</h6>
-        <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <span class="icon material-icons-outlined">content_copy</span>    
-            <a *ngIf="paymentReceiptFile" 
-            [href]="baseUrl + paymentReceiptFile.filePath" 
-            target="_blank">
-           {{paymentReceiptFile.fileDescription }}
-          </a> 
-            <app-file-uploader [data]="singleFileUploaderData"
-              (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
-          </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a *ngIf="paymentReceiptFile" [href]="baseUrl + paymentReceiptFile.filePath" target="_blank">
+            {{paymentReceiptFile.fileDescription }}
+          </a>
+          <app-file-uploader [data]="singleFileUploaderData" (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+        </div>
 
       </div>
     </div>
-    <div
-      class="tab-data-section"
-      *ngIf="
+    <div class="tab-data-section" *ngIf="
         dataSection[tabCode.licenseProjecFinalBeneficiaryContactInformation]
-      "
-    >
+      ">
       <h6 class="title">{{ localization.finalBeneficiaryContactDetail }}</h6>
       <div class="row mb-3">
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.problemsEmail }}</label>
-            <input
-              type="text"
-              id="control-complaintEmail"
-              [placeholder]="localization.email"
-              class="form-control"
-              formControlName="complaintEmail"
-            />
+            <input type="text" id="control-complaintEmail" [placeholder]="localization.email" class="form-control" formControlName="complaintEmail" />
             <mat-error *ngIf="controls.complaintEmail?.hasError('pattern')">{{
               localization.emailPattern
-            }}</mat-error>
-            <mat-error
-              *ngIf="
+              }}</mat-error>
+            <mat-error *ngIf="
                 controls.complaintEmail?.hasError('required') && showValidation
-              "
-              >{{ localization.requiredErrorMsg }}</mat-error
-            >
+              ">{{ localization.requiredErrorMsg }}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.salesEmail }}</label>
-            <input
-              type="text"
-              id="control-salesEmail"
-              [placeholder]="localization.email"
-              class="form-control"
-              formControlName="salesEmail"
-            />
+            <input type="text" id="control-salesEmail" [placeholder]="localization.email" class="form-control" formControlName="salesEmail" />
             <mat-error *ngIf="controls.salesEmail?.hasError('pattern')">{{
               localization.emailPattern
-            }}</mat-error>
-            <mat-error
-              *ngIf="
+              }}</mat-error>
+            <mat-error *ngIf="
                 controls.salesEmail?.hasError('required') && showValidation
-              "
-              >{{ localization.requiredErrorMsg }}</mat-error
-            >
+              ">{{ localization.requiredErrorMsg }}</mat-error>
           </div>
         </div>
       </div>

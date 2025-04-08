@@ -23,7 +23,7 @@ export class ShowOwnerListComponent implements OnInit, OnDestroy {
     CRA: 'رقم السجل التجاري',
     name: 'اسم مالك الصك /مالك منفعتها',
     mobileNumber: 'رقم جوال مالك الصك /مالك منفعتها',
-    agreementFileId: ' الاتفاقيه بين المطور العقاري ومالك الأرض',
+    agreementFileId: ' الاتفاقية بين المطور عقاري ومالك الأرض',
   };
 
   constructor(private _projectLandDeedService: ProjectLandDeedService) { }

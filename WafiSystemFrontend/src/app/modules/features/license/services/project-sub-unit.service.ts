@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
-import { ProjectSubUnitDto } from '../dataModels/project-sub-unit.dto';
+import { ProjectSubUnitDto, type LicenseProjectSubUnitCreateUpdateDto } from '../dataModels/project-sub-unit.dto';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
+import type { BaseResponse } from 'src/app/shared/models/base-response';
 
 @Injectable()
 export class ProjectSubUnitService {
@@ -30,6 +31,17 @@ getSelectedProjectSubUnitTitle(): Observable<string | null> {
 GetByLicenseProjectId(id: string): Observable<CoreResponseDTO<ProjectSubUnitDto[]>> {
   return this._httpClient.get<CoreResponseDTO<ProjectSubUnitDto[]>>
     (`${Configuration.APIs.LicenseProjectSubUnit.GetByLicenseProjectId}/${id}`)
+}
+
+
+addLicenseProjectSubUnit(model:LicenseProjectSubUnitCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectSubUnitCreateUpdateDto>> {
+  return this._httpClient.post<CoreResponseDTO<LicenseProjectSubUnitCreateUpdateDto>>
+    (`${Configuration.APIs.LicenseProjectSubUnit.Create}`,model)
+}
+
+removeSubUnit(id: string): Observable<CoreResponseDTO<any>> {
+  return this._httpClient.delete<CoreResponseDTO<any>>
+    (`${Configuration.APIs.LicenseProjectSubUnit.Remove}?id=${id}`)
 }
 
 

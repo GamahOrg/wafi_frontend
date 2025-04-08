@@ -3,8 +3,8 @@
 
         <div class="timeline"
              *ngIf="requestLogs">
-            <div class="timeline-header d-none d-xl-block">
-                <div class="row row-cols-5 row-gap-2">
+            <div class="timeline-header">
+                <div class="row row-gap-2">
                     <!-- <div class="col-12 col-md-4 col-xl-3">
                         <span class="title">المستخدم</span>
                     </div>
@@ -25,7 +25,7 @@
 
             <ng-container *ngFor="let log of requestLogs">
                 <div class="timeline-item">
-                    <div class="row row-cols-5 row-gap-2">
+                    <div class="row row-gap-2">
                         <!-- <div class="col-12 col-md-4 col-xl-3">
                             <div class="user">
                                 <div class="image">
@@ -37,19 +37,19 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-xl">
-                            <span class="label d-block d-xl-none">الدور</span>
+                            <span class="label">الدور</span>
                             <span class="role">صاحب الحساب</span>
                         </div> -->
                         <div class="col-12 col-md-4 col-xl">
-                            <span class="label d-block d-xl-none">الحدث</span>
+                            <span class="label">الحدث</span>
                             <span class="status">{{log.description}}</span>
                         </div>
                         <div class="col-12 col-md-4 col-xl-2">
-                            <span class="label d-block d-xl-none">التاريخ</span>
+                            <span class="label">التاريخ</span>
                             <span class="date">{{log.createdOn | date:'yyyy-MM-dd'}}</span>
                         </div>
                         <div class="col-12 col-md-4 col-xl-2">
-                            <span class="label d-block d-xl-none">الوقت</span>
+                            <span class="label">الوقت</span>
                             <span class="time">{{log.createdOn | date:'shortTime'}}</span>
                         </div>
                     </div>

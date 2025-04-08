@@ -1,55 +1,55 @@
 <div class="tab-data-section" *ngIf="projectCharteredData">
     <div class="row row-gap-3 row-gap-xl-4  mb-3">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key"> رقم الترخيص المحاسب القانوني</div>
             <div class="value">{{projectCharteredData.charteredAccountantLicenseNumber}}</div>
         </div>
     </div>
     <div class="row row-gap-3 row-gap-xl-4 ">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key"> تم الموافقة </div>
             <div class="value">{{projectCharteredData.isApproved? 'نعم' : 'لا'}}</div>
         </div>
-        <div class="col-12 col-md-6" *ngIf="projectCharteredData.isApproved">
+        <div class="col-12 col-lg-6" *ngIf="projectCharteredData.isApproved">
             <div class="key"> تاريخ الموافقه </div>
             <div class="value">{{projectCharteredData.approvedOn | date:"MM/dd/yyyy"}}</div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key"> اسم المفوض </div>
             <div class="value">{{projectCharteredData.delegatorCustomer?.fullName}}</div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key"> رقم السجل التجاري </div>
             <div class="value">{{projectCharteredData.facility.commercialRegisterNumber}}</div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key">اسم الشركة </div>
             <div class="value">{{projectCharteredData.facility.facilityName}}</div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key"> رقم الجوال </div>
             <div class="value">{{projectCharteredData.facility.telephone}}</div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key"> البريد الألكتروني </div>
             <div class="value">{{projectCharteredData.facility.email}}</div>
         </div>
 
     </div>
     <div class="row row-gap-3 row-gap-xl-4 mt-3">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key"> هل تم الموافقة</div>
             <div class="value">{{projectCharteredData.charteredAccountantAgreementIsApproved}}</div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key">عدد ايام العمل </div>
             <div class="value">{{projectCharteredData.workDaysCount}}</div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key">الشروط الاختيارية </div>
             <div class="value" [innerHTML]="projectCharteredData.optionalTerms"></div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="key">المدينة </div>
             <div class="value">{{projectCharteredData.city.cityName}}</div>
         </div>
@@ -57,11 +57,11 @@
             <ng-container
                 *ngFor="let delegate of projectCharteredData.licenseProjectCharteredAccountantAuthorizedToSignDelegators">
                 <div class="row row-gap-3 row-gap-xl-4">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-lg-6">
                         <div class="key"> اسم المفوض </div>
                         <div class="value">{{delegate.delegatorName}}</div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-lg-6">
                         <div class="key"> رقم الهوية </div>
                         <div class="value">{{delegate.identityNumber}}</div>
                     </div>

@@ -10,6 +10,11 @@ import { PaginationService } from '../../services/pagination/pagination.service'
 })
 export class PaginationComponent {
   currentLang: string = '';
+  localization = {
+    prev: this.currentLang === 'en' ? 'Previous' : 'السابق',
+    next: this.currentLang === 'en' ? 'Next' : 'التالي',
+    of: this.currentLang === 'en' ? 'of' : 'من',
+  }
 
   // currentPage: number = 1;
   nextPage: number = 1;

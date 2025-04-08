@@ -49,7 +49,7 @@ export class ContractDocumentationListComponent {
   getContracts(): void {
     this.subscriptions.push(
       this._licenseProjectBuyerService.getContracts(this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseProjectBuyerListPagingDto[]> | null) => {
-        debugger;
+        
        this.updateRequestList(res as Pagination<LicenseProjectBuyerListPagingDto[]>);
       })
     )

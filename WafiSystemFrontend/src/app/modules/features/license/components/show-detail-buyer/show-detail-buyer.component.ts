@@ -124,7 +124,7 @@ export class ShowDetailBuyerComponent {
       let taxValue = tax * price;
       this.licenseProjectBuyer.priceAfterTax = taxValue;
 
-      //قيمة الارض شامل الضريبة المضافة
+      //قيمة الأرض شامل الضريبة المضافة
       this.licenseProjectBuyer.totalPrice = (taxValue + price);
 
       let fees = (this.licenseProjectBuyerSettingDto?.percentageSupervisionOrFeesForLand as number) / 100
@@ -153,7 +153,7 @@ export class ShowDetailBuyerComponent {
     let taxValue = tax * price;
     this.licenseProjectBuyer.priceAfterTax=(taxValue);
 
-    //قيمة الارض شامل الضريبة المضافة
+    //قيمة الأرض شامل الضريبة المضافة
     this.licenseProjectBuyer.totalPrice=(taxValue + price);
 
     this.getSupervisionFollowupCostsRatio(price)
@@ -163,11 +163,11 @@ export class ShowDetailBuyerComponent {
   getSupervisionFollowupCostsRatio(price: number) {
     if (price > 0) {
       this._supervisionFollowUpCostsRatioService.getSupervisionFollowupCostsRatio(price).subscribe((value: number) => {
-        debugger
+        
         let ratio = value;
-        //نسبة الاشراف والمتابعة
+        //نسبة الإشراف والمتابعة
         this.licenseProjectBuyer!.percentageSupervisionOrFees=(ratio);
-        //نسبة الاشراف والمتابع من بد المشروع
+        //نسبة الإشراف والمتابع من بد المشروع
         debugger
         let secondDate = new Date();
         // if (this.controls.deliveryDate.value != null && this.controls.deliveryDate.value != '') {

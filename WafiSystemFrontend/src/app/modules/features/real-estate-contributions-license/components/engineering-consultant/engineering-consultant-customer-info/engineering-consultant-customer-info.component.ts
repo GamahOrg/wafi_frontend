@@ -17,7 +17,7 @@ import { SharedLicenseProjectService } from '../../../services/sharedLicenseProj
 export class EngineeringConsultantCustomerInfoComponent implements OnInit, OnDestroy {
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
   @Input() form!: FormGroup;
-  @Input() code: QualificationTypeCode = QualificationTypeCode.EngineeringConsultant;
+  @Input() code: QualificationTypeCode = QualificationTypeCode.ContributionEngineeringConsultant;
   @Input() label: string = "";
   @Input() buttonName: string = "";
   @Input() requiredMessage: string = "";

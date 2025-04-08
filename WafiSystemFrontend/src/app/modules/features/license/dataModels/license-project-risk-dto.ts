@@ -3,6 +3,7 @@ import { licenseProjectAddresses } from "../models/project-units";
 export interface LicenseProjectRiskDto {
     id:string;
     licenseProjectId :string;
+    licenseProjectEngineeringSupervisionPlannedReportDetailId :string;
       //رقم الخطر
         riskNumber :string;
       //وصف المخاطر
@@ -110,6 +111,7 @@ export interface LicenseProjectRiskCreateUpdateDto
 {
   id:string;
   licenseProjectId :string;
+   licenseProjectEngineeringSupervisionPlannedReportDetailId :string;
     //وصف المخاطر
       description :string;
       riskTypeId :number;

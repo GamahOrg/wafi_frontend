@@ -28,7 +28,12 @@
               </mat-error>
             </div>
           </div>
-
+          <div class="col-12 col-lg-6">
+            <div class="key">الرسوم</div>
+            <div class="value">
+              {{ price ? price : 'لا يوجد' }} 
+            </div>
+          </div>
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="key">تاريخ نهاية المشروع الجديد</label>
@@ -98,8 +103,8 @@
 
             </div>
             <!-- <div class="col-12 col-lg-2">
-              <button mat-flat-button color="primary" class="w-100" (click)="save()" id="btn-navigate">
-                <mat-icon>login</mat-icon> انشاء الطلب
+              <button mat-flat-button color="primary" (click)="save()" id="btn-navigate">
+                <i class="material-icons">login</i> انشاء الطلب
               </button>
             </div> -->
 

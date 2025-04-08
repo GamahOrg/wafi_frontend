@@ -1,27 +1,26 @@
 <div class="tab-data-header">
   <div class="icon"><span class="material-icons">list_alt</span></div>
-  <h6 class="title fw-normal">
+  <h6 class="title">
     البيانات من الأستشارى الهندسى (يتم ادخال البيانات من قبل مدير المشروع
-    للاستشارى الهندسى)
+    للإستشاري الهندسى)
   </h6>
 
   <button
     *ngIf="showButton"
-    mat-raised-button
     (click)="openClearanceEngineeringDialog()"
-    class="edit-icon"
+    class="edit-icon btn btn-outline-primary"
   >
     <span class="material-icons">edit</span>
   </button>
 </div>
 
-<div class="tab-data-section">
-  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-    <div class="col-12 col-md-6">
+<div class="tab-data-section bg-white p-5">
+  <div class="row row-gap-4">
+    <div class="col-12 col-lg-6">
       <div class="key">نسبة انجاز المشروع</div>
       <div class="value">{{ projectDetails.achievementRate }}</div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-lg-6">
       <div class="key">اخر تقرير هندسي</div>
       <span  *ngIf="projectDetails.lastEngineeringReport != null"
         class="delete"

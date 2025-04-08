@@ -36,6 +36,12 @@ export class ProjectListService {
   UpdateProjectManagerOnProject(projectManagerId:string,licenseProjectId:string) : Observable<CoreResponseDTO<any>> {
     return this._httpClient.get<CoreResponseDTO<any>>(`${Configuration.APIs.LicenseProject.UpdateProjectManagerOnProject}/${projectManagerId}/${licenseProjectId}`)
    }
+   UpdateLicenseProjectStatus(licenseProjectId: string, statusId: string): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.put<CoreResponseDTO<any>>(
+        `${Configuration.APIs.LicenseProject.UpdateLicenseProjectStatus}/${licenseProjectId}/${statusId}`,
+        {} 
+    );
+}
 
    GetSubCustomers(): Observable<CustomerShortDto[] | null> {
     return this._httpClient.get<CoreResponseDTO<CustomerShortDto[]>>(Configuration.APIs.Customer.GetSubCustomers).pipe(

@@ -97,7 +97,7 @@ export class AddComplaintsReportsComponent implements OnInit, OnDestroy {
     this.complaintRequest.complaintRequestTypeId = Number(this.complaintRequest.complaintRequestTypeId);
     this.complaintRequest.ComplaintRequestFiles = this.complaintRequestFileList
     if (!this.complaintRequest.ComplaintRequestFiles || this.complaintRequest.ComplaintRequestFiles.length == 0) {
-      this._toastrNotificationService.showError("نأمل رفع ملفات الشكوي او البلاغ");
+      this._toastrNotificationService.showError("نأمل رفع ملفات الشكوى او البلاغ");
       return;
     }
     this.SaveComplaintRequest();
@@ -106,12 +106,12 @@ export class AddComplaintsReportsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._complaintsReportsService.SaveComplaintRequest(this.complaintRequest as ComplaintRequestCreateUpdateDto).subscribe(res => {
         if (res && res.isDone) {
-          this._toastrNotificationService.showSuccess("تم تقديم الشكوي او البلاغ");
+          this._toastrNotificationService.showSuccess("تم تقديم الشكوى او البلاغ");
           this._complaintsReportsService.submitSuccessfullyEventEmitter.emit();
           this.closeDialog();
         }
         else {
-          this._toastrNotificationService.showError("لم يتم تقديم الشكوي او البلاغ");
+          this._toastrNotificationService.showError("لم يتم تقديم الشكوى او البلاغ");
 
         }
       }

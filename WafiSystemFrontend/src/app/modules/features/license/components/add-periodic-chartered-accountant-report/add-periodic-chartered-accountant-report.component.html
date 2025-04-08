@@ -3,7 +3,7 @@
   <div class="tab-data-section">
     <div class="row mb-3">
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">نوع التقرير</label>
             <select class="form-select" formControlName="reportTypeId">
@@ -20,7 +20,7 @@
        
       </div>
 
-      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Quarter">
+      <div class="col-12 col-lg-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Quarter">
         <div class="form-group mb-4">
           <label class="form-label">تقرير الربع-في حالة نوع التقرير ربعي</label>
           <select class="form-select" formControlName="quarterTypeId">
@@ -33,7 +33,7 @@
         </div>
       </div>
     
-      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Monthly">
+      <div class="col-12 col-lg-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Monthly">
         <div class="form-group mb-4">
           <label class="form-label">الشهر في حالة التقرير شهري </label>
           <select class="form-select" formControlName="month">
@@ -45,7 +45,7 @@
 
         </div>
       </div>
-      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value && controls.reportTypeId.value!=periodicCharteredAccountantReportType.Period">
+      <div class="col-12 col-lg-6" *ngIf="controls.reportTypeId.value && controls.reportTypeId.value!=periodicCharteredAccountantReportType.Period">
         <div class="form-group mb-4">
           <label class="form-label">العام</label>
           <select class="form-select" formControlName="year">
@@ -57,7 +57,7 @@
 
         </div>
       </div>
-      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Period">
+      <div class="col-12 col-lg-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Period">
         <div class="form-group mb-4">
           <label class="form-label">من تاريخ</label>
           <div class="input-group">
@@ -68,7 +68,7 @@
 
         </div>
       </div>
-      <div class="col-12 col-md-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Period">
+      <div class="col-12 col-lg-6" *ngIf="controls.reportTypeId.value==periodicCharteredAccountantReportType.Period">
         <div class="form-group mb-4">
           <label class="form-label">الي تاريخ</label>
           <div class="input-group">
@@ -88,7 +88,7 @@
       </div>
 
       <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-        <h6 class="title fw-normal">وثائق الصرف خلال فترة التقرير</h6>
+        <h6 class="title">وثائق الصرف خلال فترة التقرير</h6>
         <div class="table-responsive">
           <table class="table table-light">
             <thead>
@@ -121,79 +121,79 @@
       </div>
 
       <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-        <h6 class="title fw-normal">البيانات الاساسية</h6>
+        <h6 class="title">البيانات الاساسية</h6>
         <div class="row mb-3">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">اسم مكتب المحاسب القانوني</div>
               <div *ngIf="periodicCharteredAccountantReport.charteredAccountantOfficeName">
                 {{periodicCharteredAccountantReport.charteredAccountantOfficeName}}</div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">نوع الوحدات</div>
               <div *ngIf="periodicCharteredAccountantReport.unitType">{{periodicCharteredAccountantReport.unitType}}
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <div class="key">اجمالى عدد الوحدات</div>
+              <div class="key">إجمالي عدد الوحدات</div>
               <div *ngIf="periodicCharteredAccountantReport.totalUnitNumber">
                 {{periodicCharteredAccountantReport.totalUnitNumber}}</div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">أمين الحساب</div>
               <div *ngIf="periodicCharteredAccountantReport.accountKeeper">
                 {{periodicCharteredAccountantReport.accountKeeper}}</div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">رقم حساب الضمان</div>
               <div *ngIf="periodicCharteredAccountantReport.accountNumber">
                 {{periodicCharteredAccountantReport.accountNumber}}</div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">رقم ترخيص بيع وحدة على الخارطة</div>
               <div *ngIf="periodicCharteredAccountantReport.certificateNumber">
                 {{periodicCharteredAccountantReport.certificateNumber}}</div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">اسم معد التقرير</div>
               <div *ngIf="periodicCharteredAccountantReport.customer?.fullName">
                 {{periodicCharteredAccountantReport.customer?.fullName}}</div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">رقم جوال معد التقرير</div>
               <div *ngIf="periodicCharteredAccountantReport.customer?.mobile1">
                 {{periodicCharteredAccountantReport.customer?.mobile1}}</div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">البريد الألكتروني لمعد التقرير</div>
               <div *ngIf="periodicCharteredAccountantReport.customer?.email">
                 {{periodicCharteredAccountantReport.customer?.email}}</div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">سعر الارض</div>
               <div *ngIf="periodicCharteredAccountantReport.landPrice">{{periodicCharteredAccountantReport.landPrice}}
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">إجمالي قيمة وحدات المشروع</div>
               <div *ngIf="periodicCharteredAccountantReport.totalUnitsAmount">
@@ -201,18 +201,18 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <label class="form-label">اجمالى قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)</label>
+              <label class="form-label">إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)</label>
               <input type="number" id="control-totalCost" class="form-control" formControlName="totalCost"
-                placeholder="اجمالى قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)">
+                placeholder="إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)">
               <div class="invalid-feedback d-block" *ngIf="controls.totalCost?.hasError('required') && showValidation">
                 حقل مطلوب
               </div>
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">التكلفة الانشائية المتوقعة</label>
               <input type="number" id="control-expectedConstructionCost" class="form-control"
@@ -224,7 +224,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">هامش الربح المتوقع</label>
               <input type="number" id="control-expectedProfile" class="form-control" formControlName="expectedProfile"
@@ -241,9 +241,9 @@
 
       <div class="tab-data-section"
         *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount">
-        <h6 class="title fw-normal">العمليات المالية خلال الفترة (من حساب الضمان)</h6>
+        <h6 class="title">العمليات المالية خلال الفترة (من حساب الضمان)</h6>
         <div class="row mb-3">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تكاليف إنشائية (من حساب الضمان)</div>
               <div
@@ -252,7 +252,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">مصاريف ادارية وتسويقية (من حساب الضمان)</div>
               <div
@@ -261,7 +261,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">ايداعات عملاء مستردة</div>
               <div
@@ -270,7 +270,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">عمولات بنكية</div>
               <div
@@ -279,7 +279,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تكاليف انشائية - الحافز الوزارى</div>
               <div
@@ -288,7 +288,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تكاليف انشائية - التمويل البنكى</div>
               <div
@@ -297,7 +297,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">مصاريف ادارية وتسويقية - التمويل البنكى</div>
               <div
@@ -306,7 +306,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">أخرى</div>
               <div
@@ -315,7 +315,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">إجمالي العمليات المدينة</div>
               <div
@@ -324,7 +324,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تحصيل من العملاء</div>
               <div
@@ -333,7 +333,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تمويل بنكى</div>
               <div
@@ -342,7 +342,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تمويل ذاتى</div>
               <div
@@ -352,7 +352,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key"> تمويل الوزارة</div>
               <div
@@ -361,7 +361,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">أخرى دائنة</div>
               <div
@@ -370,9 +370,9 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <div class="key">إجمالى العمليات الدائنة</div>
+              <div class="key">إجمالي العمليات الدائنة</div>
               <div
                 *ngIf="periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.totalCreditOperations">
                 {{periodicCharteredAccountantReport.financialTransactionsDuringPeriodFromEscrowAccount.totalCreditOperations}}
@@ -385,9 +385,9 @@
 
       <div class="tab-data-section"
         *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount">
-        <h6 class="title fw-normal">العمليات المالية منذ البدأ في المشروع (من حساب الضمان)</h6>
+        <h6 class="title">العمليات المالية منذ البدأ في المشروع (من حساب الضمان)</h6>
         <div class="row mb-3">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تكاليف إنشائية (من حساب الضمان)</div>
               <div
@@ -396,7 +396,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">مصاريف ادارية وتسويقية (من حساب الضمان)</div>
               <div
@@ -405,7 +405,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">ايداعات عملاء مستردة</div>
               <div
@@ -414,7 +414,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">عمولات بنكية</div>
               <div
@@ -423,7 +423,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تكاليف انشائية - الحافز الوزارى</div>
               <div
@@ -432,7 +432,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تكاليف انشائية - التمويل البنكى</div>
               <div
@@ -441,14 +441,14 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">مصاريف ادارية وتسويقية - التمويل البنكى</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.administrativeMarketingExpensesBankFinancing">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.administrativeMarketingExpensesBankFinancing}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">أخرى</div>
               <div
@@ -457,7 +457,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">إجمالي العمليات المدينة</div>
               <div
@@ -466,7 +466,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تحصيل من العملاء</div>
               <div
@@ -475,7 +475,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تمويل بنكى</div>
               <div
@@ -484,7 +484,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">تمويل ذاتى</div>
               <div
@@ -493,7 +493,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key"> تمويل الوزارة</div>
               <div
@@ -502,7 +502,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">أخرى دائنة</div>
               <div
@@ -511,9 +511,9 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <div class="key">إجمالى العمليات الدائنة</div>
+              <div class="key">إجمالي العمليات الدائنة</div>
               <div
                 *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.totalCreditOperations">
                 {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectFromEscrowAccount.totalCreditOperations}}
@@ -524,9 +524,9 @@
       </div>
 
       <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-        <h6 class="title fw-normal">العمليات المالية خلال الفترة (من خارج حساب الضمان)</h6>
+        <h6 class="title">العمليات المالية خلال الفترة (من خارج حساب الضمان)</h6>
         <div class="row mb-3">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تكاليف انشائية</label>
               <input type="number" id="control-constructionCosts" class="form-control"
@@ -538,7 +538,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">مصاريف ادارية وتسويقية</label>
               <input type="number" id="control-administrativeMarketingExpenses" class="form-control"
@@ -550,7 +550,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">ايداعات عملاء مستردة</label>
               <input type="number" id="control-customerDepositRefunds" class="form-control"
@@ -562,7 +562,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">عمولات بنكية</label>
               <input type="number" id="control-bankCommissions" class="form-control" formControlName="bankCommissions"
@@ -574,7 +574,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">أخرى مدينة</label>
               <input type="number" id="control-otherDebts" class="form-control" formControlName="otherDebts"
@@ -585,18 +585,18 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <label class="form-label">إجمالى العمليات المدينة</label>
+              <label class="form-label">إجمالي العمليات المدينة</label>
               <input type="number" id="control-totalDebtOperations" class="form-control"
-                formControlName="totalDebtOperations" placeholder="إجمالى العمليات المدينة">
+                formControlName="totalDebtOperations" placeholder="إجمالي العمليات المدينة">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.totalDebtOperations?.hasError('required') && showValidation">
                 حقل مطلوب
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تحصيل من العملاء</label>
               <input type="number" id="control-collectionsFromCustomers" class="form-control"
@@ -608,7 +608,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تمويل بنكى</label>
               <input type="number" id="control-bankFinancing" class="form-control" formControlName="bankFinancing"
@@ -620,7 +620,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تمويل ذاتى</label>
               <input type="number" id="control-selfFinancing" class="form-control" formControlName="selfFinancing"
@@ -632,7 +632,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تمويل الوزارة</label>
               <input type="number" id="control-ministryFinancing" class="form-control"
@@ -644,7 +644,7 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">أخرى دائنة</label>
               <input type="number" id="control-otherCredits" class="form-control" formControlName="otherCredits"
@@ -656,11 +656,11 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <label class="form-label">إجمالى العمليات الدائنة</label>
+              <label class="form-label">إجمالي العمليات الدائنة</label>
               <input type="number" id="control-totalCreditOperations" class="form-control"
-                formControlName="totalCreditOperations" placeholder="إجمالى العمليات الدائنة">
+                formControlName="totalCreditOperations" placeholder="إجمالي العمليات الدائنة">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.totalCreditOperations?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -672,87 +672,87 @@
       </div>
       <div class="tab-data-section"
         *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount">
-        <h6 class="title fw-normal">العمليات المالية منذ البدء بالمشروع (من خارج حساب الضمان)</h6>
+        <h6 class="title">العمليات المالية منذ البدء بالمشروع (من خارج حساب الضمان)</h6>
         <div class="row mb-3">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">تكاليف إنشائية </div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.constructionCosts">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.constructionCosts}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">مصاريف ادارية وتسويقية</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.administrativeMarketingExpenses">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.administrativeMarketingExpenses}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">ايداعات عملاء مستردة</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.customerDepositRefunds">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.customerDepositRefunds}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">عمولات بنكية</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.bankCommissions">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.bankCommissions}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">أخرى مدينة</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.otherDebts">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.otherDebts}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">إجمالي العمليات المدينة</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.totalDebtOperations">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.totalDebtOperations}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">تحصيل من العملاء</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.collectionsFromCustomers">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.collectionsFromCustomers}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">تمويل بنكى</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.bankFinancing">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.bankFinancing}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">تمويل ذاتى</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.selfFinancing">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.selfFinancing}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key"> تمويل الوزارة</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.ministryFinancing">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.ministryFinancing}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">أخرى دائنة</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.otherCredits">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.otherCredits}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
-            <div class="key">إجمالى العمليات الدائنة</div>
+          <div class="col-12 col-lg-6">
+            <div class="key">إجمالي العمليات الدائنة</div>
             <div
               *ngIf="periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.totalCreditOperations">
               {{periodicCharteredAccountantReport.financialTransactionsBeginningOfProjectOutEscrowAccount.totalCreditOperations}}
@@ -761,21 +761,21 @@
         </div>
 
         <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-          <h6 class="title fw-normal">إجمالي العمليات المدينة والدائن (من داخل وخارج حساب الضمان)</h6>
-          <div class="col-12 col-md-6">
-            <div class="key">إجمالى العمليات المدينة</div>
+          <h6 class="title">إجمالي العمليات المدينة والدائن (من داخل وخارج حساب الضمان)</h6>
+          <div class="col-12 col-lg-6">
+            <div class="key">إجمالي العمليات المدينة</div>
             <div *ngIf="periodicCharteredAccountantReport.totalDebtOperations">
               {{periodicCharteredAccountantReport.totalDebtOperations}}</div>
           </div>
-          <div class="col-12 col-md-6">
-            <div class="key">إجمالى العمليات الدائنة</div>
+          <div class="col-12 col-lg-6">
+            <div class="key">إجمالي العمليات الدائنة</div>
             <div *ngIf="periodicCharteredAccountantReport.totalCreditOperations">
               {{periodicCharteredAccountantReport.totalCreditOperations}}</div>
           </div>
         </div>
         <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-          <h6 class="title fw-normal">حساب الضمان</h6>
-          <div class="col-12 col-md-6" *ngIf="!periodicCharteredAccountantReport.periodOpeningBalance">
+          <h6 class="title">حساب الضمان</h6>
+          <div class="col-12 col-lg-6" *ngIf="!periodicCharteredAccountantReport.periodOpeningBalance">
             <div class="form-group mb-4">
               <label class="form-label">رصيد افتتاح الفترة</label>
               <input type="number" id="control-periodOpeningBalance" class="form-control"
@@ -787,11 +787,11 @@
 
             </div>
           </div>
-          <div class="col-12 col-md-6" *ngIf="periodicCharteredAccountantReport.periodOpeningBalance">
+          <div class="col-12 col-lg-6" *ngIf="periodicCharteredAccountantReport.periodOpeningBalance">
             <div class="key">رصيد افتتاح الفترة</div>
             <div>{{periodicCharteredAccountantReport.periodOpeningBalance}}</div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">رصيد اغلاق الفترة</div>
             <div *ngIf="periodicCharteredAccountantReport.periodClosingBalance">
               {{periodicCharteredAccountantReport.periodClosingBalance}}</div>
@@ -801,26 +801,26 @@
 
 
       <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-        <h6 class="title fw-normal">تحليل موقف وحدات المشروع</h6>
+        <h6 class="title">تحليل موقف وحدات المشروع</h6>
         <div class="table-responsive">
           <table class="table table-light">
             <thead>
               <tr>
                 <th>نوع الوحدات</th>
-                <th>إجمالى وحدات المشروع -عدد</th>
-                <th>إجمالى وحدات المشروع - نسبة</th>
-                <th>إجمالى وحدات المشروع - قيمة</th>
-                <th>إجمالى الوحدات المباعة خلال الفترة - عدد</th>
-                <th>إجمالى الوحدات المباعة خلال الفترة - نسبة</th>
-                <th>إجمالى الوحدلات المباعة خلال الفترة - قيمة</th>
-                <th>إجمالى الوحدات المباعة منذ بداية المشروع -عدد</th>
-                <th>إجمالى الوحدات المباعة منذ بداية المشروع - قيمة</th>
-                <th>إجمالى الوحدات المباعة منذ بداية المشروع - نسبة</th>
-                <th>إجمالى الوحدات المتبقة للمشروع</th>
-                <th>إجمالى الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - قيمة</th>
-                <th>إجمالى الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - نسبة</th>
-                <th>إجمالى المبالغ المحصلة من الوحدات المباعة</th>
-                <th>نسبة التحصيل من إجمالى قيمة الوحدات المباعة</th>
+                <th>إجمالي وحدات المشروع -عدد</th>
+                <th>إجمالي وحدات المشروع - نسبة</th>
+                <th>إجمالي وحدات المشروع - قيمة</th>
+                <th>إجمالي الوحدات المباعة خلال الفترة - عدد</th>
+                <th>إجمالي الوحدات المباعة خلال الفترة - نسبة</th>
+                <th>إجمالي الوحدلات المباعة خلال الفترة - قيمة</th>
+                <th>إجمالي الوحدات المباعة منذ بداية المشروع -عدد</th>
+                <th>إجمالي الوحدات المباعة منذ بداية المشروع - قيمة</th>
+                <th>إجمالي الوحدات المباعة منذ بداية المشروع - نسبة</th>
+                <th>إجمالي الوحدات المتبقة للمشروع</th>
+                <th>إجمالي الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - قيمة</th>
+                <th>إجمالي الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - نسبة</th>
+                <th>إجمالي المبالغ المحصلة من الوحدات المباعة</th>
+                <th>نسبة التحصيل من إجمالي قيمة الوحدات المباعة</th>
               </tr>
             </thead>
             <tbody
@@ -848,7 +848,7 @@
       </div>
 
       <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-        <h6 class="title fw-normal">الدفعات المحصلة والخاصة بالوحدات المباعة الملغية</h6>
+        <h6 class="title">الدفعات المحصلة والخاصة بالوحدات المباعة الملغية</h6>
         <div class="table-responsive">
           <table class="table table-light">
             <thead>
@@ -858,7 +858,7 @@
                 <th>سعر الوحدة</th>
                 <th>تاريخ الالغاء</th>
                 <th>ما تم دفعة خلال الفترة - الدفعات التى تم ارجاعها</th>
-                <th>إجمالى الدفعات</th>
+                <th>إجمالي الدفعات</th>
                 <th>المتبقى</th>
               </tr>
             </thead>
@@ -880,9 +880,9 @@
         </div>
       </div>
       <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-        <h6 class="title fw-normal">الإيداعات والدفعات</h6>
+        <h6 class="title">الإيداعات والدفعات</h6>
         <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-          <h6 class="title fw-normal">جدول ادناه يوضح الإيداعات التي لم تظهر في حساب البنك حتى تاريخه</h6>
+          <h6 class="title">جدول ادناه يوضح الإيداعات التي لم تظهر في حساب البنك حتى تاريخه</h6>
           <button type="button" class="btn btn-primary"
             (click)="addPeriodicCharteredAccountantReportDeposit()">إضافة</button>
           <div class="table-responsive">
@@ -937,7 +937,7 @@
         </div>
 
         <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-          <h6 class="title fw-normal">جدول ادناه يوضح دفعات لم يتم خصمها في حساب البنك حتى تاريخه </h6>
+          <h6 class="title">جدول ادناه يوضح دفعات لم يتم خصمها في حساب البنك حتى تاريخه </h6>
           <button type="button" class="btn btn-primary"
             (click)="addPeriodicCharteredAccountantReportBatche()">إضافة</button>
           <div class="table-responsive">
@@ -992,9 +992,9 @@
 
       <div class="tab-data-section"
         *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint">
-        <h6 class="title fw-normal">القيود المالية</h6>
+        <h6 class="title">القيود المالية</h6>
         <div class="row mb-3">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">النسبة المسموح بها للمصاريف الإدارية والتسويقية</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.allowablePercentageOfAdministrativeMarketingExpenses">
@@ -1002,7 +1002,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">إجمالي قيمة الوحدات المباعة والمحصل قيمتها</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.totalValueOfUnitsSoldAndCollected">
@@ -1010,7 +1010,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">الحد المسموح التصرف به للمصاريف الإدارية والتسويقية</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.allowedLimitForAdministrativeMarketingExpenses">
@@ -1018,7 +1018,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">إجمالي المبالغ الإدارية والتسويقية التي تم صرفها منذ بداية المشروع</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.totalAdministrativeMarketingAmountsFromBeginningOfProject">
@@ -1026,14 +1026,14 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">المبلغ المتبقى</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.remainingAmount">
               {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.remainingAmount}}
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">النسبة الواجب توفرها بحساب الحفظ</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.percentageRequiredForSavingAccount">
@@ -1045,10 +1045,10 @@
 
         <div class="tab-data-section"
           *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint">
-          <h6 class="title fw-normal">حوافز التمويل لمشاريع وزارة الأسكان</h6>
+          <h6 class="title">حوافز التمويل لمشاريع وزارة الأسكان</h6>
 
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">مبلغ الحافز</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.incentiveAmount">
@@ -1056,8 +1056,8 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6">
-            <div class="key">هل نسبة تحصيل المبيعات وصلت الى 80% من اجمالى قيمة المبيعات</div>
+          <div class="col-12 col-lg-6">
+            <div class="key">هل نسبة تحصيل المبيعات وصلت الى 80% من إجمالي قيمة المبيعات</div>
             <span
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.salesRateReached80Percentage==true">
               نعم
@@ -1068,7 +1068,7 @@
             </span>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">قيمة استرداد الدفعة الأولى</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.firstPaymentRefundValue">
@@ -1076,8 +1076,8 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6">
-            <div class="key">هل نسبة تحصيل المبيعات وصلت الى 90% من اجمالى قيمة المبيعات</div>
+          <div class="col-12 col-lg-6">
+            <div class="key">هل نسبة تحصيل المبيعات وصلت الى 90% من إجمالي قيمة المبيعات</div>
             <span
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.salesRateReached90Percentage==true">
               نعم
@@ -1088,7 +1088,7 @@
             </span>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="key">قيمة استرداد الدفعة الثانية</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.secondPaymentRefundValue">
@@ -1098,8 +1098,8 @@
         </div>
 
         <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-          <h6 class="title fw-normal">التوصيات والنتائج</h6>
-          <div class="col-12 col-md-6">
+          <h6 class="title">التوصيات والنتائج</h6>
+          <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">التوصيات والنتائج</label>
               <textarea type="number" id="control-resultsAndRecommendations" class="form-control"
@@ -1115,8 +1115,8 @@
       </div>
 
       <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
-        <h6 class="title fw-normal">قائمة المركز المالي </h6>
-        <div class="col-12 col-md-6">
+        <h6 class="title">قائمة المركز المالي </h6>
+        <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">المركز المالي</label>
             <app-file-uploader [data]="multipleFilesUploaderData"

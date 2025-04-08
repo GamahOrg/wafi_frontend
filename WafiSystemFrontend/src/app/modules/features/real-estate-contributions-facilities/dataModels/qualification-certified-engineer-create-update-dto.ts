@@ -4,4 +4,5 @@ export class QualificationCertifiedEngineerCreateUpdateDto {
   engineerName:string="";
   identityNumber :string="";
   professionalLicenseNumber:string="";
+  qualificationEngineerType: number = 0;
 }

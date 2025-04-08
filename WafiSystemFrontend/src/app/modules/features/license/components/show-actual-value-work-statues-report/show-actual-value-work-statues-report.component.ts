@@ -9,7 +9,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { AddEditActualValueWorkStatuesReportComponent } from '../add-edit-actual-value-work-statues-report/add-edit-actual-value-work-statues-report.component';
-
+import { ActualValueReportPagingListDto, LicenseProjectEngineeringRequestStatusEnum } from '../../models/actual-value-report-paging-list-dto';
 @Component({
   selector: 'app-show-actual-value-work-statues-report',
   templateUrl: './show-actual-value-work-statues-report.component.html',
@@ -19,6 +19,8 @@ export class ShowActualValueWorkStatuesReportComponent {
   showRateFlag:boolean=true;
   baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
+  actualValueReport?:ActualValueReportPagingListDto
+licenseProjectEngineeringRequestStatusEnum=LicenseProjectEngineeringRequestStatusEnum
 currenrYear?:number;
 years?:number[];
 cumulativeAmountPriorToThatYear ?: number;
@@ -53,6 +55,7 @@ monthDate ?:Date;
  
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    debugger;
     if(this.licenseProjectId)
     {
       this.getmonthDate()
@@ -62,11 +65,14 @@ monthDate ?:Date;
     
   }
   getmonthDate() {
+    debugger;
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
+        debugger;
         if (res) {
-        
-         this.monthDate=res as Date;
+          debugger;
+          this.actualValueReport= res as ActualValueReportPagingListDto;
+          this.monthDate = this.actualValueReport.monthDate as Date;
          this.getLicenseProjectData();
           
         }
@@ -75,10 +81,11 @@ monthDate ?:Date;
   }
   getLicenseProjectData()
   {
+    debugger;
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectStatusSummaryService.GetLicenseProjectData(this.licenseProjectId as string).subscribe(res => {
         if (res) {
-        
+          debugger;
          this.licenseProject=res as LicenseProjectDto;
          const date = new Date(this.monthDate as Date);
           this.years=this.getYearsBetween(new Date(this.licenseProject.startOn), new Date(this.licenseProject.endOn));
@@ -99,11 +106,11 @@ monthDate ?:Date;
   }
   getActualProjectStatusDetails() {
     
-  
+    debugger;
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectStatusSummaryService.getActualProjectStatusDetails(this.licenseProjectId as string, this.monthDate as Date,this.currenrYear as number).subscribe(res => {
         if (res) {
-        
+          debugger
          this.showRateFlag=true;
          
           this.licenseProjectEngineeringActualReportDetails=res;
@@ -188,7 +195,8 @@ onChangeYear(data:any)
       component: AddEditActualValueWorkStatuesReportComponent,
       id: "AddEditActualValueWorkStatuesReportComponent"
     } as PopupData;
-    this._popupService.updatePopupData(Data);
+     this._popupService.updatePopupData(Data);
+   
   } 
   deletFile(id : string){
     this._fileManagementService.DeletFile(id).subscribe(res=>{

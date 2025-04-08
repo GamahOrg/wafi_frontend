@@ -20,7 +20,7 @@ export class FacilityDashboardComponent implements OnInit {
     private _userDataService: UserDataService
   ) {}
   localization = {
-    PleaseCompleteAccountInformation:'يرجى استكمال بيانات الملف الشخصي الموحد الخاص بك في منصة خدمات التطوير العقاري وإدراج جميع المستندات، ليتم استخدام البيانات في تسهيل عملية تقديم الطلبات، يرجى مراعاة أن رقم السجل التجاري المستخدم حالياً هو',
+    PleaseCompleteAccountInformation:'يرجى استكمال بيانات الملف الشخصي الموحد الخاص بك في منصة خدمات التطوير عقاري وإدراج جميع المستندات، ليتم استخدام البيانات في تسهيل عملية تقديم الطلبات، يرجى مراعاة أن رقم السجل التجاري المستخدم حالياً هو',
     CompleteDataLinkText: 'إستكمال البيانات',
     welcome: 'مرحبا بك !',
   };

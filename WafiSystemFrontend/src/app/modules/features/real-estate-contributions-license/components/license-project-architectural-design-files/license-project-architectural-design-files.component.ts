@@ -59,9 +59,9 @@ export class LicenseProjectArchitecturalDesignFilesComponent implements OnInit {
 
 
   localization = {
-    title: 'التصاميم المعماريه والمخططات الهندسيه',
-    licenseProjectPlanAccordingApprovedStandardsFiles: 'مخططات المشروع وفق المعايير المعتمده',
-    licenseProjectDesignFiles: 'التصاميم المعماريه والمخططات الهندسيه'
+    title: 'التصاميم المعمارية والمخططات الهندسية',
+    licenseProjectPlanAccordingApprovedStandardsFiles: 'مخططات المشروع وفق المعايير المعتمدة',
+    licenseProjectDesignFiles: 'التصاميم المعمارية والمخططات الهندسية'
   };
 
 }

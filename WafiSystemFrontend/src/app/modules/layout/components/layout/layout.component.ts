@@ -16,14 +16,12 @@ import { LoginUserTypeEnum } from 'src/app/modules/auth/models/login.model';
   styleUrls: ['./layout.component.scss'],
 })
 export default class LayoutComponent implements OnInit, OnDestroy {
-  currentLang: string = '';
   bodyDirection: any = Direction.rtl;
   subscriptions: Subscription[] = [];
-  showSideBar: boolean = false;
   userData: customerResponse | null = null;
   appTitle: string = "الهيئة العامة للعقار ";
-  loginUserType: string | null =  "";
-  loginUserTypeEnum:LoginUserTypeEnum | null = null;
+  loginUserType: string | null = "";
+  loginUserTypeEnum: LoginUserTypeEnum | null = null;
 
   constructor(
     private _languageService: LanguageService,
@@ -33,7 +31,6 @@ export default class LayoutComponent implements OnInit, OnDestroy {
     private _toastrNotificatioService: ToastrNotificatioService,
     private titleService: Title
   ) {
-    _languageService.currentLang.subscribe((lang) => (this.currentLang = lang));
   }
   private setAppTitle() {
     this.titleService.setTitle(this.appTitle);
@@ -44,8 +41,8 @@ export default class LayoutComponent implements OnInit, OnDestroy {
     this.observeDirectionChange();
   }
   getLoginUserType(): void {
-    this.loginUserType =  this._storageService.getLoginUserType()
-    this.loginUserTypeEnum = Number(this.loginUserType ) as LoginUserTypeEnum;
+    this.loginUserType = this._storageService.getLoginUserType()
+    this.loginUserTypeEnum = Number(this.loginUserType) as LoginUserTypeEnum;
     this.getCustomer()
   }
   getCustomer(): void {

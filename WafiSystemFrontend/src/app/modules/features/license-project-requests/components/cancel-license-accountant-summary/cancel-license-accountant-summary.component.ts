@@ -75,11 +75,8 @@ export class CancelLicenseAccountantSummaryComponent implements OnInit {
   showButton: boolean = false;
   showEditButton() {
     this.showButton =
-      this.requestType === UserRequestTypeEnum.Accountant &&
-      (this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.New ||
-        this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.PartyStudyFinished ||
-        this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.PartiesStudyFinished ||
-        this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.CustomerFeedback);
+        this.selectRequest.accountantRequestStatusId === LicenseProjectRequestStatusEnum.CustomerFeedback
+        || this.selectRequest.externalRequestStatusId == LicenseProjectRequestStatusEnum.UnderCreation;
   }
 
 

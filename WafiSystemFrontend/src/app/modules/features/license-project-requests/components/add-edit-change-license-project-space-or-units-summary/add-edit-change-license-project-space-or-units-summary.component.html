@@ -1,0 +1,230 @@
+<div class="card">
+
+    <div class="card-header">
+      <h6 class="card-title"*ngIf="!isEditMode">طلب زيادة أو تقليص عدد وحدات أو مساحة المشروع المرخص</h6>
+    </div>
+  
+    <div class="card-body">
+      <form class="d-flex flex-column h-100" 
+        id="form-changeUnitsOrProjectSpaceForm">
+        <div class="tab-data-section bg-white p-5">
+          <div class="row mb-3">
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">نموذج الطلب، موضحاً به أسباب طلب التغيير</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistApplicationFormFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !applicationFormFileId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">تقرير عن حالة المشروع الحالية</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistReportForCurrentProjectStatusFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !reportForCurrentProjectStatusId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">تقرير مساحى للمساحة المحدثة</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistReportForUpdateSpaceFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !reportForUpdateSpaceId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">جدول الاوزان النسبية المحدث</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistUpdatedRelativeWeightTableUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !updatedRelativeWeightTableId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">جدول الكميات المحدث</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistUpdatedQuantityTableFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !updatedQuantityTableId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">البرنامج الزمنى المحدث</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistUpdatedTimeSchedualeFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !updatedTimeSchedualeId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">بيان محدث يتضمن رقم مميز لكل وحدة من وحدات المشروع بالاضافة إلى عدع الوحدات</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistUpdatedStatementForUnitsFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !updatedStatementForUnitsId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">محضر فرز الوحدات</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistUnitSortingMinutesFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !unitSortingMinutesId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">ملحق الاتفاقية المبرم بين المطور والمحاسب القانونى</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistAgreementBetweenDevelperAndAccountantFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !agreementBetweenDevelperAndAccountantId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">ملحق الاتفاقية المبرم بين المطور المكتب الاستشارى </div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistAgreementBetweenDevelperAndEngineeringFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !agreementBetweenDevelperAndEngineeringId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض او مالك منفعتها </div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistAgreementBetweenDeveloperAndLandOwnerFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !agreementBetweenDeveloperAndLandOwnerId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">تقرير البنك عن حساب الضمان </div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistBankReportOnEscrowAccountFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !bankReportOnEscrowAccountId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">تحديث دراسة الجدوى الخاصة بالمشروع </div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistUpdatedFeasibilityStudyFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !updatedFeasibilityStudyId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">التصاميم المعمارية والمخططات الهندسية المعتمدة من الجهات المختصة</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistArchitecturalDesignsAndEngineeringPlansFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !architecturalDesignsAndEngineeringPlansId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">تحديث رخصة البناء او الخطاب المقدم من مركز اتمام</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistUpdatedBuildingLicenseOrLetterFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !updatedBuildingLicenseOrLetterId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">خطاب من المحاسب القانونى يفيد بعدم وجود مبيعات على الوحدات الملغاة مرفقا به تقرير عن حالة المشروع
+                    </div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistAccountantLetterForCancelledUnitsFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !accountantLetterForCancelledUnitsId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+

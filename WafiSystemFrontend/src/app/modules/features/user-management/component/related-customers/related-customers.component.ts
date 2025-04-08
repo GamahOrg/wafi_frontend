@@ -121,7 +121,7 @@ export class RelatedCustomersComponent implements OnInit, OnDestroy {
   }
 
   delete(id: string, index: number) {
-    debugger;
+    
     if (id) {
       this.subscriptions.push(
         this._customerFacilitiesService.Delete(id).subscribe((res) => {

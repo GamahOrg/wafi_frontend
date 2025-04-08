@@ -17,14 +17,14 @@ export class CertifiedLicenseDataComponent implements OnInit, OnDestroy {
   userData: customerResponse | null = null;
   certifiedLicenseData!: CertifiedLicenseDataDto 
   localization = {
-    startOn: 'تاريخ بداية الرخصة',
-    endOn: 'تاريخ نهاية الرخصة',
+    startOn: 'تاريخ بداية الرخصة المتوقع',
+    endOn: 'تاريخ نهاية الرخصة المتوقع',
     title: 'بيانات ر خصة المشروع ',
     certifiedNumber: 'رقم الرخصة',
     savedSuccessfully: 'تم الحفظ',
     save: 'حفظ كمسودة',
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
     yes: 'نعم',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     no: 'لا'

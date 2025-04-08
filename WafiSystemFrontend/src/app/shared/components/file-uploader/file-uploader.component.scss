@@ -1,84 +1,34 @@
 @import "/src/assets/styles/custom-variables";
 
 .file-upload {
-    // border: 2px dashed $darkgreen;
-    border: 2px dashed $theme-dark;
-    border-radius: $card-border-radius;
-    // background-color: $lightgreen;
-    background-color: $theme-light;
+  .selected-file {
+    padding: .5rem;
+    border: 1px solid $lightgray;
+    border-radius: $border-radius-sm;
+    background-color: $light;
 
-    :host-context(.rega) & {
-        border-color: $theme-dark;
-        background-color: $theme-light;
+    [class^="icon-"] {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
     }
 
-    .upload-drop-zone,
-    .upload-queue {
-        padding: 1rem;
+    .icon-check {
+      width: 1.125rem;
+      height: 1.125rem;
+      border-radius: 50%;
+      color: $white;
+      background-color: $success;
+
+      [class^="material-icons"] {
+        font-size: $font-size-xs;
+      }
     }
 
-    .upload-drop-zone {
-        display: flex;
-        flex-direction: column;
-        row-gap: .5rem;
-
-        text-align: center;
-
-        .upload-text,
-        .upload-hints {
-            p+p {
-                margin-top: .25rem;
-            }
-        }
-
-        .upload-text {
-            font-size: $font-size-xs;
-            // color: $darkgreen;
-            color: $theme-dark;
-
-            :host-context(.rega) & {
-                color: $theme-dark;
-            }
-        }
-
-        .upload-button {
-            .mdc-button {}
-        }
-
-        .upload-hints {
-            font-size: $font-size-xxs;
-        }
+    .file-name {
+      font-size: $font-size-sm;
+      font-weight: 500;
     }
-
-    .upload-queue {
-        padding-top: 0;
-
-        .mat-file-upload-queue {
-            display: flex;
-            flex-direction: column;
-            row-gap: .5rem;
-
-            .mdc-card {
-                padding: .25rem;
-
-                .upload-progress {
-                    height: auto;
-                }
-            }
-
-            br {
-                display: none;
-            }
-        }
-    }
+  }
 }
-
-// .file-summary{
-//     display: none !important;
-// }
-// .mat-mdc-progress-bar{
-//     display: none !important;
-// }
-// .upload-progress{
-//     display: none !important;
-// }

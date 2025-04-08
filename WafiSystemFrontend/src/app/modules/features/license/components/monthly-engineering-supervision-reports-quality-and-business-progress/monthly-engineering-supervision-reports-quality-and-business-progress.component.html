@@ -1,1 +1,292 @@
-<p>monthly-engineering-supervision-reports-quality-and-business-progress works!</p>
+
+<div  *ngIf="showRateFlag">
+    <div class="tab-data-section">
+      <div class="row mb-3">
+    
+      <div class="col-12 col-lg-6">
+        <button type="button" class="btn btn-primary" (click)="openAddEditActualQualityAndBusinessDialog()" *ngIf="
+        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+         || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback">تعديل بيانات  خطةالجودة  وضمان الجودة</button>
+     </div> 
+      </div>
+    </div> 
+    </div>
+    
+<h3 class="title">{{' خطة الجودة '}}</h3>
+
+<div class="tab-data-section">
+  <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+          <div class="key">موقف خطةادارة الجودة</div>
+          <div class="value">{{licenseProjectEngineeringActualQualityPlanAndAssurance?.qualityManagementPlanStatus?.statusName}}</div>
+      </div>
+    
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance">
+          <div class="key">إجراءات ونماذج ادارة الجودة</div>
+          <div class="value">{{licenseProjectEngineeringActualQualityPlanAndAssurance?.qualityManagementProceduresAndModels?.statusName}}</div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance">
+        <div class="key"> خطة الفحص والاختبار </div>
+        <div class="value">{{licenseProjectEngineeringActualQualityPlanAndAssurance?.examinationAndTestPlan?.statusName}}</div>
+    </div>
+  </div>
+</div> 
+<hr>
+
+<h3 class="title">{{'ضمان الجودة '}}</h3>
+<div class="tab-data-section">
+  <div class="row mb-3">
+
+
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance">
+  <div class="key">كادر الاستشاري الشهري حسب خطة التواجد (مهندسين) </div>
+  <div class="value">{{ licenseProjectEngineeringActualQualityPlanAndAssurance?.monthlyConsultantEngineerStaffAccordingPlan}}</div>
+ </div>
+
+
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance">
+  <div class="key">كادر الاستشاري الشهري حسب خطة التواجد (مهندسين) الفعلى</div>
+  <div class="value">{{ licenseProjectEngineeringActualQualityPlanAndAssurance?.actualMonthlyConsultantEngineerStaffAccordingPlan }}</div>
+ </div>
+ 
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance">
+  <div class="key">كادر الاستشاري الشهري حسب خطة التواجد (مفتشين) </div>
+  <div class="value">{{ licenseProjectEngineeringActualQualityPlanAndAssurance?.monthlyConsultantInspectorStaffAccordingPlan }}</div>
+ </div>
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance">
+  <div class="key">كادر الاستشاري الشهري حسب خطة التواجد (مفتشين) الفعلى</div>
+  <div class="value">{{ licenseProjectEngineeringActualQualityPlanAndAssurance?.actualMonthlyConsultantInspectorStaffAccordingPlan }}</div>
+ </div>
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance">
+    <div class="key">خطوات التنفيذ </div>
+    <div class="value">{{licenseProjectEngineeringActualQualityPlanAndAssurance?.methodStatements?.statusName}}</div>
+</div>
+  </div>
+</div> 
+<hr>
+<h3 class="title">{{'مراقبة الجودة'}}</h3>
+ <button type="button" class="btn btn-primary my-4"  (click)="openAddEditActualQualityControlDialog('')" *ngIf="
+ actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+  actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+  || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback">إضافة </button> 
+
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                     <th scope="col">الأعمال</th> 
+                    <th scope="col">عدد طلبات فحص الاعمال المعتمدة عن فترة</th>
+                    <th scope="col">عدد طلبات فحص الاعمال الغير معتمدة عن فترة</th>
+                    <th scope="col"> عدد طلبات فحص الاعمال تحت المراجعة</th>
+                    <th scope="col">العمليات</th>
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                     <td>
+                        <span class="text-dark">{{comdata.sysLicenseProjectEngineeringWorks.name}}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.noOfApproved}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.noOfRejected}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">{{comdata.noOfUnderReview}}</span>
+                    </td> 
+                    <td>
+                      <button type="button"  class="btn btn-outline-primary mx-4" *ngIf="
+                      actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+                       actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                       || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="openAddEditActualQualityControlDialog(comdata)">تعديل </button> &nbsp;
+                       <button type="button"  class="btn btn-outline-primary" (click)="showActualQualityControlDetailDialog(comdata)">التفاصيل</button>  &nbsp;
+                       <button type="button"  class="btn btn-outline-primary" *ngIf="
+                       actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+                        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                        || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="deleteLicenseProjectEngineeringWorksExamination(comdata.id)">حذف</button>  
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+
+    <div class="tab-data-section">
+      <div class="row mb-3">
+    
+      <div class="col-12 col-lg-6">
+        <button type="button" class="btn btn-primary"*ngIf="
+        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+         || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="openAddEditMaterialExaminationComponentDialog()">تعديل بيانات فحص المواد</button>
+     </div> 
+      </div>
+    </div> 
+    
+<div class="tab-data-section">
+    <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="key">عدد طلبات فحص المواد المعتمد – عن فترة التقرير</div>
+            <div class="value">{{licenseProjectEngineeringMaterialExamination?.noOfApproved}}</div>
+        </div>
+      
+        <div class="col-12 col-lg-6">
+            <div class="key">عدد طلبات فحص المواد المعتمد – تراكمي منذ بدايه المشروع</div>
+            <div class="value">{{licenseProjectEngineeringMaterialExamination?.noOfApprovedSinceStartProjecct}}</div>
+        </div>
+        <div class="col-12 col-lg-6" >
+          <div class="key">عدد طلبات فحص المواد غير المعتمد – عن فترة التقرير</div>
+          <div class="value">{{licenseProjectEngineeringMaterialExamination?.noOfRejected}}</div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key">عدد طلبات فحص المواد غير المعتمد – تراكمي منذ بدايه المشروع</div>
+        <div class="value">{{licenseProjectEngineeringMaterialExamination?.noOfRejectedSinceStartProjecct}}</div>
+    </div>
+    <div class="col-12 col-lg-6" >
+        <div class="key">عدد طلبات فحص المواد تحت المراجعة – عن فترة التقرير</div>
+        <div class="value">{{licenseProjectEngineeringMaterialExamination?.noOfUnderReview}}</div>
+    </div>
+    <div class="col-12 col-lg-6" >
+        <div class="key">عدد طلبات فحص المواد  تحت المراجعة – تراكمي منذ بدايه المشروع</div>
+        <div class="value">{{licenseProjectEngineeringMaterialExamination?.noOfUnderReviewSinceStartProjecct}}</div>
+    </div>
+    <div class="col-12 col-lg-6" >
+        <div class="key">الملاحظات</div>
+        <div class="value">{{licenseProjectEngineeringMaterialExamination?.notes}}</div>
+    </div>
+    </div>
+  </div> 
+  
+    <div class="tab-data-section">
+      <div class="row mb-3">
+    
+      <div class="col-12 col-lg-6">
+        <button type="button" class="btn btn-primary" *ngIf="
+        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+         || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="openAddEditNonConformityReportDialog()">تعديل بيانات تقارير عدم المطابقة</button>
+     </div> 
+      </div>
+    </div> 
+  
+  <div class="tab-data-section">
+    <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="key">عدد تقارير عدم المطابقة المغلقة - منذ فترة التقرير</div>
+            <div class="value">{{licenseProjectEngineeringNonConformityReport?.noOfClosed}}</div>
+        </div>
+      
+        <div class="col-12 col-lg-6">
+            <div class="key">عدد تقارير عدم المطابقة المغلقة – تراكمي منذ بدايه المشروع</div>
+            <div class="value">{{licenseProjectEngineeringNonConformityReport?.noOfClosedSinceStartProjecct}}</div>
+        </div>
+        <div class="col-12 col-lg-6" >
+          <div class="key">عدد تقارير عدم المطابقة المفتوحة </div>
+          <div class="value">{{licenseProjectEngineeringNonConformityReport?.noOfOpened}}</div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key">عدد تقارير عدم المطابقة المفتوحة – تراكمي منذ بدايه المشروع</div>
+        <div class="value">{{licenseProjectEngineeringNonConformityReport?.noOfOpenedSinceStartProjecct}}</div>
+    </div>
+    <div class="col-12 col-lg-6" >
+        <div class="key">عدد تقارير عدم المطابقة تحت المراجعة </div>
+        <div class="value">{{licenseProjectEngineeringNonConformityReport?.noOfUnderReview}}</div>
+    </div>
+    <div class="col-12 col-lg-6" >
+        <div class="key">عدد تقارير عدم المطابقة  تحت المراجعة – تراكمي منذ بدايه المشروع</div>
+        <div class="value">{{licenseProjectEngineeringNonConformityReport?.noOfUnderReviewSinceStartProjecct}}</div>
+    </div>
+    <div class="col-12 col-lg-6" >
+        <div class="key">الملاحظات</div>
+        <div class="value">{{licenseProjectEngineeringNonConformityReport?.notes}}</div>
+    </div>
+    </div>
+  </div> 
+
+
+  <hr>
+<h3 class="title">{{'موقف أعمال الإنشاءات'}}</h3>
+<!--  <button type="button" class="btn btn-primary my-4" *ngIf="showRateFlag" (click)="openAddEditActualQualityControlDialog('')">إضافة </button> 
+ -->
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3">
+        <table class="table">
+            <thead>
+                <tr>
+                     <th scope="col">القسم</th> 
+                    <th scope="col">تكلفة القسم</th>
+                    <th scope="col">الوزن النسبي</th>
+                    <th scope="col"> نسبة الإنجاز المخطط الشهرية</th>
+                    <th scope="col"> نسبة الإنجاز الفعلى الشهرية</th>
+                    <th scope="col">العمليات</th>
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let weight of licenseProjectEngineeringActualRelativeWeightList;let i=index;">
+                <tr>
+                     <td>
+                        <span class="text-dark">{{weight.elementName}}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{weight.weightCost}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{weight.elementValue}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">{{weight.monthlyPlannedCompletionPercentage}}</span>
+                    </td> 
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">{{weight.actualMonthlyPlannedCompletionPercentage}}</span>
+                    </td> 
+                    <td>
+                      <button type="button"  class="btn btn-outline-primary mx-4" *ngIf="
+                      actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+                       actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                       || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="openAddEditActualRelativeWeightDialog(weight)">تعديل </button> &nbsp;
+                       <button type="button"  class="btn btn-outline-primary" (click)="showActualRelativeWeightDetailDialog(weight)">التفاصيل</button>  &nbsp;
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+
+
+
+
+
+
+
+
+

@@ -98,7 +98,7 @@ export class DelegatorFormComponent implements OnInit, OnDestroy {
         this.accountKeeper = results[0] as AccountKeeperDto;
         if (!this.accountKeeper) {
 
-          this.toastr.error("نأمل التأكد من ادخال بيانات امين الحساب");
+          this.toastr.error("نأمل التأكد من ادخال بيانات أمين الحساب");
           return;
         }
       }
@@ -131,7 +131,7 @@ export class DelegatorFormComponent implements OnInit, OnDestroy {
     if (this.controls.licenseProjectId.value) {
       this.LicenseProjectDelegatorCreateUpdateDto = this.licenseProjectDelegatorForm.value as LicenseProjectDelegatorCreateUpdateDto;
       if (!this.LicenseProjectDelegatorCreateUpdateDto.delegatorAcknowledgment) {
-        this.toastr.error("نأمل الموافقه على الاقرار حتي يتم تسجيل المفوض");
+        this.toastr.error("نأمل الموافقه على الاقرار حتى يتم تسجيل المفوض");
         return;
       }
       this.LicenseProjectDelegatorCreateUpdateDto.id = this.LicenseProjectDelegatorCreateUpdateDto.id ? this.LicenseProjectDelegatorCreateUpdateDto.id : "00000000-0000-0000-0000-000000000000";

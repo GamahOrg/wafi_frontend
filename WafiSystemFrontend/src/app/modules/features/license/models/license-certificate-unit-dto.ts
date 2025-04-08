@@ -9,9 +9,9 @@ export interface LicenseCertificateUnitDto {
     unitCode :string;
     //المرحلة
      stageName:string;
-    //تاريخ بداية الانشاء
+    //تاريخ بداية الإنشاء
     constructionStartOn: Date
-    //تاريخ نهاية الانشاء
+    //تاريخ نهاية الإنشاء
     constructionEndOn: Date
     //نوع الوحدة
      subUnitTypeName:string;
@@ -19,7 +19,7 @@ export interface LicenseCertificateUnitDto {
     subUnitCount :number;
     //اسم نموذج الوحدة
     modelName :string;
-    //اجمالى المساحة للوحدة
+    //إجمالي المساحة للوحدة
      space :number;
     //مساحة مسطح البناء للوحدة
     buildingFlatSpace :number;

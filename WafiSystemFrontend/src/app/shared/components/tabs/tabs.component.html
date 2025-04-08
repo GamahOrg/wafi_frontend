@@ -1,25 +1,22 @@
-<div class="d-flex flex-column h-100"
-     [ngClass]="{'verticalTabs': tabContent.verticalTabs}">
-    <mat-tab-group mat-stretch-tabs="false"
-                   mat-align-tabs="start"
-                   class="flex-fill {{tabClassName}}"
-                   (selectedTabChange)="updateActiveTabIndex($event);"
-                   [selectedIndex]="tabContent.activeTabIndex">
-        <ng-container *ngFor="let component of tabContent.tabsComponentList; index as i">
-            <mat-tab [disabled]="component.disabled" *ngIf="component.isVisible">
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="flex-fill {{tabClassName}}" (selectedTabChange)="updateActiveTabIndex($event);" [selectedIndex]="tabContent.activeTabIndex">
 
-                <ng-template mat-tab-label
-                             class="collapseTitle">
-                    <span *ngIf="component.icon"
-                          class="icon">
-                        <i class="material-icons-outlined">{{component.icon}}</i>
-                    </span>
-                    {{component.title}}
-                </ng-template>
-                <ng-container *ngIf="tabContent.activeTabIndex == i && component.Component">
-                    <ng-container *ngComponentOutlet="component.Component"></ng-container>
-                </ng-container>
-            </mat-tab>
-        </ng-container>
-    </mat-tab-group>
-</div>
+  <ng-container *ngFor="let component of tabContent.tabsComponentList; index as i">
+    <mat-tab [disabled]="component.disabled" *ngIf="component.isVisible">
+
+      <ng-template mat-tab-label class="collapseTitle">
+        <span *ngIf="component.icon" class="icon">
+          <i class="material-icons-outlined">{{component.icon}}</i>
+        </span>
+        {{component.title}}
+      </ng-template>
+
+      <ng-container *ngIf="tabContent.activeTabIndex == i && component.Component">
+        <div class="tab-content">
+          <ng-container *ngComponentOutlet="component.Component"></ng-container>
+        </div>
+      </ng-container>
+
+    </mat-tab>
+  </ng-container>
+
+</mat-tab-group>

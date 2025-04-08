@@ -1,0 +1,269 @@
+<div class="card">
+  <div class="card-header">
+    <h6 class="card-title">طلب تغيير الأستشاري الهندسي</h6>
+  </div>
+
+  <div class="card-body">
+    <form class="d-flex flex-column h-100 p-3" [formGroup]="changeEngineeringForm" id="form-licenseProjectProblemLogForm">
+      <div class="tab-data-section">
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+              <select (change)="getLicenseDetails()" class="form-select" id="control-licenseProjectId"
+                aria-label="Default select example" formControlName="licenseProjectId">
+                <option selected disabled>المشروع</option>
+                <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error *ngIf="
+                  controls.licenseProjectId?.hasError('required') &&
+                  showFormValidation
+                ">
+                حقل مطلوب
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key">الرسوم</div>
+            <div class="value">
+              {{ price ? price : "لا يوجد" }}
+            </div>
+          </div>
+
+          <div class="row mb-3" *ngIf="showDetails">
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">اسم المشروع</label>
+                <div class="value">
+                  {{ projectDetails?.name }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">اسم المطور</label>
+                <div class="value">
+                  {{ projectDetails?.facilityName }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">رقم السجل التجاري</label>
+                <div class="value">
+                  {{ projectDetails?.commercialRegisterNumber }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">رقم شهادة تأهيل المطور العقاري</label>
+                <div class="value">
+                  {{ projectDetails?.developerCertifiedNumber }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">رقم الترخيص</label>
+                <div class="value">
+                  {{ projectDetails?.certifiedNumber }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">موقع</label>
+                <div class="value">
+                  {{ projectDetails?.cityName }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">نوع وحدات المشروع</label>
+                <div class="value">
+                  {{ projectDetails?.unitTypeName }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">اسم مكنب الاستشاري الهندسي</label>
+                <div class="value">
+                  {{ projectDetails?.engineeringConsultantName }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">اسم المحاسب القانوني</label>
+                <div class="value">
+                  {{ projectDetails?.charteredAccountantName }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">رصيد حساب الضمان</label>
+                <div class="value">
+                  {{ projectDetails?.accountNumber }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">تاريخ نهاية الرخصة</label>
+                <div class="value">
+                  {{ projectDetails?.endOn | date:'MMM d, y'}}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">عدد وحدات المشروع المباعة</label>
+                <div class="value">
+                  {{ projectDetails?.unitsSellCount }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">عدد وحدات المشروع</label>
+                <div class="value">
+                  {{ projectDetails?.subUnitCount }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">نسبة انجاز المشروع</label>
+                <div class="value">
+                  {{ projectDetails?.achievementRate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="commercial-register">
+                <div class="row mb-3">
+                  <div class="col-12 col-lg-12">
+                    <div class="form-group mb-4">
+                      <label for="commercialRegister" class="key">السجل التجاري الخاص بالأستشاري الهندسي الجديد
+                      </label>
+                      <div class="input-group">
+                        <input id="control-commercialRegister" name="commercialRegister" type="number"
+                          class="form-control" formControlName="commercialRegister"
+                          (change)="clearCommercialRegister()" />
+                        <button [disabled]="!controls.commercialRegister.value" (click)="validateCommercialRegister()"
+                          class="btn btn-primary" type="button">
+                          تحقق
+                        </button>
+                      </div>
+                      <div class="invalid-feedback d-block" *ngIf="
+                          controls.commercialRegister?.hasError('required') &&
+                          showFormValidation
+                        ">
+                        حقل مطلوب
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-12 col-lg-12">
+              <div class="form-group mb-4" *ngIf="newEngineeringFacility">
+                <label class="key">اسم مكتب الاستشاري الهندسي الجديد</label>
+                <div class="value">
+                  <span class="icon material-icons">blinds</span>
+                  {{ newEngineeringFacility.facilityName }}
+                </div>
+              </div>
+
+              <!-- <div class="form-group mb-4">
+                      <label class="key">اسم مكتب الاستشاري الهندسي الجديد</label>
+                     {{newEngineeringFacility.facilityName}}
+        
+                    </div> -->
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label for="changeReason" class="key">أسباب طلب التغيير</label>
+                <div class="input-group">
+                  <textarea type="text" rows="5" id="changeReason" class="form-control" formControlName="reasons"></textarea>
+                </div>
+                <div class="invalid-feedback d-block" *ngIf="showValidation && !controls.reasons?.value">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <div class="value">
+                  <span class="icon material-icons-outlined">content_copy</span>
+                  <div class="key">اتفاقية المكتب الاستشارى البديل</div>
+                </div>
+                <app-file-uploader [data]="singleFilesUploaderData" (fileUploaded)="
+                    onExistAlternativeConsultingOfficeAgreementFilesUploaded(
+                      $event
+                    )
+                  "></app-file-uploader>
+                <div class="invalid-feedback d-block" *ngIf="
+                    showValidation && !alternativeConsultingOfficeAgreementId
+                  ">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <div class="value">
+                  <span class="icon material-icons-outlined">content_copy</span>
+                  <div class="key">اقرار مخالصة المكتب الاستشارى السابق</div>
+                </div>
+                <app-file-uploader [data]="singleFilesUploaderData" (fileUploaded)="
+                    onExistclearanceEngineeringConsultantFilesUploaded($event)
+                  "></app-file-uploader>
+                <div class="invalid-feedback d-block" *ngIf="
+                    showValidation && !clearanceEngineeringConsultantFileId
+                  ">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <div class="value">
+                  <span class="icon material-icons-outlined">content_copy</span>
+                  <div class="key">
+                    تقرير المكتب الاستشاري السابق عن المشروع
+                  </div>
+                </div>
+                <app-file-uploader [data]="singleFilesUploaderData" (fileUploaded)="
+                    onExistPreviousConsultingOfficeReportFilesUploaded($event)
+                  "></app-file-uploader>
+                <div class="invalid-feedback d-block" *ngIf="showValidation && !previousConsultingOfficeReportId">
+                  حقل مطلوب
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-creatRequest" (click)="save()">
+          انشاء الطلب
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

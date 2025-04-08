@@ -166,7 +166,7 @@ export class UpdateRealEstateDeveloperComponent implements OnInit, OnDestroy {
 
   ValidateFiles() {
 
-    debugger
+    
     if (this.isClearanceAccountantDone && (this.clearanceAccountantFileId == null || this.clearanceAccountantFileId == undefined || this.clearanceAccountantFileId == '00000000-0000-0000-0000-000000000000')) {
       return false;
     }
@@ -272,7 +272,7 @@ export class UpdateRealEstateDeveloperComponent implements OnInit, OnDestroy {
     this.form.get('reasonsForNotFinalizingEngineeringConsultantClearance')?.updateValueAndValidity();
   }
   onClearanceChangeAccount(value: boolean): void {
-    debugger
+    
     this.isClearanceAccountantDone = value;
     if (value) {
       this.form.get('clearanceAccountantFileId')?.setValidators(Validators.required);

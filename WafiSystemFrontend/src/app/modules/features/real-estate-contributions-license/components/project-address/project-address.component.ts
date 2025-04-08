@@ -88,12 +88,12 @@ export class ProjectAddressComponent implements OnInit, OnDestroy {
   localization = {
     title: 'عنوان المشروع',
     area: 'المنطقة',
-    city: 'المدينه',
-    selectCity: 'اختار اسم المدينه',
+    city: 'المدينة',
+    selectCity: 'اختار اسم المدينة',
     selectArea: 'اختار اسم المنطقة',
     neighborhood: 'الحي',
     street: 'الشارع',
-    location: 'الموقع على الخارطه',
+    location: 'الموقع على الخارطة',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
     PleaseAddAllRequiredFields:

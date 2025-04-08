@@ -39,7 +39,7 @@ export class LicenseProjectExchangeDocumentListComponent {
   }
 
   private getLicenseProjectIdStorage(): void {
-    debugger;
+    
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId)
       this.getExchangeDocumentOnProject();
@@ -48,7 +48,7 @@ export class LicenseProjectExchangeDocumentListComponent {
   getExchangeDocumentOnProject(): void {
     this.subscriptions.push(
       this._licenseProjectExchangeDocumentService.getExchangeDocumentOnProject(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseProjectExchangeDocumentPagingDto[]> | null) => {
-        debugger;
+        
         this.updateRequestList(res as Pagination<LicenseProjectExchangeDocumentPagingDto[]>);
       })
     )

@@ -61,10 +61,8 @@ export class ChangeplanLicenseRequestDeveloperSummaryComponent implements OnInit
   }
 
   showEditButton() {
-    this.showButton = this.userRequestType === UserRequestTypeEnum.RealEstateDeveloper &&
-      (this.selectRequest.externalRequestStatusId == LicenseProjectRequestStatusEnum.UnderCreation ||
-        this.selectRequest.externalRequestStatusId == LicenseProjectRequestStatusEnum.SendToParties ||
-        this.selectRequest.externalRequestStatusId == LicenseProjectRequestStatusEnum.PartiesStudyFinished ||
+    this.showButton =
+        (this.selectRequest.externalRequestStatusId == LicenseProjectRequestStatusEnum.UnderCreation ||
         this.selectRequest.externalRequestStatusId == LicenseProjectRequestStatusEnum.CustomerFeedback
       )
   }

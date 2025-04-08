@@ -1,35 +1,15 @@
-<div class="layout d-flex align-items-stretch" [dir]="bodyDirection">
-  <!-- <app-loader></app-loader> -->
-
+<div class="layout d-flex" [dir]="bodyDirection">
   <app-pilot-launch-hint></app-pilot-launch-hint>
 
-  <aside
-    class="sidebar d-flex flex-column row-gap-3 col-10 col-md-4 col-lg-3 col-xl-2"
-    [class]="currentLang"
-    [ngClass]="{ opened: showSideBar }"
-  >
-    <span
-      class="sidebar-toggle"
-      [class]="currentLang"
-      (click)="showSideBar = !showSideBar"
-    >
-      <i class="material-icons">{{ showSideBar ? "close" : "menu" }}</i>
-    </span>
-    <app-sidebar></app-sidebar>
-    <div class="logo">
-      <img src="assets/images/layout/sidebar/logo-2030.svg" alt="" />
-      <img
-        class="img-fluid logo-img"
-        src="assets/images/layout/sidebar/REGA_LOGO_Dark.svg"
-        alt=""
-      />
-    </div>
-  </aside>
+  <app-sidebar></app-sidebar>
+
   <main class="d-flex flex-column justify-content-between flex-grow-1">
     <app-header></app-header>
-    <section class="content-area">
+
+    <section class="content-area h-100 p-4">
       <router-outlet></router-outlet>
     </section>
+
     <app-footer></app-footer>
   </main>
 </div>

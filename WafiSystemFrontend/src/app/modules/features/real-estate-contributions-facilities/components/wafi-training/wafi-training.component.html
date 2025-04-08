@@ -4,15 +4,15 @@
 
     <div class="tab-data-header">
         <div class="icon"><span class="material-icons">list_alt</span></div>
-        <h6 class="title fw-normal">تدريب الهيئة العامة للعقار للبيع على الخارطة</h6>
+        <h6 class="title">تدريب الهيئة العامة للعقار للبيع على الخارطة</h6>
 
-        <button mat-raised-button (click)="openDialog()" class="edit-icon"><span class="material-icons">edit</span></button>
+        <button class="edit-icon btn btn-outline-primary" (click)="openDialog()"><span class="material-icons">edit</span></button>
     </div>
 
     <div class="tab-data-section">
-        <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+        <div class="row row-gap-4">
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="key">شهادة اجتياز دورة التسويق للبيع على الخارطة من الهيئة العامة للعقار</div>
                 <div class="value" *ngIf="wafiTraining && wafiTraining.marketerTrainingCertificateFile">
                     <span class="icon material-icons-outlined">content_copy</span>
@@ -26,8 +26,8 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
-                <div class="key">شهادة اجتياز دورة التطوير العقاري لمشاريع البيع على الخارطة</div>
+            <div class="col-12 col-lg-6">
+                <div class="key">شهادة اجتياز دورة التطوير عقاري لمشاريع البيع على الخارطة</div>
                 <div class="value" *ngIf="wafiTraining && wafiTraining.realEstateDevelopmentTrainingCertificateFile">
                     <span class="icon material-icons-outlined">content_copy</span>
                     <a [href]="baseUrl + wafiTraining.realEstateDevelopmentTrainingCertificateFile.filePath" target="_blank">

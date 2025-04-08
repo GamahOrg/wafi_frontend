@@ -28,6 +28,7 @@ import { RequestAttachmentsComponent } from '../request-attachments/request-atta
 import { PromissoryNoteComponent } from '../promissory-note/promissory-note.component';
 import { CertifiedLicenseDataComponent } from '../certified-license-data/certified-license-data.component';
 import { CertifiedLicenseDataFormComponent } from '../certified-license-data-form/certified-license-data-form.component';
+import { LincenseProjectZonesComponent } from '../Zones/lincense-project-zones/lincense-project-zones.component';
 
 @Component({
   selector: 'app-project-data',
@@ -40,7 +41,7 @@ export class ProjectDataComponent {
   mainTabsComponentList = [
     {
       icon: '',
-      title: 'بيانات رخصة المشروع',
+      title: 'بيانات رخصة',
       Component: CertifiedLicenseDataFormComponent,
       disabled: false,
       id: 'CertifiedLicenseDataFormComponent',
@@ -51,7 +52,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'البيانات الأساسية للمشروع',
+      title: 'البيانات الأساسية',
       Component: ProjectBasicDataComponent,
       disabled: false,
       id: 'ProjectBasicDataComponent',
@@ -73,7 +74,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'عنوان المشروع',
+      title: 'العنوان',
       Component: ProjectAddressComponent,
       disabled: false,
       id: 'ProjectAddressComponent',
@@ -84,7 +85,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'عنوان المشروع',
+      title: 'العنوان',
       Component: ProjectExternalAddressComponent,
       disabled: false,
       id: 'ProjectExternalAddressComponent',
@@ -106,7 +107,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'المطور العقاري',
+      title: 'المطور عقاري',
       Component: ProjectDeveloperComponent,
       disabled: false,
       id: 'ProjectDeveloperComponent',
@@ -117,7 +118,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'أرض المشروع',
+      title: 'الأرض',
       Component: ProjectLandComponent,
       disabled: false,
       id: 'ProjectLandComponent',
@@ -128,7 +129,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'صكوك أرض المشروع',
+      title: 'الصكوك',
       Component: ProjectLandTitleDeedsComponent,
       disabled: false,
       id: 'ProjectLandTitleDeedsComponent',
@@ -139,7 +140,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'وحدات المشروع',
+      title: 'الوحدات',
       Component: DetachedLicenseProjectUnitsComponent,
       disabled: false,
       id: 'DetachedLicenseProjectUnitsComponent',
@@ -150,8 +151,9 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'الزون و بلوكات وعمائر المشروع',
-      Component: BlocksAndbuildingsAndunitsComponent,
+      title: 'الزون و بلوكات وعمائر',
+      // Component: BlocksAndbuildingsAndunitsComponent,
+      Component: LincenseProjectZonesComponent,
       disabled: false,
       id: 'BlocksAndbuildingsAndunitsComponent',
       errNum: 0,
@@ -159,6 +161,28 @@ export class ProjectDataComponent {
       tabErrors: [],
       isVisible: true,
     },
+    // {
+    //   icon: '',
+    //   title: 'أنواع الوحدات بالبلوك / العمارة',
+    //   Component: ProjectModuleModelsComponent,
+    //   disabled: false,
+    //   id: 'ProjectModuleModelsComponent',
+    //   errNum: 0,
+    //   tabCode: TabCode.licenseProjectModel,
+    //   tabErrors: [],
+    //   isVisible: true,
+    // },
+    // {
+    //   icon: '',
+    //   title: 'أكواد وحدات المشروع',
+    //   Component: ProjectUnitCodesComponent,
+    //   disabled: false,
+    //   id: 'ProjectUnitCodesComponent',
+    //   errNum: 0,
+    //   tabCode: TabCode.licenseProjectCodes,
+    //   tabErrors: [],
+    //   isVisible: true,
+    // },
     {
       icon: '',
       title: 'أنواع الوحدات بالبلوك / العمارة',
@@ -183,7 +207,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'ملفات التصميم المعمارية للمشروع',
+      title: 'ملفات التصاميم المعمارية للمشروع',
       Component: ArchitecturalDesignFilesComponent,
       disabled: false,
       id: 'ArchitecturalDesignFilesComponent',
@@ -216,7 +240,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'جدول كميات المشروع',
+      title: 'جدول كميات',
       Component: ProjectQuantitiesTableComponent,
       disabled: false,
       id: 'ProjectQuantitiesTableComponent',
@@ -238,7 +262,7 @@ export class ProjectDataComponent {
     },
     {
       icon: '',
-      title: 'وثائق المشروع',
+      title: 'الوثائق',
       Component: ProjectDocumentDataComponent,
       disabled: false,
       id: 'ProjectDocumentDataComponent',

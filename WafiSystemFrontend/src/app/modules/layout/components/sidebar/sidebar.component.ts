@@ -18,7 +18,8 @@ import { QualificationType } from 'src/app/modules/features/qualifying/dataModel
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  currentLang: string = '';
+  hideSideBar: boolean = true;
+
   baseUrl = `${environment.baseURL}/`;
   loginUserType: string | null = '';
   loginUserTypeEnum: LoginUserTypeEnum | null = null;
@@ -34,7 +35,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   links = {
     complaintsAndReport: `${Configuration.modules.wafi}/${Configuration.modules.complaintsAndReport}`,
     complaintsReports: `/${Configuration.pages.complaintsAndReport.complaintsReports}`,
-    charteredaccountprojectlist:`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.charteredaccount}`,
+    charteredaccountprojectlist: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.charteredaccount}`,
     qualifying: `${Configuration.modules.wafi}/${Configuration.modules.qualifying}`,
     qualifyingReqs: `/${Configuration.pages.qualifying.requests}`,
     qualifyingReqList: `/${Configuration.pages.qualifying.requestList}`,
@@ -60,8 +61,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     buyerList: `/${Configuration.pages.license.buyerList}`,
     contractdocumentation: `/${Configuration.pages.license.contractdocumentation}`,
     licensecertificatetemplate: `/${Configuration.pages.license.licensecertificatetemplate}`,
+    zones: `/${Configuration.pages.license.zones}`,
 
-    //  engineeringManagement: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}`,
+    engineeringManagement: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}`,
 
     employeeCreateLicense: `/${Configuration.pages.license.employeeCreateLicense}`,
     employeeLicenseList: `/${Configuration.pages.license.employeeLicenseList}`,
@@ -76,9 +78,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private _userDataService: UserDataService,
     private _storageService: StorageService,
     private router: Router,
-  ) {
-    _languageService.currentLang.subscribe((lang) => (this.currentLang = lang));
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getLoginUserType();
@@ -111,7 +111,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.isAccountant = res == QualificationType.accountantQualificationRequest;
         this.isEngineer = res == QualificationType.engineeringConsultantQualificationRequest;
         this.isDeveloper = res == QualificationType.realStateDeveloperQualificationRequest ||
-        res == QualificationType.realEstateDeveloperSpecializingInRealEstateParticipation;
+          res == QualificationType.realEstateDeveloperSpecializingInRealEstateParticipation;
       })
     )
   }

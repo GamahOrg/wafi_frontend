@@ -1,6 +1,7 @@
 export interface LicenseProjectProblemCreateUpdateDto {
     id:string;
      licenseProjectId :string;
+     licenseProjectEngineeringSupervisionPlannedReportDetailId :string;
     //نوع المشكلة
     problemTypeId :number;
     //وصف المشكلة

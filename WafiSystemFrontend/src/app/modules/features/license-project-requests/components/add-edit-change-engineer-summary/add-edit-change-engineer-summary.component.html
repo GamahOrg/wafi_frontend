@@ -1,0 +1,161 @@
+<div class="card">
+  <div class="card-header" *ngIf="!isEditMode">
+    <h6 class="card-title" >طلب تغيير الأستشاري الهندسي</h6>
+  </div>
+
+  <div class="card-body">
+    <form
+    [formGroup]="changeEngineeringForm"
+      class="d-flex flex-column h-100"
+      id="form-licenseProjectProblemLogForm"
+    >
+      <div class="tab-data-section bg-white">
+        <div class="row mb-3" *ngIf="changeLicenseProjectEngineeringRequest">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="commercial-register">
+                <div class="row mb-3">
+                  <div class="col-12 col-lg-12">
+                    <div class="form-group mb-4">
+                      <label for="commercialRegister" class="key"
+                        >السجل التجاري للإستشاري الجديد
+                      </label>
+                      <div class="input-group">
+                        <input
+                          id="control-commercialRegister"
+                          name="commercialRegister"
+                          type="number"
+                          class="form-control"
+                          formControlName="commercialRegister"
+                        />
+                        <button
+                          [disabled]="!controls['commercialRegister'].value"
+                          (click)="validateCommercialRegister()"
+                          class="btn btn-primary"
+                          type="button"
+                        >
+                          تحقق
+                        </button>
+                      </div>
+                      <div
+                        class="invalid-feedback d-block"
+                        *ngIf="
+                          controls['commercialRegister'].hasError('required') &&
+                          controls['commercialRegister'].touched
+                        "
+                      >
+                        حقل مطلوب
+                      </div>
+                      <div
+                        class="invalid-feedback d-block"
+                        *ngIf="controls['commercialRegister'].hasError('min')"
+                      >
+                        قيمة الحقل يجب الا تقل عن صفر
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-12">
+            <div class="form-group mb-4" *ngIf="newEngineeringFacility">
+              <label class="key">اسم مكتب الاستشاري الهندسي الجديد</label>
+              <div class="value">
+                <span class="icon material-icons">blinds</span>
+                {{ newEngineeringFacility.facilityName }}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="changeReason" class="key">أسباب طلب التغيير</label>
+              <div class="input-group">
+                <textarea
+                  type="text"
+                  rows="5"
+                  id="changeReason"
+                  class="form-control"
+                  formControlName="reasons"
+                ></textarea>
+              </div>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="showValidation && !controls.reasons?.value"
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <div class="key">اتفاقية المكتب الاستشارى البديل</div>
+              </div>
+              <app-file-uploader
+                [data]="singleFilesUploaderData"
+                (fileUploaded)="
+                  onExistAlternativeConsultingOfficeAgreementFilesUploaded(
+                    $event
+                  )
+                "
+              ></app-file-uploader>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  showValidation && !alternativeConsultingOfficeAgreementId
+                "
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <div class="key">اقرار مخالصة المكتب الاستشارى السابق</div>
+              </div>
+              <app-file-uploader
+                [data]="singleFilesUploaderData"
+                (fileUploaded)="
+                  onExistclearanceEngineeringConsultantFilesUploaded($event)
+                "
+              ></app-file-uploader>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="showValidation && !clearanceEngineeringConsultantFileId"
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <div class="key">تقرير المكتب الاستشاري السابق عن المشروع</div>
+              </div>
+              <app-file-uploader
+                [data]="singleFilesUploaderData"
+                (fileUploaded)="
+                  onExistPreviousConsultingOfficeReportFilesUploaded($event)
+                "
+              ></app-file-uploader>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="showValidation && !previousConsultingOfficeReportId"
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

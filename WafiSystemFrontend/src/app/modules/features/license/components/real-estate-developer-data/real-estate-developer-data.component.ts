@@ -113,7 +113,7 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     PleaseAddAllRequiredFields:
       'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     title: 'بيانات مقدم الطلب',
-    goTo: 'اذا كنت تريد تعديل البيانات نأمل الذهاب الى صفحة ',
+    goTo: 'اذا كنت تريد تعديل البيانات نأمل الذهاب إلى صفحة ',
     city : 'المدينة',
     area : 'المنطقة',
     paymentReciept:'فاتورةالسداد',
@@ -137,7 +137,7 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     identityNumberecommerceroom : 'رقم عضوية الغرفة التجارية',
     CreatDate  : 'تاريخ إصدار شهادة سلامة السجل الائتماني',
     finalBeneficiaryContactDetail: 'بيانات  التواصل للمستفيد النهائي',
-    facilityAddress: "عنوان شركة المطور العقاري",
+    facilityAddress: "عنوان شركة المطور عقاري",
     applicantData: "بيانات مقدم الطلب (مالك الحساب /مفوض)",
     applicantName: "اسم مقدم الطلب (المفوض)",
     applicantJobTitle: "منصب المفوض",
@@ -171,7 +171,7 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscriptions);
   }
   onFileUploaded(file: any) {
-    debugger
+    
     this.projectRealStateDeveloperForm.controls.paymentReceiptFileId.setValue(file.eventRes.data[0].id);
   }
   setResponseToForm(res: ProjectRealStateDeveloperDto): void {
@@ -190,7 +190,7 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
   }
 
   save(moveToNextTab: boolean = false): void {
-    debugger
+    
 
     console.log("this.projectRealStateDeveloperForm", this.projectRealStateDeveloperForm);
     if (!this.projectRealStateDeveloper.id) this.projectRealStateDeveloper.id = '00000000-0000-0000-0000-000000000000';
@@ -203,7 +203,7 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
       return;
     }
   }
-  debugger
+  
     this.subscriptions.push(
       this._projectRealStateDeveloperService.SaveProjectRealStateDeveloper(this.projectRealStateDeveloper).subscribe(res => {
         if (res.isDone) {

@@ -33,7 +33,7 @@ export class ProjectDocumentDataComponent implements OnInit, OnDestroy {
     LicenseProjectLicenseDocument: "صورة لترخيص المشروع من بلد المشروع",
     RightOfSaudisToOwnRealEstateFile: "ملف بأحقية السعوديين بتملك العقارات في بلد المشروع",
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
     yes: 'نعم',
     no: 'لا',
     savedSuccessfully: 'تم الحفظ',

@@ -25,11 +25,12 @@ export class LicenseProjectProblemService {
    return this.licenseProjectProblemId.next(LatestValue);
  }
 
-  getLicenseProjectProblems(licenseProjectId:string, pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectProblemPagingDto[]> | null> {
+  getLicenseProjectProblems(licenseProjectId:string, pageIndex: number, pageSize: number,monthDate:any): Observable<Pagination<LicenseProjectProblemPagingDto[]> | null> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("licenseProjectId", licenseProjectId);
     queryParams = queryParams.append("pageIndex", pageIndex);
     queryParams = queryParams.append("pageSize", pageSize);
+    queryParams = queryParams.append("monthDate", monthDate);
     return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectProblemPagingDto[]>>>(`${Configuration.APIs.LicenseProjectProblem.GetLicenseProjectProblems}`, { params: queryParams }).pipe(
       map((res: CoreResponseDTO<Pagination<LicenseProjectProblemPagingDto[]>>) => {
         
@@ -38,8 +39,11 @@ export class LicenseProjectProblemService {
       })
     );
   }
-   getLicenseProjectProblemCounts(licenseProjectId : string) :Observable<LicenseProjectProblemsCountsDto|null>{
-    return this._httpClient.get<CoreResponseDTO<LicenseProjectProblemsCountsDto>>(`${Configuration.APIs.LicenseProjectProblem.GetLicenseProjectProblemCounts}/${licenseProjectId}`).pipe(
+   getLicenseProjectProblemCounts(licenseProjectId : string,monthDate:any) :Observable<LicenseProjectProblemsCountsDto|null>{
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("licenseProjectId", licenseProjectId);
+    queryParams = queryParams.append("monthDate", monthDate);
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectProblemsCountsDto>>(`${Configuration.APIs.LicenseProjectProblem.GetLicenseProjectProblemCounts}`,{params: queryParams}).pipe(
       map((res: CoreResponseDTO<LicenseProjectProblemsCountsDto>)=>{
         return res.isDone? res.data as LicenseProjectProblemsCountsDto:null;
   

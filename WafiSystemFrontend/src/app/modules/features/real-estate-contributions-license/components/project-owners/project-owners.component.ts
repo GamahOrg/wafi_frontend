@@ -41,7 +41,7 @@ export class ProjectOwnersComponent implements OnInit, OnDestroy {
     CRA: 'رقم السجل التجاري',
     name: 'الاسم',
     mobileNumber: 'رقم الجوال',
-    agreementFileId: 'ملف الاتفاقيه بين المطور العقاري ومالك الأرض',
+    agreementFileId: 'ملف الاتفاقية بين المطور عقاري ومالك الأرض',
     addOwnerFromList:'إضافة المالك من القائمه',
     ownerAdded:'تمت إضافة المالك',
 

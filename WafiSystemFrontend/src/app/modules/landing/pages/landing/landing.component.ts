@@ -10,10 +10,10 @@ import {Title} from "@angular/platform-browser";
 export class LandingComponent {
   localization = {
     // pleaseChoose: "نأمل اختيار وجهتك",
-    pleaseChoose: "قم بالبدء بمشروعك العقاري",
+    pleaseChoose: "قم بالبدء بمشروعك عقاري",
     or: "او",
     enter: "دخول",
-    realEstateContributions: "المساهمات العقارية",
+    realEstateContributions: "المساهمات عقارية",
     wafi: "البيع على الخارطة",
     appTitle: "الهيئة العامة للعقار",
     beta: "اطلاق تجريبي"

@@ -78,7 +78,7 @@ export class ComplaintRequestFromLoginComponent implements OnInit, OnDestroy{
     this.complaintRequest.ComplaintRequestFiles=this.complaintRequestFileList
     if(!this.complaintRequest.ComplaintRequestFiles || this.complaintRequest.ComplaintRequestFiles.length ==0)
       {
-        this._toastrNotificationService.showError("نأمل رفع ملفات الشكوي او البلاغ");
+        this._toastrNotificationService.showError("نأمل رفع ملفات الشكوى او البلاغ");
         return;
       }
       this.createComplaintRequest();
@@ -90,14 +90,14 @@ export class ComplaintRequestFromLoginComponent implements OnInit, OnDestroy{
     this.subscriptions.push(
       this._loginService.CreateComplaintRequest(this.complaintRequest as ComplaintRequest).subscribe((res: CoreResponseDTO<any> | null) => {
         if (res && res.isDone) {
-          this._toastrNotificationService.showSuccess("تم تقديم الشكوي او البلاغ");
+          this._toastrNotificationService.showSuccess("تم تقديم الشكوى او البلاغ");
           this.complaintRequestForm.reset();
           this.complaintRequestFileList=[];
           this.showValidation=false;
         }
         else
         {
-          this._toastrNotificationService.showError("لم يتم تقديم الشكوي او البلاغ");
+          this._toastrNotificationService.showError("لم يتم تقديم الشكوى او البلاغ");
 
         }
       }

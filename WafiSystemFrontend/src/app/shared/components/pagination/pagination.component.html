@@ -1,8 +1,8 @@
-<div class="pagination" [ngClass]="currentLang">
+<div class="pagination-wrapper">
     <pagination [totalItems]="pagintationData.totalCount"
         [(ngModel)]="currentPage" 
-        [previousText]="'السابق'"
-        [nextText]="'التالي'"
+        [previousText]="localization.prev"
+        [nextText]="localization.next"
         [maxSize]="pagintationData.pageSize"
         (pageChanged)="pageChanged($event)"
         [itemsPerPage]="pagintationData.pageSize"
@@ -10,4 +10,8 @@
         (click)="clickOnPagination($event)"
         [rotate]="false" >
     </pagination>
+
+    <div class="pagination-info">
+        <span>{{currentPage * pagintationData.pageSize - pagintationData.pageSize + 1}} - {{currentPage * pagintationData.pageSize}} {{localization.of}} {{pagintationData.totalCount}}</span>
+    </div>
 </div>

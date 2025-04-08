@@ -7,7 +7,7 @@
   >
     <div class="tab-data-header">
       <div class="icon"><span class="material-icons">list_alt</span></div>
-      <h6 class="title fw-normal">
+      <h6 class="title">
         {{ localizations.CharteredAccountantTitle }}
       </h6>
     </div>
@@ -15,7 +15,7 @@
       <!-- *ngIf="!facility$.value" -->
       <app-engineering-consultant-customer-info
         [form]="form"
-        [code]="typeCode.CharteredAccountant"
+        [code]="typeCode.ContributionCharteredAccountant"
         [label]="localizations.CharteredAccountant"
         [buttonName]="localizations.ValidateConsultant"
         [requiredMessage]="localizations.CharteredAccountantRequired"
@@ -27,7 +27,7 @@
       <div class="tab-data-section">
         <div class="row">
           <div class="tab-data-section">
-            <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+            <div class="row row-gap-4">
               <div class="col-12 col-lg-6">
                 <div class="key">رقم السجل التجاري</div>
                 <div class="value">
@@ -73,7 +73,7 @@
                 </div>
               </div>
               <div class="col-12 col-lg-6">
-                <div class="key">رقم الرخصه</div>
+                <div class="key">رقم الرخصة</div>
                 <div class="value">
                   <span class="icon material-icons">blinds</span>
                   {{
@@ -197,7 +197,7 @@
                                            [propertyFile]="'charteredAccountantDelegatorSignModelFile'"
                                            [propertyName]="'charteredAccountantDelegatorSignModelFileId'"></app-engineering-consultant-upload> -->
       </div>
-      <h6 class="title fw-normal">ملفات الاتفاقيه</h6>
+      <h6 class="title">ملفات الاتفاقية</h6>
       <div class="col-12 col-lg-12">
         <div class="form-group mb-4">
           <div

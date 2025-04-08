@@ -1,0 +1,374 @@
+<div class="card">
+  <div class="card-header">
+    <h6 class="card-title">طلب تغيير أمين الحساب</h6>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="changeAccountKeeperForm">
+      <div class="tab-data-section">
+        <div class="row mb-3">
+          <!-- License Project Selection -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+              <select class="form-select" id="control-licenseProjectId" aria-label="Default select example"
+                formControlName="licenseProjectId" (change)="onLicenseProjectChange()">
+                <option selected disabled>المشروع</option>
+
+                <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error *ngIf="
+                  controls.licenseProjectId?.hasError('required') &&
+                  showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key">الرسوم</div>
+            <div class="value">
+              {{ price ? price : 'لا يوجد' }}
+            </div>
+          </div>
+
+          <ng-container *ngIf="licenseProjectDetails">
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">اسم المشروع</div>
+              <div class="value">
+                {{ licenseProjectDetails.name }}
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">اسم المطور العقارى</div>
+              <div class="value">
+                {{ licenseProjectDetails.facilityName }}
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">رقم السجل التجاري الخاص بالمطور </div>
+              <div class="value">
+                {{ licenseProjectDetails.commercialRegisterNumber }}
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">رقم شهادة تأهيل المطور العقاري</label>
+                <div class="value">
+                  {{ licenseProjectDetails?.developerCertifiedNumber }}
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">رقم ترخيص المطور</div>
+              <div class="value">
+                {{ licenseProjectDetails.certifiedNumber }}
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">رصيد حساب الضامن</div>
+              <div class="value">
+                {{ licenseProjectDetails.accountNumber }}
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">تاريخ انتهاء الترخيص </div>
+              <div class="value">
+                {{ licenseProjectDetails.endOn | date : "dd MMMM yyyy" }}
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">موقع المشروع</div>
+              <div class="value">
+                {{ licenseProjectDetails.cityName }}
+                {{licenseProjectDetails. areaName}}
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">نوع وحدات المشروع</div>
+              <div class="value">
+                {{ licenseProjectDetails. unitTypeName }}
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">عدد وحدات المشروع</div>
+              <div class="value">
+                {{ licenseProjectDetails. subUnitCount }}
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">عدد الوحدات المباعة</div>
+              <div class="value">
+                {{ licenseProjectDetails. unitsSellCount }}
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="key">نسبة انجاز المشروع</div>
+              <div class="value">
+                {{ licenseProjectDetails. achievementRate }}
+              </div>
+            </div>
+
+          </ng-container>
+
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">اسم البنك</label>
+                <select class="form-select" id="control-bankId" aria-label="Default select example"
+                  formControlName="bankId">
+                  <option value="" disabled [selected]="!changeAccountKeeperForm.controls.bankId.value">
+                    اختر البنك
+                  </option>
+
+                  <option *ngFor="let bank of banks" [value]="bank.id">
+                    {{ bank.name }}
+                  </option>
+                </select>
+                <mat-error *ngIf="controls.bankId?.hasError('required') && showValidation">
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">رقم ايبان الحساب</label>
+                <input type="text" id="control-accountNumber" class="form-control" formControlName="accountNumber"
+                  placeholder="رقم ايبان الحساب" />
+                <mat-error *ngIf="
+                  controls.accountNumber?.hasError('required') &&
+                  showValidation
+                ">
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Email -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">بريد الكتروني أمين الحساب</label>
+              <input type="email" id="control-accountKeeperEmail" class="form-control"
+                formControlName="accountKeeperEmail" placeholder="أدخل البريد الإلكتروني" />
+              <mat-error *ngIf="
+                  controls.accountKeeperEmail?.hasError('required') &&
+                  showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+              <mat-error
+                *ngIf="controls.accountKeeperEmail?.hasError('pattern') && showValidation">{{localization.emailPattern}}</mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">هاتف أمين الحساب</label>
+              <input type="text" id="control-accountKeeperTelephone" class="form-control"
+                formControlName="accountKeeperTelephone" placeholder="هاتف أمين الحساب" />
+              <mat-error *ngIf="
+                  controls.accountKeeperTelephone?.hasError('required') &&
+                  showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">رقم تحويلة أمين الحساب</label>
+              <input type="text" id="control-accountKeeperExtentionNumber" class="form-control"
+                formControlName="accountKeeperExtentionNumber" placeholder="رقم تحويلة أمين الحساب" />
+              <mat-error *ngIf="
+                  controls.accountKeeperExtentionNumber?.hasError('required') &&
+                  showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المسمى الوظيفى للموقع على الاتفاقية</label>
+              <input type="text" id="control-accountKeeperJobTitle" class="form-control"
+                formControlName="accountKeeperJobTitle" placeholder="المسمى الوظيفى للموقع على الاتفاقية " />
+              <mat-error *ngIf="
+                  controls.accountKeeperJobTitle?.hasError('required') &&
+                  showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+              <mat-error *ngIf="controls.accountKeeperMobile?.hasError('pattern') && showValidation">
+                {{localization.phoneNumberPattern}}</mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">رقم فاكس أمين الحساب</label>
+              <input type="text" id="control-accountKeeperFax" class="form-control" formControlName="accountKeeperFax"
+                placeholder="رقم فاكس أمين الحساب" />
+              <mat-error *ngIf="
+                  controls.accountKeeperFax?.hasError('required') &&
+                  showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <!-- Mobile Number -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">جوال أمين الحساب</label>
+              <input type="text" id="control-accountKeeperMobile" class="form-control"
+                formControlName="accountKeeperMobile" placeholder="أدخل رقم الجوال" />
+              <mat-error *ngIf="
+                  controls.accountKeeperMobile?.hasError('required') &&
+                  showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">اسباب طلب التغير</label>
+                <textarea type="text" rows="5" id="changeReason" class="form-control"
+                formControlName="reasons"></textarea>
+
+                <!-- <input type="text" id="control-reasons" class="form-control" formControlName="reasons"
+                  placeholder="اسباب طلب التغير" /> -->
+                <mat-error *ngIf="
+                  controls.reasons?.hasError('required') &&
+                  showValidation
+                ">
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+
+          </div>
+          <!-- Agreement File -->
+          <!-- <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <div class="key">اتفاقية أمين الحساب</div>
+              </div>
+              <app-file-uploader
+                [data]="singleFilesUploaderData"
+                (fileUploaded)="accountKeeperAgreementFileUpload($event)"
+              ></app-file-uploader>
+              <mat-error
+                *ngIf="
+                  controls.accountKeeperAgreementFileId?.hasError('required') &&
+                  showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div> -->
+
+          <!-- Clearance Acknowledgment -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <div class="key">كشف حساب بالعمليات المالية حتى تاريخ الطلب</div>
+              </div>
+              <app-file-uploader [data]="singleFilesUploaderData" (fileUploaded)="
+                  clearanceAcknowledgmentFromPreviousBankForProjectUpload(
+                    $event
+                  )
+                "></app-file-uploader>
+              <mat-error *ngIf="
+                  controls.clearanceAcknowledgmentFromPreviousBankForProjectId?.hasError(
+                    'required'
+                  ) && showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- Additional File Uploads -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <div class="key">
+                  خطاب من البنك السابق يتضمن تعهد بنقل موجودات حساب الضمان إلى
+                  البنك الجديد
+                </div>
+              </div>
+              <app-file-uploader [data]="singleFilesUploaderData"
+                (fileUploaded)="letterFromPreviousBankToNewBankUpload($event)"></app-file-uploader>
+              <mat-error *ngIf="
+                  controls.letterFromPreviousBankToNewBankId?.hasError(
+                    'required'
+                  ) && showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <div class="key">اتفاقية حساب الضمان مع البنك البديل</div>
+              </div>
+              <app-file-uploader [data]="singleFilesUploaderData" (fileUploaded)="
+                  escrowAccountAgreementwithAlternativeBankUpload($event)
+                "></app-file-uploader>
+              <mat-error *ngIf="
+                  controls.escrowAccountAgreementwithAlternativeBankId?.hasError(
+                    'required'
+                  ) && showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="value">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <div class="key">
+                  تقرير من البنك السابق عن حالة الحساب الحالية
+                </div>
+              </div>
+              <app-file-uploader [data]="singleFilesUploaderData" (fileUploaded)="
+                  reportFromPreviousBankOnCurrentAccountStatusUpload($event)
+                "></app-file-uploader>
+              <mat-error *ngIf="
+                  controls.reportFromPreviousBankOnCurrentAccountStatusId?.hasError(
+                    'required'
+                  ) && showValidation
+                ">
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-outline-primary" id="btn-cancelRequest" (click)="cancelRequest()">
+          إلغاء
+        </button>
+        <button class="btn btn-primary" id="btn-creatRequest" (click)="save()">
+          انشاء الطلب
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

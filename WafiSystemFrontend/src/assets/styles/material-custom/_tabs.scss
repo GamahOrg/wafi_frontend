@@ -1,119 +1,96 @@
-.mat-mdc-tab-group {
-    // @media (max-width: 767px) {
-    //     width: 92vw;
-    // }
-}
-
 .mat-mdc-tab-header {
-    border-end-start-radius: $card-border-radius;
-    border-end-end-radius: $card-border-radius;
-    background-color: $white;
-
+  padding: 1rem;
+  border-end-start-radius: $card-border-radius;
+  border-end-end-radius: $card-border-radius;
+  background-color: $card-bg;
 }
 
 .mat-mdc-tab-label-container {
-    margin-top: -1rem;
-    padding-top: 1rem;
-
-    border-bottom: 4px solid rgba(176, 210, 197, 0.3);
-
-    @media (min-width: 768px) {
-        padding-inline: 2rem;
-    }
+  .mat-mdc-tab-labels {
+    flex-wrap: wrap;
+  }
 }
 
 .mdc-tab {
-    height: 4rem !important;
+  height: 2.5rem !important;
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
 
-    font-family: "Almarai", sans-serif;
-    font-size: $body-font-size;
-    font-weight: bold;
-    letter-spacing: normal;
+  font-family: "IBM_Plex_Sans_Arabic", sans-serif;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  letter-spacing: normal;
 
-    &.mdc-tab--active {
-        .mdc-tab__content {
-            .mdc-tab__text-label {
-                // color: $darkgreen !important;
-                color: $theme-dark !important;
+  border-radius: $border-radius-xs;
 
-                .rega & {
-                    color: $theme-dark !important;
-                }
+  .mdc-tab__text-label {
+    color: $lightgray;
+  }
 
-                .icon {
-                    // background-color: $orange;
-                    background-color: $theme-main;
+  &.mdc-tab--active {
+    background-color: $light;
 
-                    .rega & {
-                        background-color: $theme-main !important;
-                    }
+    .mdc-tab__content {
+      .mdc-tab__text-label {
+        color: $theme-main !important;
 
-                    [class^="material-icons"] {
-                        .rega & {
-                            color: $white;
-                        }
-                    }
-                }
-            }
+        .icon {
+          background-color: $theme-main;
         }
+      }
     }
+  }
 
-    .mdc-tab-indicator {
-        .mdc-tab-indicator__content--underline {
-            border-width: 4px;
-        }
+  .mdc-tab-indicator {
+    .mdc-tab-indicator__content--underline {
+      border-width: 4px;
     }
+  }
 }
 
 .mat-mdc-tab,
 .mat-mdc-tab-link {
-    &:not(.mat-mdc-tab-disabled) {
-        .mdc-tab__text-label {
-            color: $lightgray !important;
-        }
-
-        .mdc-tab-indicator__content--underline {
-            // border-color: $darkgreen;
-            border-color: $theme-dark;
-
-            .rega & {
-                border-color: $theme-dark;
-            }
-        }
+  &:not(.mat-mdc-tab-disabled) {
+    .mdc-tab__text-label {
+      color: $lightgray !important;
     }
+
+    .mdc-tab-indicator__content--underline {
+      border: none;
+    }
+  }
 }
 
 .mat-mdc-tab-body-wrapper {
-    flex: 1 1 auto;
-    margin-top: 1rem;
+  flex: 1 1 auto;
+  margin-top: 1rem;
 }
 
 .mat-mdc-tab-body-content {
-    overflow: inherit !important;
+  overflow: inherit !important;
 }
 
 .mat-mdc-tab-ripple,
 .mdc-tab__ripple::before {
-    display: none !important;
+  display: none !important;
 }
 
 .rounded-header {
-    .mat-mdc-tab-header {
-        border-radius: 1rem;
-        border: 2px solid rgba(7, 111, 66, 0.2);
-    }
+  .mat-mdc-tab-header {
+    border-radius: 1rem;
+    border: 2px solid rgba(7, 111, 66, 0.2);
+  }
 
-    .mdc-tab--active {
-        position: relative;
-        padding-inline: 0;
+  .mdc-tab--active {
+    position: relative;
+    padding-inline: 0;
 
-        .mdc-tab__content {
-            height: 70%;
-            padding-inline: 24px;
-            margin-top: .5rem;
-            border-radius: .5rem;
-            // background-color: #F3F7F5;
-            background-color: $primary-bg;
-        }
+    .mdc-tab__content {
+      height: 70%;
+      padding-inline: 24px;
+      margin-top: .5rem;
+      border-radius: .5rem;
+      background-color: $primary-bg;
     }
+  }
 }

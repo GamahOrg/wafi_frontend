@@ -1,0 +1,64 @@
+
+  <div class="card">
+
+    <div class="card-header" *ngIf="!isEditMode">
+      <h6 class="card-title">طلب إزالة مفوض بالتوقيع على وثيقة الصرف من حساب الضمان</h6>
+    </div>
+  
+    <div class="card-body">
+      <form class="d-flex flex-column h-100" [formGroup]="changeLicenseProjectDelegatorForm"
+        id="form-licenseProjectProblemLogForm">
+        <div class="tab-data-section">
+          <div class="row mb-3">
+            
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">المفوض</label>
+                <select class="form-select" id="control-changeLicenseProjectDelegatorIds"
+                  aria-label="Default select example"
+                  formControlName="changeLicenseProjectDelegatorIds"
+                  (change)="onDelegatorChange()">
+                  <option selected disabled>اختار المفوض</option>
+                  <option *ngFor="let customer of customers" [ngValue]="customer?.delegatorCustomer?.id">
+                    {{ customer?.delegatorCustomer?.fullName }}
+                  </option>
+                </select>
+                <mat-error *ngIf="
+                  controls.changeLicenseProjectDelegatorIds?.hasError('required') &&
+                  showValidation
+                "> حقل مطلوب
+                </mat-error>
+              </div>
+            </div>
+            
+            <!-- عرض رقم الهوية -->
+            <div class="col-12 col-lg-6">
+              <div class="key">رقم الهوية</div>
+              <div class="value">
+                <div *ngIf="selectednidnumber">{{ selectednidnumber }}</div>
+              </div>
+            </div>
+            
+             <div class="row mb-3">
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">نموذج التوقيع</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistApplicationFormFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !applicationFormFileId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+

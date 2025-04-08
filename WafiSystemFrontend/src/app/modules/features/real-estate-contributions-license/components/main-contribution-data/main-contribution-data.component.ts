@@ -117,7 +117,7 @@ export class MainContributionDataComponent implements OnInit, OnDestroy{
     HasStarted: "هل تم بدأ المساهمه  ؟",
     Yes: "نعم",
     No: "لا",
-    title: 'بيانات المساهمه  الاساسيه',
+    title: 'بيانات المساهمه  الأساسية',
     projectLandData: 'بيانات أرض المساهمه ',
     name: 'اسم المساهمه ',
     quantitiesTableFileId: 'ملف جدول الكميات',
@@ -138,7 +138,7 @@ export class MainContributionDataComponent implements OnInit, OnDestroy{
     projectStarted: 'تم البدء في تنفيذ المساهمه ؟',
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',
@@ -157,7 +157,7 @@ export class MainContributionDataComponent implements OnInit, OnDestroy{
     contributionLandOwnerShare:"حصه مالك الأرض بالمساهمه",
     contributionDuration:"مدة المساهمه",
     contributionCapitalValueFromEvaluatorValidation:"يجب ان يكون عدد ملفات مساهمة قيمة رأس المال من المقيمين اكثر من 3 ملفات",
-    contributionRealEstateEvaluationFromEvaluatorValidation:"يجب ان يكون عدد ملفات  مساهمة التقييم العقاري من المقيمين اكثر من 3 ملفات",
+    contributionRealEstateEvaluationFromEvaluatorValidation:"يجب ان يكون عدد ملفات  مساهمة التقييم عقاري من المقيمين اكثر من 3 ملفات",
     PleaseAddAllRequiredFields:'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
   };
   private loadComponentData() {

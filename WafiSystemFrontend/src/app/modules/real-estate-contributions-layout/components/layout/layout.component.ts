@@ -21,7 +21,7 @@ export default class LayoutComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   showSideBar: boolean = false;
   userData: customerResponse | null = null;
-  appTitle: string = "المساهمات العقارية";
+  appTitle: string = "المساهمات عقارية";
   loginUserType: string | null =  "";
   loginUserTypeEnum:LoginUserTypeEnum | null = null;
 

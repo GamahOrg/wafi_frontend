@@ -1,13 +1,13 @@
 <div *ngIf="nationalAddress">
   <div class="tab-data-section">
-    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-      <div class="col-12 col-md-6">
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
         <div class="key">نوع محل الوساطة</div>
         <div class="value">
           {{ nationalAddress.brokerDocumentType.brokerDocumentTypeName }}
         </div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="key">رقم صك ملكية محل الوساطة</div>
         <div class="value">
           {{ nationalAddress.documentNumber }}
@@ -16,40 +16,40 @@
     </div>
   </div>
   <div class="tab-data-section">
-    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-      <div class="col-12 col-md-6">
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
         <div class="key">رقم المبنى</div>
         <div class="value fw-bold">{{ nationalAddress.buildingNumber }}</div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="key">اسم الشارع</div>
         <div class="value">
           {{ nationalAddress.streetName }}
         </div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="key">اسم الحي</div>
         <div class="value">
           {{ nationalAddress.neighborhoodName }}
         </div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="key">الرمز البريدي</div>
         <div class="value fw-bold">{{ nationalAddress.postalCode }}</div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="key">رقم الوحدة</div>
         <div class="value fw-bold">{{ nationalAddress.unitNumber }}</div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="key">الرمز الإضافي</div>
         <div class="value fw-bold">{{ nationalAddress.additionalNumber }}</div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="key">اسم المنطقة</div>
         <div class="value fw-bold">{{ nationalAddress.areas.areaName }}</div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="key">اسم المدينة</div>
         <div class="value fw-bold">{{ nationalAddress.sysCity.cityName }}</div>
       </div>

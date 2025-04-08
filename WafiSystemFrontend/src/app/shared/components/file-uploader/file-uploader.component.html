@@ -1,162 +1,42 @@
-<!-- <div class="file-upload">
-    <div class="upload-drop-zone" [fileUploadInputFor]="attachments">
-        <div class="upload-text">
-            <p>أسحب الملف إلي هذا الحقل</p>
-            <p>أو</p>
-        </div>
-
-        <div class="upload-button">
-            <ng-container *ngIf="data.multiple; else singleInputFile">
-                <input [id]="data.id" type="file" [fileUploadInputFor]="attachments" hidden #InputMultipleFiles multiple />
-                <button type="button" mat-flat-button (click)="InputMultipleFiles.click()">
-                    <mat-icon fontIcon="cloud_upload"></mat-icon>
-                    {{data.buttonText?data.buttonText: "اختر ملف" | translate}}
-                </button>
-            </ng-container>
-
-            <ng-template #singleInputFile>
-                <input [id]="data.id" type="file" [fileUploadInputFor]="attachments" hidden #inputSingleFile />
-                <button type="button" mat-flat-button (click)="inputSingleFile.click()">
-                    <mat-icon fontIcon="cloud_upload"></mat-icon>
-                    {{data.buttonText?data.buttonText: "اختر ملف" | translate}}
-                </button>
-            </ng-template>
-        </div>
-
-        <div class="upload-hints">
-            <p>الصيغة jpg, jpeg أو png و 5 ميجا بايت بحد أقصى</p>
-            <p>العرض يجب أن يكون 1115 بيكسل</p>
-        </div>
-    </div>
-
-
-
-    <div class="upload-queue" [hidden]="attachments && attachments.files && attachments.files.length === 0">
-        <mat-file-upload-queue #attachments [fileAlias]="'file'" [httpUrl]="data.httpUrl" [httpRequestHeaders]="data.httpRequestHeaders" [httpRequestParams]="data.httpRequestParams" [uploadAllColor]="data.uploadAllColor? data.uploadAllColor :'primary'" [removeAllLabel]="data.removeAllLabel?data.removeAllLabel:'مسح الكل'" [uploadAllLabel]="data.uploadAllLabel? data.uploadAllLabel : 'رفع الكل'">
-
-            <mat-file-upload [file]="file" [id]="i" *ngFor="let file of attachments.files; let i = index" (removeEvent)="removeEvent(data.id ,$event)" (onUpload)="onUpload(data.id ,$event)"></mat-file-upload>
-
-        </mat-file-upload-queue>
-    </div>
-</div> -->
-<!-- (drop)="selectFiles($event)"
-(dragover)="allowDrop($event)" -->
-<div class="file-upload"
-     >
-  <div class="upload-drop-zone">
-    <div class="upload-text">
-      <!-- <p>أسحب الملف إلي هذا الحقل</p>
-      <p>أو</p> -->
-    </div>
-    <div class="upload-button">
-      <ng-container *ngIf="data.multiple; else singleInputFile">
-        <input type="file"
-               hidden
-               #InputMultipleFiles
-               multiple
-               (change)="selectFiles($event)" />
-        <button type="button"
-                mat-flat-button
-                (click)="InputMultipleFiles.click()">
-          <!-- <mat-icon fontIcon="cloud_upload"></mat-icon> -->
-          {{data.buttonText?data.buttonText: "اختر ملف" }}
-        </button>
-      </ng-container>
-      <ng-template #singleInputFile>
-        <input type="file"
-               hidden
-               #inputSingleFile
-               accept="{{data.allowedExtensions?.join(',')}}"
-               (change)="selectFiles($event)" />
-        <button type="button"
-                mat-flat-button
-                (click)="inputSingleFile.click()">
-          <!-- <mat-icon fontIcon="cloud_upload"></mat-icon> -->
-          {{data.buttonText?data.buttonText: "اختر ملف"}}
-        </button>
-      </ng-template>
-    </div>
+<div class="file-upload">
+  <div class="upload-drop-zone d-flex flex-column gap-2">
     <div class="upload-hints">
-      <p>الصيغة {{data.allowedExtensionsText}} و {{this.data.size}}  كيلو بايت بحد أقصى</p>
-      <!-- <p>العرض يجب أن يكون 1115 بيكسل</p> -->
+      <p>الصيغة {{data.allowedExtensionsText}} و {{this.data.size}} كيلو بايت بحد أقصى</p>
     </div>
-    <!-- <div class="row">
-    <div class="col-8"
-           *ngIf="data.multiple">
-        <label class="btn btn-default p-0">
-          <input type="file"
-                 (change)="selectFiles($event)"
-                 multiple />
-        </label>
-      </div> 
-      <div class="col-8"
-           *ngIf="!data.multiple">
-        <label class="btn btn-default p-0">
-          <input type="file"
-                 (change)="selectFiles($event)" />
-        </label>
+
+    <div class="d-flex flex-column gap-2">
+      <div class="d-flex align-items-center gap-2">
+        <ng-container *ngIf="data.multiple; else singleInputFile">
+          <input type="file" hidden #InputMultipleFiles multiple (change)="selectFiles($event)" />
+          <button type="button" class="btn btn-dark" (click)="InputMultipleFiles.click()">{{data.buttonText?data.buttonText: "تصفح الملفات" }}</button>
+        </ng-container>
+        <ng-template #singleInputFile>
+          <input type="file" hidden #inputSingleFile accept="{{data.allowedExtensions?.join(',')}}" (change)="selectFiles($event)" />
+          <button type="button" class="btn btn-dark" (click)="inputSingleFile.click()">{{data.buttonText?data.buttonText: "تصفح الملفات"}}</button>
+        </ng-template>
+        <button class="btn btn-primary ms-auto" [disabled]="!selectedFiles" (click)="upload()">{{data.uploadAllLabel? data.uploadAllLabel : 'رفع الكل'}}</button>
+        <button class="btn btn-outline-secondary" [disabled]="!selectedFiles" (click)="deleteAll()">{{data.removeAllLabel?data.removeAllLabel:'مسح الكل'}}</button>
       </div>
-    </div>
 
-    <div class="col-4">
-      <button class="btn btn-primary mx-2"
-              [disabled]="!selectedFiles"
-              (click)="upload()">
-        {{data.uploadAllLabel? data.uploadAllLabel : 'رفع الكل'}}
-      </button>
-      <button class="btn btn-primary"
-              [disabled]="!selectedFiles"
-              (click)="deleteAll()">
-        {{data.removeAllLabel?data.removeAllLabel:'مسح الكل'}}
-      </button>
-    </div>
-  </div> -->
-
-    <div *ngFor="let fileName of selectedFilesName">
-      {{fileName}}
-      <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
-    </div>
-
-    <div *ngIf="currentFile"
-         class="progress my-3">
-      <div class="progress-bar progress-bar-striped bg-success progress-bar-animated"
-           role="progressbar"
-           attr.aria-valuenow="{{ progress }}"
-           aria-valuemin="0"
-           aria-valuemax="100"
-           [ngStyle]="{ width: progress + '%' }">
-        {{ progress }}%
+      <div class="selected-file d-flex align-items-center gap-2" *ngFor="let fileName of selectedFilesName">
+        <span class="icon-check"><i class="material-icons">check</i></span>
+        <span class="file-name me-auto">{{fileName}}</span>
+        <span class="icon-close cursor-pointer"><i class="material-icons">close</i></span>
       </div>
-    </div>
 
-    <div *ngIf="message"
-         class="alert alert-secondary"
-         role="alert">
-      {{ message }}
+      <div *ngIf="currentFile" class="progress">
+        <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progress + '%' }">
+          {{ progress }}%
+        </div>
+      </div>
+
+      <p *ngIf="message" class="small text-success">
+        {{ message }}
+      </p>
+
+      <p *ngIf="extensionErrorMessage" class="small text-danger">
+        {{ extensionErrorMessage }}
+      </p>
     </div>
-    <div *ngIf="extensionErrorMessage"
-         class="alert alert-secondary"
-         role="alert">
-      {{ extensionErrorMessage }}
-    </div>
-    <div>
-      <button class="btn btn-primary mx-2"
-              [disabled]="!selectedFiles"
-              (click)="upload()">
-        {{data.uploadAllLabel? data.uploadAllLabel : 'رفع الكل'}}
-      </button>
-      <button class="btn btn-outline-secondary"
-              [disabled]="!selectedFiles"
-              (click)="deleteAll()">
-        {{data.removeAllLabel?data.removeAllLabel:'مسح الكل'}}
-      </button>
-    </div>
-    <!-- <div class="card mt-3">
-    <div class="card-header">List of Files</div>
-    <ul class="list-group list-group-flush">
-      <li *ngFor="let file of fileInfos | async" class="list-group-item">
-        <a href="{{ file.url }}">{{ file.name }}</a>
-      </li> 
-    </ul>
-  </div> -->
   </div>
+</div>

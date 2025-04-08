@@ -23,7 +23,7 @@ export class ProjectUnitsComponent implements OnInit, OnDestroy {
     type: "النوع",
     unitNumber: "رقم البلوك / رقم العمارة",
     constructionStartOn: "تاريخ بداية الإنشاء",
-    constructionEndOn: "تاريخ نهاية الانشاء",
+    constructionEndOn: "تاريخ نهاية الإنشاء",
     subUnitsType: "أنواع الوحدات",
     actions: "الإجراءات",
     stageNumber: "رقم  المرحلة "

@@ -1,7 +1,7 @@
 <div class="tab-data-section"
      *ngIf="technicalCapabilities">
-  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-    <div class="col-12 col-md-6">
+  <div class="row row-gap-4">
+    <div class="col-12 col-lg-6">
       <div class="key">شهادات تأهيل أو تصنيف حصلت علىها المنشأة</div>
       <div class="value"
            *ngFor="
@@ -14,7 +14,7 @@
           {{ certification.certificationFile.fileDescription }}</a>
       </div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-lg-6">
       <div class="key">
 
         أرقام شهادات تصنيف مقدمي خدمات المدن المنفذين للمشاريع
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+  <div class="row row-gap-4">
     <!--     <div class="col-12 col-md-6 col-lg-4 m-3">
             <label>هل لدية خبرات سابقة</label>
             <p>{{ (technicalCapabilities.isPreviousExperienceExist) ? 'نعم' : 'لا' }}</p>

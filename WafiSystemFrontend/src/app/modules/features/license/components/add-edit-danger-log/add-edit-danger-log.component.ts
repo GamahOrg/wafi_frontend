@@ -8,6 +8,8 @@ import { SharedLicenseProjectService } from '../../services/sharedLicenseProject
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
+import { ActualValueReportPagingListDto } from '../../models/actual-value-report-paging-list-dto';
+import { EngineeringSupervisionReportActualProjectStatusSummaryService } from '../../services/engineering-supervision-report-actual-project-status-summary.service';
 
 @Component({
   selector: 'app-add-edit-danger-log',
@@ -47,6 +49,7 @@ export class AddEditDangerLogComponent {
 
 
   });
+  actualValueReport?:ActualValueReportPagingListDto;
   showValidation: boolean = false;
   get controls() {
     return this.licenseProjectDangerLogForm.controls;
@@ -56,6 +59,7 @@ export class AddEditDangerLogComponent {
 
   }
   constructor(
+    private _engineeringSupervisionReportActualProjectStatusSummaryService: EngineeringSupervisionReportActualProjectStatusSummaryService,
     private _lookupEngineeringManagementService: LookupEngineeringManagementService,
     private _licenseProjectRiskService: LicenseProjectRiskService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
@@ -69,9 +73,21 @@ export class AddEditDangerLogComponent {
     this.getLicenseProjectRiskId();
     this.observePopupEvents();
     this.observelicenseProjectDangerLogForm();
+    this.getmonthData();
 
   }
-
+ getmonthData() {
+    debugger;
+    this.subscriptions.push(
+      this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
+        debugger;
+        if (res) {
+          debugger;
+          this.actualValueReport= res as ActualValueReportPagingListDto;
+        }
+      })
+    )
+  }
 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
@@ -142,6 +158,7 @@ export class AddEditDangerLogComponent {
     this.licenseProjectRiskCreateUpdate = this.licenseProjectDangerLogForm.value as {} as LicenseProjectRiskCreateUpdateDto;
     this.licenseProjectRiskCreateUpdate.licenseProjectId = this.licenseProjectId as string;
     this.licenseProjectRiskCreateUpdate.id = this.licenseProjectRiskData?.id as string;
+    this.licenseProjectRiskCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId = this.actualValueReport?.id as string;
 
     
    

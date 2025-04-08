@@ -54,7 +54,7 @@ export class EngineeringConsultantComponent implements OnInit {
     EngineeringConsultant: 'رقم السجل التجاري للاستشاري الهندسي',
     EngineeringConsultantRequired: 'هذا الحقل مطلوب',
     ValidateConsultant: 'التحقق من السجل التجاري',
-    EngineeringConsultantLicenseNumber: 'رقم رخصه الاستشاري الهندسي',
+    EngineeringConsultantLicenseNumber: 'رقم رخصة الاستشاري الهندسي',
     EngineeringConsultantLicenseNumberRequired: 'هذا الحقل مطلوب',
     AgreementSection: 'اتفاقية عقد الاستشاري الهندسي',
     FirstStaffAgreement: 'بيان تواجد طاقم الإشراف الهندسى بالشهر',
@@ -445,7 +445,7 @@ export class EngineeringConsultantComponent implements OnInit {
           this.entity.numberOfMonths = res;
         } else {
           this._toastrNotificationService.showError(
-            'يجب ان يتم ادخال تاريخ بدايه المشروع ونهايه المشروع في بيانات المشروع '
+            'يجب ان يتم ادخال تاريخ بداية المشروع ونهاية المشروع في بيانات المشروع '
           );
         }
       });

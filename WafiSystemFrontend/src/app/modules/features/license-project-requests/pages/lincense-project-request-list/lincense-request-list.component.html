@@ -9,7 +9,7 @@
         </div>
 
         <!-- Button to open the dialog -->
-        <!-- <button mat-raised-button (click)="openDialog()" class="edit-icon">
+        <!-- <button class="edit-icon btn btn-outline-primary" (click)="openDialog()">
           <span class="material-icons">add</span>
           إضافة طلب
         </button> -->
@@ -52,7 +52,7 @@
             </td>
             <td>
               <div class="text-dark">
-                {{ request.facilityName }}
+                {{ request.facility?.facilityName}}
               </div>
             </td>
             <td>

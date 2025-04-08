@@ -63,6 +63,7 @@ import { PilotLaunchHintComponent } from './components/pilot-launch-hint/pilot-l
 import { LicenseRequestTimelineComponent } from './components/license-request-timeline/license-request-timeline.component';
 import { RequestTimelineService } from './services/request-timeline/request-timeline.service';
 import { RealEstateLicenseRequestTimelineComponent } from './components/real-estate-license-request-timeline/real-estate-license-request-timeline.component';
+import { HorizontalTabsComponent } from './components/horizontal-tabs/horizontal-tabs.component';
 
 export function getDatepickerConfig(): BsDatepickerConfig {
   return Object.assign(new BsDatepickerConfig(), {
@@ -92,6 +93,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     AccordionComponent,
     BreadcrumbComponent,
     VerticalTabsComponent,
+    HorizontalTabsComponent,
     GoogleMapsComponent,
     EditorRequestNotesComponent,
     EditorRequestNotesOnlyComponent,
@@ -101,7 +103,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     RealEstateContributionFooterComponent,
     PilotLaunchHintComponent,
     LicenseRequestTimelineComponent,
-    RealEstateLicenseRequestTimelineComponent
+    RealEstateLicenseRequestTimelineComponent,
   ],
   imports: [
     CommonModule,
@@ -163,6 +165,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     RealEstateContributionFooterComponent,
     PilotLaunchHintComponent,
     TabsComponent,
+    HorizontalTabsComponent,
     PopupNoteComponent,
     NgOtpInputModule,
     OTPInputComponent,

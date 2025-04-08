@@ -1,0 +1,15 @@
+:root,
+[data-bs-theme="light"] {
+  --bs-heading-color: #{$black};
+  --bs-border-color: #{$lightergray};
+}
+
+.ms-auto {
+  margin-left: 0 !important;
+  margin-inline-start: auto;
+}
+
+.me-auto {
+  margin-right: 0 !important;
+  margin-inline-end: auto;
+}

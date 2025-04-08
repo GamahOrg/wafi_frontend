@@ -1,0 +1,17 @@
+<div class="col-12" *ngIf="!availabilityToUpdate">
+    <div class="buttona bg-white px-3 py-2 mb-1 d-flex justify-content-end">
+      <div>
+        <div>
+          <button *ngIf="detailsDto?.[0]?.header?.externalRequestStatusId==licenseProjectRequestStatusEnum.UnderCreation"
+            type="button"
+            mat-flat-button
+            color="primary"
+            (click)="create()"
+          >
+            {{ localization.send }}
+          </button>           
+      </div>
+    </div>
+  </div>
+  
+  <app-tabs></app-tabs>

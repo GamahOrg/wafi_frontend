@@ -23,17 +23,17 @@ export class ProjectLicenseRequestNotesComponent implements OnInit {
     this.getSelectedRequestIdFromLocalStorage()
   }
   getSelectedRequestIdFromLocalStorage(): void {
-    debugger;
+    
     this.licenseProjectRequestId = this._projectRequestLocalStorageService.getSelectedProjectLicenseRequestIdFromLocalStorage() as string;
     if (this.licenseProjectRequestId) this.GetRequestNotesByRequestId();
   }
 
   private GetRequestNotesByRequestId(): void {
-    debugger;
+    
         this.subscriptions.push(
           this._licenseProjectRequestProcessingLogService.GetRequestNotesByRequestId(this.licenseProjectRequestId as string).subscribe((res: LicenseProjectRequestProcessingLogNotes[] | null) => {
             if (res) {
-              debugger;
+              
               this.processingRequestNotes = res;    
             }
           }),

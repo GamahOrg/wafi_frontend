@@ -1,3 +1,4 @@
+import { ProjectStatusDto } from "src/app/shared/models/projectstatus.dto";
 import { Customer } from "../../qualifying/dataModels/customer.model";
 import { areaResponse, cityResponse } from "../../qualifying/dataModels/national-address.model";
 
@@ -15,6 +16,7 @@ export interface LicenseProject
    name :string;
    projectCode :string; 
    licenseProjectEngineeringConsultants:EngineeringConsultantDto[];
+   sysLicenseProjectStatus:ProjectStatusDto;
 }
 
 export interface EngineeringConsultantDto

@@ -359,6 +359,38 @@ import { SupervisionFollowUpCostsRatioService } from './services/supervision-fol
 import { PeriodicCharteredAccountantReportComponent } from './components/periodic-chartered-accountant-report/periodic-chartered-accountant-report.component';
 import { PeriodicCharteredAccountantReportDetailsComponent } from './components/periodic-chartered-accountant-report-details/periodic-chartered-accountant-report-details.component';
 import { PeriodicCharteredAccountantReportListComponent } from './components/periodic-chartered-accountant-report-list/periodic-chartered-accountant-report-list.component';
+import { LincenseProjectZonesComponent } from './components/Zones/lincense-project-zones/lincense-project-zones.component';
+import { LicenseProjectZoneUnitComponent } from './components/Zones/license-project-zone-unit/license-project-zone-unit.component';
+import { LicenseProjectZoneUnitSubunitComponent } from './components/Zones/license-project-zone-unit-subunit/license-project-zone-unit-subunit.component';
+import { LicenseProjectZoneSubunitModelComponent } from './components/Zones/license-project-zone-subunit-model/license-project-zone-subunit-model.component';
+import { QualityAndBusinessProgressService } from './services/quality-and-business-progress.service';
+import { EngineeringSupervisionReportActualQualityAndBusinessService } from './services/engineering-supervision-report-actual-quality-and-business.service';
+import { AddEditActualQualityAndBusinessComponent } from './components/add-edit-actual-quality-and-business/add-edit-actual-quality-and-business.component';
+import { ProjectStatusUpdateComponent } from './pages/Project-status-update/project-status-update.component';
+import { SysProjectStatusService } from 'src/app/shared/services/sysProjectStatus/sys-projectstatus.service';
+import { AddEditActualQualityControlComponent } from './components/add-edit-actual-quality-control/add-edit-actual-quality-control.component';
+import { ActualQualityControlDetailsComponent } from './components/actual-quality-control-details/actual-quality-control-details.component';
+import { ShowActualQualityControlDetailsComponent } from './components/show-actual-quality-control-details/show-actual-quality-control-details.component';
+import { AddEditNonConformityReportComponent } from './components/add-edit-non-conformity-report/add-edit-non-conformity-report.component';
+import { AddEditMaterialExaminationComponent } from './components/add-edit-material-examination/add-edit-material-examination.component';
+import { AddEditActualRelativeWeightComponent } from './components/add-edit-actual-relative-weight/add-edit-actual-relative-weight.component';
+import { ShowActualRelativeWeightDetailsComponent } from './components/show-actual-relative-weight-details/show-actual-relative-weight-details.component';
+import { EngineeringSupervisionReportActualProjectDeteilsService } from './services/engineering-supervision-report-actual-project-deteils.service';
+import { AddEditActualProjectDetailsComponent } from './components/add-edit-actual-project-details/add-edit-actual-project-details.component';
+import { ActualProjectDetailsComponent } from './components/actual-project-details/actual-project-details.component';
+import { AddEditHealthAndSafetyMonitoringComponent } from './components/add-edit-health-and-safety-monitoring/add-edit-health-and-safety-monitoring.component';
+import { LicenseProjectHealthAndSafetyMonitoringService } from './services/license-project-health-and-safety-monitoring.service';
+import { EngineeringSupervisionPlannedReportActualInfrastructureService } from './services/engineering-supervision-planned-report-actual-infrastructure.service';
+import { AddEditActualInfrastructurComponent } from './components/add-edit-actual-infrastructur/add-edit-actual-infrastructur.component';
+import { AddEditConnectionWithServicesProviderComponent } from './components/add-edit-connection-with-services-provider/add-edit-connection-with-services-provider.component';
+import { ShowActualInfrastructureNetworksStatusComponent } from './components/show-actual-infrastructure-networks-status/show-actual-infrastructure-networks-status.component';
+import { AddEditActualInfrastructureNetworksStatusComponent } from './components/add-edit-actual-infrastructure-networks-status/add-edit-actual-infrastructure-networks-status.component';
+import { LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService } from './services/license-project-engineering-status-of-funds-required-from-entities.service';
+import { AddEditDesignPhaseCreditsComponent } from './components/add-edit-design-phase-credits/add-edit-design-phase-credits.component';
+import { ShowDesignPhaseCreditsComponent } from './components/show-design-phase-credits/show-design-phase-credits.component';
+import { AddEditProjectDeliveryPhaseApprovalsComponent } from './components/add-edit-project-delivery-phase-approvals/add-edit-project-delivery-phase-approvals.component';
+import { LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService } from './services/license-project-engineering-supervision-planned-monthly-report-study-note.service';
+import { ActualNotesComponent } from './components/actual-notes/actual-notes.component';
 
 @NgModule({
   declarations:[
@@ -598,9 +630,41 @@ import { PeriodicCharteredAccountantReportListComponent } from './components/per
     UpdateLicenseDepositDocumentComponent,
     PeriodicCharteredAccountantReportComponent,
     PeriodicCharteredAccountantReportDetailsComponent,
-    PeriodicCharteredAccountantReportListComponent
+    PeriodicCharteredAccountantReportListComponent,
+    AddEditActualQualityAndBusinessComponent,
+    ProjectStatusUpdateComponent,
+    AddEditActualQualityControlComponent,
+    ActualQualityControlDetailsComponent,
+    ShowActualQualityControlDetailsComponent,
+    AddEditNonConformityReportComponent,
+    AddEditMaterialExaminationComponent,
+    AddEditActualRelativeWeightComponent,
+    ShowActualRelativeWeightDetailsComponent,
+    AddEditActualProjectDetailsComponent,
+    ActualProjectDetailsComponent,
+    AddEditHealthAndSafetyMonitoringComponent,
+    AddEditActualInfrastructurComponent,
+    AddEditConnectionWithServicesProviderComponent,
+    ShowActualInfrastructureNetworksStatusComponent,
+    AddEditActualInfrastructureNetworksStatusComponent,
+    AddEditDesignPhaseCreditsComponent,
+    ShowDesignPhaseCreditsComponent,
+    AddEditProjectDeliveryPhaseApprovalsComponent,
+    ActualNotesComponent,
+    ActualProjectDetailsComponent,
+    PeriodicCharteredAccountantReportListComponent,
+    LincenseProjectZonesComponent,
+    LicenseProjectZoneUnitComponent,
+    LicenseProjectZoneUnitSubunitComponent,
+    LicenseProjectZoneSubunitModelComponent
   ],
   providers: [
+    LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService,
+    LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService,
+    EngineeringSupervisionPlannedReportActualInfrastructureService,
+    LicenseProjectHealthAndSafetyMonitoringService,
+    EngineeringSupervisionReportActualProjectDeteilsService,
+    EngineeringSupervisionReportActualQualityAndBusinessService,
     PeriodicCharteredAccountantReportService,
     LicenseCertificateTemplateService,
     LicenseProjectBuyerService,
@@ -687,7 +751,9 @@ import { PeriodicCharteredAccountantReportListComponent } from './components/per
     LicenseProjectAccountantLocalStorageService,
     StorageService,
     LicenseProjectExchangeDocumentService,
-    SupervisionFollowUpCostsRatioService
+    SupervisionFollowUpCostsRatioService,
+    QualityAndBusinessProgressService,
+    SysProjectStatusService
   ],
   imports: [
     CommonModule,

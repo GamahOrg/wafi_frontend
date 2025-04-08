@@ -1,95 +1,29 @@
-<div class="bg-white d-flex my-1 p-3 timeline justify-content-center">
-  <div class="d-flex">
-    <div class="step d-flex align-items-start mx-3">
-      <div
-        class="d-flex align-items-center step-content"
-        [ngClass]="{
-          completed:
-            currentLicenseRequestHeaderTimeLine.isRequestSentToDevelopers
-        }"
-      >
-        <mat-icon
-          *ngIf="
-            currentLicenseRequestHeaderTimeLine.isRequestSentToDevelopers;
-            else pending
-          "
-          >check_circle</mat-icon
-        >
-        <ng-template #pending>
-          <mat-icon>hourglass_empty</mat-icon></ng-template
-        >
-        <label> تم ارسال الطلب لاطراف المشروع</label>
-      </div>
-      <div class="step-line-container">
-        <hr class="step-line" />
-      </div>
-    </div>
-    <div class="step d-flex align-items-start mx-3">
-      <div
-        class="d-flex align-items-center step-content"
-        [ngClass]="{
-          completed:
-            currentLicenseRequestHeaderTimeLine.isRequestApprovedFromDevelopers
-        }"
-      >
-        <mat-icon
-          *ngIf="
-            currentLicenseRequestHeaderTimeLine.isRequestApprovedFromDevelopers;
-            else pending
-          "
-          >check_circle</mat-icon
-        >
-        <ng-template #pending>
-          <mat-icon>hourglass_empty</mat-icon></ng-template
-        >
-        <label> موافقة اطراف المشروع</label>
-      </div>
-      <div class="step-line-container">
-        <hr class="step-line" />
-      </div>
-    </div>
-    <div class="step d-flex align-items-start mx-3">
-      <div
-        class="d-flex align-items-center step-content"
-        [ngClass]="{
-          completed: currentLicenseRequestHeaderTimeLine.isRequestSent
-        }"
-      >
-        <mat-icon
-          *ngIf="
-            currentLicenseRequestHeaderTimeLine.isRequestSent;
-            else pending
-          "
-          >check_circle</mat-icon
-        >
-        <ng-template #pending>
-          <mat-icon>hourglass_empty</mat-icon></ng-template
-        >
-        <label> إرسال الطلب للدراسة</label>
-      </div>
-      <div class="step-line-container">
-        <hr class="step-line" />
-      </div>
-    </div>
-    <div class="step d-flex align-items-start mx-3">
-      <div
-        class="d-flex align-items-center step-content"
-        [ngClass]="{
-          completed: currentLicenseRequestHeaderTimeLine.isLicenseApproved
-        }"
-      >
-        <mat-icon
-          *ngIf="
-            currentLicenseRequestHeaderTimeLine.isLicenseApproved;
-            else pending
-          "
-          >check_circle</mat-icon
-        >
-        <ng-template #pending>
-          <mat-icon>hourglass_empty</mat-icon></ng-template
-        >
-        <label> تم إصدار الرخصة</label>
-      </div>
-    </div>
+<div class="timeline-horizontal">
+  <div class="timeline-item" [ngClass]="{completed: currentLicenseRequestHeaderTimeLine.isRequestSentToDevelopers}">
+    <span class="material-icons" *ngIf="currentLicenseRequestHeaderTimeLine.isRequestSentToDevelopers; else pending">check_circle</span>
+    <ng-template #pending>
+      <span class="material-icons">hourglass_empty</span></ng-template>
+    <label> تم ارسال الطلب لاطراف المشروع</label>
+  </div>
+
+  <div class="timeline-item" [ngClass]="{completed: currentLicenseRequestHeaderTimeLine.isRequestApprovedFromDevelopers}">
+    <span class="material-icons" *ngIf="currentLicenseRequestHeaderTimeLine.isRequestApprovedFromDevelopers; else pending">check_circle</span>
+    <ng-template #pending>
+      <span class="material-icons">hourglass_empty</span></ng-template>
+    <label> موافقة اطراف المشروع</label>
+  </div>
+
+  <div class="timeline-item" [ngClass]="{completed: currentLicenseRequestHeaderTimeLine.isRequestSent }">
+    <span class="material-icons" *ngIf="currentLicenseRequestHeaderTimeLine.isRequestSent; else pending">check_circle</span>
+    <ng-template #pending>
+      <span class="material-icons">hourglass_empty</span></ng-template>
+    <label> إرسال الطلب للدراسة</label>
+  </div>
+
+  <div class="timeline-item" [ngClass]="{completed: currentLicenseRequestHeaderTimeLine.isLicenseApproved }">
+    <span class="material-icons" *ngIf="currentLicenseRequestHeaderTimeLine.isLicenseApproved; else pending">check_circle</span>
+    <ng-template #pending>
+      <span class="material-icons">hourglass_empty</span></ng-template>
+    <label> تم إصدار الرخصة</label>
   </div>
 </div>

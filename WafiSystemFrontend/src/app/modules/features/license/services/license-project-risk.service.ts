@@ -22,11 +22,12 @@ export class LicenseProjectRiskService {
    return this.licenseProjectRiskId.next(LatestValue);
  }
 
-  getLicenseProjectRisks(licenseProjectId:string, pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectRiskPagingDto[]> | null> {
+  getLicenseProjectRisks(licenseProjectId:string, pageIndex: number, pageSize: number,monthDate:any): Observable<Pagination<LicenseProjectRiskPagingDto[]> | null> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("licenseProjectId", licenseProjectId);
     queryParams = queryParams.append("pageIndex", pageIndex);
     queryParams = queryParams.append("pageSize", pageSize);
+    queryParams = queryParams.append("monthDate", monthDate);
     return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectRiskPagingDto[]>>>(`${Configuration.APIs.LicenseProjectRisk.GetLicenseProjectRisks}`, { params: queryParams }).pipe(
       map((res: CoreResponseDTO<Pagination<LicenseProjectRiskPagingDto[]>>) => {
         
@@ -36,8 +37,11 @@ export class LicenseProjectRiskService {
     );
   }
 
-   getLicenseProjectRiskCounts(licenseProjectId : string) :Observable<LicenseProjectRiskCountsDto|null>{
-    return this._httpClient.get<CoreResponseDTO<LicenseProjectRiskCountsDto>>(`${Configuration.APIs.LicenseProjectRisk.GetLicenseProjectRiskCounts}/${licenseProjectId}`).pipe(
+   getLicenseProjectRiskCounts(licenseProjectId : string,monthDate:any) :Observable<LicenseProjectRiskCountsDto|null>{
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("licenseProjectId", licenseProjectId);
+    queryParams = queryParams.append("monthDate", monthDate);
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectRiskCountsDto>>(`${Configuration.APIs.LicenseProjectRisk.GetLicenseProjectRiskCounts}`,{params: queryParams}).pipe(
       map((res: CoreResponseDTO<LicenseProjectRiskCountsDto>)=>{
         return res.isDone? res.data as LicenseProjectRiskCountsDto:null;
   

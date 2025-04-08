@@ -23,7 +23,6 @@ import { DataVisibilityOfLicenseProjectService } from '../../../license/services
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { Router } from '@angular/router';
 import { ProjectRequestLocalStorageService } from '../../services/project-request-local-storage.service';
-import { CahngePlaneRequestDetailsService } from '../../services/cahnge-plane-request-details.service';
 import { LicenseProjectRequestTypeEnum } from '../../enums/license-project-request-type.enum';
 
 @Component({
@@ -41,7 +40,6 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
     private _projectLicenseServiceDetailsService: ProjectLicenseServiceDetailsService,
     private _requestNotesService: RequestNotesService,
     private projectRequestLocalStorageService: ProjectRequestLocalStorageService,
-    private _cahngePlaneRequestDetailsService: CahngePlaneRequestDetailsService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
   ) { }
 
@@ -67,6 +65,7 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
         Component: ProjectLicenseRequestDataComponent, //RequestDataComponent,
         disabled: false,
         isVisible: true,
+        id: 'ProjectLicenseRequestDataComponent'
       },
       {
         icon: '',
@@ -74,6 +73,7 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
         Component: ProjectLicenseRequestNotesComponent, //RequestNotesComponent,
         disabled: false,
         isVisible: true,
+        id: 'ProjectLicenseRequestNotesComponent'
       },
       {
         icon: '',
@@ -81,6 +81,7 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
         Component: ProjectLicenseRequestTimeLineComponent,
         disabled: false,
         isVisible: true,
+        id: 'ProjectLicenseRequestTimeLineComponent'
       },
     ],
   };
@@ -113,15 +114,12 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
   ngOnInit() {
     this.updateTabContent();
     this.getSelectedRequestIdFromLocalStorage();
-    this.observeSelectedRequest();
     this.observePopupEvents();
     this.observeRequestNotes();
   }
 
   private updateTabContent() {
     this._tabsService.updateTabContent(this.tabContent);
-    this._tabsService.updateActiveTabIndex(0);
-    this._tabsService.updateActiveVerticalTabIndex(0);
   }
 
   private getSelectedRequestIdFromLocalStorage() {
@@ -132,23 +130,7 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
     }
   }
 
-  private observeSelectedRequest() {
-    this.subscriptions.push(
-      this._projectLicenseServiceDetailsService.selectRequest$.subscribe(
-        (res: LicenseProjectRequestDto | null) => {
-          if (res) {
-            this.selectedRequest = res;
-            this._projectLicenseServiceDetailsService.selectRequest$.next(res);
-            this.updateDataVisibilityOfLicenseProject();
-            this.updateClientActionsButtons();
-            // this.updateStudyDaysProgressSetting();
-            //this.updateAllBehaviorSubject(res);
-            this.updateDayProgressSettings();
-          }
-        }
-      )
-    );
-  }
+
 
   private updateDataVisibilityOfLicenseProject() {
     let data: string[] = []
@@ -182,12 +164,12 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
   }
   editRequest() {
     console.log(this.selectedRequest);
-    
+
     this.redirectRequestSummary(this.selectedRequest.id, this.selectedRequest.licenseProjectRequestTypeId)
   }
 
   redirectRequestSummary(id: string, requestType: number) {
-    debugger;
+    
     this.projectRequestLocalStorageService.setSelectedSelectedProjectLicenseRequestIdInLocalStorage(id)
     switch (requestType) {
       case LicenseProjectRequestTypeEnum.CancelLicense:
@@ -196,9 +178,47 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
       case LicenseProjectRequestTypeEnum.ReActivateLicense:
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.reactivaiteLicenseSummary}`;
         break;
-      case LicenseProjectRequestTypeEnum.ChangePlan:       
+      case LicenseProjectRequestTypeEnum.ChangePlan:
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changePlanSummary}`;
         break;
+      case LicenseProjectRequestTypeEnum.ChangeEngineering:
+        debugger;
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeEngineerSummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.IncreaseOrDecreaseUnitsNumberOrProjectArea:
+        debugger;
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changespaceorunitssummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangeApprovedBuyerOrTenantContractsOfProject:
+        debugger;
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changebuyerortenantcontractsummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangeProjectName:
+        debugger;
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeprojectnamesummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.AddingDelegator:
+        debugger;
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.addingdelegatorsummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.RemovingDelegator:
+        debugger;
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.removingdelegatorsummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangeOrAddLicenseProjectUnitModel:
+        debugger;
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeoraddunitmodelsummary}`;
+        break;
+
+        case LicenseProjectRequestTypeEnum.ChangeAccountant:
+          this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.charteredAccountantRequestSummary}`;
+        break;
+
+        case LicenseProjectRequestTypeEnum.ChangeAccountKeeper:
+          this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.accountKeeperRequestSummary}`;
+        break;
+
+
     }
     this._router.navigate([this.requestDetailsRoute]);
   }
@@ -223,8 +243,9 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
       this._projectLicenseServiceDetailsService.getRequestHeaderDetails(this.selectedRequestId).subscribe(response => {
         if (response) {
           this.selectedRequest = response;
-          this.updateDayProgressSettings()
           this._projectLicenseServiceDetailsService.selectRequest$.next(response);
+          this.updateDayProgressSettings()
+          this.updateClientActionsButtons();
         }
       });
     }
@@ -290,7 +311,7 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
   }
 
   private emitDataIsUpdate() {
-    // this._licenseDetailsService.dataIsUpdate.emit();
+    this._projectLicenseServiceDetailsService.dataIsUpdate.emit();
   }
 
   private showNotificationOFsentNotes() {
@@ -301,7 +322,8 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
   ngOnDestroy(): void {
     // this.resetSelectRequest();
     // this.resetDataVisibilityOfLicenseProject();
-    this.licenseProjectService.clearActiveProjectRequestFromLocalStorage();
+    //this.licenseProjectService.clearActiveProjectRequestFromLocalStorage();
+    this._projectLicenseServiceDetailsService.selectRequest$.next(null);
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 

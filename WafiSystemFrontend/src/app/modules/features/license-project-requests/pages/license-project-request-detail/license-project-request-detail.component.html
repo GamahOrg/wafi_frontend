@@ -6,7 +6,7 @@
       </div>
     </div>
 
-    <div class="card qualiication-reqest-card">
+    <div class="card">
       <div class="card-body">
         <div class="card-title">
           <div class="row">
@@ -82,6 +82,14 @@
                           <label class="col-5">رقم الجوال</label>
                           <span class="col-auto">{{
                             selectedRequest?.customer?.mobile1
+                            }}</span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6" *ngIf="selectedRequest?.price">
+                        <div class="row">
+                          <label class="col-5">الرسوم</label>
+                          <span class="col-auto">{{
+                            selectedRequest?.price
                             }}</span>
                         </div>
                       </div>

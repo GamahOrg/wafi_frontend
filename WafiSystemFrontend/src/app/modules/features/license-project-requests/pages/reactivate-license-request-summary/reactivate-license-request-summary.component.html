@@ -8,7 +8,6 @@
 
     <div>
       <button 
-      *ngIf="requestUserType==userRequestTypeEnum.RealEstateDeveloper && request.externalRequestStatusId==licenseProjectRequestStatusEnum.UnderCreation"
       type="button" mat-flat-button color="primary" (click)="create()">
       {{ localization.send }}
     </button>

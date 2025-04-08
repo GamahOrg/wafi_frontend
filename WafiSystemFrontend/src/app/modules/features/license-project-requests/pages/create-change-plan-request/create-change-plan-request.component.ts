@@ -29,6 +29,7 @@ export class CreateChangePlanRequestComponent implements OnInit {
   subscriptions: Subscription[] = [];
   licenseProjects: LicenseProjectDDL[] = [];
   licenseProjectRequestId?: string;
+  price?: number;
   licenseProjectRequestChangePlanFull?: LicenseProjectRequestChangePlanFullDto;
   baseUrl = `${environment.baseURL}/`;
   createUpdateChangePlanForRealEstateDeveloper?: CreateChangePlanForRealEstateDeveloperDto;
@@ -66,11 +67,17 @@ export class CreateChangePlanRequestComponent implements OnInit {
     this.getLicenseProjectRequestChangePlan();
     this.observePopupEvents();
     this.obseveCustomerData();
-
+    this.observePrice();
     // this.setResponseToForm(this.licenseProjectRequestChangePlanFull as LicenseProjectRequestChangePlanFullDto);
   }
 
-
+  private observePrice(): void {
+    this.subscriptions.push(
+      this._licenseRequestService.getLicenseProjectRequestPrice(this.changePlanForRealEstateDeveloperForm.controls.licenseProjectId.value as string , LicenseProjectRequestTypeEnum.ChangePlan).subscribe((res: any) => {
+        this.price = res;
+      })
+    )
+  }
   getLicenseProjectByType(): void {
     this._licenseRequestService
       .getLicenseProjectByType(this.facilityId, LicenseProjectRequestTypeEnum.ChangePlan)
@@ -97,7 +104,7 @@ export class CreateChangePlanRequestComponent implements OnInit {
     this.subscriptions.push(
       this._cahngePlaneRequestDetailsService.getLicenseProjectRequestChangePlan().subscribe((res: LicenseProjectRequestChangePlanFullDto | null) => {
         if (res) {
-          debugger;
+          
           this.licenseProjectRequestChangePlanFull = res;
           this.approvalLetterForStartEndDateId = this.licenseProjectRequestChangePlanFull.approvalLetterForStartEndDateId;
           this.buyersApprovalLetterFileId = this.licenseProjectRequestChangePlanFull.buyersApprovalLetterFileId;
@@ -131,7 +138,7 @@ export class CreateChangePlanRequestComponent implements OnInit {
   }
 
   save(): void {
-    debugger;
+    
     if (!this.changePlanForRealEstateDeveloperForm.valid) {
       this.showValidation = true;
       return;

@@ -33,6 +33,15 @@ export const Configuration = {
     Bank: {
       GetDropDown: '/api/SysBank/Get',
     },
+    ProjectStatus:{
+      GetDropDown: '/api/SysLicenseProjectStatus/Get',
+    },
+    LiftingDeedReason: {
+      GetDropDown: '/api/LiftingDeedReason/Get',
+    },
+    LiftingDeeds: {
+      GetDropDown: '/api/LicenseProjectDeed/GetLicenseProjectDeedsAsync',
+    },
     City: {
       GetDropDown: '/api/SysCity/Get',
       GetListWithChambersOfCommerceCityCodeAsync:
@@ -160,6 +169,7 @@ export const Configuration = {
     },
     QualificationCertifiedEngineer: {
       GetFacilityById: '/api/QualificationCertifiedEngineer/GetFacilityById',
+      GetAllFacilityById: '/api/QualificationCertifiedEngineer/GetAllFacilityById',
       Create: '/api/QualificationCertifiedEngineer/Create',
       Update: '/api/QualificationCertifiedEngineer/Update',
       GetById: '/api/QualificationCertifiedEngineer/GetById',
@@ -347,6 +357,58 @@ export const Configuration = {
       SaveLicenseProjectEngineeringActualReportMonthDetails:
         '/api/EngineeringSupervisionReportActualProjectStatusSummary/SaveLicenseProjectEngineeringActualReportMonthDetails',
     },
+    EngineeringSupervisionReportActualProjectDetails:{
+      GetLicenseProjectEngineeringProjectZonesBlocksDetailActual:
+      '/api/EngineeringSupervisionReportActualProjectDetails/GetLicenseProjectEngineeringProjectZonesBlocksDetailActual',
+      SaveLicenseProjectEngineeringProjectZonesBlocksDetail:
+      '/api/EngineeringSupervisionReportActualProjectDetails/SaveLicenseProjectEngineeringProjectZonesBlocksDetail',
+    },
+    EngineeringSupervisionReportActualQualitySummary: {
+      GetLicenseProjectEngineeringActualQualityPlanAndAssurance:
+        '/api/EngineeringSupervisionReportActualQualitySummary/GetLicenseProjectEngineeringActualQualityPlanAndAssurance',
+        GetLicenseProjectQualityStatusList:
+        '/api/EngineeringSupervisionReportActualQualitySummary/GetLicenseProjectQualityStatusList',
+        SaveLicenseProjectEngineeringActualQualityPlanAndAssurance:
+        '/api/EngineeringSupervisionReportActualQualitySummary/SaveLicenseProjectEngineeringActualQualityPlanAndAssurance',
+        GetLicenseProjectEngineeringWorksExaminationList:
+        '/api/EngineeringSupervisionReportActualQualitySummary/GetLicenseProjectEngineeringWorksExaminationList',
+        SaveLicenseProjectEngineeringWorksExamination:
+        '/api/EngineeringSupervisionReportActualQualitySummary/SaveLicenseProjectEngineeringWorksExamination',
+        GetLicenseProjectEngineeringWorksExaminationDetails:
+        '/api/EngineeringSupervisionReportActualQualitySummary/GetLicenseProjectEngineeringWorksExaminationDetails',
+        GetSysLicenseProjectEngineeringWorkList:
+        '/api/EngineeringSupervisionReportActualQualitySummary/GetSysLicenseProjectEngineeringWorkList',
+        DeleteLicenseProjectEngineeringWorksExamination:'/api/EngineeringSupervisionReportActualQualitySummary/DeleteLicenseProjectEngineeringWorksExamination',
+        SaveLicenseProjectEngineeringNonConformityReport:'/api/EngineeringSupervisionReportActualQualitySummary/SaveLicenseProjectEngineeringNonConformityReport',
+        SaveLicenseProjectEngineeringMaterialExamination:'/api/EngineeringSupervisionReportActualQualitySummary/SaveLicenseProjectEngineeringMaterialExamination',
+        GetLicenseProjectEngineeringMaterialExamination:'/api/EngineeringSupervisionReportActualQualitySummary/GetLicenseProjectEngineeringMaterialExamination',
+        GetLicenseProjectEngineeringNonConformityReport:'/api/EngineeringSupervisionReportActualQualitySummary/GetLicenseProjectEngineeringNonConformityReport',
+        GetLicenseProjectEngineeringActualRelativeWeight:'/api/EngineeringSupervisionReportActualQualitySummary/GetLicenseProjectEngineeringActualRelativeWeight',
+        GetlicenseProjectActualRelativeWeightDetails:'/api/EngineeringSupervisionReportActualQualitySummary/GetlicenseProjectActualRelativeWeightDetails',
+        SavelicenseProjectAcualRelativeWeightRates:'/api/EngineeringSupervisionReportActualQualitySummary/SavelicenseProjectAcualRelativeWeightRates',
+
+    },
+    LicenseProjectEngineeringStatusOfFundsRequiredFromEntities:{
+      GetLicenseProjectEngineeringServiceTypeProjectDeliveryPhaseList:
+      '/api/LicenseProjectEngineeringStatusOfFundsRequiredFromEntities/GetLicenseProjectEngineeringServiceTypeProjectDeliveryPhaseList',
+      GetLicenseProjectEngineeringServiceTypeDesignStageList:
+      '/api/LicenseProjectEngineeringStatusOfFundsRequiredFromEntities/GetLicenseProjectEngineeringServiceTypeDesignStageList',
+      GetLicenseProjectEngineeringAccreditationStatusList:
+      '/api/LicenseProjectEngineeringStatusOfFundsRequiredFromEntities/GetLicenseProjectEngineeringAccreditationStatusList',
+      GetLicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesList:
+      '/api/LicenseProjectEngineeringStatusOfFundsRequiredFromEntities/GetLicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesList',
+      Save:
+      '/api/LicenseProjectEngineeringStatusOfFundsRequiredFromEntities/Save',
+
+    },
+    LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNote:
+     {
+      GetLicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList:
+        '/api/LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNote/GetLicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList',
+        SaveNoteFromCustomer:
+        '/api/LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNote/SaveNoteFromCustomer',
+
+    },
     EngineeringSupervisionReportProjectStatusSummary: {
       GetLicenseProjectEngineeringSupervisionPlannedDetailsByLicenseProjectId:
         '/api/EngineeringSupervisionReportProjectStatusSummary/GetLicenseProjectEngineeringSupervisionPlannedDetailsByLicenseProjectId',
@@ -361,6 +423,30 @@ export const Configuration = {
       SaveLicenseProjectEngineeringDetails:
         '/api/EngineeringSupervisionReportProjectStatusSummary/SaveLicenseProjectEngineeringDetails',
     },
+
+    EngineeringSupervisionReportActualInfrastructure: {
+      GetLicenseProjectEngineeringActualInfrastructureRates:
+    '/api/EngineeringSupervisionReportActualInfrastructure/GetLicenseProjectEngineeringActualInfrastructureRates',
+    SaveLicenseProjectEngineeringActualInfrastructureRates:
+    '/api/EngineeringSupervisionReportActualInfrastructure/SaveLicenseProjectEngineeringActualInfrastructureRates',
+
+    GetLicenseProjectConnectionWithServicesProvider:
+    '/api/EngineeringSupervisionReportActualInfrastructure/GetLicenseProjectConnectionWithServicesProvider',
+    SaveLicenseProjectConnectionWithServicesProvider:
+    '/api/EngineeringSupervisionReportActualInfrastructure/SaveLicenseProjectConnectionWithServicesProvider',
+
+    GetSysLicenseProjectActivationStatusoList:
+    '/api/EngineeringSupervisionReportActualInfrastructure/GetSysLicenseProjectActivationStatusoList',
+    GetSysLicenseProjectServiceTypeStatusList:
+    '/api/EngineeringSupervisionReportActualInfrastructure/GetSysLicenseProjectServiceTypeStatusList',
+    GetSysLicenseProjectTieConnectionStatusList:
+    '/api/EngineeringSupervisionReportActualInfrastructure/GetSysLicenseProjectTieConnectionStatusList',
+
+    GetActualLicenseInfrastructureElement:
+    '/api/LicenseProjectInfrastructureNetworksStatus/GetActualLicenseInfrastructureElement',
+    SaveActual:
+    '/api/LicenseProjectInfrastructureNetworksStatus/SaveActualAsync',
+},
     LicenseProjectQualityNoticeReply: {
       GetRepliesByQualityNoticId:
         '/api/LicenseProjectQualityNoticeReply/GetRepliesByQualityNoticId',
@@ -386,6 +472,14 @@ export const Configuration = {
 
       AddNotesFromProjectManger: '/api/ProjectBusinessCaseReportNote/AddNotesFromProjectManger'
     },
+
+    LicenseProjectHealthAndSafetyMonitoring: {
+      Save: '/api/LicenseProjectHealthAndSafetyMonitoring/SaveLicenseProjectHealthAndSafetyMonitoring',
+      GetLicenseProjectHealthAndSafetyMonitoringDetails:
+        '/api/LicenseProjectHealthAndSafetyMonitoring/GetLicenseProjectHealthAndSafetyMonitoringDetails',
+        GetLicenseProjectQualityStatusList:
+        '/api/LicenseProjectHealthAndSafetyMonitoring/GetLicenseProjectQualityStatusList',
+    },
     LicenseProjectInfrastructureNetworksStatus: {
       Save: '/api/LicenseProjectInfrastructureNetworksStatus/Save',
       GetInfrastructureNetworksStatusByLicenseProjectEngineeringSupervisionPlannedReportDetailId:
@@ -401,6 +495,8 @@ export const Configuration = {
         '/api/ActualValuesReport/GetRequiredSupervisionMonthsList',
       UpdateMonthSubmitted:
         '/api/ActualValuesReport/UpdateMonthSubmitted',
+        SendMonthToStudy:
+        '/api/ActualValuesReport/SendMonthToStudy',
     },
     QualityAndBusinessProgress: {
       GetLicenseProjectEngineeringMonthlyConsultantStaffRates:
@@ -446,6 +542,7 @@ export const Configuration = {
       GetLicenseProjectByType: '/api/LicenseProjectRequest/GetLicenseProjectsByType',
       UpdateProjectManagerOnProject:
         '/api/LicenseProject/UpdateProjectManagerOnProject',
+      UpdateLicenseProjectStatus:'/api/LicenseProject/UpdateLicenseProjectStatus',
       GetEngineeringConsultantProjectsList:
         '/api/LicenseProject/GetEngineeringConsultantProjectsList',
       GetAccountKeeperDetailsByLicenseProjectId:
@@ -483,6 +580,7 @@ export const Configuration = {
         '/api/LicenseProject/GetContributionDataByLicenseProjectId',
       SaveContributionData: '/api/LicenseProject/SaveContributionData',
       GetRequetType: '/api/LicenseProject/GetRequetType',
+      GetLicenseProjectDetails: '/api/LicenseProject/GetLicenseProjectDetails',
     },
     LicenseProjectExchangeDocument:{
       GetExchangeDocumentOnProject:
@@ -530,9 +628,9 @@ export const Configuration = {
         GetLicenseProjectBuyerDetail:'/api/LicenseProjectBuyer/GetLicenseProjectBuyerDetail',
         GetBuyerSettings:
         '/api/LicenseProjectBuyer/GetBuyerSettings',
-        GetBuyersBylicenseProjectId: 
+        GetBuyersBylicenseProjectId:
         '/api/LicenseProjectBuyer/GetBuyersBylicenseProjectId',
-        GetBuyersDetailByNIDNumber: 
+        GetBuyersDetailByNIDNumber:
         '/api/LicenseProjectBuyer/GetBuyersDetailByNIDNumber',
 
     },
@@ -605,7 +703,7 @@ export const Configuration = {
       GetByLicenseProjectId:
         '/api/LicenseProjectFinancialStatement/GetByLicenseProjectId',
     },
-    
+
     SysYear: {
       GetAll: '/api/SysYear/Get',
     },
@@ -656,7 +754,7 @@ export const Configuration = {
     },
      SysLicenseRelativeWeight: {
       Get: '/api/SysLicenseRelativeWeight/Get',
-    }, 
+    },
     LicenseProjectLandOwner: {
       GetByDeedId: '/api/LicenseProjectLandOwner/GetByDeedId',
       GetByLicenseProjectId:
@@ -685,6 +783,10 @@ export const Configuration = {
         '/api/LicenseProjectSubUnit/DeleteLicenseProjectSubUnitsAsync',
       GetLicenseProjectSubUnitsByLicenseProjectId:
         '/api/LicenseProjectSubUnit/GetLicenseProjectSubUnitsByLicenseProjectId',
+        Create:
+        '/api/LicenseProjectSubUnit/Create',
+        Remove:
+        '/api/LicenseProjectSubUnit/Remove',
     },
     LicenseProjectService: {
       GetByLicenseProjectId: '/api/LicenseProjectService/GetByLicenseProjectId',
@@ -810,7 +912,8 @@ export const Configuration = {
       GetUserRequestType: '/api/LicenseProjectRequest/GetUserRequestType',
       AddLicenseProjectRequest: '/api/LicenseProjectRequest/CreateLicenseProjectsRequest',
       GetRequestHeaderDetails: '/api/LicenseProjectRequest/GetRequestHeaderDetails',
-      SendRequestForParties: '/api/LicenseProjectRequest/SendRequestForParties',      
+      SendRequestForParties: '/api/LicenseProjectRequest/SendRequestForParties',
+      GetLicenseProjectRequestPrice: '/api/LicenseProjectRequest/GetLicenseProjectRequestPrice',
     },
     LicenseActivateRequest:{
       GetLicenseActivationRequestDetails: '/api/LicenseProjectActivationRequest/GetLicenseActivationRequestDetails/',
@@ -820,7 +923,7 @@ export const Configuration = {
     LicenseServiceRequest:{
       Compile: '/api/LicenseServiceRequest/Compile',
       Create: '/api/LicenseServiceRequest/Create',
-      
+
     },
     LicenseProjectCancellationRequest: {
       GetLicenseProjectDetails: '/api/LicenseProjectCancellationRequest/GetLicenseProjectCancellationRequestDetails/',
@@ -828,6 +931,38 @@ export const Configuration = {
       EditClearanceEngineering: '/api/LicenseProjectCancellationRequest/UpdateClearanceEngineeringConsultant/',
       EditClearanceAccount: '/api/LicenseProjectCancellationRequest/UpdateClearanceAccountant/',
       EditeRealStateDeveloper: '/api/LicenseProjectCancellationRequest/UpdateRealStateDeveloper/'
+    },
+    AccountkeeperRequest:{
+      GetChangeAccountKeeperDetails:'/api/ChangeAccountKeeperRequest/GetChangeAccountKeeperDetails/',
+      SaveChangeLicenseProjectAccountKeeperRequest:'/api/ChangeAccountKeeperRequest/SaveChangeLicenseProjectAccountKeeperRequest',
+    },
+    TransferAmountsBetweenSubAccountsInEscrowAccountRequest:{
+      GetDetails:'/api/TransferAmountsBetweenSubAccountsInEscrowAccountRequest/GetDetails/',
+      SaveTransferAmountsBetweenSubAccountsInEscrowAccount:'/api/TransferAmountsBetweenSubAccountsInEscrowAccountRequest/SaveTransferAmountsBetweenSubAccountsInEscrowAccount',
+    },
+    RequestTemplate:{
+      GetDetails:'/api/RequestTemplate/GetDetails/',
+      SaveRequestTemplate:'/api/RequestTemplate/SaveRequestTemplate',
+    },
+    LicenseProjectRequestTemplateFile:{
+      GetLicenseProjectRequestTemplateFile:'/api/LicenseProjectRequestTemplateFile/GetLicenseProjectRequestTemplateFile/',
+    },
+    ObjectionToSupervisionAndFollowUpCoststRequest:{
+      GetDetails:'/api/ObjectionToSupervisionAndFollowUpCostsRequest/GetDetails/',
+      SaveObjectionToSupervisionAndFollowUpCostsRequest:'/api/ObjectionToSupervisionAndFollowUpCostsRequest/SaveObjectionToSupervisionAndFollowUpCostsRequest',
+    },
+    LiftingTheMarkOnThePropertyTitleDeedRequest:{
+      GetDetails:'/api/LiftingTheMarkOnThePropertyTitleDeedRequest/GetDetails/',
+      SaveLiftingTheMarkOnThePropertyTitleDeedRequest:'/api/LiftingTheMarkOnThePropertyTitleDeedRequest/SaveLiftingTheMarkOnThePropertyTitleDeedRequest',
+    },
+    PartiesAgreementRequest:{
+      GetChangePartiesAgreementDetails:'/api/ChangePartiesAgreementRequest/GetChangePartiesAgreementDetails/',
+      SaveChangePartiesAgreementRequest:'/api/ChangePartiesAgreementRequest/SaveChangePartiesAgreementRequest',
+    },
+    CharteredAccountantRequest:{
+      GetChareteredAccountantRequestList: '/api/ChangeCharteredAccounatantRequest/GetChareteredAccountantRequestList',
+      GetChareteredAccountantRequestDetails: '/api/ChangeCharteredAccounatantRequest/GetChareteredAccountantRequestDetails',
+      SaveChangeCharteredAccountantRequest: '/api/ChangeCharteredAccounatantRequest/SaveChangeCharteredAccountantRequest'
     },
     LicenseProjectSubUnitsListCode: {
       createExcel: '/api/LicenseProjectSubUnitsListCode/CreateExcel',
@@ -838,6 +973,34 @@ export const Configuration = {
       GetByProjectUnitId:
         '/api/LicenseProjectSubUnitsListCode/GetByProjectUnitId',
       Delete: '/api/LicenseProjectSubUnitsListCode/Remove',
+    },
+    ChangeLicenseProjectDelegatorRequest:{
+      GetChangeLicenseProjectDelegatorRequestDetail: '/api/ChangeLicenseProjectDelegatorRequest/GetChangeLicenseProjectDelegatorRequestDetail',
+      Save: '/api/ChangeLicenseProjectDelegatorRequest/Save',
+    },
+    ChangeLicenseProjectEngineeringRequest:{
+      GetChangeLicenseProjectEngineeringRequestDetail: '/api/ChangeLicenseProjectEngineeringRequest/GetChangeLicenseProjectEngineeringRequestDetail',
+      Save: '/api/ChangeLicenseProjectEngineeringRequest/Save',
+    },
+    ChangeLicenseProjectBuyerOrTenantContractRequest:{
+      GetChangeLicenseProjectBuyerOrTenantContractRequestDetail: '/api/ChangeLicenseProjectBuyerOrTenantContractRequest/GetChangeLicenseProjectBuyerOrTenantContractRequestDetail',
+      Save: '/api/ChangeLicenseProjectBuyerOrTenantContractRequest/Save',
+    },
+    WithdrawSurplusBeforeProjectEndRequest:{
+      GetWithdrawSurplusBeforeProjectEndRequestDetail: '/api/WithdrawSurplusBeforeProjectEndRequest/GetWithdrawSurplusBeforeProjectEndRequestDetail',
+      Save: '/api/WithdrawSurplusBeforeProjectEndRequest/Save',
+    },
+    ChangeOrAddLicenseProjectUnitModelRequest:{
+      GetChangeOrAddLicenseProjectUnitModelRequestDetail: '/api/ChangeOrAddLicenseProjectUnitModelRequest/GetChangeOrAddLicenseProjectUnitModelRequestDetail',
+      Save: '/api/ChangeOrAddLicenseProjectUnitModelRequest/Save',
+    },
+    ChangeLicenseProjectNameRequest:{
+      GetChangeLicenseProjectNameRequestDetail: '/api/ChangeLicenseProjectNameRequest/GetChangeLicenseProjectNameRequestDetail',
+      Save: '/api/ChangeLicenseProjectNameRequest/Save',
+    },
+    ChangeLicenseProjectSpaceOrUnitsRequest:{
+      GetChangeLicenseProjectSpaceOrUnitsRequesDetail: '/api/ChangeLicenseProjectSpaceOrUnitsRequest/GetChangeLicenseProjectSpaceOrUnitsRequesDetail',
+      Save: '/api/ChangeLicenseProjectSpaceOrUnitsRequest/Save',
     },
     LicenseProjectRequestChangePlan:{
       GetLicenseProjectRequestChangePlanDetails: '/api/LicenseProjectRequestChangePlan/GetLicenseProjectRequestChangePlanDetails',
@@ -954,11 +1117,12 @@ export const Configuration = {
     deedsApproval: 'deedsApproval',
     complaintsAndReport: 'complaints-and-reports',
     licenseProjectRequests: 'license-project-requests',
-  //  engineeringManagement: "engineering-management"
+    engineeringManagement: "engineering-management"
   },
   pages: {
     confirmMail: 'confirm-mail',
     notificationList: 'notification-list',
+    viewRequestDeatils: 'view-request-deatils',
     // auth
     auth: {
       login: 'login',
@@ -1017,6 +1181,7 @@ export const Configuration = {
       addlicensecertificatetemplate: 'add-license-certificate-template',
       addPeriodiccharteredaccountantreport:'add-Periodic-chartered-accountant-report',
       periodiccharteredaccountantreportlist:'add-Periodic-chartered-accountant-report-list',
+      zones:'zones'
 
     },
     licenseProjectRequests: {
@@ -1032,8 +1197,38 @@ export const Configuration = {
       createreactivaiteLicense: 'create-reactivate-license-request',
       changePlanSummary: 'project-license-change-plan-request-summary',
       createchangePlanRequest: 'create-change-plan-request',
+      createchangeengineer:'create-change-engineer',
+      changeEngineerSummary: 'project-license-change-engineer-request-summary',
+      changespaceorunitssummary:'change-space-or-units-summary',
+      createchangespaceorunits:'create-change-space-or-units',
+      createchangeprojectname:'create-change-project-name',
+      changeprojectnamesummary:'change-project-name-summary',
+      createchangebuyerortenantcontract:'create-change-buyer-or-tenant-contract',
+      changebuyerortenantcontractsummary:'change-buyer-or-tenant-contract-summary',
+      createaddingdelegator:'create-adding-delegator',
+      addingdelegatorsummary:'adding-delegator-summary',
+      createremovingdelegator:'create-removing-delegator',
+      removingdelegatorsummary:'removing-delegator-summary',
+      createchangeoraddunitmodel:'create-change-or-add-unit-model',
+      changeoraddunitmodelsummary:'change-or-add-unit-model-summary',
+      createwithdrawsurplusbeforeprojectend:'create-withdraw-surplus-before-project-end',
+      withdrawsurplusbeforeprojectendsummary:'withdraw-surplus-before-project-end-summary',
+      createCharteredAccountantRequest: 'create-chartered-accountant-request',
+      charteredAccountantRequestSummary: 'create-chartered-accountant-request-summary',
+      accountKeeperRequestSummary: 'account-keeper-request-summary',
+      createAccountKeeperRequest: 'create-account-keeper-request',
+      createChangePartiesAgreementRequest: 'create-parties-agreement-request',
+      changePartiesAgreementRequestSummary: 'parties-agreement-request-summary',
+      transferAmountsBetweenSubaccountsInEscrowAccountSummary: 'transfer-amount-summary',
+      createTransferAmountsBetweenSubaccountsInEscrowAccount: 'create-transfer-amount',
+      createobjectionToSupervisionAndFollowupCosts:'create-objection-to-supervision-and-followup-costs',
+      objectionToSupervisionAndFollowupCostsSummary:'objection-to-supervision-and-followup-costs-summary',
+      createLiftingTheMarkOnThePropertyTitleDeedRequest:'create-lifting-the-mark-on-the-property-title-deed',
+      liftingTheMarkOnThePropertyTitleDeedRequestSummary:'lifting-the-mark-on-the-property-title-deed-summary',
+      createRequestTemplate:'create-request-template',
+      requestTemplateSummary:'request-template-summary',
     },
-  
+
     training: {
       trainingTypes: 'training-types',
       trainingList: 'training-list',

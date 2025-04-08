@@ -10,7 +10,10 @@ import { SysFileManagerCreateUpdateDto } from './license-request-project-details
 import {
   PeriodicCharteredAccountantReportQuarterTypeDto,
   PeriodicCharteredAccountantReportQuarterTypeEnum,
+  PeriodicCharteredAccountantReportStatusDto,
+  PeriodicCharteredAccountantReportStatusEnum,
   PeriodicCharteredAccountantReportTypeDto,
+
   PeriodicCharteredAccountantReportTypeEnum,
 } from './periodic-chartered-accountant-report-paging-list-dto';
 
@@ -21,6 +24,8 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   depositDate: Date;
   reportTypeId: PeriodicCharteredAccountantReportTypeEnum;
   quarterTypeId?: PeriodicCharteredAccountantReportQuarterTypeEnum;
+  reportStatusId?:PeriodicCharteredAccountantReportStatusEnum;
+  rejectionNotes?:string
   year?: number;
   month?: number;
   fromDate: Date;
@@ -31,7 +36,7 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   charteredAccountantOfficeName: string;
   // نوع الوحدات
   unitType?: string;
-  // اجمالى عدد الوحدات
+  // إجمالي عدد الوحدات
   totalUnitNumber?: number;
   // أمين الحساب
   accountKeeper?: string;
@@ -44,9 +49,9 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   customer: CustomerShortDto;
   // سعر الأرض
   landPrice?: number;
-  // اجمالى قيمة وحدات المشروع
+  // إجمالي قيمة وحدات المشروع
   totalUnitsAmount?: number;
-  // اجمالى قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)
+  // إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)
   totalCost?: number;
   // التكلفة الانشائة المتوقعة
   expectedConstructionCost?: number;
@@ -101,6 +106,7 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   licenseProject: LicenseProjectDto;
   reportType: PeriodicCharteredAccountantReportTypeDto;
   quarterType: PeriodicCharteredAccountantReportQuarterTypeDto;
+  reportStatus:PeriodicCharteredAccountantReportStatusDto;
 }
 //وثائق الصرف خلال فترة التقرير
 export interface PeriodicCharteredAccountantReportExchangeDocumentDto {
@@ -176,7 +182,7 @@ export interface FinancialTransactionsDuringPeriodFromEscrowAccountDto {
   // أخرى دائنة
   otherCredits?: number;
 
-  // إجمالى العمليات الدائنة
+  // إجمالي العمليات الدائنة
   totalCreditOperations?: number;
 }
 
@@ -198,7 +204,7 @@ export interface FinancialTransactionsBeginningOfProjectFromEscrowAccountDto {
   // أخرى
   otherDebts?: number;
 
-  // إجمالى العمليات المدينة
+  // إجمالي العمليات المدينة
   totalDebtOperations?: number;
   // تحصيل من العملاء
   collectionsFromCustomers?: number;
@@ -211,7 +217,7 @@ export interface FinancialTransactionsBeginningOfProjectFromEscrowAccountDto {
   // أخرى دائنة
   otherCredits?: number;
 
-  // إجمالى العمليات الدائنة
+  // إجمالي العمليات الدائنة
   totalCreditOperations?: number;
 }
 
@@ -227,7 +233,7 @@ export interface FinancialTransactionsDuringPeriodOutEscrowAccountDto {
   // أخرى مدينة
   otherDebts?: number;
 
-  // إجمالى العمليات المدينة
+  // إجمالي العمليات المدينة
   totalDebtOperations?: number;
   // تحصيل من العملاء
   collectionsFromCustomers?: number;
@@ -240,7 +246,7 @@ export interface FinancialTransactionsDuringPeriodOutEscrowAccountDto {
   // أخرى دائنة
   otherCredits?: number;
 
-  // إجمالى العمليات الدائنة
+  // إجمالي العمليات الدائنة
   totalCreditOperations?: number;
 }
 
@@ -256,7 +262,7 @@ export interface FinancialTransactionsBeginningOfProjectOutEscrowAccountDto {
   // أخرى مدينة
   otherDebts?: number;
 
-  // إجمالى العمليات المدينة
+  // إجمالي العمليات المدينة
   totalDebtOperations?: number;
 
   // تحصيل من العملاء
@@ -270,7 +276,7 @@ export interface FinancialTransactionsBeginningOfProjectOutEscrowAccountDto {
   // أخرى دائنة
   otherCredits?: number;
 
-  // إجمالى العمليات الدائنة
+  // إجمالي العمليات الدائنة
   totalCreditOperations?: number;
 }
 
@@ -278,46 +284,46 @@ export interface ProjectUnitsPositionAnalysisDto {
   // نوع الوحدات
   unitsType?: string;
 
-  // إجمالى وحدات المشروع - عدد
+  // إجمالي وحدات المشروع - عدد
   totalNumberLicenseProjectUnits?: number;
 
-  // إجمالى وحدات المشروع - نسبة
+  // إجمالي وحدات المشروع - نسبة
   totalPercentageLicenseProjectUnits?: number;
 
-  // إجمالى وحدات المشروع - قيمة
+  // إجمالي وحدات المشروع - قيمة
   totalValueLicenseProjectUnits?: number;
 
-  // إجمالى الوحدات المباعة خلال الفترة - عدد
+  // إجمالي الوحدات المباعة خلال الفترة - عدد
   totalNumberLicenseProjectUnitsSold?: number;
 
-  // إجمالى الوحدات المباعة خلال الفترة - نسبة
+  // إجمالي الوحدات المباعة خلال الفترة - نسبة
   totalPercentageLicenseProjectUnitsSold?: number;
 
-  // إجمالى الوحدلات المباعة خلال الفترة - قيمة
+  // إجمالي الوحدلات المباعة خلال الفترة - قيمة
   totalValueLicenseProjectUnitsSold?: number;
 
-  // إجمالى الوحدات المباعة منذ بداية المشروع -عدد
+  // إجمالي الوحدات المباعة منذ بداية المشروع -عدد
   totalNumberLicenseProjectUnitsSoldFromBeginning?: number;
 
-  // إجمالى الوحدات المباعة منذ بداية المشروع - قيمة
+  // إجمالي الوحدات المباعة منذ بداية المشروع - قيمة
   totalValueLicenseProjectUnitsFromBeginning?: number;
 
-  // إجمالى الوحدات المباعة منذ بداية المشروع - نسبة
+  // إجمالي الوحدات المباعة منذ بداية المشروع - نسبة
   totalPercentageLicenseProjectUnitsSoldFromBeginning?: number;
 
-  // إجمالى الوحدات المتبقة للمشروع
+  // إجمالي الوحدات المتبقة للمشروع
   totalRemainingUnits?: number;
 
-  // إجمالى الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - قيمة
+  // إجمالي الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - قيمة
   totalValueRemainingUnits?: number;
 
-  // إجمالى الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - نسبة
+  // إجمالي الوحدات المتبقة للمشروع بناء على ما تم الحصول عليه من الشركة - نسبة
   totalPercentageRemainingUnits?: number;
 
-  // إجمالى المبالغ المحصلة من الوحدات المباعة
+  // إجمالي المبالغ المحصلة من الوحدات المباعة
   totalAmountForUnitsSold?: number;
 
-  // نسبة التحصيل من إجمالى قيمة الوحدات المباعة
+  // نسبة التحصيل من إجمالي قيمة الوحدات المباعة
   percentageTotalValueOfUnitsSold?: number;
 }
 
@@ -337,7 +343,7 @@ export interface PaymentsCollectedForCancelledUnitsSoldDto {
   // ما تم دفعة خلال الربع - الدفعات التى تم ارجاعها
   paidDuringQuarter?: number;
 
-  // إجمالى الدفعات
+  // إجمالي الدفعات
   totalPayments: number;
 
   // المتبقى
@@ -400,13 +406,13 @@ export interface PeriodicCharteredAccountantReportFinancialConstraintDto {
   // مبلغ الحافز
   incentiveAmount?: number;
 
-  // هل نسبة تحصيل المبيعات وصلت الى 80% من اجمالى قيمة المبيعات
+  // هل نسبة تحصيل المبيعات وصلت إلى 80% من إجمالي قيمة المبيعات
   salesRateReached80Percentage?: number;
 
   // قيمة استرداد الدفعة الأولى
   firstPaymentRefundValue?: number;
 
-  // هل نسبة تحصيل المبيعات وصلت الى 90% من اجمالى قيمة المبيعات
+  // هل نسبة تحصيل المبيعات وصلت الى 90% من إجمالي قيمة المبيعات
   salesRateReached90Percentage?: number;
 
   // قيمة استرداد الدفعة الثانية

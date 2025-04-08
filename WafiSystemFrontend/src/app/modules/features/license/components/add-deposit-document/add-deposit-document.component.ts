@@ -132,7 +132,7 @@ export class AddDepositDocumentComponent implements OnInit {
 
   onSubmit(): void {
 
-debugger
+
     if (!this.formGroup.valid) {
       this.showValidation = true;
       return;

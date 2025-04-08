@@ -9,7 +9,7 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CreateLicenseRequestProjectDto } from '../../license/models/create-license-project-request-dto';
-import { licenseProjectByFacilityIdDto, type LicenseProjectDDL } from '../../license/models/license-project-by-facilityid-dto';
+import { BanksDDL, licenseProjectByFacilityIdDto, type LicenseProjectDDL } from '../../license/models/license-project-by-facilityid-dto';
 import { LicenseProjectRequestDetailsDto } from '../../license/models/license-request-project-details-dto';
 import { UpdateClearanceEngineeringComponentDto } from '../../license/models/update-clearance-engineering-component-dto';
 import { UpdateClearanceAccountantComponentDto } from '../../license/models/clearance-account-dto';
@@ -47,6 +47,24 @@ export class LincenseRequestProjectService {
         })
       );
   }
+  getLicenseProjectRequestPrice(licenseProjectId: string | null, licenseProjectType: number): Observable<any> {
+    let params = new HttpParams();
+
+    if (licenseProjectId) {
+      params = params.set('licenseProjectId', licenseProjectId);
+    }
+    params = params.set('licenseProjectType', licenseProjectType);
+
+    return this._httpClient
+      .get<CoreResponseDTO<any>>(
+        `${Configuration.APIs.LincenseProjectRequest.GetLicenseProjectRequestPrice}`,{ params }
+      )
+      .pipe(
+        map((res: CoreResponseDTO<any>) => {
+          return res.data as any;
+        })
+      );
+  }
   getLicenseRequestTypes(): Observable<LicenseRequestTypes[]> {
     return this._httpClient
       .get<CoreResponseDTO<LicenseRequestTypes[]>>(
@@ -75,6 +93,7 @@ export class LincenseRequestProjectService {
       );
   }
   getLicenseProjectByType(facilityId: String,licenseProjectRequestTypeEnum:LicenseProjectRequestTypeEnum): Observable<LicenseProjectDDL[]> {
+    
     return this._httpClient
       .get<CoreResponseDTO<LicenseProjectDDL[]>>(
         `${
@@ -88,6 +107,7 @@ export class LincenseRequestProjectService {
         })
       );
   }
+ 
   getRequestType(
     licenseRequestId: string,
     facilityId: String

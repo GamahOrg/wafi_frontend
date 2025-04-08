@@ -15,8 +15,8 @@ export class EngineeringConsultantAgreementComponent implements OnInit {
   @Input() header: string = "";
   cities$: Observable<CoreResponseDTO<CityDto[]>> | undefined;
   localizations = {
-    City: "المدينه",
-    SelectCity: "أختر المدينه",
+    City: "المدينة",
+    SelectCity: "أختر المدينة",
     CityRequired: "هذا الحقل مطلوب",
     NumberOfWorkDaysForAgreement: "عدد أيام عمل للمراجعة واعتماد وثيقة الصرف المقدمة",
     NumberOfWorkDaysForAgreementRequired: "هذا الحقل مطلوب",

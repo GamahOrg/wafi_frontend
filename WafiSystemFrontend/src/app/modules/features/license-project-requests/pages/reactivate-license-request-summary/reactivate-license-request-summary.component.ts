@@ -105,7 +105,7 @@ export class ReactivateLicenseRequestSummaryComponent implements OnInit, OnDestr
   }
 
   getRequestDetails() {
-    debugger
+    
      this.requestId = this.projectRequestLocalStorageService.getSelectedProjectLicenseRequestIdFromLocalStorage();
     if (this.requestId) {
       this.reactivateLicenseService.getRequestDetails(this.requestId).subscribe(res => {       
@@ -117,7 +117,7 @@ export class ReactivateLicenseRequestSummaryComponent implements OnInit, OnDestr
 
 
   getRequestDetailsHeader() {
-    debugger
+    
     this.requestId = this.projectRequestLocalStorageService.getSelectedProjectLicenseRequestIdFromLocalStorage();
     if (this.requestId) {
       this.projectLicenseServiceDetailsService.getRequestHeaderDetails(this.requestId).subscribe(res => {
@@ -163,7 +163,7 @@ export class ReactivateLicenseRequestSummaryComponent implements OnInit, OnDestr
       //   this.requestValidationData = res;
       //   this.checkGeneralErrorTabsIsExist();
       // }
-      this._toastrNotificatioService.showSuccess('تم ارسال الطلب')
+      // this._toastrNotificatioService.showSuccess('تم ارسال الطلب')
       this._router.navigate([ `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`]);
       console.log(res);
 

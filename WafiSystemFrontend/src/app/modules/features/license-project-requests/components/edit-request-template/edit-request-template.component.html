@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="requestTemplateForm">
+      <div class="tab-data-section">
+        <div class="row mb-3">
+          <!-- License Project Selection -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+              <select
+                class="form-select"
+                id="control-licenseProjectId"
+                aria-label="Default select example"
+                formControlName="licenseProjectId"
+              >
+                <option selected disabled>المشروع</option>
+                <option
+                  *ngFor="let licenseProject of licenseProjects"
+                  [ngValue]="licenseProject.id"
+                >
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="
+                  controls.licenseProjectId?.hasError('required') &&
+                  showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="tab-data-section">
+          <div class="row mb-3">
+            <div class="col-12 col-lg-6" *ngFor="let request of requestDetails">
+              <div class="form-group mb-4">
+                <label class="key">{{
+                  request?.licenseProjectRequestTemplateFile?.displayName
+                }}</label>
+                <a [href]="baseUrl + request?.file?.filePath" target="_blank">
+                  {{ request?.file?.fileDescription }}
+                </a>
+                <app-file-uploader
+                  [data]="singleFilesUploaderData"
+                  (fileUploaded)="
+                    onFileUpload(
+                      $event,
+                      request.licenseProjectRequestTemplateFile.id
+                    )
+                  "
+                ></app-file-uploader>
+                <mat-error
+                  *ngIf="
+                    uploadedFiles[request.licenseProjectRequestTemplateFile.id]
+                      ?.hasError && showValidation
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

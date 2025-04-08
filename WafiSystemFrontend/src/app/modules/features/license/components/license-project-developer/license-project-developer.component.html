@@ -1,58 +1,58 @@
 <div class="tab-data-section">
-    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="row row-gap-4">
         <br>
-        <h6 class="title fw-normal">{{'المطور العقاري '}}</h6>
+        <h6 class="title">{{'المطور عقاري '}}</h6>
         <div class="col-12 col-lg-6">
-            <div class="key">رقم رخصة بيع المطور العقاري</div>
+            <div class="key">رقم رخصة بيع المطور عقاري</div>
             <div class="value">
                 {{licenseProjectDeveloper.licenseNumber}}
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="key">اسم منشأة المطور العقاري</div>
+            <div class="key">اسم منشأة المطور عقاري</div>
             <div class="value">
                 {{licenseProjectDeveloper.developerLicenseProject.facilityName}}
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="key">منطقة منشأة المطور العقاري</div>
+            <div class="key">منطقة منشأة المطور عقاري</div>
             <div class="value">
                 {{licenseProjectDeveloper.developerLicenseProject.facilityArea}}
             </div>
         </div>
 
         <div class="col-12 col-lg-6">
-            <div class="key">مدينة منشأة المطور العقاري</div>
+            <div class="key">مدينة منشأة المطور عقاري</div>
             <div class="value">
                 {{licenseProjectDeveloper.developerLicenseProject.facilityCity}}
             </div>
         </div>
         <!-- <div class="col-12 col-lg-6">
-            <div class="key">اسم هوية مفوض المطور العقاري </div>
+            <div class="key">اسم هوية مفوض المطور عقاري </div>
             <div class="value">
                 {{licenseProjectDeveloper.delegatorName}}
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="key">رقم هوية مفوض المطور العقاري </div>
+            <div class="key">رقم هوية مفوض المطور عقاري </div>
             <div class="value">
                 {{licenseProjectDeveloper.delegatorIdentityNumber}}
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="key">البريد الإلكتروني الخاص بموفوض المطور العقاري </div>
+            <div class="key">البريد الإلكتروني الخاص بموفوض المطور عقاري </div>
             <div class="value">
                 {{licenseProjectDeveloper.delegatorEmail}}
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="key"> رقم جوال مفوض المطور العقاري</div>
+            <div class="key"> رقم جوال مفوض المطور عقاري</div>
             <div class="value">
                 {{licenseProjectDeveloper.delegatorMobile}}
             </div>
         </div> -->
         <div class="col-12 col-lg-6">
-            <div class="key">عقد التسويق بين العأرض والمطور العقاري</div>
+            <div class="key">عقد التسويق بين العأرض والمطور عقاري</div>
             <div class="value">
                 <span class="icon material-icons">picture_as_pdf</span>
                 <a *ngIf="licenseProjectDeveloper && licenseProjectDeveloper.developerAgreementFile" [href]="baseUrl + licenseProjectDeveloper?.developerAgreementFile?.filePath" target="_blank">

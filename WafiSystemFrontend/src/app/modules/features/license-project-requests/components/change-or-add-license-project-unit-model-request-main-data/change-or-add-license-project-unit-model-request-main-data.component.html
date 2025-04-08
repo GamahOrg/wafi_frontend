@@ -1,0 +1,47 @@
+<div class="tab-data-header"  *ngIf="changeOrAddLicenseProjectUnitModelRequest && changeOrAddLicenseProjectUnitModelRequest.licenseProjectRequest
+    && (changeOrAddLicenseProjectUnitModelRequest.licenseProjectRequest.externalRequestStatusId==LicenseProjectRequestStatusEnum.New || changeOrAddLicenseProjectUnitModelRequest.licenseProjectRequest.externalRequestStatusId==LicenseProjectRequestStatusEnum.CustomerFeedback)">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title">تفاصيل الطلب</h6>
+  
+    <button class="edit-icon btn btn-outline-primary" (click)="openDialog()">
+      <span class="material-icons">edit</span>
+    </button>
+  </div>
+  
+  <div class="tab-data-section bg-white p-5" *ngIf="changeOrAddLicenseProjectUnitModelRequest">
+      <div class="row row-gap-4">
+  <div class="col-12 col-lg-6">
+      <div class="key">نموذج الطلب، موضحاً به أسباب طلب التغيير</div>
+      <div class="value">
+          <span class="icon material-icons">picture_as_pdf</span>
+          <a *ngIf="changeOrAddLicenseProjectUnitModelRequest && changeOrAddLicenseProjectUnitModelRequest.applicationFormFile" [href]="baseUrl + changeOrAddLicenseProjectUnitModelRequest?.applicationFormFile?.filePath" target="_blank">
+              {{changeOrAddLicenseProjectUnitModelRequest?.applicationFormFile?.fileDescription}}
+          </a>
+      </div>
+  </div>
+  <div class="col-12 col-lg-6">
+      <div class="key">البرنامج الزمني شامل كافة منحنيات البرنامج الزمني</div>
+      <div class="value">
+          <span class="icon material-icons">picture_as_pdf</span>
+          <a *ngIf="changeOrAddLicenseProjectUnitModelRequest && changeOrAddLicenseProjectUnitModelRequest.timelineIncludingAllTimelineCurves" [href]="baseUrl + changeOrAddLicenseProjectUnitModelRequest?.timelineIncludingAllTimelineCurves?.filePath" target="_blank">
+              {{changeOrAddLicenseProjectUnitModelRequest?.timelineIncludingAllTimelineCurves?.fileDescription}}
+          </a>
+      </div>
+  </div>
+
+
+  <div class="col-12 col-lg-6">
+    <div class="key">جدول الأوزان النسبية المحدث</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="changeOrAddLicenseProjectUnitModelRequest && changeOrAddLicenseProjectUnitModelRequest.updatedRelativeWeightsTable" [href]="baseUrl + changeOrAddLicenseProjectUnitModelRequest?.updatedRelativeWeightsTable?.filePath" target="_blank">
+            {{changeOrAddLicenseProjectUnitModelRequest?.updatedRelativeWeightsTable?.fileDescription}}
+        </a>
+    </div>
+</div>
+
+  </div>
+  </div>
+  
+
+

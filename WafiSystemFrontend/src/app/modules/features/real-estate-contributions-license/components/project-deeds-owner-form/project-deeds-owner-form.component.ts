@@ -89,7 +89,7 @@ export class ProjectDeedsOwnerFormComponent implements OnInit, OnDestroy {
     CRA: 'رقم السجل التجاري',
     name: 'اسم مالك الصك /مالك منفعتها',
     mobileNumber: 'رقم جوال مالك الصك /مالك منفعتها',
-    agreementFileId: 'ملف الاتفاقية بين المطور العقاري ومالك الأرض',
+    agreementFileId: 'ملف الاتفاقية بين المطور عقاري ومالك الأرض',
 
     numberPattern: 'من فضلك ادخل رقم صحيح',
     requiredErrorMsg: 'حقل مطلوب',

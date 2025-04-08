@@ -20,7 +20,7 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
   mainTabsComponentList: tabsComponent[] = [
     {
       icon: '',
-      title: 'بيانات المطور العقاري',
+      title: 'بيانات المطور عقاري',
       disabled: false,
       id: 'RealEstateDeveloperDataComponent',
       errNum: 0,
@@ -90,7 +90,7 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
     },
     {
       icon: '',
-      title: ' بيانات المساهمه العقاريه ',
+      title: ' بيانات المساهمه عقاريه ',
       disabled: false,
       id: 'LicenseProjectMainContributionDataComponent',
       errNum: 0,
@@ -130,7 +130,7 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
     },
     {
       icon: '',
-      title: 'المطور العقاري',
+      title: 'المطور عقاري',
       disabled: false,
       id: 'ProjectDeveloperComponent',
       errNum: 0,
@@ -210,7 +210,7 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
     },
     {
       icon: '',
-      title: 'ملفات التصميم المعمارية للمشروع',
+      title: 'ملفات التصاميم المعمارية للمشروع',
       disabled: false,
       id: 'ArchitecturalDesignFilesComponent',
       errNum: 0,
@@ -420,7 +420,7 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
     },
   /*   {
       icon: '',
-      title: 'البيانات الاساسيه للمساهمه العقارية',
+      title: 'البيانات الأساسية للمساهمه عقارية',
       disabled: false,
       id: 'MainContributionDataComponent',
       errNum: 0,
@@ -430,7 +430,7 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
     }, */
     {
       icon: '',
-      title: 'الاتفاقيه',
+      title: 'الاتفاقية',
       disabled: false,
       id: 'AgreementsComponent',
       errNum: 0,

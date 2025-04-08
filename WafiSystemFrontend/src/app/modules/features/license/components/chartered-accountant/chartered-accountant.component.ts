@@ -53,7 +53,7 @@ export class CharteredAccountantComponent {
     CharteredAccountantTitle: 'المحاسب القانوني',
     CharteredAccountant: 'رقم السجل التجاري للمحاسب القانوني',
     CharteredAccountantRequired: 'هذا الحقل مطلوب',
-    CharteredAccountantLicenseNumber: 'رقم رخصه المحاسب القانوني',
+    CharteredAccountantLicenseNumber: 'رقم رخصة المحاسب القانوني',
     Required: 'هذا الحقل مطلوب',
     MinValueError: 'قيمة الحقل يجب الا تقل عن صفر',
     AgreementDate: 'تاريخ الاتفاقية',

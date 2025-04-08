@@ -9,9 +9,8 @@ import { Pagination } from 'src/app/shared/models/pagination.model';
 @Injectable()
 export class ActualValueReportService {
     constructor(private _httpClient: HttpClient) { }
-    showActualValueReportDetails: EventEmitter<Date> = new EventEmitter();
+    showActualValueReportDetails: EventEmitter<ActualValueReportPagingListDto> = new EventEmitter();
     submitSuccessfullyEventEmitter : EventEmitter<null> = new EventEmitter();
-
     getActualLookUpValues(licenseProjectId: string): Observable<ActualValueReportPagingListDto[] | null> {
   
       return this._httpClient.get<CoreResponseDTO<ActualValueReportPagingListDto[]>>(`${Configuration.APIs.ActualValuesReport.GetActualValueReportLookUpList}/${licenseProjectId}`).pipe(
@@ -38,6 +37,18 @@ export class ActualValueReportService {
         updateMonthSubmitted(licenseProjectEngineeringSupervisionId: string): Observable<CoreResponseDTO<any> | null> {
   
       return this._httpClient.get<CoreResponseDTO<any>>(`${Configuration.APIs.ActualValuesReport.UpdateMonthSubmitted}/${licenseProjectEngineeringSupervisionId}`).pipe(
+        map((res: CoreResponseDTO<any>) => {
+         
+          return res.isDone ? res  : null
+  
+        })
+      );
+    }
+
+    
+    sendMonthToStudy(licenseProjectEngineeringSupervisionPlannedReportDetailId: string): Observable<CoreResponseDTO<any> | null> {
+  
+      return this._httpClient.get<CoreResponseDTO<any>>(`${Configuration.APIs.ActualValuesReport.SendMonthToStudy}/${licenseProjectEngineeringSupervisionPlannedReportDetailId}`).pipe(
         map((res: CoreResponseDTO<any>) => {
          
           return res.isDone ? res  : null

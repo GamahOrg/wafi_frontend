@@ -1,5 +1,5 @@
 
-<h6 class="title fw-normal">{{'معلومات المشروع '}}</h6>
+<h3 class="title">{{'معلومات المشروع '}}</h3>
 <div class="tab-data-section">
   <div class="row mb-3">
       <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
@@ -16,7 +16,7 @@
       licenseProjectEngineeringActualReportDetails.licenseProjectAddresses && 
       licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 && 
       licenseProjectEngineeringActualReportDetails.licenseProjectAddresses[0].cities">
-          <div class="key"> المدينه</div>
+          <div class="key"> المدينة</div>
           <div class="value">{{licenseProjectEngineeringActualReportDetails.licenseProjectAddresses[0].cities.cityName}}</div>
       </div>
 <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails && 
@@ -74,21 +74,21 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
 
   </div>
 </div> 
+<hr>
 
-
-<h6 class="title fw-normal">{{' البرنامج الزمني '}}</h6>
+<h3 class="title">{{' البرنامج الزمني '}}</h3>
 <div class="tab-data-section">
   <div class="row mb-3">
 
 
   <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
-  <div class="key">تاريخ بدايه المشروع التعاقدي</div>
+  <div class="key">تاريخ بداية المشروع التعاقدي</div>
   <div class="value">{{ licenseProjectEngineeringActualReportDetails.startOn | date:'yyyy-MM-dd' }}</div>
  </div>
 
 
 <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
-  <div class="key">تاريخ نهايه المشروع التعاقدي</div>
+  <div class="key">تاريخ نهاية المشروع التعاقدي</div>
   <div class="value">{{ licenseProjectEngineeringActualReportDetails.endOn | date:'yyyy-MM-dd' }}</div>
  </div>
  
@@ -119,24 +119,19 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
  </div>
   </div>
 </div> 
-
+<hr>
 <div  *ngIf="showRateFlag">
-<div class="tab-data-section" *ngIf="years">
+<div class="tab-data-section">
   <div class="row mb-3">
-    <div class="col-12 col-lg-6">
-    <select class="form-select" [(ngModel)]="currenrYear" (change)="onChangeYear($event)">
-      <option label="اختار سنه"></option>
-      <option *ngFor="let item of years" [value]="item">
-        {{ item }}
-      </option>
-    </select>
-  </div>
   <div class="col-12 col-lg-6">
-    <button type="button" class="btn btn-primary" (click)="openAddEditActualValueWorkStatuesReportDialog()">تعديل بيانات الشهر</button>
+    <button type="button" class="btn btn-primary" (click)="openAddEditActualValueWorkStatuesReportDialog()" *ngIf="
+    actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+     actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+     || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback">تعديل بيانات الشهر</button>
  </div> 
   </div>
 </div> 
-<h6 class="title fw-normal">{{'نسبة الانجاز '}}</h6>
+<h3 class="title">{{'نسبة الانجاز الشهريه'}}</h3>
 <div class="tab-data-section">
   <div class="row mb-3">
     <table class="table table-light" style="width:100%">
@@ -157,7 +152,7 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
               {{detail.projectMonthlyPlannedCompletionRate}}</td>
           </tr>
           <tr>
-            <th> نسبه الانجاز الفعلىة الشهريه : </th>
+            <th>نسبه الانجاز الفعلية الشهرية : </th>
             <td
             *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
             let i=index;">
@@ -177,7 +172,8 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
   </div>
 
 </div>
-<h6 class="title fw-normal">{{'نسبة الانجاز '}}</h6>
+<hr>
+<h3 class="title">{{'نسبة الانجاز التراكميه'}}</h3>
 <div class="tab-data-section">
   <div class="row mb-3">
     <table class="table table-light" style="width:100%">
@@ -199,7 +195,7 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
           </tr>
           
           <tr>
-            <th>نسبه الانجاز الفعلىه التراكميه:</th>
+            <th>نسبه الانجاز الفعلية التراكميه:</th>
             <td
             *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
             let i=index;">
@@ -218,7 +214,8 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
   </div>
 
 </div>
- <h6 class="title fw-normal">{{' العماله'}}</h6>
+<hr>
+ <h3 class="title">{{' العماله'}}</h3>
  <div class="tab-data-section">
   <div class="row mb-3">
    <div class="table-responsive">
@@ -264,8 +261,8 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
  
 
 
-
- <h6 class="title fw-normal">{{'المرفقات '}}</h6>
+<hr>
+ <h3 class="title">{{'المرفقات '}}</h3>
 <div class="tab-data-section">
   <div class="row mb-3">
     <div class="col-12 col-lg-6">
@@ -281,7 +278,12 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
             {{file.imageFile.fileDescription}}</a>
             <div class="value">
                 <span class="delete" 
-                    (click)="deletFile(file.imageFile.id)"><i
+                    (click)="deletFile(file.imageFile.id)" *ngIf="
+                    actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+                     actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                     || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
+                
+                ><i
                         class="material-icons text-danger">close</i></span>
             </div>
         </div>
@@ -302,7 +304,12 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
             {{file.videoFile.fileDescription}}</a>
             <div class="value">
                 <span class="delete" 
-                    (click)="deletFile(file.videoFile.id)"><i
+                    (click)="deletFile(file.videoFile.id)" *ngIf="
+                    actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+                     actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                     || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
+                
+                ><i
                         class="material-icons text-danger">close</i></span>
             </div>
         </div>
@@ -323,7 +330,12 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
             {{file.mapFile.fileDescription}}</a>
             <div class="value">
                 <span class="delete" 
-                    (click)="deletFile(file.mapFile.id)"><i
+                    (click)="deletFile(file.mapFile.id)" *ngIf="
+                    actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+                     actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                     || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
+                
+                ><i
                         class="material-icons text-danger">close</i></span>
             </div>
         </div>

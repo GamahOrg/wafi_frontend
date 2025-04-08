@@ -21,11 +21,13 @@ export class AddEditChangeplanLicenseRequestEngineeringSummaryComponent {
   licenseProjectRequestId?:string;
   licenseProjectRequestChangePlanFull?:LicenseProjectRequestChangePlanFullDto;
   baseUrl = `${environment.baseURL}/`;
+  isEditMode: boolean = false;  // تعديل
   updateChangePlanForEngineeringConsultant?: UpdateChangePlanForEngineeringConsultantDto;
   changePlanForEngineeringConsultantForm = this._formBuilder.group({
     reasonsAndJustificationsForChangingProjectPlan: this._formBuilder.control<string | null>(null, [Validators.required]),
     achievementRate: this._formBuilder.control<number | null>(null, [Validators.required]),
     isProjectStartedForEngineeringConsultant:this._formBuilder.control<boolean | null>(false),
+    
   });
   showValidation: boolean = false;
   mueltiFilesUploaderData: FileUploader = {
@@ -54,7 +56,7 @@ export class AddEditChangeplanLicenseRequestEngineeringSummaryComponent {
     this.observePopupEvents();
   }
   getSelectedRequestIdFromLocalStorage(): void {
-    debugger;
+    
     this.licenseProjectRequestId = this._projectRequestLocalStorageService.getSelectedProjectLicenseRequestIdFromLocalStorage() as string;
 
   }
@@ -64,11 +66,15 @@ export class AddEditChangeplanLicenseRequestEngineeringSummaryComponent {
     this.subscriptions.push(
       this._cahngePlaneRequestDetailsService.getLicenseProjectRequestChangePlan().subscribe((res: LicenseProjectRequestChangePlanFullDto | null) => {
         if (res) {
-          this.licenseProjectRequestChangePlanFull = res;
+         this.licenseProjectRequestChangePlanFull = res;
+         this.isEditMode = true;  // تعديل
          this.lastEngineeringReportId=this.licenseProjectRequestChangePlanFull.lastEngineeringReportId;
          this.projecTimelineFileAttachments=this.licenseProjectRequestChangePlanFull.projecTimelineFileAttachments;
          this.licenseProjectRequestChangePlanProjectAttachments =this.licenseProjectRequestChangePlanFull.licenseProjectRequestChangePlanProjectAttachments;
-          this.changePlanForEngineeringConsultantForm.patchValue(this.licenseProjectRequestChangePlanFull as any);
+         this.changePlanForEngineeringConsultantForm.patchValue(this.licenseProjectRequestChangePlanFull as any);
+        }
+        else{
+          this.isEditMode = false;    // تعديل 
         }
       }),
     )
@@ -83,7 +89,7 @@ export class AddEditChangeplanLicenseRequestEngineeringSummaryComponent {
   }
  
   save(): void {
-    debugger;
+    
     if (!this.changePlanForEngineeringConsultantForm.valid) 
     {
       this.showValidation = true;
@@ -116,7 +122,7 @@ if(!this.projecTimelineFileAttachments || this.projecTimelineFileAttachments.len
       this._cahngePlaneRequestDetailsService.updateChangePlanForEngineeringConsultant(this.updateChangePlanForEngineeringConsultant).subscribe((res) => {
 
         if (res?.isDone) {
-          debugger;
+          
           this._cahngePlaneRequestDetailsService.setLicenseProjectRequestChangePlan(res.data as LicenseProjectRequestChangePlanFullDto);
           this._toastrNotificationService.showSuccess('تم الحفظ');
           this.closeDialog();

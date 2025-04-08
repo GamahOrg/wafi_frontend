@@ -1,0 +1,40 @@
+
+  <div class="tab-data-section bg-white p-5" *ngIf="changeLicenseProjectNameRequest">
+      <div class="row row-gap-4">
+   
+        <div class="col-12 col-lg-6">
+            <div class="key">اسم المشروع الجديد</div>
+            <div class="value">
+                <span class="icon material-icons">picture_as_pdf</span>
+            {{changeLicenseProjectNameRequest?.projectName}}
+            </div>
+        </div>
+        
+       
+  <div class="col-12 col-lg-6">
+      <div class="key">نموذج الطلب، موضحاً به أسباب طلب التغيير</div>
+      <div class="value">
+          <span class="icon material-icons">picture_as_pdf</span>
+          <a *ngIf="changeLicenseProjectNameRequest && changeLicenseProjectNameRequest.applicationFormFile" [href]="baseUrl + changeLicenseProjectNameRequest?.applicationFormFile?.filePath" target="_blank">
+              {{changeLicenseProjectNameRequest?.applicationFormFile?.fileDescription}}
+          </a>
+      </div>
+  </div>
+  <div class="col-12 col-lg-6">
+      <div class="key">نموذج عقد البيع/التأجير متضمناً الاسم الجديد للمشروع</div>
+      <div class="value">
+          <span class="icon material-icons">picture_as_pdf</span>
+          <a *ngIf="changeLicenseProjectNameRequest && changeLicenseProjectNameRequest.salesOrRentalContract" [href]="baseUrl + changeLicenseProjectNameRequest?.salesOrRentalContract?.filePath" target="_blank">
+              {{changeLicenseProjectNameRequest?.salesOrRentalContract?.fileDescription}}
+          </a>
+      </div>
+  </div>
+
+
+
+
+
+
+  </div>
+  </div>
+  

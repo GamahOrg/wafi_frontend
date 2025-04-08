@@ -42,7 +42,7 @@ export class CertifiedFacilityEngineersComponent {
 
   GetByFacilityId() {
     this.subscriptions.push(
-      this._certifiedEngineerService.GetFacilityById(this.userData?.facilities[0].id as string).subscribe(res => {
+      this._certifiedEngineerService.GetAllFacilityById(this.userData?.facilities[0].id as string).subscribe(res => {
         this.models = res as CertifiedEngineerDto[];
       })
     )

@@ -2,7 +2,7 @@
   <div *ngIf="form" class="d-flex flex-column h-100" [formGroup]="form">
     <div class="tab-data-header">
       <div class="icon"><span class="material-icons">list_alt</span></div>
-      <h6 class="title fw-normal">
+      <h6 class="title">
         {{ localizations.EngineeringConsultantTitle }}
       </h6>
     </div>
@@ -11,6 +11,7 @@
 
       <app-engineering-consultant-customer-info
         [form]="form"
+        [code]="typeCode.ContributionEngineeringConsultant"
         [requiredMessage]="localizations.EngineeringConsultantRequired"
         [label]="localizations.EngineeringConsultant"
         [buttonName]="localizations.ValidateConsultant"
@@ -22,7 +23,7 @@
       <div class="tab-data-section">
         <div class="row">
           <div class="tab-data-section">
-            <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+            <div class="row row-gap-4">
               <div class="col-12 col-lg-6">
                 <div class="key">رقم السجل التجاري</div>
                 <div class="value">
@@ -69,7 +70,7 @@
                 </div>
               </div>
               <div class="col-12 col-lg-6">
-                <div class="key">رقم الرخصه</div>
+                <div class="key">رقم الرخصة</div>
                 <div class="value">
                   <span class="icon material-icons">blinds</span>
                   {{
@@ -124,7 +125,7 @@
         >
         </app-engineering-consultant-agreement>
       </div>
-      <h6 class="title fw-normal">ملفات الاتفاقيه</h6>
+      <h6 class="title">ملفات الاتفاقية</h6>
       <div class="col-12 col-lg-12">
         <div class="form-group mb-4">
           <div

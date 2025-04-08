@@ -1,8 +1,3 @@
-// Angular Material Icon
-@import '/src/assets/fonts/angular-material-icons/Material+Icons.css';
-@import '/src/assets/fonts/angular-material-icons/Material+Icons+Outlined.css';
-@import '/src/assets/fonts/angular-material-icons/Material+Icons+Two+Tone.css';
-
 // Variables
 @import '/src/assets/styles/custom-variables';
 
@@ -10,6 +5,7 @@
 @import "/node_modules/bootstrap/scss/bootstrap";
 
 // Bootstrap Overrides
+@import '/src/assets/styles/bootstrap-custom/root';
 @import '/src/assets/styles/bootstrap-custom/cards';
 @import '/src/assets/styles/bootstrap-custom/alerts';
 @import '/src/assets/styles/bootstrap-custom/buttons';
@@ -21,8 +17,13 @@
 @import '/src/assets/styles/bootstrap-custom/datepicker';
 @import '/src/assets/styles/bootstrap-custom/carousel';
 
-// Material Theme
+// Angular Material Theme
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+// Angular Material Icon
+@import '/src/assets/fonts/angular-material-icons/Material+Icons.css';
+@import '/src/assets/fonts/angular-material-icons/Material+Icons+Outlined.css';
+@import '/src/assets/fonts/angular-material-icons/Material+Icons+Two+Tone.css';
 
 // Material Overrides
 @import '/src/assets/styles/material-custom/typography';
@@ -50,21 +51,3 @@
 // General
 @import '/src/assets/styles/helpers';
 @import '/src/assets/styles/general';
-// .upload-progress{
-//     display: none !important;
-// }
-// span.file-summary:nth-last-of-type(1){
-//     display: none !important;
-// }
-.mat-mdc-progress-bar{
-    display: none !important;
-}
-
-.upload-progress{
-    display: none !important;
-}
-.mat-mdc-card.mdc-card.ng-star-inserted{
-    span:nth-last-of-type(1), span:nth-last-of-type(2){
-        display: none !important;
-    }
-}

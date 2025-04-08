@@ -1,0 +1,56 @@
+<div class="card">
+
+    <div class="card-header">
+      <h6 class="card-title"*ngIf="!isEditMode">طلب تغيير او إضافة نماذج وحدات بالمشروع عقاري</h6>
+    </div>
+    <div class="card-body">
+      <form class="d-flex flex-column h-100">
+        <div class="tab-data-section bg-white p-5">
+          <div class="row mb-3">
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">نموذج الطلب، موضحاً به أسباب طلب التغيير</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistApplicationFormFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !applicationFormFileId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">البرنامج الزمني شامل كافة منحنيات البرنامج الزمني</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistTimelineIncludingAllTimelineCurvesFilesUploaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !timelineIncludingAllTimelineCurvesId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <div class="value">
+                    <span class="icon material-icons-outlined">content_copy</span>
+                    <div class="key">جدول الأوزان النسبية المحدث</div>
+                  </div>
+                  <app-file-uploader [data]="singleFilesUploaderData"
+                    (fileUploaded)="onExistUpdatedRelativeWeightTableFilesUloaded($event)"></app-file-uploader>
+                  <div class="invalid-feedback d-block" *ngIf="showValidation && !updatedRelativeWeightsTableId">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+

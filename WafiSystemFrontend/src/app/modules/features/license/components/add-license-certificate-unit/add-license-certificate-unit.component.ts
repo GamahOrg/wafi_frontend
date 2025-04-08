@@ -61,7 +61,7 @@ export class AddLicenseCertificateUnitComponent {
       
   }
   save(): void {
-    debugger;
+    
     if (!this.licenseCertificateUnitForm.valid) {
       this.showValidation = true;
       return;

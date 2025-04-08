@@ -63,7 +63,7 @@ export class ConstructionLicenseFormComponent implements OnInit, OnDestroy {
     title: 'بيانات الرخص الانشائية',
     constructionLicensetype: 'نوع الرخص الانشائية',
     issueOn: 'تاريخ الرخصة',
-    licenseFile: 'ملفات الرخصه الانشائية',
+    licenseFile: 'ملفات الرخصة الانشائية',
     validateLicenseFile: 'يجب اختيار ملفات الرخصة الانشائية',
     licenseNumber: 'رقم الرخصة',
     landTotalSpace: 'مساحة مسطح البناء للمشروع',

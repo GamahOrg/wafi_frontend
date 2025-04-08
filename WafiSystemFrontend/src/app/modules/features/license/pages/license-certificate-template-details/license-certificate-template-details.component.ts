@@ -33,7 +33,7 @@ export class LicenseCertificateTemplateDetailsComponent {
     this.watchPaginationActions();
   }
   getLicenseCertificateTemplateIdFromLocalStorage(): void {
-    debugger;
+    
     let id = this._licenseCertificateTemplateService.getLicenseCertificateTemplateIdFromLocalStorage() as string;
     this.licenseCertificateTemplateId=Number(id);
     if(this.licenseCertificateTemplateId)
@@ -60,7 +60,7 @@ export class LicenseCertificateTemplateDetailsComponent {
   getlicenseCertificateUnitList(): void {
     this.subscriptions.push(
       this._licenseCertificateTemplateService.getlicenseCertificateUnitList(this.licenseCertificateTemplateId as number,this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseCertificateUnitDto[]> | null) => {
-        debugger;
+        
        this.updateRequestList(res as Pagination<LicenseCertificateUnitDto[]>);
       })
     )

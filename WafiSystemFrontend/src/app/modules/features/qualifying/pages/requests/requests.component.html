@@ -1,21 +1,19 @@
 <div class="page">
-    <div class="page-header mb-4">
-        <div class="page-title">
-            <h2 class="title">إنشاء طلب تأهيل جديد</h2>
-        </div>
-    </div>
+  <div class="page-title">
+    <h2 class="title">إنشاء طلب تأهيل جديد</h2>
+  </div>
 
+  <div class="page-content p-3 rounded-2 bg-white">
     <div class="row g-4 row-cols-lg-5" *ngIf="qualificationRequestTypes && qualificationRequestTypes.length>0">
-        <div class="col-12 col-md-6 col-lg" *ngFor="let qualificationRequestType of qualificationRequestTypes">
-            <div class="card qualiication-card cursor-pointer">
-                <div class="icon"><span class="material-icons-outlined">{{getIconeName(qualificationRequestType.typeCode)}}</span></div>
-                <div class="card-body"
-                     (click)="navogateToCreateRequest(qualificationRequestType.typeCode)">
-                    <h6 class="card-title">{{qualificationRequestType.typeName}}</h6>
-                </div>
-            </div>
+      <div class="col-12 col-md-6 col-lg" *ngFor="let qualificationRequestType of qualificationRequestTypes">
+        <div class="card qualiication-card cursor-pointer">
+          <div class="icon"><span class="material-icons-outlined">{{getIconeName(qualificationRequestType.typeCode)}}</span></div>
+          <div class="card-body" (click)="navogateToCreateRequest(qualificationRequestType.typeCode)">
+            <h6 class="card-title">{{qualificationRequestType.typeName}}</h6>
+          </div>
         </div>
-        <!-- <div class="col-12 col-md-6 col-lg">
+      </div>
+      <!-- <div class="col-12 col-md-6 col-lg">
             <div class="card qualiication-card cursor-pointer">
                 <div class="icon"><span class="material-icons-outlined">local_convenience_store</span></div>
                 <div class="card-body"
@@ -24,7 +22,7 @@
                 </div>
             </div>
         </div> -->
-        <!-- <div class="col-12 col-md-6 col-lg">
+      <!-- <div class="col-12 col-md-6 col-lg">
             <div class="card qualiication-card cursor-pointer">
                 <div class="icon"><span class="material-icons-outlined">how_to_reg</span></div>
                 <div class="card-body"
@@ -33,7 +31,7 @@
                 </div>
             </div>
         </div> -->
-        <!-- <div class="col-12 col-md-6 col-lg">
+      <!-- <div class="col-12 col-md-6 col-lg">
             <div class="card qualiication-card cursor-pointer">
                 <div class="icon"><span class="material-icons-outlined">local_convenience_store</span></div>
                 <div class="card-body"
@@ -42,7 +40,7 @@
                 </div>
             </div>
         </div> -->
-        <!-- <div class="col-12 col-md-6 col-lg">
+      <!-- <div class="col-12 col-md-6 col-lg">
             <div class="card qualiication-card cursor-pointer">
                 <div class="icon"><span class="material-icons-outlined">how_to_reg</span></div>
                 <div class="card-body"
@@ -51,7 +49,7 @@
                 </div>
             </div>
         </div> -->
-        <!-- <div class="col-12 col-md-6 col-lg">
+      <!-- <div class="col-12 col-md-6 col-lg">
             <div class="card qualiication-card cursor-pointer">
                 <div class="icon"><span class="material-icons-outlined">store</span></div>
                 <div class="card-body"
@@ -60,7 +58,7 @@
                 </div>
             </div>
         </div> -->
-        <!-- <div class="col-12 col-md-6 col-lg">
+      <!-- <div class="col-12 col-md-6 col-lg">
             <div class="card qualiication-card cursor-pointer">
                 <div class="icon"><span class="material-icons-outlined">credit_score</span></div>
                 <div class="card-body"
@@ -70,4 +68,5 @@
             </div>
         </div> -->
     </div>
+  </div>
 </div>

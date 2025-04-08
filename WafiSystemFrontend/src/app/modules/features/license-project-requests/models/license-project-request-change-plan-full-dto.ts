@@ -28,7 +28,7 @@ export interface LicenseProjectRequestChangePlanFullDto {
      achievementRate:number;
          //حالة بدا المشروع الخاصة بمكتب الاستشاري الهندسي
     isProjectStartedForEngineeringConsultant:boolean;
-    //أخر تقرير هندسي
+    //آخرتقرير هندسي
      lastEngineeringReportId :string;
     lastEngineeringReport: SysFileManagerCreateUpdateDto
    
@@ -39,7 +39,7 @@ export interface LicenseProjectRequestChangePlanFullDto {
     escrowAccountBalance: number;
      //حالة بدا المشروع الخاصه بالمحاسب القانوني
    isProjectStartedCharteredAccountant:boolean;
-    //أخر تقرير مالي
+    //آخرتقرير مالي
      lastFinancialReportId :string;
      lastFinancialReport :SysFileManagerCreateUpdateDto
     //حالة وجود وحدات مباعة

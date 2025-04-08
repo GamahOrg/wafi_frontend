@@ -1,7 +1,7 @@
 <form class="d-flex flex-column h-100" id="form-licenseProjectPromissoryNoteForm">
     <div class="tab-data-header">
         <div class="icon"><span class="material-icons">list_alt</span></div>
-        <h6 class="title fw-normal">{{'سند لأمر'}}</h6>
+        <h6 class="title">{{'سند لأمر'}}</h6>
     </div>
 
     <div class="tab-data-section" [formGroup]="licenseProjectPromissoryNoteForm">
@@ -9,7 +9,7 @@
             
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
-                    <label class="form-label">تاريخ الانشاء</label>
+                    <label class="form-label">تاريخ الإنشاء</label>
                     <div class="input-group">
                         <input bsDatepicker
                                type="text" id="control-creationDate"
@@ -23,11 +23,11 @@
             </div>
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
-                    <label class="form-label">مكان الانشاء</label>
+                    <label class="form-label">مكان الإنشاء</label>
                     <input type="text" id="control-creationPlace"
                            class="form-control"
                            formControlName="creationPlace"
-                           placeholder="مكان الانشاء">
+                           placeholder="مكان الإنشاء">
                     <mat-error *ngIf="controls.creationPlace?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
                 </div>
@@ -131,7 +131,7 @@
                            formControlName="isPowerOfAttorneyToOtherThanDeveloper" />
                     <label class="form-check-label"
                            for="isPowerOfAttorneyToOtherThanDeveloper">
-                           هل تم توكيل شخص آخر غير المطور العقاري
+                           هل تم توكيل شخص آخر غير المطور عقاري
                     </label>
                 </div>
 

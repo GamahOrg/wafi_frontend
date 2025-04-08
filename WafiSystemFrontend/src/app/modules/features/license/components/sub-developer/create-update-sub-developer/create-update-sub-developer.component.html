@@ -1,9 +1,7 @@
 <div class="d-flex flex-column h-100">
   <h6 mat-dialog-title>
-    <button mat-icon-button
-            mat-dialog-close
-            tabindex="-1">
-      <mat-icon>close</mat-icon>
+    <button class="btn btn-link p-0" mat-dialog-close tabindex="-1">
+      <i class="material-icons h6">close</i>
     </button>
   </h6>
 
@@ -28,7 +26,7 @@
 
         <ng-container *ngIf="facility$ | async">
           <div class="tab-data-section">
-            <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+            <div class="row row-gap-4">
 
               <div class="col-12 col-lg-6">
                 <div class="key">اسم الشركة</div>
@@ -46,7 +44,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <label for="licenseNumber"
                    class="form-label">{{localizations.licenseNumber}}</label>
             <input id="control-licenseNumber"
@@ -58,7 +56,7 @@
               {{localizations.delegatorIdentityNumberNoCorrect}}
             </mat-error>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <label for="projectName"
                    class="form-label">{{localizations.projectName}}</label>
             <input id="control-projectName"
@@ -67,7 +65,7 @@
                    formControlName="projectName">
           </div>
 
-          <!--   <div class="col-12 col-md-6">
+          <!--   <div class="col-12 col-lg-6">
             <label for="delegatorIdentityNumber" class="form-label">{{localizations.delegatorIdentityNumber}}</label>
             <input id="control-delegatorIdentityNumber" name="delegatorIdentityNumber" type="text" class="form-control"
               formControlName="delegatorIdentityNumber">
@@ -78,7 +76,7 @@
             </mat-error>
           </div> -->
 
-          <!--  <div class="col-12 col-md-6">
+          <!--  <div class="col-12 col-lg-6">
             <label for="delegatorName" class="form-label">{{localizations.DeveloperName}}</label>
             <input   id="control-delegatorName" type="text" class="form-control"
               formControlName="delegatorName">
@@ -89,7 +87,7 @@
             </mat-error>
           </div> -->
 
-          <!--     <div class="col-12 col-md-6">
+          <!--     <div class="col-12 col-lg-6">
             <label for="delegatorMobile" class="form-label">{{localizations.DeveloperMobile}}
             </label>
             <input id="control-delegatorMobile" type="text" class="form-control"
@@ -104,7 +102,7 @@
             </mat-error>
           </div> -->
 
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <label class="form-label">{{localizations.AgreementFile}}</label>
             <app-file-uploader [data]="uploadConfig"
                                (fileUploaded)="onUpload($event)"

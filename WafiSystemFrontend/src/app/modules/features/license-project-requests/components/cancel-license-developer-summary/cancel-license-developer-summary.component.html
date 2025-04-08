@@ -1,26 +1,25 @@
 <div class="tab-data-header">
   <div class="icon"><span class="material-icons">list_alt</span></div>
-  <h6 class="title fw-normal">البيانات من المطور</h6>
+  <h6 class="title">البيانات من المطور</h6>
 
   <button
     *ngIf="showButton"
     (click)="openRealEstateDialog()"
-    mat-raised-button
-    class="edit-icon"
+    class="edit-icon btn btn-outline-primary"
   >
     <span class="material-icons">edit </span>
   </button>
 </div>
 
-<div class="tab-data-section">
-  <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-    <div class="col-12 col-md-6">
+<div class="tab-data-section bg-white p-5">
+  <div class="row row-gap-4">
+    <div class="col-12 col-lg-6">
       <div class="key">مبررات و مشفوعات الغاء الرخصة</div>
       <div class="value">
         {{ projectDetails.justificationsAndReasons }}
       </div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-lg-6">
       <div
         *ngIf="projectDetails.documentSupportingJustificationFiles != null"
         class="key"
@@ -44,14 +43,14 @@
         </a>
       </div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-lg-6">
       <div class="key">تمت المخالصة مع الاستشاري الهندسي</div>
       <div class="value">
         {{ projectDetails.isClearanceEngineeringConsultantDone ? "نعم" : "لا" }}
       </div>
     </div>
     <div
-      class="col-12 col-md-6"
+      class="col-12 col-lg-6"
       *ngIf="projectDetails.isClearanceEngineeringConsultantDone"
     >
       <div class="key">ملف المخالصة النهائية مع الاستشاري الهندسي</div>
@@ -76,7 +75,7 @@
       </a>
     </div>
     <div
-      class="col-12 col-md-6"
+      class="col-12 col-lg-6"
       *ngIf="!projectDetails.isClearanceEngineeringConsultantDone"
     >
       <div class="key">اسباب عدم اتمام المخالصةمع الاستشاري الهندسي</div>
@@ -87,7 +86,7 @@
       </div>
     </div>
     <div
-      class="col-12 col-md-6"
+      class="col-12 col-lg-6"
       *ngIf="!projectDetails.isClearanceEngineeringConsultantDone"
     >
       <div class="key">مستندات عدم اتمام المخالصة مع الاستشاري الهندسي</div>
@@ -114,14 +113,14 @@
         </a>
       </div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-lg-6">
       <div class="key">تمت المخالصة مع المحاسب القانوني</div>
       <div class="value">
         {{ projectDetails.isClearanceAccountantDone ? "نعم" : "لا" }}
       </div>
     </div>
     <div
-      class="col-12 col-md-6"
+      class="col-12 col-lg-6"
       *ngIf="projectDetails.isClearanceAccountantDone"
     >
       <div class="key">ملف المخالصة النهائية مع المحاسب القانوني</div>
@@ -142,7 +141,7 @@
       </a>
     </div>
     <div
-      class="col-12 col-md-6"
+      class="col-12 col-lg-6"
       *ngIf="!projectDetails.isClearanceAccountantDone"
     >
       <div class="key">اسباب عدم اتمام المخالصة مع المحاسب القانوني</div>
@@ -151,7 +150,7 @@
       </div>
     </div>
     <div
-      class="col-12 col-md-6"
+      class="col-12 col-lg-6"
       *ngIf="!projectDetails.isClearanceAccountantDone"
     >
       <div class="key">مستندات عدم اتمام المخالصة مع المحاسب القانوني</div>

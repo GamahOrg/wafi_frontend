@@ -1,43 +1,33 @@
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .type-item {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 
-    padding: 1.5rem;
-    text-align: center;
+  padding: .5rem 1rem;
+  text-align: center;
 
-    background-color: $white;
-    border-bottom: 5px solid transparent;
-    border-radius: $card-border-radius;
-    box-shadow: 0px 2px 16px #B5B7B9;
+  background-color: $white;
+  border-bottom: 2px solid transparent;
+
+  .title {
+    font-weight: bold;
+    color: $lightgray;
+  }
+
+  &.active {
+    border-color: $theme-main;
 
     .title {
-        font-weight: bold;
-        // color: $darkblue;
-        color: $theme-dark;
+      color: $theme-main;
     }
-
-    &.active {
-        // background-color: $darkblue;
-        background-color: $theme-dark;
-        // border-bottom: 5px solid $midblue;
-        border-bottom: 5px solid $theme-mid;
-
-        .title {
-            color: $white;
-        }
-    }
+  }
 }
 
 .licenses-group {
-    &+.licenses-group {
-        margin-top: 3rem;
-    }
-
-    .licenses-group-data {
-        margin-top: 1.5rem;
-    }
+  .licenses-group-data {
+    margin-top: 1.5rem;
+  }
 }

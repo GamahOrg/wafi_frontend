@@ -103,7 +103,7 @@ export class LicenseProjectRealEstateDeveloperDataComponent {
     savedSuccessfully: 'تم الحفظ',
     phoneNumberPattern: 'من فضلك ادخل رقم جوال صحيح',
     emailPattern: 'من فضلك ادخل البريد الإلكتروني صحيح',
-    facilityAddress: "عنوان شركة المطور العقاري",
+    facilityAddress: "عنوان شركة المطور عقاري",
     applicantData: "بيانات مقدم الطلب (مالك الحساب /مفوض)",
     applicantName: "اسم مقدم الطلب (المفوض)",
     applicantJobTitle: "منصب المفوض",

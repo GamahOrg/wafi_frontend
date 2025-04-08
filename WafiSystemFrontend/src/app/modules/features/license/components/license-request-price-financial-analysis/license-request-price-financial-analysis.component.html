@@ -1,7 +1,7 @@
 <div class="tab-data-section">
-    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="row row-gap-4">
         <br>
-        <h6 class="title fw-normal">{{'جدول المساحات الأساسية'}}</h6>
+        <h6 class="title">{{'جدول المساحات الأساسية'}}</h6>
 
         <div class="col-12 col-lg-6">
             <div class="key"> المساحة الإجمالية للمشروع  </div>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <hr>
-        <h6 class="title fw-normal">{{'التحليل المالي للأسعار'}}</h6>
+        <h6 class="title">{{'التحليل المالي للأسعار'}}</h6>
         <div class="col-12 col-lg-6">
             <div class="key">إجمالي قيمة المشروع</div>
             <div class="value">
@@ -66,7 +66,7 @@
             </div>
         </div>
         <hr>
-        <h6 class="title fw-normal">{{'المرفقات'}}</h6>
+        <h6 class="title">{{'المرفقات'}}</h6>
         <div class="col-12 col-lg-6">
             <div class="key">الجدول الزمني المقترح</div>
             <div class="value" *ngFor="let activity of licenseProjectFeasibilityStudyFullDto?.licenseProjectProposedScheduleFiles">
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="key">ملفات دراسة الجدوي</div>
+            <div class="key">ملفات دراسة الجدوى</div>
             <div class="value" *ngFor="let activity of licenseProjectFeasibilityStudyFullDto?.licenseProjectFeasibilityStudyFiles">
                 <span class="icon material-icons">picture_as_pdf</span>
                 <a *ngIf="activity && activity.feasibilityStudyFile" [href]="baseUrl + activity?.feasibilityStudyFile?.filePath" target="_blank">
@@ -95,7 +95,7 @@
             </div>
         </div>
         <hr>
-        <h6 class="title fw-normal">{{'الافتراضات التي تستند إلى الدراسة'}}</h6>
+        <h6 class="title">{{'الافتراضات التي تستند إلى الدراسة'}}</h6>
         <div class="col-12 col-lg-6">
             <div class="key"></div>
             <div class="value">
@@ -103,7 +103,7 @@
             </div>
         </div>
         <hr>
-        <h6 class="title fw-normal">{{'الجهة المعدة لدراسة الجدوى'}}</h6>
+        <h6 class="title">{{'الجهة المعدة لدراسة الجدوى'}}</h6>
         <div class="col-12 col-lg-6">
             <div class="key">اسم الجهة</div>
             <div class="value">

@@ -20,6 +20,7 @@ import { environment } from 'src/environments/environment';
 import { UploadFileModel } from 'src/app/shared/models/upload-file.model';
 import { SysFileManagerCreateUpdateDto } from 'src/app/shared/models/sys-file-manager-create-update-dto';
 import  { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { QualificationTypeCode } from 'src/app/core/enums/qualification-type-code';
 
 @Component({
   selector: 'app-engineering-consultant',
@@ -41,12 +42,13 @@ export class EngineeringConsultantComponent implements OnInit {
   facility$: BehaviorSubject<FacilityShortDto | undefined> =
     new BehaviorSubject<FacilityShortDto | undefined>(undefined);
   types = StaffTypes;
+   typeCode = QualificationTypeCode;
   localizations = {
     EngineeringConsultantTitle: 'الاستشاري الهندسي',
     EngineeringConsultant: 'رقم السجل التجاري للاستشاري الهندسي',
     EngineeringConsultantRequired: 'هذا الحقل مطلوب',
     ValidateConsultant: 'التحقق من السجل التجاري',
-    EngineeringConsultantLicenseNumber: 'رقم رخصه الاستشاري الهندسي',
+    EngineeringConsultantLicenseNumber: 'رقم رخصة الاستشاري الهندسي',
     EngineeringConsultantLicenseNumberRequired: 'هذا الحقل مطلوب',
     AgreementSection: 'اتفاقية عقد الاستشاري الهندسي',
     FirstStaffAgreement: 'بيان تواجد طاقم الإشراف الهندسى بالشهر',
@@ -437,7 +439,7 @@ export class EngineeringConsultantComponent implements OnInit {
           this.entity.numberOfMonths = res;
         } else {
           this.toastService.showError(
-            'يجب ان يتم ادخال تاريخ البدايه  او النهايه للمشروع او المساهمه '
+            'يجب ان يتم ادخال تاريخ البداية  او النهاية للمشروع او المساهمه '
           );
         }
       });

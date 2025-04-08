@@ -12,7 +12,7 @@ export interface UpdateChangePlanForEngineeringConsultantDto {
     achievementRate :number;
       //حالة بدا المشروع الخاصة بمكتب الاستشاري الهندسي
       isProjectStartedForEngineeringConsultant:boolean;
-    //أخر تقرير هندسي
+    //آخرتقرير هندسي
    lastEngineeringReportId:string;
 }
 export interface LicenseProjectRequestChangePlanProjectAttachmentCreateUpdateDto

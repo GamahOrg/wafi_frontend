@@ -60,7 +60,7 @@ export class AddBuyerComponent {
     )
   }
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectBuyerForm.valid) {
       this.showValidation = true;
       return;

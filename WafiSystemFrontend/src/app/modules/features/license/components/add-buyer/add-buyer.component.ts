@@ -122,7 +122,7 @@ export class AddBuyerComponent {
     })
   }
   loadAveragePrice(): void {
-    debugger
+    
     const filteredItem = this.projectUnitCodes?.find(x => x.id === (this.controls.unitCodeId.value as string))
 
     this.controls.blockId.setValue(filteredItem?.unitId as string)
@@ -158,7 +158,7 @@ export class AddBuyerComponent {
     this.subscriptions.push(subscriptions);
   }
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectBuyerForm.valid) {
       this.showValidation = true;
       return;
@@ -210,7 +210,7 @@ export class AddBuyerComponent {
     let taxValue = tax * price;
     this.licenseProjectBuyerForm.controls.priceAfterTax.setValue(taxValue);
 
-    //قيمة الارض شامل الضريبة المضافة
+    //قيمة الأرض شامل الضريبة المضافة
     this.licenseProjectBuyerForm.controls.totalPrice.setValue(taxValue + price);
 
     let fees = (this.licenseProjectBuyerSettingDto?.percentageSupervisionOrFeesForLand as number) / 100
@@ -239,7 +239,7 @@ export class AddBuyerComponent {
     let taxValue = tax * price;
     this.licenseProjectBuyerForm.controls.priceAfterTax.setValue(taxValue);
 
-    //قيمة الارض شامل الضريبة المضافة
+    //قيمة الأرض شامل الضريبة المضافة
     this.licenseProjectBuyerForm.controls.totalPrice.setValue(taxValue + price);
 
     this.getSupervisionFollowupCostsRatio(price)
@@ -248,17 +248,20 @@ export class AddBuyerComponent {
   getSupervisionFollowupCostsRatio(price: number) {
     if (price > 0) {
       this._supervisionFollowUpCostsRatioService.getSupervisionFollowupCostsRatio(price).subscribe((value: number) => {
-        debugger
+        
         let ratio = value;
-        //نسبة الاشراف والمتابعة
+        //نسبة الإشراف والمتابعة
         this.licenseProjectBuyerForm.controls.percentageSupervisionOrFees.setValue(ratio);
-        //نسبة الاشراف والمتابع من بد المشروع
+        //نسبة الإشراف والمتابع من بد المشروع
         debugger
-        let secondDate = new Date();
+       // let secondDate = new Date();
+       //new Date(this.licenseProjectBuyerSettingDto?.startProjectDate)
         // if (this.controls.deliveryDate.value != null && this.controls.deliveryDate.value != '') {
         //   secondDate = new Date(this.controls.deliveryDate.value)
         // }
-        let days = this.getDays(new Date(this.licenseProjectBuyerSettingDto?.startProjectDate), secondDate);
+        let firstDate=new Date(this.licenseProjectBuyerForm.controls.saleDate.value as string);
+        let secondDate = new Date(this.licenseProjectBuyerForm.controls.deliveryDate.value as string);
+        let days = this.getDays(firstDate, secondDate);
         console.log('days');
         console.log(days);
 
@@ -272,8 +275,9 @@ export class AddBuyerComponent {
   }
 
   getDays(firstDate: Date, secondDate: Date) {
+
     const millisecondsDiff = secondDate.getTime() - firstDate.getTime();
-    return Math.round(millisecondsDiff / (24 * 60 * 60 * 60));
+    return Math.ceil(millisecondsDiff / (1000 * 3600 * 24));
   }
   onExistContractFileUploaded(filesData: any) {
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;

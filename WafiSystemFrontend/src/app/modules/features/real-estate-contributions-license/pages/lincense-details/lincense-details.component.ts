@@ -580,7 +580,7 @@ export class LincenseDetailsComponent {
     );
     let Data = {
       id: ButtonType.allowCompileQWTable,
-      title: 'تسجيل نتيجة ملاحظات جداول الكميات والأوزان النسبيه',
+      title: 'تسجيل نتيجة ملاحظات جداول الكميات والأوزان النسبية',
       component: ProjectQuantitiesTableComponent,
     } as PopupData;
     this.updateAndOpenData(Data);

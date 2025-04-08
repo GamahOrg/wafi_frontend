@@ -189,7 +189,7 @@ export class CreateLincenseComponent {
     );
   }
   Create(): void {
-    debugger
+    
     if (this.controls.priod.value) {
       let employeeFacilityId = this._sharedLicenseProjectService.getFacilityIdFromLocalStorage();
       if (employeeFacilityId==null || employeeFacilityId == '00000000-0000-0000-0000-000000000000')

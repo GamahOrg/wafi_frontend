@@ -1,10 +1,10 @@
 <form class="d-flex flex-column h-100" [formGroup]="changePlanForEngineeringConsultantForm"
 id="form-licenseProjectProblemLogForm">
-<div class="tab-data-section">
+<div class="tab-data-section bg-white p-5">
   <div class="row mb-3">
   
   <div class="col-12 col-lg-6">
-    <div class="form-group mb-4">
+    <div class="form-group mb-4" *ngIf="!isEditMode">
       <label class="form-label">أسباب ومبررات تغيير خطة المشروع</label>
       <textarea type="text" id="control-reasonsAndJustificationsForChangingProjectPlan" class="form-control" formControlName="reasonsAndJustificationsForChangingProjectPlan"
         placeholder="أسباب ومبررات تغيير خطة المشروع"></textarea>
@@ -84,7 +84,7 @@ id="form-licenseProjectProblemLogForm">
 </div>
   <div class="col-12 col-lg-12" *ngIf="!controls.isProjectStartedForEngineeringConsultant.value">
     <div class="form-group mb-4">
-      <div class="key">أخر تقرير مالي</div>
+      <div class="key">آخرتقرير مالي</div>
       <div class="value">
         <span class="icon material-icons-outlined">content_copy</span>
         <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.lastEngineeringReport" id="link-buyersApprovalLetterFile"

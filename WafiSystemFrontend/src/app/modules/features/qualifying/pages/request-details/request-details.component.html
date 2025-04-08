@@ -1,188 +1,82 @@
-<div class="RequestDetails h-100">
-  <div class="d-flex flex-column row-gap-3 h-100">
-    <div class="row">
-      <div class="col-md-12">
-        <app-breadcrumb></app-breadcrumb>
-      </div>
-    </div>
+<div class="d-flex flex-column gap-3 h-100">
+  <app-breadcrumb></app-breadcrumb>
 
-    <div class="card qualiication-reqest-card">
-      <div class="card-body">
-        <div class="card-title">
-          <div class="row row-gap-2">
-            <div class="col-12 col-lg-auto">
-              <h5 class="title">
+  <div class="card profile-card">
+    <div class="card-body">
+
+      <div class="row row-gap-3">
+        <div class="col-12 col-lg">
+          <div class="d-flex align-items-center gap-2">
+            <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden">
+              <span class="icon material-icons">person</span>
+            </div>
+            <div class="d-flex flex-column gap-3">
+              <h3 class="small">
+                {{selectedRequest?.customers?.fullName}} - <span class="job">{{ selectedRequest?.qualificationRequestType?.typeName }}</span>
+              </h3>
+              <h4 class="small">
                 {{ selectedRequest?.isRenewal ? "تجديد" : "" }}
-                {{ selectedRequest?.qualificationRequestType?.typeName }}
                 {{ selectedRequest?.requestCode }}
-              </h5>
-            </div>
-            <div class="col-12 col-lg-auto">
-              <div class="date">
-                <span class="key">تاريخ تقديم الطلب</span>
-                <span class="value"
-                  ><i class="icon material-icons">calendar_month</i
-                  >{{
-                    selectedRequest?.requestFrom | date : "dd MMMM yyyy"
-                  }}</span
-                >
-              </div>
-            </div>
-            <div class="col-12 col-lg">
-              <!-- buttons -->
-              <div class="actions">
-                <!-- container -->
-                <ng-container *ngFor="let button of clientActionsButtons">
-                  <button
-                    *ngIf="
-                      button.isVisable &&
-                      selectedRequest?.facilities?.availabilityToUpdate
-                    "
-                    [disabled]="button.isDisables"
-                    class="btn btn-primary"
-                    (click)="button.onclick()"
-                    type="button"
-                  >
-                    {{ button.title }}
-                  </button>
-                </ng-container>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-12 col-lg">
-            <div class="applicant">
-              <div class="row">
-              
-
-                <div class="row">
-                  <div class="col-12 col-xxl">
-                    <div class="applicant">
-                      <div class="row">
-                        <div class="col-auto">
-                          <span class="key">مقدم من</span>
-                        </div>
-
-                        <div class="col">
-                          <div class="value">
-                            <div class="image">
-                              <span class="avatar material-icons">person</span>
-                              <!-- <img src="assets/images/general/static-person.jpeg"
-                                     alt=""
-                                     class="d-block w-100"> -->
-                            </div>
-                            <span class="name">{{
-                              selectedRequest?.customers?.fullName
-                            }}</span>
-                          </div>
-
-                          <div class="details">
-                            <div class="row mt-3">
-                              <div class="col-12 col-lg-4">
-                                <div class="row">
-                                  <label class="col-5">رقم الهوية </label>
-                                  <span class="col-auto">{{
-                                    selectedRequest?.customers?.nidnumber
-                                  }}</span>
-                                </div>
-                              </div>
-                              <div class="col-12 col-lg-4">
-                                <div class="row">
-                                  <label class="col-5">الجنسية </label>
-                                  <span class="col-auto">{{
-                                    selectedRequest?.customers?.nationality
-                                      ?.nationalityName
-                                  }}</span>
-                                </div>
-                              </div>
-                              <div class="col-12 col-lg-4">
-                                <div class="row">
-                                  <label class="col-5">رسوم الخدمة</label>
-                                  <span class="col-auto">{{
-                                    selectedRequest?.price
-                                  }}</span>
-                                </div>
-                              </div>
-                              <div class="col-12 col-lg-4">
-                                <div class="row">
-                                  <label class="col-5">مدة الطلب </label>
-                                  <span class="col-auto">
-                                    {{
-                                      selectedRequest?.period == "1"
-                                        ? "سنة"
-                                        : ""
-                                    }}
-                                    {{
-                                      selectedRequest?.period == "2"
-                                        ? "سنتين"
-                                        : ""
-                                    }}
-                                    {{
-                                      selectedRequest?.period == "3"
-                                        ? "ثلاث سنوات"
-                                        : ""
-                                    }}
-                                  </span>
-                                </div>
-                              </div>
-                              <div class="col-12 col-lg-6">
-                                <div class="row">
-                                  <label class="col-5">رقم الجوال</label>
-                                  <span class="col-auto">{{
-                                    selectedRequest?.customers?.mobile1
-                                  }}</span>
-                                </div>
-                              </div>
-                              <div class="col-12 col-lg-6">
-                                <div class="row">
-                                  <label class="col-5">البريد الإلكتروني</label>
-                                  <span class="col-auto">{{
-                                    selectedRequest?.customers?.email
-                                  }}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-4">
-                    <div
-                      class="d-flex justify-content-end align-items-end h-100"
-                    >
-                      <div
-                        class="circularProgress"
-                        *ngIf="selectedRequest && !selectedRequest.isFinished"
-                      >
-                        <p>{{ localization.remainingDaysToStudy }}</p>
-                        <app-circular-progress
-                          [circularProgressSetting]="StudyDaysProgressSetting"
-                        ></app-circular-progress>
-                      </div>
-                      <span
-                        class="status-pill"
-                        [class]="
-                          selectedRequest && selectedRequest.externalStatusId
-                            ? internalStatusId[selectedRequest.externalStatusId]
-                            : ''
-                        "
-                      >
-                        {{ selectedRequest?.externalStatus }}
-                      </span>
-                    </div>
+              </h4>
+              <div class="d-flex flex-wrap align-items-center gap-2 gap-xl-5">
+                <div class="key-value">
+                  <div class="key">{{"رقم الهوية"}}</div>
+                  <div class="value">{{selectedRequest?.customers?.nidnumber}}</div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{"الجنسية"}}</div>
+                  <div class="value">{{selectedRequest?.customers?.nationality?.nationalityName}}</div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{"رسوم الخدمة"}}</div>
+                  <div class="value">{{selectedRequest?.price}}</div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{"مدة الطلب"}}</div>
+                  <div class="value">{{selectedRequest?.period == "1"? "سنة" : selectedRequest?.period == "2"? "سنتين" : selectedRequest?.period == "3"? "ثلاث سنوات" : ""}}</div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{"رقم الجوال"}}</div>
+                  <div class="value">{{selectedRequest?.customers?.mobile1}}</div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{"البريد الإلكتروني"}}</div>
+                  <div class="value">{{selectedRequest?.customers?.email}}</div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{'تاريخ تقديم الطلب'}}</div>
+                  <div class="value">
+                    <i class="icon material-icons">calendar_month</i> {{selectedRequest?.requestFrom | date : "dd MMMM yyyy"}}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div class="col-12 col-lg-auto">
+          <div class="d-flex flex-column justify-content-between align-items-lg-end gap-3">
+            <div class="circularProgress" *ngIf="selectedRequest && !selectedRequest.isFinished">
+              <p>{{ localization.remainingDaysToStudy }}</p>
+              <app-circular-progress [circularProgressSetting]="StudyDaysProgressSetting"></app-circular-progress>
+            </div>
+            <span class="status-pill" [class]="selectedRequest && selectedRequest.externalStatusId? internalStatusId[selectedRequest.externalStatusId]: ''">{{ selectedRequest?.externalStatus }}</span>
+            <ng-container *ngFor="let button of clientActionsButtons">
+              <button *ngIf="
+                      button.isVisable &&
+                      selectedRequest?.facilities?.availabilityToUpdate
+                    " [disabled]="button.isDisables" class="btn btn-primary" (click)="button.onclick()" type="button">
+                {{ button.title }}
+              </button>
+            </ng-container>
+          </div>
+        </div>
       </div>
+
     </div>
-    <div class="tab-wrapper flex-fill">
-      <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
-    </div>
+  </div>
+
+  <div class="tab-wrapper flex-fill">
+    <app-tabs></app-tabs>
   </div>
 </div>

@@ -37,7 +37,7 @@ export class ExternalProjectInformationComponent implements OnInit, OnDestroy {
     RightOfSaudisToOwnRealEstateFile: "ملف بأحقية السعوديين بتملك العقارات في بلد المشروع",
     FinancialGuaranteeOfProjectOwnershipFile: "ملف ضمان مالي بقيمة ١٪ من القيمة الإجمالية للمشروع لمدة ثلاثة أشهر بعد تاريخ انتهاء الترخيص",
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
     yes: 'نعم',
     no: 'لا',
     savedSuccessfully: 'تم الحفظ',

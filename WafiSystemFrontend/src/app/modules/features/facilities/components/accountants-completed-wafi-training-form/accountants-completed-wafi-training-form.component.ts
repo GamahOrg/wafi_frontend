@@ -14,6 +14,7 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { QualificationQualificatedAccountantDto } from '../../dataModels/qualification-qualificated-accountant-dto';
 import { CertifiedEngineerDto } from '../../dataModels/certified-engineer-dto';
 import { CertifiedEngineerService } from '../../services/QualificationCertifiedEngineer/certified-engineer.service';
+import { QualificationEngineerType } from '../../dataModels/qualification-engineer-type.model';
 
 @Component({
   selector: 'app-accountants-completed-wafi-training-form',
@@ -102,7 +103,7 @@ export class AccountantsCompletedWafiTrainingFormComponent {
 
   getQualificationCertifiedEngineers() {
     this.subscriptions.push(
-      this._certifiedEngineerService.GetFacilityById(this.userData?.facilities[0].id as string).subscribe(res => {
+      this._certifiedEngineerService.GetFacilityById(this.userData?.facilities[0].id as string,QualificationEngineerType.Accountant).subscribe(res => {
         this.qualificationCertifiedEngineers = res;
       })
     );

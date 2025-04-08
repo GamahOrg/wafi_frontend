@@ -251,7 +251,7 @@ export class CreateLincenseComponent {
   }
   Create(): void {
     
-debugger
+
     if (this.facilityId == '00000000-0000-0000-0000-000000000000' || this.facilityId == null)
       this.facilityId = this.userData?.facilities[0].id as string;
 

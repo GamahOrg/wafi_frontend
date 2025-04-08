@@ -19,7 +19,7 @@ export class LicenseProjectProjectBasicDataComponent   implements OnInit {
 
   }
   localization = {
-    title: 'بيانات المشروع الاساسيه',
+    title: 'بيانات المشروع الأساسية',
     projectLandData: 'بيانات أرض المشروع',
     name: 'اسم المشروع',
     quantitiesTableFileId: 'ملف جدول الكميات',
@@ -42,7 +42,7 @@ export class LicenseProjectProjectBasicDataComponent   implements OnInit {
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
 
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',

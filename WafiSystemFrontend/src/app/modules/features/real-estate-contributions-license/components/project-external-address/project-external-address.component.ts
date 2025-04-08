@@ -56,7 +56,7 @@ export class ProjectExternalAddressComponent implements OnInit, OnDestroy {
   localization = {
     title: 'عنوان المشروع',
     address: 'العنوان',
-    location: 'الموقع على الخارطه',
+    location: 'الموقع على الخارطة',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
     PleaseAddAllRequiredFields:

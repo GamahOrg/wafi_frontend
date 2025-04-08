@@ -19,23 +19,23 @@ export class LicenseRequestMarketerComponent implements OnInit, OnDestroy {
     AddNewMarketer: "إضافة جديد",
     AddNewSubDeveloperLabel: "إضافة مسوق عقاري جديد",
     DeveloperName: "اسم المفوض",
-    LicenseNumber: "رقم رخصه المسوق العقاري",
+    LicenseNumber: "رقم رخصة المسوق عقاري",
     LicenseNumberRequired: "هذا الحقل مطلوب",
     DeveloperNameRequired: "هذا الحقل مطلوب",
     DeveloperEmail: "البريد الالكترونى للمفوض",
     DeveloperEmailRequired: "هذا الحقل مطلوب",
     DeveloperMobile: "رقم الجوال للمفوض",
     DeveloperMobileRequired: "هذا الحقل مطلوب",
-    AgreementFile: "عقود المسوق العقاري ",
+    AgreementFile: "عقود المسوق عقاري ",
     AgreementFileRequired: "هذا الحقل مطلوب",
     NoData: "لا توجد بيانات",
-    DeveloperLabel: "ادخل السجل التجاري للمسوق العقاري",
+    DeveloperLabel: "ادخل السجل التجاري للمسوق عقاري",
     DeveloperRequired: "هذا الحقل مطلوب",
     Save: "حفظ البيانات",
     DeveloperEmailNoCorrect: "هذا الحقل غير صحيح",
     DeveloperMobileNotCorrect: "هذا الحقل غير صحيح",
     PleaseAddAllRequiredFields: "نأمل ادخال كل الحقول اللازمة واعادة المحاولة",
-    licenseNumber: "رقم الرخصه"
+    licenseNumber: "رقم الرخصة"
   }
   /**
    *

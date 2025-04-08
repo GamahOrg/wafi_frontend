@@ -89,7 +89,7 @@ private observeconfirmAction() {
           return;
         }
         this._projectApprovalsService.SetApprovalSubject(true);
-        this.toastr.success("تم الموافقه على جميع الاقرارات الخاصة بالرخصه");
+        this.toastr.success("تم الموافقه على جميع الاقرارات الخاصة بالرخصة");
         this.closeDialog();
       }
     })

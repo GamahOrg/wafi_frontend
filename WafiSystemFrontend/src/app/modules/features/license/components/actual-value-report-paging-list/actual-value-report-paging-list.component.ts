@@ -122,8 +122,8 @@ export class ActualValueReportPagingListComponent {
     } as PopupData;
     this._popupService.updatePopupData(Data);
   } 
-  getActualValueReportDetails(monthDate:Date): void {
-    this._actualValueReportService.showActualValueReportDetails.emit(monthDate);
+  getActualValueReportDetails(comdata:ActualValueReportPagingListDto): void {
+    this._actualValueReportService.showActualValueReportDetails.emit(comdata);
   } 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())

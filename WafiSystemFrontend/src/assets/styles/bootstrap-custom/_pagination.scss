@@ -1,97 +1,48 @@
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  font-size: $font-size-sm;
+  color: $lightgray;
+}
+
 .pagination {
-    justify-content: center;
+  --bs-pagination-border-width: 0;
+  --bs-pagination-border-radius: #{$border-radius-sm};
+  --bs-pagination-hover-bg: #{$lightergray};
+
+  justify-content: center;
+  align-items: center;
 }
 
 .page-item {
-    margin-left: 4px;
-    margin-right: 4px;
 
-    &:first-child,
-    &:last-child {
-        .page-link {
-            border-radius: $border-radius-sm;
-        }
+  &.pagination-prev,
+  &.pagination-next {
+    .page-link {
+      background-color: $light;
     }
+  }
 
-    &.pagination-first,
-    &.pagination-last,
-    &.pagination-prev,
-    &.pagination-next {
-        font-size: $font-size-sm;
+  &.pagination-prev {
+    margin-inline-end: 1.5rem;
+  }
+
+  &.pagination-next {
+    margin-inline-start: 1.5rem;
+  }
+
+  &:not(.active):not(.pagination-prev):not(.pagination-next):not(:hover) {
+    .page-link {
+      font-weight: 500;
+      color: $lightgray;
+      background-color: transparent;
     }
+  }
 
-    &.pagination-prev,
-    &.pagination-next {
-        .page-link {
-            display: flex;
-            align-items: center;
-            column-gap: 0.5rem;
-
-            padding: 0.5rem;
-            font-size: $font-size-sm;
-
-            &::before {
-                font-family: FontAwesome;
-            }
-        }
-    }
-
-    &.pagination-prev {
-        margin-inline-end: 2.5rem;
-
-        .page-link {
-            &::before {
-                content: "\f054";
-            }
-        }
-    }
-
-    &.pagination-next {
-        margin-inline-start: 2.5rem;
-
-        .page-link {
-            flex-direction: row-reverse;
-
-            &::before {
-                content: "\f053";
-            }
-        }
-    }
-}
-
-.page-link {
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-    color: #6c7593;
-    border: none;
-    border-radius: $border-radius-sm;
-    transition: background-color 0.15s;
-
-    &:hover {
-        // color: $darkgreen;
-        color: $theme-dark;
-        //   background-color: rgba($darkgreen, 0.1);
-        background-color: rgba($theme-dark, 0.1);
-
-        .rega & {
-            color: $theme-dark;
-            background-color: rgba($theme-dark, 0.1);
-        }
-    }
-}
-
-.page-link.active,
-.active>.page-link {
-    // background-color: $darkgreen;
-    background-color: $theme-dark;
-    color: $white;
-
-    .rega & {
-        background-color: $theme-dark;
-    }
-}
-
-.page-link.disabled,
-.disabled>.page-link {
-    background-color: transparent;
+  .page-link {
+    border-radius: var(--bs-pagination-border-radius);
+  }
 }

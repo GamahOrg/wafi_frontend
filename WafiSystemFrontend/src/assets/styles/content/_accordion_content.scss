@@ -1,95 +1,89 @@
 .accordion-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .title {
     display: flex;
     align-items: center;
+    column-gap: .5rem;
+    color: $theme-dark;
 
-    .title {
-        display: flex;
-        align-items: center;
-        column-gap: .5rem;
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
 
-        // color: $darkgreen;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background-color: rgba($theme-dark, .08);
+
+      [class^="material-icons"] {
+        font-size: $body-font-size;
         color: $theme-dark;
-
-        :host-context(.rega) & {
-            color: $theme-dark;
-        }
-
-        .icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-
-            width: 1.5rem;
-            height: 1.5rem;
-            border-radius: 50%;
-            // background-color: rgba($darkgreen, .08);
-            background-color: rgba($theme-dark, .08);
-
-            :host-context(.rega) & {
-                background-color: rgba($theme-dark, .08);
-            }
-
-            [class^="material-icons"] {
-                font-size: $body-font-size;
-                // color: $darkgreen;
-                color: $theme-dark;
-
-                :host-context(.rega) & {
-                    color: $theme-dark;
-                }
-            }
-        }
+      }
     }
+  }
 
-    .btn {
-        --bs-btn-color: #{$theme-dark};
-        --bs-btn-border-color: #{$theme-dark};
+  .opened,
+  .closed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        --bs-btn-active-border-color: #{$theme-dark};
-        --bs-btn-active-bg: #{$theme-dark};
+    width: 1.5rem;
+    height: 1.5rem;
 
-        --bs-btn-hover-border-color: #{$theme-dark};
-        --bs-btn-hover-bg: #{$theme-dark};
+    border-radius: 50%;
+    color: $headings-color;
+    background-color: #F5FAFA;
+  }
 
-        display: flex;
-        align-items: center;
-        margin-inline-start: auto;
-        border-radius: $card-border-radius;
+  .opened {
+    display: none;
+  }
 
-        &:not(:hover) {
-            // background-color: $lightgreen;
-            background-color: $theme-light;
+  .closed {
+    display: flex;
+  }
 
-            :host-context(.rega) & {
-                background-color: $theme-light;
-            }
-        }
+  .btn {
+    --bs-btn-color: #{$theme-dark};
+    --bs-btn-border-color: #{$theme-dark};
 
-        :host-context(.rega) & {
-            --bs-btn-color: #{$theme-dark};
-            --bs-btn-border-color: #{$theme-dark};
+    --bs-btn-active-border-color: #{$theme-dark};
+    --bs-btn-active-bg: #{$theme-dark};
 
-            --bs-btn-active-border-color: #{$theme-dark};
-            --bs-btn-active-bg: #{$theme-dark};
+    --bs-btn-hover-border-color: #{$theme-dark};
+    --bs-btn-hover-bg: #{$theme-dark};
 
-            --bs-btn-hover-border-color: #{$theme-dark};
-            --bs-btn-hover-bg: #{$theme-dark};
-        }
+    display: flex;
+    align-items: center;
+    margin-inline-start: auto;
+    border-radius: $card-border-radius;
+
+    &:not(:hover) {
+      background-color: $theme-light;
     }
+  }
 }
 
 .panel-open {
-    .accordion-heading {
-        .title {
-            .icon {
-                // background-color: $orange;
-                background-color: $theme-light;
-
-                :host-context(.rega) & {
-                    background-color: $theme-light;
-                }
-            }
-        }
+  .accordion-heading {
+    .title {
+      .icon {
+        background-color: $theme-light;
+      }
     }
+
+    .opened {
+      display: flex;
+    }
+
+    .closed {
+      display: none;
+    }
+  }
 }

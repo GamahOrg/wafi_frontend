@@ -54,10 +54,7 @@ export class ChangeplanLicenseRequestEngineeringSummaryComponent implements OnIn
   }
   showEditButton() {
     this.showButton =
-      this.requestType === UserRequestTypeEnum.ProjectManager &&
-      (this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.New ||
-        this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.PartyStudyFinished ||
-        this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.PartiesStudyFinished ||
+        (this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.UnderCreation ||
         this.selectRequest.engineeringConsultantStatusId === LicenseProjectRequestStatusEnum.CustomerFeedback);
   }
   
@@ -66,7 +63,7 @@ export class ChangeplanLicenseRequestEngineeringSummaryComponent implements OnIn
     this.subscriptions.push(
       this._cahngePlaneRequestDetailsService.getLicenseProjectRequestChangePlan().subscribe((res: LicenseProjectRequestChangePlanFullDto | null) => {
         if (res) {
-          debugger;
+          
           this.licenseProjectRequestChangePlanFull = res;
         }
       }),

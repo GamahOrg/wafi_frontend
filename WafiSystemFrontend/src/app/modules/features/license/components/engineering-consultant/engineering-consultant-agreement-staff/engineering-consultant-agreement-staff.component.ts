@@ -19,7 +19,7 @@ export class EngineeringConsultantAgreementStaffComponent implements OnInit, Aft
   localizations = {
     Number: "العدد",
     SelectMonthes: "اختر عدد الاشهر",
-    StartDate: "تاريخ بدايه الدوام",
+    StartDate: "تاريخ بداية الدوام",
     StartDateRequired: "هذا الحقل مطلوب",
     NumberRequired: "هذا الحقل مطلوب",
     NumberOfExperience: "عدد سنوات الخبرة",

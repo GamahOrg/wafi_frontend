@@ -7,7 +7,7 @@ export interface LicenseProjectBuyerCreateUpdateDto {
     licenseProjectId :string;
     licenseProjectBuyerTypeId :number
     contractFileId:string;
-    //عدد الأراضى
+    //عدد الأراضي
     landNumbers :number
     //رقم الوحدة
      unitCodeId :string;
@@ -24,6 +24,6 @@ export interface LicenseProjectBuyerCreateUpdateDto {
     price :number
     //نسبة الضريبة الحالية
     currentTax :number
-    //نسبة الاشراف او نسبة الرسوم
+    //نسبة الإشراف او نسبة الرسوم
     percentageSupervisionOrFees :number
 }

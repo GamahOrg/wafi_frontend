@@ -89,7 +89,7 @@ export class LicenseProjectRealEstateDeveloperDataComponent {
 
   localization = {
     title: 'بيانات مقدم الطلب',
-    goTo: 'اذا كنت تريد تعديل البيانات نأمل الذهاب الى صفحة ',
+    goTo: 'اذا كنت تريد تعديل البيانات نأمل الذهاب إلى صفحة ',
     name: 'الاسم',
     email: 'البريد الإلكتروني',
     mobile: 'رقم الجوال',
@@ -104,7 +104,7 @@ export class LicenseProjectRealEstateDeveloperDataComponent {
     phoneNumberPattern: 'من فضلك ادخل رقم جوال صحيح',
     emailPattern: 'من فضلك ادخل البريد الإلكتروني صحيح',
 
-    facilityAddress: "عنوان شركة المطور العقاري",
+    facilityAddress: "عنوان شركة المطور عقاري",
     applicantData: "بيانات مقدم الطلب (مالك الحساب /مفوض)",
     applicantName: "اسم مقدم الطلب (المفوض)",
     applicantJobTitle: "منصب المفوض",

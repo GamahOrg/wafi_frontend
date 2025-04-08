@@ -102,7 +102,7 @@ export class LicenseRequestProjectDataComponent {
     } as accordionComponent,
     {
       icon: '',
-      title: 'المطور العقاري',
+      title: 'المطور عقاري',
       component: LicenseProjectDeveloperComponent, // need to be add
       disabled: false,
       isVisible: true,
@@ -180,7 +180,7 @@ export class LicenseRequestProjectDataComponent {
     } as accordionComponent,
     {
       icon: "",
-      title: 'ملفات التصميم المعمارية للمشروع',
+      title: 'ملفات التصاميم المعمارية للمشروع',
       component: LicenseProjectArchitecturalDesignFilesComponent,
       disabled: false,
       isVisible: true,

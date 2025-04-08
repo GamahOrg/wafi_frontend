@@ -121,7 +121,7 @@ export class LoginComponent {
     if (this.isProduction) {
       this.loginService.LoginWithIAM(loginParams).subscribe((res) => {
         if (res.data) {
-          debugger;
+          
           if (res.data.token) {
             this._storageService.saveTokens(res.data.token);
 

@@ -51,7 +51,7 @@ export class AddPeriodicCharteredAccountantReportComponent {
     year: this._formBuilder.control<number | null>(null),
     fromDate: this._formBuilder.control<string | null>(null),
     toDate: this._formBuilder.control<string | null>(null),
-     //اجمالى قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)
+     //إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)
     totalCost: this._formBuilder.control<number | null>(null, [Validators.required]),
       //التكلفة الانشائة المتوقعة
     expectedConstructionCost: this._formBuilder.control<number | null>(null, [Validators.required]),
@@ -73,7 +73,7 @@ export class AddPeriodicCharteredAccountantReportComponent {
       bankCommissions: this._formBuilder.control<number | null>(null, [Validators.required]),
       //أخرى مدينة
       otherDebts: this._formBuilder.control<number | null>(null, [Validators.required]),
-       //إجمالى العمليات المدينة
+       //إجمالي العمليات المدينة
       totalDebtOperations: this._formBuilder.control<number | null>(null, [Validators.required]),
         //تحصيل من العملاء
       collectionsFromCustomers: this._formBuilder.control<number | null>(null, [Validators.required]),
@@ -85,7 +85,7 @@ export class AddPeriodicCharteredAccountantReportComponent {
       ministryFinancing: this._formBuilder.control<number | null>(null, [Validators.required]),
       //أخرى دائنة
       otherCredits: this._formBuilder.control<number | null>(null, [Validators.required]),
-       //إجمالى العمليات الدائنة
+       //إجمالي العمليات الدائنة
       totalCreditOperations: this._formBuilder.control<number | null>(null, [Validators.required]),
          //جدول ادناه يوضح الإيداعات التي لم تظهر في حساب البنك حتى تاريخه “يستطيع إضافة أكثر من عنصر”
     periodicCharteredAccountantReportDeposits:
@@ -121,7 +121,7 @@ export class AddPeriodicCharteredAccountantReportComponent {
   }
  
   private getLicenseProjectIdStorage(): void {
-    debugger;
+    
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId) {
       this.loadComponentData();
@@ -129,14 +129,14 @@ export class AddPeriodicCharteredAccountantReportComponent {
 
   }
   loadComponentData(): void {
-debugger;
+
     const requests = [
       this._periodicCharteredAccountantReportService.getPeriodicCharteredAccountantReportTypes(),
       this._periodicCharteredAccountantReportService.getPeriodicCharteredAccountantReportQuarterTypes(),
     ];
     const subscriptions = forkJoin(requests).subscribe((results) => {
       if (results) {
-        debugger;
+        
         this.reportTypes = results[0] as PeriodicCharteredAccountantReportTypeDto[];
         this.reportQuarterTypes = results[1] as PeriodicCharteredAccountantReportQuarterTypeDto[];
       }
@@ -144,12 +144,12 @@ debugger;
     this.subscriptions.push(subscriptions);
   }
   save(): void {
-    debugger;
+    
     if (!this.PeriodicCharteredAccountantReportForm.valid) {
       this.showValidation = true;
       return;
     }
-    debugger;
+    
     this.periodicCharteredAccountantReportCreateUpdate = this.PeriodicCharteredAccountantReportForm.value as {} as PeriodicCharteredAccountantReportCreateUpdateDto;
     this.periodicCharteredAccountantReportCreateUpdate.licenseProjectId = this.licenseProjectId as string;
     this.periodicCharteredAccountantReportCreateUpdate.reportTypeId=Number(this.periodicCharteredAccountantReportCreateUpdate.reportTypeId);
@@ -212,7 +212,7 @@ if(!this.periodicCharteredAccountantReport?.periodOpeningBalance && !this.period
     )
   }
   createPeriodicCharteredAccountantReport(): void {
-    debugger;
+    
   
     this.filter = this.PeriodicCharteredAccountantReportForm.value as {} as PeriodicCharteredAccountantReportCreateUpdateDto;
     this.filter.reportTypeId=Number(this.filter.reportTypeId);
@@ -224,7 +224,7 @@ if(!this.periodicCharteredAccountantReport?.periodOpeningBalance && !this.period
       this._periodicCharteredAccountantReportService.createPeriodicCharteredAccountantReport(this.filter).subscribe((res) => {
 
         if (res) {
-          debugger;
+          
           this.periodicCharteredAccountantReport=res as PeriodicCharteredAccountantReportDto;
         }
 

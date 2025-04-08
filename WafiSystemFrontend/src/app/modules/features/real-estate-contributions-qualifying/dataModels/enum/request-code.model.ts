@@ -19,4 +19,6 @@ export enum QualificationType {
     accountantQualificationRequest="Acc",
     engineeringConsultantQualificationRequest="EC",
     realEstateDeveloperSpecializingInRealEstateParticipation="REEM",
+    contributionAccountantQualificationRequest="Acc-REEM",
+    contributionEngineeringConsultantQualificationRequest="EC-REEM",
 }

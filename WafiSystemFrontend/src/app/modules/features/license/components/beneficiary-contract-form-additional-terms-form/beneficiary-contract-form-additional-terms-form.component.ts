@@ -105,7 +105,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     
     this.beneficiaryContractFormAdditionalTermsDto = this.beneficiaryContractFormAdditionalTermsForm.value as BeneficiaryContractFormAdditionalTermsDto;
     if (!this.beneficiaryContractFormAdditionalTermsDto.additionalTermsAcknowledgment) {
-      this._toastrService.error("نأمل الموافقه على الاقرار حتي يتم تسجيل البند");
+      this._toastrService.error("نأمل الموافقه على الاقرار حتى يتم تسجيل البند");
       return;
     }
     this.subscriptions.push(

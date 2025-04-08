@@ -11,8 +11,8 @@
 <div class="d-flex flex-column h-100">
   <h6 mat-dialog-title class="d-flex">
     {{ confirmationPopupData.title }}
-    <button mat-icon-button mat-dialog-close tabindex="-1" class="close-icon">
-      <mat-icon>close</mat-icon>
+    <button class="btn btn-link p-0" mat-dialog-close tabindex="-1">
+      <i class="material-icons h6">close</i>
     </button>
   </h6>
 
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-flat-button class="primary" (click)="onClickOnCancel()">
+    <button mat-flat-button class="me-auto" (click)="onClickOnCancel()">
       إلغاء
     </button>
     <button mat-flat-button color="primary" (click)="onClickOnConfirm()">

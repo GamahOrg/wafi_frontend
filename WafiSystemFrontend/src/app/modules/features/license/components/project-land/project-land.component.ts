@@ -59,7 +59,7 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
   }
   getCustomerData() {
-    debugger
+    
     this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
       this.userData = res;
       this.facilityId = res?.facilities[0].id as string;
@@ -80,7 +80,7 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
   localization = {
     title: 'بيانات أرض المشروع',
     landTotalSpace: 'مساحة المشروع حسب الصك',
-    landValue: 'قيمة الأرض التقديريه',
+    landValue: 'قيمة الأرض التقديرية',
     buildingFlatArea: ' مساحة مسطح البناء للمشروع ',
     landOwnerApproval: 'موافقة مالك الأرض / مالك منفعتها على تهميش صك الأرض',
     accept: 'موافق',

@@ -9,6 +9,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 // import { LanguageComponent } from './components/header/language/language.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { LincenseRequestProjectService } from '../features/license-project-requests/services/lincense-request-project.service';
+import { RequestDetailsRedirectionComponent } from './components/request-details-redirection/request-details-redirection.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { NotificationsComponent } from './components/notifications/notifications
     SidebarComponent,
     // LanguageComponent,
     NotificationsComponent,
+    RequestDetailsRedirectionComponent,
   ],
   imports: [
     CommonModule,
@@ -24,5 +27,6 @@ import { NotificationsComponent } from './components/notifications/notifications
     // TranslateModule.forChild(),
     SharedModule,
   ],
+  providers:[LincenseRequestProjectService]
 })
 export class LayoutModule {}

@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="requestTemplateForm">
+      <div class="tab-data-section">
+        <div class="row mb-3">
+          <!-- License Project Selection -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+              <select
+                class="form-select"
+                id="control-licenseProjectId"
+                aria-label="Default select example"
+                formControlName="licenseProjectId"
+              >
+                <option selected disabled>المشروع</option>
+                <option
+                  *ngFor="let licenseProject of licenseProjects"
+                  [ngValue]="licenseProject.id"
+                >
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="
+                  controls.licenseProjectId?.hasError('required') &&
+                  showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key">الرسوم</div>
+            <div class="value">
+              {{ price ? price : 'لا يوجد' }} 
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-data-section">
+          <div class="row mb-3">
+            <div class="col-12 col-lg-6" *ngFor="let file of licenseTemplateFile">
+              <div class="form-group mb-4">
+                <label class="key">{{ file?.displayName }}</label>
+                <app-file-uploader
+                  [data]="singleFilesUploaderData"
+                  (fileUploaded)="onFileUpload($event, file.id)"
+                ></app-file-uploader>
+                <mat-error
+                  *ngIf="uploadedFiles[file.id]?.hasError && showValidation"
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-outline-primary" (click)="cancelRequest()">
+          إلغاء
+        </button>
+        <button class="btn btn-primary" (click)="save()">انشاء الطلب</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -27,7 +27,7 @@ export class RealStateCertificateComponent {
     switch (this.certificateData.licenseRequestTypeTypeCode) {
       // رخصة المساهمة
       case LicenseRequestTypeTypeCodeEnum.RealEstateShareholdingLicense: {
-        this.title="تمنح الهيئة العامة للعقار بموجب هذه الوثيقة رخصة المساهمات العقارية";
+        this.title="تمنح الهيئة العامة للعقار بموجب هذه الوثيقة رخصة المساهمات عقارية";
         this.fieldsCertificateData = [
           { englishTitle: 'Developer', arabicTitle: 'المطور', value: this.certificateData.facilityName },
           { englishTitle: 'License Type', arabicTitle: 'نوع الرخصة', value: this.certificateData.licenseRequestTypeName },

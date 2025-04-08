@@ -31,27 +31,27 @@ export class DataVisibilityOfLicenseProjectService {
     this.DataVisibilityOfLicenseProject.next([])
   }
 
-  getDataVisibilityOfLicenseProjectForCertainTab(subscriptions: Subscription[], mainTabsComponentList: tabsComponent[], resetIndex: boolean, updateVirticalTab: boolean, service: null | any = null): void {
-    debugger
-
-    var tabContent= new Tabs;
-    tabContent.tabsComponentList = []
+  getDataVisibilityOfLicenseProjectForCertainTab(subscriptions: Subscription[], mainTabsComponentList: tabsComponent[], resetIndex: boolean, updateVirticalTab: boolean, service: null | any = null, secondTap: boolean = false): void {
     
+
+    var tabContent = new Tabs;
+    tabContent.tabsComponentList = []
+
     subscriptions.push(
       this.getDataVisibilityOfLicenseProject().subscribe((res: string[]) => {
-        
-        var tabContent= new Tabs;
+
+        var tabContent = new Tabs;
         tabContent.tabsComponentList = []
         mainTabsComponentList.forEach(tab => {
           if (res.includes(tab.tabCode as string)) {
             tabContent.tabsComponentList.push(tab);
           }
         });
-        
+
         this.updateTabContent(tabContent, updateVirticalTab, service);
         if (resetIndex) {
-        
-          this.resetTabsIndex(service);
+
+          this.resetTabsIndex(service,secondTap);
         }
 
       })
@@ -71,34 +71,53 @@ export class DataVisibilityOfLicenseProjectService {
     )
   }
 
-  private updateTabContent(tabContent: Tabs, updateVirticalTab: boolean, service: null | any): void {
+  private updateTabContent(tabContent: Tabs, updateVirticalTab: boolean, service: null | any, secondTap: boolean = false): void {
     if (service) {
-
       if (updateVirticalTab) {
         service.updateVerticalTabContent(tabContent);
       } else {
-        service.updateTabContent(tabContent);
+        if (secondTap) {
+          service.updateSecondTabContent(tabContent);
+        } else {
+          service.updateTabContent(tabContent);
+        }
       }
 
     } else {
-
       if (updateVirticalTab) {
+        if (secondTap) {
+          this._tabsService.updateSecondTabContent(tabContent);
+        } else {
         this._tabsService.updateVerticalTabContent(tabContent);
+        }
       } else {
-        this._tabsService.updateTabContent(tabContent);
+        if (secondTap) {
+          this._tabsService.updateSecondTabContent(tabContent);
+        } else {
+          this._tabsService.updateTabContent(tabContent);
+        }
       }
     }
   }
 
-  private resetTabsIndex(service: null | any): void {
+  private resetTabsIndex(service: null | any, secondTap: boolean = false): void {
     if (service) {
-      service.updateActiveTabIndex(0);
-      service.updateActiveVerticalTabIndex(0);
-
+      if (secondTap) {
+        service.updateActiveSecondTabIndex(0);
+        service.updateActiveVerticalTabIndex(0);
+      } else {
+        service.updateActiveTabIndex(0);
+        service.updateActiveVerticalTabIndex(0);
+      }
     } else {
-
-      this._tabsService.updateActiveTabIndex(0);
-      this._tabsService.updateActiveVerticalTabIndex(0);
+      if (secondTap) {
+        this._tabsService.updateActiveSecondTabIndex(0);
+        this._tabsService.updateActiveVerticalTabIndex(0);
+      }
+      else {
+        this._tabsService.updateActiveTabIndex(0);
+        this._tabsService.updateActiveVerticalTabIndex(0);
+      }
     }
   }
 }

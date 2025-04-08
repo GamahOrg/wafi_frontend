@@ -1,36 +1,3 @@
 ﻿@import "/src/assets/styles/custom-variables";
 @import "/src/assets/styles/content/tab-content";
 @import "/src/assets/styles/content/form-conent";
-
-.key {
-    font-size: $font-size-sm;
-
-    &+.value {
-        margin-top: 1rem;
-    }
-}
-
-.value {
-    display: flex;
-    align-items: center;
-    column-gap: .5rem;
-
-    color: $headings-color;
-
-    .icon {
-        // color: $darkgreen;
-        color: $theme-dark;
-    }
-
-    .delete {
-        cursor: pointer;
-
-        [class^="material-icons"] {
-            font-size: $font-size-xs;
-        }
-    }
-
-    &+.value {
-        margin-top: .5rem;
-    }
-}

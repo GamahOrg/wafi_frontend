@@ -4,6 +4,7 @@ import { LicenseProjectDto, SysLicenseProjectRiskTypeDto, SysOwnerTypeDto, SysRe
 export interface LicenseProjectProblemDto {
     id:string;
     licenseProjectId :string;
+    licenseProjectEngineeringSupervisionPlannedReportDetailId :string;
 
    //الرقم
     number :string;

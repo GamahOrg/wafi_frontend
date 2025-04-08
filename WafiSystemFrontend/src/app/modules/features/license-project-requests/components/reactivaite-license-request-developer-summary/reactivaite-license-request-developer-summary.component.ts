@@ -54,7 +54,7 @@ export class ReactivaiteLicenseRequestDeveloperSummaryComponent implements OnIni
   }
 
   showEditButton() {
-    this.showButton = this.userRequestType === UserRequestTypeEnum.RealEstateDeveloper &&
+    this.showButton =
       (this.selectRequest.externalRequestStatusId == LicenseProjectRequestStatusEnum.UnderCreation ||
         this.selectRequest.externalRequestStatusId == LicenseProjectRequestStatusEnum.CustomerFeedback
       )

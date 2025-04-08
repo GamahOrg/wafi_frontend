@@ -12,6 +12,8 @@ import { SharedLicenseProjectService } from '../../services/sharedLicenseProject
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
+import { ActualValueReportPagingListDto } from '../../models/actual-value-report-paging-list-dto';
+import { EngineeringSupervisionReportActualProjectStatusSummaryService } from '../../services/engineering-supervision-report-actual-project-status-summary.service';
 
 @Component({
   selector: 'app-add-edit-problem-log',
@@ -30,6 +32,7 @@ export class AddEditProblemLogComponent {
   ownerTypeList?: SysOwnerTypeDto[]
   SysLevelTypeList?:SysLevelTypeDto[]
   flag:boolean=false;
+  actualValueReport?:ActualValueReportPagingListDto;
   licenseProjectProblemLogForm = this._formBuilder.group({
     projectName:this._formBuilder.control<string | null>(null),
     projectCode:this._formBuilder.control<string | null>(null),
@@ -56,6 +59,7 @@ export class AddEditProblemLogComponent {
     return this.licenseProjectProblemLogForm.controls['licenseProjectProblemResponsiblePartyIds']
   }
   constructor(
+    private _engineeringSupervisionReportActualProjectStatusSummaryService: EngineeringSupervisionReportActualProjectStatusSummaryService,
     private _lookupEngineeringManagementService: LookupEngineeringManagementService,
     private _licenseProjectProblemService: LicenseProjectProblemService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
@@ -68,10 +72,22 @@ export class AddEditProblemLogComponent {
     this.getLicenseProjectIdStorage();
     this.getLicenseProjectProblemId();
     this.observePopupEvents();
+    this.getmonthData();
 
   }
 
-
+ getmonthData() {
+    debugger;
+    this.subscriptions.push(
+      this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
+        debugger;
+        if (res) {
+          debugger;
+          this.actualValueReport= res as ActualValueReportPagingListDto;
+        }
+      })
+    )
+  }
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId) {
@@ -147,7 +163,8 @@ export class AddEditProblemLogComponent {
     this.licenseProjectProblemCreateUpdate = this.licenseProjectProblemLogForm.value  as {} as LicenseProjectProblemCreateUpdateDto;
     this.licenseProjectProblemCreateUpdate.licenseProjectId = this.licenseProjectId as string;
     this.licenseProjectProblemCreateUpdate.id = this.licenseProjectProblemData?.id as string;
-   
+    this.licenseProjectProblemCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId = this.actualValueReport?.id as string;
+
 
     this.subscriptions.push(
       this._licenseProjectProblemService.save(this.licenseProjectProblemCreateUpdate).subscribe((res) => {

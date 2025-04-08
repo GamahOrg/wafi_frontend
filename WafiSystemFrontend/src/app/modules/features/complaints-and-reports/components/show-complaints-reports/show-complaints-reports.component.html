@@ -1,7 +1,7 @@
 <div class="tab-data-section" *ngIf="complaintRequest">
-    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
+    <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
-            <div class="key">اسم مقدم الشكوي او البلاغ</div>
+            <div class="key">اسم مقدم الشكوى او البلاغ</div>
             <div>{{complaintRequest.customerName}}</div>
         </div>
        
@@ -27,7 +27,7 @@
             <div>{{complaintRequest.phone}}</div>
         </div>
         <div class="col-12 col-lg-6">
-            <div class="key">وصف الشكوي او البلاغ</div>
+            <div class="key">وصف الشكوى او البلاغ</div>
             <div>{{complaintRequest.description}}</div>
         </div>
         <div class="col-12 col-lg-6">
@@ -40,7 +40,7 @@
         </div>
         <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <div class="key">ملفات الشكوي او البلاغ</div>
+              <div class="key">ملفات الشكوى او البلاغ</div>
               <div class="value"
                 *ngFor="let file of complaintRequest.complaintRequestFiles">
                 <span class="icon material-icons-outlined">content_copy</span>

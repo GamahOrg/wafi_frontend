@@ -79,7 +79,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         .GetByCode(this.requestTypeCode, this.renewRequest)
         .subscribe((res) => {
           if (res) this.model = res;
-          if (this.requestTypeCode == 'EC' || this.requestTypeCode == 'Acc') {
+          if (this.requestTypeCode == 'EC-REEM' || this.requestTypeCode == 'Acc-REEM') {
             this.setPeriodOfRequestTobeOneYear()
             this.setPeriodDisable();
           }

@@ -1,0 +1,132 @@
+<div class="card">
+  <div class="card-header">
+    <h6 class="card-title">
+      طلب نقل المبالغ بين الحسابات الفرعية في حساب الضمان
+    </h6>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="transferAmountsForm">
+      <div class="tab-data-section">
+        <div class="row mb-3">
+          <!-- License Project Selection -->
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="key">المشروع</label>
+              <select
+                class="form-select"
+                id="control-licenseProjectId"
+                aria-label="Default select example"
+                formControlName="licenseProjectId"
+              >
+                <option selected disabled>المشروع</option>
+                <option
+                  *ngFor="let licenseProject of licenseProjects"
+                  [ngValue]="licenseProject.id"
+                >
+                  {{ licenseProject.name }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="
+                  controls.licenseProjectId?.hasError('required') &&
+                  showValidation
+                "
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key">الرسوم</div>
+            <div class="value">
+              {{ price ? price : 'لا يوجد' }} 
+            </div>
+          </div>
+        </div>
+        <div class="tab-data-section">
+          <div class="row mb-3">
+            <!-- Application Form File -->
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">نموذج الطلب</label>
+                <app-file-uploader
+                  [data]="singleFilesUploaderData"
+                  (fileUploaded)="applicationFormFileUpload($event)"
+                ></app-file-uploader>
+                <mat-error
+                  *ngIf="
+                    controls.applicationFormFileId?.hasError('required') &&
+                    showValidation
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+            <!-- Consulting Engineering -->
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">التقرير الاستشاري الهندسي</label>
+                <app-file-uploader
+                  [data]="singleFilesUploaderData"
+                  (fileUploaded)="consultingEngineeringUpload($event)"
+                ></app-file-uploader>
+                <mat-error
+                  *ngIf="
+                    controls.consultingEngineeringId?.hasError('required') &&
+                    showValidation
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+            <!-- Chartered Accountant Report -->
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">تقرير المحاسب القانوني</label>
+                <app-file-uploader
+                  [data]="singleFilesUploaderData"
+                  (fileUploaded)="charteredAccountantReportUpload($event)"
+                ></app-file-uploader>
+                <mat-error
+                  *ngIf="
+                    controls.charteredAccountantReportId?.hasError(
+                      'required'
+                    ) && showValidation
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+            <!-- Bank Report -->
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="key">تقرير البنك</label>
+                <app-file-uploader
+                  [data]="singleFilesUploaderData"
+                  (fileUploaded)="bankReportUpload($event)"
+                ></app-file-uploader>
+                <mat-error
+                  *ngIf="
+                    controls.bankReportId?.hasError('required') &&
+                    showValidation
+                  "
+                >
+                  {{ localization.requiredErrorMsg }}
+                </mat-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-outline-primary" (click)="cancelRequest()">
+          إلغاء
+        </button>
+        <button class="btn btn-primary" (click)="save()">انشاء الطلب</button>
+      </div>
+    </form>
+  </div>
+</div>

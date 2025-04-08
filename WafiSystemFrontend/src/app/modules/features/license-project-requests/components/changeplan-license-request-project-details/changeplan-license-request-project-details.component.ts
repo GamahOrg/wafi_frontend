@@ -23,21 +23,21 @@ export class ChangeplanLicenseRequestProjectDetailsComponent implements OnInit {
   constructor(private _projectRequestLocalStorageService: ProjectRequestLocalStorageService,private _cahngePlaneRequestDetailsService: CahngePlaneRequestDetailsService) {}
 
   ngOnInit(): void {
-    debugger;
+    
     this.getSelectedRequestIdFromLocalStorage();
   }
   getSelectedRequestIdFromLocalStorage(): void {
-    debugger;
+    
     this.licenseProjectRequestId = this._projectRequestLocalStorageService.getSelectedProjectLicenseRequestIdFromLocalStorage() as string;
     if (this.licenseProjectRequestId) this.getLicenseProjectDetailsById();
   }
 
   private getLicenseProjectDetailsById(): void {
-debugger;
+
     this.subscriptions.push(
       this._cahngePlaneRequestDetailsService.getLicenseProjectDetailsById(this.licenseProjectRequestId as string).subscribe((res: LicenseProjectRequestChangePlanFullDto | null) => {
         if (res) {
-          debugger;
+          
           this.licenseProjectRequestChangePlanFull = res;
           this._cahngePlaneRequestDetailsService.setLicenseProjectRequestChangePlan(this.licenseProjectRequestChangePlanFull);
 

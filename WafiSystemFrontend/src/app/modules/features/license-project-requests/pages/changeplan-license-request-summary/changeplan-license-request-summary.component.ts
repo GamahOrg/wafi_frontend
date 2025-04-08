@@ -158,7 +158,7 @@ export class ChangeplanLicenseRequestSummaryComponent implements OnInit {
       //   this.requestValidationData = res;
       //   this.checkGeneralErrorTabsIsExist();
       // }
-      this._toastrNotificatioService.showSuccess('تم ارسال الطلب')
+      //this._toastrNotificatioService.showSuccess('تم ارسال الطلب')
       this._router.navigate([ `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`]);
       console.log(res);
 

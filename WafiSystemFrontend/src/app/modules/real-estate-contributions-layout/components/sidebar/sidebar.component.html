@@ -1,69 +1,77 @@
-<div class="sidebar-content">
-  <div class="logo d-flex justify-content-center align-items-center">
-    <a routerLink="" routerLinkActive="">
-      <img [src]="baseImagePath + 'REGA_LOGO_Dark.svg'" alt="" class="img-fluid logo-img" />
+<aside class="sidebar h-100" [ngClass]="{'closed': hideSideBar}">
+
+  <div class="logo d-flex flex-column justify-content-between align-items-center py-4" [ngClass]="{'gap-md-1': hideSideBar, 'flex-md-row': !hideSideBar}">
+    <span class="sidebar-toggle" (click)="hideSideBar = !hideSideBar">
+      <i class="material-icons">{{ hideSideBar ? 'menu' : 'close'}}</i>
+    </span>
+
+    <a [routerLink]="['/']" class="flex-grow-1 text-center">
+      <img [src]="baseImagePath + 'REGA_LOGO_2.svg'" alt="" class="img-fluid logo-img" />
     </a>
   </div>
-  <div class="profile">
-    <div class="image">
-      <img src="assets/images/general/static-person.jpeg" alt="" class="d-block w-100" />
+
+  <div class="profile d-flex align-items-center gap-2" [ngClass]="{'justify-content-center mx-0': hideSideBar, 'mx-4 rounded-1': !hideSideBar}">
+    <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-1 overflow-hidden">
+      <i *ngIf="userData?.profileImageFile == null" class="icon material-icons">person</i>
+      <img *ngIf="userData?.profileImageFile != null" [src]="baseUrl + userData?.profileImageFile?.filePath" alt="" />
     </div>
 
-    <h5 class="name">{{ userData?.fullName }}</h5>
+    <div class="data">
+      <h5 class="name fw-semibold">{{ userData?.fullName }}</h5>
 
-    <div
-      *ngIf="
+      <div *ngIf="
         !this.userData?.isEmployee &&
         loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
-      "
-      class="reg-record"
-    >
-      <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        السجل التجاري
-        {{
-        userData && userData.facilities.length > 0
-        ? userData.facilities[0].commercialRegisterNumber
-        : "0"
-        }}
-        <i class="icon material-icons-outlined">expand_more</i>
-      </a>
-      <ul class="dropdown-menu" *ngIf="userData && userData.facilities.length > 0">
-        <li *ngFor="
+      " class="reg-record mt-1">
+        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          السجل التجاري
+          {{
+          userData && userData.facilities.length > 0
+          ? userData.facilities[0].commercialRegisterNumber
+          : "0"
+          }}
+          <i class="icon material-icons-outlined">expand_more</i>
+        </a>
+        <ul class="dropdown-menu" *ngIf="userData && userData.facilities.length > 0">
+          <li *ngFor="
             let facility of userData.facilities;
             let first = first;
             let i = index
           ">
-          <a class="dropdown-item" (click)="updateDefaultFacility(facility, i)"
-            [ngClass]="{ 'disabled active': first }">{{ facility.commercialRegisterNumber }}
-          </a>
-        </li>
-      </ul>
+            <a class="dropdown-item" (click)="updateDefaultFacility(facility, i)" [ngClass]="{ 'disabled active': first }">{{ facility.commercialRegisterNumber }}
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
-  <nav *ngIf="!this.userData?.isEmployee &&
-  loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary" class="nav flex-column" [ngClass]="currentLang">
-    <div  class="link-group">
-      <a class="nav-link" [routerLink]="'/' + links.facilities" [routerLinkActiveOptions]="{ exact: true }"
-        routerLinkActive="active">
-        <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
-        الصفحة الرئيسية
+  <nav class="nav flex-column flex-nowrap gap-3 mt-4" [ngClass]="{'px-3': !hideSideBar}">
+    <div class="link-group" *ngIf="!this.userData?.isEmployee &&
+  loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary">
+      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}" [routerLink]="'/' + links.facilities" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+        <span class="icon"><i class="material-icons-outlined">home</i></span>
+        <span class="nav-link-text">الصفحة الرئيسية</span>
       </a>
     </div>
-    <div class="link-group">
-      <a class="nav-link" [routerLink]="'/' + links.facilityProfile" [routerLinkActiveOptions]="{ exact: true }"
-        routerLinkActive="active">
-        ملف المنشأة
+
+    <div class="link-group" *ngIf="!this.userData?.isEmployee &&
+  loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary">
+      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}" [routerLink]="'/' + links.facilityProfile" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+        <span class="icon"><i class="material-icons-outlined">person</i></span>
+        <span class="nav-link-text">ملف المنشأة</span>
       </a>
     </div>
-    <div class="link-group">
+
+    <div class="link-group" *ngIf="!this.userData?.isEmployee &&
+  loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary">
       <accordion [closeOthers]="false" [isAnimated]="true" class="simple menu-accordion">
         <ng-container>
-          <accordion-group [isOpen]="currentUrl.includes('/' + links.qualifying)" [isOpen]="true">
-            <div class="accordion-heading" accordion-heading>
+          <accordion-group [isOpen]="currentUrl.includes('/' + links.qualifying)" [isOpen]="!hideSideBar">
+            <div class="accordion-heading" [ngClass]="{'justify-content-center': hideSideBar}" accordion-heading>
               <h6 class="title">
                 <span class="icon"><i class="material-icons-outlined">card_membership</i></span>
-                التأهيل
+                <span class="title-text">التأهيل</span>
               </h6>
               <div class="icon">
                 <i class="open material-icons-outlined">chevron_left</i>
@@ -71,43 +79,46 @@
               </div>
             </div>
 
-            <a class="nav-link" [routerLink]="'/' + links.qualifying + '/' + links.qualifyingReqs"
-              routerLinkActive="active">
-              إنشاء طلب جديد
+            <a class="nav-link" [routerLink]="'/' + links.qualifying + '/' + links.qualifyingReqs" routerLinkActive="active">
+              <span class="icon"><i class="material-icons-outlined">add_box</i></span>
+              <span class="nav-link-text">
+                إنشاء طلب جديد
+              </span>
             </a>
 
             <a class="nav-link" [routerLink]="
                 '/' + links.qualifying + '/' + links.qualifyingReqList
               " routerLinkActive="active">
-              قائمة الطلبات
+            <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
+            <span class="nav-link-text">قائمة الطلبات</span>
             </a>
 
             <a class="nav-link" [routerLink]="
                 '/' + links.qualifying + '/' + links.qualifyingCertificates
               " routerLinkActive="active">
-              شهادات التأهيل
+               <span class="icon"><i class="material-icons-outlined">local_police</i></span>
+               <span class="nav-link-text">شهادات التأهيل</span>
             </a>
             <a class="nav-link" [routerLink]="
                 '/' + links.qualifying + '/' + links.renewQualifyingList
               " routerLinkActive="active">
-              تجديد التأهيل
+              <span class="icon"><i class="material-icons-outlined">new_releases</i></span>
+              <span class="nav-link-text">تجديد التأهيل</span>
             </a>
           </accordion-group>
         </ng-container>
       </accordion>
     </div>
-  </nav>
 
-  <nav *ngIf="!this.userData?.isEmployee &&
-  loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary" class="nav flex-column" [ngClass]="currentLang">
-    <div class="link-group">
+    <div class="link-group" *ngIf="!this.userData?.isEmployee &&
+  loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary">
       <accordion [closeOthers]="false" [isAnimated]="true" class="simple menu-accordion">
         <ng-container>
-          <accordion-group [isOpen]="currentUrl.includes('/' + links.license)" [isOpen]="true">
-            <div class="accordion-heading" accordion-heading>
+          <accordion-group [isOpen]="currentUrl.includes('/' + links.license)" [isOpen]="!hideSideBar">
+            <div class="accordion-heading" [ngClass]="{'justify-content-center': hideSideBar}" accordion-heading>
               <h6 class="title">
                 <span class="icon"><i class="material-icons-outlined">local_police</i></span>
-                الترخيص
+                <span class="title-text">الترخيص</span>
               </h6>
               <div class="icon">
                 <i class="open material-icons-outlined">chevron_left</i>
@@ -116,60 +127,55 @@
             </div>
 
             <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.licenseTypes" routerLinkActive="active">
-              إنشاء طلب جديد
+              <span class="icon"><i class="material-icons-outlined">add_box</i></span>
+              <span class="nav-link-text">إنشاء طلب جديد</span>
             </a>
 
             <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.lincenseList" routerLinkActive="active">
-              قائمة الطلبات
+              <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
+              <span class="nav-link-text">قائمة الطلبات</span>
             </a>
 
             <a class="nav-link" [routerLink]="
                 '/' + links.license + '/' + links.lincenseCertificates
               " routerLinkActive="active">
-              شهادات الترخيص
+            <span class="icon"><i class="material-icons-outlined">local_police</i></span> 
+            <span class="nav-link-text">شهادات الترخيص</span>
             </a>
-            <a *ngIf="isEngineer"
-              class="nav-link"
-              [routerLink]="'/' + links.license + '/' + links.projectList"
-              routerLinkActive="active"
-            >
+            <a *ngIf="isEngineer" class="nav-link" [routerLink]="'/' + links.license + '/' + links.projectList" routerLinkActive="active">
               قائمة المشاريع
             </a>
             <a class="nav-link" [routerLink]="
                 '/' + links.license + '/' + links.lincenseRequestApprovals
               " routerLinkActive="active">
-              الموافقات
+               <span class="icon"><i class="material-icons-outlined">approval</i></span>
+               <span class="nav-link-text">الموافقات</span>         
             </a>
 
-            <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.renewLicensesList"
-              routerLinkActive="active">
-              تجديد الرخص
-            </a>     
-            <a
-            *ngIf="isAccountant"
-            class="nav-link"
-            [routerLink]="'/' + links.charteredaccountprojectlist"
-            [routerLinkActiveOptions]="{ exact: true }"
-            routerLinkActive="active"
-          >
-            مشاريع المحاسب القانوني
-          </a>  
+            <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.renewLicensesList" routerLinkActive="active">
+              <span class="icon"><i class="material-icons-outlined">new_releases</i></span>
+              <span class="nav-link-text">تجديد الرخص</span>
+            </a>
+            <a *ngIf="isAccountant" class="nav-link" [routerLink]="'/' + links.charteredaccountprojectlist" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+             
+           
+              <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
+              <span class="nav-link-text"> مشاريع المحاسب القانوني</span>
+            </a>
           </accordion-group>
         </ng-container>
       </accordion>
     </div>
-  </nav>
 
-  <nav *ngIf="this.userData?.isEmployee &&
-  loginUserTypeEnum == LoginUserTypeEnum.Employee" class="nav flex-column" [ngClass]="currentLang">
-    <div class="link-group">
+    <div class="link-group" *ngIf="this.userData?.isEmployee &&
+  loginUserTypeEnum == LoginUserTypeEnum.Employee">
       <accordion [closeOthers]="false" [isAnimated]="true" class="simple menu-accordion">
         <ng-container>
-          <accordion-group [isOpen]="currentUrl.includes('/' + links.license)" [isOpen]="true">
-            <div class="accordion-heading" accordion-heading>
+          <accordion-group [isOpen]="currentUrl.includes('/' + links.license)" [isOpen]="!hideSideBar">
+            <div class="accordion-heading" [ngClass]="{'justify-content-center': hideSideBar}" accordion-heading>
               <h6 class="title">
                 <span class="icon"><i class="material-icons-outlined">local_police</i></span>
-                تراخيص الموظف
+                <span class="title-text">تراخيص الموظف</span>
               </h6>
               <div class="icon">
                 <i class="open material-icons-outlined">chevron_left</i>
@@ -178,51 +184,42 @@
             </div>
 
             <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.employeeCreateLicense" routerLinkActive="active">
-              إنشاء طلب جديد
+              <span class="icon"><i class="material-icons-outlined">add_box</i></span>
+              <span class="nav-link-text">إنشاء طلب جديد</span>
             </a>
 
             <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.employeeLicenseList" routerLinkActive="active">
-              قائمة الطلبات
+              <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
+              <span class="nav-link-text">قائمة الطلبات</span>
             </a>
           </accordion-group>
         </ng-container>
       </accordion>
     </div>
-  </nav>
 
-  <div *ngIf="loginUserTypeEnum == LoginUserTypeEnum.finalBeneficiary" class="link-group">
-    <a
-      [routerLink]="'/' + links.license + '/' + links.contractdocumentation"
-      routerLinkActive="active"
-      class="nav-link"
-    >
-      <span class="icon"
-        ><i class="material-icons-outlined">dashboard</i></span
-      >
-      توثيق العقود
-    </a>
-  </div>
-
-  <div *ngIf="isAccountant" class="link-group">
-    <a
-      [routerLink]="'/' + links.license + '/' + links.buyerList"
-      routerLinkActive="active"
-      class="nav-link"
-    >
-      <span class="icon"
-        ><i class="material-icons-outlined">dashboard</i></span
-      >
-       سجل المشترين
-    </a>
-  </div>   
-
-  <nav *ngIf="!this.userData?.isEmployee &&
-  loginUserTypeEnum == LoginUserTypeEnum.wafiPartner" class="nav flex-column" [ngClass]="currentLang">
-    <div class="link-group">
-      <a [routerLink]="'/' + links.userManagement + '/' + links.userProfile" routerLinkActive="active" class="nav-link">
+    <div class="link-group" *ngIf="loginUserTypeEnum == LoginUserTypeEnum.finalBeneficiary">
+      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}" [routerLink]="'/' + links.license + '/' + links.contractdocumentation" routerLinkActive="active">
         <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
-        إدارة المنشأة
+        <span class="nav-link-text"> توثيق العقود</span>
       </a>
     </div>
+
+    <div class="link-group" *ngIf="isAccountant">
+      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}" [routerLink]="'/' + links.license + '/' + links.buyerList" routerLinkActive="active">
+        <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
+        <span class="nav-link-text">سجل المشترين</span>
+      </a>
+    </div>
+
+    <div class="link-group" *ngIf="!this.userData?.isEmployee &&
+  loginUserTypeEnum == LoginUserTypeEnum.wafiPartner">
+      <div class="link-group">
+        <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}" [routerLink]="'/' + links.userManagement + '/' + links.userProfile" routerLinkActive="active">
+          <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
+          <span class="nav-link-text">إدارة المنشأة</span>
+        </a>
+      </div>
+    </div>
   </nav>
-</div>
+
+</aside>

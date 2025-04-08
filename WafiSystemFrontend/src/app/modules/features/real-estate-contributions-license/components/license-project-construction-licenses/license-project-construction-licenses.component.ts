@@ -43,10 +43,10 @@ export class LicenseProjectConstructionLicensesComponent implements OnInit {
 
 
   localization = {
-    constructionLicensetype: 'نوع الرخص الإنشائيه',
-    issueOn: 'تاريخ الرخصه',
-    licenseFile: 'ملفات الرخصه الإنشائيه',
-    licenseNumber: 'رقم الرخصه',
+    constructionLicensetype: 'نوع الرخص الإنشائية',
+    issueOn: 'تاريخ الرخصة',
+    licenseFile: 'ملفات الرخصة الإنشائية',
+    licenseNumber: 'رقم الرخصة',
     before7: 'قبل 1-7',
     after7: 'بعد 1-7',
   };

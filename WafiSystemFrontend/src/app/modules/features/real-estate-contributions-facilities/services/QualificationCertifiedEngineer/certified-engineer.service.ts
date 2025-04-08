@@ -5,6 +5,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { CertifiedEngineerDto } from '../../dataModels/certified-engineer-dto';
 import { QualificationCertifiedEngineerCreateUpdateDto } from '../../dataModels/qualification-certified-engineer-create-update-dto';
+import { QualificationEngineerType } from '../../dataModels/qualification-engineer-type.model';
 
 @Injectable()
 export class CertifiedEngineerService {
@@ -30,13 +31,22 @@ export class CertifiedEngineerService {
     return this.engSubjectList.next(list) ;
     }
 
-  GetFacilityById(facilityId: string): Observable<CertifiedEngineerDto[]> {
-    return this._httpClient.get(`${Configuration.APIs.QualificationCertifiedEngineer.GetFacilityById}/${facilityId}`).pipe(
+  GetFacilityById(facilityId: string,qualificationEngineerType:QualificationEngineerType): Observable<CertifiedEngineerDto[]> {
+    return this._httpClient.get(`${Configuration.APIs.QualificationCertifiedEngineer.GetFacilityById}/${qualificationEngineerType}/${facilityId}`).pipe(
       map((res: any) => {
         return res.data as CertifiedEngineerDto[];
       })
     )
   }
+
+    GetAllFacilityById(facilityId: string): Observable<CertifiedEngineerDto[]> {
+      return this._httpClient.get(`${Configuration.APIs.QualificationCertifiedEngineer.GetAllFacilityById}/${facilityId}`).pipe(
+        map((res: any) => {
+          return res.data as CertifiedEngineerDto[];
+        })
+      )
+    }
+
    GetById(id: string) : Observable<QualificationCertifiedEngineerCreateUpdateDto | null>{
     return this._httpClient.get<CoreResponseDTO<QualificationCertifiedEngineerCreateUpdateDto>>
     (`${Configuration.APIs.QualificationCertifiedEngineer.GetById}?id=${id}`).pipe(

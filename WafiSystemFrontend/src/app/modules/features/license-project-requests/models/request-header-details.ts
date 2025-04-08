@@ -23,6 +23,7 @@ export interface LicenseProjectRequestDto {
     licenseProjectRequestType: LicenseProjectRequestTypeDto;
     licenseProjectRequestEventStatus: LicenseProjectRequestEventStatusDto;
     workflowDetailRequestStatus: RequestPhase[];
+    price: number;
 }
 
 export interface FacilityShortDto  {

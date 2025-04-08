@@ -84,7 +84,7 @@ export class FacilityDataComponent implements OnInit, OnDestroy {
       },
       {
         icon: '',
-        title: 'مهندسي الشركة المعتمدين',
+        title: 'موظفين الشركة المعتمدين',
         Component: CertifiedFacilityEngineersComponent,
         id: 'CertifiedFacilityEngineersComponent',
         disabled: false,

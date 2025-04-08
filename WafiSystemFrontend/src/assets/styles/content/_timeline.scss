@@ -1,68 +1,90 @@
-// .timeline {
-//     display: table;
-
-//     .timeline-header,
-//     .timeline-item {
-//         display: table-row;
-
-//         > * {
-//             display: table-cell;
-//         }
-//     }
-// }
-
-.timeline-header {
-    margin-bottom: 1.5rem;
+.timeline {
+  .timeline-header {
+    margin-bottom: .5rem;
     padding: .5rem 2rem;
-    border-radius: .5rem;
+    border-radius: $border-radius-xs;
     background: linear-gradient(0deg, rgba(242, 242, 242, 0.3), rgba(242, 242, 242, 0.3)), #F1F5F7;
 
-    .title {
-        font-size: $font-size-sm;
-        color: #969799;
+    @media screen and (max-width: 1199px) {
+      display: none;
     }
-}
+  }
 
-.timeline-item {
+  .title {
+    font-size: $font-size-sm;
+    color: #969799;
+  }
+
+  .timeline-item {
     padding: 1rem 1.5rem;
 
     color: $dark;
 
-    border-radius: 1.25rem;
+    border-radius: $border-radius-xs;
     background-color: $white;
     box-shadow: 0px 4px 8px rgba($black, 0.1);
 
     &+.timeline-item {
-        margin-top: .5rem;
+      margin-top: .5rem;
     }
 
     .label {
-        margin-inline-end: .5rem;
-        font-weight: bold;
+      margin-inline-end: .5rem;
+      font-weight: bold;
+
+      @media screen and (min-width: 1200px) {
+        display: none;
+      }
     }
 
     .user {
+      display: flex;
+      align-items: center;
+      column-gap: .5rem;
+
+      .image {
         display: flex;
         align-items: center;
-        column-gap: .5rem;
+        justify-content: center;
 
-        .image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        width: 2rem;
+        height: 2rem;
 
-            width: 2rem;
-            height: 2rem;
+        border: 1px solid $darkgray;
+        border-radius: 50%;
 
-            border: 1px solid $darkgray;
-            border-radius: 50%;
+        box-shadow: 0px 4px 8px rgba($black, 0.1);
+        overflow: hidden;
+      }
 
-            box-shadow: 0px 4px 8px rgba($black, 0.1);
-            overflow: hidden;
-        }
-
-        .name {
-            color: $secondary
-        }
+      .name {
+        color: $secondary
+      }
     }
+  }
+}
+
+.timeline-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    padding: 1rem 1.5rem;
+    color: $dark;
+
+    &.completed {
+      color: $info;
+    }
+
+    .label {
+      margin-inline-end: .5rem;
+      font-weight: bold;
+    }
+  }
 }

@@ -36,7 +36,7 @@ export class LicenseCertificateTemplateListComponent {
   getContracts(): void {
     this.subscriptions.push(
       this._licenseCertificateTemplateService.getLicenseCertificateTemplateList(this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseCertificateTemplatePagingDto[]> | null) => {
-        debugger;
+        
        this.updateRequestList(res as Pagination<LicenseCertificateTemplatePagingDto[]>);
       })
     )
@@ -79,14 +79,14 @@ export class LicenseCertificateTemplateListComponent {
   }
       showDetails(id:number)
       {
-        debugger;
+        
        this._licenseCertificateTemplateService.
         setLicenseCertificateTemplateIdInLocalStorage(id.toString());
         this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.licensecertificatetemplatedetails}`]);
       }
       AddProject(id:number)
       {
-        debugger;
+        
         this._licenseCertificateTemplateService.
         setLicenseCertificateTemplateIdInLocalStorage(id.toString());
         this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.addlicensecertificatetemplate}`]);

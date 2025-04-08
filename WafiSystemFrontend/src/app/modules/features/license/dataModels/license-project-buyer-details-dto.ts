@@ -7,7 +7,7 @@ export interface LicenseProjectBuyerDetailsDto {
      name :string;
     nidNumber :string;
     mobile :string;
-    //عدد الأراضى
+    //عدد الأراضي
     landNumbers :number;
     //رقم الوحدة
    unitCodeId :string;

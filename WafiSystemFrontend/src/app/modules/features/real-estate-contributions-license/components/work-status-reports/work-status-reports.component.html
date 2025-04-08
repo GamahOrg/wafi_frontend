@@ -1,5 +1,5 @@
 
-<h6 class="title fw-normal">{{'معلومات المشروع '}}</h6>
+<h6 class="title">{{'معلومات المشروع '}}</h6>
 <div class="tab-data-section">
   <div class="row mb-3">
       <div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
@@ -16,7 +16,7 @@
       masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectAddresses && 
       masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectAddresses.length !=0 && 
       masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectAddresses[0].cities">
-          <div class="key"> المدينه</div>
+          <div class="key"> المدينة</div>
           <div class="value">{{masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectAddresses[0].cities.cityName}}</div>
       </div>
 <div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport && 
@@ -97,7 +97,7 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
 
   </div>
 </div> 
-<h6 class="title fw-normal">{{'المرفقات '}}</h6>
+<h6 class="title">{{'المرفقات '}}</h6>
 <div class="tab-data-section">
   <div class="row mb-3">
     <div class="col-12 col-lg-6">
@@ -125,19 +125,19 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
 </div> 
 
 
-<h6 class="title fw-normal">{{' البرنامج الزمني '}}</h6>
+<h6 class="title">{{' البرنامج الزمني '}}</h6>
 <div class="tab-data-section">
   <div class="row mb-3">
 
 
   <div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
-  <div class="key">تاريخ بدايه المشروع التعاقدي</div>
+  <div class="key">تاريخ بداية المشروع التعاقدي</div>
   <div class="value">{{ masterLicenseProjectEngineeringSupervisionPlannedReport.startOn | date:'yyyy-MM-dd' }}</div>
  </div>
 
 
 <div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
-  <div class="key">تاريخ نهايه المشروع التعاقدي</div>
+  <div class="key">تاريخ نهاية المشروع التعاقدي</div>
   <div class="value">{{ masterLicenseProjectEngineeringSupervisionPlannedReport.endOn | date:'yyyy-MM-dd' }}</div>
  </div>
 
@@ -198,7 +198,7 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
 
   </div>
 </div>
- <h6 class="title fw-normal">{{' العماله'}}</h6>
+ <h6 class="title">{{' العماله'}}</h6>
  <div class="tab-data-section">
   <div class="row mb-3">
    <div class="table-responsive">

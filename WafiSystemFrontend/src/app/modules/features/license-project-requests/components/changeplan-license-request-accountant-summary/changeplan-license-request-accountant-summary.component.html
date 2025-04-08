@@ -1,22 +1,22 @@
 <div class="tab-data-header">
   <div class="icon"><span class="material-icons">list_alt</span></div>
-  <h6 class="title fw-normal">البيانات من المحاسب القانونى (يتم إدخال البيانات من طرف المحاسب القانوني)</h6>
+  <h6 class="title">البيانات من المحاسب القانونى (يتم إدخال البيانات من طرف المحاسب القانوني)</h6>
 
-  <button *ngIf="showButton" mat-raised-button  class="edit-icon" (click)="openDialog()">
+  <button *ngIf="showButton" class="edit-icon btn btn-outline-primary" (click)="openDialog()">
     <span class="material-icons">edit</span>
   </button>
 </div>
 
-<div class="tab-data-section" *ngIf="licenseProjectRequestChangePlanFull">
-    <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-  <div class="col-12 col-md-6">
+<div class="tab-data-section bg-white p-5" *ngIf="licenseProjectRequestChangePlanFull">
+    <div class="row row-gap-4">
+  <div class="col-12 col-lg-6">
     <div class="key">التكاليف الأجمالية للمشروع (غير شاملة ثمن الأرض) مُحدثة لتاريخ الطلب</div>
     <div class="value">
         <span class="icon material-icons">blinds</span>
         {{licenseProjectRequestChangePlanFull?.totalProjectCosts}}
     </div>
 </div>
-<div class="col-12 col-md-6">
+<div class="col-12 col-lg-6">
     <div class="key">رصيد حساب الضمان</div>
     <div class="value">
         <span class="icon material-icons">blinds</span>
@@ -25,8 +25,8 @@
 </div>
 
 
-<div class="col-12 col-md-6">
-    <div class="key">أخر تقرير مالي</div>
+<div class="col-12 col-lg-6">
+    <div class="key">آخرتقرير مالي</div>
     <div class="value">
         <span class="icon material-icons">picture_as_pdf</span>
         <a *ngIf="licenseProjectRequestChangePlanFull && licenseProjectRequestChangePlanFull.lastFinancialReport" [href]="baseUrl + licenseProjectRequestChangePlanFull?.lastFinancialReport?.filePath" target="_blank">
@@ -34,7 +34,7 @@
         </a>
     </div>
 </div>
-<div class="col-12 col-md-6">
+<div class="col-12 col-lg-6">
     <div class="key">قائمة الوحدات المباعة</div>
     <div class="value">
         <span class="icon material-icons">picture_as_pdf</span>

@@ -9,6 +9,8 @@ import { SharedLicenseProjectService } from '../../services/sharedLicenseProject
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { AddEditDangerLogComponent } from '../add-edit-danger-log/add-edit-danger-log.component';
 import { ShowDangerLogComponent } from '../show-danger-log/show-danger-log.component';
+import { EngineeringSupervisionReportActualProjectStatusSummaryService } from '../../services/engineering-supervision-report-actual-project-status-summary.service';
+import { ActualValueReportPagingListDto, LicenseProjectEngineeringRequestStatusEnum } from '../../models/actual-value-report-paging-list-dto';
 
 @Component({
   selector: 'app-danger-log',
@@ -25,10 +27,15 @@ export class DangerLogComponent {
     pageSize: 10,
     totalCount: 0,
   };
+  actualValueReport?:ActualValueReportPagingListDto;
+    licenseProjectEngineeringRequestStatusEnum=LicenseProjectEngineeringRequestStatusEnum;
+  
+  monthDate?:Date;
   reqList: Pagination<LicenseProjectRiskPagingDto[]> = {} as Pagination<LicenseProjectRiskPagingDto[]>;
   licenseProjectRiskCounts?: LicenseProjectRiskCountsDto;
 
   constructor(
+   private _engineeringSupervisionReportActualProjectStatusSummaryService: EngineeringSupervisionReportActualProjectStatusSummaryService,
     private _licenseProjectRiskService: LicenseProjectRiskService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _popupService: PopupService,
@@ -45,15 +52,29 @@ export class DangerLogComponent {
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId) {
-      this.loadComponentData();
+
+      this.getmonthDate();
     }
   }
-
+  getmonthDate() {
+      debugger;
+      this.subscriptions.push(
+        this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
+          debugger;
+          if (res) {
+            debugger;
+            this.actualValueReport= res as ActualValueReportPagingListDto;
+            this.monthDate = this.actualValueReport.monthDate as Date;
+           this.loadComponentData();
+          }
+        })
+      )
+    }
   loadComponentData(): void {
 
     const requests = [
-      this._licenseProjectRiskService.getLicenseProjectRiskCounts(this.licenseProjectId as string),
-      this._licenseProjectRiskService.getLicenseProjectRisks(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize),
+      this._licenseProjectRiskService.getLicenseProjectRiskCounts(this.licenseProjectId as string,this.monthDate as Date),
+      this._licenseProjectRiskService.getLicenseProjectRisks(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize,this.monthDate as Date),
     ];
     const subscriptions = forkJoin(requests).subscribe((results) => {
       if (results) {

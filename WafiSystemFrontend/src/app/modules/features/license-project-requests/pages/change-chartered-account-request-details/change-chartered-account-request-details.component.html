@@ -1,0 +1,160 @@
+<div class="tab-data-section bg-white">
+  <div class="row row-gap-4">
+    <div class="col-12 col-lg-6">
+      <div class="key">اسم المشروع</div>
+      <div class="value">
+        {{ changeRequestDetails?.projectName }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">اسم المطور</label>
+      <div class="value">
+        {{ projectDetails?.facilityName }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">رقم السجل التجاري</label>
+      <div class="value">
+        {{ projectDetails?.commercialRegisterNumber }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">رقم شهادة تأهيل المطور العقاري</label>
+      <div class="value">
+        {{ projectDetails?.developerCertifiedNumber }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">رقم الترخيص</label>
+      <div class="value">
+        {{ projectDetails?.certifiedNumber }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">موقع</label>
+      <div class="value">
+        {{ projectDetails?.cityName }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">نوع وحدات المشروع</label>
+      <div class="value">
+        {{ projectDetails?.unitTypeName }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">اسم مكنب الاستشاري الهندسي</label>
+      <div class="value">
+        {{ projectDetails?.engineeringConsultantName }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">اسم المحاسب القانوني</label>
+      <div class="value">
+        {{ projectDetails?.charteredAccountantName }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">اسم المحاسب القانوني الجديد</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{ changeRequestDetails?.charteredAccountantFacility?.facilityName }}
+      </div>
+    </div>   
+    <div class="col-12 col-lg-6">
+      <label class="key">رصيد حساب الضمان</label>
+      <div class="value">
+        {{ projectDetails?.accountNumber }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">تاريخ نهاية الرخصة</label>
+      <div class="value">
+        {{ projectDetails?.endOn | date: 'dd/MM/yyyy' }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">عدد وحدات المشروع المباعة</label>
+      <div class="value">
+        {{ projectDetails?.unitsSellCount }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">عدد وحدات المشروع</label>
+      <div class="value">
+        {{ projectDetails?.subUnitCount }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">نسبة انجاز المشروع</label>
+      <div class="value">
+        {{ projectDetails?.achievementRate }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="key">أسباب طلب التغيير</label>
+      <div class="value">
+        {{ changeRequestDetails?.reasons }}
+      </div>
+    </div>
+
+
+    <!-- Alternative Chartered Accountant Agreement -->
+    <div class="col-12 col-lg-6">
+      <div class="key">اتفاقية المحاسب القانوني البديل</div>
+      <div class="value">
+        <a
+          [href]="
+            baseUrl +
+            changeRequestDetails?.alternativeCharteredAccountantAgreement
+              ?.filePath
+          "
+          target="_blank"
+        >
+          {{
+            changeRequestDetails?.alternativeCharteredAccountantAgreement
+              ?.fileDescription
+          }}
+        </a>
+      </div>
+    </div>
+
+    <!-- Previous Chartered Accountant Report -->
+    <div class="col-12 col-lg-6">
+      <div class="key">تقرير المحاسب القانونى السابق عن حالة المشروع</div>
+      <div class="value">
+        <a
+          [href]="
+            baseUrl +
+            changeRequestDetails?.previousCharteredAccountantReport?.filePath
+          "
+          target="_blank"
+        >
+          {{
+            changeRequestDetails?.previousCharteredAccountantReport
+              ?.fileDescription
+          }}
+        </a>
+      </div>
+    </div>
+
+    <!-- Clearance Chartered Accountant File -->
+    <div class="col-12 col-lg-6">
+      <div class="key">إقرار مخالصة المحاسب القانوني السابق</div>
+      <div class="value">
+        <a
+          [href]="
+            baseUrl +
+            changeRequestDetails?.clearanceCharteredAccountantFile?.filePath
+          "
+          target="_blank"
+        >
+          {{
+            changeRequestDetails?.clearanceCharteredAccountantFile
+              ?.fileDescription
+          }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -42,9 +42,9 @@ export class ArchitecturalDesignFilesComponent implements OnInit, OnDestroy {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
   }
   localization = {
-    title: 'التصاميم المعماريه والمخططات الهندسيه',
-    licenseProjectPlanAccordingApprovedStandardsFiles: 'مخططات المشروع وفق المعيير المعتمده',
-    licenseProjectDesignFiles: 'التصاميم المعماريه والمخططات الهندسيه',
+    title: 'التصاميم المعمارية والمخططات الهندسية',
+    licenseProjectPlanAccordingApprovedStandardsFiles: 'مخططات المشروع وفق المعايير المعتمدة',
+    licenseProjectDesignFiles: 'التصاميم المعمارية والمخططات الهندسية',
     savedSuccessfully: 'تم الحفظ',
     requiredErrorMsg: 'حقل مطلوب',
     PleaseAddAllRequiredFields:

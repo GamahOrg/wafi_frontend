@@ -20,10 +20,10 @@ export class DeedApprovalComponent implements OnInit {
   showValidation: boolean = false;
   approve: boolean = false;
   localization = {
-    facilityData: 'بيانات المطور العقاري',
+    facilityData: 'بيانات المطور عقاري',
     yes: "نعم",
     no: 'لا',
-    title: 'الموافقة على الاتفاقية مع المطور العقاري',
+    title: 'الموافقة على الاتفاقية مع المطور عقاري',
     deedData: 'بيانات الصك',
     number: 'رقم الصك',
     issueOn: 'تاريخ الصك',
@@ -32,7 +32,7 @@ export class DeedApprovalComponent implements OnInit {
     CRA: 'رقم السجل التجاري',
     name: 'اسم مالك الصك /مالك منفعتها',
     mobileNumber: 'رقم جوال مالك الصك /مالك منفعتها',
-    agreementFileId: 'ملف الاتفاقية بين المطور العقاري ومالك الأرض',
+    agreementFileId: 'ملف الاتفاقية بين المطور عقاري ومالك الأرض',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     numberPattern: 'من فضلك ادخل رقم صحيح',
     requiredErrorMsg: 'حقل مطلوب',
@@ -42,7 +42,7 @@ export class DeedApprovalComponent implements OnInit {
     or: "او",
     enter: "دخول",
     accept: 'موافق',
-    realEstateContributions: "المساهمات العقارية",
+    realEstateContributions: "المساهمات عقارية",
     wafi: "الهيئة العامة للعقار",
     agreement: 'الموافقة على الاتفاقية',
     appTitle: "تهميش الصكوك"

@@ -12,8 +12,7 @@ import { SysFileManagerCreateUpdateDto } from 'src/app/shared/models/sys-file-ma
 import { LicenseProjectEngineeringActualReportMonthDetailsCreateUpdateDto } from '../../dataModels/license-project-engineering-actual-report-month-details-create-update-dto';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
-import { DatePipe } from '@angular/common';
-
+import { ActualValueReportPagingListDto } from '../../models/actual-value-report-paging-list-dto';
 @Component({
   selector: 'app-add-edit-actual-value-work-statues-report',
   templateUrl: './add-edit-actual-value-work-statues-report.component.html',
@@ -22,6 +21,7 @@ import { DatePipe } from '@angular/common';
 export class AddEditActualValueWorkStatuesReportComponent {
   baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
+  actualValueReport?:ActualValueReportPagingListDto;
   //التباين الخاص بنسبة الانجاز الفعلىة
 actualAchievementMemorial?:number
 //نسب الإنجاز الفعلىة التراكمية
@@ -113,7 +113,8 @@ monthDate ?:Date;
       this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
         if (res) {
         
-         this.monthDate=res; 
+          this.actualValueReport= res as ActualValueReportPagingListDto;
+          this.monthDate = this.actualValueReport.monthDate as Date;
          this. getActualProjectStatusMonthDetails();         
         }
       })

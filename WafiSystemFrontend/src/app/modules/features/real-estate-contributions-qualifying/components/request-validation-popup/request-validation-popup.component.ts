@@ -73,7 +73,7 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
     },
     {
       icon: '',
-      title: 'مهندسي الشركة المعتمدين',
+      title: 'موظفين الشركة المعتمدين',
       id: 'CertifiedFacilityEngineersComponent',
       disabled: false,
       errNum: 0,
@@ -183,14 +183,14 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
       this._requestValidationService
         .getRequestValidation()
         .subscribe((res: RequestValidation | null) => {
-          // 
-          
+          //
+
           console.log('observeValidationError');
           console.log(res);
-          
+
           this.validationError = res;
           console.log(res);
-          
+
           this.validateTabs();
           this.setTabErrorMsgArr()
         })
@@ -201,7 +201,7 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
       return (t.errNum = this.getTabErrors(t.tabCode as string));
     });
     console.log(this.tabsComponentList);
-    
+
   }
   private getTabErrors(tabCode: string) {
     let errsNum = 0;
@@ -216,7 +216,7 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
 
   private setTabErrorMsgArr() {
     // this.validationError
-    
+
     this.tabsComponentList.map((tab: tabsComponent) => {
       // find tab by tab code
       // console.log("tab.tabErrors", tab, tab.tabErrors)
@@ -225,7 +225,7 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
      console.log("this.tabContent.tabsComponentList", this.tabsComponentList)
   }
   private getTabByTabCode(TabCode: string): tabError[] {
-    
+
     let tabErrorsMsg = [] as tabError[]
 
     if (this.validationError) {
@@ -242,13 +242,13 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
     return tabErrorsMsg
   }
   getGeneralErrorTab() {
-    
+
     if (this.validationError && this.validationError.tabs && this.validationError.tabs.length)
       this.generalErrorTab = this.validationError.tabs.find(x => x.tabCode == 'General');
     return this.generalErrorTab;
   }
   checkNotGeneralErrorTabsExist() {
-    
+
     if (this.validationError && this.validationError.tabs && this.validationError.tabs.length) {
       let notGeneralError = this.validationError.tabs.find(x => x.tabCode != 'General');
       return notGeneralError ? true : false;

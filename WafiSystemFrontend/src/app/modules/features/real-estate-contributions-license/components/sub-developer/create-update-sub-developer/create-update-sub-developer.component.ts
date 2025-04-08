@@ -42,7 +42,7 @@ export class CreateUpdateSubDeveloperComponent implements OnInit {
     AgreementFile: "ملف الاتفاقية",
     AgreementFileRequired: "هذا الحقل مطلوب",
     NoData: "لا توجد بيانات",
-    DeveloperLabel: "ادخل السجل التجاري للمطور العقاري",
+    DeveloperLabel: "ادخل السجل التجاري للمطور عقاري",
     DeveloperRequired: "هذا الحقل مطلوب",
     Save: "حفظ البيانات",
     DeveloperEmailNoCorrect: "هذا الحقل غير صحيح",

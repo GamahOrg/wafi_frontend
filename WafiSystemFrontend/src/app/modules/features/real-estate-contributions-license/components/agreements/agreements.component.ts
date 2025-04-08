@@ -92,7 +92,7 @@ if(!this.realEstateContribution.shareholderContractFormFileId)
        
         this.showContributorValidation = false;
         this.showfinancialValidation = false;
-        this._toastrService.showSuccess("تم حفظ ملفات الاتفاقيه");
+        this._toastrService.showSuccess("تم حفظ ملفات الاتفاقية");
         this.realEstateContribution=res.data as RealEstateContributionDto;
         if (moveToNextTab) this.moveToNextTab()
       }

@@ -33,8 +33,6 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     monthlyEngineeringSupervisionReports: "تقرير استشاري الإشراف الهندسي الشهري",
     qualityNotices: "إشعارات الجودة",
     projectRequests: "طلبات المشروع",
-    DangerLog:"سجل المخاطر",
-    ProblemLog:"سجل المشاكل",
     ProjectBusinessCaseReport:"تقرير حالة الأعمال",
     plannedEngineeringSupervisionReportsActualResult: "تقرير الإشراف الهندسي (القيم الفعلىه)",
   };
@@ -56,13 +54,6 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
         disabled: false,
         isVisible: true,
       },
-      // {
-      //   icon: '',
-      //   title: this.localization.monthlyEngineeringSupervisionReports,
-      //   Component: ActualValueReportContainerComponent,
-      //   disabled: false,
-      //   isVisible: true,
-      // },
       {
         icon: '',
         title: this.localization.plannedEngineeringSupervisionReports,
@@ -70,34 +61,23 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
         disabled: false,
         isVisible: true,
       },
-      // {
-      //   icon: '',
-      //   title: this.localization.DangerLog,
-      //   Component: DangerLogComponent,
-      //   disabled: false,
-      //   isVisible: true,
-      // },
-      // {
-      //   icon: '',
-      //   title: this.localization.ProblemLog,
-      //   Component: ProblemLogComponent,
-      //   disabled: false,
-      //   isVisible: true,
-      // },
-      // {
-      //   icon: '',
-      //   title: this.localization.ProjectBusinessCaseReport,
-      //   Component: ProjectBusinessCaseContainerComponent,
-      //   disabled: false,
-      //   isVisible: true,
-      // },
-      // {
-      //   icon: '',
-      //   title: this.localization.monthlyEngineeringSupervisionReports,
-      //   Component: MonthlyEngineeringSupervisionReportsComponent,
-      //   disabled: false,
-      //   isVisible: true,
-      // },
+       {
+         icon: '',
+         title: this.localization.monthlyEngineeringSupervisionReports,
+         Component: ActualValueReportContainerComponent,
+         disabled: false,
+         isVisible: true,
+       },   
+
+   
+      {
+        icon: '',
+        title: this.localization.ProjectBusinessCaseReport,
+        Component: ProjectBusinessCaseContainerComponent,
+        disabled: false,
+        isVisible: true,
+      },
+      
        {
          icon: '',
          title: this.localization.qualityNotices,
@@ -105,13 +85,6 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
          disabled: false,
          isVisible: true,
        },
-      // {
-      //   icon: '',
-      //   title: this.localization.projectRequests,
-      //   Component: ProjectRequestsComponent,
-      //   disabled: false,
-      //   isVisible: true,
-      // },
     ],
   };
   constructor(

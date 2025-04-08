@@ -1,1 +1,56 @@
-<p>monthlyengineering-supervision-reports-project-details works!</p>
+<div  class="p-3" style="background-color: white;">
+    <div class="d-flex justify-content-between p-3 rred section timeschedule">
+        <div>
+           تفاصيل المشروع
+        </div>
+        <!-- <button   class="btn btn-primary" >
+              حفظ واستمرار
+        </button> -->
+      </div>
+</div>
+
+<div class="row align-items-end row-gap-3 mb-3" >
+    <div class="col-12 col-lg-6">
+        <label for="" class="form-label">  الزون</label>
+        <select class="form-select"  id="control-areasId"  (change)="selected($event)">
+            <option disabled label="-- اختار  الزون --"></option>
+            <option *ngFor="let zone of zoneslist" [value]="zone.id">{{zone.code}}</option>
+        </select>
+    </div>
+</div>
+
+<div class="tab-data-section" *ngIf="selectedZone">
+    <div class="table-responsive">
+        <table class="table table-light" >
+            <thead>
+                <tr>
+                    <th> النوع</th>
+                    <th> رقم البلوك </th>
+                    <th>  عدد الوحدات</th>
+                    <th class="w-25">نوع الوحدات</th>
+                    <th>   نسب الإنجاز</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let unit of units.results">
+                    <td>{{unit.unitType}}</td>
+                    <td>{{unit.code}}</td>
+                    <td>{{unit.subUnitCount}}</td>
+                    <td>{{unit.subUnitTypes}}</td>
+                    <td style="color : green; cursor: pointer;"*ngIf="
+                    actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draf ||
+                     actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                     || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
+                 (click)="openAddEditeDialog(unit)">تحديث النسب</td>
+                    <td style="color : green; cursor: pointer;" (click)="openDetailsDialog(unit)">عرض النسب</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="m-3">
+        <app-pagination></app-pagination>
+    </div>
+</div>

@@ -11,9 +11,9 @@ export enum ExternalStatus {
     NotesCompiledAndReqSent = 5,
     ///<summary> تم دراسة الطلب وإرسال الملاحظات لمقدم الطلب</summary> 
     ReqStudiedAndFeedbackSentForCustomer = 6,
-    ///<summary>تم قبول الطلب وإصدار الرخصه وجارى إعتمادها</summary>
+    ///<summary>تم قبول الطلب وإصدار الرخصة وجارى إعتمادها</summary>
     ReqApprovedLicIssuedAndBeingCertified = 7,
-    ///<summary>تم قبول الطلب وإصدار الرخصه المبدئية وجارى إستكمال إجراءات الرخصه</summary>
+    ///<summary>تم قبول الطلب وإصدار الرخصة المبدئية وجارى إستكمال إجراءات الرخصة</summary>
     ReqApprovedInitialLicIssuedAndBeingCompleted = 8,
     ///<summary>تم الموافقة المشروطه على الطلب</summary>
     ReqHasConditionalApproval = 9,
@@ -21,14 +21,14 @@ export enum ExternalStatus {
     ReqHasConditionalApprovalConditionsSentForCustomer = 10,
     ///<summary>تم رفض الطلب</summary>
     ReqRejected = 11,
-    ///<summary>تم قبول الموافقة المشروطه وإصدار الرخصه وجارى إعتمادها</summary>
+    ///<summary>تم قبول الموافقة المشروطه وإصدار الرخصة وجارى إعتمادها</summary>
     ReqConditionalApprovalApprovedLicIssuedAndBeingCertified = 12,
     ///<summary>تم معالجة شروط الموافقة المشروطه وإرسال الطلب</summary>
     ConditionalApprovalNotesCompiledAndReqSent = 13,
-    ///<summary>تم قبول الموافقة المشروطه وإصدار الرخصه المبدئية وجارى إستكمال إجراءات الرخصه</summary>
+    ///<summary>تم قبول الموافقة المشروطه وإصدار الرخصة المبدئية وجارى إستكمال إجراءات الرخصة</summary>
     ReqConditionalApprovalApprovedLicIssuedAndBeingCompleted = 14,
     ///<summary>تم رفض الموافقة المشروطه ورفض الطلب</summary>
     ReqConditionalApprovalRejectedAndReqRejected = 15,
-    ///<summary>تم إعتماد الرخصه وإصدارها</summary>
+    ///<summary>تم إعتماد الرخصة وإصدارها</summary>
     LicHasBeenApprovedAndIssued = 16
 }

@@ -2,9 +2,9 @@
     <app-breadcrumb></app-breadcrumb>
     <div class="page-header">
         <div class="page-title">
-            <h2 class="title-bottom-line">تأكيد بيانات طلب {{renewRequest?'تجديد':''}} {{RequestCode}} </h2>
+            <h2 class="title">تأكيد بيانات طلب {{renewRequest?'تجديد':''}} {{RequestCode}} </h2>
         </div>
-        <p class="text opacity-75">مدة التأهيل الذي تريد الحصول علىه - {{periodString}}</p>
+        <p class="text">مدة التأهيل الذي تريد الحصول عليها - {{periodString}}</p>
     </div>
 
     <div class="page-section">
@@ -19,7 +19,7 @@
 
     <div class="page-section mt-auto">
         <div class="page-title">
-            <h2 class="title">اقرار بصحة البيانات وتحمل المسؤلية</h2>
+            <h2 class="title">اقرار بصحة البيانات وتحمل المسؤولية</h2>
         </div>
 
         <div class="page-content">
@@ -33,7 +33,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="resposability" formControlName="resposability" />
                     <label class="form-check-label" for="resposability">
-                        نتحمل كامل المسؤولية في حال عدم صحة المستندات ومطابقتها معايير وتعلىمات
+                        نتحمل كامل المسؤولية في حال عدم صحة المستندات ومطابقتها معايير وتعليمات
                         الهيئة العامة للعقار
                     </label>
                 </div>
@@ -44,7 +44,7 @@
                         بالتأهيل"
                     </label>
                 </div>
-                <div class="form-actions">
+                <div class="form-actions position-static p-0 bg-transparent border-top-0">
                     <button class="btn btn-outline-primary" (click)="cancelRequest()">إلغاء</button>
                     <button class="btn btn-primary" [disabled]="!declarationForm.valid" (click)="createOrRenewRequest()">
                         إرسال الطلب

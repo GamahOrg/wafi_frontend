@@ -113,7 +113,7 @@ export class RequestSummaryComponent implements OnDestroy {
       },
       {
         icon: '', // index = 5
-        title: 'مهندسي الشركة المعتمدين',
+        title: 'موظفين الشركة المعتمدين',
         component: RequestCertifiedFacilityEngineersComponent,
         id: 'RequestCertifiedFacilityEngineersComponent',
         disabled: false,
@@ -440,7 +440,7 @@ export class RequestSummaryComponent implements OnDestroy {
     this.accordionContent.accordionComponentList[10].isVisible = true;
   }
   public createOrRenewRequest(): void {
-    
+
     if (this.renewRequest) {
       this.Renew();
     } else {
@@ -469,13 +469,13 @@ export class RequestSummaryComponent implements OnDestroy {
     );
   }
   Renew(): void {
-    
+
     this.requestValidationData = null;
     this.subscriptions.push(
       this._qualificationServiceRequestService
         .Renew(this.facilityId as string, this.code, this.period)
         .subscribe((res) => {
-          
+
           if (res.requestCode && res.id) {
             this.setRequestIdInLocalStorage(res.id);
             this.openRenewConfirmaDialog(res.requestCode);

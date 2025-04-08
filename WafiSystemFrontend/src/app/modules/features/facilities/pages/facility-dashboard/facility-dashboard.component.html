@@ -1,43 +1,41 @@
-<div class="announcement">
+<div class="d-flex flex-column gap-5">
+  <div class="announcement">
     <p class="text">
-       منصة البيع على الخارطة لإجراءات البيع أو التأجير على الخارطة الإلكترونية في مرحلة الإطلاق التجريبي سوف تحتوي المنصة على جميع الإجراءات ما بين "منصة البيع على الخارطة" وشركاءها لضمان تسهيل تجربة المستخدم    <span> <a class="link"
-        (click)="openDialog()">(خارطة الطريق والإطلاقات القادمة)</a></span>  </p>
+      منصة البيع على الخارطة لإجراءات البيع أو التأجير على الخارطة الإلكترونية في مرحلة الإطلاق التجريبي سوف تحتوي المنصة على جميع الإجراءات ما بين "منصة البيع على الخارطة" وشركاءها لضمان تسهيل تجربة المستخدم <span> <a class="link" (click)="openDialog()">(خارطة الطريق والإطلاقات القادمة)</a></span> </p>
+  </div>
 
-   
-</div>
-
-<div class="row">
+  <div class="row">
     <div class="col-12 col-md-8">
-        <div class="card dashboard-card">
-            <div class="card-header">
-                <h6 class="card-title">{{localization.welcome}} {{userData?.fullName}}</h6>
-            </div>
-            <div class="row g-0">
-                <div class="col-md-9 order-2 order-md-1">
-                    <div class="card-body h-100">
-                        <p class="card-text">
-                            {{localization.PleaseCompleteAccountInformation}}
-                            {{userData && userData.facilities[0].commercialRegisterNumber ?
-                            userData.facilities[0].commercialRegisterNumber: ""}}
-                        </p>
-                      <!--   <a [routerLink]="facilityProfileLink"
+      <div class="card welcome-card">
+        <div class="card-header">
+          <h6 class="card-title">{{localization.welcome}} {{userData?.fullName}}</h6>
+        </div>
+        <div class="row g-0">
+          <div class="col-md-9 order-2 order-md-1">
+            <div class="card-body h-100">
+              <p class="card-text">
+                {{localization.PleaseCompleteAccountInformation}}
+                {{userData && userData.facilities[0].commercialRegisterNumber ?
+                userData.facilities[0].commercialRegisterNumber: ""}}
+              </p>
+              <!--   <a [routerLink]="facilityProfileLink"
                            mat-flat-button
                            color="primary">
                             {{localization.CompleteDataLinkText}}
                         </a> -->
-                       
-                    </div>
-                </div>
-                <div class="col-md-3 order-1 order-md-2">
-                    <div class="card-image" *ngIf="userData?.profileImageFile">
-                        <!-- <img [src]="baseUrl + userData?.profileImageFile?.filePath"
+
+            </div>
+          </div>
+          <div class="col-md-3 order-1 order-md-2" *ngIf="userData?.profileImageFile">
+            <div class="card-image">
+              <!-- <img [src]="baseUrl + userData?.profileImageFile?.filePath"
                              class="img-fluid"
                              alt="..."> -->
-                    </div>
-                </div>
             </div>
+          </div>
         </div>
-        <!-- <mat-card>
+      </div>
+      <!-- <mat-card>
             <mat-card-header>
                 <mat-card-title>{{localization.welcome}} {{userData?.FullName}} </mat-card-title>
             </mat-card-header>
@@ -54,26 +52,21 @@
             </mat-card-actions>
         </mat-card>  -->
     </div>
-</div>
-<div class="row my-5">
-    <div class="col-12 col-md-12">
-        <div class="card dashboard-card">
-            <div class="row g-0">
-                <app-qualification-request-list></app-qualification-request-list>
-            </div>
-        </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <app-qualification-request-list></app-qualification-request-list>
     </div>
-</div>
-<div class="row my-5">
-    <div class="col-12 col-md-12">
-        <div class="card dashboard-card">
-            <div class="row g-0">
-                <app-license-list></app-license-list>
-            </div>
-        </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <app-license-list></app-license-list>
     </div>
+  </div>
 </div>
- 
+
 <!-- <div class="row mt-5 row-gap-5">
     <div class="col-md-3">
         <app-file-uploader></app-file-uploader>
@@ -86,29 +79,29 @@
     <div class="col-12">
         <div class="bg-white p-5">
             <div class="tab-data-section">
-                <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-                    <div class="col-12 col-md-6">
+                <div class="row row-gap-4">
+                    <div class="col-12 col-lg-6">
                         <div class="key"> برامج المسؤولية الاجتماعية</div>
                         <div class="value"><span class="icon material-icons-outlined">picture_as_pdf</span> <a href="http://file-name.pdf">file-name.pdf</a><span class="delete"><i class="material-icons text-danger">close</i></span>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-lg-6">
                         <div class="key">رقم شهادة الذكاه والتدخل</div>
                         <div class="value fw-bold">289421</div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-lg-6">
                         <div class="key">فاكس</div>
                         <div class="value"><span class="icon material-icons flipped-x">phone</span> +996 559 248**</div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-lg-6">
                         <div class="key">نشاط / انشطة المنشأه</div>
                         <div class="value"><span class="icon material-icons flipped-x">blinds</span> تأحير وبيع على الخارطة </div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-lg-6">
                         <div class="key">تاريخ إصدار السجل التجاري</div>
                         <div class="value"><span class="icon material-icons flipped-x">calendar_today</span> 25 فبراير 2020 </div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-lg-6">
                         <div class="key">الموقع الإلكتروني</div>
                         <div class="value"><span class="icon material-icons flipped-x">language</span> <a href="https://madar.sa">https://madar.sa</a></div>
                     </div>

@@ -107,7 +107,7 @@ getList(){
     this.beneficiaryContractFormAdditionalTermsDto=this.beneficiaryContractFormAdditionalTermsForm.value as BeneficiaryContractFormAdditionalTermsDto;
     if(!this.beneficiaryContractFormAdditionalTermsDto.additionalTermsAcknowledgment)
     {
-      this._toastService.showError("نأمل الموافقه على الاقرار حتي يتم تسجيل البند");
+      this._toastService.showError("نأمل الموافقه على الاقرار حتى يتم تسجيل البند");
      return;
     }
     this.subscriptions.push(

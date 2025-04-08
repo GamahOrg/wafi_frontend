@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { customerResponse } from 'src/app/shared/models/customer.model';
+import { customerResponse } from 'src/app/shared/models/customer.model';import { environment } from 'src/environments/environment';
+
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { FacilityProfileService } from '../../services/facilityProfile/facility-profile.service';
 import { Subscription } from 'rxjs';
@@ -19,6 +20,7 @@ import { RequestValidationService } from 'src/app/core/services/request-validati
   styleUrls: ['./facility-profile.component.scss']
 })
 export class FacilityProfileComponent implements OnInit, OnDestroy {
+  baseUrl = `${environment.baseURL}/`;
   userData: customerResponse | null = null;
   subscriptions: Subscription[] = [];
   localization = {

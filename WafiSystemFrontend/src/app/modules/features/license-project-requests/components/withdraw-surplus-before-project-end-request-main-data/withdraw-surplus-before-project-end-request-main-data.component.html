@@ -1,0 +1,110 @@
+<div class="tab-data-header" *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.licenseProjectRequest
+    && (withdrawSurplusBeforeProjectEndRequest.licenseProjectRequest.externalRequestStatusId==LicenseProjectRequestStatusEnum.New || withdrawSurplusBeforeProjectEndRequest.licenseProjectRequest.externalRequestStatusId==LicenseProjectRequestStatusEnum.CustomerFeedback)">
+    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <h6 class="title">تفاصيل الطلب</h6>
+  
+    <button class="edit-icon btn btn-outline-primary" (click)="openDialog()">
+      <span class="material-icons">edit</span>
+    </button>
+  </div>
+  
+  
+  <div class="tab-data-section bg-white p-5" *ngIf="withdrawSurplusBeforeProjectEndRequest">
+      <div class="row row-gap-4">
+  <div class="col-12 col-lg-6">
+      <div class="key">نموذج الطلب، موضحاً به أسباب طلب التغيير</div>
+      <div class="value">
+          <span class="icon material-icons">picture_as_pdf</span>
+          <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.applicationFormFile" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.applicationFormFile?.filePath" target="_blank">
+              {{withdrawSurplusBeforeProjectEndRequest?.applicationFormFile?.fileDescription}}
+          </a>
+      </div>
+  </div>
+  <div class="col-12 col-lg-6">
+      <div class="key">تقرير المكتب الاستشاري</div>
+      <div class="value">
+          <span class="icon material-icons">picture_as_pdf</span>
+          <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.consultingEngineering" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.consultingEngineering?.filePath" target="_blank">
+              {{withdrawSurplusBeforeProjectEndRequest?.consultingEngineering?.fileDescription}}
+          </a>
+      </div>
+  </div>
+
+
+  <div class="col-12 col-lg-6">
+    <div class="key">تقرير المحاسب القانوني</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.charteredAccountantReport" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.charteredAccountantReport?.filePath" target="_blank">
+            {{withdrawSurplusBeforeProjectEndRequest?.charteredAccountantReport?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-lg-6">
+    <div class="key">تقرير البنك</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.bankReport" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.bankReport?.filePath" target="_blank">
+            {{withdrawSurplusBeforeProjectEndRequest?.bankReport?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-lg-6">
+    <div class="key">اتفاقيات الموردين</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.supplierAgreements" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.supplierAgreements?.filePath" target="_blank">
+            {{withdrawSurplusBeforeProjectEndRequest?.supplierAgreements?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-lg-6">
+    <div class="key">اتفاقيات المقاولين</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.contractorAgreements" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.contractorAgreements?.filePath" target="_blank">
+            {{withdrawSurplusBeforeProjectEndRequest?.contractorAgreements?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-lg-6">
+    <div class="key">اتفاقيات مقدمى الخدمات</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.serviceProviderAgreements" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.serviceProviderAgreements?.filePath" target="_blank">
+            {{withdrawSurplusBeforeProjectEndRequest?.serviceProviderAgreements?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-lg-6">
+    <div class="key">تقرير المقاول</div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.contractorReport" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.contractorReport?.filePath" target="_blank">
+            {{withdrawSurplusBeforeProjectEndRequest?.contractorReport?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-lg-6">
+    <div class="key">تقرير مالي لإنهاء المشروع متضمن تكلفة المشروع الفعلية( ) مصادقاُ عليها من المكتب الهندسي والمحاسب القانوني.
+    </div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.financialReport" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.financialReport?.filePath" target="_blank">
+            {{withdrawSurplusBeforeProjectEndRequest?.financialReport?.fileDescription}}
+        </a>
+    </div>
+</div>
+<div class="col-12 col-lg-6">
+    <div class="key">خطاب التزام من المحاسب القانوني يفيد بالإبقاء على ما نسبته (20%) في حساب الضمان، إلى حين انتهاء المشروع عقاري
+    </div>
+    <div class="value">
+        <span class="icon material-icons">picture_as_pdf</span>
+        <a *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.letterOfCommitmentFromCharteredAccountant" [href]="baseUrl + withdrawSurplusBeforeProjectEndRequest?.letterOfCommitmentFromCharteredAccountant?.filePath" target="_blank">
+            {{withdrawSurplusBeforeProjectEndRequest?.letterOfCommitmentFromCharteredAccountant?.fileDescription}}
+        </a>
+    </div>
+</div>
+
+  </div>
+  </div>

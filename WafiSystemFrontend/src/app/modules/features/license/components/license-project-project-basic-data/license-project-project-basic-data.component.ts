@@ -19,7 +19,7 @@ export class LicenseProjectProjectBasicDataComponent implements OnInit {
   constructor(private _licenseDetailService: LicenseDetailsService) { }
 
   localization = {
-    title: 'بيانات المشروع الاساسيه',
+    title: 'بيانات المشروع الأساسية',
     projectLandData: 'بيانات أرض المشروع',
     name: 'اسم المشروع',
     quantitiesTableFileId: 'ملف جدول الكميات',
@@ -41,7 +41,7 @@ export class LicenseProjectProjectBasicDataComponent implements OnInit {
     projectStarted: 'تم البدء في تنفيذ المشروع؟',
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',

@@ -13,8 +13,6 @@ import { PopupData } from 'src/app/shared/models/popup.model';
 import { AddProjectLicenseRequestComponentComponent } from '../../components/add-project-license-request-component/add-project-license-request-component.component';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { customerResponse } from 'src/app/shared/models/customer.model';
-import { licenseActivationRequestDetailsDto } from '../../../license/models/license-activation-request-details-dto';
-import { CahngePlaneRequestDetailsService } from '../../services/cahnge-plane-request-details.service';
 import { LicenseProjectRequestTypeEnum } from '../../enums/license-project-request-type.enum';
 import { ProjectRequestLocalStorageService } from '../../services/project-request-local-storage.service';
 
@@ -29,10 +27,13 @@ export class LincenseRequestListComponent implements OnInit, OnDestroy {
   facilityId: string = '';
   baseUrl = `${environment.baseURL}/`;
   projectDetails: LincenseProjectRequest = {} as LincenseProjectRequest;
-  projectActiveRequestDetails: LincenseProjectRequest = {} as LincenseProjectRequest;
+  projectActiveRequestDetails: LincenseProjectRequest =
+    {} as LincenseProjectRequest;
   requestRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`;
   requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.cancelLicenseSummary}`;
   requestActivateDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.reactivaiteLicenseSummary}`;
+  changeCharteredAccountantRequestRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.charteredAccountantRequestSummary}`;
+
   newPageNo: number = 1;
   pagintationData: pagination = {
     currentPage: 1,
@@ -58,10 +59,9 @@ export class LincenseRequestListComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _userDataService: UserDataService,
     private _paginationService: PaginationService,
-    private _toastrNotificationService: ToastrNotificatioService,
     private _popupService: PopupService,
-    private projectRequestLocalStorageService:ProjectRequestLocalStorageService,
-  ) { }
+    private projectRequestLocalStorageService: ProjectRequestLocalStorageService
+  ) {}
   ngOnInit() {
     this.obseveCustomerData();
     this.LincenseRequestProjectService();
@@ -99,18 +99,20 @@ export class LincenseRequestListComponent implements OnInit, OnDestroy {
     this.watchPaginationClicked();
   }
 
-  redirectRequest(id:string, requestType: number, requestCode?: string) {
-    debugger;
-    this.projectRequestLocalStorageService.setSelectedSelectedProjectLicenseRequestIdInLocalStorage(id)
+  redirectRequest(id: string, requestType: number, requestCode?: string) {
+    
+    this.projectRequestLocalStorageService.setSelectedSelectedProjectLicenseRequestIdInLocalStorage(
+      id
+    );
     if (requestCode) {
       this.redirectRequestDetails(requestType);
     } else {
-      this.redirectRequestSummary(id,requestType);
+      this.redirectRequestSummary(id, requestType);
     }
   }
 
-  redirectRequestSummary(id:string,requestType: number) {
-    debugger;
+  redirectRequestSummary(id: string, requestType: number) {
+    
     switch (requestType) {
       case LicenseProjectRequestTypeEnum.CancelLicense:
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.cancelLicenseSummary}`;
@@ -119,27 +121,86 @@ export class LincenseRequestListComponent implements OnInit, OnDestroy {
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.reactivaiteLicenseSummary}`;
         break;
       case LicenseProjectRequestTypeEnum.ChangePlan:
-        debugger;
+        
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changePlanSummary}`;
         break;
+      case LicenseProjectRequestTypeEnum.ChangeEngineering:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeEngineerSummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.IncreaseOrDecreaseUnitsNumberOrProjectArea:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changespaceorunitssummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangeApprovedBuyerOrTenantContractsOfProject:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changebuyerortenantcontractsummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangeProjectName:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeprojectnamesummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.AddingDelegator:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.addingdelegatorsummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.RemovingDelegator:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.removingdelegatorsummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangeOrAddLicenseProjectUnitModel:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeoraddunitmodelsummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.WithdrawSurplusBeforeProjectEnd:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.withdrawsurplusbeforeprojectendsummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangeAccountant:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.charteredAccountantRequestSummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangeAccountKeeper:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.accountKeeperRequestSummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ChangePartiesAgreement:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changePartiesAgreementRequestSummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.TransferAmountsBetweenSubAccountsInEscrowAccount:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.transferAmountsBetweenSubaccountsInEscrowAccountSummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.ObjectionToSupervisionAndFollowUpCosts:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.objectionToSupervisionAndFollowupCostsSummary}`;
+        break;
+      case LicenseProjectRequestTypeEnum.LiftingTheMarkOnThePropertyTitleDeed:
+        
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.liftingTheMarkOnThePropertyTitleDeedRequestSummary}`;
+        break;
+      default:
+        this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.requestTemplateSummary}`;
+
     }
     this._router.navigate([this.requestDetailsRoute]);
   }
 
-  redirectRequestDetails(requestType: number) {   
+  redirectRequestDetails(requestType: number) {
     this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestDetails}`;
-   this._router.navigate([this.requestDetailsRoute]);
+    this._router.navigate([this.requestDetailsRoute]);
 
-     //switch (requestType) {
+    //switch (requestType) {
     //   case LicenseProjectRequestTypeEnum.CancelLicense:
     //     this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestDetails}`;
     //     break;
     //   case LicenseProjectRequestTypeEnum.ReActivateLicense:
     //     this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestDetails}`;
     //     break;
-      // case LicenseProjectRequestTypeEnum.ChangePlan:
-       //  this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestDetails}`;
-       //  break;
+    // case LicenseProjectRequestTypeEnum.ChangePlan:
+    //  this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestDetails}`;
+    //  break;
     // }
   }
   navigateToDetails(projectDetails: LincenseProjectRequest) {
@@ -147,7 +208,9 @@ export class LincenseRequestListComponent implements OnInit, OnDestroy {
     this.setSelectedRequestIdInLocalStorage();
     this.goToProjectDetails();
   }
-  navigateToRequestActivateDetails(projectActiveRequestDetails: LincenseProjectRequest) {
+  navigateToRequestActivateDetails(
+    projectActiveRequestDetails: LincenseProjectRequest
+  ) {
     this.projectActiveRequestDetails = projectActiveRequestDetails;
     this.setSelectedActivateProjectRequestIdInLocalStorage();
     this.goToProjectActivateRequest();
@@ -155,8 +218,7 @@ export class LincenseRequestListComponent implements OnInit, OnDestroy {
   goToProjectDetails() {
     this._router.navigate([this.requestDetailsRoute]);
   }
-  goToProjectActivateRequest()
-  {
+  goToProjectActivateRequest() {
     this._router.navigate([this.requestActivateDetailsRoute]);
   }
   setSelectedRequestIdInLocalStorage() {
@@ -193,7 +255,7 @@ export class LincenseRequestListComponent implements OnInit, OnDestroy {
   private updateRequestList(
     TypeListView: Pagination<LincenseProjectRequest[]>
   ): void {
-    debugger;
+    
     this.reqList = TypeListView;
     this.setPaginationData(
       this.reqList.pageSize,

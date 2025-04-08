@@ -5,16 +5,15 @@
 
     <div class="tab-data-header">
         <div class="icon"><span class="material-icons">list_alt</span></div>
-        <h6 class="title fw-normal">القدرات المؤسسية والموارد الإضافية</h6>
+        <h6 class="title">القدرات المؤسسية والموارد الإضافية</h6>
 
-        <button mat-raised-button
-                (click)="openDialog(model.id)"
-                class="edit-icon"><span class="material-icons">edit</span></button>
+        <button class="edit-icon btn btn-link"
+                (click)="openDialog(model.id)"><span class="material-icons">edit</span></button>
     </div>
 
     <div class="tab-data-section">
-        <div class="row row-gap-3 row-gap-xl-4 row-gap-xxl-5">
-            <div class="col-12 col-md-6">
+        <div class="row row-gap-4">
+            <div class="col-12 col-lg-6">
                 <div class="key">ملف الإشراف المحاسبي لمشاريع البيع على الخارطة ''</div>
                 <div class="value"
                      *ngIf="model && model.accountingSupervisionForWafiSalesProjectsFile">
@@ -32,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="key">ملف الإشراف الهندسي لمشاريع البيع على الخارطة''</div>
                 <div class="value"
                      *ngIf="model && model.engineeringSupervisionForWafiSalesProjectsFile">
@@ -49,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="key">شهادات اعتماد الأنظمة الموجودة'' </div>
                 <div class="value"
                      *ngFor="let files of model.existSystemsApprovalCertifications">
@@ -67,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="key">شهادات مهنية صادرة من الجهات المعتمدة محلية وعالمية'' </div>
                 <div class="value"
                      *ngFor="let files of model.localAndInternationalIssuedCertifications">

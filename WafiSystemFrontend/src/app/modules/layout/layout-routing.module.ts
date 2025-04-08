@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import LayoutComponent from './components/layout/layout.component';
 import { NotificationListComponent } from 'src/app/shared/pages/notification-list/notification-list.component';
+import { RequestDetailsRedirectionComponent } from './components/request-details-redirection/request-details-redirection.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,10 @@ const routes: Routes = [
     component: LayoutComponent,
     data: { breadcrumb: 'الرئيسية' },
     children: [
-
+      {
+        path:  `${Configuration.pages.viewRequestDeatils}/:requestType/:requestId`,
+        component:RequestDetailsRedirectionComponent,
+      },
       {
         path: Configuration.pages.notificationList,
         component:NotificationListComponent,
@@ -60,7 +64,7 @@ const routes: Routes = [
       },
       {
         path: Configuration.modules.complaintsAndReport,
-        data: {breadcrumb : ' الشكاوي والبلاغات'},
+        data: {breadcrumb : ' الشكاوى والبلاغات'},
         loadChildren: () =>
           import('../features/complaints-and-reports/complaints-and-reports.module').then((m) => m.ComplaintsAndReportsModule),
       },

@@ -27,6 +27,7 @@ export class CreateCancelLicenseRequestComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   showValidation: boolean = false;
   baseUrl = `${environment.baseURL}/`;
+  price?: number;
   licenseProjects: LicenseProjectDDL[] = [];
   @Input() facilityId: string = '00000000-0000-0000-0000-000000000000';
   @Input() isClearanceEngineeringConsultantDone: boolean = false;
@@ -74,7 +75,7 @@ export class CreateCancelLicenseRequestComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.observePopupEvents();
     this.obseveCustomerData();
-    // this.getLicenseProjectByType();
+    this.observePrice();
 
   }
 
@@ -88,6 +89,13 @@ export class CreateCancelLicenseRequestComponent implements OnInit, OnDestroy {
         this.save();
       })
     );
+  }
+  private observePrice(): void {
+    this.subscriptions.push(
+      this._licenseRequestService.getLicenseProjectRequestPrice(this.form.get('licenseProjectId')?.value , LicenseProjectRequestTypeEnum.CancelLicense).subscribe((res: any) => {
+        this.price = res;
+      })
+    )
   }
   getLicenseProjectByType(): void {
     this._licenseRequestService
@@ -116,7 +124,7 @@ export class CreateCancelLicenseRequestComponent implements OnInit, OnDestroy {
 
   ValidateFiles() {
 
-    debugger
+    
     if (this.isClearanceAccountantDone && (this.clearanceAccountantFileId == null || this.clearanceAccountantFileId == undefined || this.clearanceAccountantFileId == '00000000-0000-0000-0000-000000000000')) {
       return false;
     }
@@ -206,7 +214,7 @@ export class CreateCancelLicenseRequestComponent implements OnInit, OnDestroy {
     this.form.get('reasonsForNotFinalizingEngineeringConsultantClearance')?.updateValueAndValidity();
   }
   onClearanceChangeAccount(value: boolean): void {
-    debugger
+    
     this.isClearanceAccountantDone = value;
     if (value) {
       this.form.get('clearanceAccountantFileId')?.setValidators(Validators.required);

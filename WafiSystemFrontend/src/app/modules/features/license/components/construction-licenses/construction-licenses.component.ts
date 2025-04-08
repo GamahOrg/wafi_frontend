@@ -40,11 +40,11 @@ export class ConstructionLicensesComponent implements OnInit, OnDestroy {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
   }
   localization = {
-    title: 'بيانات الرخص الإنشائيه',
-    constructionLicensetype: 'نوع الرخص الإنشائيه',
-    issueOn: 'تاريخ الرخصه',
-    licenseFile: 'ملفات الرخصه الإنشائيه',
-    licenseNumber: 'رقم الرخصه',
+    title: 'بيانات الرخص الإنشائية',
+    constructionLicensetype: 'نوع الرخص الإنشائية',
+    issueOn: 'تاريخ الرخصة',
+    licenseFile: 'ملفات الرخصة الإنشائية',
+    licenseNumber: 'رقم الرخصة',
     landTotalSpace: 'مساحة مسطح البناء',
     before7: 'قبل 1-7',
     after7: 'بعد 1-7',

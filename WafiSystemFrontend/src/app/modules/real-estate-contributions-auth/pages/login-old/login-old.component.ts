@@ -49,7 +49,7 @@ export class LoginOldComponent  {
     Configuration.modules.realEstateContributionsAuth +
     '/' +
     Configuration.pages.realEstateContributionsAuth.forgotPassword;
-  appTitle: string = 'المساهمات العقارية';
+  appTitle: string = 'المساهمات عقارية';
   OTPInputValue: string | null = null;
   tokenResponse: TokenResponse = {
     accessToken: '',

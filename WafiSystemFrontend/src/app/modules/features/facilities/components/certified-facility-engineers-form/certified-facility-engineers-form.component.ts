@@ -28,6 +28,7 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     engineerName: ['', [Validators.required]],
     identityNumber: ['', [Validators.required]],
     professionalLicenseNumber: ['', [Validators.required]],
+    qualificationEngineerType:[1,[Validators.required]]
   });
   showValidation = false;
   /**
@@ -134,6 +135,7 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     }
     this.qualificationCertifiedEngineerDto.identityNumber = this.qualificationCertifiedEngineersForm.value.identityNumber as string;
     this.qualificationCertifiedEngineerDto.engineerName = this.qualificationCertifiedEngineersForm.value.engineerName as string;
+    this.qualificationCertifiedEngineerDto.qualificationEngineerType = +this.qualificationCertifiedEngineersForm.value.qualificationEngineerType! as number;
     this.qualificationCertifiedEngineerDto.facilityId = this.userData?.facilities[0].id as string;
     this.qualificationCertifiedEngineerDto.id = this.qualificationCertifiedEngineerDto.id ? this.qualificationCertifiedEngineerDto.id : "00000000-0000-0000-0000-000000000000";
     this.subscriptions.push(

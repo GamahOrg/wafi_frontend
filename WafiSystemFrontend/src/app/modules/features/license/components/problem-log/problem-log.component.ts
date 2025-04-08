@@ -10,6 +10,8 @@ import { PaginationService } from 'src/app/shared/services/pagination/pagination
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { AddEditProblemLogComponent } from '../add-edit-problem-log/add-edit-problem-log.component';
 import { ShowProblemLogComponent } from '../show-problem-log/show-problem-log.component';
+import { EngineeringSupervisionReportActualProjectStatusSummaryService } from '../../services/engineering-supervision-report-actual-project-status-summary.service';
+import { ActualValueReportPagingListDto, LicenseProjectEngineeringRequestStatusEnum } from '../../models/actual-value-report-paging-list-dto';
 
 @Component({
   selector: 'app-problem-log',
@@ -26,10 +28,14 @@ export class ProblemLogComponent {
     pageSize: 10,
     totalCount: 0,
   };
+  actualValueReport?:ActualValueReportPagingListDto;
+  licenseProjectEngineeringRequestStatusEnum=LicenseProjectEngineeringRequestStatusEnum;
+  monthDate?:Date;
   reqList: Pagination<LicenseProjectProblemPagingDto[]> = {} as Pagination<LicenseProjectProblemPagingDto[]>;
   licenseProjectProblemCounts?: LicenseProjectProblemsCountsDto;
   levelType=levelType;
   constructor(
+    private _engineeringSupervisionReportActualProjectStatusSummaryService: EngineeringSupervisionReportActualProjectStatusSummaryService,
     private _licenseProjectProblemService: LicenseProjectProblemService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _popupService: PopupService,
@@ -46,15 +52,28 @@ export class ProblemLogComponent {
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId) {
-      this.loadComponentData();
+      this.getmonthDate();
     }
   }
-
+  getmonthDate() {
+    debugger;
+    this.subscriptions.push(
+      this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
+        debugger;
+        if (res) {
+          debugger;
+          this.actualValueReport= res as ActualValueReportPagingListDto;
+          this.monthDate = this.actualValueReport.monthDate as Date;
+         this.loadComponentData();
+        }
+      })
+    )
+  }
   loadComponentData(): void {
 
     const requests = [
-      this._licenseProjectProblemService.getLicenseProjectProblemCounts(this.licenseProjectId as string),
-      this._licenseProjectProblemService.getLicenseProjectProblems(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize),
+      this._licenseProjectProblemService.getLicenseProjectProblemCounts(this.licenseProjectId as string,this.monthDate as Date),
+      this._licenseProjectProblemService.getLicenseProjectProblems(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize,this.monthDate as Date),
     ];
     const subscriptions = forkJoin(requests).subscribe((results) => {
       if (results) {

@@ -1,13 +1,21 @@
 <div class="form-actions mt-auto">
-        <button class="btn btn-outline-primary"
-                (click)="back()"
-                *ngIf="previousBtnIsVisible">{{localization.previous}}</button>
 
-        <button class="btn btn-outline-primary"
-                *ngIf="saveAsDraftBtnIsVisible"
+        <button class="btn btn-outline-secondary" (click)="back()" *ngIf="previousBtnIsVisible"><span
+                        class="icon material-icons">east</span> {{localization.previous}}</button>
+
+        <!-- <button class="btn btn-outline-primary"
+                (click)="back()"
+                *ngIf="previousBtnIsVisible">{{localization.previous}}</button> -->
+
+        <button class="btn btn-outline-primary" *ngIf="saveAsDraftBtnIsVisible"
                 (click)="saveAsDraft()">{{localization.saveAsDraft}}</button>
 
-        <button class="btn btn-outline-primary"
+        <!-- <button class="btn btn-outline-primary"
                 (click)="next()"
-                *ngIf="nextBtnIsVisible">{{localization.next}}</button>
+                *ngIf="nextBtnIsVisible">{{localization.next}}</button> -->
+
+
+
+        <button class="btn btn-outline-primary" (click)="next()" *ngIf="nextBtnIsVisible">{{localization.next}} <span
+                        class="icon material-icons">west</span></button>
 </div>

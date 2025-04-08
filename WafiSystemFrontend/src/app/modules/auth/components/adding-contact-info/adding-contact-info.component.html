@@ -3,7 +3,7 @@
         <h6 class="form-title">البيانات الشخصية</h6>
         <div class="row row-gap-3">
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="form-group">
                     <label class="form-label" for="userName">{{localization.userName}}</label>
                     <input type="text" id="control-userName" formControlName="userName" class="form-control"
@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="form-group">
                     <label for="firstName" class="form-label">{{localization.shortName}}</label>
                     <input type="text" formControlName="shortName" id="control-shortName" class="form-control"
@@ -27,7 +27,7 @@
             </div>
 
 
-            <div *ngIf="contactInfoValues.fullName==null|| contactInfoValues.fullName == ''" class="col-12 col-md-6">
+            <div *ngIf="contactInfoValues.fullName==null|| contactInfoValues.fullName == ''" class="col-12 col-lg-6">
                 <div class="form-group">
                     <label class="form-label" for="fullName">{{localization.fullName}}</label>
                     <input type="text" id="control-fullName" formControlName="fullName" class="form-control"
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div *ngIf="controls.nationality.value!=null && controls.nationality.value!='' " class="col-12 col-md-6">
+            <div *ngIf="controls.nationality.value!=null && controls.nationality.value!='' " class="col-12 col-lg-6">
                 <div class="form-group">
                     <label class="form-label" for="nationality">{{localization.nationality}}</label>
                     <input type="text" id="control-nationality" formControlName="nationality" class="form-control"
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div *ngIf="controls.nationality.value==null && controls.nationality.value==''" class="col-12 col-md-6">
+            <div *ngIf="controls.nationality.value==null && controls.nationality.value==''" class="col-12 col-lg-6">
                 <div class="form-group">
                     <label class="form-label" for="nationality">{{localization.nationality}}</label>
                     <select class="form-select" formControlName="nationality"
@@ -65,7 +65,7 @@
             </div>
 
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="form-group">
                     <label for="Mobile" class="form-label">{{localization.Mobile1}}</label>
                     <input type="text" formControlName="mobile1" class="form-control" id="control-mobile1"
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="form-group">
                     <label for="Mobile2" class="form-label">{{localization.Mobile2}}</label>
                     <input type="text" formControlName="mobile2" class="form-control" id="control-mobile2"
@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="form-group">
                     <label for="email" class="form-label">{{localization.Email}}</label>
                     <input type="email" formControlName="email" id="control-email" class="form-control"
@@ -106,7 +106,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div *ngIf="loginUserEnum != LoginUserTypeEnum.finalBeneficiary" class="form-group">
                     <label for="jobTitle" class="form-label">{{localization.JobTitle}}</label>
                     <input type="text" formControlName="jobTitle" id="control-jobTitle" class="form-control"
@@ -119,7 +119,7 @@
 
         <!-- <h6 class="form-title">تعيين كلمة المرور</h6>
         <div class="row row-gap-3">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="form-group">
                     <label for="password" class="form-label">{{localization.Password}}</label>
                     <div class="input-group">
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="form-group">
                     <label for="confirmPassword" class="form-label">{{localization.ConfirmPassword}}</label>
                     <div class="input-group">
