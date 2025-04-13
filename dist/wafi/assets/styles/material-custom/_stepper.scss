@@ -1,0 +1,68 @@
+.mat-horizontal-stepper-wrapper {
+    .mat-horizontal-content-container {
+        padding: 1px;
+    }
+}
+
+// .mat-step-header {
+//     &.cdk-keyboard-focused,
+//     &.cdk-program-focused,
+//     &:hover:not([aria-disabled]),
+//     &:hover[aria-disabled=false] {
+//         background-color: transparent;
+//     }
+// }
+
+.mat-horizontal-stepper-header::before,
+.mat-horizontal-stepper-header::after,
+.mat-stepper-horizontal-line {
+    // border-top-color: #b0c6bd;
+    border-top-color: rgba($theme-dark, 0.25);
+
+    .rega & {
+        border-top-color: rgba($theme-dark, 0.25);
+    }
+}
+
+.mat-stepper-horizontal-line {
+    border-top-width: 4px !important;
+}
+
+.mat-step-icon {
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: $border-radius-sm !important;
+}
+
+.mat-step-header {
+
+    .mat-step-icon-selected,
+    .mat-step-icon-state-done,
+    .mat-step-icon-state-edit {
+        // border: 1px solid $darkgreen;
+        border: 1px solid $theme-dark;
+        // background-color: $darkgreen;
+        background-color: $theme-dark;
+        box-shadow: 0px 4px 36px rgba(7, 111, 66, 0.12);
+
+        .rega & {
+            border-color: $theme-dark;
+            background-color: $theme-dark;
+        }
+    }
+
+    .mat-step-icon-selected {}
+
+    .mat-step-icon-state-done {}
+
+    .mat-step-icon-state-edit {
+        // color: $darkgreen;
+        color: $theme-dark;
+        background-color: transparent;
+
+        .rega & {
+            color: $theme-dark;
+            background-color: transparent;
+        }
+    }
+}

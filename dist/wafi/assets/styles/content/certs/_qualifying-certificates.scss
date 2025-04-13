@@ -1,0 +1,69 @@
+.text-teal {
+  color: #29848a;
+}
+
+.text-darkteal {
+  color: #005357;
+}
+
+.text-gray {
+  color: #7e7e7e;
+}
+
+.text-darkblue {
+  color: #001f5f;
+}
+
+.text-green {
+  color: #00a787;
+}
+
+.cetificate {
+  padding: 2.5%;
+  font-family: "REGA", sans-serif;
+  color: #000;
+
+  @media print {
+    print-color-adjust: exact;
+  }
+
+  .cetificate-layout {
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+    overflow: hidden;
+
+    @media print {
+      overflow: visible;
+    }
+
+    .cert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+
+      .logo {
+        flex: 1 0 auto;
+        max-width: 50%;
+      }
+
+      .top-pattern {
+        max-width: 50%;
+      }
+    }
+
+    .cert-footer {
+      display: flex;
+    }
+
+    .center-pattern {
+      position: absolute;
+      z-index: 1;
+      right: 50%;
+      bottom: 50%;
+      transform: translate(50%, 50%);
+    }
+  }
+}

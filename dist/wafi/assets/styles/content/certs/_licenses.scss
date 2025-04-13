@@ -1,0 +1,111 @@
+.cetificate {
+    position: relative;
+    font-family: 'Bukra', sans-serif;
+    font-size: .5vw;
+
+    @media print {
+        font-size: 2vw;
+    }
+
+    .cetificate-layout {
+        display: flex;
+        flex-direction: column;
+        row-gap: 7.5%;
+
+        position: absolute;
+        inset: 0;
+
+        padding: 10% 10%;
+        overflow: hidden;
+
+        @media print {
+            overflow: visible;
+        }
+
+        .license-logo {
+            img {
+                width: 47%;
+            }
+        }
+
+        .data {
+
+            .intro,
+            .outro {
+                font-size: .5vw;
+
+                @media print {
+                    font-size: 2vw;
+                }
+            }
+
+            .intro {
+                &+.info {
+                    margin-top: 5%;
+                }
+            }
+
+            .info {
+                font-size: .35vw;
+
+                @media print {
+                    font-size: 1.5vw;
+                }
+
+                &+.box {
+                    margin-top: 5%;
+                }
+            }
+
+            .box {
+                display: flex;
+                align-items: center;
+
+                height: 1.25rem;
+                padding: 4% 8%;
+
+                @media print {
+                    padding: 1mm 2mm;
+                }
+
+                border: 1px solid rgba(#0078bc, .5);
+
+                @media print {
+                    height: 12.5mm;
+                }
+
+                &.label {
+                    justify-content: center;
+                    color: $white;
+                    background-color: #0078bc;
+                }
+
+                &.square {
+                    width: 2.5rem;
+                    height: 2.5rem;
+
+                    @media print {
+                        width: 22.5mm;
+                        height: 22.5mm;
+                    }
+                }
+
+
+            }
+
+            .outro {
+                margin-top: 5%;
+                text-align: center;
+            }
+        }
+
+        .rega-logo {
+            margin-top: auto;
+            text-align: end;
+
+            img {
+                width: 47%;
+            }
+        }
+    }
+}

@@ -1,0 +1,94 @@
+.announcement {
+  padding: .5rem 1rem;
+  border-bottom: 5px solid $theme-mid;
+  background: linear-gradient(270deg, $theme-main 0%, rgba($theme-main, .75) 100%);
+
+  .text,
+  .link {
+    color: $white;
+  }
+
+  .text {
+    text-align: center;
+    font-size: .8rem;
+  }
+
+  .link {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.welcome-card {
+  --bs-card-cap-bg: $white;
+
+  .card-header {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 5rem;
+    padding: 1.5rem 2rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      transform: rotate(1.5deg) translateY(-1rem);
+
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      border-radius: $card-border-radius;
+      background: $theme-mid;
+    }
+
+    &::after {
+      display: none;
+    }
+
+    .card-title {
+      position: relative;
+      z-index: 2;
+
+      margin-bottom: 0;
+      color: $white;
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem 2rem;
+    font-size: $font-size-sm;
+
+    @media (max-width: 767px) {
+      padding: .5rem 1rem 1rem;
+    }
+
+    .mdc-button {
+      margin-top: 1rem;
+    }
+  }
+
+  .card-image {
+    position: relative;
+    z-index: 3;
+    text-align: end;
+
+    margin-top: -4rem;
+
+    @media (max-width: 767px) {
+      margin-top: -4.5rem;
+    }
+
+    img {
+      margin-inline-end: 2rem;
+
+      @media (max-width: 767px) {
+        max-width: 30%;
+        margin-inline-end: 1rem;
+      }
+    }
+  }
+}

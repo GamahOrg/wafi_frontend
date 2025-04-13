@@ -1,0 +1,9 @@
+.mdc-button {
+  font-family: "IBM_Plex_Sans_Arabic", sans-serif;
+  font-size: $font-size-sm;
+  letter-spacing: normal;
+
+  &.mat-primary:not([disabled]) {
+    background-color: $theme-main;
+  }
+}

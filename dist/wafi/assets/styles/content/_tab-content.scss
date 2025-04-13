@@ -1,0 +1,102 @@
+.tab-data-header {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $lightergray;
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+
+    width: 1.5rem;
+    height: 1.5rem;
+
+    border-radius: 50%;
+    background-color: $theme-light;
+
+    [class^="material-icons"] {
+      color: $theme-dark;
+    }
+  }
+
+  .edit-icon {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+  }
+
+  &~.tab-data-section {
+    margin-top: 2rem;
+  }
+}
+
+.tab-data-section {
+  &+.tab-data-section {
+    padding-top: 2rem;
+    border-top: 1px solid $lightergray;
+  }
+
+  .tab-data-section-title-subtitle {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 1rem;
+
+    .title {
+      margin-bottom: 0;
+    }
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 1rem;
+    font-size: $font-size-sm;
+  }
+
+  .subtitle {
+    font-size: $font-size-sm;
+    color: $darkgray;
+  }
+
+  .key {
+    font-size: $font-size-xs;
+    font-weight: 500;
+    color: $lightgray;
+
+    &+.value {
+      margin-top: .5rem;
+    }
+  }
+
+  .value {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $headings-color;
+
+    &+.value {
+      margin-top: .5rem;
+    }
+
+    .icon {
+      color: $lightgray;
+    }
+
+    .delete {
+      cursor: pointer;
+
+      [class^="material-icons"] {
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}

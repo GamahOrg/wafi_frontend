@@ -1,0 +1,14 @@
+@import "/src/assets/styles/custom-variables";
+
+.layout {
+  min-height: 100vh;
+  width: 100%;
+  background: $light;
+
+  main {
+    footer {
+      height: 50px;
+      background-color: $white;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+.alert {
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+    border-radius: $card-border-radius;
+
+    .icon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 1.5rem;
+        height: 1.5rem;
+
+        border-radius: 50%;
+        // background-color: rgba($darkgreen, .08);
+        background-color: rgba($theme-dark, .08);
+
+        [class^="material-icons"] {
+            font-size: small;
+        }
+    }
+}

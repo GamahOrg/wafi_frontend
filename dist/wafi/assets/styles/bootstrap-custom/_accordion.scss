@@ -1,0 +1,214 @@
+accordion {
+  accordion-group {
+    &+accordion-group {
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      --bs-card-border-radius: #{$border-radius-xs};
+      --bs-card-cap-padding-y: 1rem;
+      --bs-card-cap-bg: #{$white};
+    }
+  }
+
+  &:not(.simple) {
+    accordion-group {
+      .card {
+        --bs-card-spacer-y: 2.5rem;
+        --bs-card-spacer-x: 2.5rem;
+        --bs-card-border-width: 1px;
+        --bs-card-border-color: #{$lightergray};
+
+        .card-header {
+          border-bottom: none;
+        }
+      }
+
+      &.panel-open {
+        .card {
+          --bs-card-border-color: #{$midgreen};
+        }
+      }
+    }
+  }
+
+  &.simple {
+    accordion-group {
+      padding-inline: 1rem;
+
+      &+accordion-group {
+        padding-top: 1rem;
+        border-top: 1px solid rgba($bluegray, .5);
+      }
+
+      .card {
+        border-radius: 0;
+        box-shadow: none;
+
+        .card-header {
+          padding: 0;
+          background-color: transparent;
+          border-radius: 0;
+
+          .accordion-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .title {
+              font-size: $font-size-sm;
+              font-weight: normal;
+              color: $black;
+            }
+
+            >.icon {
+              height: 1.5rem;
+
+              .open {
+                display: inline-block;
+              }
+
+              .close {
+                display: none;
+              }
+            }
+          }
+        }
+
+        .card-body {
+          padding: .5rem 0 0;
+        }
+      }
+
+      &.panel-open {
+        .card-header {
+          box-shadow: none;
+
+          .accordion-heading {
+            .icon {
+              .open {
+                display: none;
+              }
+
+              .close {
+                display: inline-block;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.large {
+      accordion-group {
+        padding-inline: 0;
+
+        &+accordion-group {
+          padding-top: 1.5rem;
+          border-top: none;
+        }
+
+        .card {
+          .card-header {
+            padding: 1.25rem 2.5rem;
+            border-radius: $border-radius-sm;
+            box-shadow: 0px 2px 12px rgba(37, 51, 66, 0.15);
+
+            .accordion-heading {
+              .title {
+                font-size: $font-size-base*1.5;
+                color: $success;
+              }
+
+              .icon {
+                color: $success;
+              }
+            }
+          }
+
+          .card-body {
+            margin-top: 1.5rem;
+            padding-top: 0;
+          }
+        }
+      }
+    }
+
+    &.menu-accordion {
+      accordion-group {
+        padding-inline: 0;
+
+        &+accordion-group {
+          padding-top: 0;
+          border-top: none;
+        }
+
+        .card {
+          .card-header {
+            .accordion-heading {
+              padding: .5rem 1rem;
+
+              .title {
+                display: inline-flex;
+                align-items: center;
+                column-gap: 0.25rem;
+                margin-bottom: 0;
+                color: #1C1C1C;
+
+                >.icon {
+                  display: inline-flex;
+                  align-items: center;
+                  color: $theme-dark;
+                }
+              }
+
+              >.icon {
+                color: $darkgray;
+              }
+            }
+          }
+        }
+      }
+
+      .panel-open {
+        .card {
+          .card-header {
+            background-color: $theme-light;
+
+            .accordion-heading {
+              .title {
+                font-weight: bold;
+                color: $theme-dark;
+              }
+            }
+          }
+
+          .nav-link {
+            &.active {
+              position: relative;
+              margin-inline: 1rem;
+
+              font-weight: normal !important;
+              color: $theme-dark;
+              background-color: transparent !important;
+
+              &::before {
+                content: '';
+                width: $size-xs;
+                height: 1rem;
+
+                position: absolute;
+                left: 0;
+                bottom: 50%;
+                transform: translateY(50%);
+
+                border-radius: $border-radius;
+                background-color: $theme-main;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

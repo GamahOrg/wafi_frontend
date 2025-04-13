@@ -1,0 +1,28 @@
+.mdc-dialog__title {
+  display: flex;
+  align-items: center;
+
+  margin-inline: 2rem;
+  padding: 1rem 0;
+  color: $headings-color;
+
+  button {
+    margin-inline-start: auto;
+  }
+}
+
+.mdc-dialog__content {
+  flex-grow: 1;
+  max-height: none;
+  margin-inline: 1rem;
+  padding-inline: 1rem;
+
+  letter-spacing: normal;
+  overflow-x: hidden;
+}
+
+.mdc-dialog__actions {
+  margin-inline: 2rem;
+  padding: 1rem 0;
+  border-top: 3px solid #E4E4E4;
+}

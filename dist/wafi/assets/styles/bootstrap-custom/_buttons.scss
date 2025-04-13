@@ -1,0 +1,52 @@
+.btn {
+  --bs-btn-font-weight: 500;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: .25rem;
+
+  .icon {
+    font-size: inherit;
+  }
+}
+
+.btn-outline-secondary {
+  --bs-btn-hover-color: #{$white};
+  --bs-btn-active-color: #{$white};
+}
+
+.btn-secondary,
+.btn-outline-success {
+  --bs-btn-color: #{$darkgreen};
+  --bs-btn-hover-color: #{$white};
+
+  --bs-btn-active-color: #{$white};
+  --bs-btn-active-border-color: #{$darkgreen};
+  --bs-btn-active-bg: #{$darkgreen};
+
+  --bs-btn-bg: #E7F2ED;
+  --bs-btn-hover-bg: #{$darkgreen};
+}
+
+.btn-success {
+  --bs-btn-color: #737373;
+  --bs-btn-hover-color: #{$white};
+  --bs-btn-active-color: #{$white};
+  --bs-btn-disabled-color: #{$white};
+
+  --bs-btn-border-color: transparent;
+  --bs-btn-bg: #E7F2ED;
+}
+
+.btn-dark {
+  --bs-btn-bg: #0D121C;
+}
+
+.btn-link {
+  --bs-btn-color: #{$theme-main};
+  --bs-btn-hover-color: #{$dark};
+
+  text-decoration: none;
+  font-weight: 500;
+}

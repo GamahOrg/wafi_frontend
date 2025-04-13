@@ -1,0 +1,141 @@
+.form-title {
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+
+  margin-bottom: 1rem;
+  // color: $darkgreen;
+  color: $theme-dark;
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+
+    width: 1.5rem;
+    height: 1.5rem;
+
+    border-radius: 50%;
+    background-color: $orange;
+
+    [class^="material-icons"] {
+      font-size: small;
+      // color: $darkgreen;
+      color: $theme-dark;
+    }
+  }
+
+  small {
+    color: $headings-color;
+  }
+
+  &~.form-subtitle {
+    margin-top: -1rem;
+  }
+}
+
+.form-subtitle {
+  margin-bottom: 1rem;
+  color: rgba($dark, .5);
+}
+
+.form-block {
+  padding: 1rem;
+  border-radius: $card-border-radius;
+  background-color: rgba($bluegray, .2);
+
+  @media (max-width: 767px) {
+    padding: 1rem;
+  }
+
+  .title {
+    margin-bottom: 1rem;
+    font-size: $font-size-sm;
+    font-weight: bold;
+  }
+}
+
+.add-array {
+  font-size: $font-size-sm;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-note,
+.form-text {
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+
+  .text,
+  [class^="material-icons"] {
+    font-size: $font-size-xxs;
+  }
+
+  [class^="material-icons"] {
+    // color: $darkgreen;
+    color: $theme-dark;
+  }
+}
+
+.form-text {
+  [class^="material-icons"] {
+    // color: $darkgreen;
+    color: $theme-dark;
+  }
+}
+
+.form-note {
+  font-size: $font-size-xxs;
+
+  [class^="material-icons"] {
+    color: inherit;
+  }
+}
+
+.form-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 15rem;
+  border: 1.2px dashed $darkgray;
+  border-radius: $border-radius-xs;
+  background-color: rgba($bluegray, .19);
+
+  .text {
+    text-align: center;
+    font-size: 1rem;
+  }
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  column-gap: .5rem;
+
+  position: sticky;
+  bottom: -1rem;
+  z-index: 1;
+
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1rem;
+
+  border-top: 1px solid #DAE5E1;
+  background-color: $white;
+
+  .btn {
+    @media screen and (min-width: 768px) {
+      width: 10%;
+    }
+  }
+}
+
+.form-separator {
+  width: 100%;
+  height: 10px;
+  background-color: #F3F7F5;
+}

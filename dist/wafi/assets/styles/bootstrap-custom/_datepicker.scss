@@ -1,0 +1,134 @@
+.bs-datepicker {
+    margin-top: 0.5rem;
+    box-shadow: none !important;
+
+    &.theme-default {
+        background: #FFFFFF;
+        // border: 1px solid $darkgreen;
+        border: 1px solid $theme-dark;
+        border-radius: 6px;
+
+        .bs-datepicker-head {
+            background-color: transparent;
+        }
+
+        .bs-datepicker-buttons {
+            column-gap: 0.5rem;
+            padding-top: 2rem;
+            border: none;
+
+            .clear-right {
+                flex-grow: 0.5;
+            }
+
+            .btn-today-wrapper,
+            .btn-clear-wrapper {
+                .btn {
+                    width: 100%;
+                }
+            }
+
+            .btn-today-wrapper {
+                .btn {
+                    color: $white;
+                    border-color: transparent;
+                    background: linear-gradient(266.42deg, $theme-dark 6.77%, $theme-main 89.72%), $theme-main;
+                }
+            }
+
+            .btn-clear-wrapper {
+                .btn {
+                    // color: $darkgreen;
+                    color: $theme-dark;
+                    // border-color: $darkgreen;
+                    border-color: $theme-dark;
+                    background: $white;
+                }
+            }
+        }
+
+    }
+
+    .bs-media-container {
+        column-gap: .5rem;
+    }
+
+    .bs-datepicker-container {
+        padding: 12px;
+    }
+
+    .bs-datepicker-head {
+        button {
+            font-size: $font-size-sm;
+            color: #16171D;
+
+            &.previous,
+            &.next {
+                color: #6C7593;
+            }
+        }
+    }
+}
+
+.bs-datepicker-body {
+    border: none !important;
+
+    table {
+        &.days {
+            span {
+                width: 2rem;
+                height: 2rem;
+                line-height: calc(2rem + 2px);
+
+                &.in-range:not(.selected) {
+                    // color: $darkgreen !important;
+                    color: $theme-dark !important;
+
+                    &:before {
+                        // background: rgba($darkgreen, .2) !important;
+                        background: rgba($theme-dark, .2) !important;
+                    }
+                }
+            }
+        }
+
+        td {
+            color: #6C7593;
+
+            &:before {
+                top: 0 !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+            }
+
+            span {
+                &:before {
+                    top: 0 !important;
+                    bottom: 0 !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                }
+
+                &.selected {
+                    // background-color: $darkgreen !important;
+                    background-color: $theme-dark !important;
+
+                    &:before {
+                        background-color: transparent !important;
+                    }
+                }
+
+                &.select-start {
+                    border-start-end-radius: 0 !important;
+                    border-end-end-radius: 0 !important;
+                }
+
+                &.select-end {
+                    border-start-start-radius: 0 !important;
+                    border-end-start-radius: 0 !important;
+                }
+            }
+        }
+    }
+}

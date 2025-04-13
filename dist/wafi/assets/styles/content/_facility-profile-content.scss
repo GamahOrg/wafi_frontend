@@ -1,0 +1,49 @@
+.profile-card {
+  --bs-card-border-width: 1px;
+  --bs-card-border-color: #{$lightergray};
+
+  .image {
+    width: 4rem;
+    height: 4rem;
+    background-color: $white;
+
+    .icon {
+      font-size: 6rem;
+      color: $theme-gray;
+    }
+
+    img {
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .job {
+    padding: .5rem 1rem;
+    color: $theme-main;
+    border-radius: $border-radius-xs;
+    background-color: $theme-light;
+  }
+
+  .alert {
+    flex-wrap: wrap;
+  }
+}
+
+.com-reg-card {
+  --bs-card-border-width: 1px;
+  --bs-card-border-color: #{$lightergray};
+
+  .image {
+    width: 3rem;
+    height: 3rem;
+    background-color: $theme-main;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+}
