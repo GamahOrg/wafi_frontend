@@ -15,13 +15,13 @@ RUN npm install -g pnpm && pnpm install
 COPY . .
 
 # Build the Angular application
-RUN npm run build -- --configuration production
+RUN npm run build -- --configuration development
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:stable
 
 # Copy the built application from the previous stage
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist/wafi /usr/share/nginx/html
 
 # Copy custom Nginx configuration (optional)
 # Uncomment the following line if you have a custom nginx.conf

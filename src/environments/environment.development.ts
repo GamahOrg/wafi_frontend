@@ -1,6 +1,5 @@
 export const environment = {
   production: true,
-  baseURL: "https://localhost:7253",
-  securityURl: "http://localhost:7444",
-
+  baseURL: "https://stage-red-api.rega.gov.sa",
+  securityURl: "https://stage-red-api.rega.gov.sa/security",
 };
