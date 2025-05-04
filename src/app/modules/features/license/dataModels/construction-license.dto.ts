@@ -4,11 +4,12 @@ export class ConstructionLicenseDto {
   id: string = "";
   licenseProjectsId: string = "";
   before7: boolean = false;
-  issueOn: string = "";
+  issueOn?: string|null = "";
   landTotalSpace: number = 0;
   licenseFileId: string | null = null;
   licenseNumber: string = "";
   licenseFile: FileManagerBE | null = null;
+  constructionLicenseType?: number;
 }
 
 export class BaladyDto {
@@ -19,9 +20,10 @@ export class BaladyDto {
 export class ConstructionLicenseCreateUpdateDto {
   id: string = "";
   licenseProjectsId: string = "";
-  issueOn: string = "";
+  issueOn?: string = "";
   licenseFileId: string | null = null;
   licenseNumber: string = "";
+  constructionLicenseType?: number;
 }
 
 

@@ -74,7 +74,7 @@
         column-gap: .5rem;
 
         padding: .5rem 1rem;
-        color: $darkgray;
+        color: $headings-color;
         transition: color .15s, font-weight .15s;
 
         &.disabled {
@@ -90,18 +90,16 @@
 
           [class^="material-icons"] {
             font-size: 1.5rem;
-            color: $theme-dark;
           }
         }
 
         &:hover {
-          color: $headings-color;
           font-weight: bold;
         }
 
         &.active {
           font-weight: bold;
-          color: $theme-dark;
+          color: $theme-main;
           background-color: $theme-light;
         }
       }

@@ -21,17 +21,18 @@ export class EmployeeCreateLincenseComponent {
   facilityId: string | null = null;
 
   facilityForm = this._formBuilder.group({
-    commercialRegistrationNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(Configuration.validators.numberOnly)]],
+    nationalNumber: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(Configuration.validators.numberOnly)]],
   });
 
-  get commercialRegistrationNo(): FormControl {
-    return this.facilityForm.controls.commercialRegistrationNo
+  get nationalNumber(): FormControl {
+    return this.facilityForm.controls.nationalNumber
   }
 
   localization = {
     commercialRegistrationNo: "رقم السجل التجاري",
-    alert: "تم التحقق من رقم السجل التجاري   من قبل وزارة التجارة",
-    title: "البيانات الخاصة بالسجل التجاري التي تم استرجاعها من قبل وزارة التجارة",
+    nationalNumber: "الرقم الوطنى للسجل التجارى",
+    alert: "تم التحقق من الرقم الوطني للسجل التجاري   من قبل وزارة التجارة",
+    title: "البيانات الخاصة بالرقم الوطني للسجل التجاري التي تم استرجاعها من قبل وزارة التجارة",
     startDateLabel: "تاريخ إصدار السجل التجاري",
     endDateLabel: "تاريخ إنتهاء السجل التجاري",
     facilityData: "بيانات المنشأة ",
@@ -59,9 +60,9 @@ export class EmployeeCreateLincenseComponent {
 
   onClickOnVerification() {
     this.subscriptions.push(
-      this._employeeCreateLincenseService.FacilityRegister(this.commercialRegistrationNo.value).subscribe((employeeFacilityRegistrationRes: EmployeeFacilityRegistrationDto | null) => {
+      this._employeeCreateLincenseService.FacilityRegister(this.nationalNumber.value).subscribe((employeeFacilityRegistrationRes: EmployeeFacilityRegistrationDto | null) => {
         if (employeeFacilityRegistrationRes) {
-          
+
           this.viewMode = true;
           this.employeeFacilityRegistration = employeeFacilityRegistrationRes;
         }

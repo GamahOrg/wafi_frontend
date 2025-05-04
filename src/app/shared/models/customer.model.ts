@@ -17,6 +17,7 @@ export class customerResponse {
   isProjectManager: boolean = false;
   profileImageFile: SysFileManagerCreateUpdateDto | null = null;
   profileImageFileId: string = '';
+  registrationDateTime?:Date;
 }
 export interface YaqeenCustomer {
   nidnumber: string;
@@ -66,6 +67,7 @@ export class facilityResponse {
   id: string = '';
   facilityCode: string = '';
   commercialRegisterNumber?: string = '';
+  entity700Number?:string='';
   facilityName: string = '';
   commercialRegisterStartDate: Date = new Date();
   commercialRegisterEndDate: Date = new Date();

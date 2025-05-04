@@ -20,13 +20,14 @@ export class AddFacilityComponent implements OnInit, OnDestroy{
   userData: customerResponse | null = null;
   facilityData: facilityResponse = new facilityResponse;
   addFacilityForm = this._formBuilder.group({
-    commercialRegistrationNo: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(Configuration.validators.numberOnly)]],
+    nationalNumber: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(Configuration.validators.numberOnly)]],
   })
   viewMode: boolean = false;
   localization = {
     commercialRegistrationNo: "رقم السجل التجاري",
-    alert: "تم التحقق من رقم السجل التجاري   من قبل وزارة التجارة",
-    title: "البيانات الخاصة بالسجل التجاري التي تم استرجاعها من قبل وزارة التجارة",
+    nationalNumber: "الرقم الوطنى للسجل التجاري",
+    alert: "تم التحقق من الرقم الوطني للسجل التجاري   من قبل وزارة التجارة",
+    title: "البيانات الخاصة بالرقم الوطني للسجل التجاري التي تم استرجاعها من قبل وزارة التجارة",
     startDateLabel: "تاريخ إصدار السجل التجاري",
     endDateLabel: "تاريخ إنتهاء السجل التجاري",
     facilityData: "بيانات المنشأة ",
@@ -58,13 +59,13 @@ export class AddFacilityComponent implements OnInit, OnDestroy{
       })
     )
   }
-  get commercialRegistrationNo(): FormControl {
-    return this.addFacilityForm.controls.commercialRegistrationNo
+  get nationalNumber(): FormControl {
+    return this.addFacilityForm.controls.nationalNumber
   }
   save()
   {
     this.subscriptions.push(
-      this._customerFacilitiesService.FacilityRegister(this.addFacilityForm.controls.commercialRegistrationNo.value as string, this.userData?.id as string).subscribe((facilityDataRes: facilityResponse | null) => {
+      this._customerFacilitiesService.FacilityRegister(this.addFacilityForm.controls.nationalNumber.value as string, this.userData?.id as string).subscribe((facilityDataRes: facilityResponse | null) => {
         if (facilityDataRes) {
 
           this.viewMode = true;

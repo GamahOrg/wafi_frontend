@@ -1,41 +1,32 @@
-<div class="d-flex flex-column justify-content-between h-100 rega">
+<div class="d-flex flex-column h-100">
   <app-pilot-launch-hint></app-pilot-launch-hint>
   <app-auth-topbar></app-auth-topbar>
 
   <div class="content flex-fill">
-    <div class="abstract top ar">
+    <div class="abstract top start">
+      <img src="assets/images/auth/abstract-hor.svg" alt="" />
+    </div>
+    <div class="abstract top end">
       <img src="assets/images/auth/abstract-ver.svg" alt="" />
     </div>
-    <div class="abstract bottom">
+    <div class="abstract bottom end">
       <img src="assets/images/auth/abstract-hor.svg" alt="" />
     </div>
 
-    <div class="position-relative z-2 h-100">
-      <div class="row g-0 h-100">
-        <div class="col-12 col-lg-6">
-          <div class="form-side">
-            <div class="logo">
-              <!-- <img src="assets/images/real-estate-contributions/general/logo-rega-vertical.svg"
-                         
-                                 alt=""> -->
-            </div>
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-xl-6 col-xxl-5">
+        <div class="card auth-card">
+          <div class="logo mt-3">
+            <img src="assets/images/real-estate-contributions/general/logo-rega-wide-2.svg" alt="" class="logo-img" />
+          </div>
+          <div class="card-body">
             <ng-content></ng-content>
           </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="bg-side">
-            <div class="titles">
-              <h3 class="title">{{ title }}</h3>
-              <h4 class="subtitle">{{ subtitle }}</h4>
-            </div>
-            <div class="logos justify-content-end">
-              <img
-                src="assets/images/real-estate-contributions/general/logo-rega-wide-white.svg"
-                alt=""
-                class="logo-img"
-              />
-              <!-- <img src="assets/images/real-estate-contributions/general/logo-2030.svg"
-                                 alt=""> -->
+
+          <div class="card-footer">
+            <div class="d-flex justify-content-center align-items-center gap-3">
+              <span>هل تريد تقديم شكوى أو بلاغ؟</span>
+              <a [routerLink]="[complaintRequest]" class="btn btn-outline-danger" id="link-complaintRequest">اضغط هنا</a>
             </div>
           </div>
         </div>
@@ -45,4 +36,3 @@
 
   <app-real-estate-contribution-footer></app-real-estate-contribution-footer>
 </div>
-<!-- <app-loader></app-loader> -->

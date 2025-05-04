@@ -36,6 +36,21 @@
             </div>
           </ng-container>
 
+          <ng-container *ngIf="zones.length==0" >
+
+
+            <div class="row justify-content-center">
+              <div class="col-xl-12">
+                <div class="d-flex flex-column align-items-center gap-4 py-5">
+                  <p class="text-center">
+                    لا توجد زون مضافة حاليا. يمكنك إضافة زون أو أكثر وبعد ذلك ستتمكن من إضافة العمائر والبلوكات داخل هذه الزون
+                   </p>
+                </div>
+              </div>
+            </div>
+
+          </ng-container>
+
         </div>
       </div>
     </div>
@@ -51,8 +66,8 @@
             <p>تحتوي كل عمارة او بلوك على تفاصيل ( الوحدات ، النماذج , الأكواد )</p>
           </div>
           <div class="d-flex gap-3 align-self-center">
-            <span class="bg-light py-3 px-4">{{selectedZone?.numberOfBuilings}} عمارة</span>
-            <span class="bg-light py-3 px-4">{{selectedZone?.numberOfBlocks}} بلوك</span>
+            <span class="bg-light py-3 px-4">{{selectedZone?.numberOfBuilings??0}} عمارة</span>
+            <span class="bg-light py-3 px-4">{{selectedZone?.numberOfBlocks??0}} بلوك</span>
           </div>
         </div>
 
@@ -63,7 +78,7 @@
               <span class="py-2 px-3">البلوكات</span>
             </div>
 
-            <button class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><span class="icon material-icons">add</span> إضافة بلوك او عمارة</button>
+            <button *ngIf="selectedZoneIndex!=-1" class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><span class="icon material-icons">add</span> إضافة بلوك او عمارة</button>
           </div>
         </div>
       </div>
@@ -169,7 +184,10 @@
               </div>
             </div>
 
-            <div class="d-flex flex-column gap-4 mt-4">
+
+
+
+            <div class="d-flex flex-column gap-4 mt-4" *ngIf="selectedZoneIndex!=-1 && projectUnits&&projectUnits.length>0">
               <div class="d-flex flex-column gap-2">
                 <h4>الأكواد الخاصة بأنواع الوحدات</h4>
                 <p>قم بتحديد نوع الوحدة أولاً، حتي يمكنك تحميل القالب الخاص بها ثم يمكنك رفع ملف الأكواد</p>
@@ -181,7 +199,6 @@
                     <mat-icon fontIcon="upload_file"></mat-icon>
                     <div class="d-flex flex-column align-items-center gap-2">
                       <h6>قم بتحميل القالب الخاص بنوع الوحدة المحددة</h6>
-                      <p class="upload-hints">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</p>
                     </div>
                     <button class="btn btn-light" (click)="generateExcel()">تحميل القالب </button>
                   </div>
@@ -197,23 +214,27 @@
               </div>
             </div>
 
-            <div class="d-flex justify-content-center gap-4 mt-4">
+            <!-- <div class="d-flex justify-content-center gap-4 mt-4">
+              <button class="btn btn-outline-secondary"><span class="icon material-icons">east</span> السابق</button>
+              <button class="btn btn-outline-primary" (click)="moveToNextTab()">التالي <span class="icon material-icons">west</span></button>
+            </div> -->
+          </ng-container>
 
+          <ng-container *ngIf="selectedZoneIndex==-1 || projectUnits&&projectUnits.length==0">
+            <div class="row justify-content-center">
+              <div class="col-xl-6">
+                <div class="d-flex flex-column align-items-center gap-4 py-5">
+                  <p class="text-center">
+                    لا توجد أى عمائر أو بلوكات فى هذا النطاق حاليا.لعرض أنواع الوحدات المتاحة يرجى إضافة عمارة أو بلوك أولا.
+                    بعد ذلك يمكنك إضافة النماذج وتحميل الأكواد الخاصة بكل نوع من الوحدات بسهولة
+                  </p>
 
-              <!-- <button class="btn btn-outline-secondary"><span class="icon material-icons">east</span> السابق</button>
-                <button class="btn btn-outline-primary" (click)="moveToNextTab()">التالي <span
-                    class="icon material-icons">west</span></button> -->
-
+                  <button *ngIf="selectedZoneIndex!=-1" class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><span class="icon material-icons">add</span> إضافة بلوك او عمارة</button>
+                </div>
+              </div>
             </div>
           </ng-container>
 
-          <ng-container *ngIf="!selectedbuildingOrBlock || selectedbuildingOrBlock.licenseProjectSubUnits==null || selectedbuildingOrBlock.licenseProjectSubUnits.length==0">
-
-            <p class="d-flex justify-content-center gap-4 mt-4">
-              لا توجد أى عمائر أو بلوكات فى هذا النطاق حاليا.لعرض أنواع الوحدات المتاحة يرجى إضافة عمارة أو بلوك أولا.
-              بعد ذلك يمكنك إضافة النماذج وتحميل الأكواد الخاصة بكل نوع من الوحدات بسهولة
-            </p>
-          </ng-container>
         </div>
 
 

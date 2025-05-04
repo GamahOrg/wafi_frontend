@@ -21,12 +21,28 @@
         <tbody>
           <tr *ngFor="let license of constructionLicenses">
             <td>
-              <span *ngIf="license.before7">{{localization.before7}}</span>
-              <span *ngIf="!license.before7">{{localization.after7}}</span>
+              <span
+                *ngIf="license?.constructionLicenseType == 2 && license.before7"
+                >{{ localization.before7 }}</span
+              >
+              <span
+                *ngIf="
+                  license?.constructionLicenseType == 2 && !license.before7
+                "
+                >{{ localization.after7 }}</span
+              >
+              <span *ngIf="license?.constructionLicenseType == 1">{{
+                localization.letterType
+              }}</span>
             </td>
             <td>{{license?.licenseNumber}}</td>
 
-            <td>{{license?.issueOn | date:'yyyy-MM-dd'}}</td>
+            <td>
+              <span *ngIf="license?.constructionLicenseType == 1"></span>
+              <span *ngIf="license?.constructionLicenseType == 2">
+                {{ license?.issueOn | date : "yyyy-MM-dd" }}
+              </span>
+            </td>
             <td><a *ngIf="license && license.licenseFile" target="_blank"
                 [href]="baseUrl + license.licenseFile.filePath">
                 {{license.licenseFile.fileDescription}}</a></td>

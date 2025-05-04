@@ -5,18 +5,18 @@
         <div class="row row-gap-3">
             <div class="col-12 col-lg-6">
                 <div class="form-group">
-                    <label for="commercialRegistrationNo"
-                           class="form-label">{{localization.commercialRegistrationNo}}</label>
+                    <label for="nationalNumber"
+                           class="form-label">{{localization.nationalNumber}}</label>
                     <input type="text"
-                           formControlName="commercialRegistrationNo"
-                           class="form-control" id="control-commercialRegistrationNo"
-                           placeholder="اكتب {{localization.commercialRegistrationNo}}"
-                           [ngClass]="{'is-invalid': commercialRegistrationNo.touched && commercialRegistrationNo.errors}" />
-                    <div *ngIf="commercialRegistrationNo.errors"
+                           formControlName="nationalNumber"
+                           class="form-control" id="control-nationalNumber"
+                           placeholder="اكتب {{localization.nationalNumber}}"
+                           [ngClass]="{'is-invalid': nationalNumber.touched && nationalNumber.errors}" />
+                    <div *ngIf="nationalNumber.errors"
                          class="invalid-feedback">
-                        <div *ngIf="commercialRegistrationNo.errors?.['required']">{{localization.requiredErrorMsg}}</div>
-                        <div *ngIf="commercialRegistrationNo.errors?.['pattern']">{{localization.pattern}}</div>
-                        <div *ngIf="commercialRegistrationNo.errors?.['maxlength'] || commercialRegistrationNo.errors?.['minlength']">{{localization.maxLengthErrorMsg}}</div>
+                        <div *ngIf="nationalNumber.errors?.['required']">{{localization.requiredErrorMsg}}</div>
+                        <div *ngIf="nationalNumber.errors?.['pattern']">{{localization.pattern}}</div>
+                        <div *ngIf="nationalNumber.errors?.['maxlength'] || nationalNumber.errors?.['minlength']">{{localization.maxLengthErrorMsg}}</div>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                       fontIcon="check_circle"></mat-icon>
             <div class="px-1">
                 {{localization.alert }}
-                {{facilityData.commercialRegisterNumber}}
+                {{facilityData.entity700Number}}
             </div>
         </div>
 
@@ -59,13 +59,15 @@
         <div class="tab-data-section">
             <h2 class="title mb-2">{{localization.facilityData}}</h2>
             <div class="row row-gap-4">
+              
                 <div class="col-12 col-lg-6">
-                    <div class="key">{{localization.facilityType}}</div>
+                    <div class="key">{{localization.commercialRegistrationNo}}</div>
                     <div class="value">
                         <span class="icon material-icons">blinds</span>
-                        {{facilityData.facilityType}}
+                        {{facilityData.commercialRegisterNumber}}
                     </div>
                 </div>
+
                 <div class="col-12 col-lg-6">
                     <div class="key">{{localization.facilityName}}</div>
                     <div class="value">
@@ -73,6 +75,15 @@
                         {{facilityData.facilityName}}
                     </div>
                 </div>
+                
+                <div class="col-12 col-lg-6">
+                    <div class="key">{{localization.facilityType}}</div>
+                    <div class="value">
+                        <span class="icon material-icons">blinds</span>
+                        {{facilityData.facilityType}}
+                    </div>
+                </div>
+
                 <div class="col-12 col-lg-6" *ngIf="facilityData.facilityBusinessTypes.length>0">
                     <div class="key">{{localization.facilityActivities}}</div>
                     <div class="value"

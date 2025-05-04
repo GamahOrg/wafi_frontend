@@ -30,7 +30,7 @@
 
     .input-group-text,
     .form-control {
-      border-color: $bluegray;
+      border-color: $theme-main;
     }
 
     .input-group-text {
@@ -47,11 +47,11 @@
     }
 
     .btn {
-      border-color: $bluegray;
+      border-color: $theme-main;
       border-radius: $border-radius-sm;
 
       &:not(:hover) {
-        color: $theme-dark;
+        color: $theme-main;
         background-color: $white;
       }
     }

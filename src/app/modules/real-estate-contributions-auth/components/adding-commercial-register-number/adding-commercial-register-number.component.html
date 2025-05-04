@@ -1,100 +1,131 @@
 <div class="commercialRegistrationComponent">
-    <form [formGroup]="facilityForm"
-          *ngIf="!viewMode">
-
-        <div class="row row-gap-3">
-            <div class="col-12 col-lg-6">
-                <div class="form-group">
-                    <label for="commercialRegistrationNo"
-                           class="form-label">{{localization.commercialRegistrationNo}}</label>
-                    <input type="text"
-                           formControlName="commercialRegistrationNo"
-                           class="form-control"
-                           placeholder="اكتب {{localization.commercialRegistrationNo}}"
-                           [ngClass]="{'is-invalid': commercialRegistrationNo.touched && commercialRegistrationNo.errors}" />
-                    <div *ngIf="commercialRegistrationNo.errors"
-                         class="invalid-feedback">
-                        <div *ngIf="commercialRegistrationNo.errors?.['required']">{{localization.requiredErrorMsg}}</div>
-                        <div *ngIf="commercialRegistrationNo.errors?.['pattern']">{{localization.pattern}}</div>
-                        <div *ngIf="commercialRegistrationNo.errors?.['maxlength'] || commercialRegistrationNo.errors?.['minlength']">{{localization.maxLengthErrorMsg}}</div>
-                    </div>
-                </div>
+  <form [formGroup]="facilityForm" *ngIf="!viewMode">
+    <div class="row row-gap-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label for="commercialRegistrationNo" class="form-label">{{
+            localization.commercialRegistrationNo
+          }}</label>
+          <input
+            type="text"
+            formControlName="commercialRegistrationNo"
+            class="form-control"
+            placeholder="اكتب {{ localization.commercialRegistrationNo }}"
+            [ngClass]="{
+              'is-invalid':
+                commercialRegistrationNo.touched &&
+                commercialRegistrationNo.errors
+            }"
+          />
+          <div *ngIf="commercialRegistrationNo.errors" class="invalid-feedback">
+            <div *ngIf="commercialRegistrationNo.errors?.['required']">
+              {{ localization.requiredErrorMsg }}
             </div>
-        </div>
-
-        <div class="actions">
-            <button class="btn btn-primary"
-                    (click)="onClickOnVerification()"
-                    [disabled]="facilityForm.invalid">{{localization.verification}}</button>
-        </div>
-    </form>
-
-    <div *ngIf="viewMode">
-        <div class="alert alert-success"
-             role="alert">
-            <mat-icon aria-hidden="false"
-                      aria-label="Example check_circle icon"
-                      fontIcon="check_circle"></mat-icon>
-            <div class="px-1">
-                {{localization.alert }}
-                {{facilityData.commercialRegisterNumber}}
+            <div *ngIf="commercialRegistrationNo.errors?.['pattern']">
+              {{ localization.pattern }}
             </div>
-        </div>
-
-        <div class="tab-data-section mt-4">
-            <h6 class="title">{{localization.title}}</h6>
-            <div class="row row-gap-4">
-                <div class="col-12 col-lg-6">
-                    <div class="key">{{localization.startDateLabel}}</div>
-                    <div class="value">
-                        <span class="icon material-icons">calendar_today</span>
-                        {{facilityData.commercialRegisterStartDate | date:'MMM d, y'}}
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <div class="key">{{localization.endDateLabel}}</div>
-                    <div class="value">
-                        <span class="icon material-icons">calendar_today</span>
-                        {{facilityData.commercialRegisterEndDate | date:'MMM d, y'}}
-                    </div>
-                </div>
+            <div
+              *ngIf="commercialRegistrationNo.errors?.['maxlength'] || commercialRegistrationNo.errors?.['minlength']"
+            >
+              {{ localization.maxLengthErrorMsg }}
             </div>
+          </div>
         </div>
-
-        <div class="tab-data-section">
-            <h2 class="title mb-2">{{localization.facilityData}}</h2>
-            <div class="row row-gap-4">
-                <div class="col-12 col-lg-6">
-                    <div class="key">{{localization.facilityType}}</div>
-                    <div class="value">
-                        <span class="icon material-icons">blinds</span>
-                        {{facilityData.facilityType}}
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <div class="key">{{localization.facilityName}}</div>
-                    <div class="value">
-                        <span class="icon material-icons">blinds</span>
-                        {{facilityData.facilityName}}
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6" *ngIf="facilityData.facilityBusinessTypes.length>0">
-                    <div class="key">{{localization.facilityActivities}}</div>
-                    <div class="value"
-                         *ngFor="let activity of facilityData.facilityBusinessTypes">
-                        <span class="icon material-icons">blinds</span>
-                        {{activity.businessType}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="actions">
-            <button class="btn btn-outline-primary"
-                    (click)="onClickOnPrevious()">{{localization.previous}}</button>
-            <button class="btn btn-primary"
-                    color="primary"
-                    (click)="onClickOnNext()">{{localization.next}}</button>
-        </div>
+      </div>
     </div>
+
+    <div class="actions">
+      <button
+        class="btn btn-primary"
+        (click)="onClickOnVerification()"
+        [disabled]="facilityForm.invalid"
+      >
+        {{ localization.verification }}
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="viewMode">
+    <div class="alert alert-success" role="alert">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example check_circle icon"
+        fontIcon="check_circle"
+      ></mat-icon>
+      <div class="px-1">
+        {{ localization.alert }}
+        {{ facilityData.entity700Number }}
+      </div>
+    </div>
+
+    <div class="tab-data-section mt-4">
+      <h6 class="title">{{ localization.title }}</h6>
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="key">{{ localization.startDateLabel }}</div>
+          <div class="value">
+            <span class="icon material-icons">calendar_today</span>
+            {{ facilityData.commercialRegisterStartDate | date : "MMM d, y" }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="key">{{ localization.endDateLabel }}</div>
+          <div class="value">
+            <span class="icon material-icons">calendar_today</span>
+            {{ facilityData.commercialRegisterEndDate | date : "MMM d, y" }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-data-section">
+      <h2 class="title mb-2">{{ localization.facilityData }}</h2>
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="key">{{ localization.commercialRegisterNumber }}</div>
+          <div class="value">
+            <span class="icon material-icons">blinds</span>
+            {{ facilityData.commercialRegisterNumber }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="key">{{ localization.facilityName }}</div>
+          <div class="value">
+            <span class="icon material-icons">blinds</span>
+            {{ facilityData.facilityName }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="key">{{ localization.facilityType }}</div>
+          <div class="value">
+            <span class="icon material-icons">blinds</span>
+            {{ facilityData.facilityType }}
+          </div>
+        </div>
+
+        <div
+          class="col-12 col-lg-6"
+          *ngIf="facilityData.facilityBusinessTypes.length > 0"
+        >
+          <div class="key">{{ localization.facilityActivities }}</div>
+          <div
+            class="value"
+            *ngFor="let activity of facilityData.facilityBusinessTypes"
+          >
+            <span class="icon material-icons">blinds</span>
+            {{ activity.businessType }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-outline-primary" (click)="onClickOnPrevious()">
+        {{ localization.previous }}
+      </button>
+      <button class="btn btn-primary" color="primary" (click)="onClickOnNext()">
+        {{ localization.next }}
+      </button>
+    </div>
+  </div>
 </div>

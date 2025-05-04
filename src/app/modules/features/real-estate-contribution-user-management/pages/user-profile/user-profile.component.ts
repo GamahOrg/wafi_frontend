@@ -8,6 +8,7 @@ import { UserDataService } from 'src/app/core/services/user-data/user-data.servi
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserManagementDelegatorsComponent } from '../../component/user-management-delegators/user-management-delegators.component';
 import { UsermanagmentFacilitiesComponent } from '../../component/usermanagment-facilities/usermanagment-facilities.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,6 +18,7 @@ import { UsermanagmentFacilitiesComponent } from '../../component/usermanagment-
 export class UserProfileComponent implements OnInit {
   subscriptions: Subscription[] = [];
   userData: customerResponse | null = null;
+   baseUrl = `${environment.baseURL}/`;
   tabContent: Tabs = {
     verticalTabs: false,
     activeTabIndex: 0,
@@ -46,8 +48,8 @@ export class UserProfileComponent implements OnInit {
           isVisible: true,
           id: "UsermanagmentFacilitiesComponent"
         },
-       
-    
+
+
       ]
   }
 

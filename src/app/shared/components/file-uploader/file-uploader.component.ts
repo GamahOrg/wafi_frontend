@@ -20,8 +20,9 @@ export class FileUploaderComponent implements OnInit {
   selectedFiles?: FileList
   currentFile?: File | FileList;
   progress = 0;
+  isSuccessfulUpload: boolean = false
   message = '';
-  extensionErrorMessage ='';
+  extensionErrorMessage = '';
   // fileInfos?: Observable<any>;
   selectedFilesName: string[] = []
   constructor(private uploadService: FileManagementService) {
@@ -29,13 +30,13 @@ export class FileUploaderComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data);
     // this.fileInfos = this.uploadService.getFiles();
-    this.data.size=30720;
-    if(!this.data.size)
-      this.data.size=30720;
-    if(!this.data.allowedExtensionsText)
+    this.data.size = 30720;
+    if (!this.data.size)
+      this.data.size = 30720;
+    if (!this.data.allowedExtensionsText)
       this.data.allowedExtensionsText = 'pdf, doc, docx, .xls, .xlsx, jpg, jpeg أو png';
-    if(!this.data.allowedExtensions || this.data.allowedExtensions.length ==0)
-      this.data.allowedExtensions = ['.pdf', '.doc', '.docx','.xls','.xlsx', '.jpg','.jpeg','.png']
+    if (!this.data.allowedExtensions || this.data.allowedExtensions.length == 0)
+      this.data.allowedExtensions = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.jpg', '.jpeg', '.png']
   }
   removeEvent(controlName: string, e: any): void {
     // console.log("fileUploadRemoveEvents", controlName);
@@ -53,7 +54,8 @@ export class FileUploaderComponent implements OnInit {
     ev.preventDefault();
   }
   selectFiles(event: any): void {
-    this.selectedFiles = event.target.files; 
+    this.selectedFiles = event.target.files;
+    this.resetFiles();
     this.updateSelectedFileNames(event)
   }
 
@@ -65,31 +67,28 @@ export class FileUploaderComponent implements OnInit {
     }
   }
 
-  
+
   upload(): void {
     this.progress = 0;
 
     if (this.selectedFiles) {
       const files: FileList | File = this.selectedFiles;
       if (files) {
-        if(files.length)
-        {
-          for (let index = 0; index < files.length; index++)
-           {
+        if (files.length) {
+          for (let index = 0; index < files.length; index++) {
             const element = files.item(index) as File;
-            if((element?.size as number)/1024 > this.data.size){
-            this.message =' لا يمكن رفع الملف المسمي بأسم '+element?.name+' بسبب  حجمه';
-            return;
+            if ((element?.size as number) / 1024 > this.data.size) {
+              this.message = ' لا يمكن رفع الملف المسمي بأسم ' + element?.name + ' بسبب  حجمه';
+              return;
             }
-            if(!this.data.allowedExtensions?.includes(element.name.slice(element.name.lastIndexOf(".")).toLowerCase()))
-            {
+            if (!this.data.allowedExtensions?.includes(element.name.slice(element.name.lastIndexOf(".")).toLowerCase())) {
               this.extensionErrorMessage = `يجب رفع ملف بصيغة ${this.data.allowedExtensions?.join(' ,')} فقط`;
               return;
             }
           }
         }
 
-        
+
         this.currentFile = files;
         this.uploadService.UploadMultiple(this.currentFile).subscribe({
           next: (event: any) => {
@@ -99,6 +98,7 @@ export class FileUploaderComponent implements OnInit {
               this.message = event.body.message;
               this.onUpload("", event.body)
               console.log(event.body);
+              this.isSuccessfulUpload = true
             }
           },
           error: (err: any) => {
@@ -118,9 +118,17 @@ export class FileUploaderComponent implements OnInit {
       this.selectedFiles = undefined;
     }
   }
+  resetFiles() {
+    this.isSuccessfulUpload = false;
+    this.progress = 0;
+    this.message='';
+    this.currentFile = undefined;
+  }
   deleteAll(): void {
     this.selectedFiles = undefined;
     this.currentFile = undefined;
+    this.resetFiles();
+    this
     this.selectedFilesName = []
   }
 }

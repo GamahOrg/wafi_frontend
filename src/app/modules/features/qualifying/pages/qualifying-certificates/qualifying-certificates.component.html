@@ -12,7 +12,7 @@
                          [certificateData]="certificate"></app-certificate> -->
 
         <app-engineering-certificate *ngIf="certificate.qualificationRequestType==QualificationType.engineeringConsultantQualificationRequest" [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-engineering-certificate>
-        <app-engineering-certificate *ngIf="certificate.qualificationRequestType==QualificationType.contributionAccountantQualificationRequest" [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-engineering-certificate>
+        <app-engineering-certificate *ngIf="certificate.qualificationRequestType==QualificationType.contributionEngineeringConsultantQualificationRequest" [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-engineering-certificate>
         <app-accountant-certificate *ngIf="certificate.qualificationRequestType==QualificationType.accountantQualificationRequest" [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-accountant-certificate>
         <app-accountant-certificate *ngIf="certificate.qualificationRequestType==QualificationType.contributionAccountantQualificationRequest" [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-accountant-certificate>
         <app-developer-certificate  *ngIf="certificate.qualificationRequestType==QualificationType.realStateDeveloperQualificationRequest"  [certificateData]="certificate" [id]="'print-section'+certificate.requestCode"></app-developer-certificate>

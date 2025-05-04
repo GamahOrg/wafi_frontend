@@ -107,7 +107,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             switch (status) {
               case this.RegistrationStatus.existIdWithoutFacility:
                 this.steps.push({
-                  title: 'إضافة رقم السجل التجاري ',
+                  title: 'إضافة الرقم الوطني للسجل التجاري ',
                   Component: AddingCommercialRegisterNumberComponent,
                   state: '',
                   completed: true,
@@ -133,7 +133,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                     completed: true,
                     isEditable: true,
                     hasError: false,
-                  });                
+                  });
                 break;
               default:
                 this.steps.push(
@@ -146,7 +146,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                     hasError: false,
                   },
                   {
-                    title: 'إضافة رقم السجل التجاري ',
+                    title: 'إضافة الرقم الوطني للسجل التجاري ',
                     Component: AddingCommercialRegisterNumberComponent,
                     state: '',
                     completed: false,
@@ -221,13 +221,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           // console.log("res && res.facilities.length == 0 && !res.isDelegator ", res && res.facilities.length == 0 && !res.isDelegator )
           // console.log("res && res.facilities.length == 0 && !res.isDelegator && !this.RegistrationStatus", res && res.facilities.length == 0 && !res.isDelegator && !this.RegistrationStatus)
           // console.log("this.RegistrationStatus", this.RegistrationStatus)
-         
+
           let loginUserType = this._storageService.getLoginUserType()
           let loginUserTypeEnum = Number(loginUserType) as LoginUserTypeEnum;
 
-          if (res && (res.facilities == undefined || res.facilities == null || res.facilities.length == 0) && loginUserTypeEnum == LoginUserTypeEnum.wafiPartner) {
+          if (res && (res.facilities == null || res.facilities.length == 0) && loginUserTypeEnum == LoginUserTypeEnum.wafiPartner) {
             this.steps.push({
-              title: 'إضافة رقم السجل التجاري ',
+              title: 'إضافة الرقم الوطني للسجل التجاري ',
               Component: AddingCommercialRegisterNumberComponent,
               state: '',
               completed: true,
@@ -235,7 +235,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
               hasError: false,
             });
           }
-         
+
         })
     );
   }

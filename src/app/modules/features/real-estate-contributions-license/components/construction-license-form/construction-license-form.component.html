@@ -23,7 +23,19 @@
                          <label class="form-check-label" for="after7">{{localization.after7}}</label>
               </div>
           </div> -->
-        <div class="col-12 col-lg-6">
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+                <label class="form-label">{{localization.licenseType}}</label>
+                <select class="form-select" id="control-constructionLicenseType"
+                        formControlName="constructionLicenseType">
+                    <option [label]="localization.letterType" value="1"></option>
+                    <option [label]="localization.licenseNumberType" value="2"></option>
+                </select>
+            </div>
+        </div>
+
+        <div *ngIf="controls.constructionLicenseType.value==2" class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{localization.issueOn}}</label>
             <div class="input-group">
@@ -38,7 +50,7 @@
           </div>
         </div>
 
-        <div class="col-12 col-lg-6" *ngIf="showAfter">
+        <div class="col-12 col-lg-6" *ngIf="controls.constructionLicenseType.value==2">
           <div class="form-group mb-4">
             <label class="form-label">{{localization.licenseNumber}}</label>
             <input type="text" id="control-licenseNumber" placeholder="{{localization.licenseNumber}}"
@@ -48,7 +60,7 @@
           </div>
         </div>
 
-        <div class="col-12 col-lg-3" *ngIf="showAfter">
+        <div class="col-12 col-lg-3" *ngIf="controls.constructionLicenseType.value==2">
           <button class="btn btn-outline-primary mb-4"
             (click)="validateConstructionLicenseInfo()">{{localization.verify}} </button>
         </div>
@@ -67,7 +79,9 @@
         <!-- <div class="col-12 col-lg-6" *ngIf="showBefor"> -->
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
-            <label class="form-label">{{localization.licenseFile}}</label>
+            <label *ngIf="controls.constructionLicenseType.value==1" class="form-label">{{localization.letterTypeFile}}</label>
+            <label *ngIf="controls.constructionLicenseType.value==2" class="form-label">{{localization.licenseFile}}</label>
+
             <div class="col-12 col-lg-6" *ngIf="constructionLicense && constructionLicense.licenseFile">
               <a [href]="baseUrl + constructionLicense.licenseFile.filePath" target="_blank" id="link-licenseFile">
                 {{constructionLicense.licenseFile.fileDescription}}</a>

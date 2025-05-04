@@ -41,11 +41,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  complaintRequest: string =
-    '/' +
-    Configuration.modules.auth +
-    '/' +
-    Configuration.pages.auth.complaintRequest;
   registration: string =
     '/' +
     Configuration.modules.auth +

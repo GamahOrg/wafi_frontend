@@ -1,47 +1,84 @@
 <div class="d-flex flex-column h-100">
   <div class="tab-data-header">
     <div class="icon"><span class="material-icons">list_alt</span></div>
-    <h6 class="title">{{localization.title}}</h6>
-    <button class="edit-icon btn btn-outline-primary" (click)="openDialog(undefined)"><span
-        class="material-icons">add</span></button>
+    <h6 class="title">{{ localization.title }}</h6>
+    <button
+      class="edit-icon btn btn-outline-primary"
+      (click)="openDialog(undefined)"
+    >
+      <span class="material-icons">add</span>
+    </button>
   </div>
   <div class="tab-data-section">
     <div class="table-responsive">
       <table class="table table-light mb-3">
         <thead>
           <tr>
-            <th>{{localization.constructionLicensetype}}</th>
-            <th>{{localization.licenseNumber}}</th>
-            <th> {{localization.issueOn}}</th>
-            <th> {{localization.licenseFile}}</th>
-            <th> {{localization.landTotalSpace}}</th>
+            <th>{{ localization.constructionLicensetype }}</th>
+            <th>{{ localization.licenseNumber }}</th>
+            <th>{{ localization.issueOn }}</th>
+            <th>{{ localization.licenseFile }}</th>
+            <th>{{ localization.landTotalSpace }}</th>
             <th class="w-25"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let license of constructionLicenses">
             <td>
-              <span *ngIf="license.before7">{{localization.before7}}</span>
-              <span *ngIf="!license.before7">{{localization.after7}}</span>
+
+              <span
+                *ngIf="license?.constructionLicenseType == 2 && license.before7"
+                >{{ localization.before7 }}</span
+              >
+              <span
+                *ngIf="
+                  license?.constructionLicenseType == 2 && !license.before7
+                "
+                >{{ localization.after7 }}</span
+              >
+              <span *ngIf="license?.constructionLicenseType == 1">{{
+                localization.letterType
+              }}</span>
             </td>
-            <td>{{license?.licenseNumber}}</td>
 
-            <td>{{license?.issueOn | date:'yyyy-MM-dd'}}</td>
-            <td><a *ngIf="license && license.licenseFile" target="_blank"
-                [href]="baseUrl + license.licenseFile.filePath">
-                {{license.licenseFile.fileDescription}}</a></td>
-            <td>{{license?.landTotalSpace}}</td>
+            <td>{{ license?.licenseNumber }}</td>
+
             <td>
+              <span *ngIf="license?.constructionLicenseType == 1"></span>
+              <span *ngIf="license?.constructionLicenseType == 2">
+                {{ license?.issueOn | date : "yyyy-MM-dd" }}
+              </span>
+            </td>
 
-              <div class="d-flex align-items-center justify-content-end column-gap-2">
+            <td>
+              <a
+                *ngIf="license && license.licenseFile"
+                target="_blank"
+                [href]="baseUrl + license.licenseFile.filePath"
+              >
+                {{ license.licenseFile.fileDescription }}</a
+              >
+            </td>
+            <td>{{ license?.landTotalSpace }}</td>
+            <td>
+              <div
+                class="d-flex align-items-center justify-content-end column-gap-2"
+              >
                 <!--                             <button mat-icon-button color="primary" (click)="openDialog(eng.id)"><mat-icon>edit</mat-icon></button>
-     --> <button mat-icon-button color="warn" (click)="delete(license.id)"><mat-icon>delete</mat-icon></button>
+     -->
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="delete(license.id)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
               </div>
             </td>
           </tr>
           <tr>
             <td colspan="4">اجمالي مسطح البناء للمشروع</td>
-            <td>{{totalLandTotalSpace}}</td>
+            <td>{{ totalLandTotalSpace }}</td>
           </tr>
         </tbody>
       </table>

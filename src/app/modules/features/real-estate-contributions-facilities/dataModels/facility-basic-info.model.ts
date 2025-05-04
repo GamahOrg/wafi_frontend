@@ -6,6 +6,8 @@ export interface FacilityBasicInfo {
   facilityCode: string;
   crNationalNumber: string;
   commercialRegisterNumber: string;
+  entity700Number:string,
+  previouslyQualifiedFacilityEntity700Number:string,
   isIssuesExist: boolean;
   commercialRegisterStartDate: Date;
   saudiAuthorityOfEngineersLicenseNumber: string;
@@ -77,6 +79,8 @@ export interface qualificationBrokerRequirement {
 }
 export interface FacilityBasicUpdateInfo {
   id: string,
+  entity700Number:string,
+  previouslyQualifiedFacilityEntity700Number:string,
   qualificationFacilityServiceProvidersCertificateNumbers: qualificationFacilityServiceProvidersCertificateNumbersDTO[], // added
   companyCodeInFinancialMarket: string,
   cooperativeSocietyLicensingFileId: string,

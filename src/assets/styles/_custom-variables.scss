@@ -27,6 +27,7 @@ $grayblue: #BAE9EB;
 $midblue: #80CEC8;
 $darkblue: #093266;
 
+$lighterred: #FEFAFA;
 $midred: #FF7A69;
 $darkred: #D64A38;
 
@@ -102,6 +103,8 @@ $dropdown-border-radius: $border-radius-sm;
 // Forms
 $input-bg: $white;
 $input-border-color: $border-color;
+$form-select-border-color: $input-border-color;
+$input-group-addon-color: $theme-main;
 $input-group-addon-border-color: $input-border-color;
 $input-border-radius: $border-radius-sm;
 $btn-border-radius: $border-radius-xs;

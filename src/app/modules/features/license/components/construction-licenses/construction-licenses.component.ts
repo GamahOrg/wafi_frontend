@@ -51,7 +51,8 @@ export class ConstructionLicensesComponent implements OnInit, OnDestroy {
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
     dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
-    
+    letterType: 'خطاب تعهد إتمام',
+
   };
   totalLandTotalSpace: number = 0;
 
@@ -66,7 +67,7 @@ export class ConstructionLicensesComponent implements OnInit, OnDestroy {
         this._constructionLicenseService.getSubjectListObjs().subscribe((subjectObj) => {
           this.constructionLicenses = subjectObj;
           this.setBefor7();
-          this.constructionLicenses.forEach(x =>  this.totalLandTotalSpace += x.landTotalSpace )
+          this.constructionLicenses.forEach(x => this.totalLandTotalSpace += x.landTotalSpace)
 
         })
       }
@@ -75,7 +76,8 @@ export class ConstructionLicensesComponent implements OnInit, OnDestroy {
   }
   setBefor7() {
     this.constructionLicenses.forEach(x => {
-      x.before7 = new Date(x.issueOn) < new Date(2020, 7, 1);
+      if (x.issueOn)
+        x.before7 = new Date(x.issueOn) < new Date(2020, 7, 1);
     });
   }
   ngOnDestroy() {

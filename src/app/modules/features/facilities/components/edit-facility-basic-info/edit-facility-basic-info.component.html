@@ -12,6 +12,31 @@
 
     <div class="row row-gap-3 mb-3">
       <div class="col-12 col-lg-6">
+        <label for="" class="form-label">الرقم الوطنى للسجل التجارى</label>
+        <ng-container *ngIf="hasEntity700Number">
+          <input type="text" class="form-control" id="control-entity700Number"
+          formControlName="entity700Number" readonly>
+        </ng-container>
+        <ng-container *ngIf="!hasEntity700Number">
+          <input type="text" class="form-control" id="control-entity700Number"
+          formControlName="entity700Number">
+          <div class="invalid-feedback d-block" *ngIf="controls.entity700Number.errors?.['required']">
+            هذا الحقل مطلوب
+          </div>
+        </ng-container>
+
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label">الرقم الوطنى للسجل التجارى للشركة المؤهلة سابقا</label>
+        <input type="text" class="form-control" id="control-previouslyQualifiedFacilityentity700Number"
+          formControlName="previouslyQualifiedFacilityEntity700Number">
+          <div class="invalid-feedback d-block" *ngIf="controls.previouslyQualifiedFacilityEntity700Number.errors?.['required']">
+            هذا الحقل مطلوب
+          </div>
+      </div>
+
+      <!-- <div class="col-12 col-lg-6">
         <label for="" class="form-label">رقم السجل التجاري للشركة المؤهلة سابقا</label>
         <input type="text" class="form-control" id="control-previouslyQualifiedFacilityCommercialRegistrationNumber"
           formControlName="previouslyQualifiedFacilityCommercialRegistrationNumber">
@@ -21,7 +46,7 @@
             *ngIf="controls.previouslyQualifiedFacilityCommercialRegistrationNumber.errors?.['maxlength'] || controls.previouslyQualifiedFacilityCommercialRegistrationNumber.errors?.['minlength']">
             يجب أن يكون رقم السجل التجاري 10 ارقام</div>
         </div>
-      </div>
+      </div> -->
       <div class="col-12 col-lg-6">
         <label for="" class="form-label">رقم اشتراك التأمينات الاجتماعية للمنشأة
         </label>

@@ -5,6 +5,8 @@ import { SysFileManagerCreateUpdateDto } from "src/app/shared/models/sys-file-ma
 export interface FacilityBasicInfo {
   facilityCode: string;
   commercialRegisterNumber: string;
+  entity700Number:string,
+  previouslyQualifiedFacilityEntity700Number:string,
   isIssuesExist: boolean;
   capitalNumber: null | string;
   commercialRegisterStartDate: Date;
@@ -32,7 +34,7 @@ export interface FacilityBasicInfo {
   lockedTo: null | boolean;
   customersId: string;
   cooperativeSocietyLicensingFileManager: null | SysFileManagerCreateUpdateDto;
-  qualificationValFileManagerId:string; 
+  qualificationValFileManagerId:string;
   qualificationValFileManager: null | SysFileManagerCreateUpdateDto;
   facilityBusinessTypes: facilityBusinessType[]
   qualificationFacilityCertifications: qualificationFacilityCertification[];
@@ -95,6 +97,8 @@ export interface qualificationBrokerRequirement {
 }
 export interface FacilityBasicUpdateInfo {
   id: string,
+  entity700Number:string,
+  previouslyQualifiedFacilityEntity700Number:string,
   crNationalNumber: string,
   qualificationFacilityServiceProvidersCertificateNumbers: qualificationFacilityServiceProvidersCertificateNumbersDTO[], // added
   companyCodeInFinancialMarket: string,

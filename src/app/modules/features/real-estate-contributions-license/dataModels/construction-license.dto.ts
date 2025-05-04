@@ -4,18 +4,20 @@ export class ConstructionLicenseDto {
     id: string = "";
     licenseProjectsId : string = "";
     before7:boolean = false;
-    issueOn : string = "";
+    issueOn?: string|null = "";
     licenseFileId : string|null = null;
     licenseNumber : string = "";
     landTotalSpace : number = 0;
     licenseFile : FileManagerBE|null = null;
+    constructionLicenseType?: number;
 }
 export class ConstructionLicenseCreateUpdateDto {
     id: string = "";
     licenseProjectsId : string = "";
-    issueOn : string = "";
+    issueOn?: string = "";
     licenseFileId : string |null = null;
     licenseNumber : string = "";
+    constructionLicenseType?: number;
 }
 
 export class BaladyDto {

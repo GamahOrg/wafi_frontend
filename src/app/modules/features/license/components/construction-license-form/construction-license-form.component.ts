@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, forkJoin } from 'rxjs';
-import { BaladyDto, ConstructionLicenseDto, ConstructionLicenseIntegrationDto } from '../../dataModels/construction-license.dto';
+import { BaladyDto, ConstructionLicenseCreateUpdateDto, ConstructionLicenseDto, ConstructionLicenseIntegrationDto } from '../../dataModels/construction-license.dto';
 import { environment } from 'src/environments/environment';
 import { ConstructionLicenseService } from '../../services/licenseProjects/construction-license.service';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
@@ -41,6 +41,7 @@ export class ConstructionLicenseFormComponent implements OnInit, OnDestroy {
   constructionLicenseForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
     licenseProjectsId: ['', [Validators.required]],
+    constructionLicenseType: [1],
     issueOn: ['', [Validators.required]],
     licenseFileId: ['', [Validators.required]],
     licenseNumber: [''],
@@ -63,6 +64,10 @@ export class ConstructionLicenseFormComponent implements OnInit, OnDestroy {
     title: 'بيانات الرخص الانشائية',
     constructionLicensetype: 'نوع الرخص الانشائية',
     issueOn: 'تاريخ الرخصة',
+    licenseType: 'نوع الرخصة',
+    letterType: 'خطاب تعهد إتمام',
+    letterTypeFile: 'ملف خطاب تعهد إتمام',
+    licenseNumberType: 'رقم رخصة',
     licenseFile: 'ملفات الرخصة الانشائية',
     validateLicenseFile: 'يجب اختيار ملفات الرخصة الانشائية',
     licenseNumber: 'رقم الرخصة',
@@ -96,7 +101,7 @@ export class ConstructionLicenseFormComponent implements OnInit, OnDestroy {
       }));
   }
 
-  private observeIssueOnControl(){
+  private observeIssueOnControl() {
     this.subscriptions.push(
       this.constructionLicenseForm.controls.issueOn.valueChanges.subscribe(value => {
         if (value) {
@@ -146,14 +151,17 @@ export class ConstructionLicenseFormComponent implements OnInit, OnDestroy {
       this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
       return;
     }
-    this.Balady.issueOn = this.constructionLicense.issueOn;
+
+    if (this.constructionLicense.issueOn)
+      this.Balady.issueOn = this.constructionLicense.issueOn;
+
     this.Balady.licenseNumber = this.constructionLicense.licenseNumber;
     this.subscriptions.push(
       this._constructionLicenseService.ValidateConstructionLicenseInfo(this.Balady).subscribe(res => {
         if (res.isDone) {
           this.constructionLicenseIntegrationDto = res.data as ConstructionLicenseIntegrationDto;
           let landArea = 0;
-          if(this.constructionLicenseIntegrationDto.landInfoList != null){
+          if (this.constructionLicenseIntegrationDto.landInfoList != null) {
             this.constructionLicenseIntegrationDto.landInfoList.forEach(element => {
               landArea += element.landArea
             });
@@ -171,17 +179,31 @@ export class ConstructionLicenseFormComponent implements OnInit, OnDestroy {
   save(): void {
     this.constructionLicenseForm.get('licenseFileId')?.setValidators([Validators.required]);
     this.constructionLicenseForm.get('licenseFileId')?.updateValueAndValidity();
+
     if (!this.constructionLicense.id) this.constructionLicense.id = '00000000-0000-0000-0000-000000000000';
     this.controls.id.setValue(this.constructionLicense.id);
+    if (this.controls.constructionLicenseType.value == 2) {
+      if (!this.constructionLicenseForm.valid) {
+        this.showValidation = true;
+        this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+        return;
+      }
+    } else {
 
-    if (!this.constructionLicenseForm.valid) {
-      this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
-      return;
+      if (this.controls.licenseFileId.value == null || this.controls.licenseFileId.value == '') {
+        this.showValidation = true;
+        this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+        return;
+      }
     }
 
+    if (this.controls.constructionLicenseType.value == 1){
+      this.constructionLicense.issueOn=null;
+    }
+
+
     this.subscriptions.push(
-      this._constructionLicenseService.Save(this.constructionLicense).subscribe(res => {
+      this._constructionLicenseService.Save(this.constructionLicense as ConstructionLicenseCreateUpdateDto).subscribe(res => {
         if (res.isDone) {
           this._toastrNotificationService.showSuccess(this.localization.savedSuccessfully)
           this._constructionLicenseService.SetSubjectListObjs(res.data as ConstructionLicenseDto[]);

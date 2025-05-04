@@ -65,30 +65,36 @@
 
       <div class="card com-reg-card position-relative z-2">
         <div class="card-body">
-          <div class="d-flex flex-wrap align-items-center gap-2">
-            <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden">
-              <img src="assets/images/general/logo-rega-wide-white.png" alt="">
-            </div>
-            <div class="d-flex flex-wrap align-items-center gap-2 gap-xl-5">
-              <div class="key-value">
-                <div class="key">{{localization.commercialRegistrationNumber}}</div>
-                <div class="value">{{userData && userData.facilities && userData.facilities.length > 0 &&
-                  userData.facilities[0].commercialRegisterNumber? userData.facilities[0].commercialRegisterNumber:""}}</div>
+          <div class="row row-gap-4">
+            <div class="col-xl-4">
+              <div class="d-flex align-items-center gap-2">
+                <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden">
+                  <img src="assets/images/general/logo-rega-wide-white.png" alt="">
+                </div>
+                <div class="key-value">
+                  <div class="key">{{localization.commercialRegistrationNumber}}</div>
+                  <div class="value">{{userData && userData.facilities && userData.facilities.length > 0 &&
+                    userData.facilities[0].commercialRegisterNumber? userData.facilities[0].commercialRegisterNumber:""}}</div>
+                </div>
               </div>
-              <!-- <div class="key-value">
+            </div>
+            <div class="col-xl-4">
+              <div class="key-value">
                 <div class="key">{{'تمت الاضافة بواسة'}}</div>
                 <div class="value">
                   <img src="assets/images/general/static-person-1.jpeg" alt="">
                   {{userData?.fullName}}
                 </div>
               </div>
+            </div>
+            <div class="col-xl-4">
               <div class="key-value">
                 <div class="key">{{'تاريخ الإضافة'}}</div>
                 <div class="value">
                   <i class="icon material-icons">calendar_month</i>
-                  {{'22 إبريل 2022'}}
+                  {{userData?.registrationDateTime |date:'dd-MM-yyyy'}}
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>

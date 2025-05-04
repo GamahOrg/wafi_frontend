@@ -3,8 +3,14 @@
 
   <div class="cetificate-layout">
     <div class="cert-header">
-      <div class="logo">
+      <div *ngIf=" this.qualificationRequestTypeCode==QualificationRequestTypeCodeEnum.EngineeringConsultant" class="logo">
         <img src="/assets/images/qualifying/certs/logo.svg"
+             class="img-fluid"
+             alt="">
+      </div>
+
+      <div *ngIf=" this.qualificationRequestTypeCode==QualificationRequestTypeCodeEnum.ContributionEngineeringConsultant" class="logo">
+        <img src="assets/images/qualifying/certs/contribution-developer-certificate/contribution-logo.svg"
              class="img-fluid"
              alt="">
       </div>
@@ -18,7 +24,9 @@
       <h4 class="title text-darkteal">شهادة تأهيل استشاري هندسي</h4>
       <p class="text text-gray">يسر الهيئة العامة للعقار أن تمنح هذه الشهادة</p>
       <p class="text text-teal">ل {{certificateData.facilityName}}</p>
-      <p class="text text-gray">لتأهيله للإشراف على مشروعات عقارية على الخارطة</p>
+      <p class="text text-gray" *ngIf=" this.qualificationRequestTypeCode==QualificationRequestTypeCodeEnum.EngineeringConsultant">لتأهيله للإشراف على مشروعات عقارية على الخارطة</p>
+      <p class="text text-gray" *ngIf=" this.qualificationRequestTypeCode==QualificationRequestTypeCodeEnum.ContributionEngineeringConsultant">لتأهيله للإشراف على مشروعات المساهمة العقارية</p>
+     
       <span class="date text-darkteal">وذلك بتاريخ {{certificateData.committeeDecisionDate | date:'yyyy/MM/dd'}} م</span>
     </div>
 

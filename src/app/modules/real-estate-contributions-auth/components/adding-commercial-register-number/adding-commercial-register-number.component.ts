@@ -31,9 +31,9 @@ export class AddingCommercialRegisterNumberComponent {
   }
 
   localization = {
-    commercialRegistrationNo: "رقم السجل التجاري",
-    alert: "تم التحقق من رقم السجل التجاري   من قبل وزارة التجارة",
-    title: "البيانات الخاصة بالسجل التجاري التي تم استرجاعها من قبل وزارة التجارة",
+    commercialRegistrationNo: "الرقم الوطني للسجل التجاري",
+    alert: "تم التحقق من الرقم الوطني للسجل التجاري من قبل وزارة التجارة",
+    title: "البيانات الخاصة بالرقم الوطني للسجل التجاري التي تم استرجاعها من قبل وزارة التجارة",
     startDateLabel: "تاريخ إصدار السجل التجاري",
     endDateLabel: "تاريخ إنتهاء السجل التجاري",
     facilityData: "بيانات المنشأة ",
@@ -45,7 +45,8 @@ export class AddingCommercialRegisterNumberComponent {
     verification: "تحقق",
     pattern: "accept no. only",
     next: "التالي",
-    previous: "السابق"
+    previous: "السابق",
+    commercialRegisterNumber:'رقم السجل التجارى'
   }
   constructor(
     private _router: Router,

@@ -43,7 +43,7 @@ export class LincenseProjectZonesComponent implements OnInit {
   } as FileUploader;
 
   fileId: string = "";
-  
+
   constructor(
     private _zonesBlocksBuildingAndUnitsService: ZonesBlocksBuildingAndUnitsService,
     private _popupService: PopupService,
@@ -53,14 +53,14 @@ export class LincenseProjectZonesComponent implements OnInit {
     private _ProjectSubUnitService: ProjectSubUnitService,
     private _projectModelService: ProjectModelService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
-      private _codeService: ProjectUnitCodeService,
+    private _codeService: ProjectUnitCodeService,
   ) { }
 
   ngOnInit() {
     this.getLicenseProjectIdStorage();
     this.GetByLicenseProjectId();
     this.observeProjectZonesBS();
-    // this.observeNextButtonIsCliced();
+   this.observeNextButtonIsCliced();
     this.updateSaveAsDraftBtnIsvisible()
     this.observePopupClose();
   }
@@ -89,11 +89,13 @@ export class LincenseProjectZonesComponent implements OnInit {
   }
 
   updateSelectedZone(zones: Zone[]) {
+    debugger
     if (zones.length > 0) {
       if (this.selectedZone == null) {
         this.selectedZone = this.zones[0]
         this.onZoneSelected(this.selectedZone, 0)
       } else {
+        this.selectedZone = this.zones[this.selectedZoneIndex];
         this.onZoneSelected(this.selectedZone, this.selectedZoneIndex)
       }
     }
@@ -124,7 +126,7 @@ export class LincenseProjectZonesComponent implements OnInit {
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
-  selectedZoneIndex: number = 0;
+  selectedZoneIndex: number = -1;
   selectedZone?: Zone | null = null;
   onZoneSelected(zone: Zone, selectedZoneIndex: number) {
     this.selectedZoneIndex = selectedZoneIndex;
@@ -151,8 +153,13 @@ export class LincenseProjectZonesComponent implements OnInit {
       console.log(result);
       if (result.isDone) {
         this.selectedZone = null;
-        this.selectedZoneIndex = 0
-        this.updateProjectZones(this.zones.filter(x => x.id != zone.id));
+        let currentZones = this.zones.filter(x => x.id != zone.id);
+        if (currentZones.length > 0) {
+          this.selectedZoneIndex = 0
+        } else {
+          this.selectedZoneIndex = -1
+        }
+        this.updateProjectZones(currentZones);
       }
     })
 
@@ -284,7 +291,7 @@ export class LincenseProjectZonesComponent implements OnInit {
 
   deleteSubUnit(subUnit: ProjectSubUnitDto) {
     this._ProjectSubUnitService.removeSubUnit(subUnit.id).subscribe(result => {
-      
+
       if (result.isDone) {
         const index = this.selectedbuildingOrBlock?.licenseProjectSubUnits.findIndex(x => x.id == subUnit.id);
         if (index) {
@@ -306,88 +313,69 @@ export class LincenseProjectZonesComponent implements OnInit {
       title: title,
       component: LicenseProjectZoneSubunitModelComponent,
       id: "ProjectModuleModelsFormComponent",
-      buttons:[]
+      buttons: []
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
 
-  // private observeNextButtonIsCliced() {
-  //   this.subscriptions.push(
-  //     this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
-  //       this.moveToNextTab();
-  //     })
-  //   )
-  // }
+    // TabsButtons
+    private observeNextButtonIsCliced() {
+      this.subscriptions.push(
+        this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
+          (res: null) => {
+            this.moveToNextTab();
+          }
+        )
+      );
+    }
 
- 
+    moveToNextTab(): void {
+      this._nextAndPreviusButtonsService.moveToNextTab.emit();
+    }
 
-  // private observeTabsButtons(): void {
-  //   this.observeNextButtonIsCliced();
-  // }
-
-  // private moveToNextTab(): void {
-  //   this._nextAndPreviusButtonsService.moveToNextTab.emit()
-  // }
-
-
-  // private observeNextButtonIsCliced() {
-  //   this.subscriptions.push(
-  //     this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
-  //       (res: null) => {
-  //         this.moveToNextTab();
-  //       }
-  //     )
-  //   );
-  // }
-  moveToNextTab(): void {
-    
-    // this._nextAndPreviusButtonsService.moveToNextTab.emit();
-
-        this.subscriptions.push(
-      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
-        this._nextAndPreviusButtonsService.moveToNextTab.emit()
-      })
-    )
-  }
-
-  private updateSaveAsDraftBtnIsvisible(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false)
-  }
+    private updateSaveAsDraftBtnIsvisible(): void {
+      this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
+    }
 
 
- onExcelFileUploaded(fileRemovedData: any) {
+
+  onExcelFileUploaded(fileRemovedData: any) {
     this.fileId = fileRemovedData.eventRes.data[0].id;
   }
 
-    generateExcel() {
-      this._codeService.CreateExcel(this.licenseProjectId as string).subscribe((res) => {
-        
-        if (res) {
-          saveAs(res.body, 'Tempelate.xlsx');
-        }
-      });
-    }
+  generateExcel() {
+    this._codeService.CreateExcel(this.licenseProjectId as string).subscribe((res) => {
 
-    saveFileCode() {
-        let data = {} as LicenseProjectSubUnitsListCodeFile
-        data.licenseProjectsId = this.licenseProjectId as string;
-        data.fileId = this.fileId;
-        this._codeService.saveFileData(data).subscribe((res) => {
-          if (res && res.isDone) {
-            this._toastrNotificationService.showSuccess("تم الحفظ");
-            this._popupService.dismissDialog();
-    
-          }
-          else {
-            this._toastrNotificationService.showError("حدث خطأ اثناء الحفظ");
-    
-          }
-        });
+      if (res) {
+        saveAs(res.body, 'Tempelate.xlsx');
       }
+    });
+  }
 
-  
+  saveFileCode() {
+    let data = {} as LicenseProjectSubUnitsListCodeFile
+    data.licenseProjectsId = this.licenseProjectId as string;
+    data.fileId = this.fileId;
+    this._codeService.saveFileData(data).subscribe((res) => {
+      if (res && res.isDone) {
+        this._toastrNotificationService.showSuccess("تم الحفظ");
+        this._popupService.dismissDialog();
+
+      }
+      else {
+        this._toastrNotificationService.showError("حدث خطأ اثناء الحفظ");
+
+      }
+    });
+  }
+
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
+
+  clearObservable() {
+
   }
 
 }

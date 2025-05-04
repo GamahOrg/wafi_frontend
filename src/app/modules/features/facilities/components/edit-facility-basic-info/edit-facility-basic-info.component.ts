@@ -40,6 +40,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
   } as FileUploader;
   issuesIsExist: boolean = false;
   brokerRentDocumentType: boolean = false;
+  hasEntity700Number: boolean = false;
 
   constructor(
     private _facilityProfileService: FacilityProfileService,
@@ -52,6 +53,8 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
 
   basicInfoForm = this._formBuilder.group({
     // chamberOfCommerceMembershipNumber: [{ value: '', disabled: true }, Validators.required],
+    entity700Number: ['', Validators.required],
+    previouslyQualifiedFacilityEntity700Number: [''],
     chamberOfCommerceMembershipNumber: [''],
     cityId: [''],
     socialInsuranceCertificateNumber: ['', Validators.required],
@@ -185,7 +188,10 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
   observeFacilityDataBS(): void {
     this.subscriptions.push(
       this._facilityProfileService.getFacilityBasicDataBS().subscribe((res: FacilityBasicInfo) => {
-        this.facilityData = res as FacilityBasicInfo
+        this.facilityData = res as FacilityBasicInfo;
+        if (this.facilityData.entity700Number) {
+          this.hasEntity700Number = true;
+        }
         console.log("this.facilityData", this.facilityData)
         this.updateFormValues()
       })
@@ -239,6 +245,8 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
     if (this.basicInfoForm.valid) {
       this.FacilityBasicUpdateInfo.id = this.userData?.facilities[0].id as string
       // this.FacilityBasicUpdateInfo.chamberOfCommerceMembershipNumber = this.basicInfoForm.getRawValue().chamberOfCommerceMembershipNumber as string
+      this.FacilityBasicUpdateInfo.entity700Number = this.basicInfoForm.value.entity700Number as string
+      this.FacilityBasicUpdateInfo.previouslyQualifiedFacilityEntity700Number = this.basicInfoForm.value.previouslyQualifiedFacilityEntity700Number as string
       this.FacilityBasicUpdateInfo.chamberOfCommerceMembershipNumber = this.basicInfoForm.value.chamberOfCommerceMembershipNumber as string
       this.FacilityBasicUpdateInfo.cityId = this.basicInfoForm.value.cityId as string
       this.FacilityBasicUpdateInfo.socialInsuranceCertificateNumber = this.basicInfoForm.value.socialInsuranceCertificateNumber as string
