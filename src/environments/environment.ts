@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
-  baseURL: "https://red.rega.gov.sa/api",
-  securityURl: "https://red.rega.gov.sa/security",
+  production: false,
+  baseURL: 'https://wafiservicesapi.rega.gov.sa',
+  securityURl: 'https://wafisecurity.rega.gov.sa'
 };
