@@ -17,7 +17,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Build the Angular application
-RUN pnpm run build --configuration=development
+RUN pnpm run build --configuration=red
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:stable
