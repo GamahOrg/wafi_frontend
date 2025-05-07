@@ -12,7 +12,7 @@ variables:
   APPLICATION_NAME: wafi_frontend
   IMAGE_TAG_NAME: ${PRE_IMAGE_TAG_NAME}/${APPLICATION_NAME}:${CI_COMMIT_SHORT_SHA}-${CI_COMMIT_BRANCH}
   KANIKO_CACHE: false
-  # For gitops deployment
+  # For gitops deployment #
   # FILE_PATH: applications/rsd/environments/dev/deployment.yaml
   # TAG: "$IMAGE_TAG_NAME"
   # TAG_PATH: .spec.template.spec.containers[0].image
