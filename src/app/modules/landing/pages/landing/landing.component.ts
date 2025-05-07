@@ -1,46 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Configuration } from 'src/app/core/configurations/shared.config';
-import {Title} from "@angular/platform-browser";
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent {
+export class LandingComponent implements OnInit {
   localization = {
-    // pleaseChoose: "نأمل اختيار وجهتك",
-    pleaseChoose: "قم بالبدء بمشروعك عقاري",
-    or: "او",
-    enter: "دخول",
-    realEstateContributions: "المساهمات عقارية",
-    wafi: "البيع على الخارطة",
-    appTitle: "الهيئة العامة للعقار",
-    beta: "اطلاق تجريبي"
-  }
+    welcomeToREGA: 'خدمات التطوير العقاري',
+    chooseYourPlatform: 'اختر المنصة للبدء',
+    wafi: 'البيع على الخارطة',
+    wafiDescription: 'الوصول إلى منصة البيع على الخارطة للخدمات العقارية الشاملة والإدارة',
+    realEstateContributions: 'المساهمات العقارية',
+    recaDescription: 'إدارة وتتبع المساهمات والاستثمارات العقارية',
+    enter: 'الدخول للمنصة',
+    appTitle: 'ريجا - المنصة العقارية'
+  };
+
+  currentYear = new Date().getFullYear();
+
   constructor(
-    private _router: Router,
-    private titleService:Title
-  ) {
-  }
+    private router: Router,
+    private titleService: Title
+  ) {}
+
   ngOnInit(): void {
     this.setAppTitle();
   }
-  private setAppTitle() {
+
+  private setAppTitle(): void {
     this.titleService.setTitle(this.localization.appTitle);
   }
 
-  /**
-   * navigateToWafiLogin
-   */
-  public navigateToWafiLogin(): void {
-    this._router.navigateByUrl(`${Configuration.modules.auth}/${Configuration.pages.auth.login}`);
+  navigateToWafiLogin(): void {
+    this.router.navigate(['/auth/login']);
   }
-  /**
-   * navigateToRealEstateContributionsLogin
-   */
-  public navigateToRealEstateContributionsLogin() {
-    this._router.navigateByUrl(`${Configuration.modules.realEstateContributionsAuth}/${Configuration.pages.realEstateContributionsAuth.login}`);
 
+  navigateToRealEstateContributionsLogin(): void {
+    this.router.navigate(['/real-estate-contributions-auth/login']);
   }
 }

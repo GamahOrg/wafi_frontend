@@ -12,43 +12,58 @@
       <img src="assets/images/auth/abstract-hor.svg" alt="" />
     </div>
 
-    <div class="row justify-content-center align-items-center h-100">
-      <div class="col-xl-6">
-        <div class="card auth-card">
-          <div class="card-body">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="particles"></div>
+      <div class="hero-content">
+        <div class="hero-logo">
+          <img src="/assets/images/real-estate-contributions/general/logo-rega-wide-white.svg" alt="REGA Logo" />
+        </div>
+        <h1 class="hero-title">{{ localization.welcomeToREGA }}</h1>
+        <p class="hero-subtitle">{{ localization.chooseYourPlatform }}</p>
+      </div>
+    </div>
 
-            <h2 class="title">{{ localization.pleaseChoose }}</h2>
-            <h6 class="or">{{ localization.or }}</h6>
-
-            <div class="cards">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <img src="/assets/images/general/REGA_LOGO_Dark.svg" alt="" />
-                    {{ localization.wafi }}
-                  </h5>
-                  <a class="btn btn-primary w-100" (click)="navigateToWafiLogin()">{{
-                    localization.enter
-                    }}</a>
-                </div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="container">
+        <div class="platform-cards">
+          <!-- WAFI Card -->
+          <div class="platform-card wafi-card" (click)="navigateToWafiLogin()">
+            <div class="card-content">
+              <div class="card-icon">
+                <img src="/assets/images/general/off-plan-logo.png" alt="Off Plan" />
               </div>
-              <div class="card rega">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <img src="/assets/images/general/REGA_LOGO_Dark.svg" alt="" />
-                    {{ localization.realEstateContributions }}
-                  </h5>
-                  <a class="btn btn-primary w-100" (click)="navigateToRealEstateContributionsLogin()">{{ localization.enter }}</a>
-                </div>
-              </div>
+              <h3 class="card-title">{{ localization.wafi }}</h3>
+              <p class="card-description">{{ localization.wafiDescription }}</p>
+              <button class="btn btn-primary">
+                {{ localization.enter }}
+              </button>
             </div>
+            <div class="card-background"></div>
+          </div>
 
+          <!-- Real Estate Contributions Card -->
+          <div class="platform-card reca-card" (click)="navigateToRealEstateContributionsLogin()">
+            <div class="card-content">
+              <div class="card-icon">
+                <img src="/assets/images/general/musahmat-logo.png" alt="Real Estate Contributions" />
+              </div>
+              <h3 class="card-title">{{ localization.realEstateContributions }}</h3>
+              <p class="card-description">{{ localization.recaDescription }}</p>
+              <button class="btn btn-primary">
+                {{ localization.enter }}
+              </button>
+            </div>
+            <div class="card-background"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>
 
 <!-- <app-pilot-launch-hint></app-pilot-launch-hint>
 

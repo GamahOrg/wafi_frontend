@@ -6,5 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./real-estate-contribution-footer.component.scss']
 })
 export class RealEstateContributionFooterComponent {
-
+  currentYear: number = new Date().getFullYear();
+  
 }
