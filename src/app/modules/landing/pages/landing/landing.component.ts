@@ -5,26 +5,24 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+  styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent implements OnInit {
   localization = {
     welcomeToREGA: 'خدمات التطوير العقاري',
     chooseYourPlatform: 'اختر المنصة للبدء',
     wafi: 'البيع على الخارطة',
-    wafiDescription: 'الوصول إلى منصة البيع على الخارطة للخدمات العقارية الشاملة والإدارة',
+    wafiDescription:
+      'الوصول إلى منصة البيع على الخارطة للخدمات العقارية الشاملة والإدارة',
     realEstateContributions: 'المساهمات العقارية',
     recaDescription: 'إدارة وتتبع المساهمات والاستثمارات العقارية',
     enter: 'الدخول للمنصة',
-    appTitle: 'ريجا - المنصة العقارية'
+    appTitle: 'الهيئة العامة للعقار - التطوير العقاري',
   };
 
   currentYear = new Date().getFullYear();
 
-  constructor(
-    private router: Router,
-    private titleService: Title
-  ) {}
+  constructor(private router: Router, private titleService: Title) {}
 
   ngOnInit(): void {
     this.setAppTitle();
