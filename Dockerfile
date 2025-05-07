@@ -6,8 +6,12 @@ WORKDIR $CI_PROJECT_DIR
 # Copy custom Nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy the built Angular app from $CI_PROJECT_DIR/dist
-COPY dist /usr/share/nginx/html
+# Remove all files in the default Nginx html directory
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy the built Angular app from dist
+RUN cp -rf dist/. /usr/share/nginx/html
+
 
 # Expose port 80
 EXPOSE 80
