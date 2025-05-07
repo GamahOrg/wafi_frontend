@@ -27,6 +27,8 @@ cached_build:
   image:
     name: harbor.rega.gov.sa/docker-hub-rega/node:22
     entrypoint: [""]
+  variables:
+    environment: ci
   stage: cached_build
   before_script:
     - npm install -g pnpm
@@ -48,7 +50,7 @@ cached_build:
     # Cache for .next/cache per branch
     - key: "angular-cache"
       paths:
-        - .angular/cache
+        - .angular
       policy: pull-push
 
   artifacts:
@@ -77,4 +79,3 @@ include:
     needs:
       - job: cached_build
         artifacts: true
-  
