@@ -55,7 +55,7 @@
               "namedChunks": false,
               "outputHashing": "all"
             },
-            "development": {
+            "stage": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": false,
@@ -65,7 +65,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
+                  "with": "src/environments/environment.stage.ts"
                 }
               ]
             },
@@ -89,6 +89,20 @@
                   "with": "src/environments/environment.testing.ts"
                 }
               ]
+            },
+            "local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -100,13 +114,17 @@
               "browserTarget": "Wafi:build:production",
               "port": 4200
             },
-            "development": {
-              "browserTarget": "Wafi:build:development",
+            "stage": {
+              "browserTarget": "Wafi:build:stage",
               "port": 4500
             },
             "testing": {
               "browserTarget": "Wafi:build:testing",
               "port": 4300
+            },
+            "local": {
+              "browserTarget": "Wafi:build:local",
+              "port": 4400
             }
           },
           "defaultConfiguration": "development"
