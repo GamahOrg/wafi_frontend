@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration local",
     "build": "ng build",
+    "build:stage": "ng build --configuration stage",
     "watch": "ng build --watch --configuration development",
     "testingBuild": "ng build --configuration testing",
     "test": "ng test"

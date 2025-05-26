@@ -12,10 +12,11 @@ variables:
   APPLICATION_NAME: wafi_frontend
   IMAGE_TAG_NAME: ${PRE_IMAGE_TAG_NAME}/${APPLICATION_NAME}:${CI_COMMIT_SHORT_SHA}-${CI_COMMIT_BRANCH}
   KANIKO_CACHE: false
+
   # For gitops deployment
-  # FILE_PATH: applications/rsd/environments/dev/deployment.yaml
-  # TAG: "$IMAGE_TAG_NAME"
-  # TAG_PATH: .spec.template.spec.containers[0].image
+  FILE_PATH: applications/wafi/frontend/environments/${ENVIRONMENT}/deployment.yaml
+  TAG: "$IMAGE_TAG_NAME"
+  TAG_PATH: .spec.template.spec.containers[0].image
 
 cached_build:
   # only on merge request and main branch
@@ -23,6 +24,8 @@ cached_build:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       when: always
     - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "stage"'
       when: always
     - when: never
   image:
@@ -35,7 +38,11 @@ cached_build:
     pnpm install
 
     echo "Building Angular application..."
-    pnpm build
+    if [ "$CI_COMMIT_BRANCH" == "stage" ]; then
+      pnpm build:stage
+    else
+      pnpm build
+    fi
 
   cache:
     # Cache for node_modules based on lock file hash
@@ -65,6 +72,8 @@ include:
     rules:
       - if: '$CI_COMMIT_BRANCH == "main"'
         when: always
+      - if: '$CI_COMMIT_BRANCH == "stage"'
+        when: always
       - when: never
   - project: "rega-softwares/rega-devops"
     file: "pipelines/Kaniko.gitlab-ci.yml"
@@ -73,6 +82,8 @@ include:
       - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
         when: always
       - if: '$CI_COMMIT_BRANCH == "main"'
+        when: always
+      - if: '$CI_COMMIT_BRANCH == "stage"'
         when: always
       - when: never
     needs:
