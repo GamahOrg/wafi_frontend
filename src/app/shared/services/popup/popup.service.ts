@@ -75,6 +75,8 @@ export class PopupService {
         secondeStaticMessage: noteData.secondeStaticMessage,
         buttonText: noteData.buttonText,
         buttonLink: noteData.buttonLink,
+        surveyTitle:noteData.surveyTitle,        
+        surveyLink:noteData.surveyLink
       },
       disableClose: true,
     });
