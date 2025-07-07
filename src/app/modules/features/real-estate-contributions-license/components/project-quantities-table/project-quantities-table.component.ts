@@ -127,13 +127,31 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  getTotal(data: any) {
+getTotal(data: any) {
     this.total = 0;
-    data.Rows.forEach((x: any) => {
-      this.total = this.total + Number(x['elementValue']);
-    })
-
+    if (data && data.Rows) {
+      const numbers: number[] = data.Rows.map((x: any) => +x.elementValue);
+      const total = this.flexiblePreciseSum(numbers);
+      console.log(total);
+      this.total = total;
+    }
   }
+
+  flexiblePreciseSum(numbers: number[]): number {
+    // Find the maximum number of decimals in the array
+    const maxDecimals = numbers.reduce((max, num) => {
+      const decimals = (num.toString().split('.')[1] || '').length;
+      return Math.max(max, decimals);
+    }, 0);
+
+    const factor = Math.pow(10, maxDecimals);
+    const sum = numbers.reduce((total, num) => {
+      return total + Math.round(num * factor);
+    }, 0);
+
+    return sum / factor;
+  }
+
 
   get formArr() {
     return this.licenseProjectRelativeWeightForm.get("Rows") as FormArray;
