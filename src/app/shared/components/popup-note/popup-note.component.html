@@ -25,6 +25,12 @@
             {{ _notePopupData.secondeStaticMessage }}
         </p>
     </div>
+
+     <div *ngIf=" _notePopupData.surveyTitle" class="note-content">
+        <h6 class="title">{{ _notePopupData.surveyTitle }}</h6>
+        <a class="title fs-5 fw-bold"  [href]="_notePopupData.surveyLink">تقييم</a>       
+    </div>
+
 </div>
 
 <div mat-dialog-actions
