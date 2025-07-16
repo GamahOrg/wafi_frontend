@@ -14,7 +14,7 @@ variables:
   KANIKO_CACHE: false
 
   # For gitops deployment
-  FILE_PATH: applications/wafi/frontend/environments/${ENVIRONMENT}/deployment.yaml
+  FILE_PATH: apps/wafi/frontend/environments/${ENVIRONMENT}/deployment.yaml
   TAG: "$IMAGE_TAG_NAME"
   TAG_PATH: .spec.template.spec.containers[0].image
 
