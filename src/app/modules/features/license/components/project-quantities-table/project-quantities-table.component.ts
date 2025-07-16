@@ -17,7 +17,7 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { notePopupData } from 'src/app/shared/models/popup.model';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
-import  { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 
 
 @Component({
@@ -34,9 +34,9 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
   licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate: LicenseProjectQuantitiesTableFileRelativeWeightsCreateUpdateDto = new LicenseProjectQuantitiesTableFileRelativeWeightsCreateUpdateDto();
   total: number = 0;
   showValidation: boolean = false;
-  isExistingValidation:boolean=false;
+  isExistingValidation: boolean = false;
   userData: customerResponse | null = null;
-  isTotalCalculated: boolean = false; 
+  isTotalCalculated: boolean = false;
 
   /**
    *
@@ -88,8 +88,8 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
   getCustomerData() {
 
     this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-      this.userData = res;    
-      this.isExistingValidation=this.userData?.isEmployee as boolean;
+      this.userData = res;
+      this.isExistingValidation = this.userData?.isEmployee as boolean;
     })
   }
   observeSaveQWTableEventEmitter() {
@@ -142,14 +142,30 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
   }
 
   getTotal(data: any) {
-    
     this.total = 0;
     if (data && data.Rows) {
-    data.Rows.forEach((x: any) => {
-      this.total += Number(x['elementValue']);
-    })
+      const numbers: number[] = data.Rows.map((x: any) => +x.elementValue);
+      const total = this.flexiblePreciseSum(numbers);
+      console.log(total);
+      this.total = total;
+    }
   }
+
+  flexiblePreciseSum(numbers: number[]): number {
+    // Find the maximum number of decimals in the array
+    const maxDecimals = numbers.reduce((max, num) => {
+      const decimals = (num.toString().split('.')[1] || '').length;
+      return Math.max(max, decimals);
+    }, 0);
+
+    const factor = Math.pow(10, maxDecimals);
+    const sum = numbers.reduce((total, num) => {
+      return total + Math.round(num * factor);
+    }, 0);
+
+    return sum / factor;
   }
+
 
   get formArr() {
     return this.licenseProjectRelativeWeightForm.get("Rows") as FormArray;
@@ -202,17 +218,16 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
   }
 
   save(moveToNextTab: boolean = false): void {
-    if(!this.isExistingValidation)
-      {
-        if (this.total > 100) {
-          this._toastrNotificatioService.showError(this.localization.greaterThan100);
-          return;
-        }
-        if (this.total < 100) {
-          this._toastrNotificatioService.showError(this.localization.lessThan100);
-          return;
-        }
+    if (!this.isExistingValidation) {
+      if (this.total > 100) {
+        this._toastrNotificatioService.showError(this.localization.greaterThan100);
+        return;
       }
+      if (this.total < 100) {
+        this._toastrNotificatioService.showError(this.localization.lessThan100);
+        return;
+      }
+    }
 
 
     this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.quantitiesTableAcknowledgment = true;
@@ -223,19 +238,18 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
     this.licenseProjectRelativeWeightForm.value.Rows.forEach((element: any) => {
       this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectRelativeWeightList.push(element);
     })
-if(!this.isExistingValidation)
-  {
-    if ((!this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList ||
-      !this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList.length) &&
-      (!this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectQuantitiesTableFileList ||
-        !this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectQuantitiesTableFileList.length)
-    ) {
-      this.showValidation = true;
-      this._toastrNotificatioService.showError(this.localization.PleaseAddAllRequiredFields);
-      return;
+    if (!this.isExistingValidation) {
+      if ((!this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList ||
+        !this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList.length) &&
+        (!this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectQuantitiesTableFileList ||
+          !this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectQuantitiesTableFileList.length)
+      ) {
+        this.showValidation = true;
+        this._toastrNotificatioService.showError(this.localization.PleaseAddAllRequiredFields);
+        return;
+      }
     }
-  }
-    
+
 
     this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectId = this.licenseProjectId as string;
     this.subscriptions.push(
@@ -245,7 +259,7 @@ if(!this.isExistingValidation)
           this.isTotalCalculated = true;
           this._licenseDetailsService.QWTableCompiledSuccessfully.emit()
           this._toastrService.success(this.localization.savedSuccessfully);
-         if (moveToNextTab) {
+          if (moveToNextTab) {
             this.moveToNextTab()
           } else {
             this.getFilesLicenseProjectId();

@@ -29,4 +29,6 @@ export interface notePopupData {
   secondeStaticMessage?: string;
   buttonText?: string;
   buttonLink?: string;
+  surveyTitle?:string;
+  surveyLink?:string;
 }

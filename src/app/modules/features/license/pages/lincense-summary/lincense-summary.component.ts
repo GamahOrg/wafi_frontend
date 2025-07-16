@@ -193,6 +193,9 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
         Configuration.modules.license +
         '/' +
         Configuration.pages.license.lincenseDetails,
+        
+        surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
+        surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
     } as notePopupData;
     this._popupService.updateNotePopupData(Data);
   }
