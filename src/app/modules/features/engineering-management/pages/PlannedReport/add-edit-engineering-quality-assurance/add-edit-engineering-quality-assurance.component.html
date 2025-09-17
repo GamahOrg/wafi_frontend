@@ -1,0 +1,57 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseProjectEngineeringMonthlyConsultantStaffRatesForm"
+id="form-licenseProjectEngineeringMonthlyConsultantStaffRatesForm">
+<div >
+<div class="tab-data-section">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+    <select class="form-select" formControlName="currenrYear" (change)="onChangeYear($event)">
+      <option label="اختار سنه" disabled></option>
+      <option *ngFor="let item of years" [value]="item">
+        {{ item }}
+      </option>
+    </select>
+  </div>
+  </div>
+</div> 
+<div class="tab-data-section">
+  <div class="row mb-3">
+    <table class="table-responsive" style="width:100%">
+      <tbody formArrayName="licenseProjectEngineeringMonthlyConsultantStaffRates">
+        <tr>
+            <th>الشهر:</th>
+            <td
+            *ngFor="let detail of licenseProjectEngineeringMonthlyConsultantStaffRatesFormArr.controls
+              let i=index;let l=last" [formGroupName]="i">
+                <input formControlName="monthName" class="form-control" readonly="readonly">
+              </td>
+        </tr>
+        <tr>
+            <th>كادر الاستشاري الشهري حسب خطة التواجد (مهندسين) : </th>
+            <td *ngFor="let detail of licenseProjectEngineeringMonthlyConsultantStaffRatesFormArr.controls
+            let i=index;let l=last" [formGroupName]="i">
+               <div class="form-group d-flex align-items-center">
+                <input id="control-monthlyConsultantEngineerStaffAccordingPlan" class="form-control"
+                formControlName="monthlyConsultantEngineerStaffAccordingPlan"  type="number"/>
+            <span class="mx-1">%</span>
+               </div>
+            </td>
+        </tr>
+        <tr>
+            <th> كادر الاستشاري الشهري حسب خطة التواجد (مفتشين) :</th>
+            <td *ngFor="let detail of licenseProjectEngineeringMonthlyConsultantStaffRatesFormArr.controls
+            let i=index;let l=last" [formGroupName]="i">
+               <div class="form-group d-flex align-items-center">
+                <input id="control-monthlyConsultantInspectorStaffAccordingPlan" class="form-control"
+                    formControlName="monthlyConsultantInspectorStaffAccordingPlan" type="number" />
+                    <span class="mx-1">%</span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+  </div>
+</div>
+
+</div>
+</form>

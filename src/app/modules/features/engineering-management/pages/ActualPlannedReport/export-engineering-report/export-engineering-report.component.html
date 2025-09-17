@@ -1,0 +1,118 @@
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h5 class="card-title mb-0">
+            <i class="fas fa-file-export me-2"></i>
+            تصدير تقرير الإشراف الهندسي
+        </h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="updateMonthSubmittedForm"
+              id="form-updateMonthSubmittedForm">
+            <div class="row g-4">
+                <!-- Radio Button Section -->
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="form-label fw-bold text-secondary mb-3">
+                            <i class="fas fa-filter me-2"></i>
+                            نوع التقرير
+                        </label>
+                        <div class="d-flex gap-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" 
+                                       id="monthly" 
+                                       formControlName="isMonthly" 
+                                       [value]="true"
+                                       (change)="onReportTypeChange()">
+                                <label class="form-check-label fw-semibold" for="monthly">
+                                    <i class="fas fa-calendar-alt me-1"></i>
+                                    شهري
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" 
+                                       id="quarterly" 
+                                       formControlName="isMonthly" 
+                                       [value]="false"
+                                       (change)="onReportTypeChange()">
+                                <label class="form-check-label fw-semibold" for="quarterly">
+                                    <i class="fas fa-calendar-week me-1"></i>
+                                    ربع سنوي
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Report Dropdown -->
+                <div class="col-12" *ngIf="updateMonthSubmittedForm.get('isMonthly')?.value === true">
+                    <div class="form-group">
+                        <label for="control-actualValueReportId" class="form-label fw-bold text-secondary">
+                            <i class="fas fa-calendar-day me-2"></i>
+                            اختر الشهر
+                        </label>
+                        <select class="form-select form-select-lg"
+                                id="control-actualValueReportId"
+                                formControlName="monthDate">
+                            <option value="" disabled selected>-- اختر الشهر --</option>
+                            <option *ngFor="let item of actualValueReportList"
+                                    [value]="item.monthDate">
+                                {{item.monthName}} - {{item.monthDate | date:'yyyy'}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback d-block"
+                             *ngIf="updateMonthSubmittedForm.get('isMonthly')?.value === true && controls['monthDate'].errors?.['required'] && showValidation">
+                            <i class="fas fa-exclamation-circle me-1"></i>
+                            يرجى اختيار الشهر
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quarterly Report Dropdowns -->
+                <div class="col-12" *ngIf="updateMonthSubmittedForm.get('isMonthly')?.value === false">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="yearSelect" class="form-label fw-bold text-secondary">
+                                    <i class="fas fa-calendar me-2"></i>
+                                    السنة
+                                </label>
+                                <select class="form-select form-select-lg"
+                                        id="yearSelect"
+                                        formControlName="currenrYear">
+                                    <option value="" disabled selected>-- اختر السنة --</option>
+                                    <option *ngFor="let year of yearsList"
+                                            [value]="year">{{year}}</option>
+                                </select>
+                                <div class="invalid-feedback d-block"
+                                     *ngIf="updateMonthSubmittedForm.get('isMonthly')?.value === false && controls['currenrYear'].errors?.['required'] && showValidation">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    يرجى اختيار السنة
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="quarterSelect" class="form-label fw-bold text-secondary">
+                                    <i class="fas fa-chart-bar me-2"></i>
+                                    الربع
+                                </label>
+                                <select class="form-select form-select-lg"
+                                        id="quarterSelect"
+                                        formControlName="quarterNumber">
+                                    <option value="" disabled selected>-- اختر الربع --</option>
+                                    <option *ngFor="let quarter of quartersList"
+                                            [value]="quarter.value">{{quarter.name}}</option>
+                                </select>
+                                <div class="invalid-feedback d-block"
+                                     *ngIf="updateMonthSubmittedForm.get('isMonthly')?.value === false && controls['quarterNumber'].errors?.['required'] && showValidation">
+                                    <i class="fas fa-exclamation-circle me-1"></i>
+                                    يرجى اختيار الربع
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

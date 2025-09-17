@@ -1,24 +1,24 @@
 export class LicenseProjectRelativeWeightCreateUpdateDto {
-  id: string = "";
+  id: string = '';
   elementValue: number = 0;
-  licenseProjectId: string = "";
-  licenseRelativeWeightId: string = "";
+  licenseProjectId: string = '';
+  licenseRelativeWeightId: string = '';
   modifiedReferenceWeight: number = 0;
 }
 
 export class LicenseProjectRelativeWeightDto {
-  id: string = "";
+  id: string = '';
   elementValue: number = 0;
-  licenseProjectId: string = "";
-  licenseRelativeWeightId: string = "";
+  licenseProjectId: string = '';
+  licenseRelativeWeightId: string = '';
   modifiedReferenceWeight: number = 0;
-  sysLicenseRelativeWeight: SysLicenseRelativeWeightDto = new SysLicenseRelativeWeightDto();
+  sysLicenseRelativeWeight: SysLicenseRelativeWeightDto =
+    new SysLicenseRelativeWeightDto();
 }
 
 export class SysLicenseRelativeWeightDto {
-  id: string = "";
-  elementName: string = "";
+  id: string = '';
+  elementName: string = '';
   order: number = 0;
   referenceWeight: number = 0;
 }
-

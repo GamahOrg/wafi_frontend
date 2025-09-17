@@ -1,0 +1,263 @@
+
+<form class="d-flex flex-column h-100" [formGroup]="
+    licenseProjectConnectionWithServicesProviderForm
+  " id="form-licenseProjectConnectionWithServicesProviderForm">
+    <div class="card com-reg-card position-relative z-2">
+        <div class="card-body">
+            <div class="tab-data-section">
+                <div class="row mb-3">
+                   <!--  <div class="col-12 col-lg-6">
+                        <div class="key">الشهر</div>
+                        <div class="value">{{licenseProjectConnectionWithServicesProvider?.monthName}}</div>
+                    </div> -->
+                    <div class="col-6 col-md-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">حالة ربط الخدمة - كهرباء</label>
+                            <select class="form-select" formControlName="electricityTieConnectionStatusId"
+                            [ngClass]="{'is-invalid': showValidation && controls.electricityTieConnectionStatusId.errors}">
+                            <option label="حالة ربط الخدمة - كهرباء"></option>
+                            <option *ngFor="let licenseProjectTieConnectionStatus of licenseProjectTieConnectionStatusList" [value]="licenseProjectTieConnectionStatus.id">
+                                {{licenseProjectTieConnectionStatus.name}}</option>
+                        </select>
+                            <div class="invalid-feedback d-block" *ngIf="
+      controls.electricityTieConnectionStatusId?.hasError('required') && showValidation
+    ">
+                                حقل مطلوب
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">نوع الخدمة - كهرباء</label>
+                            <select class="form-select" formControlName="electricityServiceTypeStatusId"
+                            [ngClass]="{'is-invalid': showValidation && controls.electricityServiceTypeStatusId.errors}">
+                            <option label="نوع الخدمة - كهرباء"></option>
+                            <option *ngFor="let licenseProjectServiceTypeStatus of licenseProjectServiceTypeStatusList" [value]="licenseProjectServiceTypeStatus.id">
+                                {{licenseProjectServiceTypeStatus.name}}</option>
+                        </select>
+                            <div class="invalid-feedback d-block" *ngIf="
+      controls.electricityServiceTypeStatusId?.hasError('required') && showValidation
+    ">
+                                حقل مطلوب
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6" *ngIf="controls.electricityTieConnectionStatusId.value">
+                        <div class="form-group mb-4">
+                            <label class="form-label" *ngIf="controls.electricityTieConnectionStatusId.value==licenseProjectTieConnectionStatusEnum.Connected">تاريخ ربط الخدمة كهرباءالفعلى</label>
+                            <label class="form-label" *ngIf="controls.electricityTieConnectionStatusId.value==licenseProjectTieConnectionStatusEnum.NotConnected">تاريخ ربط الخدمة كهرباء المتوقع</label>
+                            <div class="input-group">
+                                <input 
+                                type="date" id="control-electricityTieConnectionDate"
+                                       class="form-control"
+                                       formControlName="electricityTieConnectionDate"
+                                       value="{{ controls.electricityTieConnectionDate.value | date:'yyyy-MM-dd' }}">
+                                <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                            </div>
+                            <mat-error *ngIf="controls.electricityTieConnectionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                        </div>
+                      </div>
+                      <div class="col-6 col-md-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">حالة تفعيل الخدمة -  كهرباء</label>
+                            <select class="form-select" formControlName="electricityConnectionStatusId"
+                            [ngClass]="{'is-invalid': showValidation && controls.electricityConnectionStatusId.errors}">
+                            <option label="حالة تفعيل الخدمة -  كهرباء"></option>
+                            <option *ngFor="let licenseProjectActivationStatus of licenseProjectActivationStatusList" [value]="licenseProjectActivationStatus.id">
+                                {{licenseProjectActivationStatus.name}}</option>
+                        </select>
+                            <div class="invalid-feedback d-block" *ngIf="
+      controls.electricityConnectionStatusId?.hasError('required') && showValidation
+    ">
+                                حقل مطلوب
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="col-6 col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">ملاحظات الكهرباء</label>
+                        <textarea type="text" id="control-electricityNotes" class="form-control"
+                            formControlName="electricityNotes"
+                            placeholder="ملاحظات الكهرباء" ></textarea>
+                        <div class="invalid-feedback d-block" *ngIf="
+  controls.electricityNotes?.hasError('required') && showValidation
+">
+                            حقل مطلوب
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">حالة ربط الخدمة - مياه</label>
+                        <select class="form-select" formControlName="waterTieConnectionStatusId"
+                        [ngClass]="{'is-invalid': showValidation && controls.waterTieConnectionStatusId.errors}">
+                        <option label="حالة ربط الخدمة - مياه"></option>
+                        <option *ngFor="let licenseProjectTieConnectionStatus of licenseProjectTieConnectionStatusList" [value]="licenseProjectTieConnectionStatus.id">
+                            {{licenseProjectTieConnectionStatus.name}}</option>
+                    </select>
+                        <div class="invalid-feedback d-block" *ngIf="
+  controls.waterTieConnectionStatusId?.hasError('required') && showValidation
+">
+                            حقل مطلوب
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">نوع الخدمة - مياه</label>
+                        <select class="form-select" formControlName="waterServiceTypeStatusId"
+                        [ngClass]="{'is-invalid': showValidation && controls.waterServiceTypeStatusId.errors}">
+                        <option label="نوع الخدمة - مياه"></option>
+                        <option *ngFor="let licenseProjectServiceTypeStatus of licenseProjectServiceTypeStatusList" [value]="licenseProjectServiceTypeStatus.id">
+                            {{licenseProjectServiceTypeStatus.name}}</option>
+                    </select>
+                        <div class="invalid-feedback d-block" *ngIf="
+  controls.waterServiceTypeStatusId?.hasError('required') && showValidation
+">
+                            حقل مطلوب
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6" *ngIf="controls.waterTieConnectionStatusId.value">
+                    <div class="form-group mb-4">
+                        <label class="form-label" *ngIf="controls.waterTieConnectionStatusId.value==licenseProjectTieConnectionStatusEnum.Connected">تاريخ ربط الخدمة مياه الفعلى</label>
+                        <label class="form-label" *ngIf="controls.waterTieConnectionStatusId.value==licenseProjectTieConnectionStatusEnum.NotConnected">تاريخ ربط الخدمة مياه المتوقع</label>
+                        <div class="input-group">
+                            <input 
+                            type="date" id="control-waterTieConnectionDate"
+                                   class="form-control"
+                                   formControlName="waterTieConnectionDate"
+                                   value="{{ controls.waterTieConnectionDate.value | date:'yyyy-MM-dd' }}">
+                            <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                        </div>
+                        <mat-error *ngIf="controls.waterTieConnectionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">حالة تفعيل الخدمة -  مياه</label>
+                        <select class="form-select" formControlName="waterConnectionStatusId"
+                        [ngClass]="{'is-invalid': showValidation && controls.waterConnectionStatusId.errors}">
+                        <option label="حالة تفعيل الخدمة -  مياه"></option>
+                        <option *ngFor="let licenseProjectActivationStatus of licenseProjectActivationStatusList" [value]="licenseProjectActivationStatus.id">
+                            {{licenseProjectActivationStatus.name}}</option>
+                    </select>
+                        <div class="invalid-feedback d-block" *ngIf="
+  controls.waterConnectionStatusId?.hasError('required') && showValidation
+">
+                            حقل مطلوب
+                        </div>
+                    </div>
+                </div>
+
+              <div class="col-6 col-md-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">ملاحظات المياه</label>
+                    <textarea type="text" id="control-waterNotes" class="form-control"
+                        formControlName="waterNotes"
+                        placeholder="ملاحظات المياه" ></textarea>
+                    <div class="invalid-feedback d-block" *ngIf="
+controls.waterNotes?.hasError('required') && showValidation
+">
+                        حقل مطلوب
+                    </div>
+                </div>
+            </div> 
+            <div class="col-6 col-md-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">حالة ربط الخدمة - صرف صحي</label>
+                    <select class="form-select" formControlName="sewageTieConnectionStatusId"
+                    [ngClass]="{'is-invalid': showValidation && controls.sewageTieConnectionStatusId.errors}">
+                    <option label="حالة ربط الخدمة - صرف صحي"></option>
+                    <option *ngFor="let licenseProjectTieConnectionStatus of licenseProjectTieConnectionStatusList" [value]="licenseProjectTieConnectionStatus.id">
+                        {{licenseProjectTieConnectionStatus.name}}</option>
+                </select>
+                    <div class="invalid-feedback d-block" *ngIf="
+controls.sewageTieConnectionStatusId?.hasError('required') && showValidation
+">
+                        حقل مطلوب
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">نوع الخدمة - صرف صحي</label>
+                    <select class="form-select" formControlName="sewageServiceTypeStatusId"
+                    [ngClass]="{'is-invalid': showValidation && controls.sewageServiceTypeStatusId.errors}">
+                    <option label="نوع الخدمة - صرف صحي"></option>
+                    <option *ngFor="let licenseProjectServiceTypeStatus of licenseProjectServiceTypeStatusList" [value]="licenseProjectServiceTypeStatus.id">
+                        {{licenseProjectServiceTypeStatus.name}}</option>
+                </select>
+                    <div class="invalid-feedback d-block" *ngIf="
+controls.sewageServiceTypeStatusId?.hasError('required') && showValidation
+">
+                        حقل مطلوب
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6" *ngIf="controls.sewageTieConnectionStatusId.value">
+                <div class="form-group mb-4">
+                    <label class="form-label" *ngIf="controls.sewageTieConnectionStatusId.value==licenseProjectTieConnectionStatusEnum.Connected">تاريخ ربط الخدمة صرف صحي الفعلى</label>
+                    <label class="form-label" *ngIf="controls.sewageTieConnectionStatusId.value==licenseProjectTieConnectionStatusEnum.NotConnected">تاريخ ربط الخدمة صرف صحي المتوقع</label>
+                    <div class="input-group">
+                        <input 
+                        type="date" id="control-sewageTieConnectionDate"
+                               class="form-control"
+                               formControlName="sewageTieConnectionDate"
+                               value="{{ controls.sewageTieConnectionDate.value | date:'yyyy-MM-dd' }}">
+                        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                    </div>
+                    <mat-error *ngIf="controls.sewageTieConnectionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                </div>
+              </div>
+              <div class="col-6 col-md-6">
+                <div class="form-group mb-4">
+                    <label class="form-label">حالة تفعيل الخدمة -  صرف صحي</label>
+                    <select class="form-select" formControlName="sewageConnectionStatusId"
+                    [ngClass]="{'is-invalid': showValidation && controls.sewageConnectionStatusId.errors}">
+                    <option label="حالة تفعيل الخدمة -  صرف صحي"></option>
+                    <option *ngFor="let licenseProjectActivationStatus of licenseProjectActivationStatusList" [value]="licenseProjectActivationStatus.id">
+                        {{licenseProjectActivationStatus.name}}</option>
+                </select>
+                    <div class="invalid-feedback d-block" *ngIf="
+controls.sewageConnectionStatusId?.hasError('required') && showValidation
+">
+                        حقل مطلوب
+                    </div>
+                </div>
+            </div>
+
+          <div class="col-6 col-md-6">
+            <div class="form-group mb-4">
+                <label class="form-label">ملاحظات صرف صحي</label>
+                <textarea type="text" id="control-sewageNotes" class="form-control"
+                    formControlName="sewageNotes"
+                    placeholder="ملاحظات صرف صحي" ></textarea>
+                <div class="invalid-feedback d-block" *ngIf="
+controls.sewageNotes?.hasError('required') && showValidation
+">
+                    حقل مطلوب
+                </div>
+            </div>
+        </div>
+              </div>
+        </div>
+    </div>
+</div>
+</form>
+
+
+
+
+
+
+
+
+

@@ -13,4 +13,7 @@ export enum RequestType {
     ChangeProjectLicensePlan = 12,
     LicenseProjectRequest = 13,
     PeriodicCharteredAccount = 14,
+    LicenseProjectRecommendation = 15,
+    LicenseProjectProblem = 16,
+    LicenseProjectRisk = 17,
 }

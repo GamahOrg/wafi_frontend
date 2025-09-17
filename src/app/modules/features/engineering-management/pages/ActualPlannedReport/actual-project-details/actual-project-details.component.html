@@ -1,0 +1,438 @@
+<h3 class="title">{{ "تفاصيل المشروع" }}</h3>
+<div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+        <div class="tab-data-section" *ngIf="licenseProjectEngineeringProjectZonesBlocksDetailActual">
+            <div class="row mb-3">
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        رقم الزون
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectUnit?.zoneCode
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        بلوكات /عمائر
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectUnit?.unitType
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        رقم البلوك /العمتارة
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectUnit?.code
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectUnit?.subUnitCount
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        نوع الوحدات
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectUnit?.subUnitTypes
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        تاريخ النهاية المخطط
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectUnit?.plannedEndDate
+                        | date:'yyyy-MM-dd'
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        تاريخ النهاية المتوقع
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectUnit?.forecastFinishDate
+                        | date:'yyyy-MM-dd'
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        نسبة الإنجاز المخططة الشهرية
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual.monthlyPlannedCompletionPercentage
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        نسبة الإنجاز الفعلى الشهرية
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual.actualMonthlyPlannedCompletionPercentage
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        نسبة الإنجاز المخططة التراكمية
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual.constructionWorkStatusCompletionRate
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        نسبة الإنجاز الفعلية التراكمية
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual.actualConstructionWorkStatusCompletionRate
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        التباين
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual.contrastCompletionRate
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات الجاهزة للتسليم للربط خلال الشهر
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual.noOfUnitsReadyForConnection
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات التراكمى المسلمة للربط
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual.cumulativeNoOfHandedUnits
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات التراكمي الكاملة التشطيبات
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual.cumulativeNoOfFullyFinishedUnits
+                        }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<h3 class="title">{{ "كهرباء" }}</h3>
+<div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+        <div class="tab-data-section">
+            <div class="row mb-3">
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        شبكات البنية التحية
+                    </div>
+                    <div class="value">
+                        <div
+                            *ngIf="licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringElectricity?.isInfrastructureNetwork">
+                            نعم
+                        </div>
+                        <div
+                            *ngIf="!licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringElectricity?.isInfrastructureNetwork">
+                            لا
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        سداد رسوم الخدمة
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringElectricity?.serviceFeesPayment
+                        }}
+                    </div>
+                </div>
+
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد عدادات الكهرباء التى تم تركيبه
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringElectricity?.noOfElectricityMetersInstalled
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات التى تم ربط الخدمة بها
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringElectricity?.noOfConnectedUnits
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات التى تم إطلاق تيار بها
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringElectricity?.noOfUnitsWithActiveElectricityService
+                        }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<hr>
+<h3 class="title">{{ "المياه" }}</h3>
+<div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+        <div class="tab-data-section">
+            <div class="row mb-3">
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        شبكات البنية التحية
+                    </div>
+                    <div class="value">
+                        <div
+                            *ngIf="licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringWater?.isInfrastructureNetwork">
+                            نعم
+                        </div>
+                        <div
+                            *ngIf="!licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringWater?.isInfrastructureNetwork">
+                            لا
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        سداد رسوم الخدمة
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringWater?.serviceFeesPayment
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد عدادات المياه التى تم تركيبها
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringWater?.noOfWaterMetersInstalled
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات التى تم ربط الخدمة بها
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringWater?.noOfConnectedUnits
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات التى تم تفعيل الخدمة بها
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineeringWater?.noOfUnitsWithActiveWaterService
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h3 class="title">{{ "الصرف الصحي" }}</h3>
+<div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+        <div class="tab-data-section">
+            <div class="row mb-3">
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        شبكات البنية التحية
+                    </div>
+                    <div class="value">
+                        <div
+                            *ngIf="licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineerSewage?.isInfrastructureNetwork">
+                            نعم
+                        </div>
+                        <div
+                            *ngIf="!licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineerSewage?.isInfrastructureNetwork">
+                            لا
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات التى تم ربط الخدمة بها
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineerSewage?.noOfConnectedUnits
+                        }}
+                    </div>
+                </div>
+
+
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات التى تم تفعيل الخدمة بها
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineerSewage?.noOfUnitsWithActiveSewagerService
+                        }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<hr>
+<h3 class="title">{{ "الجاهزية للسكن" }}</h3>
+<div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+        <div class="tab-data-section">
+            <div class="row mb-3">
+
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        عدد الوحدات الجاهزة للتسليم للمستفيدين (موصولة بالخدمات)
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineerUnitsReadinessToUse?.noOfUnitsReadyForHandover
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        شبكات البنية التحية
+                    </div>
+                    <div class="value">
+                        <div
+                            *ngIf="licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineerUnitsReadinessToUse?.blocksReadyForHandover">
+                            جاهزة
+                        </div>
+                        <div
+                            *ngIf="!licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectEngineerUnitsReadinessToUse?.blocksReadyForHandover">
+                            غير جاهزة
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label class="key">أكواد الوحدات الجاهزية للتسليم</label>
+                            <div class="form-label">
+                                {{selectedUnitCodes}}
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h3 class="title">{{ "الملاحظات" }}</h3>
+<div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+        <div class="tab-data-section">
+            <div class="row mb-3">
+
+                <div class="col-6 col-md-6">
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringProjectZonesBlocksDetailActual?.notes
+                        }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

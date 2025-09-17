@@ -13,7 +13,6 @@ import {
   PeriodicCharteredAccountantReportStatusDto,
   PeriodicCharteredAccountantReportStatusEnum,
   PeriodicCharteredAccountantReportTypeDto,
-
   PeriodicCharteredAccountantReportTypeEnum,
 } from './periodic-chartered-accountant-report-paging-list-dto';
 
@@ -24,8 +23,8 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   depositDate: Date;
   reportTypeId: PeriodicCharteredAccountantReportTypeEnum;
   quarterTypeId?: PeriodicCharteredAccountantReportQuarterTypeEnum;
-  reportStatusId?:PeriodicCharteredAccountantReportStatusEnum;
-  rejectionNotes?:string
+  reportStatusId?: PeriodicCharteredAccountantReportStatusEnum;
+  rejectionNotes?: string;
   year?: number;
   month?: number;
   fromDate: Date;
@@ -55,6 +54,8 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   totalCost?: number;
   // التكلفة الانشائة المتوقعة
   expectedConstructionCost?: number;
+  // اجمالي التكلفة الانشائية الفعلية
+  actualConstructionCost: number;
   // هامش الربح المتوقع
   expectedProfile?: number;
 
@@ -81,7 +82,9 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   // حساب الضمان
   periodOpeningBalance?: number;
   periodClosingBalance?: number;
-
+  closingBalanceBasedOnBankStatement?: number;
+  bankStatementFile: SysFileManagerCreateUpdateDto;
+  
   // تحليل موقف وحدات المشروع
   projectUnitsPositionAnalysis: ProjectUnitsPositionAnalysisDto[];
 
@@ -106,7 +109,7 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   licenseProject: LicenseProjectDto;
   reportType: PeriodicCharteredAccountantReportTypeDto;
   quarterType: PeriodicCharteredAccountantReportQuarterTypeDto;
-  reportStatus:PeriodicCharteredAccountantReportStatusDto;
+  reportStatus: PeriodicCharteredAccountantReportStatusDto;
 }
 //وثائق الصرف خلال فترة التقرير
 export interface PeriodicCharteredAccountantReportExchangeDocumentDto {
@@ -124,6 +127,19 @@ export interface PeriodicCharteredAccountantReportExchangeDocumentDto {
   subItem: LicenseProjectExchangeDocumentSubItemDto;
   licenseProjectBuyer: LicenseProjectBuyerDto;
 }
+
+export interface SysDepositTypeDto {
+  id: number;
+  name: string;
+}
+
+export enum SysDepositTypeEnum {
+  //إيداع شيك
+  CheckDeposit = 1,
+  //إيداع حوالة بنكية
+  BankTransferDeposit = 2,
+}
+
 export enum LicenseProjectExchangeDocumentMainItemEnum {
   //تكاليف انشائية
   ConstructionCosts = 1,
@@ -136,6 +152,7 @@ export enum LicenseProjectExchangeDocumentMainItemEnum {
   //عمولات بنكية
   BankCommissions = 5,
 }
+
 export enum LicenseProjectExchangeDocumentSubItemEnum {
   //حافز وزارى
   MinisteriaIncentive = 1,
@@ -354,7 +371,10 @@ export interface PeriodicCharteredAccountantReportDepositDto {
   // رقم الوحدة السكنية/نوع التكاليف
   unitCodeOrExpenseType: string;
 
-  // رقم الشيك
+  // نوع الايداع
+  sysDepositType: SysDepositTypeDto;
+
+  // رقم الشيك أو الحوالة البنكية
   checkNumber: number;
 
   // تاريخ التوريد
@@ -371,7 +391,10 @@ export interface PeriodicCharteredAccountantReportBatchDto {
   // رقم الوحدة السكنية/نوع التكاليف
   unitCodeOrExpenseType: string;
 
-  // رقم الشيك
+  // نوع الايداع
+  sysDepositType: SysDepositTypeDto;
+
+  // رقم الشيك أو الحوالة البنكية
   checkNumber: number;
 
   // تاريخ التوريد

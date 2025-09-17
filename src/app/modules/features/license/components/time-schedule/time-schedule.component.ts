@@ -6,6 +6,7 @@ import { TimelineProgramFilesComponent } from '../timeline-program-files/timelin
 import { TimelinefilesService } from '../../services/timeline-programFileServices/timelinefiles.service';
 import { RequestMenuComponent } from '../request-menu/request-menu.component';
 import { NotesComponent } from '../notes/notes.component';
+import { licenseProjectTimeScheduleRequestStatusEnum } from '../../dataModels/filesdata/filesdata.model';
 
 
 @Component({
@@ -20,10 +21,10 @@ export class TimeScheduleComponent implements OnInit, OnDestroy {
   localization = {
     timelineProgramFiles: "ملفات البرنامج الزمني",
     projectManagerNotes: "الملاحظات",
-    resultRequestNeeds : 'نتيجة قائمة المتطلبات'
+    resultRequestNeeds : 'نتيجة قائمة المتطلبات',
   };
 
-  showDetails:boolean=false;
+  showDetails:boolean = false;
 
   tabContent: Tabs = {
     verticalTabs: false,
@@ -55,16 +56,12 @@ export class TimeScheduleComponent implements OnInit, OnDestroy {
     ],
   };
 
-
-  constructor(
-    private _tabsService: TabsService,private _timelinefilesService : TimelinefilesService,
-
-  ) { }
+  constructor(private _tabsService: TabsService, private _timelinefilesService: TimelinefilesService) { }
 
   ngOnInit(): void {
-  this.observeshowtimelineDetails()
+    this.observeshowtimelineDetails()
+    this.showReportDetails();
   }
-
 
   private observeshowtimelineDetails(){
     this.subscriptions.push(
@@ -74,25 +71,29 @@ export class TimeScheduleComponent implements OnInit, OnDestroy {
     )
   }
 
-
   private updateTabContent(): void {
     this._tabsService.updateVerticalTabContent(this.tabContent);
   }
 
-
-   public getTimeShecduledDetails(id : string){
-    
+  public getTimeShecduledDetails(id : string){
     this.subscriptions.push(
-      this._timelinefilesService.getLicensetimelneProgramByID(id).subscribe(res=>{
-        this.tabContent.tabsComponentList[2].isVisible=res.allowToEdit;
-        this.updateTabContent()
-         this.showDetails = true        
+      this._timelinefilesService.getLicenseTimelneProgramByID(id).subscribe(res=>{
+       if(res.externalStatus?.id == licenseProjectTimeScheduleRequestStatusEnum.New ||
+         res.externalStatus?.id == licenseProjectTimeScheduleRequestStatusEnum.UnderStudy)
+           this.tabContent.tabsComponentList[2].isVisible = false;
+
+      this.updateTabContent()
+      this.showDetails = true        
       })
     )
   }
 
-  
-
+  showReportDetails(){
+    this._timelinefilesService.returnToList.subscribe(x => {
+      if(x)
+        this.showDetails = false;
+    })
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

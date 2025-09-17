@@ -1,0 +1,25 @@
+<button type="button" mat-flat-button class="primary mt-3" color="primary" (click)="openRequestApprovalComponentDialog()"
+ *ngIf="licenseProjectEngineeringDataTapStatus?.hasSupervisionPlannedReport 
+ && licenseProjectEngineeringDataTapStatus?.supervisionReportStatusId === licenseProjectEngineeringRequestStatus.Draft 
+ && licenseProjectEngineeringDataTapStatus?.hasTimeSchedule ">إرسال القيم المخططة</button>
+
+ &nbsp;
+
+<label class="form-label" *ngIf="licenseProjectEngineeringDataTapStatus?.hasSupervisionPlannedReport && licenseProjectEngineeringDataTapStatus?.hasTimeSchedule">
+    {{sysLicenseProjectEngineeringRequestStatus != null ? sysLicenseProjectEngineeringRequestStatus.name : ''}}
+</label>
+
+&nbsp;
+
+<button type="button" mat-flat-button class="primary mt-3" color="primary" (click)="openCustomerNotesForEngineerRequestComponentDialog()"  
+*ngIf="licenseProjectEngineeringDataTapStatus?.supervisionReportStatusId ===licenseProjectEngineeringRequestStatus.CustomerFeedback">استيفاء  الملاحظات</button>
+
+<app-vertical-tabs
+                   *ngIf="licenseProjectEngineeringDataTapStatus?.hasSupervisionPlannedReport && licenseProjectEngineeringDataTapStatus?.hasTimeSchedule; else noData"></app-vertical-tabs>
+<ng-template #noData>
+    <app-no-data [showCompleteBtn]="false"
+                 [noDataActionsButtons]="noDataActions"
+                 [title]="title"></app-no-data>
+</ng-template>
+
+

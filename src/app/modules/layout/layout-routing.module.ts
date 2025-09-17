@@ -44,6 +44,14 @@ const routes: Routes = [
           ),
       }, 
       {
+        path: Configuration.modules.developer,
+        data: { breadcrumb: 'المطور' },
+        loadChildren: () =>
+          import('../features/developer/developer.module').then(
+            (m) => m.DeveloperModule
+          ),
+      },
+      {
         path: Configuration.modules.licenseProjectRequests,
         data: { breadcrumb: 'الطلبات الاعتيادية والغير اعتيادية' },
         loadChildren: () =>
@@ -68,12 +76,12 @@ const routes: Routes = [
         loadChildren: () =>
           import('../features/complaints-and-reports/complaints-and-reports.module').then((m) => m.ComplaintsAndReportsModule),
       },
-      // {
-      //   path: Configuration.modules.engineeringManagement,
-      //   data: {breadcrumb : 'الإدارة الهندسية'},
-      //   loadChildren: () =>
-      //     import('../features/engineering-management/engineering-management.module').then((m) => m.EngineeringManagementModule),
-      // },
+      {
+        path: Configuration.modules.engineeringManagement,
+        data: {breadcrumb : 'الإدارة الهندسية'},
+        loadChildren: () =>
+          import('../features/engineering-management/engineering-management.module').then((m) => m.EngineeringManagementModule),
+      },
       {
         path: '',
         redirectTo: Configuration.modules.facilities,

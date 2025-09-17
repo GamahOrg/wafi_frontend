@@ -34,9 +34,32 @@
         </div>
       </div>
     </div>
+    <div class="mb-3">
+      <div class="form-check mb-3 p-3 border rounded" [class.border-success]="enableValidation" [class.border-warning]="!enableValidation">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="enableValidationCheckbox"
+          [(ngModel)]="enableValidation"
+          (change)="onValidationToggle()"
+        />
+        <label class="form-check-label fw-bold" for="enableValidationCheckbox">
+          <span class="material-icons me-2" [class.text-success]="enableValidation" [class.text-warning]="!enableValidation">
+            {{ enableValidation ? 'verified' : 'warning' }}
+          </span>
+          {{ enableValidation ? 'التحقق من صحة البيانات مفعل' : 'التحقق من صحة البيانات معطل' }}
+        </label>
+        <div class="mt-2 small" [class]="validationStatusClass">
+          <span class="material-icons me-1">info</span>
+          {{ enableValidation ? 'سيتم التحقق من صحة جميع البيانات المدخلة' : 'لن يتم التحقق من صحة البيانات المدخلة' }}
+        </div>
+      </div>
+  </div>
+  
 
-
-    <div class="tab-data-section">
+    <div
+      *ngIf="licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList"
+      class="tab-data-section">
       <div class="table-responsive">
         <div class="tab-data-header">
           <div class="icon"><span class="material-icons">list_alt</span></div>
@@ -44,89 +67,71 @@
         </div>
         <form [formGroup]="licenseProjectRelativeWeightForm" (ngSubmit)="save()"
           id="form-licenseProjectRelativeWeightForm">
-          <div class="row p-4" formArrayName="Rows">
 
-
-            <ng-container *ngFor="let itemrow of formArr.controls let i=index;let l=last" [formGroupName]="i">
-              <div class="col-6 col-lg-6">
-                <div class="form-group mb-4">
-                  <label class="form-label">{{ itemrow.get('elementName')?.value }}</label>
-                  <input type="number" class="form-control" formControlName="elementValue" />
-                  <!-- <mat-error *ngIf="">{{ localization.requiredErrorMsg }}</mat-error>
-                <mat-error *ngIf="">{{ localization.MinValueError }}</mat-error> -->
-                </div>
-              </div>
-            </ng-container>
-
-            <div class="row text-center">
-              <p>الاجمالى :{{total}}</p>
-            </div>
-
-          </div>
-
-
-
-          <!-- <table class="table table-light mb-3">
+          <table class="table table-light mb-3">
             <thead>
               <tr>
-                <th>البند</th>
-                <th> النسبة </th>
+                <th>{{'البند'}}</th>
+                <th>{{ 'الأوزان النسبية المرجعية'}}</th>
+                <th>{{'الأوزان النسبية المرجعية المعدلة'}}</th>
+                <th>{{'الأوزان النسبية المقترحة'}}</th>
+                <th>{{'نسبة التباين'}}</th>
+                <th>{{'اقصى نسبة تباين مسموحه للبند'}}</th>
               </tr>
             </thead>
             <tbody formArrayName="Rows">
-              <tr *ngFor="let itemrow of formArr.controls
-                let i=index;let l=last" [formGroupName]="i">
+              <tr *ngFor="let itemrow of formArr.controls let i=index" [formGroupName]="i">
                 <td>
-                  <input formControlName="elementName" class="form-control">
+                  <label class="form-label mb-0">{{ itemrow.get('elementName')?.value }}</label>
                 </td>
                 <td>
-                  <input formControlName="elementValue" class="form-control">
+                  <label class="form-label mb-0">{{ itemrow.get('referenceWeight')?.value }}</label>
+                </td>
+                <td>
+                  <label class="form-label mb-0">{{ itemrow.get('adjustedReferenceWeights')?.value }}</label>
+
+                </td>
+                <td>
+                  <input (change)="onProposedRelativeWeightsChange(i)" type="number" class="form-control"
+                    formControlName="modifiedRelativeWeight"
+                    [class.is-invalid]="itemrow.get('modifiedRelativeWeight')?.invalid && itemrow.get('modifiedRelativeWeight')?.touched"
+                    min="0" />
+                  <div class="invalid-feedback d-block"
+                    *ngIf="itemrow.get('modifiedRelativeWeight')?.invalid && itemrow.get('modifiedRelativeWeight')?.touched">
+                    <div *ngIf="itemrow.get('modifiedRelativeWeight')?.errors?.['required']">{{ localization.requiredErrorMsg }}
+                    </div>
+                    <div *ngIf="itemrow.get('modifiedRelativeWeight')?.errors?.['min']">{{ localization.minValueError }} {{
+                      itemrow.get('modifiedRelativeWeight')?.errors?.['min']?.min }}</div>
+                    <div *ngIf="itemrow.get('modifiedRelativeWeight')?.errors?.['max']">{{ localization.maxValueError }} {{
+                      itemrow.get('modifiedRelativeWeight')?.errors?.['max']?.max }}</div>
+                  </div>
+                </td>
+
+                <td>
+                  <label class="form-label mb-0">{{ itemrow.get('variance')?.value }}</label>
+                  <div class="invalid-feedback d-block">
+                  <div *ngIf="itemrow.get('variance')?.errors?.['max']">{{ localization.maxValueError }} {{
+                    itemrow.get('variance')?.errors?.['max']?.max }}</div>
+                </div>
+                </td>
+                <td>
+                  <label class="form-label mb-0">{{ itemrow.get('maxVariance')?.value }}</label>
                 </td>
                 <td [hidden]="true">
                   <input formControlName="licenseRelativeWeightId" class="form-control">
                 </td>
+                
               </tr>
-              <tr>
-                <td>الاجمالي</td>
-                <td>{{total}}</td>
+              <tr class="table-info">
+                <td><strong>{{'الاجمالي'}}</strong></td>
+                <td><strong>{{total}}</strong></td>
               </tr>
             </tbody>
-          </table> -->
+          </table>
         </form>
       </div>
     </div>
 
-    <!-- <app-next-and-previus-buttons *ngIf="showTabsButton"></app-next-and-previus-buttons> -->
-    <!-- <div class="form-actions mt-auto" *ngIf="showTabsButton">
-
-   <div class="tab-data-section-title-subtitle">
-      <h6 class="title">
-        <button class="btn btn-link" (click)="addItemToList()">
-          <span class="material-icons-outlined">add_circle_outline</span>
-          {{localization.saveItem}}
-        </button>
-      </h6>
-    </div> -->
-    <!-- <div class="tab-data-section">
-      <div class="row mb-3">
-        <div class="col-12 col-lg-12">
-          <div class="col-12 col-lg-12">
-            <div class="form-check form-check-inline">
-              <input type="checkbox" [(ngModel)]="licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.quantitiesTableAcknowledgment"
-                id="beneficiaryContractFormApproval" class="form-check-input" />
-              <label for="beneficiaryContractFormApproval" class="form-check-label">
-                <a (click)="openDialog()"> الموافقه على اقرار جدول الكميات </a>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <app-next-and-previus-buttons *ngIf="showTabsButton"></app-next-and-previus-buttons>
-    <!-- <div class="form-actions mt-auto" *ngIf="showTabsButton">
-      <button class="btn btn-outline-primary" (click)="back()">{{localization.previous}}</button>
-
-      <button class="btn btn-outline-primary" (click)="save(true)">{{localization.next}}</button>
-    </div>  -->
   </div>
 </ng-container>

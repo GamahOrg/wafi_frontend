@@ -1,0 +1,154 @@
+<form
+  class="d-flex flex-column h-100"
+  [formGroup]="
+    licenseProjectEngineeringNonConformityReportForm
+  "
+  id="form-licenseProjectEngineeringNonConformityReportForm"
+>
+  <div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+      <div
+        class="tab-data-section"
+      >
+        <div class="row mb-3">
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                  <label class="form-label"
+                    >عدد تقارير عدم المطابقة المغلقة - منذ فترة التقرير</label
+                  >
+                  <input
+                    type="number"
+                    id="control-noOfClosed"
+                    class="form-control"
+                    formControlName="noOfClosed"
+                    placeholder="عدد تقارير عدم المطابقة المغلقة - منذ فترة التقرير"
+                  />
+                  <div
+                    class="invalid-feedback d-block"
+                    *ngIf="
+                      controls.noOfClosed?.hasError(
+                        'required'
+                      ) && showValidation
+                    "
+                  >
+                    حقل مطلوب
+                  </div>
+                </div>
+              </div>
+          <div
+            class="col-12 col-lg-6"
+          >
+            <div class="key">
+                عدد تقارير عدم المطابقة المغلقة – تراكمي منذ بدايه المشروع
+            </div>
+            <div class="value">
+              {{
+                licenseProjectEngineeringNonConformityReport?.noOfClosedSinceStartProjecct
+              }}
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label"
+                >عدد تقارير عدم المطابقة المفتوحة</label
+              >
+              <input
+                type="number"
+                id="control-noOfOpened"
+                class="form-control"
+                formControlName="noOfOpened"
+                placeholder="عدد تقارير عدم المطابقة المفتوحة"
+              />
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  controls.noOfOpened?.hasError(
+                    'required'
+                  ) && showValidation
+                "
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-12 col-lg-6"
+          >
+            <div class="key">
+                عدد تقارير عدم المطابقة المفتوحة – تراكمي منذ بدايه المشروع
+            </div>
+            <div class="value">
+              {{
+                licenseProjectEngineeringNonConformityReport?.noOfOpenedSinceStartProjecct
+              }}
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label"
+                >عدد تقارير عدم المطابقة تحت المراجعة</label
+              >
+              <input
+                type="number"
+                id="control-noOfUnderReview"
+                class="form-control"
+                formControlName="noOfUnderReview"
+                placeholder="عدد تقارير عدم المطابقة تحت المراجعة "
+              />
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  controls.noOfUnderReview?.hasError(
+                    'required'
+                  ) && showValidation
+                "
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+          <div
+          class="col-12 col-lg-6"
+        >
+          <div class="key">
+            عدد تقارير عدم المطابقة  تحت المراجعة – تراكمي منذ بدايه المشروع
+          </div>
+          <div class="value">
+            {{
+              licenseProjectEngineeringNonConformityReport?.noOfUnderReviewSinceStartProjecct
+            }}
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label"
+                >الملاحظات</label
+              >
+              <textarea 
+                type="text"
+                id="control-notes"
+                class="form-control"
+                formControlName="notes"
+                placeholder="الملاحظات"
+              ></textarea>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  controls.notes?.hasError(
+                    'required'
+                  ) && showValidation
+                "
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+

@@ -48,7 +48,6 @@ export class LicenseProjectExchangeDocumentListComponent {
   getExchangeDocumentOnProject(): void {
     this.subscriptions.push(
       this._licenseProjectExchangeDocumentService.getExchangeDocumentOnProject(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseProjectExchangeDocumentPagingDto[]> | null) => {
-        
         this.updateRequestList(res as Pagination<LicenseProjectExchangeDocumentPagingDto[]>);
       })
     )

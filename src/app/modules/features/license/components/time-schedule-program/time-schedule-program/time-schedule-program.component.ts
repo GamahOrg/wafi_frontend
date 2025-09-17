@@ -5,7 +5,7 @@ import { SharedLicenseProjectService } from '../../../services/sharedLicenseProj
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
 import { statues } from 'src/app/core/models/enums/statues';
 import { Subscription } from 'rxjs';
-import { FilesData } from '../../../dataModels/filesdata/filesdata.model';
+import { LicenseTimelineProgramDto } from '../../../dataModels/filesdata/filesdata.model';
 import { Pagination, pagination } from 'src/app/shared/models/pagination.model';
 import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 import { AddTimelineFilesComponent } from '../../add-timeline-files/add-timeline-files.component';
@@ -21,7 +21,7 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
   date! : string ;
   statuesCode = statues
   licenseProjectId!: string | null
-  mainfileShecduleData!: FilesData
+  mainfileShecduleData!: LicenseTimelineProgramDto
   newPageNo: number = 1;
   pagintationData: pagination = {
     currentPage: 1,
@@ -29,14 +29,13 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
     pageSize: 10,
     totalCount: 0,
   };
-  MonthlyfileShecduleData: Pagination<FilesData[]> = {} as Pagination<FilesData[]>;
-  monthlytimeschecduledprogram : FilesData[] = [];
+  MonthlyfileShecduleData: Pagination<LicenseTimelineProgramDto[]> = {} as Pagination<LicenseTimelineProgramDto[]>;
+  monthlytimeschecduledprogram : LicenseTimelineProgramDto[] = [];
+  
   constructor(private _popupService: PopupService,
     private _timelinefilesService: TimelinefilesService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-    private _paginationService: PaginationService) {
-
-  }
+    private _paginationService: PaginationService) { }
 
   ngOnInit(): void {
     this.getLicenseProjectIdStorage()
@@ -44,15 +43,12 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
     this.observesubmitSuccessfullyEventEmitter()
   }
 
-
   dateFormat(scheduleDate: string | null) { 
-     
-    if(scheduleDate){
+    if(scheduleDate)
       this.date = new Intl.DateTimeFormat('AR-EG', { month: 'long', year: 'numeric' }).format(new Date(scheduleDate));
-    }
+
     return this.date; 
   }
-
 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
@@ -60,18 +56,15 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
       this.getMainLicenseProjectTimeScheduleByID()
       this.GetLicenseProjectTimeSchedule()
     }
-
   }
 
 
   getMainLicenseProjectTimeScheduleByID() {
     this.subscriptions.push(
       this._timelinefilesService.GetMainLicenseProjectTimeSchedule(this.licenseProjectId).subscribe(res => {
-        if (res) {
+        if (res) 
           this.mainfileShecduleData = res
-        }
       })
-
     )
   }
 
@@ -79,16 +72,15 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
   GetLicenseProjectTimeSchedule() {
     this.subscriptions.push(
       this._timelinefilesService.GetLicenseProjectTimeSchedules(this.licenseProjectId, this.pagintationData.currentPage, this.pagintationData.pageSize)
-        .subscribe(
-          (res) => {
-            this.updateRequestList(res as Pagination<FilesData[]>)
+        .subscribe((res) => {
+            this.updateRequestList(res as Pagination<LicenseTimelineProgramDto[]>)
           }
         )
     )
   }
 
 
-  private updateRequestList(TypeListView: Pagination<FilesData[]>): void {
+  private updateRequestList(TypeListView: Pagination<LicenseTimelineProgramDto[]>): void {
     this.MonthlyfileShecduleData = TypeListView;
     this.setPaginationData(
       this.MonthlyfileShecduleData.pageSize,
@@ -110,7 +102,6 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
     this.watchPaginationClicked();
   }
 
-
   private watchPagechanged(): void {
     this.subscriptions.push(
       this._paginationService.getPageChanged().subscribe((pageNo) => {
@@ -118,7 +109,6 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
       })
     )
   }
-
 
   private watchPaginationClicked(): void {
     this.subscriptions.push(
@@ -140,21 +130,19 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._timelinefilesService.submitSuccessfullyEventEmitter.subscribe(timeLineId => {
         this.getLicenseProjectIdStorage()
-      }));
+      })
+    );
   }
-
 
   public getTimeShecduledDetails(id: string) {
     this._timelinefilesService.showtimelineDetails.emit(id)
   }
 
   updateTimeSchedule(showDate : boolean) {
-    this._timelinefilesService.updateTimeShecduledData({} as FilesData);
+    this._timelinefilesService.updateTimeShecduledData({} as LicenseTimelineProgramDto);
     this._timelinefilesService.showDate = showDate
     this.openDialog();
   }
-
-  
 
   openDialog() {
     let popupData: PopupData = {
@@ -181,7 +169,6 @@ export class TimeScheduleProgramComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-
   }
 
 }

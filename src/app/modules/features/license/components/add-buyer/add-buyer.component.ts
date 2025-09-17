@@ -253,7 +253,6 @@ export class AddBuyerComponent {
         //نسبة الإشراف والمتابعة
         this.licenseProjectBuyerForm.controls.percentageSupervisionOrFees.setValue(ratio);
         //نسبة الإشراف والمتابع من بد المشروع
-        debugger
        // let secondDate = new Date();
        //new Date(this.licenseProjectBuyerSettingDto?.startProjectDate)
         // if (this.controls.deliveryDate.value != null && this.controls.deliveryDate.value != '') {

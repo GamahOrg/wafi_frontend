@@ -172,7 +172,7 @@ export class AddEditConstructionWorkPositionComponent {
         item.monthlyPlannedCompletionPercentage == null ||
         item.monthlyPlannedCompletionPercentage == 0
       )
-        constructionWorkStatusCompletionRate = 0;
+        constructionWorkStatusCompletionRate = this.constructionWorkStatusCompletionRate as number;
       if (currentIndex == 0) {
         let firstObj = constructionWorkStatusDtoList[currentIndex];
         firstObj.cumulativeplannedcompletionpercentage =
@@ -215,7 +215,7 @@ export class AddEditConstructionWorkPositionComponent {
       })
     );
   }
-
+ 
   private observeFormArr() {
     this.licenseProjectEngineeringConstructionWorkStatusFormArr.valueChanges.subscribe(
       (Arr) => {
@@ -236,14 +236,27 @@ export class AddEditConstructionWorkPositionComponent {
                 (item.monthlyPlannedCompletionPercentage as number) +
                 (lastValue.cumulativeplannedcompletionpercentage as number);
             }
+
             this.licenseProjectEngineeringConstructionWorkStatusFormArr
               .at(currentIndex)
               .patchValue(newValue, { emitEvent: false });
+
+            for (let i = currentIndex + 1; i < Arr.length; i++) {
+              Arr[i].cumulativeplannedcompletionpercentage = 
+                (Arr[i].monthlyPlannedCompletionPercentage as number) + 
+                (item.cumulativeplannedcompletionpercentage as number);
+
+              this.licenseProjectEngineeringConstructionWorkStatusFormArr
+              .at(i)
+              .patchValue(Arr[i], { emitEvent: false });
+            }
+            
           }
         });
       }
     );
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

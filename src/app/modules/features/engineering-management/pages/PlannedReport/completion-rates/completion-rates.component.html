@@ -1,0 +1,61 @@
+<div class="row mb-3" [formGroup]="compelationRateForm">
+    <div class="col-12 col-lg-3">
+        <div class="form-group mb-4">
+            <label class="form-label">{{localization.endDate}}</label>
+            <div class="input-group">
+                <input bsDatepicker type="text" class="form-control" formControlName="plannedEndDate"  
+                 [readonly]="isUpdated ? false : 'readonly'"/>
+                <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="compelationRateForm.controls['plannedEndDate'].errors?.['required']">
+                {{localization.required}}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <label class="form-label"> {{localization.year}} </label>
+
+        <select class="form-select" [value]="currentYear" (change)="onChangeYear($event)">
+            <option  disabled>اختر السنة</option>
+
+            <option *ngFor="let item of years" [value]="item">
+                {{ item }}
+            </option>
+        </select>
+    </div>
+    <div class="table-responsive" *ngIf="ProjectZonesBlockesDetails &&   showRateFlag">
+
+        <table class="table table-light" style="width:100%">
+
+            <tbody formArrayName="licenseProjectEngineeringProjectZonesBlocksDetails">
+                <tr>
+                    <th>{{localization.month}} :</th>
+                    <td
+                        *ngFor="let unitDetail of ProjectZonesBlockesDetails.licenseProjectEngineeringProjectZonesBlocksDetails">
+                        {{unitDetail.month}} </td>
+                </tr>
+                <tr>
+                    <th>{{localization.monthlyPercentage}}  : </th>
+                    <td *ngFor="let unitDetail of licenseProjectEngineeringProjectZonesBlocksDetails.controls; let i = index" [formGroupName]="i">
+                       <div class="form-group d-flex align-items-center">
+                        <input id="control-username" class="form-control"
+                        formControlName="monthlyPlannedCompletionPercentage" id="username" type="number"
+                         (input)="onMonthlyPercentageKeyUp(i)" [readonly]="isUpdated ? false : 'readonly'" />
+                    <span class="mx-1">%</span>
+                       </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{localization.accumulativePercentage}} :</th>
+                    <td *ngFor="let unitDetail of licenseProjectEngineeringProjectZonesBlocksDetails.controls; let i = index" [formGroupName]="i">
+                       <div class="form-group d-flex align-items-center">
+                        <input id="control-username" class="form-control" id="username" readonly="readonly"
+                            formControlName="accumulativePercentage" />
+                            <span class="mx-1">%</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -39,7 +39,7 @@
                         </div>
                     </td>
                    <td>
-                        <span class="text-dark">
+                        <span *ngIf="comdata.contractFile" class="text-dark">
                             <a
                             [href]="baseUrl + comdata.contractFile.filePath"
                             id="link-contractFile"

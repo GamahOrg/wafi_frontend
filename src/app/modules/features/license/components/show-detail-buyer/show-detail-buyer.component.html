@@ -131,9 +131,44 @@
       *ngIf="userType != '0' && licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
       <div class="form-group mb-4">
         <label class="form-label">الأشراف والمتابعة منذ بداية المشروع</label>
-        {{licenseProjectBuyer.supervisionFromProjectBeginning}}
+        {{licenseProjectBuyer.supervisionFollowupFromDateOfSale}}
       </div>
     </div>
+    
+
+
+    <div class="col-12 col-lg-6"
+      *ngIf="userType != '0' && licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
+      <div class="form-group mb-4">
+        <label class="form-label">نسبة انجاز الوحدة</label>
+        {{licenseProjectBuyer.unitCompletionRate}}
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6"
+      *ngIf="userType != '0' && licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
+      <div class="form-group mb-4">
+        <label class="form-label">المبالغ المحصلة</label>
+        {{licenseProjectBuyer.amountsCollected}}
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6"
+      *ngIf="userType != '0' && licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
+      <div class="form-group mb-4">
+        <label class="form-label">نسبة المبالغ المحصلة</label>
+        {{licenseProjectBuyer.percentageOfAmountsCollected}}
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6"
+      *ngIf="userType != '0' && licenseProjectBuyer.licenseProjectBuyerTypeId==licenseProjectBuyerTypeEnum.Units">
+      <div class="form-group mb-4">
+        <label class="form-label">المبالغ المتبقية</label>
+        {{licenseProjectBuyer.remainingAmounts}}
+      </div>
+    </div>
+    
     <div class="col-12 col-lg-6">
       <div class="form-group mb-4">
         <label class="form-label">ملف العقد</label>

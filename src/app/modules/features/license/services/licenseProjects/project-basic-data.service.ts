@@ -8,6 +8,7 @@ import { DropDownNameDto, DropDownSubUnitTypeDto } from '../../dataModels/drop-d
 import { ExternalProjectDataDto,ExternalProjectDataCreateUpdateDto, ProjectDocumentDataDto, ProjectDocumentDataCreateUpdateDto } from '../../models/external-project-data-dto';
 import { BankingAccountDto } from '../../dataModels/banking-account-dto';
 import { ProjectCategoryDto } from '../../../facilities/dataModels/qualificationTechnicalCapabilitiesRequirement.model';
+import { LicenseNatureTypeListDto } from '../../models/license-nature-type-list-dto';
 
 @Injectable()
 export class ProjectBasicDataService {
@@ -24,7 +25,16 @@ export class ProjectBasicDataService {
           map((res: any) => {
             return res.data as BankingAccountDto;
           })
-        )
+        );
+    }
+    GetLicenseNatureType(): Observable<LicenseNatureTypeListDto[]> {
+      return this._httpClient
+        .get<CoreResponseDTO<LicenseNatureTypeListDto[]>>(`${Configuration.APIs.SysLicenseNatureType.GetAll}`)
+        .pipe(
+          map((res: CoreResponseDTO<LicenseNatureTypeListDto[]>) => {
+            return res.data as LicenseNatureTypeListDto[];
+          })
+        );
     }
     GetProjectDocumentDataByLicenseProjectId(licenseProjectId: string): Observable<ProjectDocumentDataDto> {
       return this._httpClient.get(`${Configuration.APIs.LicenseProject.GetProjectDocumentDataByLicenseProjectId}/${licenseProjectId}`).pipe(

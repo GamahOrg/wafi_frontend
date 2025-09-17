@@ -1,0 +1,198 @@
+<form
+  class="d-flex flex-column h-100"
+  [formGroup]="
+    licenseProjectEngineeringSupervisionActualReportQualityAndBusinessForm
+  "
+  id="form-licenseProjectEngineeringSupervisionActualReportForm"
+>
+  <h3 class="title">{{ "خطة الجودة" }}</h3>
+  <div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+      <div
+        class="tab-data-section"
+        *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance"
+      >
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="" class="form-label">موقف خطة ادارة الجودة</label>
+              <select
+                class="form-select"
+                formControlName="qualityManagementPlanStatusId"
+              >
+                <option label="اختار موقف خطة ادارة الجودة" disabled></option>
+                <option
+                  *ngFor="let status of licenseProjectQualityStatusList"
+                  [value]="status.id"
+                >
+                  {{ status.statusName }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="controls.qualityManagementPlanStatusId.errors?.['required'] && showValidation"
+                >حقل مطلوب</mat-error
+              >
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="" class="form-label"
+                >إجراءات ونماذج ادارة الجودة</label
+              >
+              <select
+                class="form-select"
+                formControlName="qualityManagementProceduresAndModelsId"
+              >
+                <option
+                  label="اختار إجراءات ونماذج ادارة الجودة"
+                  disabled
+                ></option>
+                <option
+                  *ngFor="let status of licenseProjectQualityStatusList"
+                  [value]="status.id"
+                >
+                  {{ status.statusName }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="controls.qualityManagementProceduresAndModelsId.errors?.['required'] && showValidation"
+                >حقل مطلوب</mat-error
+              >
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="" class="form-label">خطة الفحص والاختبار</label>
+              <select
+                class="form-select"
+                formControlName="examinationAndTestPlanId"
+              >
+                <option label="اختار خطة الفحص والاختبار" disabled></option>
+                <option
+                  *ngFor="let status of licenseProjectQualityStatusList"
+                  [value]="status.id"
+                >
+                  {{ status.statusName }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="controls.examinationAndTestPlanId.errors?.['required'] && showValidation"
+                >حقل مطلوب</mat-error
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="title">{{ "ضمان الجودة" }}</h3>
+  <div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+      <div
+        class="tab-data-section"
+        *ngIf="licenseProjectEngineeringActualQualityPlanAndAssurance"
+      >
+        <div class="row mb-3">
+          <div
+            class="col-12 col-lg-6"
+            *ngIf="
+              licenseProjectEngineeringActualQualityPlanAndAssurance.monthlyConsultantEngineerStaffAccordingPlan
+            "
+          >
+            <div class="key">
+              كادر الاستشاري الشهري حسب خطة التواجد (مهندسين)
+            </div>
+            <div class="value">
+              {{
+                licenseProjectEngineeringActualQualityPlanAndAssurance.monthlyConsultantEngineerStaffAccordingPlan
+              }}
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label"
+                >كادر الاستشاري الشهري حسب خطة التواجد (مهندسين) الفعلى</label
+              >
+              <input
+                type="number"
+                id="control-actualMonthlyConsultantEngineerStaffAccordingPlan"
+                class="form-control"
+                formControlName="actualMonthlyConsultantEngineerStaffAccordingPlan"
+                placeholder="كادر الاستشاري الشهري حسب خطة التواجد (مهندسين) الفعلى"
+              />
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  controls.actualMonthlyConsultantEngineerStaffAccordingPlan?.hasError(
+                    'required'
+                  ) && showValidation
+                "
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-12 col-lg-6"
+            *ngIf="
+              licenseProjectEngineeringActualQualityPlanAndAssurance.monthlyConsultantInspectorStaffAccordingPlan
+            "
+          >
+            <div class="key">
+              كادر الاستشاري الشهري حسب خطة التواجد (مفتشين)
+            </div>
+            <div class="value">
+              {{
+                licenseProjectEngineeringActualQualityPlanAndAssurance.monthlyConsultantInspectorStaffAccordingPlan
+              }}
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label"
+                >كادر الاستشاري الشهري حسب خطة التواجد (مفتشين) الفعلى</label
+              >
+              <input
+                type="number"
+                id="control-actualMonthlyConsultantInspectorStaffAccordingPlan"
+                class="form-control"
+                formControlName="actualMonthlyConsultantInspectorStaffAccordingPlan"
+                placeholder="كادر الاستشاري الشهري حسب خطة التواجد (مفتشين) الفعلى"
+              />
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  controls.actualMonthlyConsultantInspectorStaffAccordingPlan?.hasError(
+                    'required'
+                  ) && showValidation
+                "
+              >
+                حقل مطلوب
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="" class="form-label">خطوات التنفيذ</label>
+              <select class="form-select" formControlName="methodStatementsId">
+                <option label="اختار خطوات التنفيذ" disabled></option>
+                <option
+                  *ngFor="let status of licenseProjectQualityStatusList"
+                  [value]="status.id"
+                >
+                  {{ status.statusName }}
+                </option>
+              </select>
+              <mat-error
+                *ngIf="controls.methodStatementsId.errors?.['required'] && showValidation"
+                >حقل مطلوب</mat-error
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

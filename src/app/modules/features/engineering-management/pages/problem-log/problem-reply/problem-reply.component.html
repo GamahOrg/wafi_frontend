@@ -1,0 +1,41 @@
+<div class="recommendation-reply-container">
+    <div class="form-header">
+      <h3>إضافة رد على التوصية</h3>
+    </div>
+  
+    <form [formGroup]="replyForm" (ngSubmit)="onSubmit()" class="reply-form">
+      <div class="form-group">
+        <label for="notes" class="form-label">{{ localization.notes }}</label>
+        <textarea
+          id="notes"
+          formControlName="notes"
+          class="form-control"
+          rows="5"
+          placeholder="أدخل الملاحظات هنا..."
+          [class.is-invalid]="replyForm.get('notes')?.invalid && replyForm.get('notes')?.touched">
+        </textarea>
+        <div class="invalid-feedback" *ngIf="replyForm.get('notes')?.invalid && replyForm.get('notes')?.touched">
+          {{ getErrorMessage('notes') }}
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="replyForm.invalid || isLoading">
+          <span *ngIf="!isLoading">{{ localization.submit }}</span>
+          <span *ngIf="isLoading">{{ localization.loading }}</span>
+        </button>
+        
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onCancel()"
+          [disabled]="isLoading">
+          {{ localization.cancel }}
+        </button>
+      </div>
+    </form>
+  </div>
+  

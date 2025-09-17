@@ -1,0 +1,83 @@
+<div class="card com-reg-card position-relative z-2">
+    <div class="card-body">
+        <div class="tab-data-section" *ngIf="licenseProjectEngineeringStatusOfFundsRequiredFromEntities">
+            <div class="row mb-3">
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        نوع الخدمة جهة الاعتماد
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringStatusOfFundsRequiredFromEntities?.serviceType?.name
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        حالة الاعتماد /الموافقة
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringStatusOfFundsRequiredFromEntities?.accreditationStatus?.name
+                        }}
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        تاريخ أول تقديم
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringStatusOfFundsRequiredFromEntities?.firstSubmissionDate
+                        | date:'yyyy-MM-dd'
+                        }}
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        تاريخ اخر تقديم
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringStatusOfFundsRequiredFromEntities?.lastSubmissionDate
+                        | date:'yyyy-MM-dd'
+                        }}
+                    </div>
+                </div>
+                <div class="col-6 col-md-6"
+                    *ngIf="licenseProjectEngineeringStatusOfFundsRequiredFromEntities.finalApprovalDate">
+                    <div class="key">
+                        تاريخ الاعتماد النهائى
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringStatusOfFundsRequiredFromEntities?.finalApprovalDate
+                        | date:'yyyy-MM-dd'
+                        }}
+                    </div>
+                </div>
+
+
+                <div class="col-6 col-md-6">
+                    <div class="key">
+                        ملاحظات
+                    </div>
+                    <div class="value">
+                        {{
+                        licenseProjectEngineeringStatusOfFundsRequiredFromEntities.notes
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

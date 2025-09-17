@@ -7,7 +7,9 @@ export class LicenseProjectQuantitiesTableFileAndRelativeWeightDto {
 }
 export class LicenseProjectRelativeWeightDto {
     id: string = "";
+    elementName: string = '';
     elementValue: number = 0;
+    modifiedRelativeWeight:number = 0;
     licenseProjectId: string = "";
     licenseRelativeWeightId: string = "";
     modifiedReferenceWeight: number = 0;
@@ -18,4 +20,8 @@ export class LicenseProjectRelativeWeightDto {
     elementName: string = "";
     order: number = 0;
     referenceWeight: number = 0;
+    evaluateEquationTo100?: boolean = false;
+    maximumAllowedVariancePercentage: number = 0;
+    minimumValue:number = 0;
+    maximumValue:number = 0;
   }

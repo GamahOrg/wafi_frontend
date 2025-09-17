@@ -5,7 +5,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { PeriodicCharteredAccountantReportPagingListDto, PeriodicCharteredAccountantReportQuarterTypeDto, PeriodicCharteredAccountantReportTypeDto } from '../models/periodic-chartered-accountant-report-paging-list-dto';
 import { Pagination } from 'src/app/shared/models/pagination.model';
-import { PeriodicCharteredAccountantReportDetailsDto } from '../models/periodic-chartered-accountant-report-details-dto';
+import { PeriodicCharteredAccountantReportDetailsDto, SysDepositTypeDto } from '../models/periodic-chartered-accountant-report-details-dto';
 import { FilterDto, PeriodicCharteredAccountantReportCreateUpdateDto, PeriodicCharteredAccountantReportDto } from '../dataModels/periodic-chartered-accountant-report-dto';
 
 @Injectable()
@@ -38,15 +38,22 @@ export class PeriodicCharteredAccountantReportService {
       )
   }
 
-  GetPeriodicCharteredAccountantReportDetail(
-    id: string,
-  ):  Observable<PeriodicCharteredAccountantReportDetailsDto> {
+  GetPeriodicCharteredAccountantReportDetail(id: string): Observable<PeriodicCharteredAccountantReportDetailsDto> {
     return this._httpClient.get<CoreResponseDTO<PeriodicCharteredAccountantReportDetailsDto>>(`${Configuration.APIs.PeriodCharteredAccountantReport.GetPeriodicCharteredAccountantReportDetail}/${id}`).pipe(
         map((res: CoreResponseDTO<PeriodicCharteredAccountantReportDetailsDto>) => {
           return res.data as PeriodicCharteredAccountantReportDetailsDto
         })
       )
   }
+
+  GetSysDepositType(): Observable<SysDepositTypeDto[]> {
+    return this._httpClient.get<CoreResponseDTO<SysDepositTypeDto[]>>(`${Configuration.APIs.PeriodCharteredAccountantReport.GetSysDepositType}`).pipe(
+        map((res: CoreResponseDTO<SysDepositTypeDto[]>) => {
+          return res.data as SysDepositTypeDto[]
+        })
+    )
+  }
+
   CreateExcel(id: string): Observable<any | null> {
     return this._httpClient.get(`${Configuration.APIs.PeriodCharteredAccountantReport.CreateExcel}/${id}`,
       {

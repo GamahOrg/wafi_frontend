@@ -1,0 +1,392 @@
+<form class="d-flex flex-column h-100" [formGroup]="licenseProjectEngineeringSupervisionActualReportForm"
+id="form-licenseProjectEngineeringSupervisionActualReportForm">
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+    <h3 class="title">{{'معلومات المشروع '}}</h3>
+<div class="tab-data-section">
+    <div class="row mb-3">
+        <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+            <div class="key">اسم المشروع</div>
+            <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.name}}</div>
+        </div>
+      
+        <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+            <div class="key">كود المشروع</div>
+            <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.projectCode}}</div>
+        </div>
+         
+        <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails && 
+                                      licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses && 
+                                      licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses.length !=0 && 
+                                      licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].cities">
+            <div class="key"> المدينة</div>
+            <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].cities.cityName}}</div>
+        </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails && 
+                                licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses && 
+                                licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses.length !=0 ">
+    <div class="key"> القطاع</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].neighborhoodName}}</div>
+  </div>
+  <div class="col-12 col-lg-6"  *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key"> اسم المطور</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.developerName}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key"> الاستشاري الهندسي</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.engineeringConsultantName}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key"> مساحه الأرض</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.landTotalSpace}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key"> مدير المشروع</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.projectManagerCustomerName}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key">المقاولون</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.contractor}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key">التكلفه الانشائية المتوقعة</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.expectedConstructionCost}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key">القاول</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.infrastructureContractor}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key">عدد الزونات</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.zonesCount}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key">عدد الوحدات</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.uniteCount}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key">عدد البلوكات</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.blockCount}}</div>
+  </div>
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+    <div class="key">عدد العمائر</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.buildingsCount}}</div>
+  </div>
+  
+
+    </div>
+</div> 
+</div>
+</div>
+<hr>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+<h3 class="title">{{' البرنامج الزمني '}}</h3>
+  <div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="row mb-3">
+
+
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="key">تاريخ بداية المشروع التعاقدي</div>
+ <div class="value">{{ licenseProjectEngineeringActualReportMonthDetails.contractualStartDate | date:'yyyy-MM-dd' }}</div>
+</div>
+
+
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="key">تاريخ نهاية المشروع التعاقدي</div>
+ <div class="value">{{ licenseProjectEngineeringActualReportMonthDetails.contractualFinishDate | date:'yyyy-MM-dd' }}</div>
+</div>
+
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="key"> مدة المشروع التعاقدي</div>
+ <div class="value">{{ licenseProjectEngineeringActualReportMonthDetails.monthsCount }}</div>
+</div>
+
+<div class="col-12 col-lg-6">
+ <div class="form-group mb-4">
+   <label class="form-label">التمديد المعتمد (يوم)</label>
+   <input type="number" id="control-approvedExtensionPerDay" class="form-control" formControlName="approvedExtensionPerDay"
+     placeholder="التمديد المعتمد (يوم)">
+   <div class="invalid-feedback d-block" *ngIf="controls.approvedExtensionPerDay?.hasError('required') && showValidation">
+     حقل مطلوب
+   </div>
+ </div>
+</div> 
+</div>
+</div>
+
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj">
+ <div class="key">تاريخ النهاية التعاقدي المعدل بناء على التمديد المعتمد</div>
+ <div class="value">{{ licenseProjectEngineeringSupervisionActualMonthReportDetailObj.contractualEndDateAdjustedBasedOnApprovedExtension | date:'yyyy-MM-dd' }}</div>
+</div> 
+
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj && licenseProjectEngineeringSupervisionActualMonthReportDetailObj.actualStartDate">
+ <div class="key"> تاريخ بداية الفعلى</div>
+ <div class="value">{{ licenseProjectEngineeringSupervisionActualMonthReportDetailObj.actualStartDate | date:'yyyy-MM-dd' }}</div>
+</div>
+
+
+
+<div class="col-12 col-lg-6">
+  <div class="form-group mb-4">
+      <label class="form-label">تاريخ النهاية المتوقع من تحديث البرنامج الزمني </label>
+      <div class="input-group">
+          <input bsDatepicker
+                 type="text" id="control-expectedEndDateFromTimelineUpdate"
+                 class="form-control"
+                 formControlName="expectedEndDateFromTimelineUpdate"
+                 value="{{ controls.expectedEndDateFromTimelineUpdate.value | date:'yyyy-MM-dd' }}">
+          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+      </div>
+      <mat-error *ngIf="controls.expectedEndDateFromTimelineUpdate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+  </div>
+</div>
+ </div>
+ </div> 
+
+ <hr>
+<h3 class="title">{{'نسب الأنجاز '}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+<div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="row mb-3">
+
+
+ 
+ <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj">
+ <div class="key">الشهر</div>
+ <div class="value">{{ licenseProjectEngineeringSupervisionActualMonthReportDetailObj.monthName}}</div>
+</div> 
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj">
+ <div class="key">نسبة الانجاز المخططة الشهرية</div>
+ <div class="value">{{ licenseProjectEngineeringSupervisionActualMonthReportDetailObj.projectMonthlyPlannedCompletionRate}}</div>
+</div>
+
+ <div class="col-12 col-lg-6">
+  <div class="form-group mb-4">
+    <label class="form-label">نسبة الانجاز المخططة الفعلىة</label>
+    <input (change)="reEvaluateCPI();reEvaluateTimePerofamanceRate();" type="number" id="control-projectMonthlyActualCompletionRate" class="form-control" formControlName="projectMonthlyActualCompletionRate"
+      placeholder="نسبة الانجاز المخططة الفعلىة ">
+    <div class="invalid-feedback d-block" *ngIf="controls.projectMonthlyActualCompletionRate?.hasError('required') && showValidation">
+      حقل مطلوب
+    </div>
+
+  </div>
+</div> 
+<div class="col-12 col-lg-6" *ngIf="actualAchievementMemorial">
+ <div class="key">التباين</div>
+ <div class="value">{{actualAchievementMemorial}}</div>
+</div>
+
+<div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj">
+  <div class="key">نسبة الانجاز المخططة التراكمية</div>
+  <div class="value">{{ licenseProjectEngineeringActualReportMonthDetails.cumulativeAmountPriorToThatMonth}}</div>
+ </div>
+ <div class="col-12 col-lg-6" *ngIf="cumulativeActualAchievementRates">
+  <div class="key">نسب الإنجاز الفعلىة التراكمية</div>
+  <div class="value">{{cumulativeActualAchievementRates}}</div>
+ </div>
+
+ <div class="col-12 col-lg-6" *ngIf="cumulativeInsurance">
+  <div class="key">التباين</div>
+  <div class="value">{{cumulativeInsurance}}</div>
+ </div> 
+
+ 
+ <div class="col-12 col-lg-6" *ngIf="delayByDay">
+  <div class="key">التأخير(اليوم)</div>
+  <div class="value">{{delayByDay}}</div>
+ </div> 
+
+ </div>
+</div> 
+</div>
+</div>
+<hr>
+<h3 class="title">{{'التكاليف الانشائية المعتمدة'}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+<div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="row mb-3">
+ <div class="col-12 col-lg-6">
+  <div class="form-group mb-4">
+    <label class="form-label">التكلفة الفعلية خلال الشهر (ريال سعودي)</label>
+    <input type="number" (change)="reEvaluateCPI()" id="control-actualMonthCost" class="form-control" formControlName="actualMonthCost" placeholder="التكلفة الفعلىة خلال الشهر (ريال سعودي)">
+    <div class="invalid-feedback d-block" *ngIf="controls.actualMonthCost?.hasError('required') && showValidation">
+      حقل مطلوب
+    </div>
+  </div>
+</div>
+<div class="col-12 col-lg-6">
+  <div class="key">التكلفة المتوقعة خلال الشهر (ريال سعودي)</div>
+  <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectEngineeringSupervisionActualMonthReportDetails.projectMonthlyPlannedMonthCost}}</div>
+</div>
+
+ <div class="col-12 col-lg-6">
+  <div class="key" >إجمالي التكلفة الفعلىة حتى تاريخه (ريال سعودي)</div>
+  <div class="value">{{totalActualCostToDate}}</div>
+ </div>
+
+<div class="col-12 col-lg-6">
+  <div class="key" >إجمالي التكلفة الفعلىة حتى تاريخه (ريال سعودي)</div>
+  <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectEngineeringSupervisionActualMonthReportDetails.totalPlannedCostToDate}}</div>
+ </div>
+
+ </div>
+</div> 
+</div>
+</div>
+<hr>
+<h3 class="title">{{'معدلات الأداء'}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+<div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="row mb-3">
+
+ <div class="col-12 col-lg-6" *ngIf="SPI">
+  <div class="key"> معدل الأداء الزمني</div>
+  <div class="value">{{SPI}}</div>
+ </div>
+ <div class="col-12 col-lg-6" *ngIf="CPI">
+  <div class="key"> معدل الأداء المالي</div>
+  <div class="value">{{CPI}}</div>
+ </div>
+ <div class="col-12 col-lg-6" *ngIf="projectTimelineStatus" >
+  <div class="key"> حالة المشروع الزمني</div>
+  <div class="value" [ngClass]="projectTimelineStatusColor">{{projectTimelineStatus}}</div>
+ </div>
+
+ <div class="col-12 col-lg-6" *ngIf="financialProjectStatus">
+  <div class="key"> حالة المشروع المالي</div>
+  <div class="value" [ngClass]="financialProjectStatusColor">{{financialProjectStatus}}</div>
+ </div>
+ </div>
+</div>
+</div>
+</div>
+<hr>
+<h3 class="title">{{'العمالة'}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+<div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="row mb-3">
+
+
+  <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj">
+    <div class="key">إجمالي عدد العمالة المخطط للشهر</div>
+    <div class="value">{{ licenseProjectEngineeringSupervisionActualMonthReportDetailObj.monthlyTotalPlannedEmployees}}</div>
+   </div> 
+ <div class="col-12 col-lg-6">
+  <div class="form-group mb-4">
+    <label class="form-label">متوسط عدد العمالة الفعلى للشهر</label>
+    <input type="number" id="control-monthlyTotalActualEmployees" class="form-control" formControlName="monthlyTotalActualEmployees"
+      placeholder="متوسط عدد العمالة الفعلى للشهر">
+    <div class="invalid-feedback d-block" *ngIf="controls.monthlyTotalActualEmployees?.hasError('required') && showValidation">
+      حقل مطلوب
+    </div>
+
+  </div>
+</div>
+ <div class="col-12 col-lg-6" *ngIf="laborMemorial">
+  <div class="key" >التباين</div>
+  <div class="value">{{laborMemorial}}</div>
+ </div>
+
+ </div>
+</div> 
+
+</div>
+</div>
+<hr>
+<h3 class="title">{{'ملاحظات  '}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+<div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="row mb-3">
+ 
+ <div class="col-12 col-lg-6">
+  <div class="form-group mb-4">
+    <label class="form-label">أسباب التأخير (أن وجد)</label>
+    <textarea type="text" id="control-delayReasons" class="form-control" formControlName="delayReasons"
+      placeholder="أسباب التأخير (أن وجد)"></textarea>
+
+  </div>
+</div>
+</div>
+</div>
+
+
+ </div>
+</div> 
+<hr>
+<h3 class="title">{{'المرفقات'}}</h3>
+<div class="card com-reg-card position-relative z-2">
+  <div class="card-body">
+<div class="tab-data-section" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
+ <div class="row mb-3">
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <div class="key">صور المشروع</div>
+      <div class="value"
+        *ngFor="let imageFile of licenseProjectEngineeringSupervisionPlannedReportDetailImages">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a *ngIf="imageFile && imageFile.imageFile" id="link-imageFile"
+          [href]="baseUrl + imageFile.imageFile.filePath" target="_blank">
+          {{imageFile.imageFile.fileDescription}}</a>
+      </div>
+      <app-file-uploader [data]="mueltiFilesUploaderImagesData"
+        (fileUploaded)="onExistImageFilesUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block"
+        *ngIf="(!licenseProjectEngineeringSupervisionPlannedReportDetailImages || licenseProjectEngineeringSupervisionPlannedReportDetailImages.length == 0) && showValidation">
+        حقل مطلوب
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <div class="key">فيديو المشروع</div>
+      <div class="value"
+        *ngFor="let videoFile of licenseProjectEngineeringSupervisionPlannedReportDetailVideos">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a *ngIf="videoFile && videoFile.videoFile" id="link-videoFile"
+          [href]="baseUrl + videoFile.videoFile.filePath" target="_blank">
+          {{videoFile.videoFile.fileDescription}}</a>
+      </div>
+      <app-file-uploader [data]="mueltiFilesUploaderVideosData"
+        (fileUploaded)="onExistVideoFilesUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block"
+        *ngIf="(!licenseProjectEngineeringSupervisionPlannedReportDetailVideos || licenseProjectEngineeringSupervisionPlannedReportDetailVideos.length == 0) && showValidation">
+        حقل مطلوب
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <div class="key">خريطة موقع عام</div>
+      <div class="value"
+        *ngFor="let mapFile of licenseProjectEngineeringSupervisionPlannedReportDetailMaps">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a *ngIf="mapFile && mapFile.mapFile" id="link-mapFile"
+          [href]="baseUrl + mapFile.mapFile.filePath" target="_blank">
+          {{mapFile.mapFile.fileDescription}}</a>
+      </div>
+      <app-file-uploader [data]="mueltiFilesUploaderMapesData"
+        (fileUploaded)="onExistMapFilesUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block"
+        *ngIf="(!licenseProjectEngineeringSupervisionPlannedReportDetailMaps || licenseProjectEngineeringSupervisionPlannedReportDetailMaps.length == 0) && showValidation">
+        حقل مطلوب
+      </div>
+    </div>
+  </div>
+
+ </div>
+</div> 
+</div>
+</div>
+
+</form>
+
+

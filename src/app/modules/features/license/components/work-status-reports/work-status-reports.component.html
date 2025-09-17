@@ -57,18 +57,6 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
   <div class="value">{{masterLicenseProjectEngineeringSupervisionPlannedReport.expectedConstructionCost}}</div>
 </div>
 <div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
-  <div class="key">مقاول البنية التحتية</div>
-  <div class="value">{{masterLicenseProjectEngineeringSupervisionPlannedReport.infrastructureContractor}}</div>
-</div>
-<div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
-  <div class="key">استشاري أعمال البنية التحتية</div>
-  <div class="value">{{masterLicenseProjectEngineeringSupervisionPlannedReport.infrastructureConsultant}}</div>
-</div>
-<div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
-  <div class="key">تكلفة أعمال البنية التحتية </div>
-  <div class="value">{{masterLicenseProjectEngineeringSupervisionPlannedReport.infrastructureCost}}</div>
-</div>
-<div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
   <div class="key">تاريخ بداية الأعمال التعاقدي </div>
   <div class="value">{{masterLicenseProjectEngineeringSupervisionPlannedReport.contractualStartDate | date:'yyyy-MM-dd'}}</div>
 </div>
@@ -167,6 +155,7 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
  </div>
   </div>
 </div> 
+
 <div class="tab-data-section">
   <div class="row mb-3">
     <table class="table table-light" style="width:100%">
@@ -198,6 +187,40 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
 
   </div>
 </div>
+
+<h6 class="title">{{'التكلفة الانشائية المتوقعة'}}</h6>
+<div class="tab-data-section">
+  <div class="row mb-3">
+    <table class="table table-light" style="width:100%">
+
+      <tbody>
+          <tr>
+              <th> الشهر:</th>
+              <td
+              *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailDtoList
+              let i=index;">
+              {{detail.monthName}}</td>
+          </tr>
+          <tr>
+          <th> التكلفة الانشائية المتوقعة الشهرية: </th>
+              <td
+              *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailDtoList
+              let i=index;">
+              {{detail.projectMonthlyPlannedMonthCost}}</td>
+          </tr>
+          <tr>
+          <th>التكلفة الانشائية التراكميه:</th>
+              <td
+              *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailDtoList
+              let i=index;">
+              {{detail.expectedConstructionCostDuringMonth}}</td>
+          </tr>
+      </tbody>
+  </table> 
+
+  </div>
+</div>
+
  <h6 class="title">{{' العماله'}}</h6>
  <div class="tab-data-section">
   <div class="row mb-3">

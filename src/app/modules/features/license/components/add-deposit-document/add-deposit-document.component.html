@@ -6,22 +6,20 @@
         <div class="row">
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <label for="mainItemId" class="form-label">البند</label>
+              <label for="mainItemId" class="form-label">المصدر</label>
               <select id="mainItemId" formControlName="mainItemId" class="form-select"
                 (change)="onMainItemChange($event)">
                 <option *ngFor="let item of mainItemsDto" [value]="item.id">
                   {{ item.name }}
                 </option>
               </select>
-              <mat-error *ngIf="
-          controls.mainItemId?.hasError('required') && showValidation
-        ">حقل مطلوب</mat-error>
+              <mat-error *ngIf="controls.mainItemId?.hasError('required') && showValidation">حقل مطلوب</mat-error>
             </div>
           </div>
 
           <div *ngIf="showDescriptionField" class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <label for="mianItemDescription" class="form-label">وصف البند</label>
+              <label for="mianItemDescription" class="form-label">وصف المصدر</label>
               <input id="mianItemDescription" formControlName="mianItemDescription" type="text" class="form-control" />
             </div>
           </div>
@@ -29,16 +27,14 @@
         </div>
 
         <div class="row">
-
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label for="referenceNumber" class="form-label">الرقم المرجعى للايداع</label>
               <input id="referenceNumber" formControlName="referenceNumber" type="text" class="form-control" />
-              <mat-error *ngIf="
-                controls.referenceNumber?.hasError('required') && showValidation
-              ">حقل مطلوب</mat-error>
+              <mat-error *ngIf=" controls.referenceNumber?.hasError('required') && showValidation">حقل مطلوب</mat-error>
             </div>
           </div>
+
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label for="depositDate" class="form-label">تاريخ الإيداع</label>
@@ -47,10 +43,7 @@
                   formControlName="depositDate" value="{{ controls.depositDate.value | date : 'yyyy-MM-dd' }}" />
                 <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
               </div>
-
-              <div class="invalid-feedback d-block" *ngIf="
-                controls.depositDate?.hasError('required') && showValidation
-              ">
+              <div class="invalid-feedback d-block" *ngIf="controls.depositDate?.hasError('required') && showValidation">
                 هذا الحقل مطلوب
               </div>
             </div>
@@ -64,7 +57,7 @@
               <label class="form-label">رقم الحساب</label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ accountNumber }}
+                  {{ licenseProjectAccounts.accountNumber }}
                 </span>
               </div>
             </div>
@@ -72,9 +65,169 @@
 
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <label for="amount" class="form-label">المبلغ</label>
-              <input id="amount" formControlName="amount" type="number" class="form-control" />
+              <label for="amount" class="form-label">اجمالي مبلغ الايداع</label>
+              <input id="amount" formControlName="amount" type="number" class="form-control" (input)="calcAccounts()"/>
               <mat-error *ngIf="controls.amount?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">              
+              <label for="checkNumber" class="form-label">نوع الايداع</label>
+              <select class="form-select" formControlName="sysDepositTypeId">
+                <option label="اختر نوع الايداع" disabled></option>
+                <option *ngFor="let type of sysDepositTypeList" [value]="type.id">
+                  {{ type.name }}
+                </option>
+              </select>              
+              <mat-error *ngIf="controls.sysDepositTypeId?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="checkNumber" class="form-label">رقم الحوالة  / الشيك</label>
+              <input id="checkNumber" formControlName="checkNumber" type="text" class="form-control" />
+              <mat-error *ngIf="controls.checkNumber?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+            </div>
+          </div>
+        </div>
+       
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">حساب التكاليف الانشائية</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ licenseProjectAccounts.constructionCostsAccountNumber }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">مبلغ الايداع في حساب التكاليف الانشائية</label>
+              <input id="constructionCostsAmount" formControlName="constructionCostsAmount" type="number" class="form-control" 
+              [readOnly]="controls.mainItemId.value === licenseProjectDepositDocumentMainItemEnum.collectionFromClients"/>
+              <mat-error *ngIf="controls.constructionCostsAmount?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+            </div>
+          </div>
+        </div>
+
+       <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="amount" class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ licenseProjectAccounts.constructionCostsAvailableAmount }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="amount" class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ (licenseProjectAccounts.constructionCostsAvailableAmount) + (controls.constructionCostsAmount.value || 0) | number:'1.2-2'}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">حساب الادارى والتسويقى</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ licenseProjectAccounts.administrativeAndMarketingAccountNumber }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="administrativeAndMarketingAmount" class="form-label">مبلغ الايداع في حساب الاداري والتسويقي </label>
+              <input id="administrativeAndMarketingAmount" formControlName="administrativeAndMarketingAmount" type="number" class="form-control"
+              [readOnly]="controls.mainItemId.value === licenseProjectDepositDocumentMainItemEnum.collectionFromClients" />
+              <mat-error *ngIf="controls.administrativeAndMarketingAmount?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ licenseProjectAccounts.administrativeAndMarketingAvailableAmount }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="amount" class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ (licenseProjectAccounts.administrativeAndMarketingAvailableAmount) + (controls.administrativeAndMarketingAmount.value || 0) | number:'1.2-2'}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="row" *ngIf="controls.mainItemId.value === licenseProjectDepositDocumentMainItemEnum.collectionFromClients">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">حساب الحفظ</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ licenseProjectAccounts.custodyAccountNumber }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="escrowAccountAmount" class="form-label">مبلغ الايداع في حساب الحفظ</label>
+              <input id="escrowAccountAmount" formControlName="escrowAccountAmount" type="number" class="form-control"
+              [readOnly]="controls.mainItemId.value === licenseProjectDepositDocumentMainItemEnum.collectionFromClients" />
+              <mat-error *ngIf="controls.escrowAccountAmount?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+            </div>
+          </div>
+        </div>
+       
+        <div class="row" *ngIf="controls.mainItemId.value === licenseProjectDepositDocumentMainItemEnum.collectionFromClients">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ licenseProjectAccounts.custodyAvailableAmount }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="amount" class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
+              <div class="form-control-plaintext">
+                <span>
+                  {{ (licenseProjectAccounts.custodyAvailableAmount) + (controls.escrowAccountAmount.value || 0) | number:'1.2-2'}}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -89,10 +242,7 @@
                 {{ buyer.name }}
               </option>
             </select>
-            <mat-error *ngIf="
-                controls.licenseProjectBuyer?.hasError('required') &&
-                showValidation
-              ">حقل مطلوب</mat-error>
+            <mat-error *ngIf=" controls.licenseProjectBuyer?.hasError('required') && showValidation">حقل مطلوب</mat-error>
           </div>
         </div>
         <div *ngIf="showOtherField && showBuyerDetails" class="col-12 col-lg-6">

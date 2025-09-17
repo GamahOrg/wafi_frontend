@@ -1,0 +1,115 @@
+ <div class="form-block mb-3"
+     [formGroup]="itemsOnMonthForm">
+    <div class="row row-gap-3 mb-3">
+
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label for=""
+                           class="form-label">البنود</label>
+                           
+                    <select class="form-select" id="control-sysLicenseInfrastructureElementId"
+                            aria-label="Default select example"
+                            formControlName="sysLicenseInfrastructureElementId">
+                        <option selected  [value]="0"
+                                disabled>البنود </option>
+                        <option *ngFor="let element of sysLicenseInfrastructureElementList"
+                                [value]="element.id">{{element.elementName}}</option>
+                    </select>
+                     <div 
+                    class="invalid-feedback">
+                   <div *ngIf="controls.sysLicenseInfrastructureElementId.errors?.['required']">حقل مطلوب</div>
+               </div> 
+                </div>
+            </div>
+    
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label for=""
+                           class="form-label">تكلفة البند</label>
+                    <input type="number" id="control-itemCost"
+                           class="form-control"
+                           placeholder="تكلفة البند"
+                           formControlName="itemCost">
+                    <div class="invalid-feedback d-block"
+                         *ngIf="controls.itemCost.errors?.['required'] && showValidation">
+                         حقل مطلوب
+                    </div> 
+                     <div class="invalid-feedback d-block"
+                         *ngIf="controls.itemCost.errors?.['min'] && showValidation">قيمة الحقل يجب الا
+                        تقل عن صفر</div> 
+                </div>
+            </div>
+    
+     
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label for=""
+                           class="form-label">نسبه الانجاز المخططه الشهريه</label>
+                    <input type="number" id="control-monthlyPlannedCompletionPercentage"
+                           class="form-control"
+                           placeholder="نسبه الانجاز المخططه الشهريه"
+                           formControlName="monthlyPlannedCompletionPercentage">
+                    <div class="invalid-feedback d-block"
+                         *ngIf="controls.monthlyPlannedCompletionPercentage.errors?.['required'] && showValidation">
+                         حقل مطلوب
+                    </div> 
+                     <div class="invalid-feedback d-block"
+                         *ngIf="controls.monthlyPlannedCompletionPercentage.errors?.['min'] && showValidation">قيمة الحقل يجب الا
+                        تقل عن صفر</div> 
+                </div>
+            </div>
+    
+        </div>
+    </div>
+     <button type="button" class="btn btn-primary" (click)="addRow()" *ngIf="engineerinSupervisionPlannedReportAllowToEdit" >اضافة</button>
+
+    <div class="tab-data-section" *ngIf="licenseProjectInfrastructureNetworksStatusList && licenseProjectInfrastructureNetworksStatusList.length >0 ">
+        <div class="table-responsive">
+            <table class="table table-light mb-3">
+                <thead>
+                    <tr>
+                        <th>اسم البند</th>
+                        <th>تكلفة البند</th>
+                        <th>الوزن النسبي</th>
+                        <th>الشهر</th>
+                        <th>نسبه الانجاز المخططه الشهريه</th>
+                        <th>نسبه الانجاز المخططه التراكميه</th>
+                        <th>العمليات</th>
+                        <th class="w-25"></th>
+                    </tr>
+                </thead>
+                 <tbody>
+                    <tr *ngFor="let infrastructureNetworksStatus of licenseProjectInfrastructureNetworksStatusList
+                    let i=index;">
+                    <td>
+                       {{infrastructureNetworksStatus.itemName}}
+                         
+                       </td>
+                       <td>
+                        {{infrastructureNetworksStatus.itemCost}}
+                       </td>
+                       <td>
+                        {{infrastructureNetworksStatus.relativeWeight}}
+                       </td>
+                       <td>
+                        {{infrastructureNetworksStatus.monthName}}
+                       </td>
+                       <td>
+                        {{infrastructureNetworksStatus.monthlyPlannedCompletionPercentage}}
+                       </td>
+                       <td>
+                        {{infrastructureNetworksStatus.cumulativeplannedcompletionpercentage}}
+                       </td>
+                       <td>
+                        <div class="d-flex align-items-center justify-content-end column-gap-2">
+                         <button mat-icon-button color="warn" (click)="delete(infrastructureNetworksStatus.id,i)" *ngIf="engineerinSupervisionPlannedReportAllowToEdit"><mat-icon>delete</mat-icon></button>
+                       </div>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> 
+</div>
+

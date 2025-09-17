@@ -5,8 +5,9 @@ import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { EventEmitter, Injectable } from '@angular/core';
 import { LicenseDepositDocumentListDto } from '../models/license-deposit-document-model/deposit-document-list-dto';
 import { LicenseDepositDocumentDetailsDto } from '../models/license-deposit-document-model/deposit-document-details-dto';
-import { AddUpdateLicenseProjectDepositDto, MainItemsDto } from '../models/license-deposit-document-model/add-update-deposit-document-dto';
+import { AddUpdateLicenseProjectDepositDto, MainItemsDto, SysSettingsDto } from '../models/license-deposit-document-model/add-update-deposit-document-dto';
 import { Pagination } from 'src/app/shared/models/pagination.model';
+import { LicenseProjectAccountsDto } from '../dataModels/license-project-buyer-dto';
 
 @Injectable()
 export class LicenseDepositDocumentService {
@@ -34,6 +35,7 @@ export class LicenseDepositDocumentService {
       })
     )
   }
+
   GetDepositDocumentDetails(id: string): Observable<LicenseDepositDocumentDetailsDto|null> {
     return this._httpClient.get<CoreResponseDTO<LicenseDepositDocumentDetailsDto>>(`${Configuration.APIs.LicenseProjectDeposits.GetById}/${id}`).pipe(
       map((res: CoreResponseDTO<LicenseDepositDocumentDetailsDto>) => {
@@ -41,21 +43,24 @@ export class LicenseDepositDocumentService {
       })
     )
   }
-  GetAccountNumber(id: string): Observable<string|null> {
-    return this._httpClient.get<CoreResponseDTO<string>>(`${Configuration.APIs.LicenseProjectDeposits.GetAccountNumber}/${id}`).pipe(
-      map((res: CoreResponseDTO<string>) => {
-        return res.data  ? res.data as string : null
+
+  GetAccountNumber(id: string): Observable<LicenseProjectAccountsDto|null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectAccountsDto>>(`${Configuration.APIs.LicenseProjectDeposits.GetAccountNumber}/${id}`).pipe(
+      map((res: CoreResponseDTO<LicenseProjectAccountsDto>) => {
+        return res.data  ? res.data as LicenseProjectAccountsDto : null
       })
     )
   }
+
   SaveLicenseDepositDocument(obj: AddUpdateLicenseProjectDepositDto): Observable<CoreResponseDTO<any>> {
     return this._httpClient.post<CoreResponseDTO<any>>
-      (Configuration.APIs.LicenseProjectDeposits.Save, obj).pipe(
+      (Configuration.APIs.LicenseProjectDeposits.SaveLicenseProjectDeposits, obj).pipe(
         map((res: CoreResponseDTO<any>) => {
           return res;
         })
       )
   }
+
   UpdateLicenseDepositDocument(obj: AddUpdateLicenseProjectDepositDto): Observable<CoreResponseDTO<any>> {
     return this._httpClient.put<CoreResponseDTO<any>>
       (Configuration.APIs.LicenseProjectDeposits.Update, obj).pipe(
@@ -64,10 +69,20 @@ export class LicenseDepositDocumentService {
         })
       )
   }
+
   GetMainItems(): Observable<CoreResponseDTO<MainItemsDto[]|null>> {
     return this._httpClient.get<CoreResponseDTO<MainItemsDto[]>>
       (Configuration.APIs.LicenseProjectDeposits.GetMainItems).pipe(
         map((res: CoreResponseDTO<MainItemsDto[]>) => {
+          return res;
+        })
+      )
+  }
+
+  GetCalcRatioSettingForAccounts(): Observable<CoreResponseDTO<SysSettingsDto[]|null>> {
+    return this._httpClient.get<CoreResponseDTO<SysSettingsDto[]>>
+      (Configuration.APIs.LicenseProjectDeposits.GetCalcRatioSettingForAccounts).pipe(
+        map((res: CoreResponseDTO<SysSettingsDto[]>) => {
           return res;
         })
       )

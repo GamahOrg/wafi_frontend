@@ -1,5 +1,5 @@
 
-<button type="button" class="btn btn-primary my-4" (click)="openAddActualMonthesDialog()">تحديث التقرير</button>
+<button type="button" class="btn btn-primary my-4" *ngIf="isRefreshReport" (click)="openAddActualMonthesDialog()">تحديث التقرير</button>
 
 <div class="row row-gap-4">
     <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">

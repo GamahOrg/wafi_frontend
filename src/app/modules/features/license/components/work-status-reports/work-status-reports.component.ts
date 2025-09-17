@@ -24,10 +24,11 @@ export class WorkStatusReportsComponent {
   subscriptions: Subscription[] = [];
   licenseProjectEngineeringSupervisionPlannedReportDetailList?: LicenseProjectEngineeringSupervisionPlannedReportDetailCreateUpdateDto[];
   licenseProjectEngineeringSupervisionPlannedReportDetailDtoList?:LicenseProjectEngineeringSupervisionPlannedReportDetailDto[]
-currenrYear?:number;
-years?:number[];
-cumulativeAmountPriorToThatYear ?: number;
-engineerinSupervisionPlannedReportAllowToEdit:boolean=false;
+  currenrYear?:number;
+  years?:number[];
+  cumulativeAmountPriorToThatYear ?: number;
+  constructionCostBeforeThisYear ?: number;
+  engineerinSupervisionPlannedReportAllowToEdit:boolean=false;
   masterLicenseProjectEngineeringSupervisionPlannedReport?: MasterLicenseProjectEngineeringSupervisionPlannedReportDto ;
   masterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdate ?: MasterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdateDto ;
 
@@ -38,7 +39,6 @@ engineerinSupervisionPlannedReportAllowToEdit:boolean=false;
   showValidation: boolean = false;
   licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles :LicenseProjectEngineeringSupervisionPlannedReportAttachmentCreateUpdateDto[]=[];
 
- 
   constructor(
     private _licenseProjectEngineeringSupervisionPlannedReportDetailService: LicenseProjectEngineeringSupervisionPlannedReportDetailService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
@@ -50,26 +50,20 @@ engineerinSupervisionPlannedReportAllowToEdit:boolean=false;
     this.getLicenseProjectIdStorage()
   }
 
- 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if(this.licenseProjectId)
-    {
       this.GetByLicenseProjectId();
-    }
-    
-    
   }
   
   GetByLicenseProjectId() {
     this.subscriptions.push(
       this._licenseProjectEngineeringSupervisionPlannedReportDetailService.GetLicenseProjectEngineeringDetails(this.licenseProjectId as string).subscribe(res => {
         if (res) {
-        
-         this.showRateFlag=true;
+          this.showRateFlag=true;
           this.years=this.getYearsBetween(new Date(res.startOn), new Date(res.endOn));
           this.masterLicenseProjectEngineeringSupervisionPlannedReport=res;
-         this.getLicenseProjectEngineeringCompletionAndEmploymentRates();
+          this.getLicenseProjectEngineeringCompletionAndEmploymentRates();
         }
         else
           this.showRateFlag=false;
@@ -78,7 +72,6 @@ engineerinSupervisionPlannedReportAllowToEdit:boolean=false;
   }
 
   getLicenseProjectEngineeringCompletionAndEmploymentRates(): void {
-   
     if( this.years &&  this.years.length != 0 && !this.currenrYear)
     this.currenrYear = this.years[0] as number;
     this.subscriptions.push(
@@ -86,25 +79,22 @@ engineerinSupervisionPlannedReportAllowToEdit:boolean=false;
       GetLicenseProjectEngineeringCompletionAndEmploymentRates(this.licenseProjectId as string,this.currenrYear as number)
         .subscribe((res: MasterLicenseProjectEngineeringSupervisionPlannedDetailsDto |null) => {
           if(res && res.licenseProjectEngineeringSupervisionPlannedReportDetails.length > 0){
-            this.cumulativeAmountPriorToThatYear=res.cumulativeAmountPriorToThatYear;
-            this.engineerinSupervisionPlannedReportAllowToEdit=res.engineerinSupervisionPlannedReportAllowToEdit;
+            this.cumulativeAmountPriorToThatYear = res.cumulativeAmountPriorToThatYear;
+            this.constructionCostBeforeThisYear = res.constructionCostBeforeThisYear;
+            this.engineerinSupervisionPlannedReportAllowToEdit = res.engineerinSupervisionPlannedReportAllowToEdit;
             this._licenseProjectEngineeringSupervisionPlannedReportDetailService.setEngineerinSupervisionPlannedReportAllowToEdit(this.engineerinSupervisionPlannedReportAllowToEdit);
-         this.addValuesToList(res.licenseProjectEngineeringSupervisionPlannedReportDetails,res.cumulativeAmountPriorToThatYear);
-
-        }})
-    
+            this.addValuesToList(res.licenseProjectEngineeringSupervisionPlannedReportDetails, res.cumulativeAmountPriorToThatYear, res.constructionCostBeforeThisYear);
+          }
+        })
     )
   }
 
-onChangeYear(data:any)
-{
- 
-  this.currenrYear = Number(data.target.value);
-  this.getLicenseProjectEngineeringCompletionAndEmploymentRates();
-}
+  onChangeYear(data:any){
+    this.currenrYear = Number(data.target.value);
+    this.getLicenseProjectEngineeringCompletionAndEmploymentRates();
+  }
 
   getYearsBetween(startDate: Date, endDate: Date): number[] {
-  
     const startYear = startDate.getFullYear();
     const endYear = endDate.getFullYear();
     const years = [];
@@ -113,29 +103,31 @@ onChangeYear(data:any)
     }
       years.sort((a, b) => a - b); // Sort in ascending order
     return years;
-  
-}
+  }
  
-
-
-  addValuesToList(licenseProjectEngineeringSupervisionPlannedReportDetailList:LicenseProjectEngineeringSupervisionPlannedReportDetailDto[],cumulativeAmountPriorToThatYear:number)
-  {
-      // Caculate the cumulative planned completionper centage
-       licenseProjectEngineeringSupervisionPlannedReportDetailList.forEach(item => {
-        let currentIndex  = licenseProjectEngineeringSupervisionPlannedReportDetailList.findIndex((x: any) => x.monthDate === item.monthDate);
-       
-        if(item.id=='00000000-0000-0000-0000-000000000000' || (item.projectMonthlyPlannedCompletionRate==null || item.projectMonthlyPlannedCompletionRate==0))
-        cumulativeAmountPriorToThatYear=0;
-        if(currentIndex ==0)
-        {
-          let firstObj=licenseProjectEngineeringSupervisionPlannedReportDetailList[currentIndex];
-          firstObj.cumulativeplannedcompletionpercentage = item.projectMonthlyPlannedCompletionRate  as number + cumulativeAmountPriorToThatYear;
-        }
-        else
-        {
-         let lastobj=licenseProjectEngineeringSupervisionPlannedReportDetailList[currentIndex-1];
-         item.cumulativeplannedcompletionpercentage= (item.projectMonthlyPlannedCompletionRate as number) + (lastobj.cumulativeplannedcompletionpercentage as number);
-        }
+  addValuesToList(licenseProjectEngineeringSupervisionPlannedReportDetailList:LicenseProjectEngineeringSupervisionPlannedReportDetailDto[],cumulativeAmountPriorToThatYear:number, constructionCostBeforeThisYear: number){
+    // Caculate the cumulative planned completionper centage
+    licenseProjectEngineeringSupervisionPlannedReportDetailList.forEach(item => {
+    let currentIndex  = licenseProjectEngineeringSupervisionPlannedReportDetailList.findIndex((x: any) => x.monthDate === item.monthDate);
+    
+    if(item.id=='00000000-0000-0000-0000-000000000000' || (item.projectMonthlyPlannedCompletionRate == null || item.projectMonthlyPlannedCompletionRate == 0)
+      || (item.projectMonthlyPlannedMonthCost == null || item.projectMonthlyPlannedMonthCost == 0)){
+      cumulativeAmountPriorToThatYear = this.cumulativeAmountPriorToThatYear as number;
+      constructionCostBeforeThisYear = this.constructionCostBeforeThisYear as number;
+    }
+    
+    if(currentIndex ==0)
+    {
+      let firstObj = licenseProjectEngineeringSupervisionPlannedReportDetailList[currentIndex];
+      firstObj.cumulativeplannedcompletionpercentage = item.projectMonthlyPlannedCompletionRate  as number + cumulativeAmountPriorToThatYear;
+      firstObj.expectedConstructionCostDuringMonth = item.projectMonthlyPlannedMonthCost  as number + constructionCostBeforeThisYear;
+    }
+    else
+    {
+      let lastobj = licenseProjectEngineeringSupervisionPlannedReportDetailList[currentIndex-1];
+      item.cumulativeplannedcompletionpercentage = (item.projectMonthlyPlannedCompletionRate as number) + (lastobj.cumulativeplannedcompletionpercentage as number);
+      item.expectedConstructionCostDuringMonth = (item.projectMonthlyPlannedMonthCost as number) + (lastobj.expectedConstructionCostDuringMonth as number);
+    }
       this.licenseProjectEngineeringSupervisionPlannedReportDetailDtoList=licenseProjectEngineeringSupervisionPlannedReportDetailList;
     }) 
   }
@@ -144,9 +136,7 @@ onChangeYear(data:any)
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
   }
 
-
   openAddEditEngineeringSupervisionReportsProjectDetailsDialog(): void {
- 
     let Data = {
       title: "تعديل بيانات المشروع",
       component: AddEditEngineeringSupervisionReportsProjectDetailsComponent,
@@ -154,10 +144,9 @@ onChangeYear(data:any)
     } as PopupData;
     let dialogRef = this._popupService.updatePopupData(Data);
      dialogRef.afterClosed().subscribe(_=> this.GetByLicenseProjectId());
-   
   }
+
   openAddEditCompletionAndEmploymentRatesDialog(): void {
- 
     let Data = {
       title: "تعديل بيانات السنين",
       component: AddEditCompletionAndEmploymentRatesComponent,
@@ -165,13 +154,14 @@ onChangeYear(data:any)
     } as PopupData;
     let dialogRef = this._popupService.updatePopupData(Data);
      dialogRef.afterClosed().subscribe(_=> this.GetByLicenseProjectId());
-   
   }
+
+  
   deletFile(id : string){
     this._fileManagementService.DeletFile(id).subscribe(res=>{
-      if(res.isDone){
-        this.GetByLicenseProjectId()      }
+      if(res.isDone)
+        this.GetByLicenseProjectId()
     })
-
   }
+
 }

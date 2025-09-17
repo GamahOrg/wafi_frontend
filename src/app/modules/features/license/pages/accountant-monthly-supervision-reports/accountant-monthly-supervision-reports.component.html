@@ -1,0 +1,100 @@
+<div class="certified-report-container">
+  <div class="report-header">
+    <h2 class="report-title">
+      تقرير الإشراف الهندسي المعتمد
+    </h2>
+  </div>
+
+  <button type="button" *ngIf="showDetails" class="btn btn-secondary me-2" (click)="showDetails = false">رجوع للقائمة</button>
+
+  <div *ngIf="monthlyCertifiedReportList.length && !showDetails" class="table-container">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">الشهر</th>
+            <th scope="col">العمليات
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of monthlyCertifiedReportList">
+          <tr *ngIf="item">
+            <td *ngIf="item.monthDate">{{ formatDateToArabic(item.monthDate) }}</td>
+            <td *ngIf="item.monthDate">
+              <button type="button" class="btn btn-primary" (click)="getMonthlyReport(item.id)" >عرض التفاصيل</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div *ngIf="monthlyCertifiedReportList.length === 0 && !showDetails" class="empty-state">
+    <i class="fas fa-file-excel"></i>
+    <p>لا توجد تقارير معتمدة لعرضها</p>
+  </div>
+  
+<ng-container *ngIf="showDetails && reqList && reqList.results">
+  <div *ngIf="showDetails && reqList.results.length > 0" class="table-container">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">
+              <i class="fas fa-calendar-alt"></i>
+              تاريخ الشهر
+            </th>
+            <th scope="col">
+              <i class="fas fa-calendar-check"></i>
+              تاريخ المصروف
+            </th>
+            <th scope="col">
+              <i class="fas fa-money-bill-wave"></i>
+              المبلغ (ريال سعودي)
+            </th>
+            <th scope="col">
+              <i class="fas fa-file-alt"></i>
+              البيان
+            </th>
+            <!-- <th scope="col">
+              <i class="fas fa-file-alt"></i>
+              العمليات
+            </th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of reqList.results">
+            <tr *ngFor="let expense of item.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenses; let i = index">
+              <td *ngIf="i === 0">{{ item.monthDate | date : "dd-MM-yyyy" }}</td>
+              <td *ngIf="i !== 0" class="empty-month-cell"></td>
+              <td>{{ expense.expenseDate | date : "dd-MM-yyyy"  }}</td>
+              <td>{{ expense.amount }}</td>
+              <td>{{ expense.description || '-' }}</td>
+             <!-- <td>
+              <button type="button" class="btn btn-primary" (click)="getActualValueReportDetails(item)" >عرض التفاصيل</button>
+            </td> -->
+          </tr>
+            
+            <tr *ngIf="item.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenses?.length === 0">
+              <td>{{ item.monthDate | date : "dd MMMM yyyy" }}</td>
+              <td>-</td>
+              <td class="amount-cell">-</td>
+              <td>لا توجد مصروفات</td>
+            </tr>
+
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="mt-auto" *ngIf="reqList.totalCount > 0 && showDetails" >
+        <app-pagination></app-pagination>
+  </div>
+
+  <div *ngIf="reqList.results.length === 0 && showDetails" class="empty-state">
+    <i class="fas fa-file-excel"></i>
+    <p>لا توجد تقارير معتمدة لعرضها</p>
+  </div>
+</ng-container>
+</div>

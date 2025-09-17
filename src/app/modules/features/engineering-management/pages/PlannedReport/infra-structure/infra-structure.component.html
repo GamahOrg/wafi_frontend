@@ -1,0 +1,102 @@
+
+<button type="button" class="btn btn-primary mb-3" (click)="openAddInfrastructureRatesDialog()">تحديث بيانات البنية التحتية</button>
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+      <div class="key">مقاول البنية التحتية</div>
+      <div class="value">{{licenseProjectEngineeringInfrastructure?.infrastructureContractor}}</div>
+    </div>
+    <div class="col-6 col-lg-6">
+      <div class="key">استشاري أعمال البنية التحتية</div>
+      <div class="value">{{licenseProjectEngineeringInfrastructure?.infrastructureConsultant}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">تكلفة أعمال البنية التحتية </div>
+      <div class="value">{{licenseProjectEngineeringInfrastructure?.infrastructureCost}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">مدة أعمال البنية التحتية التعاقدية (شهر)</div>
+      <div class="value">{{durationOfContractualInfrastructureWorksMonths}}</div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+    <select class="form-select" [(ngModel)]="currenrYear" (change)="onChangeYear($event)">
+      <option label="اختار سنه" disabled ></option>
+      <option *ngFor="let item of years" [value]="item">
+        {{ item }}
+      </option>
+    </select>
+  </div>
+  <div class="col-12 col-lg-6">
+    <button type="button" class="btn btn-primary" (click)="openAddEditEngineeringInfrastructureRatesDialog()" *ngIf="engineerinSupervisionPlannedReportAllowToEdit">تعديل بيانات البنيه التحتيه</button>
+ </div>
+  </div>
+
+<div class="tab-data-section">
+  <div class="row mb-3">
+  <table class="table table-light" style="width:100%">
+
+    <tbody>
+        <tr>
+            <th> الشهر:</th>
+            <td
+            *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailDtoList
+            let i=index;">
+            {{detail.monthName}}</td>
+        </tr>
+        <tr>
+            <th> نسبه الانجاز المخططه الشهريه : </th>
+            <td
+            *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailDtoList
+            let i=index;">
+            {{detail.infrastructureMonthlyPlannedCompletionRate}}</td>
+        </tr>
+        <tr>
+            <th>نسبه الانجاز المخططه التراكميه:</th>
+            <td
+            *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailDtoList
+            let i=index;">
+            {{detail.cumulativeplannedcompletionpercentage}}</td>
+        </tr>
+    </tbody>
+</table>
+  </div>
+</div>
+
+<h6 class="title">{{'موقف أعمال شبكات البنية التحتية'}}</h6>
+<div class="tab-data-section">
+  <div class="row mb-3">
+
+  <div class="table-responsive">
+      <table class="table table-light" style="width:100%">
+          <thead>
+              <tr>
+                  <th> الشهر</th>
+                 <th>العمليات</th>
+                 
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let detail of engineeringSupervisionPlannedReportDetailForInfrastructureMonthlyList
+              let i=index;" >
+                   <td>
+                    {{detail.monthName}}
+                  </td>
+                   <td>
+                    <button type="button" class="btn btn-primary" (click)="openAddEditModifyTermsDialog(detail)">تعديل البنود على الشهر</button>
+
+                  </td>  
+                   
+              </tr>
+          </tbody> 
+      </table>
+  </div>
+  </div>
+</div>
+
+
+
+
+
+
