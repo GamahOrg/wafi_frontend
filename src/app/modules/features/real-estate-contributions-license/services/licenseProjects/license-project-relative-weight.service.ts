@@ -20,7 +20,7 @@ export class LicenseProjectRelativeWeightService {
   }
 
   Save(models: LicenseProjectRelativeWeightCreateUpdateDto[]): Observable<LicenseProjectRelativeWeightDto[]> {
-    return this._httpClient.post<CoreResponseDTO<LicenseProjectRelativeWeightCreateUpdateDto[]>>
+    return this._httpClient.post<CoreResponseDTO<LicenseProjectRelativeWeightDto[]>>
       (Configuration.APIs.LicenseProjectRelativeWeight.Save, models).pipe(
         map((res: CoreResponseDTO<LicenseProjectRelativeWeightDto[]>) => {
           return res.data as LicenseProjectRelativeWeightDto[];

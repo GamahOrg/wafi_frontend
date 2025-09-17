@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Tabs } from 'src/app/shared/models/tabs.model';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { EngineeringSupervisionReportActualProjectStatusSummaryService } from '../../services/engineering-supervision-report-actual-project-status-summary.service';
 import { ActualValueReportService } from '../../services/actual-value-report.service';
-import { ShowActualValueWorkStatuesReportComponent } from '../show-actual-value-work-statues-report/show-actual-value-work-statues-report.component';
 import { MonthlyEngineeringSupervisionReportsComponent } from '../monthly-engineering-supervision-reports/monthly-engineering-supervision-reports.component';
 import { ActualValueReportPagingListDto ,LicenseProjectEngineeringRequestStatusEnum} from '../../models/actual-value-report-paging-list-dto';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
@@ -25,7 +24,7 @@ import { RequestNotesService } from 'src/app/shared/services/requestNotes/reques
 export class ActualValueReportContainerComponent {
   subscriptions: Subscription[] = [];
   showDetails:boolean=false;
-    RequestNotes: RequestNotesData | null = null;
+  RequestNotes: RequestNotesData | null = null;
   actualValueReport?:ActualValueReportPagingListDto;
   licenseProjectEngineeringRequestStatusEnum=LicenseProjectEngineeringRequestStatusEnum;
   licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteCreateUpdate?:LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteCreateUpdateDto
@@ -42,18 +41,19 @@ export class ActualValueReportContainerComponent {
       },  
     ],
   };
+
   constructor(
     private _requestNotesService: RequestNotesService,
     private _popupService:PopupService,
-   private _toastrNotificationService: ToastrNotificatioService,
+    private _toastrNotificationService: ToastrNotificatioService,
     private _tabsService: TabsService,
     private _actualValueReportService: ActualValueReportService,
     private _engineeringSupervisionReportActualProjectStatusSummaryService:EngineeringSupervisionReportActualProjectStatusSummaryService,
     private _licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService:LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService
   ) { }
+
   ngOnInit(): void {
-    
-    this.observeGetmonthDate();
+    this.observeGetMonthDate();
     this.observePopupEvents();
     this.observeRequestNotes();
   }
@@ -61,16 +61,16 @@ export class ActualValueReportContainerComponent {
   observeRequestNotes(): void {
     this.subscriptions.push(
       this._requestNotesService.RequestNotes$.subscribe((res: RequestNotesData | null) => {
-        if (res) this.RequestNotes = res;
+        if (res) 
+          this.RequestNotes = res;
       })
     )
   }
-  private observeGetmonthDate(){
-    debugger;
+
+  private observeGetMonthDate(){
     this.subscriptions.push(
       this._actualValueReportService.showActualValueReportDetails.subscribe(res=>{
-        debugger;
-        this.actualValueReport=res;
+        this.actualValueReport = res;
         this._engineeringSupervisionReportActualProjectStatusSummaryService.setmonthDate(res)
         this.updateTabContent();
         this.showDetails = true 
@@ -79,90 +79,85 @@ export class ActualValueReportContainerComponent {
   }
 
   compile(){
-    debugger;
     this.licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteCreateUpdate={} as LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteCreateUpdateDto;
     this.licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId=this.actualValueReport?.id as string;
     this.licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteCreateUpdate.notes=this.RequestNotes?.notes as string;
 
     this.subscriptions.push(
       this._licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService.save(this.licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteCreateUpdate).subscribe(res=>{
-        debugger;
-        if(res && res.isDone)
-          {
-            debugger;
+        if(res && res.isDone){
             this._toastrNotificationService.showSuccess("تم إرسال التقرير للدراسة");
-             this.closeDialog();
+            this.closeDialog();
             if(this.actualValueReport)
-            this.actualValueReport.supervisionPlannedReportStatusId=this.licenseProjectEngineeringRequestStatusEnum.Compile;
+              this.actualValueReport.supervisionPlannedReportStatusId=this.licenseProjectEngineeringRequestStatusEnum.Compile;
           }
       })
     )
   }
 
   sendMonthToStudy(){
-    debugger;
     this.subscriptions.push(
       this._actualValueReportService.sendMonthToStudy(this.actualValueReport?.id as string).subscribe(res=>{
-        debugger;
-        if(res && res.isDone)
-          {
-            debugger;
+        if(res && res.isDone){
             this._toastrNotificationService.showSuccess("تم إرسال التقرير للدراسة");
-
             if(this.actualValueReport)
-            this.actualValueReport.supervisionPlannedReportStatusId=this.licenseProjectEngineeringRequestStatusEnum.UnderStudy;
+              this.actualValueReport.supervisionPlannedReportStatusId=this.licenseProjectEngineeringRequestStatusEnum.UnderStudy;
           }
       })
     )
   }
+
   private updateTabContent(): void {
     this._tabsService.updateVerticalTabContent(this.tabContent);
   }
+
  // hekper methods 
   openNotesDialog(): void {
-  let Data = {
-    id: ButtonType.allowCompile,
-    title: " نتيجة معالجة التقرير",
-    component: EditorRequestNotesOnlyComponent
-  } as PopupData;
-  this.updateAndOpenData(Data)
-}
+    let Data = {
+      id: ButtonType.allowCompile,
+      title: " نتيجة معالجة التقرير",
+      component: EditorRequestNotesOnlyComponent
+    } as PopupData;
+    this.updateAndOpenData(Data)
+  }
 
-private updateAndOpenData(data: PopupData) {
-  this._popupService.updatePopupData(data)
-}
+  private updateAndOpenData(data: PopupData) {
+    this._popupService.updatePopupData(data)
+  }
 
-// popup
-private observePopupEvents(): void {
-  this.observecancelAction()
-  this.observeconfirmAction()
-}
+  // popup
+  private observePopupEvents(): void {
+    this.observeCancelAction()
+    this.observeConfirmAction()
+  }
 
-private observecancelAction() {
-  this.subscriptions.push(
-    this._popupService.cancelAction.subscribe((res: PopupData) => {
-      console.log(res)
-    })
-  )
-}
+  private observeCancelAction() {
+    this.subscriptions.push(
+      this._popupService.cancelAction.subscribe((res: PopupData) => {
+        console.log(res)
+      })
+    )
+  }
 
-private observeconfirmAction() {
-  this.subscriptions.push(
-    this._popupService.confirmAction.subscribe((res: PopupData) => {
-      console.log(res)
-      switch (res.id) {
-        case ButtonType.allowCompile:
-          this.compile()
-          break;
+  private observeConfirmAction() {
+    this.subscriptions.push(
+      this._popupService.confirmAction.subscribe((res: PopupData) => {
+        console.log(res)
+        switch (res.id) {
+          case ButtonType.allowCompile:
+            this.compile()
+            break;
+        }
+      })
+    )
+  }
 
-      }
-    })
-  )
-}
-private closeDialog(): void {
-  this._popupService.dismissDialog()
-}
+  private closeDialog(): void {
+    this._popupService.dismissDialog()
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
   }
+
 }

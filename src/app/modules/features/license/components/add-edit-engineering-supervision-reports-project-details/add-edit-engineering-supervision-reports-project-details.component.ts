@@ -32,6 +32,7 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
   years?: number[];
   masterLicenseProjectEngineeringSupervisionPlannedReport?: MasterLicenseProjectEngineeringSupervisionPlannedReportDto;
   masterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdate?: MasterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdateDto;
+  
   licenseProjectEngineeringSupervisionPlannedReportForm =
     this._formBuilder.group({
       expectedConstructionCost: this._formBuilder.control<number | null>(null, [
@@ -42,17 +43,6 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
       contractor: this._formBuilder.control<string | null>(null, [
         Validators.required,
       ]),
-      infrastructureContractor: this._formBuilder.control<string | null>(null, [
-        Validators.required,
-      ]),
-      infrastructureConsultant: this._formBuilder.control<string | null>(null, [
-        Validators.required,
-      ]),
-      infrastructureCost: this._formBuilder.control<number | null>(null, [
-        Validators.required,
-        Validators.pattern(Configuration.validators.decimal),
-        Validators.min(0),
-      ]),
       contractualStartDate: this._formBuilder.control<string | null>(null, [
         Validators.required,
       ]),
@@ -60,6 +50,7 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
         Validators.required,
       ]),
     });
+
   get controls() {
     return this.licenseProjectEngineeringSupervisionPlannedReportForm.controls;
   }
@@ -69,8 +60,7 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
   } as FileUploader;
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   showValidation: boolean = false;
-  licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles: LicenseProjectEngineeringSupervisionPlannedReportAttachmentCreateUpdateDto[] =
-    [];
+  licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles: LicenseProjectEngineeringSupervisionPlannedReportAttachmentCreateUpdateDto[] = [];
 
   constructor(
     private _licenseProjectEngineeringSupervisionPlannedReportDetailService: LicenseProjectEngineeringSupervisionPlannedReportDetailService,
@@ -92,11 +82,11 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
       this.GetByLicenseProjectId();
     }
   }
+
   GetByLicenseProjectId() {
     this.subscriptions.push(
       this._licenseProjectEngineeringSupervisionPlannedReportDetailService
-        .GetLicenseProjectEngineeringDetails(this.licenseProjectId as string)
-        .subscribe((res) => {
+        .GetLicenseProjectEngineeringDetails(this.licenseProjectId as string).subscribe((res) => {
           if (res) {
             this.addValuesToMainForm(res);
           }
@@ -104,53 +94,40 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
     );
   }
 
-  addValuesToMainForm(
-    obj: MasterLicenseProjectEngineeringSupervisionPlannedReportDto
-  ) {
-    this.masterLicenseProjectEngineeringSupervisionPlannedReport =
-      obj as MasterLicenseProjectEngineeringSupervisionPlannedReportDto;
+  addValuesToMainForm(obj: MasterLicenseProjectEngineeringSupervisionPlannedReportDto) {
+    this.masterLicenseProjectEngineeringSupervisionPlannedReport = obj as MasterLicenseProjectEngineeringSupervisionPlannedReportDto;
     this.licenseProjectEngineeringSupervisionPlannedReportForm.patchValue(
       this.masterLicenseProjectEngineeringSupervisionPlannedReport as any
     );
-    this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles = this
-      .masterLicenseProjectEngineeringSupervisionPlannedReport
+    this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles = this.masterLicenseProjectEngineeringSupervisionPlannedReport
       .licenseProjectEngineeringSupervisionPlannedReportAttachments as LicenseProjectEngineeringSupervisionPlannedReportAttachmentCreateUpdateDto[];
   }
 
   save(): void {
-    if (
-      !this.licenseProjectEngineeringSupervisionPlannedReportForm.valid ||
-      !this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles ||
-      this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles
-        .length == 0
-    ) {
+    if (!this.licenseProjectEngineeringSupervisionPlannedReportForm.valid ||
+        !this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles ||
+        this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles.length == 0) {
       this.showValidation = true;
       return;
     }
 
     this.masterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdate =
-      this.licenseProjectEngineeringSupervisionPlannedReportForm
-        .value as {} as MasterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdateDto;
-    this.masterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdate.id =
-      this.licenseProjectId as string;
+      this.licenseProjectEngineeringSupervisionPlannedReportForm.value as {} as MasterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdateDto;
+    this.masterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdate.id =this.licenseProjectId as string;
     this.masterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportAttachments =
-      this
-        .licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles as LicenseProjectEngineeringSupervisionPlannedReportAttachmentCreateUpdateDto[];
+      this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles as LicenseProjectEngineeringSupervisionPlannedReportAttachmentCreateUpdateDto[];
 
     this.subscriptions.push(
-      this._licenseProjectEngineeringSupervisionPlannedReportDetailService
-        .SaveLicenseProjectEngineeringDetails(
-          this
-            .masterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdate
-        )
+      this._licenseProjectEngineeringSupervisionPlannedReportDetailService.SaveLicenseProjectEngineeringDetails(this.masterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdate)
         .subscribe((res) => {
           if (res) {
             this._toastrNotificationService.showSuccess('تم الحفظ');
-            this.closeDialog();
+            this.closeDialogWithData(res);
           }
         })
     );
   }
+
   private observelicenseProjectEngineeringSupervisionPlannedReportForm() {
     this.subscriptions.push(
       this.licenseProjectEngineeringSupervisionPlannedReportForm.valueChanges.subscribe(
@@ -163,21 +140,17 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
-  onLicenseProjectEngineeringSupervisionPlannedReportAttachmentFilesUploaded(
-    filesData: any
-  ) {
+  onLicenseProjectEngineeringSupervisionPlannedReportAttachmentFilesUploaded(filesData: any) {
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles)
-      this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles =
-        [];
+      this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles = [];
+    
     filesData.eventRes.data.forEach((data: any) => {
-      this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles.push(
-        {
+      this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles.push({
           generalSiteMapFileId: data.id,
           id: '00000000-0000-0000-0000-000000000000',
           licenseProjectId: this.licenseProjectId as string,
-        }
-      );
+      });
     });
   }
 
@@ -190,7 +163,6 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
-        console.log(res);
       })
     );
   }
@@ -198,7 +170,6 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        console.log(res);
         this.save();
       })
     );
@@ -207,4 +178,15 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
   private closeDialog(): void {
     this._popupService.dismissDialog();
   }
+
+  private closeDialogWithData(data: any): void {
+    this._popupService.dismissDialogWithData(data);
+  }
+
+  getDateNow(): string{
+    const dateNow: string = new Date().toISOString().substring(0, 10);
+    const [year, month, day] = dateNow.split('-');
+    return `${day}/${month}/${year}`;
+  }
+  
 }

@@ -1,0 +1,15 @@
+<button type="button" class="btn btn-primary my-4" (click)="backToList()">رجوع للقائمة</button>
+
+<section *ngIf="filesData.licenseProjectTimeScheduleVerificationElementValues">
+    <h5>نتيجة قائمة المتطلبات</h5>
+    <div class="d-flex justify-content-between flex-column text-right my-3" *ngFor="let note of filesData.licenseProjectTimeScheduleVerificationElementValues; let i = index">
+        <div class="d-flex justify-content-between">
+            <span class="listnum px-2 h-50">{{i+1}}</span>
+            <span class="mx-2">{{note.sysLicenseProjectTimeScheduleVerificationElement.name}}</span>
+            <span class="statuesbtn py-1 px-2 h-50" [ngClass]="{'red' : !note.elementStatus, 'green': note.elementStatus }" >{{note.elementStatus ? 'مقبول' : 'مرفوض'}}</span>
+        </div>
+        <div *ngIf="note.notes">
+            <textarea rows="4" readonly  class="form-control w-100">{{note.notes}}</textarea>
+        </div>
+    </div>
+</section>

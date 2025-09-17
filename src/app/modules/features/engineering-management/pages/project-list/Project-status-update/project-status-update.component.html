@@ -1,0 +1,23 @@
+<ng-container>
+    <form class="d-flex flex-column h-100" [formGroup]="ProjectStatusForm" id="form-ProjectStatusForm">
+      <div class="tab-data-section">
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">تحديث حالة المشروع</label>
+              <select class="form-select" formControlName="statusId">
+                <option value="">اختر حالة</option>
+                <option *ngFor="let status of statuses" [ngValue]="status.id">
+                  {{ status.name }}
+                </option>
+              </select>
+              <mat-error *ngIf="controls.statusId?.hasError('required') && showValidation">
+                حقل مطلوب
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  

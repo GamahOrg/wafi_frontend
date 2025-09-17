@@ -5,6 +5,21 @@ export const Configuration = {
     LicenseProjectRequestLog: {
       GetLicenseProjectRequestLogs: '/api/LicenseProjectRequestLog/GetLicenseProjectRequestLogs',
     },
+    LicenseProjectRecommendation: {
+      GetLicenseProjectRecommendationsByLicenseProjectId:
+        '/api/LicenseProjectRecommendation/GetLicenseProjectRecommendationsByLicenseProjectId',
+      GetRecommendationNumberByStatus:
+        '/api/LicenseProjectRecommendation/GetRecommendationNumberByStatus',
+      GetRecommendationResponsiblePartyDropDown:
+        '/api/SysResponsibleParty/GetList',
+      GetLicenseProjectRecommendationsById:
+        '/api/LicenseProjectRecommendation/GetLicenseProjectRecommendationsById',
+      SaveLicenseProjectRecommendations:
+        '/api/LicenseProjectRecommendation/SaveLicenseProjectRecommendations',
+      SaveLicenseProjectRecommendationReply:
+        '/api/LicenseProjectRecommendation/SaveLicenseProjectRecommendationReply',
+
+    },
     LicenseProjectRequestProcessingLog: {
       GetByRequestId: '/api/LicenseProjectRequestProcessingLog/GetByRequestId',
     },
@@ -32,6 +47,9 @@ export const Configuration = {
     },
     Bank: {
       GetDropDown: '/api/SysBank/Get',
+    },
+    SysRequestApproval: {
+      GetSysRequestApprovalList: '/api/SysRequestApproval/GetSysRequestApprovalList',
     },
     ProjectStatus:{
       GetDropDown: '/api/SysLicenseProjectStatus/Get',
@@ -127,6 +145,7 @@ export const Configuration = {
       UpdateCustomer: '/api/Customer/UpdateCustomer',
       GetCustomerFacilities: '/api/Customer/GetCustomerFacilities',
       GetFacilitySubCustomers: '/api/Customer/GetFacilitySubCustomers',
+      GetUserType:'/api/Customer/GetUserType'
     },
     RelatedCustomer: {
       Save: '/api/RelatedCustomer/Save',
@@ -362,6 +381,20 @@ export const Configuration = {
       '/api/EngineeringSupervisionReportActualProjectDetails/GetLicenseProjectEngineeringProjectZonesBlocksDetailActual',
       SaveLicenseProjectEngineeringProjectZonesBlocksDetail:
       '/api/EngineeringSupervisionReportActualProjectDetails/SaveLicenseProjectEngineeringProjectZonesBlocksDetail',
+      GetLicenseProjectReadyForHandoverUnit:
+      '/api/EngineeringSupervisionReportActualProjectDetails/GetLicenseProjectReadyForHandoverUnit',
+    },
+    MonthlyEngineeringReportExternalExpenses: {
+      SaveOrUpdateMonthlyEngineeringReportExternalExpenses:
+        '/api/MonthlyEngineeringReportExternalExpenses/SaveOrUpdateMonthlyEngineeringReportExternalExpenses',
+      GetAllMonthlyEngineeringReportExternalExpenses:
+        '/api/MonthlyEngineeringReportExternalExpenses/GetAllMonthlyEngineeringReportExternalExpenses',
+      GetAllMonthlyEngineeringReportExternalExpensesByMonth:
+        '/api/MonthlyEngineeringReportExternalExpenses/GetAllMonthlyEngineeringReportExternalExpensesByMonth',
+      GetMonthlyEngineeringReportExternalExpensesById:
+        '/api/MonthlyEngineeringReportExternalExpenses/GetMonthlyEngineeringReportExternalExpensesById',
+      DeleteMonthlyEngineeringReportExternalExpenses:
+        '/api/MonthlyEngineeringReportExternalExpenses/DeleteMonthlyEngineeringReportExternalExpenses',
     },
     EngineeringSupervisionReportActualQualitySummary: {
       GetLicenseProjectEngineeringActualQualityPlanAndAssurance:
@@ -386,7 +419,8 @@ export const Configuration = {
         GetLicenseProjectEngineeringActualRelativeWeight:'/api/EngineeringSupervisionReportActualQualitySummary/GetLicenseProjectEngineeringActualRelativeWeight',
         GetlicenseProjectActualRelativeWeightDetails:'/api/EngineeringSupervisionReportActualQualitySummary/GetlicenseProjectActualRelativeWeightDetails',
         SavelicenseProjectAcualRelativeWeightRates:'/api/EngineeringSupervisionReportActualQualitySummary/SavelicenseProjectAcualRelativeWeightRates',
-
+        SaveLicenseProjectEngineeringConstructionWorkStatus:'/api/EngineeringSupervisionReportActualQualitySummary/SaveLicenseProjectEngineeringConstructionWorkStatus',
+        DeleteLicenseProjectEngineeringConstructionWorkStatus:'/api/EngineeringSupervisionReportActualQualitySummary/DeleteLicenseProjectEngineeringConstructionWorkStatus',
     },
     LicenseProjectEngineeringStatusOfFundsRequiredFromEntities:{
       GetLicenseProjectEngineeringServiceTypeProjectDeliveryPhaseList:
@@ -414,6 +448,10 @@ export const Configuration = {
         '/api/EngineeringSupervisionReportProjectStatusSummary/GetLicenseProjectEngineeringSupervisionPlannedDetailsByLicenseProjectId',
       GetLicenseProjectEngineeringCompletionAndEmploymentRates:
         '/api/EngineeringSupervisionReportProjectStatusSummary/GetLicenseProjectEngineeringCompletionAndEmploymentRates',
+      GetCertifiedLicenseProjectEngineeringSupervisionPlannedReport:
+       '/api/EngineeringSupervisionReportActualInfrastructure/GetCertifiedLicenseProjectEngineeringSupervisionPlannedReport',
+      GetCertifiedLicenseProjectEngineeringSupervisionPlannedReportWithExternalExpenses:
+       '/api/EngineeringSupervisionReportActualInfrastructure/GetCertifiedLicenseProjectEngineeringSupervisionPlannedReportWithExternalExpenses',
       SaveLicenseProjectEngineeringCompletionAndEmploymentRates:
         '/api/EngineeringSupervisionReportProjectStatusSummary/SaveLicenseProjectEngineeringCompletionAndEmploymentRates',
       GetLicenseProjectEngineeringDataTapStatus:
@@ -422,6 +460,8 @@ export const Configuration = {
         '/api/EngineeringSupervisionReportProjectStatusSummary/GetLicenseProjectEngineeringDetails',
       SaveLicenseProjectEngineeringDetails:
         '/api/EngineeringSupervisionReportProjectStatusSummary/SaveLicenseProjectEngineeringDetails',
+      UpdateLicenseProjectEngineeringInfrastructure:
+        '/api/EngineeringSupervisionReportProjectStatusSummary/UpdateLicenseProjectEngineeringInfrastructure',
     },
 
     EngineeringSupervisionReportActualInfrastructure: {
@@ -489,14 +529,15 @@ export const Configuration = {
       Delete: '/api/LicenseProjectInfrastructureNetworksStatus/Remove',
     },
     ActualValuesReport: {
-      GetActualValueReportLookUpList:
-        '/api/ActualValuesReport/GetActualValueReportLookUpList',
+      GetActualValueReportLookUpList: '/api/ActualValuesReport/GetActualValueReportLookUpList',
+      GetCertifiedValueReportLookUpList: '/api/ActualValuesReport/GetCertifiedValueReportLookUpList',
       GetRequiredSupervisionMonthsList:
         '/api/ActualValuesReport/GetRequiredSupervisionMonthsList',
       UpdateMonthSubmitted:
         '/api/ActualValuesReport/UpdateMonthSubmitted',
         SendMonthToStudy:
         '/api/ActualValuesReport/SendMonthToStudy',
+      GenerateReport: '/api/ExportEngineeringReport/GenerateReport',
     },
     QualityAndBusinessProgress: {
       GetLicenseProjectEngineeringMonthlyConsultantStaffRates:
@@ -545,6 +586,9 @@ export const Configuration = {
       UpdateLicenseProjectStatus:'/api/LicenseProject/UpdateLicenseProjectStatus',
       GetEngineeringConsultantProjectsList:
         '/api/LicenseProject/GetEngineeringConsultantProjectsList',
+        GetDeveloperProjectsList:
+        '/api/LicenseProject/GetDeveloperProjectsList',
+        
       GetAccountKeeperDetailsByLicenseProjectId:
         '/api/LicenseProject/GetAccountKeeperDetailsByLicenseProjectId',
       GetProjectRealStateDeveloperByLicenseProjectId:
@@ -581,6 +625,7 @@ export const Configuration = {
       SaveContributionData: '/api/LicenseProject/SaveContributionData',
       GetRequetType: '/api/LicenseProject/GetRequetType',
       GetLicenseProjectDetails: '/api/LicenseProject/GetLicenseProjectDetails',
+      GetSupervisionReportStatusByLicenseProjectId: '/api/LicenseProject/GetSupervisionReportStatusByLicenseProjectId',
     },
     LicenseProjectExchangeDocument:{
       GetExchangeDocumentOnProject:
@@ -645,8 +690,10 @@ export const Configuration = {
       GetById: '/api/LicenseProjectDeposits/GetById',
       GetAccountNumber: '/api/LicenseProjectDeposits/GetAccountNumber',
       Save: '/api/LicenseProjectDeposits/SaveLicenseDepositDocument',
+      SaveLicenseProjectDeposits: '/api/LicenseProjectDeposits/SaveLicenseProjectDeposits',
       Update: '/api/LicenseProjectDeposits/UpdateLicenseDepositDocument',
       GetMainItems: '/api/SysLicenseProjectDepositMainItems/GetMainItems',
+      GetCalcRatioSettingForAccounts: '/api/LicenseProjectDeposits/GetCalcRatioSettingForAccounts',
     },
     LicenseCertificateTemplate:{
       GetLicenseCertificateTemplateList:
@@ -707,6 +754,9 @@ export const Configuration = {
     SysYear: {
       GetAll: '/api/SysYear/Get',
     },
+    SysLicenseNatureType: {
+      GetAll: '/api/SysLicenseNatureType/Get',
+    },
     SysFundingType: {
       GetAll: '/api/SysFundingType/Get',
     },
@@ -732,6 +782,7 @@ export const Configuration = {
       GetExchangeDocumentOnProject:'/api/PeriodCharteredAccountantReport/GetExchangeDocumentOnProject',
       GetPeriodicCharteredAccountantReportDetail:'/api/PeriodCharteredAccountantReport/GetPeriodicCharteredAccountantReportDetail',
       CreateExcel:'/api/PeriodCharteredAccountantReport/CreateExcel',
+      GetSysDepositType:'/api/PeriodCharteredAccountantReport/GetSysDepositType',
     },
     LicenseProjectDeed: {
       GetByLicenseProjectId: '/api/LicenseProjectDeed/GetByLicenseProjectId',
@@ -754,6 +805,8 @@ export const Configuration = {
     },
      SysLicenseRelativeWeight: {
       Get: '/api/SysLicenseRelativeWeight/Get',
+      GetSysLicenseRelativeWeightByLicenceProjectId: '/api/SysLicenseRelativeWeight/GetSysLicenseRelativeWeightByLicenceProjectId',
+      GetScopeItemsByLicenseProjectAsync:'/api/SysLicenseRelativeWeight/GetScopeItemsByLicenseProjectAsync'
     },
     LicenseProjectLandOwner: {
       GetByDeedId: '/api/LicenseProjectLandOwner/GetByDeedId',
@@ -1049,6 +1102,7 @@ export const Configuration = {
         '/api/LicenseProjectRisk/GetLicenseProjectRiskById',
       GetLicenseProjectRisks: '/api/LicenseProjectRisk/GetLicenseProjectRisks',
       Save: '/api/LicenseProjectRisk/Save',
+      SaveLicenseRiskReply: '/api/LicenseProjectRisk/SaveLicenseRiskReply',
     },
     LicenseProjectProblem: {
       GetLicenseProjectProblemCounts:
@@ -1058,6 +1112,8 @@ export const Configuration = {
       GetLicenseProjectProblems:
         '/api/LicenseProjectProblem/GetLicenseProjectProblems',
       Save: '/api/LicenseProjectProblem/Save',
+      SaveLicenseProjectProblemReply: '/api/LicenseProjectProblem/SaveLicenseProjectProblemReply',
+
     },
     //الملاحظات
     LicenseRequestProcessingNotes: {
@@ -1099,6 +1155,7 @@ export const Configuration = {
   modules: {
     auth: 'auth',
     qualifying: 'qualifying',
+    developer: 'developer',
     // customers: 'customers',
     facilities: 'facilities',
     // employees: 'employees',
@@ -1155,6 +1212,9 @@ export const Configuration = {
       qualifyingCertificates: 'qualifying-certificates',
       renewQualifyingList: 'renew-qualifying-list',
     },
+    developer:{
+      developerProjectList:'developer-project-list',
+    },
     license: {
       lincenseTypes: 'lincense-types',
       createLincense: 'create-lincense',
@@ -1170,6 +1230,7 @@ export const Configuration = {
       lincenseRequestApprovalDetails: 'lincense-request-approval-details',
       lincenseProjects: 'lincense-projects',
       projectList: 'project-list',
+      developerProjectList: 'developer-project-list',
       projectDetails: 'project-details',
       RenewLicensesList: 'renew-licenses-list',
       employeeCreateLicense: 'employee-create-license',

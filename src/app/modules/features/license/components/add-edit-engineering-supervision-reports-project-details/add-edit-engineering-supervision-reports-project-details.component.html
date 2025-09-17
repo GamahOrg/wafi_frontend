@@ -33,47 +33,14 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
 </div>
 <div class="col-12 col-lg-6">
   <div class="form-group mb-4">
-    <label class="form-label">  مقاول البنية التحتية</label>
-    <input type="text" id="control-infrastructureContractor" class="form-control" formControlName="infrastructureContractor"
-      placeholder="مقاول البنية التحتية">
-    <div class="invalid-feedback d-block" *ngIf="controls.infrastructureContractor?.hasError('required') && showValidation">
-      حقل مطلوب
-    </div>
-
-  </div>
-</div> 
-<div class="col-12 col-lg-6">
-  <div class="form-group mb-4">
-    <label class="form-label">  استشاري أعمال البنية التحتية</label>
-    <input type="text" id="control-infrastructureConsultant" class="form-control" formControlName="infrastructureConsultant"
-      placeholder="استشاري أعمال البنية التحتية">
-    <div class="invalid-feedback d-block" *ngIf="controls.infrastructureConsultant?.hasError('required') && showValidation">
-      حقل مطلوب
-    </div>
-
-  </div>
-</div> 
-<div class="col-12 col-lg-6">
-  <div class="form-group mb-4">
-    <label class="form-label">تكلفة أعمال البنية التحتية </label>
-    <input type="text" id="control-infrastructureCost" class="form-control" formControlName="infrastructureCost"
-      placeholder="تكلفة أعمال البنية التحتية ">
-    <div class="invalid-feedback d-block" *ngIf="controls.infrastructureCost?.hasError('required') && showValidation">
-      حقل مطلوب
-    </div>
-    <mat-error *ngIf="controls.infrastructureCost?.hasError('pattern')">من فضلك قم بأدخال رقم صحيح</mat-error>
-
-  </div>
-</div>
-<div class="col-12 col-lg-6">
-  <div class="form-group mb-4">
       <label class="form-label">تاريخ بداية الأعمال التعاقدي </label>
       <div class="input-group">
           <input bsDatepicker
                  type="text" id="control-contractualStartDate"
                  class="form-control"
+                 placeholder="yyyy-mm-dd"
                  formControlName="contractualStartDate"
-                 value="{{ controls.contractualStartDate.value | date:'yyyy-MM-dd' }}">
+                 [value]="controls.contractualStartDate.value == '0001-01-01T00:00:00' ? getDateNow() : controls.contractualStartDate.value | date: 'dd/MM/yyyy' ">
           <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
       </div>
       <mat-error *ngIf="controls.contractualStartDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -87,7 +54,7 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
                  type="text" id="control-contractualFinishDate"
                  class="form-control"
                  formControlName="contractualFinishDate"
-                 value="{{ controls.contractualFinishDate.value | date:'yyyy-MM-dd' }}">
+                 [value]="controls.contractualFinishDate.value == '0001-01-01T00:00:00' ? getDateNow() : controls.contractualFinishDate.value | date: 'dd/MM/yyyy' ">
           <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
       </div>
       <mat-error *ngIf="controls.contractualFinishDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>

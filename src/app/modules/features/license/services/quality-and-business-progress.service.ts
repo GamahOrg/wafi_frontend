@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { LicenseProjectEngineeringMonthlyConsultantStaffRatesDto } from '../dataModels/license-project-engineering-monthly-consultant-staff-rates-dto';
 import { BehaviorSubject, Observable, map } from 'rxjs';
@@ -15,35 +15,32 @@ export class QualityAndBusinessProgressService {
 
   constructor(private _httpClient: HttpClient) { }
   private licenseProjectRelativeWeightId= new BehaviorSubject<string|null>(null);
-
   private licenseProjectRelativeWeightId$ = this.licenseProjectRelativeWeightId.asObservable();
+
   getLicenseProjectRelativeWeightId(): Observable<string|null> {
-   return this.licenseProjectRelativeWeightId$;
- }
- setLicenseProjectRelativeWeightId(LatestValue: string) {
-   return this.licenseProjectRelativeWeightId.next(LatestValue);
- }
+    return this.licenseProjectRelativeWeightId$;
+  }
+
+  setLicenseProjectRelativeWeightId(LatestValue: string) {
+    return this.licenseProjectRelativeWeightId.next(LatestValue);
+  }
   
   GetLicenseProjectEngineeringMonthlyConsultantStaffRates(licenseProjectId: string, year: number): Observable<LicenseProjectEngineeringMonthlyConsultantStaffRatesDto[] | null> {
-
     return this._httpClient.get<CoreResponseDTO<LicenseProjectEngineeringMonthlyConsultantStaffRatesDto[]>>(`${Configuration.APIs.QualityAndBusinessProgress.GetLicenseProjectEngineeringMonthlyConsultantStaffRates}/${licenseProjectId}/${year}`).pipe(
       map((res: CoreResponseDTO<LicenseProjectEngineeringMonthlyConsultantStaffRatesDto[]>) => {
-       
         return res.isDone ? res.data as LicenseProjectEngineeringMonthlyConsultantStaffRatesDto[] : null
-
       })
     );
   }
-  GetlicenseProjectRelativeWeightList(licenseProjectId: string,licenseProjectRelativeWeightId:string, year: number): Observable<MasterConstructionWorkStatusDto | null> {
 
+  GetlicenseProjectRelativeWeightList(licenseProjectId: string,licenseProjectRelativeWeightId:string, year: number): Observable<MasterConstructionWorkStatusDto | null> {
     return this._httpClient.get<CoreResponseDTO<MasterConstructionWorkStatusDto>>(`${Configuration.APIs.QualityAndBusinessProgress.GetlicenseProjectRelativeWeightList}/${licenseProjectId}/${licenseProjectRelativeWeightId}/${year}`).pipe(
       map((res: CoreResponseDTO<MasterConstructionWorkStatusDto>) => {
-       
         return res.isDone ? res.data as MasterConstructionWorkStatusDto : null
-
       })
     );
   }
+
   GetLicenseProjectEngineeringRelativeWeight(licenseProjectId: string, pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectEngineeringRelativeWeightDto[]>| null> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("licenseProjectId", licenseProjectId);
@@ -51,7 +48,6 @@ export class QualityAndBusinessProgressService {
     queryParams = queryParams.append("pageSize", pageSize);
     return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectEngineeringRelativeWeightDto[]>>>(`${Configuration.APIs.QualityAndBusinessProgress.GetLicenseProjectEngineeringRelativeWeight}`, { params: queryParams }).pipe(
       map((res: CoreResponseDTO<Pagination<LicenseProjectEngineeringRelativeWeightDto[]>>) => {
-       
         return res.isDone? res.data as Pagination<LicenseProjectEngineeringRelativeWeightDto[]>: null
       })
     );
@@ -65,6 +61,7 @@ export class QualityAndBusinessProgressService {
         })
       )
   } 
+
   SavelicenseProjectRelativeWeightRates(list: ConstructionWorkStatusCreateUpdateDto[]): Observable<CoreResponseDTO<any> | null> {
     return this._httpClient.post<CoreResponseDTO<any>>
       (Configuration.APIs.QualityAndBusinessProgress.SavelicenseProjectRelativeWeightRates, list).pipe(
@@ -73,4 +70,5 @@ export class QualityAndBusinessProgressService {
         })
       )
   } 
+
 }

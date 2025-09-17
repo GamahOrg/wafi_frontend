@@ -1,0 +1,161 @@
+
+<form class="d-flex flex-column h-100" [formGroup]="
+    actualInfrastructureForm
+  " id="form-actualInfrastructureForm">
+    <h3 class="title">{{ "نظرة عامة" }}</h3>
+    <div class="card com-reg-card position-relative z-2">
+        <div class="card-body">
+            <div class="tab-data-section">
+                <div class="row mb-3">
+                    <div class="col-12 col-lg-6">
+                        <div class="key">الشهر</div>
+                        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.monthName}}</div>
+                    </div>
+                  
+                    <div class="col-12 col-lg-6">
+                        <div class="key">مقاول البنية التحتية</div>
+                        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.infrastructureContractor}}</div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="key">استشاري أعمال البنية التحتية</div>
+                        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.infrastructureConsultant}}</div>
+                    </div>
+                  
+                    <div class="col-12 col-lg-6">
+                        <div class="key">تكلفة أعمال البنية التحتية (ر.س.) </div>
+                        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.infrastructureCost}}</div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <div class="key">تاريخ بداية الأعمال التعاقدي </div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.contractualStartDate |date:'yyyy/MM/dd'}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">تاريخ نهاية الأعمال التعاقدي </div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.contractualFinishDate|date:'yyyy/MM/dd'}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">مدة اعمال البنية التحتيه</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.contractualInfrastructureWorksDuration}}</div>
+                  </div>
+                  <div class="col-6 col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">التمديد المعتمد</label>
+                        <input type="number" id="control-approvedExtension" class="form-control"
+                            formControlName="approvedExtension"
+                            placeholder="التمديد المعتمد" />
+                        <div class="invalid-feedback d-block" *ngIf="
+  controls.approvedExtension?.hasError('required') && showValidation
+">
+                            حقل مطلوب
+                        </div>
+                    </div>
+                </div>
+                
+                  <div class="col-12 col-lg-6">
+                      <div class="key">التاريخ النهائي التعاقدي المعدل بناء علي التمديد المعتمد</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.contractualEndDateAdjustedBasedOnApprovedExtension|date:'yyyy/MM/dd'}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">تاريخ بداية الأعمال الفعلي </label>
+                        <div class="input-group">
+                            <input 
+                            type="date" id="control-actualStartDate"
+                                   class="form-control"
+                                   formControlName="actualStartDate"
+                                   value="{{ controls.actualStartDate.value | date:'yyyy-MM-dd' }}">
+                            <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                        </div>
+                        <mat-error *ngIf="controls.actualStartDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    </div>
+                  </div>
+                  
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">تاريخ النهاية المتوقع من تحديث البرنامج الزمني</label>
+                        <div class="input-group">
+                            <input 
+                            type="date" id="control-forecastCompletionDate"
+                                   class="form-control"
+                                   formControlName="forecastCompletionDate"
+                                   value="{{ controls.forecastCompletionDate.value | date:'yyyy-MM-dd' }}">
+                            <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                        </div>
+                        <mat-error *ngIf="controls.forecastCompletionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                    </div>
+                  </div>
+                
+                  <div class="col-12 col-lg-6">
+                      <div class="key">المدة المنقضية من المشروع </div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.projectDuration}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">نسبةالمدة المنقضية من المشروع </div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.projectDurationPercentage}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">المدة المتبقية من المشروع </div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.projectRemaining}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">نسبةالمدة المتبقية من المشروع </div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.projectRemainingPercentage}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">التأخير</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.delay}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">نسبة الإنجاز المخططة الشهرية</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.infrastructureMonthlyPlannedCompletionRate}}</div>
+                  </div>
+
+                  <div class="col-6 col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">نسبة الإنجاز الفعلية الشهرية</label>
+                        <input type="number" id="control-actualInfrastructureMonthlyPlannedCompletionRate" class="form-control"
+                            formControlName="actualInfrastructureMonthlyPlannedCompletionRate"
+                            placeholder="نسبة الإنجاز الفعلية الشهرية" />
+                        <div class="invalid-feedback d-block" *ngIf="
+  controls.actualInfrastructureMonthlyPlannedCompletionRate?.hasError('required') && showValidation
+">
+                            حقل مطلوب
+                        </div>
+                    </div>
+                </div>
+                 
+                  <div class="col-12 col-lg-6">
+                      <div class="key">التباين</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.contrast}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">نسبة الإنجاز المخططة الشهريةالتراكمي</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.totalInfrastructureMonthlyPlannedCompletionRate}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">نسبة الإنجاز الفعلية الشهريةالتراكمي</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.totalActualInfrastructureMonthlyPlannedCompletionRate}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">التباين</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.totalContrast}}</div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                      <div class="key">معدل الاداء الزمني</div>
+                      <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructure?.timePerformanceRate}}</div>
+                  </div>
+              </div>
+              </div>
+        </div>
+    </div>
+
+</form>
+
+
+
+
+
+
+
+

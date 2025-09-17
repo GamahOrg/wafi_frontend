@@ -1,0 +1,32 @@
+<section *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList && licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList.length > 0">
+    <div class="card"
+         *ngFor="let notesData of licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList">
+        <div class="card-body">
+            <div class="results-wrapper">
+                <div class="results-info">
+                  
+                    <h6 class="title">
+                         <span class="name">{{notesData.ownerTypeId == ownerTypes.ProjectManager? 'ملاحظات مدير المشروع ' : 'ملاحظات المهندس المسئول' }}</span>
+                       
+                    </h6>
+                    <span class="date">
+                        <i class="material-icons">calendar_month</i>
+                        {{notesData.createdOn | date:"MM/dd/yyyy"}}
+                    </span>
+                </div>
+
+                <div class="notes"
+                     >
+                    <div class="note"
+                         [innerHTML]="notesData.notes"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList?.length == 0" >
+    
+        <p class="text-success mt-3"
+           >لا يوجد ملاحظات على الطلب
+        </p>
+ </section>

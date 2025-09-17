@@ -13,14 +13,17 @@ export class VerticalTabsComponent {
 
   subscriptions: Subscription[] = [];
   tabContent: Tabs = new Tabs();
+  
   constructor(
     private _tabsService: TabsService,
     private requestTimelineService: RequestTimelineService
   ) {}
+
   ngOnInit(): void {
     this.observeVerticalTabsContent();
     this.observeActiveVerticalTabIndex();
   }
+
   observeVerticalTabsContent(): void {
     this.subscriptions.push(
       this._tabsService
@@ -31,10 +34,12 @@ export class VerticalTabsComponent {
         })
     );
   }
+
   updateActiveTabIndex(index: number) {
     this.tabContent.activeTabIndex = index;
     this._tabsService.updateActiveVerticalTabIndex(index);
   }
+
   observeActiveVerticalTabIndex() {
     this.subscriptions.push(
       this._tabsService.getActiveVerticalTabIndex().subscribe((res: number) => {
@@ -47,4 +52,5 @@ export class VerticalTabsComponent {
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+
 }

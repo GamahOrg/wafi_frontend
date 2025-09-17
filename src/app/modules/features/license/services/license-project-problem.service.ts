@@ -9,6 +9,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LicenseProjectProblemsCountsDto } from '../dataModels/license-project-problems-counts-dto';
 import { LicenseProjectProblemDto } from '../dataModels/license-project-problem-dto';
 import { LicenseProjectProblemCreateUpdateDto } from '../dataModels/license-project-problem-create-update-dto';
+import { LicenseProjectProblemReplyDto } from '../../engineering-management/models/license-project-problem-dto';
 
 @Injectable()
 export class LicenseProjectProblemService {
@@ -59,7 +60,9 @@ export class LicenseProjectProblemService {
     );
    }
 
-  
+   saveLicenseProjectProblemReply(model: LicenseProjectProblemReplyDto): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.post<CoreResponseDTO<any>>(`${Configuration.APIs.LicenseProjectProblem.SaveLicenseProjectProblemReply}`, model);
+  }
 
    save(licenseProjectProblemCreateUpdate: LicenseProjectProblemCreateUpdateDto): Observable<CoreResponseDTO<any> | null> {
     return this._httpClient.post<CoreResponseDTO<any>>

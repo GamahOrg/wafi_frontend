@@ -7,6 +7,7 @@ import { LicenseProjectBuyerListComponent } from '../../components/license-proje
 import { LicenseDepositDocumentComponent } from '../../components/license-deposit-document/license-deposit-document.component';
 import { LicenseProjectExchangeDocumentListComponent } from '../../components/license-project-exchange-document-list/license-project-exchange-document-list.component';
 import { PeriodicCharteredAccountantReportComponent } from '../../components/periodic-chartered-accountant-report/periodic-chartered-accountant-report.component';
+import { AccountantMonthlySupervisionReportsComponent } from '../accountant-monthly-supervision-reports/accountant-monthly-supervision-reports.component';
 
 @Component({
   selector: 'app-License-project-accountant',
@@ -21,6 +22,7 @@ export class LicenseProjectAccountantComponent implements OnInit, OnDestroy {
     disbursementDocuments: "وثائق الصرف",
     depositDocuments: "وثائق الايداع",
     charteredAccountReport: "تقارير المحاسب القانوني",
+    monthlyAccountantReports: "تقرير المحاسب القانوني الشهري",
   };
   tabContent: Tabs = {
     verticalTabs: false,
@@ -51,6 +53,13 @@ export class LicenseProjectAccountantComponent implements OnInit, OnDestroy {
         icon: '',
         title: this.localization.charteredAccountReport,
         Component: PeriodicCharteredAccountantReportComponent,
+        disabled: false,
+        isVisible: true,
+      },
+      {
+        icon: '',
+        title: this.localization.monthlyAccountantReports,
+        Component: AccountantMonthlySupervisionReportsComponent,
         disabled: false,
         isVisible: true,
       },

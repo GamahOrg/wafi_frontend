@@ -1,0 +1,153 @@
+
+            <div class="tab-data-section">
+                <div class="row mb-3">
+
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            الشهر
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.monthName
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            القسم
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.elementName
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            تكلفة القسم
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.weightCost
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            الوزن النسبي
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.elementValue
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            نسبة الإنجاز المخطط الشهرية
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.monthlyPlannedCompletionPercentage
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            نسبة الإنجاز المخطط التراكمي
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.constructionWorkStatusCompletionRate
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            نسبة الإنجاز الفعلى الشهرية
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.actualMonthlyPlannedCompletionPercentage
+                            }}
+                        </div>
+                    </div>
+                  
+
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            نسبة الإنجاز الفعلى التراكمي
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.actualConstructionWorkStatusCompletionRate
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            التباين
+                        </div>
+                        <div class="value" [ngClass]="contrastCompletionRateColor">
+                            {{
+                            constructionWorkStatusActual?.contrastCompletionRate
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            إجمالي تكلفة القسم
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.allWeightCost
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            إجمالي نسبة الانجاز المخطط التراكمي
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.totalConstructionWorkStatusCompletionRate
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            إجمالي نسبة الانجاز الفعلى التراكمي
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.totalActualConstructionWorkStatusCompletionRate
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            إجمالي التباين
+                        </div>
+                        <div class="value"  [ngClass]="totalContrastCompletionRateColor">
+                            {{
+                            constructionWorkStatusActual?.totalContrastCompletionRate
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
+                        <div class="key">
+                            الملاحظات
+                        </div>
+                        <div class="value">
+                            {{
+                            constructionWorkStatusActual?.notes
+                            }}
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>

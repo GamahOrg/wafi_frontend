@@ -1067,6 +1067,10 @@ export class LincenseDetailsComponent {
       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
         this.selectedRequest.licenseProjectId
       );
+      this._sharedLicenseProjectService.setfacilityIdInLocalStorage(
+        this.selectedRequest.facilityId
+      );
+      
       this._router.navigate([this.requestDetailsRoute]);
     }
   }

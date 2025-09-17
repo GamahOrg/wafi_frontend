@@ -1,0 +1,81 @@
+
+<form class="d-flex flex-column h-100" [formGroup]="monthlyEngineeringReportExternalExpensesForm"
+  id="form-monthlyEngineeringReportExternalExpensesForm">
+
+  <div class="tab-data-section">
+    <div class="row mb-3">
+ 
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">تاريخ الصرف</label>
+          <div class="input-group">
+          <input bsDatepicker
+                 type="text" id="control-expenseDate"
+                 class="form-control"
+                 placeholder="yyyy-mm-dd"
+                 formControlName="expenseDate"
+                 [value]="controls.expenseDate.value == '0001-01-01T00:00:00' ? getDateNow() : controls.expenseDate.value | date: 'dd/MM/yyyy' ">
+          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          </div>
+          <mat-error *ngIf="controls.expenseDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">المبلغ</label>
+          <input type="text" id="control-expectedConstructionCost" class="form-control" formControlName="amount"
+              placeholder="المبلغ">
+          <div class="invalid-feedback d-block" *ngIf="controls.amount?.hasError('required') && showValidation">
+      حقل مطلوب
+          </div>
+          <mat-error *ngIf="controls.amount?.hasError('pattern')">من فضلك قم بأدخال رقم صحيح</mat-error>
+        </div>
+      </div>
+
+       <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">البيان</label>
+          <input type="text" id="control-description" class="form-control" formControlName="description"
+            placeholder="البيان">
+          <div class="invalid-feedback d-block" *ngIf="controls.description?.hasError('required') && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div> 
+
+  <h6 class="title">{{'المرفقات '}}</h6>
+  <div class="tab-data-section">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <div class="key">المرفقات</div>
+          <div *ngIf="monthlyEngineeringReportExternalExpenses &&
+            monthlyEngineeringReportExternalExpenses.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments 
+            && monthlyEngineeringReportExternalExpenses.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments.length != 0">
+          <div class="value"
+            *ngFor="let file of monthlyEngineeringReportExternalExpenses.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a *ngIf="file && file.attachmentFile" id="link-file"
+              [href]="baseUrl + file.attachmentFile.filePath" target="_blank">
+              {{file.attachmentFile.fileDescription}}</a>
+          </div>
+        </div>
+          <app-file-uploader [data]="mueltiFilesUploaderData"
+            (fileUploaded)="onMonthlyEngineeringReportExternalExpensesAttachmentFilesUploaded($event)"></app-file-uploader>
+          <div class="invalid-feedback d-block"
+            *ngIf="(!licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments || licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments.length == 0) && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div> 
+
+</form>
+
+

@@ -1,4 +1,6 @@
 
+<button type="button" class="btn btn-primary my-4" (click)="backToList()">رجوع للقائمة</button>
+
 <section *ngIf="LicenseProjectTimeScheduleStudyNote && LicenseProjectTimeScheduleStudyNote.length > 0">
     <div class="card"
          *ngFor="let notesData of LicenseProjectTimeScheduleStudyNote">

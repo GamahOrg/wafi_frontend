@@ -22,3 +22,7 @@ export class SysLicenseRelativeWeightDto {
   referenceWeight: number = 0;
 }
 
+export interface LicenseProjectEngineeringConstructionWorkStatusDto {
+  licenseProjectId: string;
+  licenseProjectRelativeWeightId: string;
+}

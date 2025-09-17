@@ -14,12 +14,7 @@ export class LicenseProjectInfrastructureNetworksStatusService {
   private engineeringSupervisionPlannedReportDetailForInfrastructureMonthly = new BehaviorSubject<EngineeringSupervisionPlannedReportDetailForInfrastructureMonthlyDto|null>({} as EngineeringSupervisionPlannedReportDetailForInfrastructureMonthlyDto|null);
 
   private engineeringSupervisionPlannedReportDetailForInfrastructureMonthly$ = this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly.asObservable();
-  getEngineeringSupervisionPlannedReportDetailForInfrastructureMonthly(): Observable<EngineeringSupervisionPlannedReportDetailForInfrastructureMonthlyDto|null> {
-   return this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly$;
- }
- setEngineeringSupervisionPlannedReportDetailForInfrastructureMonthly(LatestValue: EngineeringSupervisionPlannedReportDetailForInfrastructureMonthlyDto) {
-   return this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly.next(LatestValue);
- }
+  
   constructor(private _httpClient: HttpClient) { }
   GetInfrastructureNetworksStatusByLicenseProjectEngineeringSupervisionPlannedReportDetailId(licenseProjectEngineeringSupervisionPlannedReportDetailId: string): Observable<LicenseProjectInfrastructureNetworksStatusDto[] | null> {
     return this._httpClient.get<CoreResponseDTO<LicenseProjectInfrastructureNetworksStatusDto[]>>
@@ -29,28 +24,40 @@ export class LicenseProjectInfrastructureNetworksStatusService {
         })
       )
   } 
-GetLicenseInfrastructureElement(monthDate:Date,licenseProjectlId:string): Observable<SysLicenseInfrastructureElementDto[] | null> {
-  return this._httpClient.get<CoreResponseDTO<SysLicenseInfrastructureElementDto[]>>
-    (`${Configuration.APIs.LicenseProjectInfrastructureNetworksStatus.GetLicenseInfrastructureElement}/${monthDate} /${licenseProjectlId}`).pipe(
-      map((res: CoreResponseDTO<SysLicenseInfrastructureElementDto[]>) => {
-        return res.isDone ? res.data as SysLicenseInfrastructureElementDto[] : null
-      })
-    )
-}
-Save(list: LicenseProjectInfrastructureNetworksStatusCreateUpdateDto[]): Observable<CoreResponseDTO<any> | null> {
-  return this._httpClient.post<CoreResponseDTO<any>>
-    (Configuration.APIs.LicenseProjectInfrastructureNetworksStatus.Save, list).pipe(
-      map((res: CoreResponseDTO<any>) => {
-        return res.isDone ? res.data : null
-      })
-    )
-}
-Delete(id: string): Observable<any> {
-  return this._httpClient.delete<any>
-    (`${Configuration.APIs.LicenseProjectInfrastructureNetworksStatus.Delete}?id=${id}`).pipe(
-      map((res: any) => {
-        return res;
-      })
-    )
-}
+
+  GetLicenseInfrastructureElement(monthDate:Date, licenseProjectlId:string): Observable<SysLicenseInfrastructureElementDto[] | null> {
+    return this._httpClient.get<CoreResponseDTO<SysLicenseInfrastructureElementDto[]>>
+      (`${Configuration.APIs.LicenseProjectInfrastructureNetworksStatus.GetLicenseInfrastructureElement}/${monthDate} /${licenseProjectlId}`).pipe(
+        map((res: CoreResponseDTO<SysLicenseInfrastructureElementDto[]>) => {
+          return res.isDone ? res.data as SysLicenseInfrastructureElementDto[] : null
+        })
+      )
+  }
+
+  Save(list: LicenseProjectInfrastructureNetworksStatusCreateUpdateDto[]): Observable<CoreResponseDTO<any> | null> {
+    return this._httpClient.post<CoreResponseDTO<any>>
+      (Configuration.APIs.LicenseProjectInfrastructureNetworksStatus.Save, list).pipe(
+        map((res: CoreResponseDTO<any>) => {
+          return res.isDone ? res.data : null
+        })
+      )
+  }
+
+  Delete(id: string): Observable<any> {
+    return this._httpClient.delete<any>
+      (`${Configuration.APIs.LicenseProjectInfrastructureNetworksStatus.Delete}?id=${id}`).pipe(
+        map((res: any) => {
+          return res;
+        })
+      )
+  }
+
+  getEngineeringSupervisionPlannedReportDetailForInfrastructureMonthly(): Observable<EngineeringSupervisionPlannedReportDetailForInfrastructureMonthlyDto|null> {
+    return this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly$;
+  }
+
+  setEngineeringSupervisionPlannedReportDetailForInfrastructureMonthly(LatestValue: EngineeringSupervisionPlannedReportDetailForInfrastructureMonthlyDto) {
+    return this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly.next(LatestValue);
+  }
+
 }

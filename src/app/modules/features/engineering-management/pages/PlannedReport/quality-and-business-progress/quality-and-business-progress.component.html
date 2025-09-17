@@ -1,0 +1,109 @@
+<div class="tab-data-section" *ngIf="years">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+      <select class="form-select" [(ngModel)]="currenrYear" (change)="onChangeYear($event)">
+        <option label="اختار سنه"></option>
+        <option *ngFor="let item of years" [value]="item">
+          {{ item }}
+        </option>
+      </select>
+    </div>
+    <div class="col-12 col-lg-6">
+       <button type="button" class="btn btn-primary" (click)="openAddEditEngineeringQualityAssuranceDialog()">تعديل بيانات  ضمان الجودة</button>
+    </div>
+    </div>
+  </div> 
+
+<h6 class="title">{{'ضمان الجودة '}}</h6>
+<div class="tab-data-section">
+  <div class="row mb-3">
+
+  <div class="table-responsive">
+    
+      <table class="table table-light" style="width:100%">
+
+        <tbody>
+            <tr>
+                <th> الشهر</th>
+                <td
+                *ngFor="let detail of licenseProjectEngineeringMonthlyConsultantStaffRatesList
+                let i=index;">
+                {{detail.monthName}}</td>
+            </tr>
+            <tr>
+                <th> كادر الاستشاري الشهري حسب خطة التواجد (مهندسين) </th>
+                <td
+                *ngFor="let detail of licenseProjectEngineeringMonthlyConsultantStaffRatesList
+                let i=index;">
+                {{detail.monthlyConsultantEngineerStaffAccordingPlan}}</td>
+            </tr>
+            <tr>
+                <th> كادر الاستشاري الشهري حسب خطة التواجد (مفتشين) </th>
+                <td
+                *ngFor="let detail of licenseProjectEngineeringMonthlyConsultantStaffRatesList
+                let i=index;">
+                {{detail.monthlyConsultantInspectorStaffAccordingPlan}}</td>
+            </tr>
+        </tbody>
+    </table> 
+  </div>
+  </div>
+</div>
+
+<div class="row row-gap-4">
+    <!-- <button type="button" class="btn btn-primary" (click)="openAddEditConstructionWorkStatusDialog()">اضافة</button> -->
+
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">اسم القسم</th>
+                    <th scope="col">تكلفة القسم</th>
+                    <th scope="col">الأوزان النسبية المقترحة</th>
+                    <th scope="col">العمليات</th>
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.elementName}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.weightCost}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.elementValue}}</span>
+                    </td>
+                    <td>
+                        <div class="col-12 col-lg-6">
+                            <button type="button" class="btn btn-primary" 
+                                    (click)="openAddEditConstructionWorkPositionDialog(comdata.id)"
+                                    [title]="'تعديل موقف أعمال الإنشاءات'">
+                                <i class="fa fa-edit fa-lg"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger me-3" 
+                                    (click)="deleteConstructionWorkStatus(comdata.id)"
+                                    [title]="'حذف موقف أعمال الإنشاءات'">
+                                <i class="fa fa-trash fa-lg"></i>
+                            </button>
+                         </div>
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>

@@ -1,0 +1,39 @@
+@import '/src/assets/styles/content/_timelines-files.scss';
+
+.actual-value-report-container {
+  .report-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    
+    @media print {
+      display: none !important;
+    }
+  }
+
+  .report-content {
+    width: 100%;
+    
+    @media print {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+}
+
+// PDF export specific styles
+@media print {
+  .actual-value-report-container {
+    .report-actions {
+      display: none !important;
+    }
+    
+    .report-content {
+      margin: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+  }
+}

@@ -51,11 +51,11 @@ export class RequestListComponent implements OnInit {
   get externalStatusId() {
     return internalStatusId;
   }
+  
   constructor(
     private _requestService: RequestService,
     private _router: Router,
-    private _paginationService: PaginationService,
-  ) {
+    private _paginationService: PaginationService) {
     this.maxDate.setDate(this.maxDate.getDate() + 5);
     this.bsInlineRangeValue = [this.bsInlineValue, this.maxDate];
   }
@@ -64,10 +64,11 @@ export class RequestListComponent implements OnInit {
     this.getQualificationRequests();
     this.watchPaginationActions();
   }
+
   getSearchText(event: Event) {
     this.searchText=(event.target as HTMLInputElement).value;
-
   }
+
   sortData(column: string) {
     if (this.currentSortColumn === column) {
       this.currentSortOrder = this.currentSortOrder === 'asc' ? 'desc' : 'asc';
@@ -77,10 +78,11 @@ export class RequestListComponent implements OnInit {
     }
     this.getQualificationRequests();
   }
-  search()
-  {
+
+  search(){
    this.getQualificationRequests();
   }
+
   getQualificationRequests() {
     this.subscriptions.push(
       this._requestService.getQualificationRequests(this.pagintationData.currentPage, this.pagintationData.pageSize,this.searchText,this.currentSortColumn , this.currentSortOrder)
@@ -89,6 +91,7 @@ export class RequestListComponent implements OnInit {
       })
     )
   }
+  
   //private methods
   private updateRequestList(TypeListView: Pagination<Request[]>): void {
     this.reqList = TypeListView;
@@ -105,6 +108,7 @@ export class RequestListComponent implements OnInit {
     this.pagintationData.totalCount = total
     this._paginationService.updatePaginationData(this.pagintationData);
   }
+
   navigateToDetails(request: Request) {
     this.selectedRequest = request;
     this.setSelectedRequestIdInLocalStorage();
@@ -114,6 +118,7 @@ export class RequestListComponent implements OnInit {
   routeToRequestDetails(): void {
     this._router.navigate([this.requestDetailsRoute]);
   }
+
   setSelectedRequestIdInLocalStorage() {
     this._requestService.setSelectedRequestIdInLocalStorage(this.selectedRequest.id)
   }
@@ -122,6 +127,7 @@ export class RequestListComponent implements OnInit {
     this.watchPagechanged();
     this.watchPaginationClicked();
   }
+
   private watchPagechanged(): void {
     this.subscriptions.push(
       this._paginationService.getPageChanged().subscribe((pageNo) => {
@@ -129,6 +135,7 @@ export class RequestListComponent implements OnInit {
       })
     )
   }
+
   private watchPaginationClicked(): void {
     this.subscriptions.push(
       this._paginationService.getPageClicked().subscribe((nextPage: number) => {
@@ -139,11 +146,12 @@ export class RequestListComponent implements OnInit {
       })
     );
   }
+
   private loadNextPage(nextPage: number): void {
     this.pagintationData.currentPage = nextPage;
-
     this.getQualificationRequests()
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

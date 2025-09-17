@@ -45,21 +45,20 @@ export class AddEditItemsOnMonthComponent {
     this.observePopupEvents();
     this.getEngineerinSupervisionPlannedReportAllowToEdit();
   }
+
   get controls() {
     return this.itemsOnMonthForm.controls
   }
+
   getEngineerinSupervisionPlannedReportAllowToEdit() {
     this.subscriptions.push(
-
       this._licenseProjectEngineeringSupervisionPlannedReportDetailService.getEngineerinSupervisionPlannedReportAllowToEdit().subscribe((engineerinSupervisionPlannedReportAllowToEdit) => {
         this.engineerinSupervisionPlannedReportAllowToEdit = engineerinSupervisionPlannedReportAllowToEdit as boolean;
-
       })
     )
   }
 
   private getEngineeringSupervisionPlannedReportDetailForInfrastructureMonthly(): void {
-
     this.subscriptions.push(
       this._licenseProjectInfrastructureNetworksStatusService.getEngineeringSupervisionPlannedReportDetailForInfrastructureMonthly().subscribe((data: EngineeringSupervisionPlannedReportDetailForInfrastructureMonthlyDto | null) => {
         this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly = data as EngineeringSupervisionPlannedReportDetailForInfrastructureMonthlyDto;
@@ -68,15 +67,14 @@ export class AddEditItemsOnMonthComponent {
         }
       }));
   }
-  loadComponentData(): void {
 
+  loadComponentData(): void {
     const requests = [
       this._licenseProjectInfrastructureNetworksStatusService.GetLicenseInfrastructureElement(this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly?.monthDate as Date, this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly?.licenseProjectId as string),
       this._licenseProjectInfrastructureNetworksStatusService.GetInfrastructureNetworksStatusByLicenseProjectEngineeringSupervisionPlannedReportDetailId(this.engineeringSupervisionPlannedReportDetailForInfrastructureMonthly?.id as string),
     ];
     const subscriptions = forkJoin(requests).subscribe((results) => {
       if (results) {
-
         this.sysLicenseInfrastructureElementList = results[0] as SysLicenseInfrastructureElementDto[];
         this.licenseProjectInfrastructureNetworksStatusList = results[1] as LicenseProjectInfrastructureNetworksStatusDto[];
 
@@ -90,12 +88,10 @@ export class AddEditItemsOnMonthComponent {
       }
     });
     this.subscriptions.push(subscriptions);
-
   }
+
   addRow(): void {
-
     if (this.itemsOnMonthForm.valid) {
-
       let licenseProjectInfrastructureNetworksStatu = {} as LicenseProjectInfrastructureNetworksStatusDto;
       let itemsOnMonth = this.itemsOnMonthForm.value;
 
@@ -121,33 +117,27 @@ export class AddEditItemsOnMonthComponent {
       }
       this.licenseProjectInfrastructureNetworksStatusList.push(licenseProjectInfrastructureNetworksStatu);
       this.itemsOnMonthForm.reset();
-
-
     }
   }
-  save() {
 
-    if (this.licenseProjectInfrastructureNetworksStatusList && this.licenseProjectInfrastructureNetworksStatusList.length > 0) {
+  save() {
+    if(this.licenseProjectInfrastructureNetworksStatusList && this.licenseProjectInfrastructureNetworksStatusList.length > 0) {
       this.licenseProjectInfrastructureNetworksStatusCreateUpdateList = this.licenseProjectInfrastructureNetworksStatusList;
       this.subscriptions.push(
         this._licenseProjectInfrastructureNetworksStatusService.Save(this.licenseProjectInfrastructureNetworksStatusCreateUpdateList as LicenseProjectInfrastructureNetworksStatusCreateUpdateDto[]).subscribe(
           (res) => {
-
             this.showSuccess("تم حفظ بنود الشهر ");
             this.closeDialog();
-
-
           })
       )
     }
   }
-  delete(id: string, index: number) {
 
+  delete(id: string, index: number) {
     if (id) {
       this.subscriptions.push(
         this._licenseProjectInfrastructureNetworksStatusService.Delete(id).subscribe(res => {
           if (res.isDone)
-
             this.showSuccess("تم حذف البند من على الشهر");
           this.licenseProjectInfrastructureNetworksStatusList?.splice(index, 1);
         })
@@ -155,19 +145,19 @@ export class AddEditItemsOnMonthComponent {
     }
     else
       this.licenseProjectInfrastructureNetworksStatusList?.splice(index, 1);
-
   }
+
   showSuccess(message: string) {
     this._toastrNotificationService.showSuccess(message);
   }
+
   showError(message: string) {
     this._toastrNotificationService.showError(message);
   }
+
   observePopupEvents(): void {
     this.observeconfirmAction()
   }
-
-
 
   private observeconfirmAction() {
     this.subscriptions.push(
@@ -176,9 +166,11 @@ export class AddEditItemsOnMonthComponent {
       })
     )
   }
+
   private closeDialog(): void {
     this._popupService.dismissDialog()
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
   }

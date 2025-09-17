@@ -26,16 +26,17 @@ export class ShowDetailBuyerComponent {
   selectedBuyerType = LicenseProjectBuyerTypeEnum.Lands;
   userType?: string;
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
+
   constructor(
     private _licenseProjectBuyerService: LicenseProjectBuyerService,
     private _supervisionFollowUpCostsRatioService: SupervisionFollowUpCostsRatioService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-
     private datePipe: DatePipe,
     private _storageService: StorageService
   ) { this.getLoginUserType() }
+
   ngOnInit(): void {
-    this.getLicenseProjectBuyerIdStorage();
+    // this.getLicenseProjectBuyerIdStorage();
     this.getLicenseProjectIdStorage();
   }
 
@@ -53,6 +54,7 @@ export class ShowDetailBuyerComponent {
     this.licenseProjectBuyerId = this._licenseProjectBuyerService.getLicenseProjectBuyerIdStorage();
     this.getLicenseProjectBuyerDetail();
   }
+  
   private getLoginUserType(): void {
     this.userType = this._storageService.getLoginUserType() as string;
   }
@@ -64,13 +66,13 @@ export class ShowDetailBuyerComponent {
       }
     })
   }
-  private getLicenseProjectBuyerDetail() {
 
+  private getLicenseProjectBuyerDetail() {
     this.subscriptions.push(
       this._licenseProjectBuyerService.getLicenseProjectBuyerDetail(this.licenseProjectBuyerId as string).subscribe((res) => {
         this.licenseProjectBuyer = res as LicenseProjectBuyerDto;
         if (this.licenseProjectBuyer) {
-          this.onlicenseProjectypeChanged(this.licenseProjectBuyer.licenseProjectBuyerTypeId)
+          this.onLicenseProjecTypeChanged(this.licenseProjectBuyer.licenseProjectBuyerTypeId)
           // this.licenseProjectBuyer.priceAfterTax = this.licenseProjectBuyer.price * this.licenseProjectBuyer.currentTax;
           // this.licenseProjectBuyer.totalPrice = this.licenseProjectBuyer.price + this.licenseProjectBuyer.priceAfterTax;
 
@@ -92,17 +94,16 @@ export class ShowDetailBuyerComponent {
     )
   }
 
-  onlicenseProjectypeChanged(licensePTojectbuyerTypeId: number) {
-    if (licensePTojectbuyerTypeId == this.licenseProjectBuyerTypeEnum.Lands) {
+  onLicenseProjecTypeChanged(licenseProjectBuyerTypeId: number) {
+    if (licenseProjectBuyerTypeId == this.licenseProjectBuyerTypeEnum.Lands) {
       this.selectedBuyerType = LicenseProjectBuyerTypeEnum.Lands
     } else {
       this.selectedBuyerType = LicenseProjectBuyerTypeEnum.Units
     }
-    this.observelicenseProjectBuyerForm()
+    this.observeLicenseProjectBuyerForm()
   }
 
-  observelicenseProjectBuyerForm() {
-
+  observeLicenseProjectBuyerForm() {
     if (this.selectedBuyerType == this.licenseProjectBuyerTypeEnum.Units) {
       this.calcaulateRatiosForUnit();
     } else {

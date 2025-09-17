@@ -391,6 +391,14 @@ import { ShowDesignPhaseCreditsComponent } from './components/show-design-phase-
 import { AddEditProjectDeliveryPhaseApprovalsComponent } from './components/add-edit-project-delivery-phase-approvals/add-edit-project-delivery-phase-approvals.component';
 import { LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService } from './services/license-project-engineering-supervision-planned-monthly-report-study-note.service';
 import { ActualNotesComponent } from './components/actual-notes/actual-notes.component';
+import { RecordAddEditDangerLogComponent } from './components/record-dangers/record-add-edit-danger-log/record-add-edit-danger-log.component';
+import { RecordShowDangerLogComponent } from './components/record-dangers/record-show-danger-log/record-show-danger-log.component';
+import { RecordDangerLogComponent } from './components/record-dangers/record-danger-log/record-danger-log.component';
+import { AddEditMonthlyEngineeringReportExternalExpensesComponent } from './components/add-edit-monthly-engineering-report-external-expenses/add-edit-monthly-engineering-report-external-expenses.component';
+import { MonthlyEngineeringReportExternalExpensesService } from './services/monthly-engineering-report-external-expenses.service';
+import { AddEditConstructionWorkStatusComponent } from './components/add-edit-construction-work-status/add-edit-construction-work-status.component';
+import { LicenseProjectRelativeWeightService } from './services/licenseProjects/license-project-relative-weight.service';
+import { AccountantMonthlySupervisionReportsComponent } from './pages/accountant-monthly-supervision-reports/accountant-monthly-supervision-reports.component';
 
 @NgModule({
   declarations:[
@@ -656,7 +664,13 @@ import { ActualNotesComponent } from './components/actual-notes/actual-notes.com
     LincenseProjectZonesComponent,
     LicenseProjectZoneUnitComponent,
     LicenseProjectZoneUnitSubunitComponent,
-    LicenseProjectZoneSubunitModelComponent
+    LicenseProjectZoneSubunitModelComponent,
+    RecordAddEditDangerLogComponent,
+    RecordShowDangerLogComponent,
+    RecordDangerLogComponent,
+    AddEditMonthlyEngineeringReportExternalExpensesComponent,
+    AddEditConstructionWorkStatusComponent,
+    AccountantMonthlySupervisionReportsComponent
   ],
   providers: [
     LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService,
@@ -753,7 +767,9 @@ import { ActualNotesComponent } from './components/actual-notes/actual-notes.com
     LicenseProjectExchangeDocumentService,
     SupervisionFollowUpCostsRatioService,
     QualityAndBusinessProgressService,
-    SysProjectStatusService
+    SysProjectStatusService,
+    MonthlyEngineeringReportExternalExpensesService,
+    LicenseProjectRelativeWeightService,
   ],
   imports: [
     CommonModule,
@@ -761,10 +777,10 @@ import { ActualNotesComponent } from './components/actual-notes/actual-notes.com
     LicenseRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-
     // TranslateModule.forChild(),
     FormsModule
   ]
+
 })
-export class LicenseModule {
-}
+
+export class LicenseModule {}

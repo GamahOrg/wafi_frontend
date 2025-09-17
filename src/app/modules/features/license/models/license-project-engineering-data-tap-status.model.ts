@@ -5,13 +5,15 @@ export interface LicenseProjectEngineeringDataTapStatus {
 }
 export enum LicenseProjectEngineeringRequestStatus
 {
-    Draf = 0,
+    Draft = 0,
+    ///<summary>جديد</summary>
+    New = 1,
     ///<summary>تحت الدراسة</summary>
-    UnderStudy = 1,
+    UnderStudy = 2,
     ///<summary>يوجد الملاحظات</summary>
-    CustomerFeedback = 2,
+    CustomerFeedback = 3,
     ///<summary> تم ارسال معالجة الملاحظات</summary>
-    Compile = 3,
+    Compile = 4,
     ///<summary>تم الاعتماد</summary>
-    Certified = 4,
+    Certified = 5,
 }

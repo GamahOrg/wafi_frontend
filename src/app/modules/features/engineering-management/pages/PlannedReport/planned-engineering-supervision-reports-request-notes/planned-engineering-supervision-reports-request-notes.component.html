@@ -1,0 +1,23 @@
+<div class="d-flex flex-column h-100">
+    <div class="tab-data-section">
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th>الملاحظات</th>
+            
+            </tr>
+          </thead>
+          <tbody *ngIf="engineeringSupervisionPlannedReportStudyNoteList && engineeringSupervisionPlannedReportStudyNoteList.length">
+            <tr *ngFor="let engineeringSupervisionPlannedReportStudyNote of engineeringSupervisionPlannedReportStudyNoteList">
+              <td>
+                <div [innerHTML]="engineeringSupervisionPlannedReportStudyNote.notes"></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+  </div>
+  

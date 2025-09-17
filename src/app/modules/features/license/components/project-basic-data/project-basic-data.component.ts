@@ -16,6 +16,8 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
+import { LicenseNatureTypeListDto } from '../../models/license-nature-type-list-dto';
+import { LicenseNatureTypeEnum } from '../../enums/license-nature-type';
 
 @Component({
   selector: 'app-project-basic-data',
@@ -32,10 +34,12 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
   subCategories: ProjectSubCategoryDto[] = [];
   tempSubCategories: ProjectSubCategoryDto[] = [];
   projectSizeType = ProjectSizeEnum;
+  licenseNatureTypeEnum = LicenseNatureTypeEnum;
   licenseProjectScopes: DropDownNameDto[] = [];
   types: DropDownSubUnitTypeDto[] = [];
   showValidation: boolean = false;
   isExistingValidation: boolean = false;
+  licenseNatureType: LicenseNatureTypeListDto[] = [];
   multipleFileUploaderData: FileUploader = {
     multiple: true,
   } as FileUploader;
@@ -71,6 +75,7 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
     endOn: ['', [Validators.required]],
     achievementRate: [0, [Validators.min(0)]],
     engineeringConsultantReportFileId: [''],
+    licenseProjectNatureTypeId: [LicenseNatureTypeEnum.Units, [Validators.required]],
   }, { validators: dateValidator });
 
   get controls() {
@@ -88,14 +93,19 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
   }
 
   getCustomerData() {
-
     this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
       this.userData = res;
       this.isExistingValidation = this.userData?.isEmployee as boolean;
     })
   }
+  getLicenseNatureType(){
+    this._projectBasicDataService.GetLicenseNatureType().subscribe((res: LicenseNatureTypeListDto[]) => {
+      this.licenseNatureType = res;
+    })
+  }
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.getLicenseNatureType();
   }
 
   localization = {
@@ -136,6 +146,7 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
     next: 'التالي',
     previous: 'السابق',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
+    licenseNatureType: 'طبيعة المشروع',
   };
 
   private loadComponentData() {

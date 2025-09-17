@@ -24,13 +24,13 @@ export class TimelineProgramFilesComponent  implements OnInit , OnDestroy{
   timeshecdulestatuesId! : number | undefined
 
   localization = {
-    threeDReportFile : " االتفرير السردي",
+    threeDReportFile : "التقرير الثردي",
     generalSitePlanFile : "مخطط الموقع العام",
     primaveraFile : " البرنامج الزمني بصيغة البريمافيرا",
     scheduleFile :" البرنامج الزمني بصيغة pdf",
-    workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile : " منحني تقدم الأعمال (نسبة الإنجاز الشهرية والتراكمية) اكسيل",
-    cashFlowCurveFile : "منحني التدفقات النقدية - اكسيل",
-    employmentCountCurveFile : " منحني عدد العمالة - اكسيل",
+    workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile : " منحنى تقدم الأعمال (نسبة الإنجاز الشهرية والتراكمية) اكسيل",
+    cashFlowCurveFile : "منحنى التدفقات النقدية - اكسيل",
+    employmentCountCurveFile : " منحنى عدد العمالة - اكسيل",
     licenseProjectTimeScheduleOtherAttachments : "مرفقات اخري (يمكنك تحميل أي عدد من المرفقات)",
   }
   

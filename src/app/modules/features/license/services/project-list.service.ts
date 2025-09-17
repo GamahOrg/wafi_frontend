@@ -5,7 +5,7 @@ import { Pagination } from 'src/app/shared/models/pagination.model';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CustomerShortDto } from '../models/facility-short-dto';
-import { LicenseRequestHeaderDto } from '../dataModels/license-request-header-dto';
+import { LicenseRequestHeaderDto, ProjectLicenseRequestsParams } from '../dataModels/license-request-header-dto';
 
 @Injectable()
 export class ProjectListService {
@@ -22,17 +22,23 @@ export class ProjectListService {
   setProject(LatestValue: LicenseRequestHeaderDto) {
     return this.project.next(LatestValue);
   }
-  getEngineeringConsultantProjectsList( pageIndex: number, pageSize: number): Observable<Pagination<LicenseRequestHeaderDto[]>| null> {
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("pageIndex", pageIndex);
-    queryParams = queryParams.append("pageSize", pageSize);
-    return this._httpClient.get<CoreResponseDTO<Pagination<LicenseRequestHeaderDto[]>>>(`${Configuration.APIs.LicenseProject.GetEngineeringConsultantProjectsList}`, { params: queryParams }).pipe(
+  
+  getEngineeringConsultantProjectsList(params: ProjectLicenseRequestsParams): Observable<Pagination<LicenseRequestHeaderDto[]>| null> {
+    return this._httpClient.post<CoreResponseDTO<Pagination<LicenseRequestHeaderDto[]>>>(`${Configuration.APIs.LicenseProject.GetEngineeringConsultantProjectsList}`, params).pipe(
       map((res: CoreResponseDTO<Pagination<LicenseRequestHeaderDto[]>>) => {
-       
+        return res.isDone? res.data as Pagination<LicenseRequestHeaderDto[]>: null
+      })
+    );
+  }  
+  getDevelopereringConsultantProjectsList(params: ProjectLicenseRequestsParams): Observable<Pagination<LicenseRequestHeaderDto[]>| null> {
+    return this._httpClient.post<CoreResponseDTO<Pagination<LicenseRequestHeaderDto[]>>>(`${Configuration.APIs.LicenseProject.GetDeveloperProjectsList}`, params).pipe(
+      map((res: CoreResponseDTO<Pagination<LicenseRequestHeaderDto[]>>) => {
         return res.isDone? res.data as Pagination<LicenseRequestHeaderDto[]>: null
       })
     );
   }
+
+ 
   UpdateProjectManagerOnProject(projectManagerId:string,licenseProjectId:string) : Observable<CoreResponseDTO<any>> {
     return this._httpClient.get<CoreResponseDTO<any>>(`${Configuration.APIs.LicenseProject.UpdateProjectManagerOnProject}/${projectManagerId}/${licenseProjectId}`)
    }

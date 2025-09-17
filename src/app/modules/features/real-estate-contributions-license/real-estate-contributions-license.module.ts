@@ -331,6 +331,7 @@ import { ContractDocumentationListComponent } from './pages/contract-documentati
 import { LicenseProjectBuyerService } from './services/license-project-buyer.service';
 import { CharteredAccountProjectListComponent } from './pages/chareted-account-project-list/chartered-account-project-list/chartered-account-project-list.component';
 import { CertifiedLicenseDataComponent } from './components/certified-license-data/certified-license-data.component';
+import { AddInfrastructureRatesComponent } from '../license/components/add-infrastructure-rates/add-infrastructure-rates.component';
 // import { LicenseRequestApprovalsDetailsComponent } from './pages/license-request-approvals-details/license-request-approvals-details.component';
 
 @NgModule({
@@ -507,6 +508,7 @@ import { CertifiedLicenseDataComponent } from './components/certified-license-da
     AddEditConstructionWorkPositionComponent,
     CompletionRatesComponent,
     AddEditEngineeringInfrastructureRatesComponent,
+    AddInfrastructureRatesComponent,
     AddEditItemsOnMonthComponent,
     PositionOfTheRequiredAppropriationsFromTheAuthoritiesComponent,
     MonthlyEngineeringSupervisionReportsInfraStructureComponent,

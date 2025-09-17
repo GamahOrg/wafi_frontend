@@ -1,0 +1,39 @@
+@import "/src/assets/styles/custom-variables";
+@import '/src/assets/styles/bootstrap-custom/dropdown';
+
+
+.section {
+    border-radius: 12px, 12px, 8px, 8px;
+    box-shadow: 10px 5px 5px #0000000D;
+    height: 74px;
+    color: #076F42;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+label{
+font-family: Almarai;
+font-size: 14px;
+font-weight: 400;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: right;
+
+}
+
+.textarea{
+font-family: Almarai;
+font-size: 18px;
+font-weight: 700;
+line-height: 20px;
+letter-spacing: 0em;
+text-align: right;
+color: #333333;
+
+}
+
+textarea{
+    width: 50%;
+    height: 50%;
+}

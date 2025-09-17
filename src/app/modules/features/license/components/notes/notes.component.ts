@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TimelinefilesService } from '../../services/timeline-programFileServices/timelinefiles.service';
 import { Subscription } from 'rxjs';
-import { FilesData, LicenseProjectTimeScheduleOwnerType, LicenseProjectTimeScheduleStudyNoteDto } from '../../dataModels/filesdata/filesdata.model';
+import { LicenseProjectTimeScheduleOwnerType, LicenseProjectTimeScheduleStudyNoteDto } from '../../dataModels/filesdata/filesdata.model';
 
 @Component({
   selector: 'app-notes',
@@ -12,27 +12,27 @@ export class NotesComponent implements OnInit, OnDestroy {
   LicenseProjectTimeScheduleStudyNote! : LicenseProjectTimeScheduleStudyNoteDto[]
   subscriptions: Subscription[] = [];
   ownerTypes = LicenseProjectTimeScheduleOwnerType
-constructor(private _timelinefilesService : TimelinefilesService){
 
-}
+  constructor(private _timelinefilesService : TimelinefilesService){ }
 
-ngOnInit(): void {
-  this.getsubscribtionData()
+  ngOnInit(): void {
+    this.getsubscribtionData()
+  }
+
+  getsubscribtionData(){
+    this.subscriptions.push(
+      this._timelinefilesService.timeshecduledDetails$.subscribe(res=>{
+        this.LicenseProjectTimeScheduleStudyNote = res.licenseProjectTimeScheduleStudyNotes
+      })
+    )
+  }
+
+  backToList(): void {
+    this._timelinefilesService.returnToList.emit(true)
+  }
   
-}
-
-
-getsubscribtionData(){
-  this.subscriptions.push(
-    this._timelinefilesService.timeshecduledDetails$.subscribe(res=>{
-      this.LicenseProjectTimeScheduleStudyNote = res.licenseProjectTimeScheduleStudyNotes
-      console.log(res)
-    })
-  )
-}
-
-ngOnDestroy(): void {
-  this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-}
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+  }
 
 }

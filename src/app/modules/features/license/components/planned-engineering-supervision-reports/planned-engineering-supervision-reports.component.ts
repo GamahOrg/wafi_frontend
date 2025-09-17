@@ -23,23 +23,28 @@ import { RequestNotesService } from 'src/app/shared/services/requestNotes/reques
 import { PlannedEngineeringSupervisionReportsRequestNotesComponent } from '../planned-engineering-supervision-reports-request-notes/planned-engineering-supervision-reports-request-notes.component';
 import { EditorRequestNotesOnlyComponent } from 'src/app/shared/components/editor-request-notes-only/editor-request-notes-only.component';
 import { LicenseProjectEngineeringSupervisionPlannedReportStudyNoteCreateUpdateDto } from '../../dataModels/master-license-project-engineering-supervision-planned-report-dto';
+import { ProjectBasicDataService } from '../../services/licenseProjects/project-basic-data.service';
+import { SysLicenseProjectEngineeringRequestStatusDto } from '../../models/project-business-case-report-dto';
+import { LicenseProjectScopeEnum } from '../../../real-estate-contributions-license/dataModels/project-basic-data.dto';
+import { RequestApprovalComponent } from 'src/app/shared/components/request-approval/request-approval.component';
+import { SysRequestApprovalService } from 'src/app/shared/services/sysRequestApproval/sysRequestApproval.service';
+import { SysRequestApprovalActionTypeEnum, SysRequestApprovalTypeEnum } from 'src/app/shared/models/sys-request-approval.dto';
 
 @Component({
   selector: 'app-planned-engineering-supervision-reports',
   templateUrl: './planned-engineering-supervision-reports.component.html',
   styleUrls: ['./planned-engineering-supervision-reports.component.scss'],
 })
-export class PlannedEngineeringSupervisionReportsComponent
-  implements OnInit, OnDestroy
+export class PlannedEngineeringSupervisionReportsComponent implements OnInit, OnDestroy
 {
   subscriptions: Subscription[] = [];
-  licenseProjectEngineeringRequestStatus =
-    LicenseProjectEngineeringRequestStatus;
+  isSuperstructureScope: boolean = false;
+  sysLicenseProjectEngineeringRequestStatus: SysLicenseProjectEngineeringRequestStatusDto | null = null;
+  licenseProjectEngineeringRequestStatus = LicenseProjectEngineeringRequestStatus;
   requestNotesData: RequestNotesData | undefined;
   RequestNotes: RequestNotesData | null = null;
   localization = {
-    PlannedEngineeringSupervisionReportsQualityAndBusinessProgress:
-      'الجودة و تقدم الأعمال',
+    PlannedEngineeringSupervisionReportsQualityAndBusinessProgress: 'الجودة و تقدم الأعمال',
     workStatusReports: 'ملخص حالة المشروع',
     infraStructure: 'البنية التحتية',
     projectDetails: 'تفاصيل المشروع',
@@ -59,9 +64,7 @@ export class PlannedEngineeringSupervisionReportsComponent
       },
       {
         icon: '',
-        title:
-          this.localization
-            .PlannedEngineeringSupervisionReportsQualityAndBusinessProgress,
+        title: this.localization.PlannedEngineeringSupervisionReportsQualityAndBusinessProgress,
         Component: QualityAndBusinessProgressComponent,
         disabled: false,
         isVisible: true,
@@ -89,57 +92,80 @@ export class PlannedEngineeringSupervisionReportsComponent
       },
     ],
   };
+
   noDataActions: Button[] = [];
   title: string = '';
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
-  licenseProjectEngineeringDataTapStatus: LicenseProjectEngineeringDataTapStatus | null =
-    null;
+  licenseProjectEngineeringDataTapStatus: LicenseProjectEngineeringDataTapStatus | null = null;
+
   constructor(
     private _tabsService: TabsService,
     private _licenseProjectEngineeringSupervisionPlannedReportDetailService: LicenseProjectEngineeringSupervisionPlannedReportDetailService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _popupService: PopupService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _requestNotesService: RequestNotesService
+    private _requestNotesService: RequestNotesService,
+    private _projectBasicDataService: ProjectBasicDataService,
+    private _sysRequestApprovalService: SysRequestApprovalService
   ) {}
 
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
     this.observePopupEvents();
     this.observeRequestNotes();
+    this.closeDialogWithData();
+    this.isApprovalRequired();
   }
 
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId =
-      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId) {
+      this.getEngineeringConsultantProjectsList();
       this.GetLicenseProjectEngineeringDataTapStatus();
     }
   }
-  public sendPlannedReport(): void {
+
+  getEngineeringConsultantProjectsList(): void {
     this.subscriptions.push(
-      this._licenseProjectEngineeringSupervisionPlannedReportDetailService
-        .SendPlannedReport(this.licenseProjectId as string)
+      this._projectBasicDataService.GetMainDataByLicenseProjectId(this.licenseProjectId as string)
         .subscribe((res) => {
-          if (res && res.isDone) {
-            this._toastrNotificationService.showSuccess(
-              'تم إرسال القيم المخطط غير مسموح بالتعديل علىها الان'
-            );
-            this._licenseProjectEngineeringSupervisionPlannedReportDetailService.setEngineerinSupervisionPlannedReportAllowToEdit(
-              false
-            );
+          if (res && res.data){
+            this.isSuperstructureScope = res.data.licenseProjectScope?.code == LicenseProjectScopeEnum.Superstructure;
+            res.data.supervisionReportStatus == null ? this.sysLicenseProjectEngineeringRequestStatus = null : this.sysLicenseProjectEngineeringRequestStatus = res.data.supervisionReportStatus
           }
         })
     );
   }
+
+  isApprovalRequired(){
+    this.subscriptions.push(
+      this._sysRequestApprovalService.isApprovalRequired.subscribe((isApprovalRequired) => {
+        if (isApprovalRequired) {
+          this.closeDialog();
+          this.sendPlannedReport();
+        }
+      })
+    );
+  }
+
+  public sendPlannedReport(): void {
+    this.subscriptions.push(
+      this._licenseProjectEngineeringSupervisionPlannedReportDetailService.SendPlannedReport(this.licenseProjectId as string).subscribe((res) => {
+          if (res && res.isDone) {
+            this._toastrNotificationService.showSuccess(
+              'تم إرسال القيم المخطط غير مسموح بالتعديل علىها الان'
+            );
+            this._licenseProjectEngineeringSupervisionPlannedReportDetailService.setEngineerinSupervisionPlannedReportAllowToEdit(false);
+          }
+        })
+    );
+  }
+
   private GetLicenseProjectEngineeringDataTapStatus(): void {
     this.subscriptions.push(
       this._licenseProjectEngineeringSupervisionPlannedReportDetailService
-        .GetLicenseProjectEngineeringDataTapStatus(
-          this.licenseProjectId as string
-        )
+        .GetLicenseProjectEngineeringDataTapStatus(this.licenseProjectId as string)
         .subscribe((res: LicenseProjectEngineeringDataTapStatus | null) => {
-          console.log('res', res);
           // this._sharedLicenseProjectService.updateLicenseProjectEngineeringDataTapStatus(res);
           this.licenseProjectEngineeringDataTapStatus = res;
           // this.licenseProjectEngineeringDataTapStatus = { hasTimeSchedule: true, hasSupervisionPlannedReport: false }
@@ -149,8 +175,7 @@ export class PlannedEngineeringSupervisionReportsComponent
               this.title = 'من فضلك أدخل خط الأساس للمشروع';
               break;
             case this.licenseProjectEngineeringDataTapStatus?.hasTimeSchedule &&
-              !this.licenseProjectEngineeringDataTapStatus
-                ?.hasSupervisionPlannedReport:
+              !this.licenseProjectEngineeringDataTapStatus?.hasSupervisionPlannedReport:
               this.noDataActions = [
                 {
                   icon: '',
@@ -165,9 +190,9 @@ export class PlannedEngineeringSupervisionReportsComponent
               this.title =
                 'لقد مر تاريخ بداية الفترة التعاقدية للمشروع ويجب تسجيل تقرير استشاري الإشراف الهندسي المخطط ';
               break;
-            case this.licenseProjectEngineeringDataTapStatus?.hasTimeSchedule &&
-              this.licenseProjectEngineeringDataTapStatus
-                ?.hasSupervisionPlannedReport:
+            case this.licenseProjectEngineeringDataTapStatus?.hasTimeSchedule && 
+              this.licenseProjectEngineeringDataTapStatus?.hasSupervisionPlannedReport:
+
               this.noDataActions = [];
               this.title = '';
               this.updateTabContent();
@@ -176,6 +201,7 @@ export class PlannedEngineeringSupervisionReportsComponent
         })
     );
   }
+
   // helper methods
   public openCustomerNotesForEngineerRequestComponentDialog(): void {
     let Data = {
@@ -184,6 +210,22 @@ export class PlannedEngineeringSupervisionReportsComponent
       id: 'EditorRequestNotesOnlyComponent',
     } as PopupData;
     console.log('updatePopupData', Data);
+    this._popupService.updatePopupData(Data);
+  }
+
+  // helper methods
+  public openRequestApprovalComponentDialog(): void {
+    this._sysRequestApprovalService.setRequestApproval(
+      {
+        actionTypeId : SysRequestApprovalActionTypeEnum.SendRequest,
+        requestTypeId: SysRequestApprovalTypeEnum.PlannedValues,
+      }
+    );
+    let Data = {
+      title: 'اقرار',
+      component: RequestApprovalComponent,
+      id: 'RequestApprovalComponent',
+    } as PopupData;
     this._popupService.updatePopupData(Data);
   }
 
@@ -196,7 +238,6 @@ export class PlannedEngineeringSupervisionReportsComponent
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
-        console.log(res);
       })
     );
   }
@@ -204,10 +245,15 @@ export class PlannedEngineeringSupervisionReportsComponent
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        this.compilePlannedReport();
+        if (res.id === 'RequestApprovalComponent') {
+          this.isApprovalRequired();
+        } else {
+          this.compilePlannedReport();
+        }
       })
     );
   }
+  
   observeRequestNotes(): void {
     this.subscriptions.push(
       this._requestNotesService.RequestNotes$.subscribe(
@@ -217,10 +263,10 @@ export class PlannedEngineeringSupervisionReportsComponent
       )
     );
   }
+
   private compilePlannedReport(): void {
     if (this.RequestNotes) {
-      let note =
-        {} as LicenseProjectEngineeringSupervisionPlannedReportStudyNoteCreateUpdateDto;
+      let note = {} as LicenseProjectEngineeringSupervisionPlannedReportStudyNoteCreateUpdateDto;
       note.notes = this.RequestNotes?.notes as string;
       note.licenseProjectId = this.licenseProjectId as string;
       note.id = '00000000-0000-0000-0000-000000000000';
@@ -240,21 +286,37 @@ export class PlannedEngineeringSupervisionReportsComponent
   private closeDialog(): void {
     this._popupService.dismissDialog();
   }
+
+  closeDialogWithData(){
+    this.subscriptions.push(
+      this._popupService.closeDialog.subscribe((res: any) => {
+        if (res && this.licenseProjectEngineeringDataTapStatus) {
+          this.licenseProjectEngineeringDataTapStatus.hasSupervisionPlannedReport = true;
+          this.updateTabContent()
+        }
+        // this.GetLicenseProjectEngineeringDataTapStatus();
+      })
+    );
+  }
+
   private openAddEditEngineeringSupervisionReportsProjectDetailsDialog(): void {
     let Data = {
       title: 'تعديل بيانات المشروع',
       component: AddEditEngineeringSupervisionReportsProjectDetailsComponent,
       id: 'AddEditEngineeringSupervisionReportsProjectDetailsComponent',
     } as PopupData;
-    console.log('updatePopupData', Data);
     this._popupService.updatePopupData(Data);
   }
 
   private updateTabContent(): void {
+    if(this.isSuperstructureScope)
+      this.tabContent.tabsComponentList = this.tabContent.tabsComponentList.filter(x => x.title !== this.localization.infraStructure);
+
     this._tabsService.updateVerticalTabContent(this.tabContent);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+
 }

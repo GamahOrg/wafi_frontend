@@ -33,6 +33,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   baseImagePath: string = './assets/images/layout/sidebar/';
   userData: customerResponse | null = null;
   links = {
+    
     complaintsAndReport: `${Configuration.modules.wafi}/${Configuration.modules.complaintsAndReport}`,
     complaintsReports: `/${Configuration.pages.complaintsAndReport.complaintsReports}`,
     charteredaccountprojectlist: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.charteredaccount}`,
@@ -71,6 +72,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     lincenceProjectRequest: `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}`,
     lincenceProjectRequestList: `/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`,
     createLincenceProjectRequestList: `/${Configuration.pages.licenseProjectRequests.licenseProjectRequests}`,
+
+    developerProjects: `${Configuration.modules.engineeringManagement}/${Configuration.pages.license.developerProjectList}`,
   };
 
   constructor(

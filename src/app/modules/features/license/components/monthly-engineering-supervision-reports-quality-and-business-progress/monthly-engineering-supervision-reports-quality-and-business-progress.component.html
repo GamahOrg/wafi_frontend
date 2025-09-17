@@ -220,11 +220,9 @@
     </div>
   </div> 
 
+<hr>
 
-  <hr>
 <h3 class="title">{{'موقف أعمال الإنشاءات'}}</h3>
-<!--  <button type="button" class="btn btn-primary my-4" *ngIf="showRateFlag" (click)="openAddEditActualQualityControlDialog('')">إضافة </button> 
- -->
 <div class="row row-gap-4">
     <div class="table-responsive mb-3">
         <table class="table">
@@ -271,16 +269,113 @@
             </tbody>
         </table>
     </div>
+</div>
 
-    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
-        <app-pagination></app-pagination>
-    </div>
-    <ng-container *ngIf="reqList.totalCount === 0">
+<ng-container *ngIf="licenseProjectEngineeringActualRelativeWeightList && licenseProjectEngineeringActualRelativeWeightList.length === 0">
         <div class="mt-4">
             <app-no-data [showCompleteBtn]="false"></app-no-data>
         </div>
-    </ng-container>
+</ng-container>
+
+<hr/>
+
+<h3 class="title">وثائق الصرف من تقرير المحاسب القانوني</h3>
+<div class="row row-gap-4">
+        <div class="table-responsive mb-3" *ngIf="licenseProjectExchangeDocumentList.totalCount > 0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">البند الرئيسي</th>
+                        <th scope="col">البند الفرعي</th>
+                        <th scope="col">رقم الوثيقة</th>
+                        <th scope="col">تاريخ الصرف</th>
+                        <th scope="col">المبلغ</th>
+                        <th scope="col">تاريخ الاعتماد</th>
+                        <th scope="col">رقم الحساب الرئيسي</th>
+                        <th scope="col">رقم الحساب الفرعي</th>
+                        <th scope="col">البيان</th>
+                        <th scope="col">المستفيد</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let request of licenseProjectExchangeDocumentList?.results">
+                    <tr *ngIf="request">
+                        <td>{{request.mainItem.name}}</td>
+                        <td>{{request.subItem.name}}</td>
+                        <td>{{request.documnetNumber}}</td>
+                        <td>{{request.exchangeDate | date:'dd-MM-yyyy'}}</td>
+                        <td>{{request.amount}}</td>
+                        <td>{{request.approvalDate | date:'dd-MM-yyyy'}}</td>
+                        <td>{{request.accountNumber}}</td>
+                        <td></td>
+                        <td>{{request.statment}}</td>
+                        <td>{{request.liceneProjectBeneficiaryType.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-auto" *ngIf="licenseProjectExchangeDocumentList.totalCount > 0">
+            <app-pagination></app-pagination>
+        </div>
+
+        <ng-container *ngIf="licenseProjectExchangeDocumentList.totalCount === 0">
+            <div class="mt-4">
+                <app-no-data [showCompleteBtn]="false"></app-no-data>
+            </div>
+        </ng-container>
+
 </div>
+
+<hr/>
+
+<h3 class="title">ما تم صرفه من خارج حساب الضمان</h3>
+<button type="button" class="btn btn-primary" (click)="openAddEditMonthlyEngineeringReportExternalExpensesDialog()">اضافة صرف من خارج حساب الضمان</button>
+<div class="row row-gap-4">
+        <div class="table-responsive mb-3" *ngIf="monthlyEngineeringReportExternalExpensesList.totalCount > 0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">تاريخ الصرف</th>    
+                        <th scope="col">المبلغ</th>
+                        <th scope="col">البيان</th>
+                        <th scope="col">المرفقات</th>
+                        <th scope="col">العمليات</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let item of monthlyEngineeringReportExternalExpensesList?.results">
+                    <tr *ngIf="item">
+                        <td>{{item.expenseDate | date:'dd-MM-yyyy'}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.description}}</td>
+                        <td>
+                            <div *ngFor="let attachment of item.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments">
+                                <a *ngIf="attachment && attachment.attachmentFile" id="link-file"
+                                    [href]="baseUrl + attachment.attachmentFile.filePath" target="_blank">
+                                    {{attachment.attachmentFile.fileDescription}}</a>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary mx-4" (click)="openAddEditMonthlyEngineeringReportExternalExpensesDialog(item.id)">تعديل </button>
+                            <button type="button"  class="btn btn-outline-primary" (click)="deleteMonthlyEngineeringReportExternalExpenses(item.id)">حذف</button> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-auto" *ngIf="monthlyEngineeringReportExternalExpensesList.totalCount > 0">
+            <app-pagination></app-pagination>
+        </div>
+
+        <ng-container *ngIf="monthlyEngineeringReportExternalExpensesList.totalCount === 0">
+            <div class="mt-4">
+                <app-no-data [showCompleteBtn]="false"></app-no-data>
+            </div>
+        </ng-container>
+
+</div>
+
+
 
 
 

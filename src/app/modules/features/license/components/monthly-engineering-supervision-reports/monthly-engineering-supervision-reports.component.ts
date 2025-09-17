@@ -7,11 +7,13 @@ import { MonthlyEngineeringSupervisionReportsInfraStructureComponent } from '../
 import { MonthlyEngineeringSupervisionReportsRisksAndSafetyComponent } from '../monthly-engineering-supervision-reports-risks-and-safety/monthly-engineering-supervision-reports-risks-and-safety.component';
 import { MonthlyengineeringSupervisionReportsProjectDetailsComponent } from '../monthlyengineering-supervision-reports-project-details/monthlyengineering-supervision-reports-project-details.component';
 import { MonthlyEngineeringSupervisionReportsQualityAndBusinessProgressComponent } from '../monthly-engineering-supervision-reports-quality-and-business-progress/monthly-engineering-supervision-reports-quality-and-business-progress.component';
-import { MonthlyEngineeringSupervisionReportsWorkStatusReportsComponent } from '../monthly-engineering-supervision-reports-work-status-reports/monthly-engineering-supervision-reports-work-status-reports.component';
 import { ShowActualValueWorkStatuesReportComponent } from '../show-actual-value-work-statues-report/show-actual-value-work-statues-report.component';
 import { ActualNotesComponent } from '../actual-notes/actual-notes.component';
 import { DangerLogComponent } from '../danger-log/danger-log.component';
 import { ProblemLogComponent } from '../problem-log/problem-log.component';
+import { LicenseProjectScopeEnum } from '../../../real-estate-contributions-license/dataModels/project-basic-data.dto';
+import { ProjectBasicDataService } from '../../services/licenseProjects/project-basic-data.service';
+import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 
 @Component({
   selector: 'app-monthly-engineering-supervision-reports',
@@ -20,6 +22,8 @@ import { ProblemLogComponent } from '../problem-log/problem-log.component';
 })
 export class MonthlyEngineeringSupervisionReportsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
+  licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
+  isSuperstructureScope: boolean = false;
 
   localization = {
     MonthlyEngineeringSupervisionReportsWorkStatusReports: "تقارير حالة الأعمال",
@@ -109,17 +113,44 @@ export class MonthlyEngineeringSupervisionReportsComponent implements OnInit, On
 
   constructor(
     private _tabsService: TabsService,
+    private _sharedLicenseProjectService: SharedLicenseProjectService,
+    private _projectBasicDataService: ProjectBasicDataService,
   ) { }
 
   ngOnInit(): void {
-    this.updateTabContent();
+    this.getLicenseProjectIdStorage();
+    // this.updateTabContent();
+  }
+
+  private getLicenseProjectIdStorage(): void {
+    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    if (this.licenseProjectId) {
+      this.getEngineeringConsultantProjectsList();
+      this.updateTabContent();
+    }
+  }
+
+  getEngineeringConsultantProjectsList(): void {
+    this.subscriptions.push(
+      this._projectBasicDataService.GetMainDataByLicenseProjectId(this.licenseProjectId as string)
+        .subscribe((res) => {
+          if (res && res.data){
+            this.isSuperstructureScope = res.data.licenseProjectScope?.code == LicenseProjectScopeEnum.Superstructure;
+            this.updateTabContent();
+          }
+        })
+    );
   }
 
   private updateTabContent(): void {
+    if(this.isSuperstructureScope)
+      this.tabContent.tabsComponentList = this.tabContent.tabsComponentList.filter(x => x.title !== this.localization.MonthlyEngineeringSupervisionReportsInfraStructure);
+
     this._tabsService.updateVerticalTabContent(this.tabContent);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+
 }

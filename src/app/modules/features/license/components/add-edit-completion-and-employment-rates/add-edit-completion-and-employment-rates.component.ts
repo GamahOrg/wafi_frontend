@@ -24,6 +24,10 @@ export class AddEditCompletionAndEmploymentRatesComponent {
   currenrYear?: number;
   years?: number[];
   cumulativeAmountPriorToThatYear?: number;
+  constructionCostBeforeThisYear?: number;
+  expectedConstructionCost: number = 0;
+  isExpectedConstructionCostError = false;
+  expectedConstructionCostDuringMonthValue: number = 0;
   licenseProjectEngineeringSupervisionPlannedReportForm =
     this._formBuilder.group({
       currenrYear: [0],
@@ -63,6 +67,7 @@ export class AddEditCompletionAndEmploymentRatesComponent {
       this.GetByLicenseProjectId();
     }
   }
+
   GetByLicenseProjectId() {
     this.subscriptions.push(
       this._licenseProjectEngineeringSupervisionPlannedReportDetailService
@@ -70,6 +75,7 @@ export class AddEditCompletionAndEmploymentRatesComponent {
         .subscribe((res) => {
           if (res) {
             this.showRateFlag = true;
+            this.expectedConstructionCost = res.expectedConstructionCost;
             this.years = this.getYearsBetween(
               new Date(res.startOn),
               new Date(res.endOn)
@@ -96,23 +102,26 @@ export class AddEditCompletionAndEmploymentRatesComponent {
           (
             res: MasterLicenseProjectEngineeringSupervisionPlannedDetailsDto | null
           ) => {
-            if (
-              res &&
-              res.licenseProjectEngineeringSupervisionPlannedReportDetails
-                .length > 0
-            ) {
-              this.cumulativeAmountPriorToThatYear =
-                res.cumulativeAmountPriorToThatYear;
+            if ( res && res.licenseProjectEngineeringSupervisionPlannedReportDetails .length > 0 ) {
+              this.cumulativeAmountPriorToThatYear = res.cumulativeAmountPriorToThatYear;
+              this.constructionCostBeforeThisYear = res.constructionCostBeforeThisYear;
               this.addValuesToArrayForm(
                 res.licenseProjectEngineeringSupervisionPlannedReportDetails,
-                res.cumulativeAmountPriorToThatYear
+                res.cumulativeAmountPriorToThatYear,
+                res.constructionCostBeforeThisYear
               );
             }
           }
         )
     );
   }
+
   save(): void {
+    if(this.expectedConstructionCostDuringMonthValue > this.expectedConstructionCost ){
+      this._toastrNotificationService.showError('التكلفة الانشائية المتوقعة التراكمية أكبر من التكلفة الانشائية للمشروع');
+      return;
+    }
+
     this.licenseProjectEngineeringSupervisionPlannedReportDetailList = this
       .licenseProjectEngineeringSupervisionPlannedReportForm.controls
       .licenseProjectEngineeringSupervisionPlannedReportDetails
@@ -145,6 +154,7 @@ export class AddEditCompletionAndEmploymentRatesComponent {
       );
     }
   }
+
   onChangeYear(data: any) {
     this.currenrYear = Number(data.target.value);
     this.save();
@@ -163,8 +173,9 @@ export class AddEditCompletionAndEmploymentRatesComponent {
 
   addValuesToArrayForm(
     licenseProjectEngineeringSupervisionPlannedReportDetailList: LicenseProjectEngineeringSupervisionPlannedReportDetailDto[],
-    cumulativeAmountPriorToThatYear: number
+    cumulativeAmountPriorToThatYear: number, constructionCostBeforeThisYear: number
   ) {
+
     this.licenseProjectEngineeringSupervisionPlannedReportForm.controls.licenseProjectEngineeringSupervisionPlannedReportDetails.clear();
     // Caculate the cumulative planned completionper centage
     licenseProjectEngineeringSupervisionPlannedReportDetailList.forEach(
@@ -174,12 +185,14 @@ export class AddEditCompletionAndEmploymentRatesComponent {
             (x: any) => x.monthDate === item.monthDate
           );
 
-        if (
-          item.id == '00000000-0000-0000-0000-000000000000' ||
-          item.projectMonthlyPlannedCompletionRate == null ||
-          item.projectMonthlyPlannedCompletionRate == 0
-        )
-          cumulativeAmountPriorToThatYear = 0;
+        if (item.id == '00000000-0000-0000-0000-000000000000' || item.projectMonthlyPlannedCompletionRate == null ||
+          item.projectMonthlyPlannedCompletionRate == 0 )
+          cumulativeAmountPriorToThatYear =  this.cumulativeAmountPriorToThatYear as number;
+
+        if (item.id == '00000000-0000-0000-0000-000000000000' || item.projectMonthlyPlannedMonthCost == null ||
+          item.projectMonthlyPlannedMonthCost == 0 )
+          constructionCostBeforeThisYear = this.constructionCostBeforeThisYear as number;
+
         if (currentIndex == 0) {
           let firstObj =
             licenseProjectEngineeringSupervisionPlannedReportDetailList[
@@ -188,6 +201,13 @@ export class AddEditCompletionAndEmploymentRatesComponent {
           firstObj.cumulativeplannedcompletionpercentage =
             (item.projectMonthlyPlannedCompletionRate as number) +
             cumulativeAmountPriorToThatYear;
+
+          firstObj.expectedConstructionCostDuringMonth =
+           (item.projectMonthlyPlannedMonthCost as number) +
+           constructionCostBeforeThisYear;
+          if (isNaN(firstObj.expectedConstructionCostDuringMonth)) 
+            firstObj.expectedConstructionCostDuringMonth = 0;
+ 
         } else {
           let lastobj =
             licenseProjectEngineeringSupervisionPlannedReportDetailList[
@@ -196,18 +216,27 @@ export class AddEditCompletionAndEmploymentRatesComponent {
           item.cumulativeplannedcompletionpercentage =
             (item.projectMonthlyPlannedCompletionRate as number) +
             (lastobj.cumulativeplannedcompletionpercentage as number);
+
+          item.expectedConstructionCostDuringMonth =
+           (item.projectMonthlyPlannedMonthCost as number) +
+           (lastobj.expectedConstructionCostDuringMonth as number);
+
+          if (isNaN(item.expectedConstructionCostDuringMonth) || item.expectedConstructionCostDuringMonth == 0) 
+           item.expectedConstructionCostDuringMonth = 0;
         }
+
         let currentobj = this._formBuilder.group({
           id: item.id,
           licenseProjectUnitId: this.licenseProjectId,
           monthDate: item.monthDate,
           monthName: item.monthName,
-          projectMonthlyPlannedCompletionRate:
-            item.projectMonthlyPlannedCompletionRate,
+          projectMonthlyPlannedCompletionRate: item.projectMonthlyPlannedCompletionRate,
           monthlyTotalPlannedEmployees: item.monthlyTotalPlannedEmployees,
-          cumulativeplannedcompletionpercentage:
-            item.cumulativeplannedcompletionpercentage,
+          cumulativeplannedcompletionpercentage: item.cumulativeplannedcompletionpercentage,
+          projectMonthlyPlannedMonthCost: item.projectMonthlyPlannedMonthCost,
+          expectedConstructionCostDuringMonth: item.expectedConstructionCostDuringMonth ?? 0
         });
+
         this.licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr.push(
           currentobj
         );
@@ -224,6 +253,7 @@ export class AddEditCompletionAndEmploymentRatesComponent {
       )
     );
   }
+
   private observelicenseProjectEngineeringSupervisionPlannedReport() {
     const projectMonthlyPlannedCompletionRateArray =
       this.licenseProjectEngineeringSupervisionPlannedReportForm.get(
@@ -231,8 +261,9 @@ export class AddEditCompletionAndEmploymentRatesComponent {
       ) as FormArray;
 
     projectMonthlyPlannedCompletionRateArray.valueChanges.subscribe((Arr) => {
-      console.log(Arr);
-      Arr.forEach((item: any) => {
+      // console.log(Arr);
+      for (let index = 0; index < Arr.length; index++) {
+        const item = Arr[index];
         if (item && item.projectMonthlyPlannedCompletionRate) {
           let currentIndex = Arr.findIndex(
             (x: any) => x.monthDate === item.monthDate
@@ -248,13 +279,76 @@ export class AddEditCompletionAndEmploymentRatesComponent {
               (item.projectMonthlyPlannedCompletionRate as number) +
               (lastValue.cumulativeplannedcompletionpercentage as number);
           }
+
+          // Update current item
+        this.licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr
+          .at(currentIndex)
+          .patchValue(newValue, { emitEvent: false });
+        
+        // Update all subsequent items (cascade the cumulative values)
+        for (let i = currentIndex + 1; i < Arr.length; i++) {
+          let subsequentItem = Arr[i];
+          let previousCumulative = Arr[i - 1].cumulativeplannedcompletionpercentage || 0;
+          let monthlyRate = subsequentItem.projectMonthlyPlannedCompletionRate || 0;
+          
+          subsequentItem.cumulativeplannedcompletionpercentage = 
+            (monthlyRate as number) + (previousCumulative as number);
+          
+          this.licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr
+            .at(i)
+            .patchValue(subsequentItem, { emitEvent: false });
+        }
+
+        }
+
+        if (item && item.projectMonthlyPlannedMonthCost) {
+          let currentIndex = Arr.findIndex(
+            (x: any) => x.monthDate === item.monthDate
+          ) as number;
+          let newValue = Arr[currentIndex];
+          if (currentIndex == 0)
+            newValue.expectedConstructionCostDuringMonth =
+              (item.projectMonthlyPlannedMonthCost as number) +
+              (this.constructionCostBeforeThisYear as number);
+          else {
+            let lastValue = Arr[currentIndex - 1];
+            newValue.expectedConstructionCostDuringMonth =
+              (item.projectMonthlyPlannedMonthCost as number) +
+              (lastValue.expectedConstructionCostDuringMonth as number);
+          }
+
+          this.expectedConstructionCostDuringMonthValue = newValue.expectedConstructionCostDuringMonth;
+          if(newValue.expectedConstructionCostDuringMonth > this.expectedConstructionCost && !this.isExpectedConstructionCostError){
+            this.isExpectedConstructionCostError = true;
+            this._toastrNotificationService.showError('التكلفة الانشائية المتوقعة التراكمية أكبر من التكلفة الانشائية للمشروع');
+            return;
+          }
+            
+          // Update current item
           this.licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr
             .at(currentIndex)
             .patchValue(newValue, { emitEvent: false });
+          
+          // Update all subsequent items (cascade the cumulative values)
+          for (let i = currentIndex + 1; i < Arr.length; i++) {
+            let subsequentItem = Arr[i];
+            let previousCumulative = Arr[i - 1].expectedConstructionCostDuringMonth || 0;
+            let monthlyRate = subsequentItem.projectMonthlyPlannedMonthCost || 0;
+
+            subsequentItem.expectedConstructionCostDuringMonth = 
+              (monthlyRate as number) + (previousCumulative as number);
+
+            this.licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr
+              .at(i)
+              .patchValue(subsequentItem, { emitEvent: false });
+          }
         }
-      });
+
+      }
     });
   }
+
+
   // popup
   observePopupEvents(): void {
     this.observecancelAction();

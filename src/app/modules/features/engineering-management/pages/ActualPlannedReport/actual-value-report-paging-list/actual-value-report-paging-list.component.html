@@ -1,0 +1,51 @@
+
+<button type="button" class="btn btn-primary my-4 me-2" *ngIf="isRefreshReport" (click)="openAddActualMonthesDialog()">تحديث التقرير</button>
+
+<button type="button" class="btn btn-success me-2" (click)="openExportReportDialog()">
+  <i class="fa fa-file-pdf-o"></i> تصدير PDF
+</button>
+
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">التاريخ</th>
+                    <th scope="col"> الشهر</th>
+                    <th scope="col"> الحالة</th>
+                    <th>العمليات</th>
+
+                   
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                    <td>
+                        <span class="text-dark">{{comdata.monthDate | date:'yyyy-MM-dd'}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata.monthName}}</span>
+                    </td>
+                    <td>
+                        <span class="text-dark">{{comdata?.supervisionPlannedReportStatus?.name}}</span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="getActualValueReportDetails(comdata)" >عرض التفاصيل</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+
+
+

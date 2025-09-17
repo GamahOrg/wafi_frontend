@@ -150,13 +150,17 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     maxLengthErrorMsg : "length must not be more than 20"
   };
 
+  facilityId: string = '00000000-0000-0000-0000-000000000000';
   private loadComponentData() {
-    let facilityId=this.userData?.isEmployee?'00000000-0000-0000-0000-000000000000':this.userData?.facilities[0].id!;
-
+    this.facilityId = this.userData?.isEmployee?'00000000-0000-0000-0000-000000000000':this.userData?.facilities[0].id!;
+    
+    if(this.facilityId == undefined || this.facilityId == '00000000-0000-0000-0000-000000000000')
+      this.facilityId = this._sharedLicenseProjectService.getFacilityIdFromLocalStorage() ?? '00000000-0000-0000-0000-000000000000'
+     
     const requests = [
       this._projectRealStateDeveloperService.GetProjectRealStateDeveloperByLicenseProjectId(this.licenseProjectId as string),
       // this._projectRealStateDeveloperService.GetSubCustomers(),
-      this._projectRealStateDeveloperService.GetFacilitySubCustomers(facilityId),
+      this._projectRealStateDeveloperService.GetFacilitySubCustomers(this.facilityId),
     ];
     const subscriptions = forkJoin(requests).subscribe((results) => {
       this.projectRealStateDeveloper = results[0] as ProjectRealStateDeveloperDto;

@@ -1,0 +1,17 @@
+<form class="d-flex flex-column h-100" [formGroup]="constructionWorkStatusForm" id="form-monthlyEngineeringReportExternalExpensesForm">
+
+  <div class="col-12 col-lg-6">
+    <label for="" class="form-label">الوزن النسبي</label>
+    <select class="form-select" formControlName="weightId">
+        <option label="-- اختار الوزن النسبي --"></option>
+        <option *ngFor="let weight of sysLicenseRelativeWeightList" [value]="weight.id">{{weight.elementName}}</option>
+    </select>
+    <div>
+        <p style="font-size: 10px; color: #b02a37;" *ngIf="controls.weightId?.hasError('required')&& showValidation">حقل مطلوب</p>
+    </div>
+  </div>
+
+  
+</form>
+
+

@@ -193,7 +193,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-6">
+          <div class="col-12 col-lg-12">
             <div class="form-group mb-4">
               <div class="key">إجمالي قيمة وحدات المشروع</div>
               <div *ngIf="periodicCharteredAccountantReport.totalUnitsAmount">
@@ -203,16 +203,20 @@
 
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
-              <label class="form-label">إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)</label>
-              <input type="number" id="control-totalCost" class="form-control" formControlName="totalCost"
-                placeholder="إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)">
-              <div class="invalid-feedback d-block" *ngIf="controls.totalCost?.hasError('required') && showValidation">
-                حقل مطلوب
-              </div>
-
+              <div class="key">اجمالي التكلفة الانشائية المتوقعة</div>
+              <div *ngIf="periodicCharteredAccountantReport.customer?.email">
+                {{periodicCharteredAccountantReport?.expectedConstructionCost}}</div>
             </div>
           </div>
           <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <div class="key">اجمالي التكلفة الانشائية الفعلية</div>
+              <div *ngIf="periodicCharteredAccountantReport.customer?.email">
+                {{periodicCharteredAccountantReport?.actualConstructionCost}}</div>
+            </div>
+          </div>
+
+          <!-- <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">التكلفة الانشائية المتوقعة</label>
               <input type="number" id="control-expectedConstructionCost" class="form-control"
@@ -223,7 +227,20 @@
               </div>
 
             </div>
+          </div> -->
+
+          
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)</label>
+              <input type="number" id="control-totalCost" class="form-control" formControlName="totalCost"
+                placeholder="إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)">
+              <div class="invalid-feedback d-block" *ngIf="controls.totalCost?.hasError('required') && showValidation">
+                حقل مطلوب
+              </div>
+            </div>
           </div>
+
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">هامش الربح المتوقع</label>
@@ -787,15 +804,43 @@
 
             </div>
           </div>
-          <div class="col-12 col-lg-6" *ngIf="periodicCharteredAccountantReport.periodOpeningBalance">
-            <div class="key">رصيد افتتاح الفترة</div>
-            <div>{{periodicCharteredAccountantReport.periodOpeningBalance}}</div>
+          <div class="col-12 col-lg-6" *ngIf="!periodicCharteredAccountantReport.periodOpeningBalance">
+            <div class="form-group mb-4">
+              <label class="form-label">رصيد الاغلاق بناء على كشف الحساب البنكي</label>
+              <input type="number" id="control-closingBalanceBasedOnBankStatement" class="form-control" (input)="calculateClosingBalance()"
+                formControlName="closingBalanceBasedOnBankStatement" placeholder="رصيد الاغلاق بناء على كشف الحساب البنكي">
+              <div class="invalid-feedback d-block"
+                *ngIf="!controls.closingBalanceBasedOnBankStatement && !periodicCharteredAccountantReport.periodOpeningBalance && showValidation">
+                حقل مطلوب
+              </div>
+            </div>
           </div>
+
+          <div class="tab-data-section" *ngIf="!periodicCharteredAccountantReport.periodOpeningBalance">
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label">الرجاء ارفاق كشف الحساب البنكي</label>
+                <app-file-uploader [data]="singleFilesUploaderData"
+                  (fileUploaded)="onBankStatementFileUploaded($event)"></app-file-uploader>
+                <div class="invalid-feedback d-block"
+                  *ngIf="(!bankStatementFileId) && showValidation">
+                  حقل مطلوب
+                </div>
+              
+              </div>
+            </div>
+          </div>
+
           <div class="col-12 col-lg-6">
-            <div class="key">رصيد اغلاق الفترة</div>
-            <div *ngIf="periodicCharteredAccountantReport.periodClosingBalance">
-              {{periodicCharteredAccountantReport.periodClosingBalance}}</div>
+            <div class="form-group mb-4">
+              <div class="key">فروقات رصيد الاغلاق</div>
+              <div>
+                {{calculateClosingBalanceResult}}
+              </div>
+            </div>
           </div>
+
+          
         </div>
       </div>
 
@@ -879,7 +924,8 @@
           </table>
         </div>
       </div>
-      <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
+
+      <!-- <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
         <h6 class="title">الإيداعات والدفعات</h6>
         <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
           <h6 class="title">جدول ادناه يوضح الإيداعات التي لم تظهر في حساب البنك حتى تاريخه</h6>
@@ -890,7 +936,8 @@
               <thead>
                 <tr>
                   <th>رقم الوحدة السكنية/نوع التكاليف</th>
-                  <th>رقم الشيك</th>
+                  <th>نوع الايداع</th>
+                  <th>رقم الحوالة البنكية / الشيك</th>
                   <th>تاريخ التوريد</th>
                   <th>المبلغ بالريال</th>
                   <th>تاريخ الايداع فى البنك</th>
@@ -903,6 +950,16 @@
                     <td>
                       <input type="text" id="control-unitCodeOrExpenseType{{i}}" class="form-control"
                         formControlName="unitCodeOrExpenseType">
+                    </td>
+                    <td>
+                      <div class="form-group mb-4">
+                        <select class="form-select" formControlName="sysDepositTypeId">
+                          <option label="اختر نوع الايداع" disabled></option>
+                          <option *ngFor="let type of sysDepositTypeList" [value]="type.id">
+                            {{ type.name }}
+                          </option>
+                        </select>
+                      </div>
                     </td>
                     <td>
                       <input type="number" id="control-checkNumber{{i}}" class="form-control"
@@ -945,7 +1002,8 @@
               <thead>
                 <tr>
                   <th>رقم الوحدة السكنية/نوع التكاليف</th>
-                  <th>رقم الشيك</th>
+                  <th>نوع الايداع</th>
+                  <th>رقم الحوالة البنكية / الشيك</th>
                   <th>تاريخ التوريد</th>
                   <th>المبلغ بالريال</th>
                   <th>تاريخ الايداع فى البنك</th>
@@ -958,6 +1016,16 @@
                     <td>
                       <input type="text" id="control-unitCodeOrExpenseType" class="form-control"
                         formControlName="unitCodeOrExpenseType">
+                    </td>
+                    <td>
+                      <div class="form-group mb-4">
+                        <select class="form-select" formControlName="sysDepositTypeId">
+                          <option label="اختر نوع الايداع" disabled></option>
+                          <option *ngFor="let type of sysDepositTypeList" [value]="type.id">
+                            {{ type.name }}
+                          </option>
+                        </select>
+                      </div>
                     </td>
                     <td>
                       <input type="number" id="control-checkNumber" class="form-control" formControlName="checkNumber">
@@ -988,12 +1056,14 @@
             </table>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="tab-data-section"
         *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint">
         <h6 class="title">القيود المالية</h6>
-        <div class="row mb-3">
+
+        <!-- <div class="row mb-3">
+
           <div class="col-12 col-lg-6">
             <div class="key">النسبة المسموح بها للمصاريف الإدارية والتسويقية</div>
             <div
@@ -1041,7 +1111,7 @@
             </div>
           </div>
 
-        </div>
+        </div> -->
 
         <div class="tab-data-section"
           *ngIf="periodicCharteredAccountantReport && periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint">

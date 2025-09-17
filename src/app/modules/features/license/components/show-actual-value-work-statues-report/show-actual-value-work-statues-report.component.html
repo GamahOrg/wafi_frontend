@@ -131,8 +131,9 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
  </div> 
   </div>
 </div> 
-<h3 class="title">{{'نسبة الانجاز الشهريه'}}</h3>
-<div class="tab-data-section">
+
+  <h3 class="title">{{'نسبة الانجاز الشهريه'}}</h3>
+  <div class="tab-data-section">
   <div class="row mb-3">
     <table class="table table-light" style="width:100%">
 
@@ -171,10 +172,12 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
 
   </div>
 
-</div>
-<hr>
-<h3 class="title">{{'نسبة الانجاز التراكميه'}}</h3>
-<div class="tab-data-section">
+  </div>
+
+  <hr>
+
+  <h3 class="title">{{'نسبة الانجاز التراكميه'}}</h3>
+  <div class="tab-data-section">
   <div class="row mb-3">
     <table class="table table-light" style="width:100%">
 
@@ -210,13 +213,92 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
       </tr> 
       </tbody>
   </table> 
+  </div>
+  </div>
+
+  <hr>
+
+  <h3 class="title">{{' التكلفة الانشائية الشهرية'}}</h3>
+  <div class="tab-data-section">
+  <div class="row mb-3">
+    <table class="table table-light" style="width:100%">
+
+      <tbody>
+          <tr>
+              <th> الشهر:</th>
+              <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+              let i=index;">
+              {{detail.monthName}}</td>
+          </tr>
+          <tr>
+              <th>  التكلفة الانشائية المتوقعة الشهرية : </th>
+              <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+              let i=index;">
+              {{detail.projectMonthlyPlannedMonthCost}}</td>
+          </tr>
+          <tr>
+            <th> التكلفة الانشائية الفعلية الشهرية : </th>
+            <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
+              {{detail.actualMonthCost}}
+            </td>
+        </tr>
+        <tr>
+          <th>   التباين : </th>
+          <td
+          *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
+          let i=index;">
+          {{detail.actualMonthCost - detail.projectMonthlyPlannedMonthCost}}</td>
+      </tr>
+      
+      </tbody>
+  </table> 
 
   </div>
 
-</div>
-<hr>
- <h3 class="title">{{' العماله'}}</h3>
- <div class="tab-data-section">
+  </div>
+  
+  <hr>
+  
+  <h3 class="title">{{' التكلفة الانشائية التراكمية'}}</h3>
+  <div class="tab-data-section">
+  <div class="row mb-3">
+    <table class="table table-light" style="width:100%">
+
+      <tbody>
+          <tr>
+              <th> الشهر:</th>
+              <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
+                {{detail.monthName}}
+              </td>
+          </tr>
+          <tr>
+              <th> التكلفة الانشائية التراكمية المتوقعة:</th>
+              <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
+                {{detail.totalPlannedCostToDate}}
+              </td>
+          </tr>
+          
+          <tr>
+            <th> التكلفة الانشائية الفعلية التراكميه:</th>
+            <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
+              {{detail.totalActualCostToDate}}
+            </td>
+        </tr>
+        <tr>
+          <th>   التباين : </th>
+          <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
+            {{detail.totalActualCostToDate - detail.totalPlannedCostToDate}}
+          </td>
+      </tr> 
+      </tbody>
+  </table> 
+  </div>
+  </div>
+
+  <hr>
+  
+  <h3 class="title">{{' العماله'}}</h3>
+  <div class="tab-data-section">
   <div class="row mb-3">
    <div class="table-responsive">
       <table class="table table-light" style="width:100%">
@@ -255,15 +337,11 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
     </table> 
   </div> 
   </div>
- </div>
+  </div>
 
-
- 
-
-
-<hr>
- <h3 class="title">{{'المرفقات '}}</h3>
-<div class="tab-data-section">
+  <hr>
+  <h3 class="title">{{'المرفقات '}}</h3>
+  <div class="tab-data-section">
   <div class="row mb-3">
     <div class="col-12 col-lg-6">
       <div class="form-group mb-4">
@@ -343,7 +421,7 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
       </div>
     </div> 
   </div>
-</div> 
+  </div> 
 </div>
 
 

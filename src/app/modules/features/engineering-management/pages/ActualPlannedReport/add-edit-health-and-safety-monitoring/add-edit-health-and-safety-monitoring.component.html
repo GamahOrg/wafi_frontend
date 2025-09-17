@@ -1,0 +1,150 @@
+<form class="d-flex flex-column h-100" [formGroup]="
+    licenseProjectHealthAndSafetyMonitoringForm
+  " id="form-licenseProjectHealthAndSafetyMonitoringForm">
+    <h3 class="title">{{ " إدارة الصحة والسلامة" }}</h3>
+    <div class="card com-reg-card position-relative z-2">
+        <div class="card-body">
+            <div class="tab-data-section">
+                <div class="row mb-3">
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label for="" class="form-label">موقف خطة الصحة والسلامة</label>
+                            <select class="form-select" formControlName="hsePlanStatusId">
+                                <option label="اختار موقف خطة  الصحة والسلامة" disabled></option>
+                                <option *ngFor="let status of licenseProjectQualityStatusList" [value]="status.id">
+                                    {{ status.statusName }}
+                                </option>
+                            </select>
+                            <mat-error *ngIf="controls.hsePlanStatusId.errors?.['required'] && showValidation">حقل
+                                مطلوب</mat-error>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">الإجراءات الوقائية التي يجب اتباعها</label>
+                            <textarea type="text" id="control-preventiveMeasures" class="form-control"
+                                formControlName="preventiveMeasures"
+                                placeholder="الإجراءات الوقائية التي يجب اتباعها"></textarea>
+                            <div class="invalid-feedback d-block" *ngIf="
+                  controls.preventiveMeasures?.hasError(
+                    'required'
+                  ) && showValidation
+                ">
+                                حقل مطلوب
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<hr>
+    <h3 class="title">{{ "مراقبة الصحة والسلامة" }}</h3>
+    <div class="card com-reg-card position-relative z-2">
+        <div class="card-body">
+            <div class="tab-data-section">
+                <div class="row mb-3">
+
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">عدد الحوادث الكبيرة في فترة التقرير</label>
+                            <input type="number" id="control-majorIncidentsAtReportDate" class="form-control"
+                                formControlName="majorIncidentsAtReportDate"
+                                placeholder="عدد الحوادث الكبيرة في فترة التقرير" />
+                            <div class="invalid-feedback d-block" *ngIf="
+                      controls.majorIncidentsAtReportDate?.hasError(
+                        'required'
+                      ) && showValidation
+                    ">
+                                حقل مطلوب
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">عدد الاصابات مع وقت ضائع في فترة التقرير</label>
+                            <input type="number" id="control-lostTimeInjuriesAtReportDate" class="form-control"
+                                formControlName="lostTimeInjuriesAtReportDate"
+                                placeholder="عدد الاصابات مع وقت ضائع في فترة التقرير" />
+                            <div class="invalid-feedback d-block" *ngIf="
+                      controls.lostTimeInjuriesAtReportDate?.hasError(
+                        'required'
+                      ) && showValidation
+                    ">
+                                حقل مطلوب
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">عدد تقارير الأخطاء القريبة في فترة التقرير</label>
+                            <input type="number" id="control-nearMissReportsAtReportDate" class="form-control"
+                                formControlName="nearMissReportsAtReportDate"
+                                placeholder="عدد تقارير الأخطاء القريبة في فترة التقرير" />
+                            <div class="invalid-feedback d-block" *ngIf="
+                      controls.nearMissReportsAtReportDate?.hasError(
+                        'required'
+                      ) && showValidation
+                    ">
+                                حقل مطلوب
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <div class="key">
+                            عدد الحوادث الكبيرة منذ بداية المشروع
+                        </div>
+                        <div class="value">
+                            {{
+                            licenseProjectHealthAndSafetyMonitoring?.totalMajorIncidentsAtReportDate
+                            }}
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-6">
+                        <div class="key">
+                            عدد الاصابات مع وقت ضائع منذ بداية المشروع
+                        </div>
+                        <div class="value">
+                            {{
+                            licenseProjectHealthAndSafetyMonitoring?.totalLostTimeInjuriesAtReportDate
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <div class="key">
+                            عدد تقارير الأخطاء القريبة منذ بدايه المشروع
+                        </div>
+                        <div class="value">
+                            {{
+                            licenseProjectHealthAndSafetyMonitoring?.totalNearMissReportsAtReportDate
+                            }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group mb-4">
+                            <label class="form-label">ملاحظات الصحة والسلامة</label>
+                            <textarea type="text" id="control-notes" class="form-control"
+                                formControlName="notes"
+                                placeholder="ملاحظات الصحة والسلامة"></textarea>
+                            <div class="invalid-feedback d-block" *ngIf="
+                  controls.notes?.hasError(
+                    'required'
+                  ) && showValidation
+                ">
+                                حقل مطلوب
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,271 @@
+
+    <div class="tab-data-section">
+      <div class="row mb-3">
+    
+      <div class="col-12 col-lg-6">
+        <button type="button" class="btn btn-primary" *ngIf="
+        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
+         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+         || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
+    
+     (click)="openAddEditActualInfrastructureDialog()">تعديل بيانات نظرة عامة</button>
+     </div> 
+      </div>
+    </div> 
+
+
+<h3 class="title">{{'نظرة عامة'}}</h3>
+<div class="tab-data-section">
+  <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+          <div class="key">الشهر</div>
+          <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.monthName}}</div>
+      </div>
+    
+      <div class="col-12 col-lg-6">
+          <div class="key">مقاول البنية التحتية</div>
+          <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.infrastructureContractor}}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+          <div class="key">استشاري أعمال البنية التحتية</div>
+          <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.infrastructureConsultant}}</div>
+      </div>
+    
+      <div class="col-12 col-lg-6">
+          <div class="key">تكلفة أعمال البنية التحتية (ر.س.) </div>
+          <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.infrastructureCost}}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">تاريخ بداية الأعمال التعاقدي </div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.contractualStartDate |date:'yyyy/MM/dd'}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">تاريخ نهاية الأعمال التعاقدي </div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.contractualFinishDate|date:'yyyy/MM/dd'}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">مدة اعمال البنية التحتيه</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.contractualInfrastructureWorksDuration}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">التمديد المعتمد</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.approvedExtension}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">التاريخ النهائي التعاقدي المعدل بناء علي التمديد المعتمد</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.contractualEndDateAdjustedBasedOnApprovedExtension|date:'yyyy/MM/dd'}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">تاريخ بداية الأعمال الفعلي </div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.actualStartDate|date:'yyyy/MM/dd'}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">تاريخ النهاية المتوقع من تحديث البرنامج الزمني</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.forecastCompletionDate|date:'yyyy/MM/dd'}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">المدة المنقضية من المشروع </div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.projectDuration}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">نسبةالمدة المنقضية من المشروع </div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.projectDurationPercentage}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">المدة المتبقية من المشروع </div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.projectRemaining}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">نسبةالمدة المتبقية من المشروع </div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.projectRemainingPercentage}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">التأخير</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.delay}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">نسبة الإنجاز المخططة الشهرية</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.infrastructureMonthlyPlannedCompletionRate}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">نسبة الإنجاز الفعلية الشهرية</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.actualInfrastructureMonthlyPlannedCompletionRate}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">التباين</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.contrast}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">نسبة الإنجاز المخططة الشهريةالتراكمي</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.totalInfrastructureMonthlyPlannedCompletionRate}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">نسبة الإنجاز الفعلية الشهريةالتراكمي</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.totalActualInfrastructureMonthlyPlannedCompletionRate}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">التباين</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.totalContrast}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">معدل الاداء الزمني</div>
+        <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.timePerformanceRate}}</div>
+    </div>
+</div>
+</div>
+
+
+
+<hr>
+
+
+    <div class="tab-data-section">
+      <div class="row mb-3">
+    
+      <div class="col-12 col-lg-6">
+        <button type="button" class="btn btn-primary" *ngIf="
+        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
+         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+         || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
+    
+     (click)="openAddConnectionWithServicesProviderDialog()">تعديل بيانات  موقف ربط الخدمات مع مزودي الخدمة للمشروع</button>
+     </div> 
+      </div>
+    </div> 
+    
+
+
+<h3 class="title">{{'موقف ربط الخدمات مع مزودي الخدمة للمشروع'}}</h3>
+<div class="tab-data-section">
+  <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+          <div class="key">الشهر</div>
+          <div class="value">{{licenseProjectConnectionWithServicesProvider?.monthName}}</div>
+      </div>
+    
+      <div class="col-12 col-lg-6">
+          <div class="key">حالة ربط الخدمة - كهرباء</div>
+          <div class="value">{{licenseProjectConnectionWithServicesProvider?.electricityTieConnectionStatus?.name}}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+          <div class="key">نوع الخدمة - كهرباء</div>
+          <div class="value">{{licenseProjectConnectionWithServicesProvider?.electricityServiceTypeStatus?.name}}</div>
+      </div>
+    
+      
+      <div class="col-12 col-lg-6">
+        <div class="key">تاريخ ربط الخدمة كهرباء المتوقع/الفعلى </div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.electricityTieConnectionDate |date:'yyyy/MM/dd'}}</div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">حالة تفعيل الخدمة -  كهرباء</div>
+            <div class="value">{{licenseProjectConnectionWithServicesProvider?.electricityConnectionStatus?.name}}</div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">ملاحظات الكهرباء</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.electricityNotes}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">حالة ربط الخدمة - مياه</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.waterTieConnectionStatus?.name}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">نوع الخدمة - مياه</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.waterServiceTypeStatus?.name}}</div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="key">تاريخ ربط الخدمة مياه المتوقع/الفعلى </div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.waterTieConnectionDate |date:'yyyy/MM/dd'}}</div>
+
+        <div class="col-12 col-lg-6">
+            <div class="key">حالة تفعيل الخدمة - مياه</div>
+            <div class="value">{{licenseProjectConnectionWithServicesProvider?.waterConnectionStatus?.name}}</div>
+        </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="key">ملاحظات مياه</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.waterNotes}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">حالة ربط الخدمة - صرف صحى</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.sewageTieConnectionStatus?.name}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">نوع الخدمة - صرف صحى</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.sewageServiceTypeStatus?.name}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">تاريخ ربط الخدمة صرف صحى المتوقع/الفعلى</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.sewageTieConnectionDate | date:'yyyy/MM/dd'}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">حالة تفعيل الخدمة - صرف صحى</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.sewageConnectionStatus?.name}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">ملاحظات صرف صحى</div>
+        <div class="value">{{licenseProjectConnectionWithServicesProvider?.sewageNotes}}</div>
+    </div>
+  
+</div>
+</div>
+</div>
+<hr>
+
+<h3 class="title">{{'موقف أعمال شبكات البنية التحتية'}}</h3>
+<div class="tab-data-section">
+  <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+          <div class="key">الشهر</div>
+          <div class="value">{{licenseProjectConnectionWithServicesProvider?.monthName}}</div>
+        </div>
+    </div>
+            <table class="table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th scope="col">النشاط</th>
+                        <th scope="col">تكلفة النشاط</th>
+                           <th scope="col">نسبة الانجاز المخططة الشهرية</th>
+                             <th scope="col">نسبة الانجاز الفعلي الشهري</th>
+                            <th scope="col">العمليات</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let actual of actualLicenseProjectInfrastructureNetworksStatusList">
+                    <tr *ngIf="actual">
+                        <td >
+                            <span class="text-dark">{{actual.elementName}}
+                            </span>
+                        </td>
+                        <td >
+                            <span class="text-dark">{{actual.itemCost}}
+                            </span>
+                        </td>
+                        <td >
+                            <span class="text-dark">{{actual.monthlyPlannedCompletionPercentage}}
+                            </span>
+                        </td>
+                        <td >
+                            <span class="text-dark">{{actual.actualMonthlyPlannedCompletionPercentage}}
+                            </span>
+                        </td>
+                      
+                        <td>
+                         
+                            <div class="d-flex align-items-center">
+                                <button type="button" class="btn btn-primary"*ngIf="
+                                actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
+                                 actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+                                 || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
+                            
+                              (click)="openAddEditeActualElementDialog(actual)" > تعديل </button>
+                                &nbsp;
+                                <button type="button" class="btn btn-primary" (click)="openShowDialog(actual)" > عرض </button>
+                        </div>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+      
