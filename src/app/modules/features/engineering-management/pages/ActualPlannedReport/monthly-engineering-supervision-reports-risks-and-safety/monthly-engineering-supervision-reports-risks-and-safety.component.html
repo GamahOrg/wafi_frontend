@@ -1,0 +1,69 @@
+<div  *ngIf="showRateFlag">
+    <div class="tab-data-section">
+      <div class="row mb-3">
+    
+      <div class="col-12 col-lg-6">
+        <button type="button" class="btn btn-primary" *ngIf="
+        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
+         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
+         || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
+    (click)="openAddEditHealthAndSafetyMonitoringComponentDialog()">تعديل بيانات الصحة والسلامة</button>
+     </div> 
+      </div>
+    </div> 
+    </div>
+
+
+<h3 class="title">{{' إدارة الصحة والسلامة '}}</h3>
+<div class="tab-data-section">
+  <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+          <div class="key">موقف خطة الصحة والسلامة</div>
+          <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.hsePlanStatus?.statusName}}</div>
+      </div>
+    
+      <div class="col-12 col-lg-6">
+          <div class="key">الإجراءات الوقائية التي يجب اتباعها</div>
+          <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.preventiveMeasures}}</div>
+      </div>
+      
+  </div>
+</div> 
+<hr>
+
+<h3 class="title">{{' مراقبة الصحة والسلامة '}}</h3>
+
+<div class="tab-data-section" >
+  <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+          <div class="key">عدد الحوادث الكبيرة في فترة التقرير</div>
+          <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.majorIncidentsAtReportDate}}</div>
+      </div>
+    
+      <div class="col-12 col-lg-6">
+          <div class="key"> عدد الاصابات مع وقت ضائع في فترة التقرير</div>
+          <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.lostTimeInjuriesAtReportDate}}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">عدد تقارير الأخطاء القريبة في فترة التقرير</div>
+        <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.nearMissReportsAtReportDate}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">عدد الحوادث الكبيرة منذ بداية المشروع</div>
+        <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.totalMajorIncidentsAtReportDate}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">عدد الاصابات مع وقت ضائع منذ بداية المشروع</div>
+        <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.totalLostTimeInjuriesAtReportDate}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">عدد تقارير الأخطاء القريبة منذ بدايه المشروع</div>
+        <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.totalNearMissReportsAtReportDate}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="key">ملاحظات الصحة والسلامة</div>
+        <div class="value">{{licenseProjectHealthAndSafetyMonitoring?.notes}}</div>
+    </div>
+  </div>
+</div> 
+

@@ -64,6 +64,7 @@ import { LicenseRequestTimelineComponent } from './components/license-request-ti
 import { RequestTimelineService } from './services/request-timeline/request-timeline.service';
 import { RealEstateLicenseRequestTimelineComponent } from './components/real-estate-license-request-timeline/real-estate-license-request-timeline.component';
 import { HorizontalTabsComponent } from './components/horizontal-tabs/horizontal-tabs.component';
+import { RequestApprovalComponent } from './components/request-approval/request-approval.component';
 
 export function getDatepickerConfig(): BsDatepickerConfig {
   return Object.assign(new BsDatepickerConfig(), {
@@ -104,6 +105,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     PilotLaunchHintComponent,
     LicenseRequestTimelineComponent,
     RealEstateLicenseRequestTimelineComponent,
+    RequestApprovalComponent
   ],
   imports: [
     CommonModule,
@@ -179,7 +181,8 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     NotificationListComponent,
     CircularProgressComponent,
     LicenseRequestTimelineComponent,
-    RealEstateLicenseRequestTimelineComponent
+    RealEstateLicenseRequestTimelineComponent,
+    RequestApprovalComponent
   ],
 })
 export class SharedModule {}

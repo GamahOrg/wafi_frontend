@@ -1,0 +1,70 @@
+<div class="row row-gap-4">
+
+    <table class="table">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">عدد التوصية / المقترح المغلقة</th>
+          <th scope="col">عدد التوصية / المقترح المفتوحة</th>
+          <th scope="col">عدد التوصية / المقترح الكلية</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center">
+          <td> {{recommendationNumberByStatus?.closeRecommendationNumber || 0}}</td>
+          <td>{{recommendationNumberByStatus?.openRecommendationNumber || 0}}</td>
+          <td>{{recommendationNumberByStatus?.totalRecommendationNumber || 0}}</td>
+        </tr>
+      </tbody>
+  
+    </table>
+  
+    <div *ngIf="recommendationList?.totalCount??0 > 0" class="table-responsive mb-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">كود التوصية</th>
+            <th scope="col">نص التوصية</th>
+            <th scope="col">تاريخ التنفيذ المتوقع</th>
+            <th scope="col">الحالة</th>
+            <th scope="col">الاجراءات</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let recommendation of recommendationList?.results">
+          <tr *ngIf="recommendation && recommendation.licenseProjectId">
+            <td>
+              <span class="text-dark">{{recommendation.code}} </span>
+            </td>
+            <td>
+              <span class="text-dark">{{recommendation.recommendationText}} </span>
+            </td>
+            <td>
+              <span class="text-dark">{{recommendation.executionDate | date:'yyyy-MM-dd'}}</span>
+            </td>
+            <td>
+              <span class="text-dark"> {{recommendation.status.name}} </span>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <!-- </div>
+              <div class="d-flex align-items-center"> -->
+                <button type="button" class="btn btn-primary" (click)="viewDialog(recommendation.id)"> عرض التوصية
+                </button>
+                <button *ngIf=" !isDeveloper && recommendation.status.id === sysStatusIssueTypeEnum.Open && recommendation.ownerTypeId === ownerTypeId.ProjectManager" type="button" class="btn btn-primary mx-4" (click)="sendNotificationDialog(recommendation.id)">
+                  ارسال رد
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="recommendationList?.totalCount??0 > 0" class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="recommendationList?.totalCount === 0">
+      <div class="mt-4">
+        <app-no-data [showCompleteBtn]="false"></app-no-data>
+      </div>
+    </ng-container>
+  </div>

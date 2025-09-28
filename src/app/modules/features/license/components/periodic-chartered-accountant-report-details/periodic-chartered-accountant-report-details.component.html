@@ -162,8 +162,12 @@
           <div class="value">{{ reportDetails?.totalCost }}</div>
         </div>
         <div class="col-12 col-lg-6">
-          <div class="key">التكلفة الانشائة المتوقعة</div>
+          <div class="key">اجمالي التكلفة الانشائة المتوقعة</div>
           <div class="value">{{ reportDetails?.expectedConstructionCost }}</div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="key">اجمالي التكلفة الانشائة الفعلية</div>
+          <div class="value">{{ reportDetails?.actualConstructionCost }}</div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="key">هامش الربح المتوقع</div>
@@ -509,6 +513,21 @@
           <div class="key">رصيد اغلاق الفترة</div>
           <div class="value">{{ reportDetails?.periodClosingBalance }}</div>
         </div>
+        <div class="col-12 col-lg-6">
+          <div class="key">رصيد الاغلاق بناء على كشف الحساب البنكى</div>
+          <div class="value">{{ reportDetails?.closingBalanceBasedOnBankStatement }}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+          <div class="key">فروقات رصيد الاغلاق</div>
+          <div class="value">{{ (reportDetails?.periodClosingBalance ?? 0) - (reportDetails?.closingBalanceBasedOnBankStatement ?? 0) }}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+          <div class="key">كشف الحساب البنكي</div>
+          <div class="value">
+                <a *ngIf="reportDetails?.bankStatementFile?.filePath" [href]="baseUrl + reportDetails?.bankStatementFile?.filePath" target="_blank">
+                {{ reportDetails?.bankStatementFile?.fileDescription }}
+                </a>
+          </div>
       </div>
     </div>
   </div>
@@ -573,7 +592,7 @@
   </div>
 
   <!--ملحق رقم 6: الإيداعات والدفعات-->
-  <div class="card mt-3" *ngIf="reportDetails?.periodicCharteredAccountantReportDeposits?.length">
+  <!-- <div class="card mt-3" *ngIf="reportDetails?.periodicCharteredAccountantReportDeposits?.length">
     <div class="tab-data-header">
       <div class="icon"><span class="material-icons">receipt</span></div>
       <h6 class="title">جدول ادناه يوضح الإيداعات التي لم تظهر في حساب البنك حتى تاريخه “يستطيع إضافة أكثر من
@@ -584,7 +603,8 @@
         <thead>
           <tr>
             <th>رقم الوحدة السكنية/نوع التكاليف</th>
-            <th>رقم الشيك</th>
+            <th>نوع الايداع</th>
+            <th>رقم الحوالة البنكية / الشيك</th>
             <th>تاريخ التوريد</th>
             <th>المبلغ بالريال</th>
             <th>تاريخ الايداع فى البنك</th>
@@ -593,6 +613,7 @@
         <tbody>
           <tr *ngFor="let payment of reportDetails?.periodicCharteredAccountantReportDeposits">
             <td>{{ payment?.unitCodeOrExpenseType }}</td>
+            <td>{{ payment?.sysDepositType?.name }}</td>
             <td>{{ payment?.checkNumber }}</td>
             <td>{{ payment?.supplyDate | date }}</td>
             <td>{{ payment?.riyalsAmount | currency }}</td>
@@ -602,6 +623,7 @@
       </table>
     </div>
   </div>
+
   <div class="card mt-3" *ngIf="reportDetails?.periodicCharteredAccountantReportBatches?.length">
     <div class="tab-data-header">
       <div class="icon"><span class="material-icons">receipt</span></div>
@@ -613,7 +635,8 @@
         <thead>
           <tr>
             <th>رقم الوحدة السكنية/نوع التكاليف</th>
-            <th>رقم الشيك</th>
+            <th>نوع الايداع</th>
+            <th>رقم الحوالة البنكية / الشيك</th>
             <th>تاريخ التوريد</th>
             <th>المبلغ بالريال</th>
             <th>تاريخ الخصم فى البنك</th>
@@ -622,6 +645,7 @@
         <tbody>
           <tr *ngFor="let payment of reportDetails?.periodicCharteredAccountantReportBatches">
             <td>{{ payment?.unitCodeOrExpenseType }}</td>
+            <td>{{ payment?.sysDepositType?.name }}</td>
             <td>{{ payment?.checkNumber }}</td>
             <td>{{ payment?.supplyDate | date }}</td>
             <td>{{ payment?.riyalsAmount | currency }}</td>
@@ -630,7 +654,8 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </div> -->
+
   <!--ملحق رقم 7: القيود المالية-->
   <div class="card mt-3">
     <div class="tab-data-header">
@@ -639,7 +664,8 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-12 col-lg-6">
+
+        <!-- <div class="col-12 col-lg-6">
           <div class="key">النسبة المسموح بها للمصاريف الإدارية والتسويقية</div>
           <div class="value">{{
             reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.allowablePercentageOfAdministrativeMarketingExpenses
@@ -673,7 +699,8 @@
           <div class="value">{{
             reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.percentageRequiredForSavingAccount }}
           </div>
-        </div>
+        </div> -->
+        
         <div class="col-12 col-lg-6">
           <div class="key">مبلغ الحافز</div>
           <div class="value">{{ reportDetails?.periodicCharteredAccountantReportFinancialConstraint?.incentiveAmount }}

@@ -7,11 +7,13 @@ import { PopupData } from 'src/app/shared/models/popup.model';
 import { Subscription } from 'rxjs';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { FilesData } from '../../dataModels/filesdata/filesdata.model';
+import { LicenseTimelineProgramDto } from '../../dataModels/filesdata/filesdata.model';
 import { environment } from 'src/environments/environment';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 import { LicenseProjectTimeScheduleOtherAttachment } from '../../../real-estate-contributions-license/models/license-project-time-schedule-other-attachment';
+import { SysRequestApprovalService } from 'src/app/shared/services/sysRequestApproval/sysRequestApproval.service';
+import { SysRequestApprovalActionTypeEnum, SysRequestApprovalDto, SysRequestApprovalTypeEnum } from 'src/app/shared/models/sys-request-approval.dto';
 
 @Component({
   selector: 'app-add-timeline-files',
@@ -21,10 +23,12 @@ import { LicenseProjectTimeScheduleOtherAttachment } from '../../../real-estate-
 export class AddTimelineFilesComponent implements OnInit, OnDestroy {
   baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
+  sysRequestApprovalList: SysRequestApprovalDto[] = [];
   licenseProjectId!: string | null;
   dateList!: string[]
   isFormSubmitted = false;
-  uploadedfiles!: FilesData;
+  uploadedfiles!: LicenseTimelineProgramDto;
+  
   filesdataForm = this._formBuilder.group({
     id: [''],
     licenseProjectId: [''],
@@ -38,8 +42,6 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
     employmentCountCurveFileId: ['', Validators.required],
     licenseProjectTimeScheduleOtherAttachments: [new Array<LicenseProjectTimeScheduleOtherAttachment>()],
     notes: ['']
-
-
   })
 
   mueltiFilesUploaderData: FileUploader = {
@@ -84,41 +86,38 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
   licensetimesceduleId!: string
 
   localization = {
-    threeDReportFile: " االتفرير السردي",
+    threeDReportFile: "التقرير الثردي",
     generalSitePlanFile: "مخطط الموقع العام",
     primaveraFile: " البرنامج الزمني بصيغة البريمافيرا",
     scheduleFile: " البرنامج الزمني بصيغة pdf",
-    workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile: " منحني تقدم الأعمال (نسبة الإنجاز الشهرية والتراكمية) اكسيل",
-    cashFlowCurveFile: "منحني التدفقات النقدية - اكسيل",
-    employmentCountCurveFile: " منحني عدد العمالة - اكسيل",
+    workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile: " منحنى تقدم الأعمال (نسبة الإنجاز الشهرية والتراكمية) اكسيل",
+    cashFlowCurveFile: "منحنى التدفقات النقدية - اكسيل",
+    employmentCountCurveFile: " منحنى عدد العمالة - اكسيل",
     licenseProjectTimeScheduleOtherAttachments: "مرفقات اخري (يمكنك تحميل أي عدد من المرفقات)",
     SaveSuccess: "تم الحفظ بنجاح",
     required: 'هذا الحقل مطلوب',
     fileType: 'يجب رفع ملف بصيغة',
-    requiredFiles: 'نأمل رفع جميع الملفات'
-
-
-
+    requiredFiles: 'نأمل رفع جميع الملفات',
+    approvalRequired: 'يجب الموافقة على الاقرار اولا',
   }
 
   constructor(private _timelinefilesService: TimelinefilesService, private _popupService: PopupService, private _toastrNotificatioService: ToastrNotificatioService, private _formBuilder: FormBuilder,
-    private _fileManagementService: FileManagementService, private _sharedLicenseProjectService: SharedLicenseProjectService
-  ) {
-    this.showDate = this._timelinefilesService.showDate;
+    private _fileManagementService: FileManagementService, 
+    private _sharedLicenseProjectService: SharedLicenseProjectService,
+    private _sysRequestApprovalService: SysRequestApprovalService) {
+      this.showDate = this._timelinefilesService.showDate;
   }
-
 
   ngOnInit(): void {
     this.getidValue()
     this.observeconfirmAction()
     this.getLicenseProjectIdStorage()
     this.getUploadedfiles()
-    this.isShowDaTa()
-
-
+    this.isShowData()
+    this.getSysRequestApproval()
   }
 
-  private isShowDaTa() {
+  private isShowData() {
     if (this.showDate) {
       this.getTimeScheduleMonthList()
       this.filesdataForm.controls.monthDate.addValidators(Validators.required);
@@ -127,18 +126,14 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
   }
 
 
-
   private getidValue() {
     this.filesdataForm.patchValue({ id: this._popupService.popupData.value.id })
-
   }
 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId)
       this.filesdataForm.patchValue({ licenseProjectId: this.licenseProjectId })
-
-
   }
 
   private getTimeScheduleMonthList() {
@@ -148,7 +143,6 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
       })
     )
   }
-
 
   onSelectedDateChanged(event: any) {
     if (event.target.value)
@@ -161,7 +155,6 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
 
   getUploadedfiles() {
     this.subscriptions.push(
-
       this._timelinefilesService.timeshecduledDetails$.subscribe(res => {
         this.uploadedfiles = res
       })
@@ -170,14 +163,11 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
   }
 
   ongeneralSitePlanFileUploaded($event: any) {
-
     this.filesdataForm.patchValue({ generalSitePlanFileId: $event.eventRes.data[0].id })
   }
 
   onthreeDReportFileUploaded($event: any) {
     this.filesdataForm.patchValue({ threeDReportFileId: $event.eventRes.data[0].id })
-
-
   }
 
   onprimaveraFileUploaded($event: any) {
@@ -186,9 +176,7 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
 
   onscheduleFileUploaded($event: any) {
     this.filesdataForm.patchValue({ scheduleFileId: $event.eventRes.data[0].id })
-
   }
-
 
   onworkProgressCurveMonthlyAndCumulativePercentageOfCompletionFileUploaded($event: any) {
     this.filesdataForm.patchValue({ workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId: $event.eventRes.data[0].id })
@@ -200,7 +188,6 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
 
   onemploymentCountCurveFileUploaded($event: any) {
     this.filesdataForm.patchValue({ employmentCountCurveFileId: $event.eventRes.data[0].id })
-
   }
 
   onlicenseProjectTimeScheduleOtherAttachmentsFileUploaded($event: any) {
@@ -223,7 +210,6 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
         this.save()
       })
     )
-
   }
 
   deletFile(controlName: string, id: any) {
@@ -245,11 +231,28 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
     this._popupService.dismissDialog()
   }
 
+  getSysRequestApproval(){
+    this.subscriptions.push(
+      this._sysRequestApprovalService.GetSysRequestApprovalList(SysRequestApprovalTypeEnum.TimeSchedule, SysRequestApprovalActionTypeEnum.SendRequest).subscribe(res => {
+        if(res && res.isDone)
+          this.sysRequestApprovalList = res.data as SysRequestApprovalDto[];
+      })
+    )
+  }
+
+  areAllItemsApproved(): boolean {
+    return this.sysRequestApprovalList.length > 0 && 
+           this.sysRequestApprovalList.every(item => item.isApproved === true);
+  }
 
   save() {
     this.isFormSubmitted = true;
-    console.log(this.filesdataForm);
 
+    if(!this.areAllItemsApproved()){
+      this._toastrNotificatioService.showError(this.localization.approvalRequired)
+      return;
+    }
+      
     if (!this.filesdataForm.valid) {
       this._toastrNotificatioService.showError(this.localization.requiredFiles)
       return;

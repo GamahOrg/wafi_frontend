@@ -6,6 +6,8 @@ import { BaseResponse } from '../../../shared/models/base-response';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CoreResponseDTO } from '../../models/core.model';
 import { LoginUserTypeEnum } from 'src/app/modules/auth/models/login.model';
+import { EmployeeRegistrationDto } from 'src/app/modules/features/license/models/employee-registration-dto';
+import { UserTypeEnum } from 'src/app/modules/features/engineering-management/enums/user-type.enum';
 
 @Injectable()
 export class UserDataService {
@@ -26,6 +28,19 @@ export class UserDataService {
       })
     )
   }
+
+  GetUserType(id:string): Observable<UserTypeEnum|null> {
+    return this._httpClient.get<BaseResponse<UserTypeEnum>>(`${Configuration.APIs.Customer.GetUserType}`+'/'+id).pipe(
+      map((res: BaseResponse<UserTypeEnum>) => {
+        if (res.data) {
+          return res.data as UserTypeEnum
+        } else {
+          return null
+        }
+      })
+    )
+  }
+
   // local Storage 
   setCustomerDataInLocalStorage(customerData: customerResponse): void {
     let customerDataStringified = JSON.stringify(customerData)
@@ -44,6 +59,11 @@ export class UserDataService {
   getCustomerData(): Observable<customerResponse | null> {
 
     return this.customerData$.asObservable()
+  }
+  getEmployeeDataFromLocalStorage(): EmployeeRegistrationDto | null {
+    let EmployeeData = localStorage.getItem('EmployeeData');
+    return EmployeeData && JSON.parse(EmployeeData)
+    // return this.EmployeeData$.asObservable()
   }
   updateCustomerData(customerData: customerResponse) {
     this.customerData$.next(customerData)

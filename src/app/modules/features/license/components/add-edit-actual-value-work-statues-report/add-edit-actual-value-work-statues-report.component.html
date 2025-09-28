@@ -16,15 +16,15 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
         </div>
          
         <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails && 
-        licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses && 
-        licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses.length !=0 && 
-        licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].cities">
+                                      licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses && 
+                                      licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses.length !=0 && 
+                                      licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].cities">
             <div class="key"> المدينة</div>
             <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].cities.cityName}}</div>
         </div>
   <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails && 
-  licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses && 
-  licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses.length !=0 ">
+                                licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses && 
+                                licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses.length !=0 ">
     <div class="key"> القطاع</div>
     <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectAddresses[0].neighborhoodName}}</div>
   </div>
@@ -210,18 +210,26 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
  <div class="row mb-3">
  <div class="col-12 col-lg-6">
   <div class="form-group mb-4">
-    <label class="form-label">التكلفة الفعلىة خلال الشهر (ريال سعودي)</label>
-    <input type="number" id="control-actualMonthCost" class="form-control" formControlName="actualMonthCost"
-      placeholder="التكلفة الفعلىة خلال الشهر (ريال سعودي)">
+    <label class="form-label">التكلفة الفعلية خلال الشهر (ريال سعودي)</label>
+    <input type="number" id="control-actualMonthCost" class="form-control" formControlName="actualMonthCost" placeholder="التكلفة الفعلىة خلال الشهر (ريال سعودي)">
     <div class="invalid-feedback d-block" *ngIf="controls.actualMonthCost?.hasError('required') && showValidation">
       حقل مطلوب
     </div>
-
   </div>
 </div>
- <div class="col-12 col-lg-6" *ngIf="totalActualCostToDate">
+<div class="col-12 col-lg-6">
+  <div class="key">التكلفة المتوقعة خلال الشهر (ريال سعودي)</div>
+  <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectEngineeringSupervisionActualMonthReportDetails.projectMonthlyPlannedMonthCost}}</div>
+</div>
+
+ <div class="col-12 col-lg-6">
   <div class="key" >إجمالي التكلفة الفعلىة حتى تاريخه (ريال سعودي)</div>
   <div class="value">{{totalActualCostToDate}}</div>
+ </div>
+
+<div class="col-12 col-lg-6">
+  <div class="key" >إجمالي التكلفة الفعلىة حتى تاريخه (ريال سعودي)</div>
+  <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectEngineeringSupervisionActualMonthReportDetails.totalPlannedCostToDate}}</div>
  </div>
 
  </div>

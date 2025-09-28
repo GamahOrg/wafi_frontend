@@ -1,6 +1,19 @@
 <div class="modal-body">
     <div class="tab-data-section">
         <div class="row mb-3">
+
+            <div class="col-12 col-lg-12">
+                <div class="form-group mb-4">
+                    <label class="form-label"> اسم المشروع</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.licenseProjectName }}
+                      </span>
+                    </div>
+                </div>
+            </div> 
+
+
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">رقم الهوية</label>
@@ -11,47 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
-                <div class="form-group mb-4">
-                    <label class="form-label"> البند</label>
-                    <div class="form-control-plaintext">
-                      <span>
-                        {{ selectedRequest?.mainItem }}
-                      </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="form-group mb-4">
-                    <label class="form-label"> وصف البند</label>
-                    <div class="form-control-plaintext">
-                      <span>
-                        {{ selectedRequest?.mianItemDescription }}
-                      </span>
-                    </div>
-                </div>
-            </div>  
-            <div class="col-12 col-lg-6">
-                <div class="form-group mb-4">
-                    <label class="form-label"> رقم الحساب الرئيسي</label>
-                    <div class="form-control-plaintext">
-                      <span>
-                        {{ selectedRequest?.accountNumber }}
-                      </span>
-                    </div>
-                </div>
-            </div> 
-            <div class="col-12 col-lg-6">
-                <div class="form-group mb-4">
-                    <label class="form-label"> اسم المشروع</label>
-                    <div class="form-control-plaintext">
-                      <span>
-                        {{ selectedRequest?.licenseProjectName }}
-                      </span>
-                    </div>
-                </div>
-            </div> 
-            <div class="col-12 col-lg-6">
+             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> اسم المشتري</label>
                     <div class="form-control-plaintext">
@@ -60,7 +33,29 @@
                       </span>
                     </div>
                 </div>
+            </div> 
+
+            <div (ngClass)="selectedRequest?.mianItemDescription == null ? 'col-12 col-lg-12' : 'col-12 col-lg-6'">
+                <div class="form-group mb-4">
+                    <label class="form-label"> المصدر</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.mainItem }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" *ngIf="selectedRequest?.mianItemDescription">
+                <div class="form-group mb-4">
+                    <label class="form-label"> وصف المصدر</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.mianItemDescription }}
+                      </span>
+                    </div>
+                </div>
             </div>  
+
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> رقم الوحدة</label>
@@ -81,6 +76,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> رقم العقد</label>
@@ -101,26 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
-                <div class="form-group mb-4">
-                    <label class="form-label"> البيان </label>
-                    <div class="form-control-plaintext">
-                      <span>
-                        {{ selectedRequest?.statment }}
-                      </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="form-group mb-4">
-                    <label class="form-label"> المبلغ </label>
-                    <div class="form-control-plaintext">
-                      <span>
-                        {{ selectedRequest?.amount }}
-                      </span>
-                    </div>
-                </div>
-            </div>  
+
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">الرقم المرجعى للايداع</label>
@@ -140,7 +117,171 @@
                       </span>
                     </div>
                 </div>
-            </div>        
+            </div>
+            
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> رقم الحساب الرئيسي</label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.accountNumber }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="form-group mb-4">
+                    <label class="form-label"> المبلغ </label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.amount }}
+                      </span>
+                    </div>
+                </div>
+            </div>  
+
+            <!-- الحسابات الفرعية -->
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label"> رقم حساب التكاليف الانشائية</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.constructionCostsAccountNumber }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label"> مبلغ الايداع في حساب التكاليف الانشائية </label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.constructionCostsAmount }}
+                  </span>
+                </div>
+              </div>
+            </div>  
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ (selectedRequest?.constructionCostsAvailableAmount ?? 0) - (selectedRequest?.constructionCostsAmount ?? 0) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.constructionCostsAvailableAmount }}
+                  </span>
+                </div>
+              </div>
+            </div>  
+
+              
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label"> رقم حساب الادارى والتسويقى</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.administrativeAndMarketingAccountNumber }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label"> مبلغ الايداع في حساب الاداري والتسويقي </label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.administrativeAndMarketingAmount }}
+                  </span>
+                </div>
+              </div>
+            </div>  
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ (selectedRequest?.administrativeAndMarketingAvailableAmount ?? 0) - (selectedRequest?.administrativeAndMarketingAmount ?? 0) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.administrativeAndMarketingAvailableAmount }}
+                  </span>
+                </div>
+              </div>
+            </div>  
+
+              
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label"> رقم حساب الحفظ</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.custodyAccountNumber }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label"> مبلغ الايداع في حساب الحفظ </label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.escrowAccountAmount }}
+                  </span>
+                </div>
+              </div>
+            </div>  
+
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ (selectedRequest?.custodyAvailableAmount ?? 0) - (selectedRequest?.escrowAccountAmount ?? 0) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                <label class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
+                <div class="form-control-plaintext">
+                  <span>
+                    {{ selectedRequest?.custodyAvailableAmount }}
+                  </span>
+                </div>
+              </div>
+            </div>  
+
+              
+            
+            <div class="col-12 col-lg-12">
+                <div class="form-group mb-4">
+                    <label class="form-label"> البيان </label>
+                    <div class="form-control-plaintext">
+                      <span>
+                        {{ selectedRequest?.statment }}
+                      </span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>  
 </div>

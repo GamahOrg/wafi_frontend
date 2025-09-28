@@ -1,0 +1,77 @@
+
+<form class="d-flex flex-column h-100" [formGroup]="
+    actualInfrastructureNetworksStatusForm
+  " id="form-actualInfrastructureNetworksStatusForm">
+    <div class="card com-reg-card position-relative z-2">
+        <div class="card-body">
+            <div class="tab-data-section">
+                <div class="row mb-3">
+                    <div class="col-12 col-lg-6">
+                        <div class="key">النشاط</div>
+                        <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.elementName}}</div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="key">تكلفة النشاط</div>
+                        <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.itemCost}}</div>
+                    </div>
+                  
+                    <div class="col-12 col-lg-6">
+                        <div class="key">نسبة الإنجاز المخطط الشهرية</div>
+                        <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.monthlyPlannedCompletionPercentage}}</div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <div class="key">نسبة الإنجاز المخطط التراكمي</div>
+                      <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.cumulativeplannedcompletionpercentage}}</div>
+                  </div>
+
+                  <div class="col-6 col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">نسبة الإنجاز الفعلى الشهرية</label>
+                        <input type="number" id="control-actualMonthlyPlannedCompletionPercentage" class="form-control"
+                            formControlName="actualMonthlyPlannedCompletionPercentage"
+                            placeholder="نسبة الإنجاز الفعلى الشهرية" />
+                        <div class="invalid-feedback d-block" *ngIf="
+  controls.actualMonthlyPlannedCompletionPercentage?.hasError('required') && showValidation
+">
+                            حقل مطلوب
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="key">نسبة الإنجاز الفعلي التراكمي</div>
+                    <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.cumulativeActualcompletionpercentage}}</div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <div class="key">التباين</div>
+                    <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.contrast}}</div>
+                </div>
+
+
+                <div class="col-6 col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="form-label">الملاحظات</label>
+                        <textarea type="text" id="control-notes" class="form-control"
+                            formControlName="notes"
+                            placeholder="الملاحظات" ></textarea>
+                        <div class="invalid-feedback d-block" *ngIf="
+  controls.notes?.hasError('required') && showValidation
+">
+                            حقل مطلوب
+                        </div>
+                    </div>
+                </div>
+              </div>
+              </div>
+        </div>
+    </div>
+
+</form>
+
+
+
+
+
+
+
+

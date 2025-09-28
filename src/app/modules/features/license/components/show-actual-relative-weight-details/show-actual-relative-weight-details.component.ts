@@ -67,7 +67,7 @@ contrastCompletionRateColor?:string;
   }
   getlicenseProjectActualRelativeWeightDetails() {
     this.subscriptions.push(
-      this._engineeringSupervisionReportActualQualityAndBusinessService.getlicenseProjectActualRelativeWeightDetails(this.licenseProjectId as string,this.licenseProjectEngineeringActualRelativeWeight?.licenseRelativeWeightId as string,this.monthDate as Date).subscribe(res => {
+      this._engineeringSupervisionReportActualQualityAndBusinessService.getLicenseProjectActualRelativeWeightDetails(this.licenseProjectId as string,this.licenseProjectEngineeringActualRelativeWeight?.licenseRelativeWeightId as string,this.monthDate as Date).subscribe(res => {
         if (res) {
         
          this.constructionWorkStatusActual=res as ConstructionWorkStatusActualDto; 

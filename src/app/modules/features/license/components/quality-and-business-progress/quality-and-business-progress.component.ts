@@ -11,6 +11,9 @@ import { PopupData } from 'src/app/shared/models/popup.model';
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
 import { AddEditEngineeringQualityAssuranceComponent } from '../add-edit-engineering-quality-assurance/add-edit-engineering-quality-assurance.component';
 import { AddEditConstructionWorkPositionComponent } from '../add-edit-construction-work-position/add-edit-construction-work-position.component';
+import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
+import { AddEditConstructionWorkStatusComponent } from '../add-edit-construction-work-status/add-edit-construction-work-status.component';
+import { LicenseProjectRelativeWeightService } from '../../services/licenseProjects/license-project-relative-weight.service';
 
 @Component({
   selector: 'app-quality-and-business-progress',
@@ -31,15 +34,18 @@ export class QualityAndBusinessProgressComponent {
     pageSize: 10,
     totalCount: 0,
   };
-  reqList: Pagination<LicenseProjectEngineeringRelativeWeightDto[]> =
-    {} as Pagination<LicenseProjectEngineeringRelativeWeightDto[]>;
+
+  reqList: Pagination<LicenseProjectEngineeringRelativeWeightDto[]> = {} as Pagination<LicenseProjectEngineeringRelativeWeightDto[]>;
   licenseProjectEngineeringMonthlyConsultantStaffRatesList?: LicenseProjectEngineeringMonthlyConsultantStaffRatesDto[];
+
   constructor(
     private _licenseProjectEngineeringSupervisionPlannedReportDetailService: LicenseProjectEngineeringSupervisionPlannedReportDetailService,
     private _qualityAndBusinessProgressService: QualityAndBusinessProgressService,
+    private _licenseProjectRelativeWeightService: LicenseProjectRelativeWeightService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _popupService: PopupService,
-    private _paginationService: PaginationService
+    private _paginationService: PaginationService,
+    private _toastrNotificationService: ToastrNotificatioService,
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +61,7 @@ export class QualityAndBusinessProgressComponent {
       this.GetLicenseProjectEngineeringDetails();
     }
   }
+
   GetLicenseProjectEngineeringDetails() {
     this.subscriptions.push(
       this._licenseProjectEngineeringSupervisionPlannedReportDetailService
@@ -88,21 +95,26 @@ export class QualityAndBusinessProgressComponent {
     const subscriptions = forkJoin(requests).subscribe((results) => {
       if (results) {
         if (results[0])
-          this.licenseProjectEngineeringMonthlyConsultantStaffRatesList =
-            results[0] as LicenseProjectEngineeringMonthlyConsultantStaffRatesDto[];
+          this.licenseProjectEngineeringMonthlyConsultantStaffRatesList = results[0] as LicenseProjectEngineeringMonthlyConsultantStaffRatesDto[];
         if (results[1])
-          this.updateRequestList(
-            results[1] as Pagination<
-              LicenseProjectEngineeringRelativeWeightDto[]
-            >
-          );
+          this.updateRequestList(results[1] as Pagination<LicenseProjectEngineeringRelativeWeightDto[]>);
       }
     });
     this.subscriptions.push(subscriptions);
   }
-  private updateRequestList(
-    TypeListView: Pagination<LicenseProjectEngineeringRelativeWeightDto[]>
-  ): void {
+
+  getLicenseProjectEngineeringRelativeWeightList() {
+    this.subscriptions.push(
+      this._qualityAndBusinessProgressService.GetLicenseProjectEngineeringRelativeWeight(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize)
+        .subscribe((res) => {
+          if (res) {
+            this.updateRequestList(res);
+          }
+        })
+    );
+  }
+
+  private updateRequestList(TypeListView: Pagination<LicenseProjectEngineeringRelativeWeightDto[]>): void {
     this.reqList = TypeListView;
     this.setPaginationData(
       this.reqList.pageSize,
@@ -110,16 +122,14 @@ export class QualityAndBusinessProgressComponent {
       this.reqList.pageCount
     );
   }
-  private setPaginationData(
-    pageSize: number,
-    total: number,
-    pageCount: number
-  ): void {
+
+  private setPaginationData(pageSize: number, total: number, pageCount: number): void {
     this.pagintationData.pageCount = pageCount;
     this.pagintationData.pageSize = pageSize;
     this.pagintationData.totalCount = total;
     this._paginationService.updatePaginationData(this.pagintationData);
   }
+
   onChangeYear(data: any) {
     this.currenrYear = Number(data.target.value);
     this.loadComponentData();
@@ -140,6 +150,7 @@ export class QualityAndBusinessProgressComponent {
     this.watchPagechanged();
     this.watchPaginationClicked();
   }
+  
   private watchPagechanged(): void {
     this.subscriptions.push(
       this._paginationService.getPageChanged().subscribe((pageNo) => {
@@ -147,6 +158,7 @@ export class QualityAndBusinessProgressComponent {
       })
     );
   }
+
   private watchPaginationClicked(): void {
     this.subscriptions.push(
       this._paginationService.getPageClicked().subscribe((nextPage: number) => {
@@ -157,9 +169,9 @@ export class QualityAndBusinessProgressComponent {
       })
     );
   }
+
   private loadNextPage(nextPage: number): void {
     this.pagintationData.currentPage = nextPage;
-
     this.loadComponentData();
   }
 
@@ -190,6 +202,28 @@ export class QualityAndBusinessProgressComponent {
     this._popupService.updatePopupData(Data);
   }
 
+  openAddEditConstructionWorkStatusDialog(id?: string | null): void {
+      let Data = {
+        title: "إضاقة موقف أعمال الإنشاءات",
+        component: AddEditConstructionWorkStatusComponent,
+        id: "AddEditConstructionWorkStatusComponent"
+      } as PopupData;
+    let dialogRef = this._popupService.updatePopupData(Data);
+    dialogRef.afterClosed().subscribe(_=> this.getLicenseProjectEngineeringRelativeWeightList());
+  }
+
+  deleteConstructionWorkStatus(id: string) {
+    this.subscriptions.push(
+      this._licenseProjectRelativeWeightService.DeleteMonthlyEngineeringReportExternalExpenses(this.licenseProjectId as string, id).subscribe((res) => {
+        if (res.isDone) {
+          this._toastrNotificationService.showSuccess('تم الحذف بنجاح');
+          let index = this.reqList.results.findIndex((x) => x.id == id);
+          if (index != -1) this.reqList.results.splice(index, 1);
+        } else this._toastrNotificationService.showError(res.message);
+      })
+    );
+  }
+
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
@@ -197,4 +231,5 @@ export class QualityAndBusinessProgressComponent {
       })
     );
   }
+
 }

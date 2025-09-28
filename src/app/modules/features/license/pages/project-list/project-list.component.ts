@@ -6,13 +6,12 @@ import { PaginationService } from 'src/app/shared/services/pagination/pagination
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { ProjectListFormComponent } from '../project-list-form/project-list-form.component';
-import { LicenseRequestHeaderDto } from '../../dataModels/license-request-header-dto';
+import { LicenseRequestHeaderDto, ProjectLicenseRequestsParams } from '../../dataModels/license-request-header-dto';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 import { Router } from '@angular/router';
 import { Configuration } from 'src/app/core/configurations/shared.config';
-import { SysProjectStatusService } from 'src/app/shared/services/sysProjectStatus/sys-projectstatus.service';
 import { ProjectStatusUpdateComponent } from '../Project-status-update/project-status-update.component';
 
 @Component({
@@ -32,22 +31,33 @@ export class ProjectListComponent {
     pageSize: 10,
     totalCount: 0,
   };
+  searchText:string='';
   userData: customerResponse | null = null;
+  
   constructor(
     private _projectMangerService: ProjectListService,
     private _paginationService: PaginationService,
     private _popupService: PopupService,
-    private _sysProjectStatusService:SysProjectStatusService,
     private _userDataService: UserDataService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _router: Router
   ) {}
+
   ngOnInit(): void {
     this.getEngineeringConsultantProjectsList();
     this.watchPaginationActions();
     this.obseveCustomerData();
     this.obseveSubmitSuccessfullyEventEmitter();
   }
+
+  search(){
+   this.getEngineeringConsultantProjectsList();
+  }
+
+  getSearchText(event: Event) {
+    this.searchText=(event.target as HTMLInputElement).value;
+  }
+
   private obseveCustomerData(): void {
     this.subscriptions.push(
       this._userDataService
@@ -66,13 +76,14 @@ export class ProjectListComponent {
       `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.projectDetails}`
     );
   }
+
   getEngineeringConsultantProjectsList(): void {
+    const params = new ProjectLicenseRequestsParams();
+    params.pageIndex = this.pagintationData.currentPage;
+    params.pageSize = this.pagintationData.pageSize;
+    params.searchText = this.searchText;
     this.subscriptions.push(
-      this._projectMangerService
-        .getEngineeringConsultantProjectsList(
-          this.pagintationData.currentPage,
-          this.pagintationData.pageSize
-        )
+      this._projectMangerService.getEngineeringConsultantProjectsList(params)
         .subscribe((res: Pagination<LicenseRequestHeaderDto[]> | null) => {
           if (res && res.results.length > 0)
             this.updateRequestList(
@@ -82,9 +93,7 @@ export class ProjectListComponent {
     );
   }
 
-  private updateRequestList(
-    TypeListView: Pagination<LicenseRequestHeaderDto[]>
-  ): void {
+  private updateRequestList(TypeListView: Pagination<LicenseRequestHeaderDto[]>): void {
     this.reqList = TypeListView;
     this.setPaginationData(
       this.reqList.pageSize,
@@ -92,11 +101,8 @@ export class ProjectListComponent {
       this.reqList.pageCount
     );
   }
-  private setPaginationData(
-    pageSize: number,
-    total: number,
-    pageCount: number
-  ): void {
+
+  private setPaginationData(pageSize: number, total: number, pageCount: number): void {
     this.pagintationData.pageCount = pageCount;
     this.pagintationData.pageSize = pageSize;
     this.pagintationData.totalCount = total;
@@ -131,6 +137,7 @@ export class ProjectListComponent {
     this.pagintationData.currentPage = nextPage;
     this.getEngineeringConsultantProjectsList();
   }
+
   obseveSubmitSuccessfullyEventEmitter() {
     this.subscriptions.push(
       this._projectMangerService.submitSuccessfullyEventEmitter.subscribe(
@@ -140,6 +147,7 @@ export class ProjectListComponent {
       )
     );
   }
+
   openDialog(project?: LicenseRequestHeaderDto): void {
     // set Project Object to Service
     this._projectMangerService.setProject(project as LicenseRequestHeaderDto);
@@ -149,6 +157,7 @@ export class ProjectListComponent {
     } as PopupData;
     this.updateAndOpenData(Data);
   }
+
   openStatusDialog(project: LicenseRequestHeaderDto): void {
     this._projectMangerService.setProject(project);
     let Data = {
@@ -158,6 +167,7 @@ export class ProjectListComponent {
   
     this.updateAndOpenData(Data);
   }
+  
   private updateAndOpenData(data: PopupData) {
     this._popupService.updatePopupData(data);
   }
@@ -165,4 +175,5 @@ export class ProjectListComponent {
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+  
 }

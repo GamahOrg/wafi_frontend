@@ -20,24 +20,34 @@ export class LicenseProjectExchangeDocumentService {
   setLicenseProjectExchangeDocumentIdInLocalStorage(licenseProjectExchangeDocumentId: string): void {
     localStorage.setItem('licenseProjectExchangeDocumentId', licenseProjectExchangeDocumentId)
   }
+
   getLicenseProjectExchangeDocumentIdStorage(): string | null {
     return localStorage.getItem('licenseProjectExchangeDocumentId')
   }
+
   removeLicenseProjectExchangeDocumentIdfromLocalStorage(): void {
     localStorage.removeItem('licenseProjectExchangeDocumentId')
   }
-  getExchangeDocumentOnProject ( licenseProjectId:string,pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectExchangeDocumentPagingDto[]>| null> {
+
+  getExchangeDocumentOnProject(licenseProjectId: string, pageIndex: number, pageSize: number, monthDate?: Date): Observable<Pagination<LicenseProjectExchangeDocumentPagingDto[]> | null> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("licenseProjectId", licenseProjectId);
     queryParams = queryParams.append("pageIndex", pageIndex);
     queryParams = queryParams.append("pageSize", pageSize);
+    
+    if (monthDate) {
+        // Ensure monthDate is a Date object
+        const dateObj = new Date(monthDate);
+        queryParams = queryParams.append("monthDate", dateObj.toISOString());
+    }
+
     return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectExchangeDocumentPagingDto[]>>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetExchangeDocumentOnProject}`, { params: queryParams }).pipe(
-      map((res: CoreResponseDTO<Pagination<LicenseProjectExchangeDocumentPagingDto[]>>) => {
-       
-        return res.isDone? res.data as Pagination<LicenseProjectExchangeDocumentPagingDto[]>: null
-      })
+        map((res: CoreResponseDTO<Pagination<LicenseProjectExchangeDocumentPagingDto[]>>) => {
+            return res.isDone ? res.data as Pagination<LicenseProjectExchangeDocumentPagingDto[]> : null
+        })
     );
   }
+  
   getLicenseProjectExchangeDocumentDetail(licenseProjectExchangeDocumentId: string): Observable<LicenseProjectExchangeDocumentDto |null> {
     return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentDto>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetLicenseProjectExchangeDocumentDetail}/${licenseProjectExchangeDocumentId}`).pipe(
       map((res: CoreResponseDTO<LicenseProjectExchangeDocumentDto>) => {
@@ -47,7 +57,6 @@ export class LicenseProjectExchangeDocumentService {
   }
 
   saveBuyer(obj: LicenseProjectExchangeDocumentCreateUpdateDto): Observable<CoreResponseDTO<any>> {
-
     return this._httpClient.post<CoreResponseDTO<any>>
       (Configuration.APIs.LicenseProjectExchangeDocument.Save, obj).pipe(
         map((res: CoreResponseDTO<any>) => {
@@ -55,6 +64,7 @@ export class LicenseProjectExchangeDocumentService {
         })
       )
   }
+  
   getLiceneProjectBeneficiaryTypeList(): Observable<LiceneProjectBeneficiaryTypeDto[] |null> {
     return this._httpClient.get<CoreResponseDTO<LiceneProjectBeneficiaryTypeDto[]>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetLiceneProjectBeneficiaryTypeList}`).pipe(
       map((res: CoreResponseDTO<LiceneProjectBeneficiaryTypeDto[]>) => {
@@ -62,6 +72,7 @@ export class LicenseProjectExchangeDocumentService {
       })
     )
   }
+  
   getExchangeDocumentMainItemList(): Observable<LicenseProjectExchangeDocumentMainItemDto[] |null> {
     return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentMainItemDto[]>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetExchangeDocumentMainItemList}`).pipe(
       map((res: CoreResponseDTO<LicenseProjectExchangeDocumentMainItemDto[]>) => {
@@ -69,8 +80,8 @@ export class LicenseProjectExchangeDocumentService {
       })
     )
   }
-  getExchangeDocumentSubItemList(mainItemId:LicenseProjectExchangeDocumentMainItemEnum): Observable<LicenseProjectExchangeDocumentSubItemDto[] |null> {
-    return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentSubItemDto[]>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetExchangeDocumentSubItemList}/${mainItemId}`).pipe(
+  getExchangeDocumentSubItemList(): Observable<LicenseProjectExchangeDocumentSubItemDto[] |null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentSubItemDto[]>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetExchangeDocumentSubItemList}`).pipe(
       map((res: CoreResponseDTO<LicenseProjectExchangeDocumentSubItemDto[]>) => {
         return res.data  ? res.data as LicenseProjectExchangeDocumentSubItemDto[] : null
       })

@@ -1,0 +1,31 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/tab-content";
+@import "/src/assets/styles/content/form-conent";
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+.red{
+    background-color: red;
+  }
+
+  .green{
+    background-color:rgb(0, 128, 0);
+  }
+  .lightgreen{
+    background-color:rgb(112, 209, 112);
+  }
+  .yellow
+  {
+    background-color: yellow;
+  }
+  .orange
+  {
+    background-color: orange;
+  }
+  .brown
+  {
+    background-color: brown;
+  }

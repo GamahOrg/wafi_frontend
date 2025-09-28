@@ -2,20 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Tabs } from 'src/app/shared/models/tabs.model';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
-import { ProjectInformationComponent } from '../../components/project-information/project-information.component';
 import { TimeScheduleComponent } from '../../components/time-schedule/time-schedule.component';
-import { QualityNoticesComponent } from '../../components/quality-notices/quality-notices.component';
-import { ProjectRequestsComponent } from '../../components/project-requests/project-requests.component';
-import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 import { PlannedEngineeringSupervisionReportsComponent } from '../../components/planned-engineering-supervision-reports/planned-engineering-supervision-reports.component';
-import { MonthlyEngineeringSupervisionReportsComponent } from '../../components/monthly-engineering-supervision-reports/monthly-engineering-supervision-reports.component';
-import { LicenseProjectQualityNoticeListComponent } from '../../components/license-project-quality-notice-list/license-project-quality-notice-list.component';
-import { DangerLogComponent } from '../../components/danger-log/danger-log.component';
-import { ProblemLogComponent } from '../../components/problem-log/problem-log.component';
-import { ProjectBusinessCaseReportListComponent } from '../../components/project-business-case-report-list/project-business-case-report-list.component';
 import { ProjectBusinessCaseContainerComponent } from '../../components/project-business-case-container/project-business-case-container.component';
 import { LicenseProjectQualityNoticeContainerComponent } from '../../components/license-project-quality-notice-container/license-project-quality-notice-container.component';
-import { ActualValueReportPagingListComponent } from '../../components/actual-value-report-paging-list/actual-value-report-paging-list.component';
 import { ActualValueReportContainerComponent } from '../../components/actual-value-report-container/actual-value-report-container.component';
 
 @Component({
@@ -24,7 +14,6 @@ import { ActualValueReportContainerComponent } from '../../components/actual-val
   styleUrls: ['./project-details.component.scss']
 })
 export class ProjectDetailsComponent implements OnInit, OnDestroy {
-
   subscriptions: Subscription[] = [];
   localization = {
     projectInformation: "معلومات المشروع",
@@ -34,8 +23,9 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     qualityNotices: "إشعارات الجودة",
     projectRequests: "طلبات المشروع",
     ProjectBusinessCaseReport:"تقرير حالة الأعمال",
-    plannedEngineeringSupervisionReportsActualResult: "تقرير الإشراف الهندسي (القيم الفعلىه)",
+    plannedEngineeringSupervisionReportsActualResult: "تقرير الإشراف الهندسي (القيم الفعلية)",
   };
+
   tabContent: Tabs = {
     verticalTabs: false,
     activeTabIndex: 0,
@@ -61,15 +51,13 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
         disabled: false,
         isVisible: true,
       },
-       {
-         icon: '',
-         title: this.localization.monthlyEngineeringSupervisionReports,
-         Component: ActualValueReportContainerComponent,
-         disabled: false,
-         isVisible: true,
-       },   
-
-   
+      {
+        icon: '',
+        title: this.localization.monthlyEngineeringSupervisionReports,
+        Component: ActualValueReportContainerComponent,
+        disabled: false,
+        isVisible: true,
+      },   
       {
         icon: '',
         title: this.localization.ProjectBusinessCaseReport,
@@ -77,27 +65,28 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
         disabled: false,
         isVisible: true,
       },
-      
-       {
-         icon: '',
-         title: this.localization.qualityNotices,
-         Component: LicenseProjectQualityNoticeContainerComponent,
-         disabled: false,
-         isVisible: true,
-       },
+      {
+        icon: '',
+        title: this.localization.qualityNotices,
+        Component: LicenseProjectQualityNoticeContainerComponent,
+        disabled: false,
+        isVisible: true,
+      },
     ],
   };
+
   constructor(
     private _tabsService: TabsService,
-    private _sharedLicenseProjectService: SharedLicenseProjectService,
   ) { }
 
   ngOnInit(): void {
     this.updateTabContent()
   }
+
   private updateTabContent(): void {
     this._tabsService.updateTabContent(this.tabContent);
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

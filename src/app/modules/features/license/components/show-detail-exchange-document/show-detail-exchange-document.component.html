@@ -4,96 +4,227 @@
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">البند الرئيسي</label>
-          {{licenseProjectExchangeDocument.mainItem.name}}
-  
-        </div>
-      </div>
-      <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.subItem">
-        <div class="form-group mb-4">
-          <label class="form-label">البند الفرعي</label>
-          {{licenseProjectExchangeDocument.subItem.name}}
+          <div class="form-control-plaintext">
+              <span> {{licenseProjectExchangeDocument.mainItem.name}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">رقم الوثيقة</label>
-          {{licenseProjectExchangeDocument.documnetNumber}}
+          <label class="form-label">البند الفرعي</label>
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.subItem.name}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">تاريخ الصرف</label>
-          {{licenseProjectExchangeDocument.exchangeDate | date:'yyyy-MM-dd'}}
-        </div>
-      </div>
-      <div class="col-12 col-lg-6">
-        <div class="form-group mb-4">
-          <label class="form-label">المبلغ</label>
-          {{licenseProjectExchangeDocument.amount}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.exchangeDate | date:'yyyy-MM-dd'}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">تاريخ الاعتماد</label>
-          {{licenseProjectExchangeDocument.approvalDate | date:'yyyy-MM-dd'}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.approvalDate | date:'yyyy-MM-dd'}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">البيان</label>
-          {{licenseProjectExchangeDocument.statment}}
+          <label class="form-label">رقم الوثيقة</label>
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.documnetNumber}}</span>
+          </div>
         </div>
       </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">بند الصرف من جدول الكميات</label>
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.sysLicenseRelativeWeight.elementName}} </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">المبلغ</label>
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.amount}} </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">رقم الحساب الرئيسي</label>
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectAccounts.accountNumber}} </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row" *ngIf="licenseProjectExchangeDocument.subItemId == licenseProjectExchangeDocumentSubItemEnum.ConstructionCosts">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">حساب التكاليف الانشائية</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ licenseProjectAccounts.constructionCostsAccountNumber }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="licenseProjectExchangeDocument.subItemId == licenseProjectExchangeDocumentSubItemEnum.ConstructionCosts">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="amount" class="form-label">المبلغ المتوفر في الحساب قبل الصرف</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ licenseProjectAccounts.constructionCostsAvailableAmount | number:'1.2-2'}}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="amount" class="form-label">المبلغ المتوفر في الحساب بعد الصرف</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ (licenseProjectAccounts.constructionCostsAvailableAmount) - (licenseProjectExchangeDocument.amount) | number:'1.2-2' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row" *ngIf="licenseProjectExchangeDocument.subItemId == licenseProjectExchangeDocumentSubItemEnum.AdministrativeAndMarketingExpenses">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">حساب الادارى والتسويقى</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ licenseProjectAccounts.administrativeAndMarketingAccountNumber }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="licenseProjectExchangeDocument.subItemId == licenseProjectExchangeDocumentSubItemEnum.AdministrativeAndMarketingExpenses">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">المبلغ المتوفر في الحساب قبل الصرف</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ (licenseProjectAccounts.administrativeAndMarketingAvailableAmount) + (licenseProjectExchangeDocument.amount) | number:'1.2-2' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="amount" class="form-label">المبلغ المتوفر في الحساب بعد الصرف</label>
+            <div class="form-control-plaintext">
+              <span>
+                {{ licenseProjectAccounts.administrativeAndMarketingAvailableAmount | number:'1.2-2'}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.liceneProjectBeneficiaryType">
         <div class="form-group mb-4">
           <label class="form-label">المستفيد</label>
-          {{licenseProjectExchangeDocument.liceneProjectBeneficiaryType.name}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.liceneProjectBeneficiaryType.name}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.beneficiaryDescription">
         <div class="form-group mb-4">
           <label class="form-label">وصف المستفيد</label>
-          {{licenseProjectExchangeDocument.beneficiaryDescription}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.beneficiaryDescription}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer">
         <div class="form-group mb-4">
           <label class="form-label">اسم المشتري</label>
-          {{licenseProjectExchangeDocument.licenseProjectBuyer.name}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.licenseProjectBuyer.name}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer">
         <div class="form-group mb-4">
           <label class="form-label">رقم هوية المشتري</label>
-          {{licenseProjectExchangeDocument.licenseProjectBuyer.nidNumber}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.licenseProjectBuyer.nidNumber}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer && licenseProjectExchangeDocument.licenseProjectBuyer.unitCode">
         <div class="form-group mb-4">
           <label class="form-label">رقم الوحدة</label>
-          {{licenseProjectExchangeDocument.licenseProjectBuyer.unitCode}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.licenseProjectBuyer.unitCode}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer">
         <div class="form-group mb-4">
           <label class="form-label">رقم البلوك</label>
-          {{licenseProjectExchangeDocument.licenseProjectBuyer.blockCode}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.licenseProjectBuyer.blockCode}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="licenseProjectExchangeDocument.licenseProjectBuyer">
         <div class="form-group mb-4">
           <label class="form-label">رقم العقد</label>
-          {{licenseProjectExchangeDocument.licenseProjectBuyer.contractNumber}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.licenseProjectBuyer.contractNumber}} </span>
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم الدفعة</label>
-          {{licenseProjectExchangeDocument.batchNumber}}
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.batchNumber}} </span>
+          </div>
         </div>
       </div>
-   
+  
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">البيان</label>
+          <div class="form-control-plaintext">
+            <span> {{licenseProjectExchangeDocument.statment}} </span>
+          </div>
+        </div>
+      </div>
 
-   
+      <div class="col-md-6 col-lg-6">
+        <div class="form-group mb-4">
+          <div class="key">المستندات الداعمة</div>
+          <div class="value m-3" *ngIf="licenseProjectExchangeDocumentFile && licenseProjectExchangeDocumentFile.length > 0">
+            <div *ngFor="let item of licenseProjectExchangeDocumentFile">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a [href]="baseUrl + item.file?.filePath" target="_blank">
+                  {{item.file?.fileDescription}}
+              </a>       
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>

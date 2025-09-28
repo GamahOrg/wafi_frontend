@@ -27,9 +27,11 @@ export class AddEditEngineeringInfrastructureRatesComponent {
       licenseProjectEngineeringSupervisionPlannedReportDetails:
         this._formBuilder.array([]),
     });
+    
   get controls() {
     return this.licenseProjectEngineeringSupervisionPlannedReportForm.controls;
   }
+
   get licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr() {
     return this.licenseProjectEngineeringSupervisionPlannedReportForm.get(
       'licenseProjectEngineeringSupervisionPlannedReportDetails'
@@ -56,20 +58,17 @@ export class AddEditEngineeringInfrastructureRatesComponent {
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId =
       this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (this.licenseProjectId) {
+    if (this.licenseProjectId)
       this.GetLicenseProjectEngineeringDetails();
-    }
   }
+
   GetLicenseProjectEngineeringDetails() {
     this.subscriptions.push(
       this._licenseProjectEngineeringSupervisionPlannedReportDetailService
         .GetLicenseProjectEngineeringDetails(this.licenseProjectId as string)
         .subscribe((res) => {
           if (res) {
-            this.years = this.getYearsBetween(
-              new Date(res.startOn),
-              new Date(res.endOn)
-            );
+            this.years = this.getYearsBetween(new Date(res.startOn), new Date(res.endOn));
             if (this.years && this.years.length != 0 && !this.currenrYear)
               this.currenrYear = this.years[0] as number;
             this.getLicenseProjectEngineeringInfrastructureRates();
@@ -79,45 +78,24 @@ export class AddEditEngineeringInfrastructureRatesComponent {
   }
 
   getLicenseProjectEngineeringInfrastructureRates(): void {
-    this.licenseProjectEngineeringSupervisionPlannedReportForm.controls.currenrYear.setValue(
-      this.currenrYear as number
-    );
+    this.licenseProjectEngineeringSupervisionPlannedReportForm.controls.currenrYear.setValue(this.currenrYear as number);
     this.subscriptions.push(
-      this._licenseProjectEngineeringSupervisionPlannedReportDetailService
-        .GetLicenseProjectEngineeringInfrastructureRates(
-          this.licenseProjectId as string,
-          this.currenrYear as number
-        )
-        .subscribe(
-          (
-            res: MasterLicenseProjectEngineeringSupervisionPlannedDetailsDto | null
-          ) => {
-            if (
-              res &&
-              res.licenseProjectEngineeringSupervisionPlannedReportDetails
-                .length > 0
-            ) {
-              this.cumulativeAmountPriorToThatYear =
-                res.cumulativeAmountPriorToThatYear;
-              this.addValuesToArrayForm(
-                res.licenseProjectEngineeringSupervisionPlannedReportDetails,
-                res.cumulativeAmountPriorToThatYear
-              );
+      this._licenseProjectEngineeringSupervisionPlannedReportDetailService.GetLicenseProjectEngineeringInfrastructureRates(
+          this.licenseProjectId as string, this.currenrYear as number)
+          .subscribe(( res: MasterLicenseProjectEngineeringSupervisionPlannedDetailsDto | null) => {
+            if (res && res.licenseProjectEngineeringSupervisionPlannedReportDetails.length > 0) {
+              this.cumulativeAmountPriorToThatYear = res.cumulativeAmountPriorToThatYear;
+              this.addValuesToArrayForm(res.licenseProjectEngineeringSupervisionPlannedReportDetails, res.cumulativeAmountPriorToThatYear);
             }
           }
         )
     );
   }
+  
   save(): void {
-    this.licenseProjectEngineeringSupervisionPlannedReportDetailList = this
-      .licenseProjectEngineeringSupervisionPlannedReportForm.controls
-      .licenseProjectEngineeringSupervisionPlannedReportDetails
-      .value as LicenseProjectEngineeringSupervisionPlannedReportDetailCreateUpdateDto[];
-    if (
-      this.licenseProjectEngineeringSupervisionPlannedReportDetailList &&
-      this.licenseProjectEngineeringSupervisionPlannedReportDetailList.length >
-        0
-    ) {
+    this.licenseProjectEngineeringSupervisionPlannedReportDetailList = this.licenseProjectEngineeringSupervisionPlannedReportForm.controls
+      .licenseProjectEngineeringSupervisionPlannedReportDetails.value as LicenseProjectEngineeringSupervisionPlannedReportDetailCreateUpdateDto[];
+    if (this.licenseProjectEngineeringSupervisionPlannedReportDetailList && this.licenseProjectEngineeringSupervisionPlannedReportDetailList.length > 0) {
       this.licenseProjectEngineeringSupervisionPlannedReportDetailList.forEach(
         (item) => {
           item.licenseProjectId = this.licenseProjectId as string;
@@ -141,6 +119,7 @@ export class AddEditEngineeringInfrastructureRatesComponent {
       );
     }
   }
+
   onChangeYear(data: any) {
     this.currenrYear = Number(data.target.value);
     this.save();
@@ -159,8 +138,7 @@ export class AddEditEngineeringInfrastructureRatesComponent {
 
   addValuesToArrayForm(
     licenseProjectEngineeringSupervisionPlannedReportDetailList: LicenseProjectEngineeringSupervisionPlannedReportDetailDto[],
-    cumulativeAmountPriorToThatYear: number
-  ) {
+    cumulativeAmountPriorToThatYear: number) {
     this.licenseProjectEngineeringSupervisionPlannedReportForm.controls.licenseProjectEngineeringSupervisionPlannedReportDetails.clear();
     // Caculate the cumulative planned completionper centage
     licenseProjectEngineeringSupervisionPlannedReportDetailList.forEach(
@@ -246,6 +224,7 @@ export class AddEditEngineeringInfrastructureRatesComponent {
       )
     );
   }
+
   // popup
   observePopupEvents(): void {
     this.observeconfirmAction();
@@ -259,7 +238,9 @@ export class AddEditEngineeringInfrastructureRatesComponent {
       })
     );
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+  
 }

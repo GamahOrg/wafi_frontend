@@ -73,6 +73,30 @@
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
+            <label class="form-label">{{ localization.licenseNatureType }}</label>
+            <select
+              class="form-select"
+              id="control-licenseNatureType"
+              formControlName="licenseProjectNatureTypeId"
+            >
+              <option [label]="localization.licenseNatureType"></option>
+              <option
+                *ngFor="let licenseNatureType of licenseNatureType"
+                [value]="licenseNatureType.id"
+              >
+                {{ licenseNatureType.name }}
+              </option>
+            </select>
+            <mat-error
+              *ngIf="
+                controls.licenseProjectNatureTypeId?.hasError('required') && showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
             <label class="form-label">{{ localization.typeId }}</label>
             <select
               class="form-select"

@@ -1,4 +1,6 @@
-<section *ngIf="filesData">
+<button type="button" class="btn btn-primary my-4" (click)="backToList()">رجوع للقائمة</button>
+
+<section *ngIf="licenseTimelineProgram">
   <div class="d-flex justify-content-between p-3  section timeschedule">
     <div>
       البرنامج الزمني
@@ -8,11 +10,11 @@
         [ngClass]="{'red' : timeshecdulestatuesId == statuesCode.UnderStudy, 'green' : timeshecdulestatuesId == statuesCode.Certified || timeshecdulestatuesId == statuesCode.New, 'orange' : timeshecdulestatuesId == statuesCode.Compile}">
         {{timeshecduleStatues}}
       </button>
-      <button class="note p-2 m-1" *ngIf="filesData.allowToEdit" (click)="openDialog()">إستيفاء الملاحظات</button>
+      <button class="note p-2 m-1" *ngIf="licenseTimelineProgram.allowToEdit" (click)="openDialog()">إستيفاء الملاحظات</button>
     </div>
   </div>
   <!-- <div class="notehint p-3" 
-  *ngIf="!filesData.allowToEdit"
+  *ngIf="!licenseTimelineProgram.allowToEdit"
   >
     <div class="d-flex justify-content-between">
       <h5>تم رفض البرنامج الزمني</h5>
@@ -21,21 +23,54 @@
      <span>يرجي عرض الملاحظات واستيفاءها بالضغط على الزر بالأعلى يساراً “استيفاء الملاحظات”</span> 
     
   </div> -->
+
+  <h6> بيانات المشروع </h6>
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+      <div class="key">تاريخ تقديم البرنامج الزمني</div>
+      <div class="value">{{licenseTimelineProgram.createdOn | date:'dd-MM-yyyy'}}</div>
+    </div>
+    <div class="col-6 col-lg-6">
+      <div class="key">كود المشروع</div>
+      <div class="value">{{licenseTimelineProgram.licenceProjectCode}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">اسم المشروع</div>
+      <div class="value">{{licenseTimelineProgram.licenseProjectName}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">المدينة</div>
+      <div class="value">{{licenseTimelineProgram.licenseProjectCity}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">ملكية الأرض</div>
+      <div class="value">{{licenseTimelineProgram.licenseProjectLandOwnership}}</div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">رقم الترخيص</div>
+      <div class="value">{{licenseTimelineProgram.certificateNumber}}</div>
+    </div>
+  </div>
+
+
+
+
+  <h6> مرفقات البرنامج الزمني </h6>
   <div class="row mt-3">
     <div class="col-6">
       <label for="" class="form-label"> {{localization.threeDReportFile}}</label>
-      <div class="value" *ngIf="filesData.threeDReportFileId">
-        <a [href]="baseUrl + filesData.threeDReportFile?.filePath" target="_blank">
-          {{filesData.threeDReportFile?.fileDescription}}
+      <div class="value" *ngIf="licenseTimelineProgram.threeDReportFileId">
+        <a [href]="baseUrl + licenseTimelineProgram.threeDReportFile?.filePath" target="_blank">
+          {{licenseTimelineProgram.threeDReportFile?.fileDescription}}
         </a>
       </div>
     </div>
     <div class="col-6 d-flex justify-content-between ">
       <div>
         <label for="" class="form-label"> {{localization.generalSitePlanFile}}</label>
-        <div class="value" *ngIf="filesData.generalSitePlanFileId">
-          <a [href]="baseUrl + filesData.generalSitePlanFile?.filePath" target="_blank">
-            {{filesData.generalSitePlanFile?.fileDescription}}
+        <div class="value" *ngIf="licenseTimelineProgram.generalSitePlanFileId">
+          <a [href]="baseUrl + licenseTimelineProgram.generalSitePlanFile?.filePath" target="_blank">
+            {{licenseTimelineProgram.generalSitePlanFile?.fileDescription}}
           </a>
         </div>
 
@@ -43,7 +78,7 @@
       <!-- <button class="uploadbtn mt-3" (click)="openDialog()">
         تعديل الملفات
     </button> -->
-      <!-- <div *ngIf="filesData.allowToEdit">
+      <!-- <div *ngIf="licenseTimelineProgram.allowToEdit">
 
         <button class="edit-icon btn btn-outline-primary" (click)="openDialog()"><span
             class="material-icons">edit</span></button>
@@ -54,17 +89,17 @@
   <div class="row mt-3">
     <div class="col-6">
       <label for="" class="form-label"> {{localization.primaveraFile}}</label>
-      <div class="value" *ngIf="filesData.primaveraFileId">
-        <a [href]="baseUrl + filesData.primaveraFile?.filePath" target="_blank">
-          {{filesData.primaveraFile?.fileDescription}}
+      <div class="value" *ngIf="licenseTimelineProgram.primaveraFileId">
+        <a [href]="baseUrl + licenseTimelineProgram.primaveraFile?.filePath" target="_blank">
+          {{licenseTimelineProgram.primaveraFile?.fileDescription}}
         </a>
       </div>
     </div>
     <div class="col-6">
       <label for="" class="form-label"> {{localization.scheduleFile}}</label>
-      <div class="value" *ngIf="filesData.scheduleFileId">
-        <a [href]="baseUrl + filesData.scheduleFile?.filePath" target="_blank">
-          {{filesData.scheduleFile?.fileDescription}}
+      <div class="value" *ngIf="licenseTimelineProgram.scheduleFileId">
+        <a [href]="baseUrl + licenseTimelineProgram.scheduleFile?.filePath" target="_blank">
+          {{licenseTimelineProgram.scheduleFile?.fileDescription}}
         </a>
       </div>
     </div>
@@ -75,18 +110,18 @@
     <div class="col-6">
       <label for="" class="form-label">
         {{localization.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile}}</label>
-      <div class="value" *ngIf="filesData.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId">
-        <a [href]="baseUrl + filesData.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.filePath"
+      <div class="value" *ngIf="licenseTimelineProgram.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId">
+        <a [href]="baseUrl + licenseTimelineProgram.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.filePath"
           target="_blank">
-          {{filesData.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.fileDescription}}
+          {{licenseTimelineProgram.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.fileDescription}}
         </a>
       </div>
     </div>
     <div class="col-6">
       <label for="" class="form-label"> {{localization.cashFlowCurveFile}}</label>
-      <div class="value" *ngIf="filesData.cashFlowCurveFileId">
-        <a [href]="baseUrl + filesData.cashFlowCurveFile?.filePath" target="_blank">
-          {{filesData.cashFlowCurveFile?.fileDescription}}
+      <div class="value" *ngIf="licenseTimelineProgram.cashFlowCurveFileId">
+        <a [href]="baseUrl + licenseTimelineProgram.cashFlowCurveFile?.filePath" target="_blank">
+          {{licenseTimelineProgram.cashFlowCurveFile?.fileDescription}}
         </a>
       </div>
     </div>
@@ -95,27 +130,27 @@
   <div class="row mt-3">
     <div class="col-6">
       <label for="" class="form-label"> {{localization.employmentCountCurveFile}}</label>
-      <div class="value" *ngIf="filesData.employmentCountCurveFileId">
-        <a [href]="baseUrl + filesData.employmentCountCurveFile?.filePath" target="_blank">
-          {{filesData.employmentCountCurveFile?.fileDescription}}
+      <div class="value" *ngIf="licenseTimelineProgram.employmentCountCurveFileId">
+        <a [href]="baseUrl + licenseTimelineProgram.employmentCountCurveFile?.filePath" target="_blank">
+          {{licenseTimelineProgram.employmentCountCurveFile?.fileDescription}}
         </a>
       </div>
     </div>
     <div class="col-6">
       <label for="" class="form-label"> {{localization.cashFlowCurveFile}}</label>
-      <div class="value" *ngIf="filesData.cashFlowCurveFileId">
+      <div class="value" *ngIf="licenseTimelineProgram.cashFlowCurveFileId">
         <!-- <span class="delete" (click)="deletFile(facilityData.cashFlowCurveFile?.id)"><i
                   class="material-icons text-danger">close</i></span> -->
         <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + filesData.cashFlowCurveFile?.filePath" target="_blank">
-          {{filesData.cashFlowCurveFile?.fileDescription}}
+        <a [href]="baseUrl + licenseTimelineProgram.cashFlowCurveFile?.filePath" target="_blank">
+          {{licenseTimelineProgram.cashFlowCurveFile?.fileDescription}}
         </a>
       </div>
     </div>
     <div class="col-6 col-lg-6">
       <label for="licNum" class="form-label">{{localization.licenseProjectTimeScheduleOtherAttachments}}</label>
-      <div class="value m-3" *ngIf="filesData.licenseProjectTimeScheduleOtherAttachments">
-        <ng-container *ngFor="let file of filesData.licenseProjectTimeScheduleOtherAttachments">
+      <div class="value m-3" *ngIf="licenseTimelineProgram.licenseProjectTimeScheduleOtherAttachments">
+        <ng-container *ngFor="let file of licenseTimelineProgram.licenseProjectTimeScheduleOtherAttachments">
           <span class="icon material-icons-outlined">content_copy</span>
           <a [href]="baseUrl + file.otherAttachmentFile.filePath" target="_blank">
             {{file.otherAttachmentFile.fileDescription}}

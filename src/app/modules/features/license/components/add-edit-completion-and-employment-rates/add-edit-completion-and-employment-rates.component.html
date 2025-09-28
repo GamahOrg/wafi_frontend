@@ -17,6 +17,7 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
  </div>
   </div>
 </div> 
+
 <div class="tab-data-section">
   <div class="row mb-3">
   <table class="table-responsive" style="width:100%">
@@ -55,6 +56,44 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
 </table>
   </div>
 </div>
+
+<div class="tab-data-section">
+  <div class="row mb-3">
+  <table class="table-responsive" style="width:100%">
+    <tbody formArrayName="licenseProjectEngineeringSupervisionPlannedReportDetails">
+      <tr>
+          <th>الشهر:</th>
+          <td
+          *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr.controls
+              let i=index;let l=last" [formGroupName]="i">
+              <input formControlName="monthName" class="form-control" readonly="readonly">
+            </td>
+      </tr>
+      <tr>
+          <th> التكلفة الانشائية المتوقعة الشهرية: </th>
+          <td *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr.controls
+          let i=index;let l=last" [formGroupName]="i">
+             <div class="form-group d-flex align-items-center">
+              <input id="control-projectMonthlyPlannedMonthCost" class="form-control"
+              formControlName="projectMonthlyPlannedMonthCost"  type="number"/>
+             </div>
+          </td>
+      </tr>
+      <tr>
+          <th>التكلفة الانشائية التراكميه:</th>
+          <td *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailsFormArr.controls
+          let i=index;let l=last" [formGroupName]="i">
+             <div class="form-group d-flex align-items-center">
+              <input id="control-expectedConstructionCostDuringMonth" class="form-control"
+                  formControlName="expectedConstructionCostDuringMonth" readonly="readonly" />
+              </div>
+          </td>
+      </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+
  <div class="tab-data-section">
   <div class="row mb-3">
 
@@ -83,6 +122,7 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
 </table>
   </div>
  </div>
+
 </div>
 </form>
 

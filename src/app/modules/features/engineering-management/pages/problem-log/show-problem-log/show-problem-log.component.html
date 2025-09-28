@@ -1,0 +1,161 @@
+<div class="tab-data-section" *ngIf="licenseProjectProblem">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6" *ngIf="licenseProjectProblem.licenseProject">
+      <div class="form-group mb-4">
+        <label class="form-label"> اسم المشروع</label>
+
+        {{licenseProjectProblem.licenseProject.name}}
+
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6" *ngIf="licenseProjectProblem.licenseProject">
+      <div class="form-group mb-4">
+        <label class="form-label"> كود المشروع</label>
+        {{licenseProjectProblem.licenseProject.projectCode}}
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="licenseProjectProblem.licenseProject && licenseProjectProblem.licenseProject.licenseProjectAddresses && licenseProjectProblem.licenseProject.licenseProjectAddresses.length > 0">
+      <div class="form-group mb-4">
+        <label class="form-label">المنطقه</label>
+        {{licenseProjectProblem.licenseProject.licenseProjectAddresses[0].areas.areaName}}
+
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="licenseProjectProblem.licenseProject && licenseProjectProblem.licenseProject.licenseProjectAddresses && licenseProjectProblem.licenseProject.licenseProjectAddresses.length > 0">
+      <div class="form-group mb-4">
+        <label class="form-label">المدينة</label>
+        {{licenseProjectProblem.licenseProject.licenseProjectAddresses[0].cities.cityName}}
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">رقم المشكلة</label>
+        {{licenseProjectProblem.number}}
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">النوع</label>
+        {{licenseProjectProblem.problemType.name}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label"> وصف المشكلة</label>
+        {{licenseProjectProblem.description}}
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">تاريخ الحدوث</label>
+        {{licenseProjectProblem.issueDate | date:'yyyy-MM-dd'}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">الشدة</label>
+        {{licenseProjectProblem.levelType.name}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">الأيام المنقضية</label>
+        {{licenseProjectProblem.daysPassed}}
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">مالك الحل</label>
+        {{licenseProjectProblem.riskOwner.name}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6"
+      *ngIf="licenseProjectProblem.licenseProjectProblemResponsibleParties && licenseProjectProblem.licenseProjectProblemResponsibleParties.length >0">
+      
+      <div class="form-group mb-4">
+        <label class="form-label"> الجهات المسؤولة عن الحل في حالة الحدوث</label>
+        <div class="table-responsive mb-3">
+          <table class="table">
+
+            <tbody *ngFor="let party of licenseProjectProblem.licenseProjectProblemResponsibleParties;let i=index;">
+              <tr>
+                <td>
+                  {{party.responsibleParty.name}}
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label"> الحل المقترح </label>
+        {{licenseProjectProblem.recommendedAction}}
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">تاريخ الاغلاق المقترح</label>
+        {{licenseProjectProblem.expectedClosureDate | date:'yyyy-MM-dd'}}
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">الحالة</label>
+        {{licenseProjectProblem.status.name}}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label class="form-label">تاريخ الاغلاق الفعلي</label>
+        {{licenseProjectProblem.actualClosureDate | date:'yyyy-MM-dd'}}
+
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-12">
+      
+            <ng-container *ngIf="licenseProjectProblem.licenseProjectProblemReplies && licenseProjectProblem.licenseProjectProblemReplies.length > 0">
+               <div class="form-group mb-4">
+        <div class="table-responsive mb-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ردود الأطراف</th>
+              </tr>
+            </thead>
+            <tbody
+              *ngFor="let reply of licenseProjectProblem.licenseProjectProblemReplies; let i= index;">
+              <tr>
+                <td>
+                  <div class="reply-notes">
+                    <span *ngIf="reply.employeeeId==null">مدير المشروع</span>
+                  <span *ngIf="reply.employeeeId!=null">الادارة الهندسية</span>
+                  <span> {{reply.createdOn | date:'yyyy-MM-dd HH:mm'}}</span>
+                  <p> {{reply.notes}}</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+            </ng-container>
+     
+    </div>
+    </div>
+</div>

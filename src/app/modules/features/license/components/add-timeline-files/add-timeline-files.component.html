@@ -159,3 +159,16 @@
 <app-rich-text-editor 
     (valueChanged)="onValueChange($event)" ></app-rich-text-editor>
 </div> 
+
+<div class="row row-gap-3 mb-3" *ngFor="let item of sysRequestApprovalList; let i = index">
+    <div class="form-check">
+        <input class="form-check-input"
+            type="checkbox"
+            [(ngModel)]="item.isApproved"
+            id="item.discerption{{i}}" />
+        <label class="form-check-label"
+            for="chk1">
+            {{item.description}}
+        </label>
+    </div>
+</div>

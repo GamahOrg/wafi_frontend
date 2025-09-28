@@ -1,0 +1,95 @@
+<div class="tab-data-section" *ngIf="licenseProjectRecommendation">
+  <div class="row mb-3">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">{{localization.expectedImplementationDate}}</label>
+          <span style="font-weight: bold;"> {{licenseProjectRecommendation.executionDate | date:'yyyy-MM-dd'}} </span>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">{{localization.status}}</label>
+          <span style="font-weight: bold;"> {{licenseProjectRecommendation.status.name}} </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">{{localization.recommendationText}}</label>
+          <span style="font-weight: bold;"> {{licenseProjectRecommendation.recommendationText}} </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label class="form-label">{{localization.notes}}</label>
+          <span style="font-weight: bold;"> {{licenseProjectRecommendation.notes}} </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 row"
+      *ngIf="licenseProjectRecommendation.licenseProjectRecommendationResponsibleParties && licenseProjectRecommendation.licenseProjectRecommendationResponsibleParties.length > 0">
+      <div class="form-group mb-4">
+        <div class="table-responsive mb-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">{{localization.responsibleParty}}</th>
+              </tr>
+            </thead>
+            <tbody
+              *ngFor="let party of licenseProjectRecommendation.licenseProjectRecommendationResponsibleParties; let i= index;">
+              <tr>
+                <td>
+                  {{party.responsibleParty.name}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12 col-lg-12">
+    
+    <ng-container *ngIf="licenseProjectRecommendation.licenseProjectRecommendationReplies && licenseProjectRecommendation.licenseProjectRecommendationReplies.length > 0">
+  <div class="form-group mb-4">
+      <div class="table-responsive mb-3">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ردود الأطراف</th>
+            </tr>
+          </thead>
+          <tbody
+            *ngFor="let reply of licenseProjectRecommendation.licenseProjectRecommendationReplies; let i= index;">
+            <tr>
+              <td>
+                <div class="reply-notes">
+                  
+                  <span *ngIf="reply.employeeeId==null">مدير المشروع</span>
+                  <span *ngIf="reply.employeeeId!=null">الادارة الهندسية</span>
+                  <span> {{reply.createdOn | date:'yyyy-MM-dd HH:mm'}}</span>
+                  <p> {{reply.notes}}</p>
+                 
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </ng-container>
+    
+  
+  </div>
+  </div>
+</div>
