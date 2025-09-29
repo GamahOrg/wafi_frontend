@@ -25,7 +25,7 @@ cached_build:
       when: always
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: always
-    - if: '$CI_COMMIT_BRANCH == "stage"'
+    - if: '$CI_COMMIT_BRANCH == "staging"'
       when: always
     - when: never
   image:
@@ -38,7 +38,7 @@ cached_build:
     pnpm install
 
     echo "Building Angular application..."
-    if [ "$CI_COMMIT_BRANCH" == "stage" ]; then
+    if [ "$CI_COMMIT_BRANCH" == "staging" ]; then
       pnpm build:stage
     else
       pnpm build
@@ -72,7 +72,7 @@ include:
     rules:
       - if: '$CI_COMMIT_BRANCH == "main"'
         when: always
-      - if: '$CI_COMMIT_BRANCH == "stage"'
+      - if: '$CI_COMMIT_BRANCH == "staging"'
         when: always
       - when: never
   - project: "rega-softwares/rega-devops"
@@ -83,7 +83,7 @@ include:
         when: always
       - if: '$CI_COMMIT_BRANCH == "main"'
         when: always
-      - if: '$CI_COMMIT_BRANCH == "stage"'
+      - if: '$CI_COMMIT_BRANCH == "staging"'
         when: always
       - when: never
     needs:
