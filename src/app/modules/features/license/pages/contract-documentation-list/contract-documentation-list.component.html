@@ -39,8 +39,9 @@
                         </div>
                     </td>
                    <td>
-                        <span *ngIf="comdata.contractFile" class="text-dark">
+                        <span class="text-dark">
                             <a
+                            *ngIf="comdata.contractFile && comdata.contractFile.filePath"
                             [href]="baseUrl + comdata.contractFile.filePath"
                             id="link-contractFile"
                             target="_blank"
@@ -50,12 +51,12 @@
                         </span>
                     </td> 
                     <td>
-                        <span class="text-dark">{{comdata.status.name}}</span>
+                        <span class="text-dark">{{comdata?.status?.name}}</span>
                     </td>
                     <td>
                        <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary mx-4" (click)="confirmAccepted(comdata)">قبول توثيق العقد</button>
                         <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary" (click)="confirRejected(comdata)">رفض توثيق العقد</button> 
-                        <button type="button"  class="btn btn-outline-primary" (click)="showDetailDialog(comdata.id)">التفاصيل</button> 
+                        <button type="button"  class="btn btn-outline-primary" (click)="showDetailDialog(comdata.id,comdata.licenseProjectId)">التفاصيل</button> 
                      </td>
                 </tr>
             </tbody>

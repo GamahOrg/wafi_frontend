@@ -33,14 +33,17 @@ export class ShowDetailBuyerComponent {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private datePipe: DatePipe,
     private _storageService: StorageService
-  ) { this.getLoginUserType() }
+  ) {  }
 
   ngOnInit(): void {
-    // this.getLicenseProjectBuyerIdStorage();
+    debugger
+    this.getLoginUserType()
+    this.getLicenseProjectBuyerIdStorage();
     this.getLicenseProjectIdStorage();
   }
 
   private getLicenseProjectIdStorage(): void {
+    debugger
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId) {
       this.loadSetting();

@@ -11,6 +11,7 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { PopupData,  confirmationPopupData } from 'src/app/shared/models/popup.model';
 import { ShowDetailBuyerComponent } from '../../components/show-detail-buyer/show-detail-buyer.component';
+import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 
 @Component({
   selector: 'app-contract-documentation-list',
@@ -38,6 +39,7 @@ export class ContractDocumentationListComponent {
     private _licenseProjectBuyerService: LicenseProjectBuyerService,
     private _popupService: PopupService,
     private _paginationService: PaginationService,
+    private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _toastrNotificationService: ToastrNotificatioService,
   ) { }
   ngOnInit(): void {
@@ -64,8 +66,10 @@ export class ContractDocumentationListComponent {
       this.reqList.pageCount
     );
   }
-  showDetailDialog(id: string): void {
+  showDetailDialog(id: string,licenseProjectId:string): void {
+    debugger
     this._licenseProjectBuyerService.setLicenseProjectBuyerIdInLocalStorage(id)
+    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(licenseProjectId)
     let Data = {
       title: "تفاصيل المشتري",
       component: ShowDetailBuyerComponent,
