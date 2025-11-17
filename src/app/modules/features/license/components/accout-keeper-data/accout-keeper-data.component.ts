@@ -101,7 +101,7 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
   private loadComponentData() {
     const requests = [
       this._accountKeeperService.GetAccountKeeperDetailsByLicenseProjectId(this.licenseProjectId as string),
-      this._bankSerive.GetAreasDropDown()
+      this._bankSerive.GetBankDropDown()
     ];
 
     const subscriptions = forkJoin(requests).subscribe((results) => {

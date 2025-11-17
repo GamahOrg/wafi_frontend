@@ -1,0 +1,56 @@
+<div class="row row-gap-4">
+    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                     <th scope="col">اسم المشروع</th>
+                    <th scope="col">اسم المشترى</th>
+                    <th scope="col"> رقم هوية المشترى</th>
+                    <th scope="col"> رقم الجوال</th>
+                    <th scope="col">الحي</th>
+                    <th scope="col">التفاصيل</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let comdata of reqList.results;let i=index;">
+                <tr>
+                     <td>
+                        <span class="text-dark">{{comdata?.licenseProject?.name}}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.name}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata.nidNumber}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="d-flex align-items-center column-gap-2">{{comdata.mobile}}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center column-gap-2">
+                            {{comdata?.licenseProject?.licenseProjectAddresses?.[0]?.neighborhoodName}}
+                        </div>
+                    </td>
+                    <td>
+                       <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary mx-4" (click)="confirmRecover(comdata)">استرداد</button>
+                       <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary mx-4" (click)="openDialog(comdata.id)">تعديل </button>
+                       <button type="button"  class="btn btn-primary" (click)="showDetail(comdata.id)">تفاصيل المشتري</button>
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
+        <app-pagination></app-pagination>
+    </div>
+    <ng-container *ngIf="reqList.totalCount === 0">
+        <div class="mt-4">
+            <app-no-data [showCompleteBtn]="false"></app-no-data>
+        </div>
+    </ng-container>
+</div>
+

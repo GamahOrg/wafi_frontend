@@ -45,18 +45,23 @@
                   *ngIf="selectedRequest?.licenseProject?.availabilityToUpdate"
                   class="btn d-flex align-items-center justify-content-between btn-primary"
                   (click)="editRequest()"
-                  type="button"
-                >
+                  type="button">
                   {{ localization.editButtonTitle }}
                 </button>
-                <!-- <button
-                  *ngIf="selectedRequest?.isRenewal"
+                <button
+                  *ngIf="selectedRequest && selectedRequest.licenseProjectFarzRequestStatus?.id === farzRequestStatusEnum.Rejected"
                   class="btn d-flex align-items-center justify-content-between btn-primary"
-                  (click)="editRequest()"
-                  type="button"
-                >
-                  {{ localization.editButtonForRenewTitle }}
-                </button> -->
+                  (click)="editFarz()"
+                  type="button">
+                  {{ localization.farzStatus }}
+                </button>
+                <button
+                  *ngIf="selectedRequest && selectedRequest.externalStatusId === 18"
+                  class="btn d-flex align-items-center justify-content-between btn-primary"
+                  (click)="openPaymentTermsModal()"
+                  type="button">
+                  {{ localization.editPaymentandAdditionalTermsTitle }}
+                </button>
               </div>
             </div>
           </div>
@@ -235,14 +240,17 @@
                 ></app-circular-progress>
               </div>
 
+              <div class="circularProgress" *ngIf="selectedRequest && selectedRequest.licenseProjectFarzRequestStatus">
+                <p>
+                  {{selectedRequest.licenseProjectFarzRequestStatus.name}}
+                </p>
+                <app-circular-progress [circularProgressSetting]="allowCompileOpenBankAccountProgressSetting"></app-circular-progress>
+              </div>
+
               <span
                 class="status-pill"
                 [class]="
-                  selectedRequest && selectedRequest.externalStatus
-                    ? externalStatusId[selectedRequest.externalStatusId]
-                    : ''
-                "
-              >
+                  selectedRequest && selectedRequest.externalStatus ? externalStatusId[selectedRequest.externalStatusId] : '' ">
                 {{ selectedRequest?.externalStatus }}
               </span>
             </div>

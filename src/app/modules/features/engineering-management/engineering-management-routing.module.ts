@@ -4,6 +4,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { ProjectListComponent } from './pages/project-list/project-list.component';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { DeveloperProjectListComponent } from './pages/developer-project-list/developer-project-list.component';
+import { RecommendationsLogsListComponent } from './pages/recommendations-logs-list/recommendations-logs-list.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: Configuration.pages.license.developerProjectList,
     component: DeveloperProjectListComponent,
+    data: { breadcrumb: 'المشاريع المطور' },
+  },
+  {
+    path: Configuration.pages.license.recommendationLogsList,
+    component: RecommendationsLogsListComponent,
     data: { breadcrumb: 'المشاريع المطور' },
   },
 

@@ -17,17 +17,36 @@ export class LicenseProjectCharteredAccountantCreateUpdateDto {
   delegatorEmail: string = "";
   delegatorMobile: string = "";
   delegatorIdentityNumber: string = "";
-  charteredAccountantDelegatorSignModelFileId: string = "";
-  licenseProjectCharteredAccountantDelegators?: LicenseProjectCharteredAccountantDelegatorCreateUpdateDto[] = []; */
+  charteredAccountantDelegatorSignModelFileId: string = ""; */
+  licenseProjectCharteredAccountantAuthorizedToSignDelegators?: LicenseProjectCharteredAccountantDelegatorCreateUpdateDto[] = [];
+  licenseProjectCharteredAccountantPayments?: LicenseProjectCharteredAccountantPaymentsDto[];
+  contarctValue?: number;
+  financialReportApprovalPeriodInDays?: number;
+  paymentDeadline?: string;
 }
 
 export class LicenseProjectCharteredAccountantDelegatorCreateUpdateDto {
   id: string = '00000000-0000-0000-0000-000000000000';
   licenseProjectCharteredAccountantId: string = '';
+  delegatorCustomerId: string = '';
   delegatorName: string = '';
   identityNumber: string = '';
   signModelFileId: string = '';
   delegatorAcknowledgment: boolean = false;
   charteredAccountantDelegatorSignModelFile?: SysFileManagerCreateUpdateDto =
     new SysFileManagerCreateUpdateDto();
+}
+
+
+export interface LicenseProjectCharteredAccountantPaymentsDto {
+  id: string;
+   //البند
+  item: string;
+ //الكمية
+  quantity: number;
+ //السعر للوحدة
+  unitPrice: number;
+ //الوصف
+  description: string;
+  licenseProjectCharteredAccountantId: string;
 }

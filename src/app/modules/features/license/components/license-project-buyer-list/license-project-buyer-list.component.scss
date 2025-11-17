@@ -7,12 +7,35 @@
     color: white;
     border-color: var(--bs-btn-hover-border-color);
     align-items: end;
-    
+
 }
 
 
 table{
     border: 1px solid lightgray;
+
+    thead {
+        background-color: #F4F6F6;
+
+        tr {
+            height: 61.29px;
+
+            th {
+                background-color: #F4F6F6;
+                padding: 18.15px 24.19px;
+                gap: 6.05px;
+                vertical-align: middle;
+                opacity: 1;
+                font-family: IBM Plex Sans Arabic;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24.19px;
+                letter-spacing: 0;
+                color: #001F21;
+                text-align: right;
+            }
+        }
+    }
 }
 
 
@@ -42,14 +65,9 @@ button.btn-secondary:hover{
     background-color: white;
 }
 
-  
-table{
-    border: 1px solid lightgray;
-}
-
 
 .edit:hover{
   color: #076F42;
-  
+
 }
 

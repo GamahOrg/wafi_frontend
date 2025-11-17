@@ -35,7 +35,9 @@ export interface FacilityBasicInfo {
   customersId: string;
   cooperativeSocietyLicensingFileManager: null | SysFileManagerCreateUpdateDto;
   qualificationValFileManagerId:string;
+  logoFileId:string;
   qualificationValFileManager: null | SysFileManagerCreateUpdateDto;
+  logoFile: null | SysFileManagerCreateUpdateDto;
   facilityBusinessTypes: facilityBusinessType[]
   qualificationFacilityCertifications: qualificationFacilityCertification[];
   qualificationIssuesDocuments: qualificationIssuesDocument[];
@@ -129,6 +131,7 @@ export interface FacilityBasicUpdateInfo {
   // qualificationFacilityCertificationCreateUpdateDto: qualificationFacilityCertificationCreateUpdateDto,
   // QualificationFacilityCertification: qualificationFacilityCertification
   qualificationValFileManagerId:string;
+  logoFileId:string;
 }
 export enum brokerDocumentType {
   'TitleDeed' = 1,

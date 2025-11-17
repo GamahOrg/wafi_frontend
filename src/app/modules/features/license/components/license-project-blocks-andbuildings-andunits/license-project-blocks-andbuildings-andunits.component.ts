@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { LicenseDetails } from '../../models/license-details.model';
 import { licenseProjectZones } from '../../models/project-units';
 import { LicenseDetailsService } from '../../services/license-details/license-details.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-license-project-blocks-andbuildings-andunits',
@@ -10,6 +11,7 @@ import { LicenseDetailsService } from '../../services/license-details/license-de
   styleUrls: ['./license-project-blocks-andbuildings-andunits.component.scss']
 })
 export class LicenseProjectBlocksAndbuildingsAndunitsComponent {
+  baseUrl = `${environment.baseURL}/`;
   request!: LicenseDetails;
   zones!: licenseProjectZones[];
   subscriptions: Subscription[] = [];
@@ -19,6 +21,7 @@ export class LicenseProjectBlocksAndbuildingsAndunitsComponent {
   ngOnInit(): void {
     this.updateLicenseProjectZones()
   }
+
   private updateLicenseProjectZones(): void {
     this.subscriptions.push(
       this._licenseDetailsService.licenseProjectZones$.subscribe((res: licenseProjectZones[] | null) => {
@@ -28,6 +31,7 @@ export class LicenseProjectBlocksAndbuildingsAndunitsComponent {
       })
     )
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

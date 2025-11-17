@@ -1,0 +1,67 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/tab-content";
+@import "/src/assets/styles/content/form-conent";
+
+::ng-deep mat-chip {
+  margin: 2px;
+}
+#control-delegatorCustomerIds {
+  height: auto; /* let it resize automatically */
+  overflow: hidden; /* hide multiple lines */
+}
+
+/* Optional: cursor pointer */
+#control-delegatorCustomerIds option {
+  cursor: pointer;
+}
+.custom-multiple-select {
+  height: 140px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 6px;
+  font-size: 14px;
+  background-color: #fff;
+  width: 100%;
+  cursor: pointer;
+}
+
+.custom-multiple-select option {
+  padding: 6px;
+}
+
+.custom-multiple-select option:checked {
+  background-color: #1976d2;
+  color: white;
+}
+
+.selected-values {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.selected-chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #1976d2;
+  color: #fff;
+  border-radius: 16px;
+  padding: 4px 10px;
+  margin: 4px 6px 0 0;
+  font-size: 13px;
+}
+
+.selected-chip .remove-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  margin-left: 6px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.selected-chip .remove-btn:hover {
+  color: #ffbdbd;
+}

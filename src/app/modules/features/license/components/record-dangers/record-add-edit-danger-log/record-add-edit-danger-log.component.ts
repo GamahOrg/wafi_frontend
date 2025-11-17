@@ -95,7 +95,7 @@ export class RecordAddEditDangerLogComponent {
 
     this.subscriptions.push(
       this._licenseProjectRiskService.getLicenseProjectRiskById(this.licenseProjectId as string).subscribe((res) => {
-        debugger;
+        
         let licenseProject = res?.licenseProject as LicenseProjectDto;
         let area = licenseProject.licenseProjectAddresses[0].areas.areaName;
         let city = licenseProject.licenseProjectAddresses[0].cities.cityName;
@@ -111,13 +111,13 @@ export class RecordAddEditDangerLogComponent {
     this.subscriptions.push(
       this._licenseProjectRiskService.getLicenseProjectRiskById(this.licenseProjectRiskId as string).subscribe((res) => {
         this.licenseProjectRiskData = res as LicenseProjectRiskDto;
-        debugger;
+        
         this.addValuesToForm(this.licenseProjectRiskData);
       })
     )
   }
   addValuesToForm(licenseProjectRisk: LicenseProjectRiskDto) {
-    debugger;
+    
     if (licenseProjectRisk.id && licenseProjectRisk.id != "00000000-0000-0000-0000-000000000000") {
       this.licenseProjectDangerLogForm.patchValue(licenseProjectRisk as any);
       let riskResponsiblePartyIds: number[] = [];
@@ -128,7 +128,7 @@ export class RecordAddEditDangerLogComponent {
       }
       this.licenseProjectDangerLogForm.controls.riskResponsiblePartyIds.setValue(riskResponsiblePartyIds);
     }
-    debugger;
+    
     let licenseProject = licenseProjectRisk.licenseProject;
     let area = licenseProject.licenseProjectAddresses[0].areas.areaName;
     let city = licenseProject.licenseProjectAddresses[0].cities.cityName;
@@ -159,7 +159,7 @@ export class RecordAddEditDangerLogComponent {
     this.subscriptions.push(subscriptions);
   }
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectDangerLogForm.valid) {
       this.showValidation = true;
       return;
@@ -169,7 +169,7 @@ export class RecordAddEditDangerLogComponent {
     this.licenseProjectRiskCreateUpdate.licenseProjectId = this.licenseProjectId as string;
     this.licenseProjectRiskCreateUpdate.id = this.licenseProjectRiskData?.id as string;
 
-    debugger;
+    
 
 
     this.subscriptions.push(
@@ -214,7 +214,7 @@ export class RecordAddEditDangerLogComponent {
     this.subscriptions.push(
 
       this.licenseProjectDangerLogForm.valueChanges.subscribe(changes => {
-        debugger;
+        
         if (changes.probability && changes.effect) {
           let priorityValue: string = '';
           let multiplyValue = changes.effect * changes.probability;

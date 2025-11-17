@@ -30,16 +30,25 @@
             <thead>
                 <tr>
                     <th scope="col">اسم المشروع</th>
+                    <th scope="col">رقم الرخصة</th>
                     <th scope="col">كود المشروع</th>
                     <th scope="col">تاريخ إصدار الرخصة</th>
                     <th scope="col">حاله المشروع</th>
-                    <th scope="col">العمليات</th>
+                    <th scope="col">تاريخ بداية المشروع</th>
+                    <th scope="col">تاريخ نهاية المشروع</th>
+                    <th scope="col">تفاصيل</th>
+        
                 </tr>
             </thead>
             <tbody *ngFor="let project of reqList?.results">
                 <tr *ngIf="project && project.licenseProject">
                     <td>
                         <span class="text-dark" *ngIf="project.licenseProject.name">{{project.licenseProject.name}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-dark"
+                            *ngIf="project.certificateNumber">{{project.certificateNumber}}
                         </span>
                     </td>
                     <td>
@@ -62,12 +71,24 @@
                             *ngIf="project.licenseProject.sysLicenseProjectStatus?.name">{{project.licenseProject.sysLicenseProjectStatus?.name}}
                         </span>
                     </td>
+                       <td>
+                        <span class="text-dark"
+                            *ngIf="project.licenseProject.startOn">{{project.licenseProject.startOn| date:'MMM d, y'}}
+                        </span>
+                    </td>
+                       <td>
+                        <span class="text-dark"
+                            *ngIf="project.licenseProject.endOn">{{project.licenseProject.endOn| date:'MMM d, y'}}
+                        </span>
+                    </td>
                   
                     <td>
 
                         <div class="d-flex align-items-center">
                             <button type="button" class="btn btn-primary mx-4"
                                 (click)="showProjectDetails(project.licenseProject.id)"> تفاصيل المشروع </button>
+                            <!--<button type="button" class="btn btn-primary mx-4"
+                                (click)="showUnitList(project.licenseProject.id)"> وحدات المشروع </button>-->    
                         </div>
                     </td>
 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { accordionContent } from 'src/app/shared/models/accordion.model';
-import { AccordionService } from 'src/app/shared/services/accordion/accordion.service';
 import { LicenseRequestCharteredAccountantComponent } from '../license-request-chartered-accountant/license-request-chartered-accountant.component';
 import { LicenseRequestEngineeringConsultantComponent } from '../license-request-engineering-consultant/license-request-engineering-consultant.component';
 import { LicenseRequestFinalBeneficiaryContractComponent } from '../license-request-final-beneficiary-contract/license-request-final-beneficiary-contract.component';
@@ -12,6 +11,7 @@ import { TabCode } from '../../models/tab-code.model';
 import { LicenseProjectMainRealStateDeveloperComponent } from '../license-project-main-real-state-developer/license-project-main-real-state-developer.component';
 import { LicenseBeneficiaryContractFormAdditionalTermsComponent } from '../license-beneficiary-contract-form-additional-terms/license-beneficiary-contract-form-additional-terms.component';
 import { LicenseRequestFinalTenantContractComponent } from '../license-request-final-tenant-contract/license-request-final-tenant-contract.component';
+import { ViewBusinessPaymentTemplatesComponent } from '../view-business-payment-templates/view-business-payment-templates.component';
 @Component({
   selector: 'app-license-request-project-parties',
   templateUrl: './license-request-project-parties.component.html',
@@ -115,6 +115,18 @@ export class LicenseRequestProjectPartiesComponent {
       isRendered: false,
       isDeletebtn: false,
       accordionCode: TabCode.beneficiaryContractFormAdditionalTerms,
+    },
+    {
+      icon: "",
+      title: 'خطة الدفعات المالية',
+      component: ViewBusinessPaymentTemplatesComponent,
+      disabled: false,
+      isVisible: true,
+      id: '',
+      isViewed: false,
+      isRendered: false,
+      isDeletebtn: false,
+      accordionCode: TabCode.LicenseProjectBusinessPayment,
     },
   ];
   accordionContent: accordionContent = {

@@ -1,2 +1,49 @@
 @import "/src/assets/styles/custom-variables";
 @import "/src/assets/styles/bootstrap-custom/tabs";
+
+:host {
+  display: block;
+  overflow: visible !important;
+}
+
+::ng-deep .mat-tab-body-content {
+  overflow: visible !important;
+}
+
+::ng-deep .mat-tab-body-wrapper {
+  overflow: visible !important;
+}
+
+::ng-deep .mat-tab-body {
+  overflow: visible !important;
+}
+
+::ng-deep .mat-tab-label .count {
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  border-radius: 50% !important;
+  margin-inline-start: 0.5rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  color: #ffffff !important;
+  background-color: #c92a2a !important;
+}
+
+.count {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  margin-inline-start: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #c92a2a;
+}

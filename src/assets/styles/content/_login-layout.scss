@@ -4,7 +4,6 @@
   padding: .75rem;
 
   font-size: $font-size-xs;
-  // color: $darkgreen;
   color: $theme-dark;
 
   background: #FFFFFF;
@@ -26,7 +25,6 @@
 
       &+.contact {
         padding-inline-start: 2rem;
-        // border-inline-start: 2px solid $darkgreen;
         border-inline-start: 2px solid $theme-dark;
       }
     }
@@ -86,7 +84,7 @@
     }
 
     .card-footer {
-      --bs-card-cap-color: $dark;
+      --bs-card-cap-color: #{$body-color};
       font-weight: 500;
     }
   }

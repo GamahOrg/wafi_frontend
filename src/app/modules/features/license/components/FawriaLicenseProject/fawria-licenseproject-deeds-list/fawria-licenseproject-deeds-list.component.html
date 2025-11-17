@@ -1,0 +1,190 @@
+<div class="tab-data-top">
+  <div class="row g-3">
+    <div class="col-12 col-lg-4 col-xxl-3">
+      <div class="card active h-100">
+        <div class="card-body">
+          <span class="icon"><i class="hgi hgi-stroke hgi-star"></i></span>
+          <div class="d-flex flex-column">
+            <h4 class="card-title">{{deedHeaderProjectDataDto?.qualificationDegree}}</h4>
+            <p class="card-text">{{localization.appearanceQualification}}</p>
+          </div>
+          <!-- <span class="popover-icon ms-auto cursor-pointer" [popover]="popTemplate" [adaptivePosition]="true" container="body" boundariesElement="viewport" placement="top" containerClass="tab-data-top-card-popover" triggers="mouseenter:mouseleave">
+            <i class="hgi hgi-stroke hgi-alert-circle"></i>
+          </span>
+          <ng-template #popTemplate>
+            <div class="d-flex align-items-center gap-2">
+              <i class="hgi hgi-stroke hgi-help-circle"></i>
+              <div class="d-flex flex-column gap-2">
+                <h6 class="title">مساحة التأهيل</h6>
+                <span>أقصي مساحة حسب تأهيلك للمشروع حسب الصك هي 300 م²</span>
+              </div>
+            </div>
+          </ng-template> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 col-xxl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <span class="icon"><i class="hgi hgi-stroke hgi-align-selection"></i></span>
+          <div class="d-flex flex-column">
+            <h4 class="card-title">{{deedHeaderProjectDataDto?.projectAreaDeedAmount}} م²</h4>
+            <p class="card-text">{{localization.projectConstructionArea}}</p>
+          </div>
+          <!-- <span class="popover-icon ms-auto cursor-pointer" [popover]="popTemplate" [adaptivePosition]="true" container="body" boundariesElement="viewport" placement="top" containerClass="tab-data-top-card-popover" triggers="mouseenter:mouseleave">
+            <i class="hgi hgi-stroke hgi-alert-circle"></i>
+          </span>
+          <ng-template #popTemplate>
+            <div class="d-flex align-items-center gap-2">
+              <i class="hgi hgi-stroke hgi-help-circle"></i>
+              <div class="d-flex flex-column gap-2">
+                <h6 class="title">درجة التأهيل</h6>
+                <span>أقصى مساحة مسموحة حسب تأهيلك للمشروع تعتمد على مساحة مسطح البناء هي 300 م² </span>
+              </div>
+            </div>
+          </ng-template> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 col-xxl-3" *ngIf="isUnit">
+      <div class="card h-100">
+        <div class="card-body">
+          <span class="icon"><i class="hgi hgi-stroke hgi-align-selection"></i></span>
+          <div class="d-flex flex-column">
+            <h4 class="card-title">{{deedHeaderProjectDataDto?.constructionAreaAmount}} م²</h4>
+            <p class="card-text">{{localization.projectAreaAccordingToPermit}}</p>
+          </div>
+          <button class="btn btn-sm btn-outline-primary ms-auto" *ngIf="hasNonType1Deeds()" (click)="openUpdateBuildingAreaDialog(false)">
+            <i class="icon hgi hgi-stroke hgi-add-square"></i>
+            إضافة
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 col-xxl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <span class="icon"><i class="hgi hgi-stroke hgi-motion-01"></i></span>
+          <div class="d-flex flex-column">
+            <h4 class="card-title">{{deedHeaderProjectDataDto?.totalUnit || '0'}}</h4>
+            <p class="card-text">عدد الوحدات</p>
+          </div>
+          <button class="btn btn-sm btn-outline-primary ms-auto" *ngIf="hasNonType1Deeds() || !isUnit" (click)="openUpdateBuildingAreaDialog(true)">
+            <i class="icon hgi hgi-stroke hgi-add-square"></i>
+            إضافة
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- error message -->
+  <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert" *ngIf="deedHeaderProjectDataDto?.isQualifaictionDegreeValid">
+    <span class="icon">
+      <i class="hgi hgi-stroke hgi-help-circle"></i>
+    </span>
+    <span>لا يمكن استكمال الطلب، درجة التأهيل الحالية أقل من الحد المسموح لإجمالي مساحة مسطح البناء للمشروع</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <!-- Project Details Section -->
+  <div class="tab-data-section" *ngIf="deedsList && deedsList.length > 0">
+    <h6 class="title mb-2">{{localization.projectDetails}}</h6>
+
+    <div class="row g-5">
+      <div class="col-12 col-lg-auto">
+        <div class="key">
+          <i class="icon hgi hgi-stroke hgi-building-06"></i>
+          {{localization.cityNameLabel}}
+        </div>
+        <div class="value">
+          {{ deedHeaderProjectDataDto?.cityName }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-auto">
+        <div class="key">
+          <i class="icon hgi hgi-stroke hgi-building-06"></i>
+          {{localization.deedNameLabel}}
+        </div>
+        <div class="value">
+          {{ deedHeaderProjectDataDto?.neighborhoodName }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Deeds List Section -->
+<div class="tab-data-header">
+  <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+  <h6 class="title">
+    {{ localization.projectLandDeeds }}
+  </h6>
+  <button class="btn btn-outline-primary ms-auto" (click)="addDeeds()" *ngIf="deedsList && deedsList.length > 0">
+    <i class="icon hgi hgi-stroke hgi-add-square me-2"></i> {{ localization.addDeeds }}
+  </button>
+</div>
+
+<div class="tab-data-section">
+  <!-- Deeds Table -->
+  <ng-container *ngIf="deedsList.length > 0">
+    <div class="table-responsive">
+      <table class="table table-light" *ngIf="deedsList && deedsList.length > 0">
+        <thead>
+          <tr>
+            <th scope="col">{{localization.deedType}}</th>
+            <th scope="col">{{localization.deedNumber}}</th>
+            <th scope="col">{{localization.deedDate}}</th>
+            <th scope="col">{{localization.unitsCount}}</th>
+            <th scope="col">{{localization.licenseType}}</th>
+            <th scope="col">{{localization.buildingPermitNumber}}</th>
+            <th scope="col">{{localization.actions}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let deed of deedsList">
+            <td> {{deed.integrationTypeId == 0 ? 'وزارة عدل' : 'السجل العقاري'}} </td>
+            <td>
+              <span class="tag">{{deed.deedNumber}}</span>
+            </td>
+            <td>{{deed.deedDate}}</td>
+            <td>
+              <span class="tag">{{deed.ownersCount}}</span>
+            </td>
+            <td> {{deed.licenseProjectConstructionLicenseType}} </td>
+            <td *ngIf="deed.constructionLicenseNumber != null">
+              <span class="tag">{{deed.constructionLicenseNumber}}</span>
+            </td>
+            <td>
+              <button mat-icon-button [matMenuTriggerFor]="actionMenu" class="action-menu-trigger">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #actionMenu="matMenu" class="deed-action-menu">
+                <button mat-menu-item (click)="viewDeedDetails(deed)">
+                  <mat-icon>description</mat-icon>
+                  <span>تفاصيل الصك</span>
+                </button>
+                <!-- <button mat-menu-item (click)="editDeed(deed)">
+                  <mat-icon>edit</mat-icon>
+                  <span>تعديل الصك</span>
+                </button> -->
+                <button mat-menu-item (click)="deleteDeed(deed.id)" class="delete-action">
+                  <mat-icon>delete</mat-icon>
+                  <span>حذف الصك</span>
+                </button>
+              </mat-menu>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <!-- No Data Message -->
+  <ng-container *ngIf="!deedsList || deedsList.length === 0">
+    <app-no-data (onNoDataButtonClicked)="addDeeds()" [showText]="false" [completeBtnTitle]="'إضافة صكوك'"></app-no-data>
+  </ng-container>
+</div>
+
+<!-- Next/Previous Buttons -->
+<app-next-and-previus-buttons></app-next-and-previus-buttons>

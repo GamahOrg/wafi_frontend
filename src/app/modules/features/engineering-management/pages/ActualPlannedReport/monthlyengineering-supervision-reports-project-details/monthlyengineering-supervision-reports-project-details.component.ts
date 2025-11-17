@@ -53,12 +53,12 @@ export class MonthlyengineeringSupervisionReportsProjectDetailsComponent {
   }
 
   getmonthDate() {
-    debugger;
+    
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
-        debugger;
+        
         if (res) {
-          debugger;
+          
           this.actualValueReport = res as ActualValueReportPagingListDto;
         }
       })

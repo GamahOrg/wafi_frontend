@@ -86,7 +86,7 @@ export class AddEditConnectionWithServicesProviderComponent {
       this.subscriptions.push(
         this._engineeringSupervisionPlannedReportActualInfrastructureService.getLicenseProjectConnectionWithServicesProviderDto().subscribe(res => {
           if (res) {
-          debugger;
+          
            this.licenseProjectConnectionWithServicesProvider=res as LicenseProjectConnectionWithServicesProviderDto; 
            if(this.licenseProjectConnectionWithServicesProvider && this.licenseProjectConnectionWithServicesProvider.id && this.licenseProjectConnectionWithServicesProvider.id !="00000000-0000-0000-0000-000000000000")
             {
@@ -102,13 +102,13 @@ export class AddEditConnectionWithServicesProviderComponent {
   
     
     save(): void {
-      debugger;
+      
       if (!this.licenseProjectConnectionWithServicesProviderForm.valid) {
         this.showValidation = true;
         return;
       }
   
-      debugger;
+      
       this.licenseProjectConnectionWithServicesProviderCreateUpdate = this.licenseProjectConnectionWithServicesProviderForm.value as {} as LicenseProjectConnectionWithServicesProviderCreateUpdateDto;
       this.licenseProjectConnectionWithServicesProviderCreateUpdate.id=this.licenseProjectConnectionWithServicesProvider?.id as string;
       this.licenseProjectConnectionWithServicesProviderCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId=this.licenseProjectConnectionWithServicesProvider?.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;

@@ -1,0 +1,22 @@
+<div class="page">
+  <!-- Statistics Content -->
+  <div class="content">
+    <div class="details-section">
+      <!-- Page Title -->
+      <div class="section-header">
+        <h2 class="section-title">الاجماليات</h2>
+      </div>
+
+      <!-- Information Grid -->
+      <div class="info-grid">
+        <div class="info-item" *ngFor="let stat of allStatistics">
+          <label class="info-label">{{ stat.label }}</label>
+          <span class="info-value" [ngClass]="{ 'price': stat.isCurrency }">
+            {{ stat.value }}
+            <img *ngIf="stat.isCurrency" src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

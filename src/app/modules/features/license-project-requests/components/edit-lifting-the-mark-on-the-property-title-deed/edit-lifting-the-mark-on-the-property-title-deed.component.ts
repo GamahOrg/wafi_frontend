@@ -141,7 +141,7 @@ export class EditLiftingTheMarkOnThePropertyTitleDeedComponent {
   loadliftingDeeds(){
     this._liftingDeedService.getLicenseProjectDeeds(this .changeRequestDetails.licenseProjectId as string).subscribe(
       (response:LicenseDeedDropDownList[] | null) => {
-        debugger
+        
 
         this.liftingDeeds = response as LicenseDeedDropDownList [];
         if (this.changeRequestDetails?.liftingDeeds.length > 0) {
@@ -160,7 +160,7 @@ export class EditLiftingTheMarkOnThePropertyTitleDeedComponent {
       this.showValidation = true;
       return;
     }
-    debugger
+    
     var requestPayload = this.liftingTheMarkOnThePropertyTitleDeedForm
       .value as {} as CreateOrUpdateLiftingTheMarkOnThePropertyTitleDeedRequestDto;
       requestPayload.id = this.changeRequestDetails?.id;

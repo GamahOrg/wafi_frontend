@@ -34,10 +34,16 @@ export class SellingCertificateComponent {
         break;
       }
       case LicenseRequestTypeTypeCodeEnum.SellRealEstateUnits:
-        case LicenseRequestTypeTypeCodeEnum.PRESellRealEstateUnits:   
+        case LicenseRequestTypeTypeCodeEnum.PRESellRealEstateUnits:  
       {
         // this.certificateTemplateDate = this.getOFFPLANSALELICENSETemplate();
         this.certificateTemplateDate = this.buildTemplate('OFF-PLAN SALE LICENSE');
+        break;
+      }
+      case LicenseRequestTypeTypeCodeEnum.Fawria:   
+      {
+        // this.certificateTemplateDate = this.getOFFPLANSALELICENSETemplate();
+        this.certificateTemplateDate = this.buildTemplate('Fawria LICENSE');
         break;
       }
       case LicenseRequestTypeTypeCodeEnum.SellToSubDeveloper: {

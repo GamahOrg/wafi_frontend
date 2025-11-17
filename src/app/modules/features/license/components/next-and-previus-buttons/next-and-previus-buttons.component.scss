@@ -1,2 +1,51 @@
 @import "/src/assets/styles/custom-variables";
 @import "/src/assets/styles/content/form-conent";
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+
+  .nav-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    width: 126px;
+    height: 36px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid $primary;
+    color: $primary;
+
+    .icon {
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .prev-button {
+    .icon {
+      order: 2;
+    }
+  }
+
+  .next-button {
+    .icon {
+      order: -1;
+    }
+  }
+
+  .draft-button {
+    // Uses same styling as next-button (primary color)
+  }
+}

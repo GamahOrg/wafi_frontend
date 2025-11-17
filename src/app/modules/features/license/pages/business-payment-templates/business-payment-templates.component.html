@@ -1,0 +1,166 @@
+<div class="business-payment-templates">
+  <!-- Payment Versions History Page -->
+  <app-payment-versions-history *ngIf="showVersionsHistory" (onClose)="closeVersionsHistory()"></app-payment-versions-history>
+
+  <!-- Header Section -->
+  <div class="tab-data-header" *ngIf="!isCreateUpdateMode && !showVersionsHistory">
+      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+      <h6 class="title">نماذج الدفعات المالية</h6>
+      <div class="buttons-group">
+        <button *ngIf="!isNew" type="button" class="record-btn btn btn-outline-primary" (click)="openRecordDialog()">
+          <i class="fa fa-refresh"></i>
+          <span>سجل الدفعات</span>
+        </button>
+        <button type="button" class="edit-icon btn btn-primary" (click)="openAddPaymentModal()">
+          <span>إضافة نموذج</span>
+          <i class="hgi hgi-stroke hgi-plus-sign"></i>
+        </button>
+      </div>
+    </div>
+
+  <!-- <div class="page-header" *ngIf="!isCreateUpdateMode">
+     <div class="header-content"> -->
+      <!-- <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+      <h6 class="title">نماذج الدفعات المالية</h6>
+      <div class="header-actions">
+        <button  type="button" class="edit-icon btn btn-primary" (click)="openAddPaymentModal()">
+          <span>إضافة نموذج</span>
+          <i class="hgi hgi-stroke hgi-plus-sign"></i>
+        </button>
+      </div> -->
+  <!-- </div> -->
+<!-- </div>  -->
+
+<app-edit-business-payment-templates
+  *ngIf="isCreateUpdateMode"
+  [paymentId]="editingPaymentId"
+  [isActive]="isActive"
+  [isUpdateVersion]="!isNew"
+  (backClicked)="onBackFromEdit()">
+</app-edit-business-payment-templates>
+
+  <!-- Empty State -->
+
+  <ng-container *ngIf="!loading && paymentTemplates.length === 0 && !isCreateUpdateMode && !showVersionsHistory" >
+      <div class="mt-4">
+          <app-no-data [showCompleteBtn]="false"></app-no-data>
+      </div>
+  </ng-container>
+  <!-- Payment Installments Table -->
+<div class="payment-data-section" *ngIf="!loading && paymentTemplates.length > 0 && !isCreateUpdateMode && !showVersionsHistory">
+  
+  <div class="payment-content-wrapper">
+    <!-- Right Sidebar: Templates List -->
+    <div class="templates-sidebar">
+      <div 
+        class="template-item"
+        [class.active]="selectedTemplateId === template.id"
+        *ngFor="let template of paymentTemplates"
+        (click)="selectTemplate(template.id)">
+        <span class="template-name">{{ template.templateName }}</span>
+        <div class="template-item-actions" (click)="$event.stopPropagation()">
+          <button *ngIf="template.isActive"
+            type="button"
+            style="font-size: 16px; color: #005257; border: none; justify-content: center; background: transparent;"
+            (click)="$event.stopPropagation(); editTemplate()"
+            [disabled]="selectedTemplateId !== template.id">
+            <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+          </button>
+          <button *ngIf="template.isActive  && !isNew"
+            type="button"
+            style="font-size: 16px; color: #EC0A0A; border: none; justify-content: center; width: 32px; height: 32px; background: transparent;"
+            (click)="$event.stopPropagation(); confirmDeactivateTemplate(template)">
+            <i class="fa fa-ban"></i>
+          </button>
+          <button *ngIf="isNew"
+            type="button"
+            style="font-size: 16px; color: #EC0A0A; border: none; justify-content: center; width: 32px; height: 32px; background: transparent;"
+            (click)="$event.stopPropagation(); confirmDeleteTemplate(template)">
+            <i class="hgi hgi-stroke hgi-delete-03"></i>
+          </button>
+          <button *ngIf="!template.isActive && !isNew"
+            type="button"
+            style="font-size: 16px; color: #28a745; border: none; justify-content: center; width: 32px; height: 32px; background: transparent;"
+            (click)="$event.stopPropagation(); confirmActivateTemplate(template)"
+            title="تفعيل النموذج">
+            <i class="fa fa-check-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content: Payment Table -->
+    <div class="payment-main-content">
+      <!-- Template Actions (Optional - يمكن إزالتها إذا لم تكن مطلوبة) -->
+      <div class="template-actions" *ngIf="selectedTemplate" style="display: none;">
+        <button
+          type="button"
+          class="btn btn-edit"
+          (click)="editTemplate()">
+          <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+          تعديل النموذج
+        </button>
+        <button
+          type="button"
+          class="btn btn-delete"
+          (click)="confirmDeleteTemplate(selectedTemplate)">
+          <i class="fa fa-ban"></i>
+          تعطيل النموذج
+        </button>
+      </div>
+
+      <!-- Payment Table -->
+      <div class="payment-table">
+        <!-- Refunds Input Field -->
+        <div class="refunds-section" *ngIf="selectedTemplate">
+          <label for="refunds">عدد الدفعات المستردة: </label>
+          <label id="refunds">{{selectedTemplate.licenseProjectBusinessPayment.refunds}}</label>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>رقم الدفعة</th>
+              <th>نسبة الاستقطاع</th>
+              <th>نسبة الإنجاز</th>
+              <th>وصف الدفعة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of paymentInstallments; let i = index">
+              <td class="payment-number">{{ i + 1 }}</td>
+              <td>{{ payment.deductionPercentage }}%</td>
+              <td>{{ payment.rentPercentage }}%</td>
+              <td class="payment-description">{{payment.description && payment.description.length > 70 ? (payment.description | slice:0:100) + '...' : payment.description}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+      <!-- Navigation Buttons -->
+      <!-- <div class="nav-buttons">
+        <button class="nav-btn nav-btn-prev" (click)="goPrevious()">
+          <i class="fa fa-arrow-right"></i>
+          السابق
+        </button>
+        <button class="nav-btn nav-btn-draft" (click)="saveDraft()">
+          حفظ كمسودة
+        </button>
+        <button class="nav-btn nav-btn-next" (click)="goNext()">
+          التالي
+          <i class="fa fa-arrow-left"></i>
+        </button>
+      </div> -->
+  </div>
+    <!-- <app-next-and-previus-buttons *ngIf="(!isCreateUpdateMode || isActive) && !showVersionsHistory"></app-next-and-previus-buttons> -->
+
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading && !showVersionsHistory">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>جاري التحميل...</p>
+  </div>
+</div>
+

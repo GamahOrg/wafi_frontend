@@ -103,7 +103,7 @@ subscriptions: Subscription[] = [];
     );
   }
   onDelegatorChange() {
-    debugger
+    
     const selectedId = this.changeLicenseProjectDelegatorForm.controls.changeLicenseProjectDelegatorIds.value;
     const selectedCustomer = this.customers.find(c => c.id === selectedId);
     

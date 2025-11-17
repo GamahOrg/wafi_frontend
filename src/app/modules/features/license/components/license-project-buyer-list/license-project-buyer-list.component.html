@@ -1,25 +1,46 @@
-<button type="button" class="btn btn-primary my-4" (click)="openDialog('')">إضافة </button>
+<!-- <button type="button" class="btn btn-primary my-4" (click)="openDialog('')">إضافة </button> -->
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="nidNumberSearch">البحث برقم الهوية</label>
+            <input
+                type="text"
+                class="form-control"
+                id="nidNumberSearch"
+                [(ngModel)]="nidNumber"
+                (keyup.enter)="onSearchChange()"
+                placeholder="ادخل رقم الهوية للبحث "
+            />
+        </div>
+    </div>
+    <!-- <div class="col-md-2 d-flex align-items-end">
+        <button type="button" class="btn btn-primary" (click)="onSearchChange()">
+            بحث
+        </button>
+    </div> -->
+</div>
 
 <div class="row row-gap-4">
     <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
         <table class="table">
             <thead>
                 <tr>
-                     <th scope="col">نوع السجل</th> 
+                     <th scope="col">اسم المشروع</th> 
                     <th scope="col">اسم المشترى</th>
                     <th scope="col"> رقم هوية المشترى</th>
                     <th scope="col"> رقم الجوال</th>
-                    <th scope="col">رقم العقد</th>
-                    <th scope="col">ملف العقد</th>
-                    <th scope="col">الحالة</th>
-                    <th scope="col">العمليات</th>
+                    <th scope="col">الحي</th>
+                    <!-- <th scope="col">ملف العقد</th> -->
+                    <!-- <th scope="col">الحالة</th> -->
+                    <th scope="col">التفاصيل</th>
                    
                 </tr>
             </thead>
             <tbody *ngFor="let comdata of reqList.results;let i=index;">
                 <tr>
                      <td>
-                        <span class="text-dark">{{comdata.licenseProjectBuyerType.name}}</span>
+                        <span class="text-dark">{{comdata?.licenseProject?.name}}</span>
                     </td>
                     <td>
                         <div class="d-flex align-items-center column-gap-2">
@@ -36,10 +57,10 @@
                     </td>
                     <td>
                         <div class="d-flex align-items-center column-gap-2">
-                            {{comdata.contractNumber}}
+                            {{comdata?.licenseProject?.licenseProjectAddresses?.[0]?.neighborhoodName}}
                         </div>
                     </td>
-                    <td>
+                    <!-- <td>
                         <span class="text-dark">
                             <a *ngIf="comdata.contractFile&&comdata.contractFile.filePath"
                             [href]="baseUrl + comdata.contractFile.filePath"
@@ -49,15 +70,15 @@
                             {{ comdata.contractFile.fileDescription }}
                           </a>
                         </span>
-                    </td>
-                    <td>
+                    </td> -->
+                    <!-- <td>
                         <span class="text-dark">{{comdata.status.name}}</span>
-                    </td>
+                    </td> -->
                     <td>
                        <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary mx-4" (click)="confirmRecover(comdata)">استرداد</button>
                        <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary mx-4" (click)="openDialog(comdata.id)">تعديل </button>
                        <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.Cerified" class="btn btn-outline-primary" (click)="confirmCancel(comdata)">إلغاء عقد المشتري </button> 
-                       <button type="button"  class="btn btn-outline-primary" (click)="showDetailDialog(comdata.id)">التفاصيل</button> 
+                       <button type="button"  class="btn btn-primary" (click)="showDetail(comdata.id)">تفاصيل المشتري</button> 
 
                      </td>
                 </tr>

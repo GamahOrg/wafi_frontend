@@ -1,4 +1,4 @@
-<div class="timeline-horizontal">
+<div class="timeline-horizontal" *ngIf="isShow">
   <div class="timeline-item" [ngClass]="{completed: currentLicenseRequestHeaderTimeLine.isRequestSentToDevelopers}">
     <span class="material-icons" *ngIf="currentLicenseRequestHeaderTimeLine.isRequestSentToDevelopers; else pending">check_circle</span>
     <ng-template #pending>
@@ -15,14 +15,14 @@
 
 
   <div class="timeline-item" [ngClass]="{completed: currentLicenseRequestHeaderTimeLine.isRequestSent }">
-    <span *ngIf="currentLicenseRequestHeaderTimeLine.isRequestSent; else pending">check_circle</span>
+    <span class="material-icons" *ngIf="currentLicenseRequestHeaderTimeLine.isRequestSent; else pending">check_circle</span>
     <ng-template #pending>
       <span class="material-icons">hourglass_empty</span></ng-template>
     <label> إرسال الطلب للدراسة</label>
   </div>
 
   <div class="timeline-item" [ngClass]="{completed: currentLicenseRequestHeaderTimeLine.isLicenseApproved }">
-    <span *ngIf="currentLicenseRequestHeaderTimeLine.isLicenseApproved; else pending">check_circle</span>
+    <span class="material-icons" *ngIf="currentLicenseRequestHeaderTimeLine.isLicenseApproved; else pending">check_circle</span>
     <ng-template #pending>
       <span class="material-icons">hourglass_empty</span></ng-template>
     <label> تم إصدار الرخصة</label>

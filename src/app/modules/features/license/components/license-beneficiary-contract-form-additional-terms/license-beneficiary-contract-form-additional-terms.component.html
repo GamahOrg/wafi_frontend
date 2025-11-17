@@ -1,29 +1,50 @@
 <div class="d-flex flex-column h-100">
-    <div class="tab-data-header">
-      <div class="icon"><span class="material-icons">list_alt</span></div>
+    <!-- <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
       <h6 class="title">{{localization.title}}</h6>
-    </div>
+    </div> -->
     <div class="tab-data-section">
       <div class="table-responsive">
         <table class="table table-light">
           <thead>
             <tr>
-              <th>{{localization.licenseBeneficiaryContractFormId}}</th>
+              <!-- <th>{{localization.licenseBeneficiaryContractFormId}}</th> -->
               <th>{{localization.itemNumber}}</th>
+              <th> {{localization.itemTitle}}</th>
               <th> {{localization.itemText}}</th>
               <th class="w-25"></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let beneficiary of beneficiaryContractFormAdditionalTermsList">
-              <td>
-                {{beneficiary?.licenseBeneficiaryContractForm?.description}}
-              </td>
-              <td>{{beneficiary?.itemNumber}}</td>
-              <td>{{beneficiary?.itemText}}</td>
-            </tr>
+            <ng-container *ngFor="let parentBeneficiary of getParentItems(); let parentIndex = index">
+              <!-- Parent Row -->
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <button *ngIf="hasChildren(parentBeneficiary.id)" mat-icon-button class="me-2"
+                      (click)="toggleExpand(parentBeneficiary.id)"
+                      >
+                      <mat-icon>{{isExpanded(parentBeneficiary.id) ? 'expand_less' : 'expand_more'}}</mat-icon>
+                    </button>
+                    <span>{{getItemNumberDisplay(parentBeneficiary)}}</span>
+                  </div>
+                </td>
+                <td>{{parentBeneficiary?.itemTitle}}</td>
+                <td>{{parentBeneficiary?.itemText}}</td>
+              </tr>
+
+              <!-- Child Rows -->
+              <ng-container *ngIf="isExpanded(parentBeneficiary.id)">
+                <tr *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index" class="child-row">
+                  <td class="ps-5">{{getItemNumberDisplay(childBeneficiary)}}</td>
+                  <td>{{childBeneficiary?.itemTitle}}</td>
+                  <td>{{childBeneficiary?.itemText}}</td>
+                </tr>
+              </ng-container>
+            </ng-container>
           </tbody>
         </table>
       </div>
     </div>    
   </div>
+

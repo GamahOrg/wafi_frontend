@@ -37,6 +37,7 @@ import {
 } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import { PopupNoteComponent } from './components/popup-note/popup-note.component';
 import { OTPInputComponent } from './components/otp-input/otp-input.component';
@@ -65,6 +66,14 @@ import { RequestTimelineService } from './services/request-timeline/request-time
 import { RealEstateLicenseRequestTimelineComponent } from './components/real-estate-license-request-timeline/real-estate-license-request-timeline.component';
 import { HorizontalTabsComponent } from './components/horizontal-tabs/horizontal-tabs.component';
 import { RequestApprovalComponent } from './components/request-approval/request-approval.component';
+import { CollapsibleDirective } from './directives/collapsible.directive';
+import { NumberFormatDirective } from './directives/number-format.directive';
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
+import { NationalAddressService } from '../modules/features/facilities/services/facilityProfile/national-address-service/national-address.service';
+import { DisableItemConfirmationComponent } from './components/disable-item-confirmation/disable-item-confirmation.component';
+import { SaveUpdateConfirmationComponent } from './components/save-update-confirmation/save-update-confirmation.component';
+import { HijriDatepickerComponent } from './components/hijri-datepicker/hijri-datepicker.component';
+import { HijriDatepickerDirective } from './directives/hijri-datepicker.directive';
 
 export function getDatepickerConfig(): BsDatepickerConfig {
   return Object.assign(new BsDatepickerConfig(), {
@@ -72,6 +81,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     showClearButton: true,
     containerClass: 'theme-default',
     dateInputFormat: 'DD/MM/YYYY',
+    adaptivePosition: true,
   });
 }
 
@@ -105,7 +115,14 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     PilotLaunchHintComponent,
     LicenseRequestTimelineComponent,
     RealEstateLicenseRequestTimelineComponent,
-    RequestApprovalComponent
+    RequestApprovalComponent,
+    CollapsibleDirective,
+    NumberFormatDirective,
+    PdfViewerComponent,
+    DisableItemConfirmationComponent,
+    SaveUpdateConfirmationComponent,
+    HijriDatepickerComponent,
+    HijriDatepickerDirective
   ],
   imports: [
     CommonModule,
@@ -122,6 +139,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     BsDatepickerModule,
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
+    PopoverModule.forRoot(),
 
     NgOtpInputModule,
     AccordionModule,
@@ -146,6 +164,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     OTPService,
     NotificationsService,
     RequestTimelineService,
+    NationalAddressService,
   ],
   exports: [
     LanguageComponent,
@@ -164,6 +183,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     BsDatepickerModule,
     BsDropdownModule,
     CarouselModule,
+    PopoverModule,
     RealEstateContributionFooterComponent,
     PilotLaunchHintComponent,
     TabsComponent,
@@ -182,7 +202,12 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     CircularProgressComponent,
     LicenseRequestTimelineComponent,
     RealEstateLicenseRequestTimelineComponent,
-    RequestApprovalComponent
+    RequestApprovalComponent,
+    CollapsibleDirective,
+    NumberFormatDirective,
+    PdfViewerComponent,
+    HijriDatepickerComponent,
+    HijriDatepickerDirective
   ],
 })
 export class SharedModule {}

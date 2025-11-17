@@ -49,6 +49,12 @@ export class NextAndPreviusButtonsComponent implements OnInit, OnDestroy {
         this.saveAsDraftBtnIsVisible = res
       })
     )
+
+     this.subscriptions.push(
+      this._nextAndPreviusButtonsService.saveAsDraftBtnText.subscribe((res: string) => {
+        this.localization.saveAsDraft = res
+      })
+    )
   }
   private observeTabsContent(): void {
     this.subscriptions.push(

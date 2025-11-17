@@ -1,0 +1,22 @@
+<div class="contract-viewer-page">
+   <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="fa fa-file-text-o"></i>
+      عقد البيع
+    </h1>
+  </div>
+
+  <!-- PDF Viewer Section -->
+  <div class="pdf-viewer-section">
+    <app-pdf-viewer
+      [fileId]="contractFileId"
+      [retryCallback]="retryLoadContract"
+      [noContentMessage]="'لا يوجد عقد متاح'"
+      [noContentDescription]="'لم يتم العثور على العقد'"
+      [loadingMessage]="'جاري تحميل العقد'"
+      [loadingDescription]="'يرجى الانتظار بينما يتم تحميل العقد'"
+      [errorMessage]="'حدث خطأ في تحميل العقد'"
+    ></app-pdf-viewer>
+  </div>
+</div>

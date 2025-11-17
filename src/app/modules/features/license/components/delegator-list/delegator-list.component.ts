@@ -91,7 +91,7 @@ export class DelegatorListComponent implements OnInit, OnDestroy {
     });
   }
   save(): void {
-    debugger
+    
     if (this.licenseProjectDelegatorForm?.invalid) {
       this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
       this.licenseProjectDelegatorForm?.markAllAsTouched();

@@ -45,7 +45,7 @@
                 height: 3rem;
                 margin-inline-end: 1rem;
 
-                background-color: $lightgreen;
+                background-color: $lightergreen;
                 border-radius: 50%;
 
                 [class^="material-icons"] {
@@ -56,7 +56,7 @@
 
             .title {
                 font-size: $font-size-sm;
-                color: $dark;
+                color: $body-color;
             }
 
             .note {

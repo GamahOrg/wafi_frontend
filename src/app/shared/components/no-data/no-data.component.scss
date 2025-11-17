@@ -1,50 +1,23 @@
 @import "/src/assets/styles/custom-variables";
 
 .no-data {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
 
-    img {
-        width: 5.5rem;
+  .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $theme-dark;
+  }
 
-        &:not(.rega) {
-            display: block;
+  img {
+    max-width: 18rem;
+  }
 
-            :host-context(.rega) & {
-                display: none;
-            }
-        }
-
-        &.rega {
-            display: none;
-
-            :host-context(.rega) & {
-                display: block;
-            }
-        }
-    }
-
-    .text {
-        max-width: 17rem;
-        text-align: center;
-
-        .title {
-            // color: $darkgreen;
-            color: $theme-dark;
-
-            :host-context(.rega) & {
-                color: $theme-dark;
-            }
-
-            &~.desc {
-                margin-top: 0.5rem;
-            }
-        }
-
-        .desc {
-            font-size: $font-size-sm;
-        }
-    }
+  .text {
+    max-width: 17rem;
+    text-align: center;
+  }
 }

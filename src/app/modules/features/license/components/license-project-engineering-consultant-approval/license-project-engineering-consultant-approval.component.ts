@@ -20,6 +20,9 @@ export class LicenseProjectEngineeringConsultantApprovalComponent implements OnI
     this.subscriptions.push(
       this._licenseRequestApprovalsService.getLicenseProjectEngineeringConsultantApprovalBS().subscribe((obj) => {
         this.engineeringConsultantApproval = obj as LicenseProjectEngineeringConsultantApproval;
+        console.log('this.engineeringConsultantApproval.agreementFile');
+        console.log(this.engineeringConsultantApproval.agreementFile);
+        
       })
     )
   }

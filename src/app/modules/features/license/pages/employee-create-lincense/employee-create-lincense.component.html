@@ -13,7 +13,7 @@
                          placeholder="اكتب {{localization.nationalNumber}}"
                          [ngClass]="{'is-invalid': nationalNumber.touched && nationalNumber.errors}" />
                   <div *ngIf="nationalNumber.errors"
-                       class="invalid-feedback">
+                       class="invalid-feedback d-block">
                       <div *ngIf="nationalNumber.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                       <div *ngIf="nationalNumber.errors?.['pattern']">{{localization.pattern}}</div>
                       <div *ngIf="nationalNumber.errors?.['maxlength'] || nationalNumber.errors?.['minlength']">{{localization.maxLengthErrorMsg}}</div>

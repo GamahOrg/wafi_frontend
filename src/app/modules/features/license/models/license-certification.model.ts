@@ -27,6 +27,7 @@ export interface LicenseCertificateDto {
     projectAreaName: string;
     projectNeighborhoodName: string;
     commercialRegisterNumber: string;
+    entity700number: string;
     projectSize: number | null;
     decisionNo: string
     isFinalCertification: boolean;
@@ -39,7 +40,10 @@ export interface LicenseCertificateDto {
     contributionTypeName : string;
     contributionCapitalValue : number;
     contributionDuration: number;
-    categoryName:string
+    categoryName:string;
+    entity700Number:string;
+    projectStartOn:string;
+    projectEndOn:string;
 }
 
 export interface CertificateTemplate {

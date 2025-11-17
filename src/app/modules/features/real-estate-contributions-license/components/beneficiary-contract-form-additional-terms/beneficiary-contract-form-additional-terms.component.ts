@@ -13,35 +13,41 @@ import { BeneficiaryContractFormAdditionalTermsFormComponent } from '../benefici
 @Component({
   selector: 'app-beneficiary-contract-form-additional-terms',
   templateUrl: './beneficiary-contract-form-additional-terms.component.html',
-  styleUrls: ['./beneficiary-contract-form-additional-terms.component.scss']
+  styleUrls: ['./beneficiary-contract-form-additional-terms.component.scss'],
 })
 export class BeneficiaryContractFormAdditionalTermsComponent {
   subscriptions: Subscription[] = [];
-  beneficiaryContractFormAdditionalTerms: BeneficiaryContractFormAdditionalTermsDto[] = [];
-  SysLicenseBeneficiaryContractFormList: SysLicenseBeneficiaryContractFormDto[] = [];
-  licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
+  beneficiaryContractFormAdditionalTerms: BeneficiaryContractFormAdditionalTermsDto[] =
+    [];
+  SysLicenseBeneficiaryContractFormList: SysLicenseBeneficiaryContractFormDto[] =
+    [];
+  licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   constructor(
     private _beneficiaryContractFormAdditionalTermsService: BeneficiaryContractFormAdditionalTermsService,
     private _toastrService: ToastrService,
     private _popupService: PopupService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService
-  ) { }
+  ) {}
   ngOnInit() {
-    this.getLicenseProjectIdStorage()
+    this.getLicenseProjectIdStorage();
     this.getAdditionallist();
     this.updateSaveAsDraftBtnIsvisible();
     this.observeNextButtonIsCliced();
   }
-  getAdditionallist():void{
+  getAdditionallist(): void {
     this.subscriptions.push(
-      this._beneficiaryContractFormAdditionalTermsService.getBeneficiarylist().subscribe((list) => {
-        this.beneficiaryContractFormAdditionalTerms = list as BeneficiaryContractFormAdditionalTermsDto[];
-      })
-    )
+      this._beneficiaryContractFormAdditionalTermsService
+        .getBeneficiarylist()
+        .subscribe((list) => {
+          this.beneficiaryContractFormAdditionalTerms =
+            list as BeneficiaryContractFormAdditionalTermsDto[];
+        })
+    );
   }
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     this.loadComponentData();
   }
   localization = {
@@ -55,47 +61,55 @@ export class BeneficiaryContractFormAdditionalTermsComponent {
   };
   private loadComponentData() {
     this.subscriptions.push(
-      this._beneficiaryContractFormAdditionalTermsService.GetAllAdditionalAsync(this.licenseProjectId as string).subscribe((results) => {
-      if (results) {
-        this.beneficiaryContractFormAdditionalTerms = results.data as BeneficiaryContractFormAdditionalTermsDto[];
-      }
-    }));
+      this._beneficiaryContractFormAdditionalTermsService
+        .GetAllAdditionalAsync(this.licenseProjectId as string)
+        .subscribe((results) => {
+          if (results) {
+            this.beneficiaryContractFormAdditionalTerms =
+              results.data as BeneficiaryContractFormAdditionalTermsDto[];
+          }
+        })
+    );
   }
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+  
   openDialog(): void {
     let Data = {
       title: this.localization.title,
-      component: BeneficiaryContractFormAdditionalTermsFormComponent
+      component: BeneficiaryContractFormAdditionalTermsFormComponent,
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
-  delete(id: string,index:number) {
+
+  delete(id: string, index: number) {
     this.subscriptions.push(
-      this._beneficiaryContractFormAdditionalTermsService.Delete(id).subscribe(res => {
-        if (res.isDone) {
-          this._toastrService.success(this.localization.savedSuccessfully)
-          if (index != -1)
-            this.beneficiaryContractFormAdditionalTerms.splice(index, 1);
-        }
-        else
-          this._toastrService.error(res.message);
-      })
-    )
+      this._beneficiaryContractFormAdditionalTermsService
+        .Delete(id)
+        .subscribe((res) => {
+          if (res.isDone) {
+            this._toastrService.success(this.localization.savedSuccessfully);
+            if (index != -1)
+              this.beneficiaryContractFormAdditionalTerms.splice(index, 1);
+          } else this._toastrService.error(res.message);
+        })
+    );
   }
   // TabsButtons
   private observeNextButtonIsCliced() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
-        this.moveToNextTab()
-      })
-    )
+      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
+        (res: null) => {
+          this.moveToNextTab();
+        }
+      )
+    );
   }
   moveToNextTab(): void {
-    this._nextAndPreviusButtonsService.moveToNextTab.emit()
+    this._nextAndPreviusButtonsService.moveToNextTab.emit();
   }
   private updateSaveAsDraftBtnIsvisible(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false)
+    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
   }
 }

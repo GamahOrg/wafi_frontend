@@ -1,0 +1,223 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/cards";
+
+:host {
+    display: block;
+    height: 100%;
+    overflow-y: auto;
+}
+
+// // Stepper Container
+// .stepper-container {
+//   background-color: #FFFFFF;
+//   border-radius: 12px;
+//   padding: 24px;
+//   box-shadow: 0px 3px 6px 0px #00000008,
+//               0px 11px 11px 0px #00000008,
+//               0px 24px 14px 0px #00000005;
+//   margin-bottom: 20px;
+//   min-height: 600px;
+//   height: 100%;
+// }
+
+// .stepper-title {
+//   font-family: 'IBM Plex Sans Arabic', sans-serif;
+//   font-weight: 600;
+//   font-size: 20px;
+//   line-height: 28px;
+//   color: #001F21;
+//   margin-bottom: 24px;
+//   text-align: right;
+// }
+
+// // Stepper
+// .stepper {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0;
+// }
+
+// .stepper-item {
+//   display: flex;
+//   gap: 16px;
+//   position: relative;
+//   padding-bottom: 32px;
+
+//   &:last-child {
+//     padding-bottom: 0;
+
+//     .stepper-line {
+//       display: none;
+//     }
+//   }
+// }
+
+// // Indicator
+// .stepper-indicator {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   position: relative;
+//   flex-shrink: 0;
+// }
+
+// .stepper-number {
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-family: 'IBM Plex Sans Arabic', sans-serif;
+//   font-weight: 600;
+//   font-size: 16px;
+//   background-color: #E5E5E5;
+//   color: #8A8A8A;
+//   position: relative;
+//   z-index: 2;
+//   transition: all 0.3s ease;
+// }
+
+// .stepper-line {
+//   position: absolute;
+//   top: 40px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   width: 2px;
+//   height: calc(100% + 0px);
+//   background-color: #E5E5E5;
+//   z-index: 1;
+// }
+
+// // Content
+// .stepper-content {
+//   flex: 1;
+//   padding-top: 4px;
+//   border: #E7EAEA 1px solid;
+//   border-radius: 8px;
+// }
+
+// .stepper-step-title {
+//   font-family: 'IBM Plex Sans Arabic', sans-serif;
+//   font-weight: 500;
+//   font-size: 16px;
+//   line-height: 24px;
+//   color: #001F21;
+//   margin-bottom: 8px;
+//   text-align: right;
+// }
+
+// .stepper-details {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 4px;
+//   align-items: flex-end;
+// }
+
+// .stepper-date {
+//   font-family: 'IBM Plex Sans Arabic', sans-serif;
+//   font-weight: 400;
+//   font-size: 14px;
+//   line-height: 20px;
+//   color: #5D5D5D;
+//   display: flex;
+//   align-items: center;
+//   gap: 4px;
+
+//   i {
+//     font-size: 16px;
+//     color: #5D5D5D;
+//   }
+// }
+
+// .stepper-status {
+//   font-family: 'IBM Plex Sans Arabic', sans-serif;
+//   font-weight: 500;
+//   font-size: 14px;
+//   line-height: 20px;
+//   text-align: right;
+
+//   &.status-completed {
+//     color: #10B981;
+//   }
+
+//   &.status-current {
+//     color: #F59E0B;
+//   }
+
+//   &.status-pending {
+//     color: #8A8A8A;
+//   }
+// }
+
+// // Completed State
+// .stepper-item.completed {
+//   .stepper-number {
+//     background-color: #10B981;
+//     color: #FFFFFF;
+//   }
+
+//   .stepper-line {
+//     background-color: #10B981;
+//   }
+// }
+
+// // Current State
+// .stepper-item.current {
+//   .stepper-number {
+//     background-color: #F59E0B;
+//     color: #FFFFFF;
+//   }
+
+//   .stepper-line {
+//     background: linear-gradient(to bottom, #F59E0B 0%, #E5E5E5 100%);
+//   }
+
+//   .stepper-step-title {
+//     font-weight: 600;
+//   }
+// }
+
+// // Pending State
+// .stepper-item.pending {
+//   .stepper-number {
+//     background-color: #E5E5E5;
+//     color: #8A8A8A;
+//   }
+
+//   .stepper-line {
+//     background-color: #E5E5E5;
+//   }
+
+//   .stepper-step-title {
+//     color: #8A8A8A;
+//   }
+// }
+
+// // Responsive
+// @media (max-width: 991px) {
+//   .stepper-container {
+//     margin-bottom: 20px;
+//   }
+
+//   .stepper-item {
+//     padding-bottom: 24px;
+//   }
+
+//   .stepper-number {
+//     width: 36px;
+//     height: 36px;
+//     font-size: 14px;
+//   }
+
+//   .stepper-step-title {
+//     font-size: 14px;
+//     line-height: 20px;
+//   }
+
+//   .stepper-date,
+//   .stepper-status {
+//     font-size: 12px;
+//     line-height: 18px;
+//   }
+// }

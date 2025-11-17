@@ -1,0 +1,1842 @@
+@import "/src/assets/styles/custom-variables";
+
+// Popup Overlay
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+// Fix bsDatepicker z-index to appear above popup
+::ng-deep {
+  bs-datepicker-container {
+    z-index: 10001 !important;
+  }
+}
+
+.popup-container {
+  background-color: #F1F2F2;
+  border-radius: 12px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  direction: rtl;
+
+  * {
+    direction: rtl;
+  }
+}
+
+// Header
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background-color: #E8ECED;
+  border-bottom: none;
+  direction: rtl;
+  border-radius: 12px 12px 0 0;
+}
+
+.popup-title {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: $body-color;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: $body-color;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+  line-height: 1;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  span {
+    display: block;
+    line-height: 1;
+  }
+}
+
+// Content
+.popup-content {
+  padding: 30px;
+  background-color: #F1F2F2;
+}
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 2px solid $border-color;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: $white;
+
+  &:hover {
+    border-color: $darkgray;
+    background: $light;
+  }
+
+  input[type="radio"]:checked ~ label,
+  input[type="radio"]:checked {
+    & ~ * {
+      color: $primary;
+    }
+  }
+}
+
+// Form Sections
+.form-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  // Section 2: Unit Information specific styling
+  &:nth-child(2) {
+    padding: 16px 24px;
+
+    .section-title {
+      margin: 0 0 20px 0;
+      padding: 0;
+    }
+
+    .form-row {
+      width: 100%;
+      height: auto;
+      grid-auto-flow: row;
+      justify-content: space-between;
+      justify-items: start;
+      opacity: 1;
+      transform: rotate(0deg);
+      margin: 0 0 16px 0;
+      padding: 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .form-group:first-child {
+        grid-column: 1;
+      }
+
+      .form-group:nth-child(2) {
+        grid-column: 2;
+      }
+    }
+
+    .form-group {
+      margin: 0;
+      padding: 0;
+      justify-self: start;
+
+      &:has(.form-value) {
+        gap: 4px;
+
+        .form-label {
+          margin: 0;
+          padding: 0;
+        }
+
+        .form-value {
+          margin: 0;
+          padding: 0;
+        }
+
+        .price-value {
+          margin: 0;
+          padding: 0;
+          gap: 4px;
+        }
+      }
+
+      &.full-width {
+        grid-column: 1 / -1;
+        justify-self: start;
+
+        &:has(.form-value) {
+          flex-direction: row;
+          gap: 8px;
+          justify-content: flex-start;
+          align-items: center;
+
+          .form-label {
+            width: auto;
+            white-space: nowrap;
+          }
+
+          .form-value {
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+
+  // Section 3: Contract Information specific styling
+  &:nth-child(3) {
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-flow: dense;
+      gap: 20px 60px;
+      direction: rtl;
+
+      .form-group {
+        justify-self: stretch;
+        align-items: flex-start;
+        width: 100%;
+
+        &:not(.full-width) {
+          &:first-child {
+            grid-column: 1;
+          }
+
+          &:nth-child(2) {
+            grid-column: 2;
+          }
+        }
+
+        &:has(.form-value) {
+          gap: 0;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+
+          .form-label {
+            margin: 0;
+            padding: 0;
+            text-align: right;
+            width: auto;
+            white-space: nowrap;
+            flex-shrink: 0;
+            order: 1;
+          }
+
+          .form-value {
+            margin: 0;
+            padding: 0;
+            min-width: auto;
+            text-align: left;
+            width: auto;
+            order: 2;
+          }
+
+          .price-value {
+            margin: 0;
+            padding: 0;
+            gap: 5px;
+            justify-content: flex-start;
+          }
+        }
+      }
+
+      .form-group {
+
+        .form-input,
+        select.form-control {
+          max-width: 100%;
+          width: 100%;
+          height: 40px;
+          padding: 8px 16px;
+        }
+
+        .form-input-with-currency {
+          max-width: 100%;
+          width: 100%;
+
+          .form-input {
+            max-width: 100%;
+            width: 100%;
+            height: 40px;
+            padding: 8px 16px;
+            padding-left: 40px;
+          }
+        }
+      }
+
+      .form-group.full-width {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+
+        .form-label {
+          align-self: flex-start;
+          text-align: right;
+          width: 100%;
+        }
+
+        .form-input-with-currency {
+          align-self: flex-start;
+          width: 100%;
+          max-width: 490px;
+        }
+
+        .form-value {
+          align-self: flex-start;
+        }
+      }
+    }
+  }
+}
+
+.section-title {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #001F21;
+  margin: 0 0 24px 0;
+}
+
+// Form Rows and Groups
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: column;
+  gap: 20px 60px;
+  margin-bottom: 20px;
+  justify-items: start;
+  direction: rtl;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  // For input-with-button and date-input-with-button, align to start
+  &:has(.input-with-button),
+  &:has(.date-input-with-button) {
+    align-items: flex-start;
+  }
+
+  &.full-width {
+    grid-column: 1 / -1;
+    align-items: flex-end;
+
+    .form-label {
+      width: 100%;
+      text-align: right;
+      align-self: flex-start;
+    }
+
+    .radio-group {
+      width: auto;
+    }
+
+    .input-with-button,
+    .date-input-with-button {
+      width: 100%;
+      align-self: flex-start;
+    }
+
+    .form-input {
+      width: 490px;
+      max-width: 490px;
+      align-self: flex-start;
+    }
+
+    .form-input-with-currency {
+      align-self: flex-start;
+    }
+
+    // For unit information section - horizontal layout with full-width
+    &:has(.form-value) {
+      flex-direction: row;
+      gap: 5px;
+      justify-content: flex-end;
+      align-items: center;
+      width: auto;
+      justify-self: end;
+
+      .form-label {
+        width: auto;
+        white-space: nowrap;
+        font-weight: 600;
+        color: #001F21;
+      }
+
+      .form-value {
+        font-weight: 500;
+        color: #5D5D5D;
+      }
+    }
+  }
+
+  // For unit information section - horizontal layout
+  &:has(.form-value) {
+    flex-direction: row;
+    gap: 5px;
+    justify-content: flex-end;
+    align-items: center;
+    width: auto;
+    justify-self: end;
+
+    .form-label {
+      width: auto;
+      white-space: nowrap;
+      font-weight: 600;
+      color: #001F21;
+    }
+
+    .form-value {
+      font-weight: 500;
+      color: #5D5D5D;
+    }
+  }
+}
+
+.form-label {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: $body-color;
+  text-align: right;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  &.required {
+    color: $body-color;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .required-star {
+    color: #B42318;
+  }
+}
+
+.form-input {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+  width: 100%;
+  max-width: 490px;
+  height: 40px;
+  padding: 8px 16px;
+  gap: 10px;
+  border: 1px solid #8A9393;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: $body-color;
+  text-align: right;
+  vertical-align: middle;
+  opacity: 1;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #005257;
+  }
+
+  &::placeholder {
+    color: #8A9393;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0px;
+  }
+
+  &.readonly-input {
+    background-color: #E7EAEA;
+    color: #5D5D5D;
+    cursor: not-allowed;
+    border-color: #8A9393;
+
+    &::placeholder {
+      color: #5D5D5D;
+    }
+  }
+}
+
+// Select dropdown styling
+select.form-control {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+  width: 100%;
+  max-width: 490px;
+  height: 40px;
+  padding: 8px 16px;
+  border: 1px solid #8A9393 !important;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: $body-color;
+  text-align: right;
+  direction: rtl;
+  opacity: 1;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: left 12px center;
+  background-size: 16px;
+  padding-left: 40px;
+
+  &:focus {
+    outline: none;
+    border-color: #005257 !important;
+  }
+
+  &:not(:focus) {
+    border: 1px solid #8A9393 !important;
+  }
+
+  option {
+    padding: 8px;
+    text-align: right;
+    direction: rtl;
+  }
+
+  &:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    color: #8A9393;
+    border: 1px solid #8A9393 !important;
+  }
+
+  &.is-invalid {
+    border-color: #dc3545 !important;
+
+    &:focus {
+      border-color: #dc3545 !important;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+  }
+}
+
+.form-value {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #5D5D5D;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  min-width: 150px;
+  margin-left: 8px;
+}
+
+.price-value {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #5D5D5D;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+.currency-icon {
+  font-size: 14px;
+  color: #5D5D5D;
+}
+
+// Input with currency
+.form-input-with-currency {
+  position: relative;
+  display: flex;
+  align-items: center;
+  direction: rtl;
+
+  .form-input {
+    padding-left: 40px;
+    width: 490px;
+    max-width: 490px;
+  }
+
+  .currency-icon {
+    position: absolute;
+    left: 16px;
+    color: #5D5D5D;
+  }
+
+  .riyal-icon {
+    position: absolute;
+    left: 16px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+  }
+}
+
+// Radio Group
+.radio-group {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 269.75px;
+  height: 48px;
+  padding: 8px;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #ffffff;
+
+  &:hover {
+    border-color: #005257;
+  }
+
+  input[type="radio"] {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    margin: 0;
+    flex-shrink: 0;
+    appearance: none;
+    border: 2px solid #B1B6B8;
+    border-radius: 50%;
+    position: relative;
+
+    &:checked {
+      accent-color: #005257;
+      border-color: #005257;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #005257;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &:checked~.radio-label {
+      font-weight: 600;
+    }
+  }
+
+  input[type="radio"]:checked {
+    &~.radio-label {
+      font-weight: 600;
+    }
+  }
+
+  &:has(input[type="radio"]:checked) {
+    border-color: #005257;
+    background-color: #E8F4F5;
+  }
+
+  .radio-label {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 16px;
+    color: #B1B6B8;
+    cursor: pointer;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  input[type="radio"]:checked~.radio-label {
+    color: $body-color;
+  }
+}
+
+// Input with Button (ID with Verify)
+.input-with-button {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 100%;
+
+  .form-input,
+  .form-control {
+    flex: 1;
+    min-width: 0;
+    height: 40px;
+    padding: 8px 16px;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0px;
+    border: 1px solid #8A9393;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: $body-color;
+    text-align: right;
+    vertical-align: middle;
+    opacity: 1;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: #005257;
+    }
+
+    &::placeholder {
+      color: #5D5D5D;
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0px;
+    }
+
+    &.is-invalid {
+      border-color: #dc3545 !important;
+
+      &:focus {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+    }
+  }
+
+  .btn-verify {
+    flex-shrink: 0;
+  }
+
+  .entity-id-input {
+    flex: 1;
+    height: 40px;
+    padding: 8px 16px;
+    gap: 10px;
+    border: 1px solid #8A9393;
+    border-radius: 8px;
+    opacity: 1;
+  }
+}
+
+// Input with Button Reversed (Button on Left, Input on Right)
+.input-with-button-reversed {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+
+  .btn-verify {
+    order: 2;
+  }
+
+  .form-input {
+    flex: 1;
+    order: 1;
+  }
+}
+
+// Verify Button
+.btn-verify {
+  min-width: 59px;
+  width: auto;
+  height: 40px;
+  padding: 8px 16px;
+  gap: 8px;
+  background-color: #005257;
+  color: #F7F9F9;
+  border: none;
+  border-radius: 4px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #004044;
+  }
+
+  &:active {
+    background-color: #003336;
+  }
+}
+
+// Date Input with Button
+.date-input-with-button {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 100%;
+
+  .form-control {
+    flex: 1;
+    min-width: 0;
+    height: 40px;
+    padding: 8px 16px;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #8A9393;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: $body-color;
+    text-align: right;
+    opacity: 1;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: #005257;
+    }
+
+    // ==================
+    &::placeholder {
+      color: #5D5D5D;
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    &.is-invalid {
+      border-color: #dc3545 !important;
+
+      &:focus {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+    }
+  }
+
+  .btn-verify {
+    flex-shrink: 0;
+  }
+
+  .input-group {
+    flex: 1;
+
+    .form-control {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      height: 40px;
+      padding: 8px;
+      border: 1px solid #8A9393;
+      border-radius: 8px 0 0 8px;
+      color: $body-color;
+      text-align: right;
+
+      &::placeholder {
+        color: #5D5D5D;
+      }
+    }
+
+    .input-group-text {
+      background-color: #ffffff;
+      border: 1px solid #8A9393;
+      border-left: none;
+      border-radius: 0 8px 8px 0;
+      padding: 8px;
+
+      i {
+        color: #8A9393;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+
+// File Uploader Alignment
+.form-row {
+  .form-group {
+    app-file-uploader {
+      display: flex;
+      justify-content: flex-end;
+      align-self: flex-end;
+      text-align: right;
+      margin: 0;
+      padding: 0;
+      width: auto;
+    }
+  }
+}
+
+::ng-deep {
+  app-file-uploader {
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-end;
+    text-align: right;
+    margin: 0;
+    padding: 0;
+    width: auto;
+
+    >div,
+    .file-uploader-wrapper,
+    .file-uploader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+      text-align: right;
+      margin: 0;
+      padding: 0;
+      width: auto;
+    }
+
+    .upload-actions,
+    .uploaded-files {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+  }
+}
+
+// Submit Button
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  padding: 24px 30px;
+  direction: rtl;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.btn-submit {
+  min-width: auto;
+  height: 48px;
+  background-color: #005257;
+  color: #F7F9F9;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 48px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #004044;
+  }
+
+  &:active {
+    background-color: #003336;
+  }
+}
+
+// Error message styling
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  text-align: right;
+  display: block;
+  width: 100%;
+  direction: rtl;
+}
+
+.form-input.is-invalid,
+.form-control.is-invalid {
+  border-color: #dc3545 !important;
+
+  &:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
+}
+
+.form-group {
+  position: relative;
+}
+
+// Confirmation Dialog
+.confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002;
+}
+
+.confirmation-dialog {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  padding: 40px 32px 32px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  direction: rtl;
+}
+
+.confirmation-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+
+  svg {
+    width: 100px;
+    height: 80px;
+  }
+}
+
+.confirmation-message {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: $body-color;
+  margin-bottom: 32px;
+  line-height: 28px;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  direction: rtl;
+}
+
+.btn-confirm {
+  min-width: 140px;
+  height: 48px;
+  background-color: #005257;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #004044;
+  }
+
+  &:active {
+    background-color: #003336;
+  }
+}
+
+.btn-cancel {
+  min-width: 140px;
+  height: 48px;
+  background-color: transparent;
+  color: #005257;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #F0F4F5;
+  }
+
+  &:active {
+    background-color: #E8F4F5;
+  }
+}
+
+// Loading Overlay (Local - will be overridden by global loader from interceptor)
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10050;
+  backdrop-filter: blur(2px);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #005257;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #FFFFFF;
+  margin: 0;
+  text-align: center;
+}
+
+// Responsive adjustments
+
+// Mobile Small (max-width: 480px)
+@media (max-width: 480px) {
+  .popup-overlay {
+    padding: 0;
+  }
+
+  .popup-container {
+    max-width: 100%;
+    max-height: 100vh;
+    height: 100vh;
+    border-radius: 0;
+    overflow-y: auto;
+  }
+
+  .popup-header {
+    padding: 16px 20px;
+  }
+
+  .popup-title {
+    font-size: 18px;
+  }
+
+  .popup-content {
+    padding: 16px;
+  }
+
+  .form-value {
+    margin-right: 8px !important;
+  }
+
+  .form-section {
+    padding: 16px;
+    margin-bottom: 16px;
+
+    // Section 2 adjustments
+    &:nth-child(2) {
+      padding: 12px 16px;
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+
+        .form-group:first-child,
+        .form-group:nth-child(2) {
+          grid-column: 1;
+        }
+      }
+
+      .form-group.full-width {
+        &:has(.form-value) {
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 4px;
+        }
+      }
+    }
+
+    // Section 3 adjustments
+    &:nth-child(3) {
+      padding: 16px;
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+
+        .form-group {
+          width: 100%;
+          justify-self: stretch;
+
+          &:first-child,
+          &:nth-child(2) {
+            grid-column: 1;
+          }
+
+          &.full-width {
+            .form-input-with-currency {
+              width: 100%;
+              max-width: 100%;
+
+              .form-input {
+                width: 100%;
+                max-width: 100%;
+              }
+            }
+          }
+
+          &:has(.form-value) {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0;
+
+            .form-label {
+              width: auto;
+              text-align: right;
+              font-size: 14px;
+              white-space: nowrap;
+              flex-shrink: 0;
+              order: 1;
+              margin-left: 8px;
+            }
+
+            .form-value {
+              width: auto;
+              text-align: left;
+              font-size: 14px;
+              order: 2;
+              margin-left: 8px;
+            }
+
+            .price-value {
+              justify-content: flex-start;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .section-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .form-label {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .form-input,
+  .form-control,
+  select.form-control {
+    max-width: 100%;
+    width: 100%;
+    font-size: 14px;
+    height: 44px;
+    padding: 10px 14px;
+  }
+
+  select.form-control {
+    padding-left: 35px;
+    background-position: left 10px center;
+  }
+
+  .form-value {
+    font-size: 14px;
+    min-width: auto;
+    margin-left: 8px;
+  }
+
+  .price-value {
+    font-size: 14px;
+  }
+
+  .radio-group {
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .radio-option {
+    flex: 1;
+    min-width: calc(50% - 4px);
+    height: 44px;
+
+    .radio-label {
+      font-size: 14px;
+    }
+  }
+
+  .input-with-button {
+    flex-direction: column;
+    gap: 8px;
+    max-width: 100%;
+
+    .form-input {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .btn-verify {
+      width: 100%;
+      height: 44px;
+    }
+  }
+
+  .date-input-with-button {
+    flex-direction: column;
+    gap: 8px;
+
+    .input-group {
+      width: 100%;
+
+      .form-control {
+        font-size: 12px;
+        height: 44px;
+      }
+    }
+
+    .btn-verify {
+      width: 100%;
+      height: 44px;
+    }
+  }
+
+  .form-input-with-currency {
+    width: 100%;
+    max-width: 100%;
+
+    .form-input {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .riyal-icon {
+      left: 14px;
+    }
+  }
+
+  .form-actions {
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  // Confirmation dialog
+  .confirmation-dialog {
+    padding: 24px 20px 20px;
+    max-width: calc(100% - 32px);
+  }
+
+  .confirmation-message {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .confirmation-actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+
+    .btn-confirm,
+    .btn-cancel {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+
+  .loading-text {
+    font-size: 16px;
+  }
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+  }
+
+  // Form group adjustments
+  .form-group {
+    &.full-width {
+
+      .form-input,
+      .form-input-with-currency {
+        width: 100%;
+        max-width: 100%;
+
+        .form-input {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Mobile (min-width: 481px and max-width: 768px)
+@media (min-width: 481px) and (max-width: 768px) {
+  .popup-overlay {
+    padding: 16px;
+  }
+
+  .popup-container {
+    max-width: 100%;
+    max-height: calc(100vh - 32px);
+    border-radius: 12px;
+  }
+
+  .popup-header {
+    padding: 18px 22px;
+  }
+
+  .popup-title {
+    font-size: 19px;
+  }
+
+  .popup-content {
+    padding: 24px;
+  }
+
+  .form-section {
+    padding: 20px;
+    margin-bottom: 18px;
+    direction: rtl;
+    // Section 2 adjustments
+    &:nth-child(2) {
+      padding: 14px 20px;
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 14px;
+
+        .form-group:first-child,
+        .form-group:nth-child(2) {
+          grid-column: 1;
+        }
+      }
+
+      .form-group.full-width {
+        &:has(.form-value) {
+          flex-direction: row;
+          gap: 6px;
+        }
+      }
+    }
+
+    // Section 3 adjustments
+    &:nth-child(3) {
+      padding: 20px;
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 14px;
+
+        .form-group {
+          width: 100%;
+          justify-self: stretch;
+
+          &:first-child,
+          &:nth-child(2) {
+            grid-column: 1;
+          }
+
+          &.full-width {
+            .form-input-with-currency {
+              width: 100%;
+              max-width: 100%;
+
+              .form-input {
+                width: 100%;
+                max-width: 100%;
+              }
+            }
+          }
+
+          &:has(.form-value) {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0;
+
+            .form-label {
+              width: auto;
+              text-align: right;
+              font-size: 15px;
+              white-space: nowrap;
+              flex-shrink: 0;
+              order: 1;
+            }
+
+            .form-value {
+              width: auto;
+              text-align: left;
+              font-size: 15px;
+              order: 2;
+              margin-left: 8px;
+            }
+
+            .price-value {
+              justify-content: flex-start;
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .section-title {
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .form-input,
+  .form-control,
+  select.form-control {
+    max-width: 100%;
+    width: 100%;
+    font-size: 15px;
+  }
+
+  select.form-control {
+    padding-left: 35px;
+    background-position: left 10px center;
+  }
+
+  .form-value {
+    font-size: 15px;
+  }
+
+  .price-value {
+    font-size: 15px;
+  }
+
+  .radio-group {
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .radio-option {
+    flex: 1;
+    min-width: calc(50% - 4px);
+  }
+
+  .input-with-button {
+    flex-direction: row;
+    max-width: 100%;
+    flex-wrap: wrap;
+
+    .form-input {
+      flex: 1;
+      min-width: 200px;
+      max-width: 100%;
+    }
+
+    .btn-verify {
+      flex-shrink: 0;
+    }
+  }
+
+  .date-input-with-button {
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .input-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .btn-verify {
+      flex-shrink: 0;
+    }
+  }
+
+  .form-input-with-currency {
+    width: 100%;
+    max-width: 100%;
+
+    .form-input {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .riyal-icon {
+      left: 16px;
+    }
+  }
+
+  .form-actions {
+    padding: 20px 24px;
+    margin-top: 18px;
+  }
+
+  .btn-submit {
+    min-width: 200px;
+    font-size: 15px;
+  }
+
+  // Confirmation dialog
+  .confirmation-dialog {
+    padding: 32px 28px 28px;
+    max-width: 90%;
+  }
+
+  .confirmation-actions {
+    gap: 14px;
+  }
+
+  // Form group adjustments
+  .form-group {
+    &.full-width {
+
+      .form-input,
+      .form-input-with-currency {
+        width: 100%;
+        max-width: 100%;
+
+        .form-input {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Tablet (min-width: 769px and max-width: 1024px)
+@media (min-width: 769px) and (max-width: 1024px) {
+  .popup-container {
+    max-width: 720px;
+  }
+
+  .form-section {
+
+    // Section 3 adjustments for tablet
+    &:nth-child(3) {
+      .form-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 40px;
+
+        .form-group {
+          width: 100%;
+
+          &.full-width {
+            .form-input-with-currency {
+              width: 100%;
+              max-width: 100%;
+
+              .form-input {
+                width: 100%;
+                max-width: 100%;
+              }
+            }
+          }
+
+          &:has(.form-value) {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0;
+
+            .form-label {
+              width: auto;
+              text-align: right;
+              white-space: nowrap;
+              flex-shrink: 0;
+              order: 1;
+            }
+
+            .form-value {
+              width: auto;
+              text-align: left;
+              order: 2;
+            }
+
+            .price-value {
+              justify-content: flex-start;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 40px;
+  }
+
+  .form-input {
+    max-width: 100%;
+  }
+
+  .input-with-button {
+    max-width: 100%;
+
+    .form-input {
+      max-width: 100%;
+    }
+  }
+
+  .radio-option {
+    width: auto;
+    min-width: 180px;
+    flex: 1;
+  }
+
+  .form-input-with-currency {
+    width: 100%;
+    max-width: 100%;
+
+    .form-input {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  .form-group {
+    &.full-width {
+      .form-input {
+        max-width: 100%;
+      }
+
+      .form-input-with-currency {
+        width: 100%;
+        max-width: 100%;
+
+        .form-input {
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Desktop adjustments for very large screens
+@media (min-width: 1400px) {
+  .popup-container {
+    max-width: 1000px;
+  }
+
+  .form-row {
+    gap: 20px 80px;
+  }
+}
+
+// أيقونة الريال
+.riyal-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}

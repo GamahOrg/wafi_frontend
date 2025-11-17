@@ -1,0 +1,18 @@
+<div class="delete-confirmation-dialog">
+  <div class="dialog-content">
+    <div class="dialog-icon">
+      <img src="assets/images/general/delet-icon.svg" alt="delete icon" class="delete-icon">
+    </div>
+
+    <h2 class="dialog-title">هل أنت متأكد من حذف الصك؟</h2>
+
+    <div class="dialog-actions">
+      <button mat-button class="cancel-button" (click)="onCancel()">
+        إلغاء
+      </button>
+      <button mat-raised-button class="delete-button" (click)="onConfirm()">
+        حذف الصك
+      </button>
+    </div>
+  </div>
+</div>

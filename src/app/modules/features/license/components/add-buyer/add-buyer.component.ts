@@ -105,22 +105,22 @@ export class AddBuyerComponent {
    
   }
 
-  getLicenseProjectBuyersDetails() {
-    this._licenseProjectBuyerService.getLicenseProjectBuyerDetail(this.licenseProjectBuyerId as string).subscribe(results => {
-      this.licenseProjectBuyer = results as LicenseProjectBuyerDto;
-      if (this.licenseProjectBuyer) {
-        this.contractFileId=this.licenseProjectBuyer.contractFileId;
-        this.licenseProjectBuyer.saleDate = this.datePipe.transform(this.licenseProjectBuyer.saleDate, 'yyyy-MM-dd') as any;
-        this.licenseProjectBuyer.deliveryDate = this.datePipe.transform(this.licenseProjectBuyer.deliveryDate, 'yyyy-MM-dd') as any;
-        this.licenseProjectBuyerForm.patchValue(this.licenseProjectBuyer as any);
-        this.licenseProjectBuyerForm.controls.saleDate.setValue(this.licenseProjectBuyer.saleDate as any);
-        this.licenseProjectBuyerForm.controls.deliveryDate.setValue(this.licenseProjectBuyer.deliveryDate as any);
-        if (this.controls.licenseProjectBuyerTypeId.value){
-          this.onlicenseProjectypeChanged(+this.controls.licenseProjectBuyerTypeId.value);
-        }
-      }
-    })
-  }
+  // getLicenseProjectBuyersDetails() {
+  //   this._licenseProjectBuyerService.getLicenseProjectBuyerDetail(this.licenseProjectBuyerId as string).subscribe(results => {
+  //     this.licenseProjectBuyer = results as LicenseProjectBuyerDto;
+  //     if (this.licenseProjectBuyer) {
+  //       this.contractFileId=this.licenseProjectBuyer.contractFileId;
+  //       this.licenseProjectBuyer.saleDate = this.datePipe.transform(this.licenseProjectBuyer.saleDate, 'yyyy-MM-dd') as any;
+  //       this.licenseProjectBuyer.deliveryDate = this.datePipe.transform(this.licenseProjectBuyer.deliveryDate, 'yyyy-MM-dd') as any;
+  //       this.licenseProjectBuyerForm.patchValue(this.licenseProjectBuyer as any);
+  //       this.licenseProjectBuyerForm.controls.saleDate.setValue(this.licenseProjectBuyer.saleDate as any);
+  //       this.licenseProjectBuyerForm.controls.deliveryDate.setValue(this.licenseProjectBuyer.deliveryDate as any);
+  //       if (this.controls.licenseProjectBuyerTypeId.value){
+  //         this.onlicenseProjectypeChanged(+this.controls.licenseProjectBuyerTypeId.value);
+  //       }
+  //     }
+  //   })
+  // }
   loadAveragePrice(): void {
     
     const filteredItem = this.projectUnitCodes?.find(x => x.id === (this.controls.unitCodeId.value as string))
@@ -150,7 +150,7 @@ export class AddBuyerComponent {
         this.licenseProjectBuyerSettingDto = results[2] as LicenseProjectBuyerSettingDto;
         this.paymentTypes = results[3] as LicenseProjectBuyerPaymentTypeDto[];
         if (this.licenseProjectBuyerId) {
-          this.getLicenseProjectBuyersDetails()
+          // this.getLicenseProjectBuyersDetails()
         }
       }
 

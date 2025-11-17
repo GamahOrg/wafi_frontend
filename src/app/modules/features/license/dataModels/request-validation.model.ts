@@ -17,5 +17,5 @@ export interface RequestSuccessResponse{
     id: string;
     requestCode: string;
     licenseProjectId: string;
-
+    typeCode: string;
 }

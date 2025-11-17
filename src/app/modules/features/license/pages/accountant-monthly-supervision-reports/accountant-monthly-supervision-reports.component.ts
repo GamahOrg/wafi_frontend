@@ -104,7 +104,7 @@ export class AccountantMonthlySupervisionReportsComponent implements  OnInit, On
     this.licenseProjectReportService
       .GetCertifiedLicenseProjectEngineeringSupervisionPlannedReportWithExternalExpenses(this.licenseProjectId).subscribe((res)=>{
         if(res) {
-          debugger
+          
           this.showDetails = false;
           // Filter by unique months
           const uniqueMonths = new Map();

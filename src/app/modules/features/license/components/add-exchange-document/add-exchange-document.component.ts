@@ -190,7 +190,7 @@ export class AddExchangeDocumentComponent {
   }
 
   public onSupportingDocumentsFilesUploaded(filesData: any) :void{
-    debugger
+    
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectExchangeDocumentFile) this.licenseProjectExchangeDocumentFile = [];
     filesData.eventRes.data.forEach((data: any) => {
@@ -203,7 +203,7 @@ export class AddExchangeDocumentComponent {
   }
 
   save(): void {
-    debugger
+    
     if (!this.licenseProjectExchangeDocumentForm.valid || this.licenseProjectExchangeDocumentFile == null || this.licenseProjectExchangeDocumentFile.length == 0) {
       this.showValidation = true;
       return;

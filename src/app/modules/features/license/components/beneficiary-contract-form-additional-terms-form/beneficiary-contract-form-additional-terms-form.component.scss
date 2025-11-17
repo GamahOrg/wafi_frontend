@@ -6,3 +6,52 @@
     display: block;
     height: 100%;
 }
+
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+  
+  &:hover {
+    background-color: #007bff;
+    color: white;
+  }
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.btn-add-term {
+  background-color: $lightblue;
+  border: 1px dashed #005257;
+  border-radius: 10px;
+  color: #005257;
+  padding: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #e6f8f8;
+    border-color: #004249;
+    color: #004249;
+  }
+
+  &:focus {
+    box-shadow: none;
+    background-color: $lightblue;
+    border-color: #005257;
+  }
+
+  i {
+    color: #005257;
+  }
+}

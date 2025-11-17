@@ -14,7 +14,7 @@
           placeholder="أدخل الملاحظات هنا..."
           [class.is-invalid]="replyForm.get('notes')?.invalid && replyForm.get('notes')?.touched">
         </textarea>
-        <div class="invalid-feedback" *ngIf="replyForm.get('notes')?.invalid && replyForm.get('notes')?.touched">
+        <div class="invalid-feedback d-block" *ngIf="replyForm.get('notes')?.invalid && replyForm.get('notes')?.touched">
           {{ getErrorMessage('notes') }}
         </div>
       </div>

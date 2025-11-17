@@ -14,6 +14,11 @@ import { MainRealStateDeveloperComponent } from '../main-real-state-developer/ma
 import { TabCode } from '../../models/tab-code.model';
 import { BeneficiaryContractFormAdditionalTermsComponent } from '../beneficiary-contract-form-additional-terms/beneficiary-contract-form-additional-terms.component';
 import { FinalTenantContractComponent } from '../final-tenant-contract/final-tenant-contract.component';
+import { BusinessPaymentTemplatesComponent } from '../../pages/business-payment-templates/business-payment-templates.component';
+import { FawriaLicenseprojectEngineeringConsultantsContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-engineering-consultants-container/fawria-licenseproject-engineering-consultants-container.component';
+import { FawriaLicenseprojectCharteredAccountantsContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-chartered-accountants-container/fawria-licenseproject-chartered-accountants-container.component';
+import { FawriaLicenseprojectDeedOwnersContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-deed-owners-container/fawria-licenseproject-deed-owners-container.component';
+import { FawriaLicenseprojectEscrowAccountCreateComponent } from '../FawriaLicenseProject/fawria-licenseproject-escrow-account-create/fawria-licenseproject-escrow-account-create.component';
 
 @Component({
   selector: 'app-project-parties',
@@ -43,6 +48,50 @@ export class ProjectPartiesComponent {
       id: 'CharteredAccountantComponent',
       errNum: 0,
       tabCode: TabCode.licenseProjectCharteredAccountants,
+      tabErrors: [],
+      isVisible: true,
+    },
+     {
+      icon: '',
+      title: 'اتفاقية الملاك',
+      Component: FawriaLicenseprojectDeedOwnersContainerComponent,
+      disabled: false,
+      id: 'fawriaLicenseProjectDeedOwners',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectDeedOwners,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'الاستشاري الهندسي',
+      Component: FawriaLicenseprojectEngineeringConsultantsContainerComponent,
+      disabled: false,
+      id: 'fawriaLicenseProjectEngineeringConsultants',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectEngineeringConsultants,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'المحاسب القانوني',
+      Component: FawriaLicenseprojectCharteredAccountantsContainerComponent,
+      disabled: false,
+      id: 'fawriaLicenseProjectCharteredAccountants',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectCharteredAccountants,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'حساب الضمان',
+      Component: FawriaLicenseprojectEscrowAccountCreateComponent,
+      disabled: false,
+      id: 'fawriaLicenseProjectEscrowAccount',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectEscrowAccount,
       tabErrors: [],
       isVisible: true,
     },
@@ -104,12 +153,23 @@ export class ProjectPartiesComponent {
     },
     {
       icon: '',
-      title: 'إضافة البنود الإضافية لكل نموذج عقد المستفيد النهائي',
+      title: 'البنود الإضافية',
       Component: BeneficiaryContractFormAdditionalTermsComponent,
       disabled: false,
       id: 'BeneficiaryContractFormAdditionalTermsComponent',
       errNum: 0,
       tabCode: TabCode.beneficiaryContractFormAdditionalTerms,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'الدفعات المالية',
+      Component: BusinessPaymentTemplatesComponent,
+      disabled: false,
+      id: 'BusinessPaymentTemplatesComponent',
+      errNum: 0,
+      tabCode: TabCode.LicenseProjectBusinessPayment,
       tabErrors: [],
       isVisible: true,
     },

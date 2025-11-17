@@ -1,35 +1,36 @@
-<!-- <div class="confirm-container">
-  <h1 mat-dialog-title>{{confirmationPopupData.title}}</h1>
+<div class="confirmation-dialog-wrapper">
+  <!-- Close Button -->
+  <button class="close-button" (click)="onClickOnCancel()" aria-label="Close">
+    <span>×</span>
+  </button>
 
-  <div mat-dialog-actions style="float:right;margin:20px;">
-    <button mat-button [mat-dialog-close]="{ clicked: 'Ok' }">Ok</button>
-    <button mat-button [mat-dialog-close]="{ clicked: 'Cancel' }">
-      Cancel
-    </button>
+  <!-- Title -->
+  <div class="dialog-title-section" *ngIf="confirmationPopupData.title">
+    <h2 class="dialog-title">{{ confirmationPopupData.title }}</h2>
   </div>
-</div> -->
-<div class="d-flex flex-column h-100">
-  <h6 mat-dialog-title class="d-flex">
-    {{ confirmationPopupData.title }}
-    <button class="btn btn-link p-0" mat-dialog-close tabindex="-1">
-      <i class="material-icons h6">close</i>
-    </button>
-  </h6>
 
-  <div mat-dialog-content>
-    <div [innerHTML]="confirmationPopupData.staticMessage"></div>
-
-    <div>
-      {{ confirmationPopupData.dynamicMessage }}<br />
-      {{ confirmationPopupData.secondeStaticMessage }}<br />
+  <!-- Content with Side Bar -->
+  <div class="dialog-body">
+    <div class="side-bar"></div>
+    <div class="content-area">
+      <div *ngIf="confirmationPopupData.staticMessage" class="content-text" [innerHTML]="confirmationPopupData.staticMessage">
+      </div>
+      <div *ngIf="confirmationPopupData.dynamicMessage" class="content-text">
+        {{ confirmationPopupData.dynamicMessage }}
+      </div>
+      <div *ngIf="confirmationPopupData.secondeStaticMessage" class="content-text">
+        {{ confirmationPopupData.secondeStaticMessage }}
+      </div>
     </div>
   </div>
-  <div mat-dialog-actions align="end">
-    <button mat-flat-button class="me-auto" (click)="onClickOnCancel()">
+
+  <!-- Footer Buttons -->
+  <div class="dialog-footer">
+    <button class="btn-cancel" (click)="onClickOnCancel()">
       إلغاء
     </button>
-    <button mat-flat-button color="primary" (click)="onClickOnConfirm()">
-      {{confirmationPopupData.acceptButtonText??'حفظ البيانات'}}
+    <button class="btn-save" (click)="onClickOnConfirm()">
+      {{confirmationPopupData.acceptButtonText ?? 'حفظ البيانات'}}
     </button>
   </div>
 </div>

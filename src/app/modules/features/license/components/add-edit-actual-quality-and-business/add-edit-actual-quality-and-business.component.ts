@@ -79,13 +79,13 @@ licenseProjectQualityStatusList?:SysLicenseProjectQualityStatusDto[]
 
   
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectEngineeringSupervisionActualReportQualityAndBusinessForm.valid) {
       this.showValidation = true;
       return;
     }
 
-    debugger;
+    
     this.licenseProjectEngineeringActualQualityPlanAndAssuranceCreateUpdate = this.licenseProjectEngineeringSupervisionActualReportQualityAndBusinessForm.value as {} as LicenseProjectEngineeringActualQualityPlanAndAssuranceCreateUpdateDto;
     this.licenseProjectEngineeringActualQualityPlanAndAssuranceCreateUpdate.id=this.licenseProjectEngineeringActualQualityPlanAndAssurance?.id as string;
     this.licenseProjectEngineeringActualQualityPlanAndAssuranceCreateUpdate.qualityManagementPlanStatusId=Number(this.licenseProjectEngineeringActualQualityPlanAndAssuranceCreateUpdate.qualityManagementPlanStatusId);

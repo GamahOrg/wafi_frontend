@@ -1,0 +1,941 @@
+@import "/src/assets/styles/custom-variables";
+
+// Main Container
+.contract-details-container {
+  width: 100%;
+  background-color: #F5F5F5;
+  direction: rtl;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+// Warning Banner
+.warning-banner {
+  background: linear-gradient(90deg, #FEF3C7 0%, #FDE68A 100%);
+  border: 2px solid #F59E0B;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+
+  .close-btn {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #92400E;
+    font-size: 18px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #78350F;
+      transform: scale(1.1);
+    }
+  }
+
+  .warning-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding-right: 0;
+
+    .warning-icon {
+      color: #D97706;
+      font-size: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+
+      i {
+        display: block;
+      }
+    }
+
+    .warning-text {
+      flex: 1;
+      text-align: right;
+
+      .warning-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #92400E;
+        margin-bottom: 4px;
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+      }
+
+      .warning-subtitle {
+        font-size: 14px;
+        font-weight: 400;
+        color: #B45309;
+        line-height: 1.5;
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+      }
+    }
+  }
+}
+
+// Cancel Button Container
+.cancel-button-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  direction: rtl;
+}
+
+.btn-cancel-top {
+  padding: 8px 20px;
+  background-color: #FFFFFF;
+  border: 2px solid #DC2626;
+  border-radius: 6px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #DC2626;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #FEF2F2;
+    border-color: #B91C1C;
+    color: #B91C1C;
+  }
+
+  &:active {
+    background-color: #FEE2E2;
+  }
+}
+
+// Cancel Confirmation Modal
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  direction: rtl;
+}
+
+.modal-container {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  overflow: hidden;
+  animation: modalFadeIn 0.3s ease-in-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content {
+  padding: 40px 30px 30px;
+  text-align: center;
+  direction: rtl;
+}
+
+.modal-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+
+  svg {
+    width: 64px;
+    height: 64px;
+    stroke: #DC2626;
+  }
+}
+
+.modal-title {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: $body-color;
+  margin: 0 0 32px 0;
+  line-height: 1.5;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  direction: rtl;
+}
+
+.btn-modal-cancel,
+.btn-modal-confirm {
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.btn-modal-cancel {
+  background-color: transparent;
+  border: 1px solid #D4D4D4;
+  color: #525252;
+
+  &:hover {
+    background-color: #F5F5F5;
+    border-color: #A3A3A3;
+  }
+
+  &:active {
+    background-color: #E5E5E5;
+  }
+}
+
+.btn-modal-confirm {
+  background-color: #DC2626;
+  border: 1px solid #DC2626;
+  color: #FFFFFF;
+
+  &:hover {
+    background-color: #B91C1C;
+    border-color: #B91C1C;
+  }
+
+  &:active {
+    background-color: #991B1B;
+  }
+}
+
+// Cancel Reason Modal
+.modal-reason {
+  max-width: 600px;
+
+  .modal-buttons {
+    justify-content: flex-end;
+  }
+}
+
+.modal-reason-title {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: $body-color;
+  margin: 0 0 24px 0;
+  text-align: right;
+  direction: rtl;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  text-align: right;
+  direction: rtl;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #D4D4D4;
+  border-radius: 6px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 15px;
+  color: $body-color;
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.2s;
+  direction: rtl;
+  text-align: right;
+
+  &::placeholder {
+    color: #A3A3A3;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #005257;
+    box-shadow: 0 0 0 3px rgba(0, 82, 87, 0.1);
+  }
+}
+
+.btn-modal-submit {
+  background-color: #005257;
+  border: 1px solid #005257;
+  color: #FFFFFF;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  min-width: 120px;
+
+  &:hover {
+    background-color: #004044;
+    border-color: #004044;
+  }
+
+  &:active {
+    background-color: #003033;
+  }
+
+  &:disabled {
+    background-color: #D4D4D4;
+    border-color: #D4D4D4;
+    cursor: not-allowed;
+  }
+}
+
+// Header Section
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E5E5E5;
+  padding: 16px 30px;
+  direction: rtl;
+  margin-bottom: 20px;
+  border-radius: 8px 8px 0 0;
+}
+
+// Header Tabs Wrapper
+.header-tabs-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+// Header Tabs Container
+.header-tabs {
+  display: inline-flex;
+  gap: 40px;
+  direction: rtl;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.tab-btn {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #A3A3A3;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  border-radius: 0;
+  position: relative;
+
+  &:hover:not(.active) {
+    color: #525252;
+  }
+
+  &.active {
+    background-color: transparent;
+    color: #005257;
+    font-weight: 600;
+  }
+}
+
+// Header Actions
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #ECFDF3;
+  border: none;
+  border-radius: 24px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #085D3A;
+  cursor: default;
+  transition: all 0.2s;
+
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #085D3A;
+    flex-shrink: 0;
+  }
+
+  &.approved {
+    color: #085D3A;
+    background-color: #ECFDF3;
+
+    .status-dot {
+      background-color: #085D3A;
+    }
+  }
+
+  &.pending {
+    color: #B45309;
+    background-color: #FEF3C7;
+
+    .status-dot {
+      background-color: #B45309;
+    }
+  }
+
+  &.rejected {
+    color: #991B1B;
+    background-color: #FEE2E2;
+
+    .status-dot {
+      background-color: #991B1B;
+    }
+  }
+}
+
+// Content Wrapper
+.content-wrapper {
+  padding: 0;
+  direction: rtl;
+  background-color: #FFFFFF;
+  border-radius: 0 0 8px 8px;
+}
+
+// Tab Content
+.tab-content {
+  width: 100%;
+  direction: rtl;
+  padding: 30px;
+  background-color: #FFFFFF;
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  direction: rtl;
+  background-color: #FFFFFF;
+
+  p {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 16px;
+    color: #525252;
+  }
+}
+
+// Error State
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  direction: rtl;
+  background-color: #FFFFFF;
+
+  p {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 16px;
+    color: #DC2626;
+  }
+}
+
+// Details Section
+.details-section {
+  background-color: #FFFFFF;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 40px;
+  box-shadow: none;
+
+  &.half-width {
+    flex: 1;
+    margin-bottom: 0;
+  }
+}
+
+// Section Header with Icon Badge
+.section-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 24px;
+  direction: rtl;
+  gap: 12px;
+}
+
+.section-title {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #001F21;
+  margin: 0;
+}
+
+// Icon Badge
+.icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0891B2;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  flex-shrink: 0;
+  order: -1;
+
+  &.pink {
+    background-color: #EC4899;
+  }
+
+  &.blue {
+    background-color: #0891B2;
+  }
+}
+
+// Info Grid
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 80px;
+  direction: rtl;
+  max-width: 100%;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.info-label {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
+  text-align: right;
+  color: #001F21;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  min-width: fit-content;
+}
+
+.info-value {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 24px;
+  text-align: right;
+  color: #737373;
+  margin: 0;
+  padding: 0;
+
+  &.price {
+    color: #737373;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.riyal-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Separator Line
+.section-separator {
+  width: 100%;
+  height: 1px;
+  background-color: #E5E5E5;
+  margin: 40px 0;
+}
+
+// Two Column Section with Icon Badges
+.two-column-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+  direction: rtl;
+}
+
+// Three Column Section
+.three-column-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
+  direction: rtl;
+}
+
+.details-section.third-width,
+.details-section.half-width {
+  flex: 1;
+  margin-bottom: 0;
+  padding: 0;
+  background-color: transparent;
+
+  .section-header {
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: right;
+    color: #001F21;
+  }
+}
+
+.single-value {
+  padding: 0;
+
+  .info-value {
+    font-size: 15px;
+    font-weight: 400;
+    color: #737373;
+    line-height: 24px;
+  }
+}
+
+// Rejection Reason Section
+.rejection-reason-section {
+  background-color: #FFFFFF;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 40px;
+  box-shadow: none;
+
+  .section-header {
+    margin-bottom: 16px;
+  }
+}
+
+.rejection-reason-text {
+  padding: 0;
+
+  p {
+    margin: 0;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    text-align: right;
+    color: #737373;
+    word-wrap: break-word;
+  }
+}
+
+// Payment Plan Section
+.payment-plan-section {
+  background-color: #FFFFFF;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 0;
+  box-shadow: none;
+
+  .section-header {
+    margin-bottom: 16px;
+  }
+}
+
+.payment-plan-name {
+  margin-bottom: 24px;
+
+  .info-value {
+    font-size: 15px;
+    font-weight: 400;
+    color: #737373;
+  }
+}
+
+// Table Section
+.table-section {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: none;
+  overflow: hidden;
+  margin-top: 20px;
+  border: 1px solid #E5E5E5;
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl;
+
+  thead {
+    tr {
+      background-color: #F9FAFB;
+      border-bottom: 1px solid #E5E5E5;
+
+      th {
+        padding: 16px 20px;
+        text-align: right;
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        color: #525252;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #E5E5E5;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #FAFAFA;
+      }
+
+      td {
+        padding: 16px 20px;
+        text-align: right;
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: #737373;
+      }
+    }
+  }
+}
+
+// PDF Viewer Section
+.pdf-viewer-section {
+  width: 100%;
+  min-height: 600px;
+  background-color: #F9FAFB;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .contract-details-container {
+    padding: 15px;
+  }
+
+  .cancel-button-container {
+    margin-bottom: 15px;
+  }
+
+  .btn-cancel-top {
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+
+  .modal-container {
+    width: 95%;
+  }
+
+  .modal-content {
+    padding: 30px 20px 20px;
+  }
+
+  .modal-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .modal-title {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+
+  .modal-buttons {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .btn-modal-cancel,
+  .btn-modal-confirm,
+  .btn-modal-submit {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .modal-reason-title {
+    font-size: 16px;
+  }
+
+  .form-textarea {
+    font-size: 14px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header-tabs {
+    gap: 24px;
+  }
+
+  .tab-btn {
+    font-size: 14px;
+  }
+
+  .tab-content {
+    padding: 20px;
+  }
+
+  .two-column-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .three-column-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .btn-status {
+    padding: 6px 12px;
+    font-size: 12px;
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  .payment-table {
+    font-size: 12px;
+
+    thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+    }
+
+    tbody td {
+      padding: 12px 16px;
+      font-size: 12px;
+    }
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .icon-badge {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+
+// Section Header with Action Button
+.section-header-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  direction: rtl;
+}
+
+// Inline Cancel Button (in same row as title)
+.btn-cancel-inline {
+  padding: 8px 20px;
+  background-color: #FFFFFF;
+  border: 2px solid #DC2626;
+  border-radius: 6px;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #DC2626;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #FEF2F2;
+    border-color: #B91C1C;
+    color: #B91C1C;
+  }
+
+  &:active {
+    background-color: #FEE2E2;
+  }
+}
+
+// Update section header to work within the new structure
+.section-header-with-action {
+  .section-header {
+    margin-bottom: 0;
+  }
+}
+
+// Responsive adjustment
+@media (max-width: 768px) {
+  .section-header-with-action {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-cancel-inline {
+    width: 100%;
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+}

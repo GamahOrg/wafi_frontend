@@ -77,7 +77,7 @@ export class AddEditDesignPhaseCreditsComponent {
       this.subscriptions.push(
         this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.getLicenseProjectEngineeringStatusOfFundsRequiredFromEntities().subscribe(res => {
           if (res) {
-          debugger;
+          
            this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities=res as LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDto; 
            if(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities && this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.id && this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.id !="00000000-0000-0000-0000-000000000000")
             {
@@ -95,7 +95,7 @@ export class AddEditDesignPhaseCreditsComponent {
       this.subscriptions.push(
         this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.getLicenseProjectEngineeringSupervisionPlannedReportDetailId().subscribe(res => {
           if (res) {
-          debugger;
+          
            this.licenseProjectEngineeringSupervisionPlannedReportDetailId=res as string;; 
           
           }
@@ -103,7 +103,7 @@ export class AddEditDesignPhaseCreditsComponent {
       )
     }
     save(): void {
-      debugger;
+      
       if (!this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.valid) {
         this.showValidation = true;
         return;
@@ -113,7 +113,7 @@ export class AddEditDesignPhaseCreditsComponent {
       this.showValidation = true;
       return;
     }
-      debugger;
+      
       this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate = this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.value as {} as LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdateDto;
       this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate.id=this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities?.id as string;
       this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId=this.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;
@@ -122,7 +122,7 @@ export class AddEditDesignPhaseCreditsComponent {
       this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate.isForDelivery=false;
       this.subscriptions.push(
         this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.save(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate).subscribe((res) => {
-  debugger;
+  
           if (res?.isDone) {
             this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.submitSuccessfullyEventEmitter.emit()
             this._toastrNotificationService.showSuccess('تم الحفظ');

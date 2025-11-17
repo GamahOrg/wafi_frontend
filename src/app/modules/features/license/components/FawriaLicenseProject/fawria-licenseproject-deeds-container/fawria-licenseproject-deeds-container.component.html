@@ -1,0 +1,8 @@
+<!-- <app-instant-license-deeds></app-instant-license-deeds> -->
+<app-fawria-licenseproject-deeds-list *ngIf="pageMode==PagemodeEnum.List" (changePage)="onChangePage($event)"
+  (isIntegrationFlag)="onIsIntegrationFlagChange($event)" (isUnitFlag)="onIsUnitFlagChange($event)">
+</app-fawria-licenseproject-deeds-list>
+<app-fawria-licenseproject-deeds-create *ngIf="pageMode==PagemodeEnum.Create" [isIntegration]="isIntegration"
+  [isUnit]="isUnit" (changePage)="onChangePage($event)">
+</app-fawria-licenseproject-deeds-create>
+<app-fawria-licenseproject-deeds-details *ngIf="pageMode==PagemodeEnum.View"></app-fawria-licenseproject-deeds-details>

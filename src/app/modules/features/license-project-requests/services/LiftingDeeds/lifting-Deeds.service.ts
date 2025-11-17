@@ -11,7 +11,7 @@ export class LicenseProjectDeedService {
     constructor(private _httpClient: HttpClient) { }
 
     getLicenseProjectDeeds(licenseProjectId: string):Observable<LicenseDeedDropDownList[] |null>{
-      debugger
+      
       return this._httpClient.get<CoreResponseDTO<LicenseDeedDropDownList[]>>(`${Configuration.APIs.LiftingDeeds.GetDropDown}/${licenseProjectId}`).pipe(
                 map((res: CoreResponseDTO<LicenseDeedDropDownList[]>)=>{
                   return res.isDone? res.data as LicenseDeedDropDownList[]:null;

@@ -28,7 +28,7 @@ showValidation: boolean = false;
     this.subscriptions.push(
       this._engineeringSupervisionPlannedReportActualInfrastructureService.getActualLicenseProjectInfrastructureNetworksStatusDto().subscribe(res => {
         if (res) {
-        debugger;
+        
          this.actualLicenseProjectInfrastructureNetworksStatus=res as ActualLicenseProjectInfrastructureNetworksStatusDto; 
         }
       })

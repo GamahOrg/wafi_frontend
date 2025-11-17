@@ -42,7 +42,7 @@ const routes: Routes = [
           import('../features/license/license.module').then(
             (m) => m.LicenseModule
           ),
-      }, 
+      },
       {
         path: Configuration.modules.developer,
         data: { breadcrumb: 'المطور' },

@@ -3,7 +3,7 @@
 export interface LicenseProjectEngineeringConsultantCreateUpdateDto {
   id: any;
   licenseProjectId: string;
-  cityId: string;
+  cityId: string| null;
   workDaysCount: number;
   engineeringConsultantLicenseNumber: string;
   engineeringConsultantId: string;
@@ -76,16 +76,36 @@ export interface LicenseProjectEngineeringConsultantCreateUpdateDto {
   otherSpecialtiesBlockQuantitiesMonthes: string[];
   licenseProjectEngineeringConsultantFiles?: SysFileManagerCreateUpdateDto[];
   EngineeringConsultantFileId?: string[];
-  // licenseProjectEngineeringConsultantDelegators?: LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto[];
+  licenseProjectEngineeringConsultantAuthorizedToSignDelegators?: LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto[];
+  // licenseProjectEngineeringConsultantDelegators: LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto[];
+
+  licenseProjectEngineeringConsultantPayments?: LicenseProjectEngineeringConsultantPaymentsDto[];
+  contarctValue?: number;
+  financialReportApprovalPeriodInDays?: number;
+  paymentDeadline?: string;
 }
 
 export class LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto {
   id: string = '00000000-0000-0000-0000-000000000000';
   licenseProjectEngineeringConsultantId: string = '';
+  delegatorCustomerId: string = '';
   // delegatorName: string = "";
   // identityNumber: string = "";
-  signModelFileId: string = '';
+  signModelFileId: string | null = null;
   delegatorAcknowledgment: boolean = false;
   engineeringConsultantDelegatorSignModelFile?: SysFileManagerCreateUpdateDto =
     new SysFileManagerCreateUpdateDto();
+}
+
+export interface LicenseProjectEngineeringConsultantPaymentsDto {
+  id: string;
+   //البند
+  item: string;
+ //الكمية
+  quantity: number;
+ //السعر للوحدة
+  unitPrice: number;
+ //الوصف
+  description: string;
+  licenseProjectEngineeringConsultantId: string;
 }

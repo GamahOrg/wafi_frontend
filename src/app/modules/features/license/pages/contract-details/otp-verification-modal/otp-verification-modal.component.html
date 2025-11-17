@@ -1,0 +1,140 @@
+<!-- Modal Overlay -->
+<div class="modal-overlay" *ngIf="isVisible" (click)="close()">
+  <!-- Modal Content -->
+  <div class="modal-content" (click)="$event.stopPropagation()" dir="rtl">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h3 class="modal-title">
+        {{
+          actionType === "accept" ? "تأكيد توقيع عقد البيع" : "تأكيد رفض العقد"
+        }}
+      </h3>
+      <button class="close-button" (click)="close()" type="button">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <!-- Phone Number Info (only for accept action) -->
+      <p class="phone-info" *ngIf="phoneNumber && actionType === 'accept'">
+        يرجى إدخال رمز التحقق الذي تم إرساله على رقم جوالك {{ phoneNumber }}
+      </p>
+
+      <!-- OTP Input Fields (only for accept action) -->
+      <div class="otp-container" *ngIf="actionType === 'accept'">
+        <input
+          id="otp-0"
+          type="text"
+          inputmode="numeric"
+          maxlength="1"
+          class="otp-input"
+          [(ngModel)]="otpDigits[0]"
+          (input)="onOtpInput(0, $event)"
+          (keydown)="onOtpKeyDown(0, $event)"
+          [disabled]="isSendingOtp || isVerifying"
+          autocomplete="off"
+        />
+        <input
+          id="otp-1"
+          type="text"
+          inputmode="numeric"
+          maxlength="1"
+          class="otp-input"
+          [(ngModel)]="otpDigits[1]"
+          (input)="onOtpInput(1, $event)"
+          (keydown)="onOtpKeyDown(1, $event)"
+          [disabled]="isSendingOtp || isVerifying"
+          autocomplete="off"
+        />
+        <input
+          id="otp-2"
+          type="text"
+          inputmode="numeric"
+          maxlength="1"
+          class="otp-input"
+          [(ngModel)]="otpDigits[2]"
+          (input)="onOtpInput(2, $event)"
+          (keydown)="onOtpKeyDown(2, $event)"
+          [disabled]="isSendingOtp || isVerifying"
+          autocomplete="off"
+        />
+        <input
+          id="otp-3"
+          type="text"
+          inputmode="numeric"
+          maxlength="1"
+          class="otp-input"
+          [(ngModel)]="otpDigits[3]"
+          (input)="onOtpInput(3, $event)"
+          (keydown)="onOtpKeyDown(3, $event)"
+          [disabled]="isSendingOtp || isVerifying"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Rejection Reason (only for reject action) -->
+      <div class="rejection-reason-container" *ngIf="actionType === 'reject'">
+        <label class="form-label" for="rejectionReason">
+          سبب الرفض
+          <span class="required-asterisk">*</span>
+        </label>
+        <textarea
+          id="rejectionReason"
+          class="rejection-textarea"
+          rows="4"
+          placeholder="يرجى إدخال سبب رفض العقد"
+          [(ngModel)]="rejectionReason"
+          [disabled]="isVerifying"
+        ></textarea>
+      </div>
+
+      <!-- Success Message -->
+      <div class="alert alert-success" *ngIf="successMessage" role="alert">
+        <i class="bi bi-check-circle"></i>
+        {{ successMessage }}
+      </div>
+
+      <!-- Error Message -->
+      <div class="alert alert-danger" *ngIf="errorMessage" role="alert">
+        <i class="bi bi-exclamation-circle"></i>
+        {{ errorMessage }}
+      </div>
+
+      <!-- Resend Link (only for accept action) -->
+      <div class="resend-container" *ngIf="actionType === 'accept'">
+        <span class="resend-text">لم يتم إرسال رمز التحقق؟</span>
+        <button
+          class="resend-link"
+          (click)="sendOtp()"
+          [disabled]="isSendingOtp"
+          type="button"
+        >
+          إعادة إرسال الرمز
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button
+        class="btn-verify"
+        [disabled]="!isFormValid() || isVerifying"
+        (click)="verify()"
+        type="button"
+      >
+        <span *ngIf="!isVerifying">{{
+          actionType === "accept" ? "تحقق" : "تأكيد الرفض"
+        }}</span>
+        <span *ngIf="isVerifying">{{
+          actionType === "accept" ? "جاري التحقق..." : "جاري الرفض..."
+        }}</span>
+        <span
+          class="spinner-border spinner-border-sm ms-2"
+          *ngIf="isVerifying"
+        ></span>
+      </button>
+    </div>
+  </div>
+</div>

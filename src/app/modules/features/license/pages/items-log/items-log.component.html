@@ -1,0 +1,101 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3 align-items-center">
+      <div class="col-12 col-lg-6">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-back" (click)="goBack()">
+            <i class="fa fa-arrow-right"></i>
+            <span>رجوع</span>
+          </button>
+          <div class="page-title mb-0">
+            <h5 class="title">سجل البنود</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="row" *ngIf="isLoading">
+      <div class="col-12 text-center">
+        <p>جاري التحميل...</p>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!isLoading && versions.length === 0">
+      <div class="col-12">
+        <p>لا توجد بيانات للعرض</p>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!isLoading && versions.length > 0">
+      <div class="col-12">
+        <accordion [closeOthers]="true" [isAnimated]="true">
+          <accordion-group *ngFor="let version of versions; let i = index" [isOpen]="i === 0">
+            <div class="accordion-heading" accordion-heading>
+              <div class="version-header">
+                <div class="version-info-right">
+                  <div class="version-number">نسخة رقم {{ version.verion }}</div>
+                  <div class="d-flex align-items-center gap-2 mt-2">
+                    <div class="version-date">تاريخ النسخة : {{ version.versionDate | date: 'dd-M-yyyy' }}</div>
+                    <span class="status-badge status-other">غير ساري</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-body">
+              <div *ngIf="!version.additionalTermsVersionItems || version.additionalTermsVersionItems.length === 0" class="text-center py-3">
+                <p class="text-muted">لا توجد بنود لهذا الإصدار</p>
+              </div>
+
+              <div *ngIf="version.additionalTermsVersionItems && version.additionalTermsVersionItems.length > 0">
+                <div class="table-responsive">
+                  <table class="table table-light">
+                    <thead>
+                      <tr>
+                        <th>رقم البند التسلسلي</th>
+                        <th>عنوان البند الرئيسي</th>
+                        <th>نص البند</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let parentItem of getParentItems(version.additionalTermsVersionItems); let parentIndex = index">
+                        <!-- Parent Row -->
+                        <tr>
+                          <td>
+                            <span>{{getItemNumberDisplay(parentItem, version.additionalTermsVersionItems)}}</span>
+                          </td>
+                          <td>
+                            <div class="d-flex align-items-center">
+                              <button *ngIf="hasChildren(parentItem.id, version.additionalTermsVersionItems)" mat-icon-button class="me-2" (click)="toggleExpand(parentItem.id)">
+                                <mat-icon>{{isExpanded(parentItem.id) ? 'expand_less' : 'expand_more'}}</mat-icon>
+                              </button>
+                              <span>{{parentItem?.itemTitle || '-'}}</span>
+                            </div>
+                          </td>
+                          <td>{{parentItem?.itemText && parentItem.itemText.length > 100 ? (parentItem.itemText | slice:0:100) + '...' : parentItem.itemText}}</td>
+                       
+                        </tr>
+
+                        <!-- Child Rows -->
+                        <ng-container *ngIf="isExpanded(parentItem.id)">
+                          <tr *ngFor="let childItem of getChildItems(parentItem.id, version.additionalTermsVersionItems); let childIndex = index" class="child-row">
+                            <td class="ps-5">{{getItemNumberDisplay(childItem, version.additionalTermsVersionItems)}}</td>
+                            <td>{{childItem?.itemTitle || '-'}}</td>
+                            <td>{{childItem?.itemText && childItem.itemText.length > 100 ? (childItem.itemText | slice:0:100) + '...' : childItem?.itemText}}</td>
+                            <td></td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </accordion-group>
+        </accordion>
+      </div>
+    </div>
+  </div>
+</div>

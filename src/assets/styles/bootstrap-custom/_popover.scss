@@ -1,0 +1,21 @@
+.popover {
+  --bs-popover-body-padding-x: .5rem;
+  --bs-popover-body-padding-y: .5rem;
+  --bs-popover-body-color: #{$white};
+  --bs-popover-border-color: #{$theme-main};
+  --bs-popover-bg: #{$theme-main};
+  --bs-popover-border-radius: #{$border-radius-xs};
+
+  &.tab-data-top-card-popover {
+    --bs-popover-font-size: #{$font-size-xs};
+    --bs-popover-body-color: #384250;
+    --bs-popover-border-color: #{$white};
+    --bs-popover-bg: #{$white};
+
+    box-shadow: 0px 34px 34px 0px rgba(#000, .13);
+
+    .title {
+      font-size: $font-size-xs;
+    }
+  }
+}

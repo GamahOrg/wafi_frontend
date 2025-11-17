@@ -61,7 +61,7 @@ export class AddEditMonthlyEngineeringReportExternalExpensesComponent implements
       this.monthlyEngineeringReportExternalExpenses.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments = [];
     }
 
-    debugger
+    
     filesData.eventRes.data.forEach((data: any) => {
       const attachmentItem: LicenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments = {
         licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseId: this.licenseProjectEngineeringSupervisionPlannedReportDetailId,
@@ -93,7 +93,7 @@ export class AddEditMonthlyEngineeringReportExternalExpensesComponent implements
   }
   
   getMonthlyEngineeringReportExternalExpensesId(){
-    debugger
+    
     this.subscriptions.push(
       this._monthlyEngineeringReportExternalExpensesService.getMonthlyEngineeringReportExternalExpensesId().subscribe((id: string | null) => {
         if (id) {
@@ -116,7 +116,7 @@ export class AddEditMonthlyEngineeringReportExternalExpensesComponent implements
   }
   
   save(): void {
-    debugger
+    
     if (!this.monthlyEngineeringReportExternalExpensesForm.valid ||
         !this.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments ||
         this.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments.length == 0) {

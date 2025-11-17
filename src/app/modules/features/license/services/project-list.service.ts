@@ -6,6 +6,7 @@ import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CustomerShortDto } from '../models/facility-short-dto';
 import { LicenseRequestHeaderDto, ProjectLicenseRequestsParams } from '../dataModels/license-request-header-dto';
+import { ProjectPartiesStatusDto } from '../models/project-parties-status-model';
 
 @Injectable()
 export class ProjectListService {
@@ -42,10 +43,26 @@ export class ProjectListService {
   UpdateProjectManagerOnProject(projectManagerId:string,licenseProjectId:string) : Observable<CoreResponseDTO<any>> {
     return this._httpClient.get<CoreResponseDTO<any>>(`${Configuration.APIs.LicenseProject.UpdateProjectManagerOnProject}/${projectManagerId}/${licenseProjectId}`)
    }
+  
+  
    UpdateLicenseProjectStatus(licenseProjectId: string, statusId: string): Observable<CoreResponseDTO<any>> {
-    return this._httpClient.put<CoreResponseDTO<any>>(
-        `${Configuration.APIs.LicenseProject.UpdateLicenseProjectStatus}/${licenseProjectId}/${statusId}`,
-        {} 
+     return this._httpClient.get<CoreResponseDTO<any>>(
+         `${Configuration.APIs.LicenseProject.GetProjectPartiesStatus}/${licenseProjectId}/${statusId}`,
+         {}
+     );
+   }
+   
+   GetProjectPartiesStatus(licenseProjectId: string, isOwner: boolean): Observable<CoreResponseDTO<ProjectPartiesStatusDto[] | null>> {
+     return this._httpClient.get<CoreResponseDTO<ProjectPartiesStatusDto[] | null>>(
+         `${Configuration.APIs.LicenseProject.GetProjectPartiesStatus}/${licenseProjectId}/${isOwner}`,
+         {}
+     );
+   }
+   
+   GenerateDraftVersionForProject(licenseProjectId: string): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.post<CoreResponseDTO<any>>(
+        `${Configuration.APIs.LicenseProjectService.GenerateDraftVersionForProject}/${licenseProjectId}`,
+        {}
     );
 }
 

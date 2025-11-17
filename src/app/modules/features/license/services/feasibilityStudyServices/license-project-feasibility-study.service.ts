@@ -4,7 +4,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LicenseProjectFeasibilityStudyDto } from '../../models/feasibilityStudyDtos/license-project-feasibility-study-dto';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
-import { LicenseProjectFeasibilityStudyCreateUpdateDto } from '../../models/feasibilityStudyDtos/license-project-feasibility-study-create-update-dto';
+import { LicenseProjectFeasibilityStudyCreateUpdateDto, LicenseProjectFeasibilityStudySaveDto } from '../../models/feasibilityStudyDtos/license-project-feasibility-study-create-update-dto';
 
 @Injectable()
 export class LicenseProjectFeasibilityStudyService {
@@ -32,6 +32,15 @@ setFeasibilityStudyId(LatestValue: string) {
   Save(model: LicenseProjectFeasibilityStudyCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectFeasibilityStudyDto>> {
     return this._httpClient.post<CoreResponseDTO<LicenseProjectFeasibilityStudyCreateUpdateDto>>
       (Configuration.APIs.LicenseProjectFeasibilityStudy.Save, model).pipe(
+        map((res: any) => {
+          return res;
+        })
+      )
+  }
+
+   SaveFawriaFeasibilityStudy(model: LicenseProjectFeasibilityStudySaveDto): Observable<CoreResponseDTO<LicenseProjectFeasibilityStudyDto>> {
+    return this._httpClient.post<CoreResponseDTO<LicenseProjectFeasibilityStudyDto>>
+      (Configuration.APIs.LicenseProjectFeasibilityStudy.SaveFawriaFeasibilityStudy, model).pipe(
         map((res: any) => {
           return res;
         })

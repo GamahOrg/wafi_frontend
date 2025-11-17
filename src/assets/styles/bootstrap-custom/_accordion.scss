@@ -144,6 +144,8 @@ accordion {
         }
 
         .card {
+          --bs-card-border-width: 0;
+
           .card-header {
             .accordion-heading {
               padding: .5rem 1rem;

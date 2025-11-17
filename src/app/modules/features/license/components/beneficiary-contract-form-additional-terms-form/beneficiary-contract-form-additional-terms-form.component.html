@@ -6,52 +6,94 @@
             <div class="row mb-3">
                 <div class="col-12 col-lg-6">
                     <div class="form-group mb-4">
-                        <label class="form-label">{{localization.itemNumber}}</label>
-                        <div class="input-group">
-                            <input  id="control-itemNumber"
-                                   type="number"
-                                   class="form-control"
-                                   formControlName="itemNumber">
-                        </div>
-                        <mat-error *ngIf="controls.itemNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                        <label class="form-label">بند {{maxItemNumber}}</label>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6">
+
+                <div class="col-12 col-lg-12">
                     <div class="form-group mb-4">
-                        <label class="form-label">{{localization.licenseBeneficiaryContractFormId}}</label>
-                        <select class="form-select"  id="control-licenseBeneficiaryContractFormId"
-                        formControlName="licenseBeneficiaryContractFormId">
-                    <option value="">اختر البند</option>
-                    <option *ngFor="let beneficiary of sysLicenseBeneficiaryContractFormList"
-                            [ngValue]="beneficiary.id">
-                        {{ beneficiary.description }}
-                    </option>
-                </select>
-
+                        <label class="form-label">{{localization.itemTitle}}</label>
+                        <input type="text"  id="control-itemText"
+                               placeholder="{{localization.itemTitlePlaceholder}}"
+                               class="form-control"
+                               formControlName="itemTitle"/>
+                        <mat-error *ngIf="controls.itemTitle?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
                     </div>
-
-                        <mat-error *ngIf="controls.licenseBeneficiaryContractFormId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-                    </div>
+                </div>
                 <div class="col-12 col-lg-12">
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.itemText}}</label>
                         <textarea type="text"  id="control-itemText"
-                               placeholder="{{localization.itemText}}"
+                               placeholder="{{localization.itemTextPlaceholder}}"
                                class="form-control"
                                formControlName="itemText"></textarea>
                         <mat-error *ngIf="controls.itemText?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
                     </div>
                 </div>
-                <div class="col-12 col-lg-12">
-                <div class="page-content">
-                    <div class="form-check">
-                        <input class="form-check-input"  id="control-additionalTermsAcknowledgment" type="checkbox"  formControlName="additionalTermsAcknowledgment" />
-                        <label class="form-check-label" for="additionalTermsAcknowledgment">
-                            أقر بعدم إضافة بنود إضافية تتعأرض مع البنود الأساسية للعقد التي تم اعدادها من قبل "البيع على الخارطة" كما تم ذكرها فى نموذج العقد
-                             </label>
+
+
+                <!-- Dynamic Additional Terms Section -->
+                <div class="col-12" formArrayName="additionalTerms">
+                    <h6 class="mb-3">البنود الإضافية</h6>
+                    
+                    <!-- Additional Terms List -->
+                    <div *ngFor="let additionalTerm of additionalTermsArray.controls; let i = index" 
+                         [formGroupName]="i" 
+                         class="mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- <div class="d-flex justify-content-between align-items-start mb-3"> -->
+                                <div class="d-flex justify-content-end align-items-end mb-3">
+                                    <!-- <h6 class="card-title mb-0">نص البند الإضافي {{maxItemNumber}}.{{i + 1}}</h6> -->
+                                    <button type="button" 
+                                            class="btn btn-danger btn-sm"
+                                            (click)="removeAdditionalTerm(i)">
+                                        <i class="hgi hgi-stroke hgi-delete-03"></i> {{localization.remove}}
+                                    </button>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">{{localization.additionalTermText}}</label>
+                                    <textarea class="form-control"
+                                              [id]="'additional-term-' + i"
+                                              [placeholder]="localization.additionalTermTextPlaceholder"
+                                              rows="3"
+                                              formControlName="itemText"></textarea>
+                                    <mat-error *ngIf="getAdditionalTermGroup(i).get('itemText')?.hasError('required') && showValidation">
+                                        {{localization.requiredErrorMsg}}
+                                    </mat-error>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-            </div>
+                    <!-- Empty State Message -->
+                    <!-- <div *ngIf="additionalTermsArray.length === 0" class="text-center text-muted py-4">
+                        <i class="fa fa-file-text fa-2x mb-2"></i>
+                        <p class="mb-0">لم يتم إضافة أي بنود إضافية بعد</p>
+                        <small>اضغط على "{{localization.addAdditionalTerm}}" لإضافة بند جديد</small>
+                    </div> -->
+                    <button type="button"
+                            class="btn btn-add-term w-100 mb-3"
+                            (click)="addAdditionalTerm()">
+                        <i class="hgi hgi-stroke hgi-plus-sign me-2"></i>{{localization.addAdditionalTerm}}
+                    </button>
+
+                </div>
+
+
+                <div class="col-12 col-lg-12">
+                    <div class="page-content">
+                        <div class="form-check">
+                            <input class="form-check-input" id="control-additionalTermsAcknowledgment" type="checkbox"
+                                formControlName="additionalTermsAcknowledgment" />
+                            <label class="form-check-label" for="additionalTermsAcknowledgment">
+                                أقر بعدم إضافة بنود إضافية تتعأرض مع البنود الأساسية للعقد التي تم اعدادها من قبل "البيع على الخارطة"
+                                كما تم ذكرها فى نموذج العقد
+                            </label>
+                        </div>
+                
+                    </div>
                 </div>
 
             </div>

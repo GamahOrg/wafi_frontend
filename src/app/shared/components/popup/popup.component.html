@@ -1,15 +1,15 @@
-<div class="d-flex flex-column h-100">
-  <h6 mat-dialog-title>
-    {{popupData.title}}
-    <button class="btn btn-link p-0" mat-dialog-close tabindex="-1">
-      <i class="material-icons h6">close</i>
-    </button>
-  </h6>
+<div mat-dialog-title>
+  <i class="icon" [ngClass]="popupData.iconClass"></i>
+  <h6 class="title">{{popupData.title}}</h6>
+  <button *ngIf="!popupData.disableClose" class="btn btn-link p-0" mat-dialog-close tabindex="-1">
+    <i class="material-icons h6">close</i>
+  </button>
+</div>
 
-  <div mat-dialog-content>
-    <ng-container *ngComponentOutlet="popupData.component"></ng-container>
+<div mat-dialog-content>
+  <ng-container *ngComponentOutlet="popupData.component"></ng-container>
 
-    <!-- <h6 class="form-title">
+  <!-- <h6 class="form-title">
             <span class="icon"><i class="material-icons">list_alt</i></span>
             <span>متطلبات القدرات المؤسسية والموارد البشرية</span>
         </h6>
@@ -121,10 +121,10 @@
         <a href=""
            class="add-array">+ اضافة مشروع جديد</a> -->
 
-  </div>
+</div>
 
-  <div mat-dialog-actions align="end">
-    <!-- <button mat-flat-button
+<div *ngIf="popupActionsButtons.length>0" mat-dialog-actions align="end">
+  <!-- <button mat-flat-button
                 class="primary"
                 (click)="onClickOnCancel()">إلغاء</button>
 
@@ -132,14 +132,13 @@
                 color="primary"
                 (click)="onClickOnConfirm()">حفظ البيانات</button> -->
 
-    <ng-container *ngFor="let button of popupActionsButtons">
-      <button mat-flat-button *ngIf="button.isVisable && button.actionType=='cancel'" [disabled]="button.isDisables" class="me-auto" (click)="onClickOnPopupActionButton(button.actionType)">
-        {{button.title}}
-      </button>
+  <ng-container *ngFor="let button of popupActionsButtons">
+    <button mat-flat-button *ngIf="button.isVisable && button.actionType=='cancel'" [disabled]="button.isDisables" class="me-auto" (click)="onClickOnPopupActionButton(button.actionType)">
+      {{button.title}}
+    </button>
 
-      <button mat-flat-button *ngIf="button.isVisable && button.actionType=='confirm'" [disabled]="button.isDisables" color="primary" (click)="onClickOnPopupActionButton(button.actionType)">
-        {{button.title}}
-      </button>
-    </ng-container>
-  </div>
+    <button mat-flat-button *ngIf="button.isVisable && button.actionType=='confirm'" [disabled]="button.isDisables" color="primary" (click)="onClickOnPopupActionButton(button.actionType)">
+      {{button.title}}
+    </button>
+  </ng-container>
 </div>

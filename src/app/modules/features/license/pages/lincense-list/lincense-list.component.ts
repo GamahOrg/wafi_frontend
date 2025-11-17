@@ -2,7 +2,10 @@ import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { Pagination, pagination } from 'src/app/shared/models/pagination.model';
-import { internalStatusId, licenseRequest } from '../../models/license-requests';
+import {
+  internalStatusId,
+  licenseRequest,
+} from '../../models/license-requests';
 import { Router } from '@angular/router';
 import { LicenseRequestHeaderService } from '../../services/license-request-header.service';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
@@ -13,15 +16,15 @@ import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
-
+import { LicenseInternalStatus } from '../../enums/license-internal-status';
 
 @Component({
   selector: 'app-lincense-list',
   templateUrl: './lincense-list.component.html',
   styleUrls: ['./lincense-list.component.scss'],
-  providers:[PaginationService]
+  providers: [PaginationService],
 })
-export class LincenseListComponent implements OnInit, OnDestroy{
+export class LincenseListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   baseUrl = `${environment.baseURL}/`;
   currentSortOrder: 'asc' | 'desc' | null = null;
@@ -42,7 +45,7 @@ export class LincenseListComponent implements OnInit, OnDestroy{
   bsInlineValue = new Date();
   bsInlineRangeValue: Date[];
   maxDate = new Date();
-  searchText:string='';
+  searchText: string = '';
   // Pagination
   newPageNo: number = 1;
   pagintationData: pagination = {
@@ -51,9 +54,9 @@ export class LincenseListComponent implements OnInit, OnDestroy{
     pageSize: 10,
     totalCount: 0,
   };
-  requestId?:string;
+  requestId?: string;
   // reqList: licenseRequest[] = [] as licenseRequest[];
-  reqList:  Pagination<licenseRequest[]> = {} as Pagination<licenseRequest[]>;
+  reqList: Pagination<licenseRequest[]> = {} as Pagination<licenseRequest[]>;
   selectedRequest: licenseRequest = {} as licenseRequest;
   get internalStatusId() {
     return internalStatusId;
@@ -64,11 +67,10 @@ export class LincenseListComponent implements OnInit, OnDestroy{
   constructor(
     private _requestService: LicenseRequestHeaderService,
     private _router: Router,
-    private _sharedLicenseProjectService:SharedLicenseProjectService,
+    private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _paginationService: PaginationService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _popupService: PopupService,
-
+    private _popupService: PopupService
   ) {
     this.maxDate.setDate(this.maxDate.getDate() + 5);
     this.bsInlineRangeValue = [this.bsInlineValue, this.maxDate];
@@ -80,8 +82,7 @@ export class LincenseListComponent implements OnInit, OnDestroy{
     this.observePopupEvents();
   }
   getSearchText(event: Event) {
-    this.searchText=(event.target as HTMLInputElement).value;
-
+    this.searchText = (event.target as HTMLInputElement).value;
   }
   sortData(column: string) {
     if (this.currentSortColumn === column) {
@@ -92,8 +93,7 @@ export class LincenseListComponent implements OnInit, OnDestroy{
     }
     this.getLicensesRequests();
   }
-  search()
-  {
+  search() {
     this.getLicensesRequests();
   }
   getLicensesRequests() {
@@ -109,11 +109,18 @@ export class LincenseListComponent implements OnInit, OnDestroy{
     //     })
     // )
     this.subscriptions.push(
-      this._requestService.getLicensesRequests(this.pagintationData.currentPage, this.pagintationData.pageSize,this.searchText,this.currentSortColumn , this.currentSortOrder)
-      .subscribe((res: Pagination<licenseRequest[]>) => {
-        this.updateRequestList(res as Pagination<licenseRequest[]>)
-      })
-    )
+      this._requestService
+        .getLicensesRequests(
+          this.pagintationData.currentPage,
+          this.pagintationData.pageSize,
+          this.searchText,
+          this.currentSortColumn,
+          this.currentSortOrder
+        )
+        .subscribe((res: Pagination<licenseRequest[]>) => {
+          this.updateRequestList(res as Pagination<licenseRequest[]>);
+        })
+    );
   }
   private updateRequestList(TypeListView: Pagination<licenseRequest[]>): void {
     this.reqList = TypeListView;
@@ -124,33 +131,52 @@ export class LincenseListComponent implements OnInit, OnDestroy{
     );
   }
 
-  private setPaginationData(pageSize: number, total: number, pageCount: number): void {
-    this.pagintationData.pageCount = pageCount
-    this.pagintationData.pageSize = pageSize
-    this.pagintationData.totalCount = total
+  private setPaginationData(
+    pageSize: number,
+    total: number,
+    pageCount: number
+  ): void {
+    this.pagintationData.pageCount = pageCount;
+    this.pagintationData.pageSize = pageSize;
+    this.pagintationData.totalCount = total;
     this._paginationService.updatePaginationData(this.pagintationData);
   }
   public navigateToDetails(request: licenseRequest) {
-
     this.selectedRequest = request;
     this.setSelectedRequestIdInLocalStorage();
-    this.routeToRequestDetails(request)
+    this.routeToRequestDetails(request);
   }
 
-  routeToRequestDetails(request :licenseRequest): void {
-    if(request.requestCode)
-      this._router.navigateByUrl(`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`)
-    else
-      this._router.navigate([this.requestDetailsRoute]);
+  routeToRequestDetails(request: licenseRequest): void {
+    if (request.requestCode) {
+      if (request.licenseRequestType?.typeCode === 'FSRSU') {
+        this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+          this.selectedRequest?.licenseProjectId
+        );
+        this._router.navigateByUrl(
+          `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`
+        );
+      } else
+        this._router.navigateByUrl(
+          `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`
+        );
+    } else this._router.navigate([this.requestDetailsRoute]);
   }
+
   public navigateToCreateRequest(): void {
-    this._router.navigateByUrl(`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}`);
+    this._router.navigateByUrl(
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}`
+    );
   }
   setSelectedRequestIdInLocalStorage() {
-    if(this.selectedRequest.requestCode)
-      this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(this.selectedRequest.id)
+    if (this.selectedRequest.requestCode)
+      this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
+        this.selectedRequest.id
+      );
     else
-      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.selectedRequest.licenseProjectId)
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+        this.selectedRequest.licenseProjectId
+      );
   }
   watchPaginationActions(): void {
     this.watchPagechanged();
@@ -161,7 +187,7 @@ export class LincenseListComponent implements OnInit, OnDestroy{
       this._paginationService.getPageChanged().subscribe((pageNo) => {
         this.newPageNo = pageNo;
       })
-    )
+    );
   }
   private watchPaginationClicked(): void {
     this.subscriptions.push(
@@ -176,60 +202,78 @@ export class LincenseListComponent implements OnInit, OnDestroy{
   private loadNextPage(nextPage: number): void {
     this.pagintationData.currentPage = nextPage;
 
-    this.getLicensesRequests()
+    this.getLicensesRequests();
   }
-   confirmDelete(id :any) {
-    this.requestId=id;
+  confirmDelete(id: any) {
+    this.requestId = id;
     let deleteConfirmationObj = {
-      staticMessage: "هل انت متأكد من حذف الطلب",
-      dynamicMessage: "",
+      staticMessage: 'هل انت متأكد من حذف الطلب',
+      dynamicMessage: '',
       secondeStaticMessage: '',
-    }
+    };
     this._popupService.updateConfirmationPopupData(deleteConfirmationObj);
   }
   public delete(): void {
     this.subscriptions.push(
-      this._requestService.Delete(this.requestId as string).subscribe((res:CoreResponseDTO<any>) => {
-        if (res.isDone) {
-          this._toastrNotificationService.showSuccess("تم الحذف");
-          this.closeDialog();
-          this.getLicensesRequests();
-        }
-        else
-          this._toastrNotificationService.showError(" لم يتم حذف ");
-
-
-      })
-    )
+      this._requestService
+        .Delete(this.requestId as string)
+        .subscribe((res: CoreResponseDTO<any>) => {
+          if (res.isDone) {
+            this._toastrNotificationService.showSuccess('تم الحذف');
+            this.closeDialog();
+            this.getLicensesRequests();
+          } else this._toastrNotificationService.showError(' لم يتم حذف ');
+        })
+    );
   }
   private closeDialog(): void {
-    this._popupService.dismissDialog()
+    this._popupService.dismissDialog();
   }
   observePopupEvents(): void {
-    
-    this.observecancelAction()
-    this.observeconfirmAction()
+    this.observecancelAction();
+    this.observeconfirmAction();
   }
 
   private observecancelAction() {
-    
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         this._popupService.dismissDialog();
       })
-    )
+    );
   }
- 
+
   private observeconfirmAction() {
-    
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.delete();
       })
-    )
+    );
   }
+
+  getStatusClass(statusId: number) {
+    switch (statusId) {
+      case LicenseInternalStatus.Draft:
+      case LicenseInternalStatus.UnderStudy:
+        return 'black';
+      case LicenseInternalStatus.OwnerAgreementsApproved:
+      case LicenseInternalStatus.PartyAgreementsApproved:
+      case LicenseInternalStatus.InvoicePaid:
+      case LicenseInternalStatus.EscrowAccountOpened:
+      case LicenseInternalStatus.RequestCertifiedAndFinallicenseIssued:
+        return 'green';
+      case LicenseInternalStatus.PendingApproval:
+      case LicenseInternalStatus.WaitingApproval:
+        return 'orange';
+      case LicenseInternalStatus.RequestCanceled:
+      case LicenseInternalStatus.RequestRejected:
+        return 'red';
+      case LicenseInternalStatus.ProcessingNotes:
+        return 'blue';
+    }
+    return '';
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
-
 }

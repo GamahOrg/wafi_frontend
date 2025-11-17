@@ -76,7 +76,7 @@ subscriptions: Subscription[] = [];
       this.subscriptions.push(
         this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.getLicenseProjectEngineeringStatusOfFundsRequiredFromEntities().subscribe(res => {
           if (res) {
-          debugger;
+          
            this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities=res as LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDto; 
            if(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities && this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.id && this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.id !="00000000-0000-0000-0000-000000000000")
             {
@@ -94,7 +94,7 @@ subscriptions: Subscription[] = [];
       this.subscriptions.push(
         this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.getLicenseProjectEngineeringSupervisionPlannedReportDetailId().subscribe(res => {
           if (res) {
-          debugger;
+          
            this.licenseProjectEngineeringSupervisionPlannedReportDetailId=res as string;; 
           
           }
@@ -102,7 +102,7 @@ subscriptions: Subscription[] = [];
       )
     }
     save(): void {
-      debugger;
+      
       if (!this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.valid) {
         this.showValidation = true;
         return;
@@ -112,7 +112,7 @@ subscriptions: Subscription[] = [];
       this.showValidation = true;
       return;
     }
-      debugger;
+      
       this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate = this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.value as {} as LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdateDto;
       this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate.id=this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities?.id as string;
       this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId=this.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;
@@ -121,7 +121,7 @@ subscriptions: Subscription[] = [];
       this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate.isForDelivery=true;
       this.subscriptions.push(
         this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.save(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesCreateUpdate).subscribe((res) => {
-  debugger;
+  
           if (res?.isDone) {
             this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.submitSuccessfullyEventEmitter.emit()
             this._toastrNotificationService.showSuccess('تم الحفظ');

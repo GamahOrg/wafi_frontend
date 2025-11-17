@@ -141,7 +141,7 @@ export class CreateChangeEngineerComponent {
   }
 
   validateCommercialRegister(): void {
-    debugger;
+    
 
     let commercialRegister = this.controls.commercialRegister.value;
 
@@ -154,7 +154,7 @@ export class CreateChangeEngineerComponent {
           this.qualificationTypeEnum.engineeringConsultantQualificationRequest as string, this.changeEngineeringForm.controls.licenseProjectId.value as string).subscribe((res) => {
 
             if (res) {
-              debugger;
+              
               this.newEngineeringFacility = res.facility as FacilityShortDto;
               this.changeEngineeringForm.controls.engineeringFacilityId.setValue(this.newEngineeringFacility.id as string);
             }
@@ -173,7 +173,7 @@ export class CreateChangeEngineerComponent {
       this._toastrNotificationService.showError('برجاء ادخل السجل التجاري للاستشاري الهندسي الجديد والضغط على تحقق ')
     }
 
-    debugger;
+    
     if (
       !this.changeEngineeringForm.controls.reasons.value ||
       !this.alternativeConsultingOfficeAgreementId ||

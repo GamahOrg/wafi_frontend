@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
+import { Configuration } from 'src/app/core/configurations/shared.config';
 import { confirmationPopupData, PopupData } from 'src/app/shared/models/popup.model';
 import { LicenseProjectBuyerListPagingDto, LicenseProjectBuyerStatusEnum } from '../../dataModels/license-project-buyer-list-paging-dto';
 import { AddBuyerComponent } from '../add-buyer/add-buyer.component';
@@ -18,12 +20,14 @@ import { ShowDetailBuyerComponent } from '../show-detail-buyer/show-detail-buyer
   templateUrl: './license-project-buyer-list.component.html',
   styleUrls: ['./license-project-buyer-list.component.scss']
 })
+
 export class LicenseProjectBuyerListComponent {
   baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
   buyer?: LicenseProjectBuyerListPagingDto;
   newPageNo: number = 1;
+  nidNumber: string = '';
   pagintationData: pagination = {
     currentPage: 1,
     pageCount: 0,
@@ -32,21 +36,24 @@ export class LicenseProjectBuyerListComponent {
   };
   reqList: Pagination<LicenseProjectBuyerListPagingDto[]> = {} as Pagination<LicenseProjectBuyerListPagingDto[]>;
   licenseProjectBuyerStatus = LicenseProjectBuyerStatusEnum;
+  
   constructor(
     private _licenseProjectBuyerService: LicenseProjectBuyerService,
     private _popupService: PopupService,
     private _paginationService: PaginationService,
     private _toastrNotificationService: ToastrNotificatioService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-  ) { this.getLicenseProjectIdStorage() }
+    private _router: Router
+  ) { }
+
   ngOnInit(): void {
+    this.getLicenseProjectIdStorage();
     this.observeconfirmAction();
     this.watchPaginationActions();
     this.observesubmitSuccessfullyEventEmitter();
   }
 
   private getLicenseProjectIdStorage(): void {
-    
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId)
       this.getBuyersOnProject();
@@ -54,37 +61,35 @@ export class LicenseProjectBuyerListComponent {
 
   getBuyersOnProject(): void {
     this.subscriptions.push(
-      this._licenseProjectBuyerService.getBuyersOnProject(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize).subscribe((res: Pagination<LicenseProjectBuyerListPagingDto[]> | null) => {
-        
+      this._licenseProjectBuyerService.getBuyersOnProject(this.licenseProjectId as string, this.pagintationData.currentPage, this.pagintationData.pageSize, this.nidNumber || undefined).subscribe((res: Pagination<LicenseProjectBuyerListPagingDto[]> | null) => {
         this.updateRequestList(res as Pagination<LicenseProjectBuyerListPagingDto[]>);
       })
     )
   }
+
   private recoverBuyerContract(id:string) {
-            this.subscriptions.push(
-      
-              this._licenseProjectBuyerService.acceptOrRejectOrRecoverBuyerContract(id,this.licenseProjectBuyerStatus.Recovery).subscribe((res:CoreResponseDTO<any>) => {
-                if (res.isDone) {
-                  this._toastrNotificationService.showSuccess(" تم حفظ استرداد العقد ");
-                  this.getBuyersOnProject();
-                  this.closeDialog();
-                }
-                else
-                  this._toastrNotificationService.showError(" لم يتم حفظ  استرداد العقد");
-        
-        
-              })
-            )
+    this.subscriptions.push(
+      this._licenseProjectBuyerService.acceptOrRejectOrRecoverBuyerContract(id,this.licenseProjectBuyerStatus.Recovery).subscribe((res:CoreResponseDTO<any>) => {
+        if (res.isDone) {
+          this._toastrNotificationService.showSuccess(" تم حفظ استرداد العقد ");
+          this.getBuyersOnProject();
+          this.closeDialog();
+        }
+        else
+          this._toastrNotificationService.showError(" لم يتم حفظ  استرداد العقد");
+      })
+    )
   }
+
   private updateRequestList(licenseProjectBuyerResult: Pagination<LicenseProjectBuyerListPagingDto[]>): void {
     this.reqList = licenseProjectBuyerResult;
-
     this.setPaginationData(
       this.reqList.pageSize,
       this.reqList.totalCount,
       this.reqList.pageCount
     );
   }
+
   private setPaginationData(pageSize: number, total: number, pageCount: number): void {
     this.pagintationData.pageCount = pageCount
     this.pagintationData.pageSize = pageSize
@@ -92,11 +97,11 @@ export class LicenseProjectBuyerListComponent {
     this._paginationService.updatePaginationData(this.pagintationData);
   }
 
-
   watchPaginationActions(): void {
     this.watchPagechanged();
     this.watchPaginationClicked();
   }
+
   private watchPagechanged(): void {
     this.subscriptions.push(
       this._paginationService.getPageChanged().subscribe((pageNo) => {
@@ -104,6 +109,7 @@ export class LicenseProjectBuyerListComponent {
       })
     )
   }
+
   private watchPaginationClicked(): void {
     this.subscriptions.push(
       this._paginationService.getPageClicked().subscribe((nextPage: number) => {
@@ -114,15 +120,16 @@ export class LicenseProjectBuyerListComponent {
       })
     );
   }
+
   private observesubmitSuccessfullyEventEmitter() {
     this.subscriptions.push(
       this._licenseProjectBuyerService.submitSuccessfullyEventEmitter.subscribe(res => {
         this.getBuyersOnProject()
       }));
   }
+
   private loadNextPage(nextPage: number): void {
     this.pagintationData.currentPage = nextPage;
-
     this.getBuyersOnProject()
   }
 
@@ -135,16 +142,12 @@ export class LicenseProjectBuyerListComponent {
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
-  showDetailDialog(id: string): void {
-    this._licenseProjectBuyerService.setLicenseProjectBuyerIdInLocalStorage(id)
-    let Data = {
-      title: "تفاصيل المشتري",
-      component: ShowDetailBuyerComponent,
-      id: "ShowDetailBuyerComponent",
-      buttons: []
-    } as PopupData;
-    this._popupService.updatePopupData(Data);
+
+  showDetail(id: string): void {
+    this._licenseProjectBuyerService.setLicenseProjectBuyerIdInLocalStorage(id);
+    this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.buyerDetails}`]);
   }
+
   confirmRecover(data: LicenseProjectBuyerListPagingDto) {
     this.buyer = data;
     let deleteConfirmationObj = {
@@ -155,6 +158,7 @@ export class LicenseProjectBuyerListComponent {
     } as confirmationPopupData
     this._popupService.updateConfirmationPopupData(deleteConfirmationObj);
   }
+
   confirmCancel(data: LicenseProjectBuyerListPagingDto) {
     this.buyer = data;
     let cancelConfirmationObj = {
@@ -176,11 +180,10 @@ export class LicenseProjectBuyerListComponent {
         }
         else
           this._toastrNotificationService.showError(" لم يتم إلغاء عقد المشتري");
-
-
       })
     )
   }
+
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
@@ -188,15 +191,21 @@ export class LicenseProjectBuyerListComponent {
           this.recoverBuyerContract(this.buyer?.id as string);
         if (this.buyer?.statusId == this.licenseProjectBuyerStatus.Cerified)
           this.cancelLicenseProjectBuyer(this.buyer?.id as string);
-
       })
     )
   }
+
   private closeDialog(): void {
     this._popupService.dismissDialog()
+  }
+
+  onSearchChange(): void {
+    this.pagintationData.currentPage = 1;
+    this.getBuyersOnProject();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
   }
+
 }

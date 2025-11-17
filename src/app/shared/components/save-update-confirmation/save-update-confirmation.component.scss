@@ -1,0 +1,80 @@
+.success-popup-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  padding: 20px;
+}
+
+.success-popup-container {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 50px 70px;
+  text-align: center;
+  max-width: 550px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.popup-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+
+  svg {
+    width: 100px;
+    height: 80px;
+  }
+}
+
+.popup-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  direction: rtl;
+  text-align: center;
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.popup-message {
+  font-size: 17px;
+  color: #4B5563;
+  line-height: 1.8;
+  margin-bottom: 35px;
+  direction: rtl;
+  text-align: center;
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.confirm-button {
+  background: #005257;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 60px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 82, 87, 0.3);
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  &:hover {
+    background: #004044;
+    box-shadow: 0 6px 16px rgba(0, 82, 87, 0.4);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background: #003033;
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 82, 87, 0.2);
+  }
+}

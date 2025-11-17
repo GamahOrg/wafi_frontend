@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProjectUnit } from '../../models/project-units';
+import { ProjectUnit, SysLicenseProjectBuildingBlockTypeDto } from '../../models/project-units';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
@@ -61,6 +61,18 @@ export class LicenseProjectUnitService {
       map((res: CoreResponseDTO<any[]>) => {
         if (res.data) {
           return res.data as ProjectUnit[]
+        } else {
+          return null
+        }
+      })
+    )
+  }
+
+  GetLicenseProjectBuildingBlockType(): Observable<SysLicenseProjectBuildingBlockTypeDto[] | null> {
+    return this._httpClient.get<CoreResponseDTO<SysLicenseProjectBuildingBlockTypeDto[]>>(`${Configuration.APIs.LicenseProjectUnit.GetLicenseProjectBuildingBlockType}`).pipe(
+      map((res: CoreResponseDTO<any[]>) => {
+        if (res.data) {
+          return res.data as SysLicenseProjectBuildingBlockTypeDto[]
         } else {
           return null
         }

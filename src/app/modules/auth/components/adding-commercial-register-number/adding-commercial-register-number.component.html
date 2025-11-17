@@ -21,7 +21,7 @@
                 commercialRegistrationNo.errors
             }"
           />
-          <div *ngIf="commercialRegistrationNo.errors" class="invalid-feedback">
+          <div *ngIf="commercialRegistrationNo.errors" class="invalid-feedback d-block">
             <div *ngIf="commercialRegistrationNo.errors?.['required']">
               {{ localization.requiredErrorMsg }}
             </div>

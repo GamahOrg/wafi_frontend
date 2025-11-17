@@ -4,6 +4,7 @@ import { Button } from 'src/app/shared/models/button.model';
 import { Tabs } from 'src/app/shared/models/tabs.model';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import {
+  FarzRequestStatusEnum,
   LicenseDetails,
   LicenseRequestCustomerHeaderEventStatus,
 } from '../../models/license-details.model';
@@ -38,11 +39,9 @@ import {
   LicenseProjectMainDataDto,
   ProjectRealStateDeveloperDto,
 } from '../../models/license-project.model';
-import { LicenseProjectSubDeveloperFullDto } from '../../models/license-project-sub-developer-full-dto';
 import {
   licenseProjectAddresses,
   licenseProjectConstructionLicenses,
-  licenseProjectDeeds,
   licenseProjectDesignFiles,
   licenseProjectServices,
   licenseProjectZones,
@@ -68,18 +67,17 @@ import { VisitorEngineeringConsultantDto } from '../../dataModels/visitor-engine
 import { BeneficiaryContractFormAdditionalTermsDto } from '../../models/beneficiary-contract-form-additional-terms-dto';
 import { LicenseProjectDeveloperDto } from '../../dataModels/license-project-developer-dto';
 import { LicenseProjectRequestAttachmentDto } from '../../dataModels/license-project-request-attachment-dto';
-import {
-  LicenseProjectDetachedUnit,
-  LicenseProjectDetachedUnitRequestDetails,
-} from '../../dataModels/license-project-detached-unit.model';
+import { LicenseProjectDetachedUnitRequestDetails } from '../../dataModels/license-project-detached-unit.model';
 import { LicenseProjectFinancialStatementDto } from '../../models/LicenseProjectFinancialStatementDto';
 import { LicenseProjectPromissoryNoteDto } from '../../dataModels/license-project-promissory-note.model';
 import { LicenseProjectSubDeveloperDto } from '../../dataModels/license-project-sub-developer/license-project-sub-developer-dto';
 import { CircularProgressSetting } from 'src/app/shared/models/circular-progress-setting.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { Router } from '@angular/router';
+import { ProjectListService } from '../../services/project-list.service';
 import { ProjectLandDeedDto } from '../../dataModels/project-land-deed.dto';
 import { CertifiedLicenseDataDto } from '../../models/certified-license-data-dto';
+import { LicenseProjectBusinessPaymentModel } from '../../models/business-payment.model';
 
 @Component({
   selector: 'app-lincense-details',
@@ -92,12 +90,17 @@ export class LincenseDetailsComponent {
   selectedRequestID: string | null = '';
   compileWithLogFilesDto: CompileWithLogFilesDto = new CompileWithLogFilesDto();
   requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseSummary}`;
+  editFarzNoteRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.farzNote}`;
+
 
   get externalStatusId() {
     return ExternalStatus;
   }
   get ButtonType() {
     return ButtonType;
+  }
+  get farzRequestStatusEnum() {
+    return FarzRequestStatusEnum;
   }
   tabContent: Tabs = {
     verticalTabs: false,
@@ -211,6 +214,8 @@ export class LincenseDetailsComponent {
     remainingDaysToCompileOpenBankAccountPeriod:
       'الوقت المتبقي لمعالجة فتح حساب بنكي ',
     editButtonTitle: 'معالجة الملاحظات',
+    farzStatus: 'معالجة ملاحظات فرز',
+    editPaymentandAdditionalTermsTitle: 'تعديل الدفعات و البنود الإضافية',
     editButtonForRenewTitle: 'تعديل الطلب قبل التجديد',
   };
   constructor(
@@ -222,7 +227,8 @@ export class LincenseDetailsComponent {
     private _toastrService: ToastrService,
     private _requestNotesService: RequestNotesService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
-    private _router: Router
+    private _router: Router,
+    private _projectListService: ProjectListService
   ) { }
 
   ngOnInit(): void {
@@ -537,6 +543,10 @@ export class LincenseDetailsComponent {
         requestDetails.licenseProject
           .licenseProjectBeneficiaryContractFormAdditionalTerms
       );
+    if (requestDetails.licenseProject.licenseProjectBusinessPayments)
+      this.updateLicenseProjectBusinessPaymentsList(
+        requestDetails.licenseProject.licenseProjectBusinessPayments
+      );
     if (requestDetails.licenseProject.LicenseProjectRequestAttachments)
       this.updateLicenseProjectRequestAttachments(
         requestDetails.licenseProject.LicenseProjectRequestAttachments
@@ -589,6 +599,11 @@ export class LincenseDetailsComponent {
   ) {
     this._licenseDetailsService.beneficiaryContractFormAdditionalTerms$.next(
       beneficiaryContractFormAdditionalTermsList
+    );
+  }
+  updateLicenseProjectBusinessPaymentsList(licenseProjectBusinessPayments: LicenseProjectBusinessPaymentModel[]) {
+    this._licenseDetailsService.licenseProjectBusinessPaymentDto$.next(
+      licenseProjectBusinessPayments
     );
   }
 
@@ -1074,10 +1089,71 @@ export class LincenseDetailsComponent {
       this._router.navigate([this.requestDetailsRoute]);
     }
   }
+
+  public editFarz() {
+    if (this.selectedRequest) {
+      this._sharedLicenseProjectService.setLicenseAvailabilityToUpdateInLocalStorage(
+        this.selectedRequest.licenseProject.availabilityToUpdate
+      );
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+        this.selectedRequest.licenseProjectId
+      );
+      this._sharedLicenseProjectService.setfacilityIdInLocalStorage(
+        this.selectedRequest.facilityId
+      );
+
+      this._router.navigate([this.editFarzNoteRoute]);
+    }
+  }
+
+  /**
+   * Navigate to payment terms and additional terms page
+   * Generates draft version before navigation
+   */
+  public openPaymentTermsModal(): void {
+    if (this.selectedRequest) {
+
+        this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+              this.selectedRequest!.licenseProjectId
+            );
+
+            const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.paymentTermsTabs}`;
+            this._router.navigate([navigationPath]);
+
+      // // Call GenerateDraftVersionForProject API
+      // this._projectListService.GenerateDraftVersionForProject(
+      //   this.selectedRequest.licenseProjectId
+      // ).subscribe({
+      //   next: (response) => {
+      //     if (response.isDone) {
+      //       // Store license project ID and navigate on success
+      //       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      //         this.selectedRequest!.licenseProjectId
+      //       );
+
+      //       const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.paymentTermsTabs}`;
+      //       this._router.navigate([navigationPath]);
+
+      //       this._toastrService.success('تم إنشاء النسخة المسودة بنجاح');
+      //     } else {
+      //       // Show error message from API
+      //       this._toastrService.error(response.message || 'فشل في إنشاء النسخة المسودة');
+      //     }
+      //   },
+      //   error: (error) => {
+      //     // Handle error
+      //     console.error('Error generating draft version:', error);
+      //     this._toastrService.error('حدث خطأ أثناء إنشاء النسخة المسودة');
+      //   }
+      // });
+    }
+  }
+
   ngOnDestroy(): void {
     this.resetSelectRequest();
     this.resetDataVisibilityOfLicenseProject();
     this._sharedLicenseProjectService.removeLicenseRequestfromLocalStorage();
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
+
 }

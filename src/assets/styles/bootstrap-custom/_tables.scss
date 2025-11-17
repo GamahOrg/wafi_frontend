@@ -1,5 +1,9 @@
+.table-responsive {
+  border: var(--bs-border-width) solid $table-border-color;
+  border-radius: $border-radius-sm;
+}
+
 .table {
-  font-size: $font-size-sm;
   margin-bottom: 0;
 
   >thead,
@@ -9,19 +13,7 @@
 
   >thead {
     th {
-      padding-block: .75rem 1rem;
-      font-size: $font-size-sm;
       font-weight: 500;
-
-      &:first-child {
-        border-start-start-radius: $border-radius-xs;
-        border-end-start-radius: $border-radius-xs;
-      }
-
-      &:last-child {
-        border-start-end-radius: $border-radius-xs;
-        border-end-end-radius: $border-radius-xs;
-      }
 
       .sortable {
         display: flex;
@@ -37,8 +29,6 @@
 }
 
 .table-light {
-  border-color: $lightergray;
-
   >thead {
     th {
       color: $headings-color;
@@ -48,12 +38,12 @@
 
   >tbody {
     td {
-      color: $lightgray;
+      color: $dark;
       background-color: $white;
     }
   }
 
   .text-dark {
-    color: $dark;
+    color: $body-color;
   }
 }

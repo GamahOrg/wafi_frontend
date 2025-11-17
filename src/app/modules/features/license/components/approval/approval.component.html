@@ -1,12 +1,12 @@
 <div class="row row-gap-3 mb-3" *ngFor="let item of approvalList; let i = index">
-    <div class="form-check">
+    <div class="form-check form-check-rtl">
      <input class="form-check-input"
             type="checkbox"
             [value]="item.isChecked"
             (change)="checkValue($event,i)"
             id="item.discerption{{i}}" />
      <label class="form-check-label"
-            for="chk1">
+            for="item.discerption{{i}}">
             {{item.discerption}}
      </label>
  </div>

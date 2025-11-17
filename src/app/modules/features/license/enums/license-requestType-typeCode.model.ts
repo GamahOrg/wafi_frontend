@@ -31,4 +31,5 @@ export enum LicenseRequestTypeTypeCodeEnum {
     RealEstateShareholdingLicense = "REC",
     
     PRESellRealEstateUnits = "PRESRSU",
+    Fawria = "FSRSU",
 }

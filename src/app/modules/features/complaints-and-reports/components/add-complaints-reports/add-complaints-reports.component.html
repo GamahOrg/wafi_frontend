@@ -10,7 +10,7 @@
                         <option *ngFor="let complaintRequestType of complaintRequestTypes"
                             [value]="complaintRequestType.id">{{complaintRequestType.name}}</option>
                     </select>
-                    <div *ngIf="controls.complaintRequestTypeId.errors" class="invalid-feedback">
+                    <div *ngIf="controls.complaintRequestTypeId.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.complaintRequestTypeId.errors?.['required']">حقل مطلوب</div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                     <input type="text" id="control-customerName" formControlName="customerName" readonly="true"
                         placeholder="اسم مقدم الشكوى او البلاغ" class="form-control"
                         [ngClass]="{'is-invalid': showValidation && controls.customerName.errors}" />
-                    <div *ngIf="controls.customerName.errors" class="invalid-feedback">
+                    <div *ngIf="controls.customerName.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.customerName.errors?.['required']">حقل مطلوب</div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                            placeholder="رقم الهوية"
                            [ngClass]="{'is-invalid': showValidation && controls.nidNumber.errors}" />
                     <div *ngIf="controls.nidNumber.errors"
-                         class="invalid-feedback">
+                         class="invalid-feedback d-block">
                         <div *ngIf="controls.nidNumber.errors?.['required']">حقل مطلوب</div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                            class="form-control"
                            [ngClass]="{'is-invalid': showValidation && controls.facilityName.errors}" />
                     <div *ngIf="controls.facilityName.errors"
-                         class="invalid-feedback">
+                         class="invalid-feedback d-block">
                         <div *ngIf="controls.facilityName.errors?.['required']">حقل مطلوب</div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                     <input type="text" id="control-commercialRegisterNumber" formControlName="commercialRegisterNumber"
                         placeholder="رقم سجل التجاري" readonly="true" class="form-control"
                         [ngClass]="{'is-invalid': showValidation && controls.commercialRegisterNumber.errors}" />
-                    <div *ngIf="controls.commercialRegisterNumber.errors" class="invalid-feedback">
+                    <div *ngIf="controls.commercialRegisterNumber.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.commercialRegisterNumber.errors?.['required']">حقل مطلوب</div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                     <input type="email" formControlName="email" id="control-email" class="form-control"
                         placeholder="البريد الإلكتروني" readonly="true"
                         [ngClass]="{'is-invalid': showValidation && controls.email.errors}" />
-                    <div *ngIf="controls.email.errors" class="invalid-feedback">
+                    <div *ngIf="controls.email.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.email.errors?.['required']">حقل مطلوب</div>
                         <div *ngIf="controls.email.errors?.['pattern']">من فضلك ادخل البريد الإلكتروني صحيح</div>
                     </div>
@@ -86,7 +86,7 @@
                     <input type="text" formControlName="phone" class="form-control" id="control-phone"
                         placeholder="رقم الجوال" readonly="true"
                         [ngClass]="{'is-invalid': showValidation && controls.phone.errors}" />
-                    <div *ngIf="controls.phone.errors" class="invalid-feedback">
+                    <div *ngIf="controls.phone.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.phone.errors?.['required']">حقل مطلوب</div>
                         <div *ngIf="controls.phone.errors?.['pattern']">من فضلك ادخل رقم جوال صحيح</div>
                         <div *ngIf="controls.phone.errors?.['maxlength'] || controls.phone.errors?.['minlength']">طول
@@ -102,7 +102,7 @@
                     <label for="description" class="form-label">وصف البلاغ او الشكوى</label>
                     <textarea type="text" formControlName="description" id="control-description" class="form-control"
                         [ngClass]="{'is-invalid': showValidation && controls.description.errors}"></textarea>
-                    <div *ngIf="controls.description.errors" class="invalid-feedback">
+                    <div *ngIf="controls.description.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.description.errors?.['required']">حقل مطلوب</div>
                     </div>
                 </div>

@@ -1,0 +1,385 @@
+// ==========================================
+// Color Variables
+// ==========================================
+$primary-black: #001F21;
+$primary-teal: #005257;
+$light-gray: #8A9393;
+$medium-gray: #5D5D5D;
+$lighter-gray: #B1B6B8;
+$white: #F7F9F9;
+$background-gray: #f8f9fa;
+$border-color: #dee2e6;
+
+// ==========================================
+// Typography Variables
+// ==========================================
+$font-family: 'IBM Plex Sans Arabic', sans-serif;
+
+// ==========================================
+// Sales Contract Container
+// ==========================================
+.sales-contract-container {
+  font-family: $font-family;
+  direction: rtl;
+}
+
+// ==========================================
+// Alerts
+// ==========================================
+.alert {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: $font-family;
+  font-size: 16px;
+  font-weight: 500;
+
+  &-success {
+    background-color: rgba(#28a745, 0.1);
+    border: 1px solid #28a745;
+    color: #28a745;
+  }
+
+  &-danger {
+    background-color: rgba(#dc3545, 0.1);
+    border: 1px solid #dc3545;
+    color: #dc3545;
+  }
+
+  i {
+    font-size: 1.25rem;
+  }
+}
+
+// ==========================================
+// Contract Document
+// ==========================================
+.contract-document {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+// ==========================================
+// Utility Classes
+// ==========================================
+.d-flex {
+  display: flex;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.ms-2 {
+  margin-right: 0.5rem;
+}
+// ==========================================
+// Agreement Section
+// ==========================================
+.agreement-section {
+  padding: 20px 0;
+  direction: rtl;
+}
+
+.agreement-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  direction: rtl;
+
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: $primary-teal;
+    border: 2px solid #D4D4D4;
+    border-radius: 4px;
+  }
+
+  .checkbox-label {
+    font-family: $font-family;
+    font-size: 16px;
+    font-weight: 500;
+    color: $primary-black;
+    cursor: pointer;
+  }
+
+  &:hover {
+    .checkbox-label {
+      color: $primary-teal;
+    }
+  }
+}
+
+// ==========================================
+// Buttons
+// ==========================================
+.btn-accept {
+  background-color: $primary-teal;
+  color: white;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease;
+  min-width: 120px;
+
+  &:hover:not(:disabled) {
+    background-color: darken($primary-teal, 8%);
+  }
+
+  &:active:not(:disabled) {
+    background-color: darken($primary-teal, 12%);
+  }
+
+  &:disabled {
+    background-color: $lighter-gray;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.btn-reject {
+  background-color: white;
+  color: $primary-black;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 10px 24px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  min-width: 120px;
+
+  &:hover:not(:disabled) {
+    background-color: #F9FAFB;
+    border-color: #9CA3AF;
+  }
+
+  &:active:not(:disabled) {
+    background-color: #F3F4F6;
+  }
+
+  &:disabled {
+    background-color: #F9FAFB;
+    color: $lighter-gray;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.btn-download {
+  background-color: $primary-teal;
+  color: white;
+  font-size: 14px;
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba($primary-teal, 0.2);
+
+  &:hover {
+    background-color: darken($primary-teal, 10%);
+    box-shadow: 0 3px 8px rgba($primary-teal, 0.3);
+    transform: translateY(-2px);
+    color: white;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba($primary-teal, 0.2);
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border: 0.25rem solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+  display: inline-block;
+
+  &.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15rem;
+  }
+}
+
+@keyframes spinner-border {
+  to { transform: rotate(360deg); }
+}
+
+// ==========================================
+// Cards
+// ==========================================
+.card-custom {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  color: $primary-black;
+  font-size: 24px;
+  font-family: $font-family;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.48px;
+  word-wrap: break-word;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  i {
+    color: $primary-teal;
+    font-size: 1.5rem;
+  }
+}
+
+.subsection-title {
+  color: $primary-black;
+  font-size: 24px;
+  font-family: $font-family;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.48px;
+  word-wrap: break-word;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  i {
+    color: $primary-teal;
+  }
+}
+
+// ==========================================
+// Info Grid
+// ==========================================
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-label {
+  color: $medium-gray;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.32px;
+  word-wrap: break-word;
+}
+
+.info-value {
+  color: $primary-black;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.32px;
+  word-wrap: break-word;
+}
+
+.price-highlight {
+  color: $primary-teal;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+// ==========================================
+// Utility Classes
+// ==========================================
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: $light-gray !important;
+}
+
+.py-4 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+// ==========================================
+// Responsive Design
+// ==========================================
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .agreement-section {
+    padding: 15px 0;
+  }
+
+  .agreement-checkbox {
+    .checkbox-label {
+      font-size: 14px;
+    }
+  }
+}

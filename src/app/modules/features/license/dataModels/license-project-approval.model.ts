@@ -17,6 +17,7 @@ export interface SaveApproval {
     delegatorCustomerId:string;
     isApproved: boolean | null;
     approvalRole: ApprovalRole;
+    nationalAddress?:string
 }
 export interface UpdateApproval {
     id: string;

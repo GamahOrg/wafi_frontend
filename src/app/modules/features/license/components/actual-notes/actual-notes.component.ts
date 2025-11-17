@@ -30,17 +30,17 @@ ngOnInit(): void {
 }
 private getLicenseProjectIdStorage(): void {
   this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-  debugger;
+  
   if(this.licenseProjectId)
     this.getmonthDate()
 }
 getmonthDate() {
-  debugger;
+  
   this.subscriptions.push(
     this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
-      debugger;
+      
       if (res) {
-        debugger;
+        
         this.actualValueReport= res as ActualValueReportPagingListDto;
         this.monthDate = this.actualValueReport.monthDate as Date;
        this.getLicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList();

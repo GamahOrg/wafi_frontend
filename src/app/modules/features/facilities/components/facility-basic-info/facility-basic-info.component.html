@@ -1,6 +1,6 @@
 <ng-container *ngIf="facilityData">
   <div class="tab-data-header">
-    <div class="icon"><span class="material-icons">list_alt</span></div>
+    <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
     <h6 class="title">البيانات الأساسية</h6>
 
     <button class="edit-icon btn btn-outline-primary" (click)="openDialog()">
@@ -112,6 +112,12 @@
             <span class="delete" (click)="deletFile(facilityData.qualificationValFileManager.id)"><i class="material-icons text-danger">close</i></span>
           </div>
           <!-- <span class="delete" (click)="confirmDelete(facilityData.cooperativeSocietyLicensingFileManager)"><i class="material-icons text-danger">close</i></span> -->
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">الشعار</div>
+        <div class="value" *ngIf="facilityData.logoFile">
+          <img [src]="baseUrl + facilityData.logoFile.filePath" alt="Logo" width="100" height="100"/>
         </div>
       </div>
     </div>

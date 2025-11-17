@@ -77,6 +77,14 @@ export class DeveloperProjectListComponent {
       `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}/${Configuration.pages.license.projectDetails}`
     );
   }
+  showUnitList(licenseProjectId: string) :void {
+       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      licenseProjectId
+    );
+      this._router.navigateByUrl(
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.realStateDeveloperUnitsListComponent}`
+    );
+  }
 
   getEngineeringConsultantProjectsList(): void {
     const params = new FilterProjectList();

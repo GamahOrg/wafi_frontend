@@ -8,3 +8,294 @@
     display: block;
     height: 100%;
 }
+
+// Title styling
+.title {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+}
+
+// Buttons Group Container
+.buttons-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    direction: rtl;
+    margin-right: auto;
+}
+
+// Button styling to match title
+.edit-icon {
+    background-color: #005257;
+    border: 1.5px solid #005257;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 0;
+    transition: all 0.2s ease-in-out;
+
+    span {
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        color: #FFFFFF;
+        vertical-align: middle;
+    }
+
+    i {
+        margin-right: 8px;
+        color: #FFFFFF;
+        font-size: 16px;
+        vertical-align: middle;
+    }
+
+    &:hover {
+        background-color: #004044;
+        border-color: #004044;
+    }
+
+    &:active {
+        background-color: #003033;
+        border-color: #003033;
+    }
+}
+
+// Record button styling
+.record-btn {
+    background-color: #FFFFFF;
+    border: 1.5px solid #005257;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 0;
+    transition: all 0.2s ease-in-out;
+
+    span {
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        color: #005257;
+        vertical-align: middle;
+    }
+
+    i {
+        margin-right: 8px;
+        color: #005257;
+        font-size: 16px;
+        vertical-align: middle;
+    }
+
+    &:hover {
+        background-color: #F0F9FA;
+        border-color: #004044;
+
+        span {
+            color: #004044;
+        }
+
+        i {
+            color: #004044;
+        }
+    }
+
+    &:active {
+        background-color: #E0F2F4;
+        border-color: #003033;
+    }
+}
+
+i {
+        margin-left: 8px;
+        vertical-align: middle;
+}
+
+// Table header styling
+table thead th {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 500;
+    font-size: 21.59px;
+    line-height: 24.67px;
+    color: #000000;
+}
+
+// Table content styling
+table tbody td {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+    font-size: 21.59px;
+    line-height: 24.67px;
+    // color: #000000 !important;
+}
+
+// Menu items styling - same as table cells
+::ng-deep .mat-menu-panel {
+    button.mat-menu-item,
+    button.mat-mdc-menu-item {
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-weight: 400;
+        font-size: 21.59px;
+        line-height: 24.67px;
+
+        i {
+            margin-left: 8px;
+        }
+
+        span {
+            vertical-align: middle;
+        }
+
+        &.menu-edit-btn {
+            color: #001F21 !important;
+
+            i {
+                color: #001F21 !important;
+            }
+
+            span {
+                color: #001F21 !important;
+            }
+        }
+
+        &.menu-delete-btn {
+            color: #EC0A0A !important;
+
+            i {
+                color: #EC0A0A !important;
+            }
+
+            span {
+                color: #EC0A0A !important;
+            }
+        }
+
+        &.menu-activate-btn {
+            color: #047857 !important;
+
+            i {
+                color: #047857 !important;
+            }
+
+            span {
+                color: #047857 !important;
+            }
+        }
+    }
+}
+
+// Additional specificity for Material menu items
+::ng-deep .mat-mdc-menu-item.menu-edit-btn {
+    color: #001F21 !important;
+
+    .mat-icon,
+    i,
+    span {
+        color: #001F21 !important;
+    }
+}
+
+::ng-deep .mat-mdc-menu-item.menu-delete-btn {
+    color: #EC0A0A !important;
+
+    .mat-icon,
+    i,
+    span {
+        color: #EC0A0A !important;
+    }
+}
+
+::ng-deep .mat-mdc-menu-item.menu-activate-btn {
+    color: #047857 !important;
+
+    .mat-icon,
+    i,
+    span {
+        color: #047857 !important;
+    }
+}
+
+.child-row {
+    background-color: #f8f9fa;
+
+    td {
+        border-top: 1px solid #e9ecef;
+        font-size: 0.9em;
+    }
+}
+
+// Empty State Styling
+.empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    min-height: 400px;
+}
+
+.empty-state-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+
+    img {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+    }
+}
+
+.empty-state-text {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #005257;
+    margin: 0;
+    text-align: center;
+}
+
+// Status Badge Styling
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0;
+    text-align: right;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: 6px;
+    }
+
+    &.status-active {
+        background-color: #ECFDF3;
+        color: #085D3A;
+
+        &::before {
+            background-color: #085D3A;
+        }
+    }
+
+    &.status-inactive {
+        background-color: #FEF3F2;
+        color: #912018;
+
+        &::before {
+            background-color: #912018;
+        }
+    }
+}

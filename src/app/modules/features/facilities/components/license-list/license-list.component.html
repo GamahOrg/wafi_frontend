@@ -212,7 +212,7 @@
               <div class="d-flex align-items-center">
                 <span
                   class="status-dot"
-                  [ngClass]="externalStatusId[request.externalStatusId]"
+                  [ngClass]="getStatusClass(request.externalStatusId)"
                   *ngIf="request.externalStatus"
                 >
                   <i class="icon material-icons">fiber_manual_record</i>

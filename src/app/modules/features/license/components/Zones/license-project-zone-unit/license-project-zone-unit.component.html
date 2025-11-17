@@ -3,6 +3,7 @@
   [formGroup]="addEditUnitForm"
   id="form-addEditUnitForm"
 >
+
   <h6 class="form-title">{{ localization.UnitType }}</h6>
   <div class="row">
     <div class="col-12 col-lg-6">
@@ -15,6 +16,7 @@
             [id]="type.id"
             [value]="type.id"
             formControlName="unitTypeId"
+            (change)="onUnitTypeChange(type.id)"
           />
           <label class="form-check-label" [for]="type.id">{{
             type.name
@@ -23,6 +25,29 @@
         <div
           class="invalid-feedback d-block"
           *ngIf="controls.unitTypeId.errors?.['required'] && showValidation"
+        >
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
+     <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label for="" class="form-label">{{ localization.projectBuildingBlockType }}</label>
+        <select
+          class="form-select"
+          id="control-projectBuildingBlockType"
+          aria-label="Default select example"
+          formControlName="buildingBlockTypeId"
+        >
+          <option selected disabled>{{ localization.projectBuildingBlockType }}</option>
+          <option *ngFor="let item of projectBuildingBlockType" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="controls.buildingBlockTypeId.errors?.['required'] && showValidation"
         >
           حقل مطلوب
         </div>
@@ -145,6 +170,26 @@
         </div>
       </div>
     </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label for="" class="form-label">{{ localization.designFile }}</label>
+            <div class="value m-3" *ngIf="controls.designFileId.value && selectedProjectUnit && selectedProjectUnit.designFile">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a [href]="baseUrl + selectedProjectUnit.designFile?.filePath" target="_blank">
+                    {{selectedProjectUnit.designFile?.fileDescription}}
+                </a>
+            </div>
+            <app-file-uploader (fileUploaded)="onDesignFileUploaded($event)"
+            [data]="singleFileUploaderData"
+            ></app-file-uploader> 
+            <div class="invalid-feedback d-block"
+                *ngIf="controls.designFileId.errors && controls.designFileId.errors['required']">
+          حقل مطلوب
+            </div>
+        </div>
+      </div>
+    
   </div>
 </form>
 

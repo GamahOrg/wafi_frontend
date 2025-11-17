@@ -1,0 +1,307 @@
+<!-- Main Container -->
+<div class="contract-update-container">
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">جاري التحميل...</span>
+    </div>
+    <p class="loading-text">جاري تحميل التفاصيل...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-danger" *ngIf="errorMessage && !isLoading" role="alert">
+    <i class="bi bi-exclamation-circle"></i>
+    {{ errorMessage }}
+  </div>
+
+  <!-- Main Content -->
+  <ng-container *ngIf="!isLoading && contractDetails">
+  <!-- Header Section with Tabs and Actions -->
+  <div class="header-section">
+    <!-- Header Tabs -->
+    <div class="header-tabs">
+      <button class="tab-btn" [class.active]="activeTab === 'unit'" (click)="switchTab('unit')">تفاصيل الوحدة</button>
+      <button class="tab-btn" [class.active]="activeTab === 'contract'" (click)="switchTab('contract')">عقد البيع</button>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <button class="btn-status pending">
+        <span class="status-dot"></span>
+        <span>بانتظار الاعتماد</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+
+    <!-- Section: تفاصيل الوحدة -->
+    <div *ngIf="activeTab === 'unit'" class="tab-content" [formGroup]="contractForm">
+      <div class="details-section">
+        <div class="section-header">
+          <h2 class="section-title">تفاصيل الوحدة</h2>
+        </div>
+
+        <!-- Information Grid -->
+        <div class="info-grid">
+          <!-- Row 1 -->
+          <div class="info-item">
+            <label class="info-label">اسم المشروع</label>
+            <span class="info-value">{{ contractDetails.projectName || '-' }}</span>
+          </div>
+          <div class="info-item">
+            <label class="info-label">المدينة</label>
+            <span class="info-value">{{ contractDetails.city || '-' }}</span>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="info-item">
+            <label class="info-label">كود الوحدة</label>
+            <span class="info-value">{{ contractDetails.unitCode || '-' }}</span>
+          </div>
+          <div class="info-item">
+            <label class="info-label">نوع الوحدة</label>
+            <span class="info-value">{{ contractDetails.unitType || '-' }}</span>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="info-item">
+            <label class="info-label">اسم النموذج</label>
+            <span class="info-value">{{ contractDetails.modelName || '-' }}</span>
+          </div>
+          <div class="info-item">
+            <label class="info-label">رقم المبنى</label>
+            <span class="info-value">{{ contractDetails.blockBuildCode || '-' }}</span>
+          </div>
+
+          <!-- Row 4 -->
+          <div class="info-item">
+            <label class="info-label">رقم الطابق</label>
+            <span class="info-value">{{ contractDetails.floor || '-' }}</span>
+          </div>
+          <div class="info-item">
+            <label class="info-label">المساحة الإجمالية للوحدة</label>
+            <span class="info-value">{{ contractDetails.unitSpace || '-' }} م²</span>
+          </div>
+
+          <!-- Row 5 -->
+          <div class="info-item">
+            <label class="info-label">رقم العقد</label>
+            <span class="info-value">{{ contractDetails.contarctNumber || '-' }}</span>
+          </div>
+          <div class="info-item">
+            <label class="info-label">تاريخ العقد</label>
+            <span class="info-value">{{ contractDetails.contractDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+
+          <!-- Row 6 -->
+          <div class="info-item">
+            <label class="info-label">تاريخ تسليم الوحدة</label>
+            <span class="info-value">{{ contractDetails.deliveryOn | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="info-item">
+            <label class="info-label">السعر</label>
+            <span class="info-value price">
+              {{ contractDetails.price | number:'1.0-0' }}
+              <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+            </span>
+          </div>
+
+          <!-- Row 7 -->
+          <div class="info-item">
+            <label class="info-label">نوع المشتري</label>
+            <span class="info-value">{{ contractDetails.buyerType || '-' }}</span>
+          </div>
+          <div class="info-item" *ngIf="contractDetails.buyerTypeId === buyerTypeEnum.Facility">
+            <label class="info-label">الرقم الموحد</label>
+            <span class="info-value">{{ contractDetails.facilityNationalNumber || '-' }}</span>
+          </div>
+
+          <!-- Row 8 - Show establishment name if buyer type is Facility -->
+          <div class="info-item" *ngIf="contractDetails.buyerTypeId === buyerTypeEnum.Facility">
+            <label class="info-label">اسم المنشأة</label>
+            <span class="info-value">{{ contractDetails.facilityName || '-' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Separator Line -->
+      <div class="section-separator"></div>
+
+<ng-container *ngIf="false && contractDetails && this.contractDetails?.isOldContract == true && contractDetails.licenseProjectBuyerBusinessPayment && contractDetails.licenseProjectBuyerBusinessPayment.paymentInstallments && contractDetails.licenseProjectBuyerBusinessPayment.paymentInstallments.length>0">
+
+  <div class="section-header">
+          <h2 class="section-title">خطة الدفع</h2>
+        </div>
+
+       <div class="payment-plan-table-wrapper">
+            <table class="payment-plan-table">
+              <thead>
+                <tr>
+                  <th>رقم الدفعة</th>
+                  <th>نسبة الاستقطاع</th>
+                  <th>نسبة الإنجاز</th>
+                  <th>وصف الدفعة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let installment of contractDetails.licenseProjectBuyerBusinessPayment?.paymentInstallments">
+                  <td>{{ installment.installmentNumber }}</td>
+                  <td>{{ installment.deductionPercentage }}%</td>
+                  <td>{{ installment.rentPercentage }}%</td>
+                  <td>{{ installment.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+</ng-container>
+      <!-- Section: العنوان الوطنى للمشتري -->
+      <div class="buyer-address-section" *ngIf="this.contractDetails?.isOldContract == false">
+        <div class="section-header">
+          <h2 class="section-title">العنوان الوطنى للمشتري</h2>
+        </div>
+
+        <!-- Radio Options -->
+        <div class="radio-options">
+          <div class="radio-option" *ngFor="let addressItem of buyerAddresses">
+            <input type="radio" [id]="'address-' + addressItem.id" name="addressId" [value]="addressItem.id" formControlName="addressId">
+            <label [for]="'address-' + addressItem.id" class="radio-label">
+              <span class="radio-custom"></span>
+              <span class="radio-text">{{ addressItem.address }}</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="hasError('addressId')">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>يرجى اختيار العنوان الوطنى للمشتري</span>
+        </div>
+      </div>
+
+      <!-- Separator Line -->
+      <div class="section-separator" *ngIf="this.contractDetails?.isOldContract == false"></div>
+
+      <!-- Section: نوع الدفع -->
+      <div class="payment-type-section" *ngIf="this.contractDetails?.isOldContract == false">
+        <div class="section-header">
+          <h2 class="section-title">نوع الدفع</h2>
+        </div>
+
+        <!-- Radio Options -->
+        <div class="payment-type-options">
+          <div class="radio-option">
+            <input type="radio" id="payment-cash" name="paymentType" [value]="paymentTypeEnum.Cash" formControlName="paymentType">
+            <label for="payment-cash" class="radio-label">
+              <span class="radio-custom"></span>
+              <span class="radio-text">نقدي</span>
+            </label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="payment-financing" name="paymentType" [value]="paymentTypeEnum.Finance" formControlName="paymentType">
+            <label for="payment-financing" class="radio-label">
+              <span class="radio-custom"></span>
+              <span class="radio-text">تمويل</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="hasError('paymentType')">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>يرجى اختيار نوع الدفع</span>
+        </div>
+      </div>
+
+      <!-- Separator Line -->
+      <div class="section-separator" *ngIf="contractDetails?.isOldContract == false"></div>
+
+      <!-- Section: خطط الدفع -->
+      <div *ngIf="contractForm.get('paymentType')?.value && contractDetails?.isOldContract == false" class="payment-plan-section" >
+        <div class="section-header">
+          <h2 class="section-title" *ngIf="contractDetails?.isOldContract == true" >خطة الدفع</h2>
+          <h2 class="section-title" *ngIf="contractDetails?.isOldContract == false">خطط الدفع</h2>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="hasError('paymentPlan') && contractDetails?.isOldContract == false">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>يرجى اختيار خطة الدفع</span>
+        </div>
+
+        <!-- Payment Plan Content -->
+        <div class="payment-plan-content">
+          <!-- Payment Plan Options -->
+          <div class="payment-plan-options" *ngIf="contractDetails?.isOldContract == false">
+            <div class="radio-option" *ngFor="let plan of paymentPlans; let i = index">
+              <input type="radio" [id]="'plan-' + i" name="paymentPlan" [value]="i" formControlName="paymentPlan">
+              <label [for]="'plan-' + i" class="radio-label">
+                <span class="radio-custom"></span>
+                <span class="radio-text">{{ plan.modelTitle }}</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Payment Plan Table -->
+          <div class="payment-plan-table-wrapper">
+            <table class="payment-plan-table">
+              <thead>
+                <tr>
+                  <th>رقم الدفعة</th>
+                  <th>نسبة الاستقطاع</th>
+                  <th>نسبة الإنجاز</th>
+                  <th>وصف الدفعة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let installment of paymentPlans[contractForm.get('paymentPlan')?.value]?.paymentInstallments">
+                  <td>{{ installment.installmentNumber }}</td>
+                  <td>{{ installment.deductionPercentage }}%</td>
+                  <td>{{ installment.rentPercentage }}%</td>
+                  <td>{{ installment.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Button -->
+      <div class="button-wrapper">
+        <button class="btn-next" (click)="onNext()" [disabled]="isGeneratingContract">
+          <span *ngIf="!isGeneratingContract">التالي</span>
+          <span *ngIf="isGeneratingContract">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            جاري الإنشاء...
+          </span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Section: عقد البيع -->
+    <div *ngIf="activeTab === 'contract'" class="tab-content">
+      <app-sales-contract
+        [projectDetails]="projectDetails"
+        [contracts]="contracts"
+        [contractUrl]="contractDetails?.contractUrl || ''"
+        [contractFileId]="contractDetails?.contractFileId || ''"
+        [contractId]="contractId"
+      ></app-sales-contract>
+    </div>
+
+
+  </div>
+  </ng-container>
+
+  <!-- Empty State (No Data) -->
+  <div class="empty-state" *ngIf="!isLoading && !contractDetails && !errorMessage">
+    <i class="bi bi-inbox"></i>
+    <h5>لا توجد بيانات</h5>
+    <p>لم يتم العثور على تفاصيل العقد</p>
+  </div>
+
+</div>

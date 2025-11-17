@@ -9,7 +9,7 @@ import {CoreResponseDTO} from 'src/app/core/models/core.model';
 import {
   LicenseProjectEngineeringConsultantDto
 } from '../dataModels/license-project-engineering-consultant/license-project-engineering-consultant-dto';
-import { FacilityShortDto } from '../models/facility-short-dto';
+import { CustomerShortDto, FacilityShortDto } from '../models/facility-short-dto';
 
 @Injectable()
 export class LicenseProjectEngineeringConsultantService {
@@ -42,6 +42,14 @@ export class LicenseProjectEngineeringConsultantService {
       }))
   }
 
+  validateCommercialRegisterNumber(commercialRegister: string, typeCode: string, licenseProjectId: string | null): Observable<CoreResponseDTO<CustomerShortDto>> {
+    let url = `${Configuration.APIs.facility.validateCommercialRegister}`;
+    return this.httpClient.get(`${url}/${commercialRegister}/${typeCode}/${licenseProjectId}`).pipe(
+      map((res: any) => {
+        return res;
+      }))
+  }
+
   updateAsync(model: LicenseProjectEngineeringConsultantCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>> {
     let url = `${this.baseUrl}${Configuration.APIs.LicenseProjectEngineeringConsultant.Update}`;
     return this.httpClient.put<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>>(url, model);
@@ -58,4 +66,23 @@ export class LicenseProjectEngineeringConsultantService {
       params: {id: licenseProjectId}
     });
   }
+
+  fawryLicenseUpdateAsync(model: LicenseProjectEngineeringConsultantCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>> {
+    let url = `${this.baseUrl}${Configuration.APIs.LicenseProjectEngineeringConsultant.FawryLicenseUpdate}`;
+    return this.httpClient.put<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>>(url, model);
+  }
+
+  fawryLicenseCreateAsync(model: LicenseProjectEngineeringConsultantCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>> {
+    let url = `${this.baseUrl}${Configuration.APIs.LicenseProjectEngineeringConsultant.FawryLicenseCreate}`;
+    return this.httpClient.post<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>>(url, model);
+  }
+
+  fawryLicenseGetAsync(licenseProjectId: any): Observable<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>> {
+    let url = `${this.baseUrl}${Configuration.APIs.LicenseProjectEngineeringConsultant.FawryLicenseGet}`;
+    return this.httpClient.get<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>>(`${url}`, {
+      params: {id: licenseProjectId}
+    });
+  }
+
+  
 }

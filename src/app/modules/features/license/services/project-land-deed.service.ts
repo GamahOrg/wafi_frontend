@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { DeedData, OwnersDto, ProjectLandDeedCreateUpdateDto, ProjectLandDeedDto, type SaveLicenseProjectDeed } from '../dataModels/project-land-deed.dto';
+import { DeedData, FawriaLicenseDeedAndConstructionLicenseDto, FawriaLicenseDeedAndConstructionLicenseResponseDto, OwnersDto, ProjectLandDeedCreateUpdateDto, ProjectLandDeedDto, type SaveLicenseProjectDeed } from '../dataModels/project-land-deed.dto';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { DropDownSubUnitTypeDto } from '../dataModels/drop-down-name.dto';
@@ -49,7 +49,6 @@ export class ProjectLandDeedService {
   }
 
   Save(obj: ProjectLandDeedDto): Observable<CoreResponseDTO<ProjectLandDeedDto[]>> {
-
     return this._httpClient.post<CoreResponseDTO<ProjectLandDeedDto[]>>
       (Configuration.APIs.LicenseProjectDeed.Save, obj).pipe(
         map((res: CoreResponseDTO<ProjectLandDeedDto[]>) => {
@@ -59,7 +58,6 @@ export class ProjectLandDeedService {
   }
 
   SaveDeedData(obj: SaveLicenseProjectDeed): Observable<CoreResponseDTO<ProjectLandDeedDto[]>> {
-
     return this._httpClient.post<CoreResponseDTO<ProjectLandDeedDto[]>>
       (Configuration.APIs.LicenseProjectDeed.SaveDeedData, obj).pipe(
         map((res: CoreResponseDTO<ProjectLandDeedDto[]>) => {
@@ -69,7 +67,6 @@ export class ProjectLandDeedService {
   }
 
   UpdateDeedOwners(obj: OwnersDto): Observable<CoreResponseDTO<ProjectLandDeedDto[]>> {
-
     return this._httpClient.post<CoreResponseDTO<ProjectLandDeedDto[]>>
       (Configuration.APIs.LicenseProjectDeed.UpdateDeedOwners, obj).pipe(
         map((res: CoreResponseDTO<ProjectLandDeedDto[]>) => {
@@ -95,6 +92,7 @@ export class ProjectLandDeedService {
         })
       )
   }
+
   GetSysLicenseProjectLandOwnerDeedTypeDropDown(): Observable<DropDownSubUnitTypeDto[]> {
     return this._httpClient
       .get<CoreResponseDTO<DropDownSubUnitTypeDto[]>>(`${Configuration.APIs.SysLicenseProjectLandOwnerDeedType.GetDropDown}`)
@@ -104,4 +102,32 @@ export class ProjectLandDeedService {
         })
       );
   }
+
+  FawriaLicenseValidateIntegration(obj: FawriaLicenseDeedAndConstructionLicenseDto): Observable<CoreResponseDTO<FawriaLicenseDeedAndConstructionLicenseResponseDto>> {
+    return this._httpClient.post<CoreResponseDTO<FawriaLicenseDeedAndConstructionLicenseResponseDto>>
+      (Configuration.APIs.LicenseProjectDeed.FawriaLicenseDeedAndConstructionLicense, obj).pipe(
+        map((res: CoreResponseDTO<FawriaLicenseDeedAndConstructionLicenseResponseDto>) => {
+          return res;
+        })
+      )
+  }
+
+  SaveFawriaLicenseDeedAndConstructionLicense(obj: FawriaLicenseDeedAndConstructionLicenseResponseDto): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.post<CoreResponseDTO<any>>
+      (Configuration.APIs.LicenseProjectDeed.SaveFawriaLicenseDeedAndConstructionLicense, obj).pipe(
+        map((res: CoreResponseDTO<any>) => {
+          return res;
+        })
+      )
+  }
+
+  GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId(id: string) {
+    return this._httpClient.get<CoreResponseDTO<FawriaLicenseDeedAndConstructionLicenseResponseDto>>
+      (`${Configuration.APIs.LicenseProjectDeed.GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId}/${id}`).pipe(
+        map((res: CoreResponseDTO<FawriaLicenseDeedAndConstructionLicenseResponseDto>) => {
+          return res.data;
+        })
+      )
+  }
+
 }

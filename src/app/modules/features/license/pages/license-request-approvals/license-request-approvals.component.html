@@ -38,7 +38,11 @@
                             {{ request.projectName }}
                         </td>
 
-                        <td>{{ request.isApproved ? "نعم" : "لا"}}</td>
+                        <td>
+                            
+                            {{ request.approvedOn!=null ? request.isApproved ? "نعم" : "لا":"قيد الانتظار"}}
+                        
+                        </td>
                         <td>
                             <div class="d-flex align-items-center">
                                 <span class="text-dark"

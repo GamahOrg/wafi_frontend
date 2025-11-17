@@ -68,7 +68,7 @@ export class AddEditChangeEngineerSummaryComponent {
 
   }
   validateCommercialRegister(): void {
-    debugger;
+    
 
     let commercialRegister = this.controls.commercialRegister.value;
 
@@ -82,7 +82,7 @@ export class AddEditChangeEngineerSummaryComponent {
             this.qualificationTypeEnum.engineeringConsultantQualificationRequest as string, this.changeLicenseProjectEngineeringRequest.licenseProjectRequest.licenseProjectId).subscribe((res) => {
 
               if (res) {
-                debugger;
+                
                 this.newEngineeringFacility = res.facility as FacilityShortDto;
                 this.changeEngineeringForm.controls.engineeringFacilityId.setValue(this.newEngineeringFacility.id as string);
               }
@@ -143,7 +143,7 @@ export class AddEditChangeEngineerSummaryComponent {
     });
   }
   save(): void {
-    debugger;
+    
     if (
       !this.changeEngineeringForm.controls.reasons.value ||
       !this.alternativeConsultingOfficeAgreementId ||

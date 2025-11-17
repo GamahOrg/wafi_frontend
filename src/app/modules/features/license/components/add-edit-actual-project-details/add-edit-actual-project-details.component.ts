@@ -99,17 +99,17 @@ export class AddEditActualProjectDetailsComponent {
 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    debugger;
+    
     if (this.licenseProjectId)
       this.getmonthDate()
   }
   getmonthDate() {
-    debugger;
+    
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
-        debugger;
+        
         if (res) {
-          debugger;
+          
           this.actualValueReport= res as ActualValueReportPagingListDto;
           this.monthDate = this.actualValueReport.monthDate as Date;
           this.getLicenseProjectUnit();
@@ -118,12 +118,12 @@ export class AddEditActualProjectDetailsComponent {
     )
   }
   getLicenseProjectUnit() {
-    debugger;
+    
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectDeteilsService.getLicenseProjectUnit().subscribe(res => {
-        debugger;
+        
         if (res) {
-          debugger;
+          
           this.licenseProjectUnit = res as unitslist;
           this.getLicenseProjectEngineeringProjectZonesBlocksDetailActual();
         }
@@ -132,11 +132,11 @@ export class AddEditActualProjectDetailsComponent {
   }
 
   getLicenseProjectEngineeringProjectZonesBlocksDetailActual() {
-    debugger;
+    
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectDeteilsService.getLicenseProjectEngineeringProjectZonesBlocksDetailActual(this.licenseProjectId as string, this.monthDate as Date, this.licenseProjectUnit?.id as string).subscribe(res => {
         if (res) {
-          debugger;
+          
           this.licenseProjectEngineeringProjectZonesBlocksDetailActual = res as LicenseProjectEngineeringProjectZonesBlocksDetailActualDto;
           if (this.licenseProjectEngineeringProjectZonesBlocksDetailActual) {
             this.actualProjectDetailsForm.patchValue(this.licenseProjectEngineeringProjectZonesBlocksDetailActual as any);
@@ -196,7 +196,7 @@ export class AddEditActualProjectDetailsComponent {
               if(!this.licenseProjectEngineeringProjectZonesBlocksDetailActual.licenseProjectEngineerUnitsReadinessToUse.blocksReadyForHandover)
                 this.actualProjectDetailsForm.controls.blocksReadyForHandover.setValue('false');
             }
-debugger;
+
             if (this.licenseProjectEngineeringProjectZonesBlocksDetailActual.licenseProjectUnit) {
                //تاريخ النهاية المتوقعة
                this.actualProjectDetailsForm.controls.forecastFinishDate.setValue(formatDate(this.licenseProjectEngineeringProjectZonesBlocksDetailActual.licenseProjectUnit.forecastFinishDate,'yyyy-MM-dd',this.locale));
@@ -210,13 +210,13 @@ debugger;
 
 
   save(): void {
-    debugger;
+    
     if (!this.actualProjectDetailsForm.valid) {
       this.showValidation = true;
       return;
     }
     
-    debugger;
+    
     this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate = this.actualProjectDetailsForm.value as {} as LicenseProjectEngineeringProjectZonesBlocksDetailActualDto;
     this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate.id = this.licenseProjectEngineeringProjectZonesBlocksDetailActual?.id as string;
 
@@ -271,7 +271,7 @@ debugger;
     this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate.
       licenseProjectEngineerSewage.licenseProjectEngineeringProjectZonesBlocksDetailId = this.licenseProjectEngineeringProjectZonesBlocksDetailActual?.id as string;
     //شبكات البنية التحية
-    debugger;
+    
     this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate.
       licenseProjectEngineerSewage.isInfrastructureNetwork = JSON.parse(this.actualProjectDetailsForm.controls.isInfrastructureNetworkSewage.value as string);
     //عدد الوحدات التى تم ربط الخدمة بها
@@ -307,9 +307,9 @@ debugger;
 
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectDeteilsService.saveLicenseProjectEngineeringProjectZonesBlocksDetail(this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate).subscribe((res) => {
-        debugger;
+        
         if (res?.isDone) {
-          debugger;
+          
           this._engineeringSupervisionReportActualProjectDeteilsService.submitSuccessfullyEventEmitter.emit()
           this._toastrNotificationService.showSuccess('تم الحفظ');
           this.closeDialog();

@@ -12,9 +12,11 @@ import { TabCode } from '../../models/tab-code.model';
 @Component({
   selector: 'app-license-request-validation-popup',
   templateUrl: './license-request-validation-popup.component.html',
-  styleUrls: ['./license-request-validation-popup.component.scss']
+  styleUrls: ['./license-request-validation-popup.component.scss'],
 })
-export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy {
+export class LicenseRequestValidationPopupComponent
+  implements OnInit, OnDestroy
+{
   validationError: RequestValidation | null = null;
   generalErrorTab: TabsError | undefined;
   mainTabsComponentList: tabsComponent[] = [
@@ -59,7 +61,7 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
       isVisible: true,
     },
     {
-      icon: "",
+      icon: '',
       title: 'بيانات المفوضون للتوقيع على وثيقه الصرف',
       disabled: false,
       isVisible: true,
@@ -408,6 +410,99 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
       tabErrors: [],
       isVisible: true,
     },
+    {
+      icon: '',
+      title: 'خطة الدفعات المالية',
+      disabled: false,
+      id: 'ViewBusinessPaymentTemplatesComponent',
+      errNum: 0,
+      tabCode: TabCode.LicenseProjectBusinessPayment,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+    {
+      icon: '',
+      title: 'البيانات الأساسية',
+      disabled: false,
+      id: 'fawriaLicenseProjectMainData',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectMainData,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'بيانات التواصل',
+      disabled: false,
+      id: 'fawriaLicenseProjectContactInformation',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectContactInformation,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'الصكوك ورخص البناء',
+      disabled: false,
+      id: 'fawriaLicenseProjectDeeds',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectDeeds,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'بيانات دراسة الجدوى',
+      disabled: false,
+      id: 'fawriaLicenseProjectFeasibilityStudy',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectFeasibilityStudy,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'اتفاقية الملاك',
+      disabled: false,
+      id: 'fawriaLicenseProjectDeedOwners',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectDeedOwners,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'الاستشارى الهندسى',
+      disabled: false,
+      id: 'fawriaLicenseProjectEngineeringConsultants',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectEngineeringConsultants,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'المحاسب القانونى',
+      disabled: false,
+      id: 'fawriaLicenseProjectCharteredAccountants',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectCharteredAccountants,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+    {
+      icon: '',
+      title: 'حساب الضمان',
+      disabled: false,
+      id: 'fawriaLicenseProjectEscrowAccount',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectEscrowAccount,
+      tabErrors: [],
+      isVisible: true,
+    },
+
     // {
     //   icon: '',
     //   title: 'سند لأمر',
@@ -419,14 +514,21 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
     //   isVisible: true,
     // },
   ];
-  tabsComponentList: tabsComponent[] = []
+
+  //  = 'FawriaLicenseProjectContactInformation',
+  // fawriaLicenseProjectDeeds = 'FawriaLicenseProjectDeeds',
+  // fawriaLicenseProjectFeasibilityStudy = 'FawriaLicenseProjectFeasibilityStudy',
+  // fawriaLicenseProjectDeedOwners = 'FawriaLicenseProjectDeedOwners',
+  // fawriaLicenseProjectEngineeringConsultants = 'FawriaLicenseProjectEngineeringConsultants',
+  // fawriaLicenseProjectCharteredAccountants = 'FawriaLicenseProjectCharteredAccountants',
+  // fawriaLicenseProjectEscrowAccount = 'FawriaLicenseProjectEscrowAccount',
+  tabsComponentList: tabsComponent[] = [];
   subscriptions: Subscription[] = [];
   constructor(
     private _popupService: PopupService,
     private _licenseRequestService: LicenseRequestService,
-    private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
-
-  ) { }
+    private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService
+  ) {}
 
   ngOnInit(): void {
     this.observeValidationError();
@@ -435,15 +537,16 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
   private getDataVisibilityOfLicenseProject() {
     this.tabsComponentList = [];
     this.subscriptions.push(
-      this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProject().subscribe((res: string[]) => {
-        this.mainTabsComponentList.forEach(tab => {
-          if (res.includes(tab.tabCode as string)) {
-            this.tabsComponentList.push(tab)
-          }
-        }
-        )
-      })
-    )
+      this._dataVisibilityOfLicenseProjectService
+        .getDataVisibilityOfLicenseProject()
+        .subscribe((res: string[]) => {
+          this.mainTabsComponentList.forEach((tab) => {
+            if (res.includes(tab.tabCode as string)) {
+              this.tabsComponentList.push(tab);
+            }
+          });
+        })
+    );
   }
 
   // popup
@@ -463,7 +566,7 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        if (res.id == "LicenseRequestValidationPopupComponent") {
+        if (res.id == 'LicenseRequestValidationPopupComponent') {
           this.closeDialog();
         }
       })
@@ -480,8 +583,8 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
         .subscribe((res: RequestValidation | null) => {
           this.validationError = res;
           this.validateTabs();
-          this.setTabErrorMsgArr()
-          this.getDataVisibilityOfLicenseProject()
+          this.setTabErrorMsgArr();
+          this.getDataVisibilityOfLicenseProject();
         })
     );
   }
@@ -494,38 +597,50 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
     let errsNum = 0;
     if (this.validationError) {
       errsNum =
-        this.validationError.tabs.find((tab: TabsError) => tab.tabCode === tabCode)
-          ?.tabErrors.length ?? 0;
+        this.validationError.tabs.find(
+          (tab: TabsError) => tab.tabCode === tabCode
+        )?.tabErrors.length ?? 0;
     }
     return errsNum;
   }
-
 
   private setTabErrorMsgArr() {
     this.mainTabsComponentList.map((tab: tabsComponent) => {
       // find tab by tab code
       tab.tabErrors = this.getTabByTabCode(tab.tabCode as string) as tabError[];
-    })
+    });
   }
   private getTabByTabCode(TabCode: string): tabError[] {
-    let tabErrorsMsg = [] as tabError[]
+    let tabErrorsMsg = [] as tabError[];
     if (this.validationError) {
       this.validationError.tabs.map((tab: TabsError) => {
         if (tab.tabCode === TabCode) {
-          tabErrorsMsg = tab.tabErrors
+          tabErrorsMsg = tab.tabErrors;
         }
-      })
+      });
     }
-    return tabErrorsMsg
+    return tabErrorsMsg;
   }
   getGeneralErrorTab() {
-    if (this.validationError && this.validationError.tabs && this.validationError.tabs.length)
-      this.generalErrorTab = this.validationError.tabs.find(x => x.tabCode == 'General');
+    if (
+      this.validationError &&
+      this.validationError.tabs &&
+      this.validationError.tabs.length
+    )
+      this.generalErrorTab = this.validationError.tabs.find(
+        (x) => x.tabCode == 'General'
+      );
     return this.generalErrorTab;
   }
   checkNotGeneralErrorTabsExist() {
-    if (this.validationError && this.validationError.tabs && this.validationError.tabs.length) {
-      let notGeneralError = this.validationError.tabs.find(x => x.tabCode != 'General');
+    if (
+      this.validationError &&
+      this.validationError.tabs &&
+      this.validationError.tabs.length
+    ) {
+      let notGeneralError = this.validationError.tabs.find(
+        (x) => x.tabCode != 'General'
+      );
       return notGeneralError ? true : false;
     }
     return false;
@@ -534,5 +649,4 @@ export class LicenseRequestValidationPopupComponent implements OnInit, OnDestroy
     // this.resetDataVisibilityOfLicenseProject();
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
-
 }

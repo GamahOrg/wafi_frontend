@@ -89,7 +89,7 @@ export class LincenseProjectZonesComponent implements OnInit {
   }
 
   updateSelectedZone(zones: Zone[]) {
-    debugger
+    
     if (zones.length > 0) {
       if (this.selectedZone == null) {
         this.selectedZone = this.zones[0]
@@ -205,6 +205,7 @@ export class LincenseProjectZonesComponent implements OnInit {
   }
 
   public openEditDialog(unit: ProjectUnit): void {
+    
     this.selectedbuildingOrBlock = unit;
     this._zonesBlocksBuildingAndUnitsService.updateSelectedProjectUnit(this.selectedbuildingOrBlock)
     let Data = {
@@ -260,38 +261,27 @@ export class LincenseProjectZonesComponent implements OnInit {
 
   observePopupClose() {
     this._popupService.closeDialog.subscribe((popupResult: PopupResult) => {
-
       if (popupResult) {
-
         switch (popupResult.actionType) {
           case ZoneActionType.AddZone.toString():
-
             break;
           case ZoneActionType.UpdateZone.toString():
-
             break;
           case ZoneActionType.AddUnit.toString():
-
             break;
           case ZoneActionType.UpdateUnit.toString():
-
             break;
           case ZoneActionType.AddSubUnit.toString():
             this.selectedbuildingOrBlock?.licenseProjectSubUnits.push(popupResult.data)
             break;
-
         }
-
-
       }
-
     })
   }
 
 
   deleteSubUnit(subUnit: ProjectSubUnitDto) {
     this._ProjectSubUnitService.removeSubUnit(subUnit.id).subscribe(result => {
-
       if (result.isDone) {
         const index = this.selectedbuildingOrBlock?.licenseProjectSubUnits.findIndex(x => x.id == subUnit.id);
         if (index) {
@@ -305,9 +295,8 @@ export class LincenseProjectZonesComponent implements OnInit {
 
   openModelDialog(): void {
     if (!this.selectedLicenseProjectSubUnit) return;
-
+    
     let title = `إضافة النماذج للوحدات فى ${this.selectedbuildingOrBlock?.unitTypeName} ${this.selectedbuildingOrBlock?.code} - زون ${this.selectedZone?.code}`
-
     this._projectModelService.SetSubjectObj({ licenseProjectSubUnitId: this.selectedLicenseProjectSubUnit.id } as LicenseProjectModelDto);
     let Data = {
       title: title,
@@ -337,20 +326,17 @@ export class LincenseProjectZonesComponent implements OnInit {
       this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
     }
 
+    onExcelFileUploaded(fileRemovedData: any) {
+      this.fileId = fileRemovedData.eventRes.data[0].id;
+    }
 
-
-  onExcelFileUploaded(fileRemovedData: any) {
-    this.fileId = fileRemovedData.eventRes.data[0].id;
-  }
-
-  generateExcel() {
-    this._codeService.CreateExcel(this.licenseProjectId as string).subscribe((res) => {
-
-      if (res) {
-        saveAs(res.body, 'Tempelate.xlsx');
-      }
-    });
-  }
+    generateExcel() {
+      this._codeService.CreateExcel(this.licenseProjectId as string).subscribe((res) => {
+        if (res) {
+          saveAs(res.body, 'Tempelate.xlsx');
+        }
+      });
+    }
 
   saveFileCode() {
     let data = {} as LicenseProjectSubUnitsListCodeFile
@@ -360,22 +346,18 @@ export class LincenseProjectZonesComponent implements OnInit {
       if (res && res.isDone) {
         this._toastrNotificationService.showSuccess("تم الحفظ");
         this._popupService.dismissDialog();
-
       }
       else {
         this._toastrNotificationService.showError("حدث خطأ اثناء الحفظ");
-
       }
     });
   }
-
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
   clearObservable() {
-
   }
 
 }

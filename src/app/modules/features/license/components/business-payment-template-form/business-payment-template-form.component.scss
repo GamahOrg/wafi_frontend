@@ -1,0 +1,269 @@
+.business-payment-template-form {
+  padding: 20px;
+  overflow-x: hidden;
+  direction: rtl;
+  width: 100%;
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .form-section {
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+
+      .required {
+        color: #dc3545;
+        margin-left: 4px;
+      }
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      background-color: #fff;
+      transition: all 0.3s ease;
+      direction: rtl;
+
+      &:focus {
+        outline: none;
+        border-color: #006A6C;
+        box-shadow: 0 0 0 2px rgba(0, 106, 108, 0.2);
+      }
+
+      &.is-invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+      }
+
+      &::placeholder {
+        color: #999;
+        direction: rtl;
+      }
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .invalid-feedback {
+      display: block;
+      color: #dc3545;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .installments-section {
+    width: 100%;
+    box-sizing: border-box;
+
+    .installment-form {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      width: 100%;
+      box-sizing: border-box;
+
+      .installment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #006A6C;
+
+        h4 {
+          margin: 0;
+          color: #006A6C;
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        .delete-installment-btn {
+          background: #dc3545;
+          border: none;
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          color: white;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: #c82333;
+            transform: scale(1.1);
+          }
+
+          i {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .add-payment-section {
+      text-align: center;
+      margin-top: 15px;
+
+      .btn-add-payment {
+        background: linear-gradient(135deg, #006A6C, #008B8D);
+        border: none;
+        border-radius: 25px;
+        padding: 10px 20px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 106, 108, 0.3);
+
+        &:hover {
+          background: linear-gradient(135deg, #005557, #007779);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(0, 106, 108, 0.4);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        i {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .totals-summary {
+      background-color: #f8f9fa;
+      border: 2px solid #006A6C;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
+
+      .summary-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        gap: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        label {
+          font-weight: 600;
+          color: #333;
+          margin: 0;
+          min-width: 140px;
+        }
+
+        .total-value {
+          font-weight: 700;
+          font-size: 16px;
+          color: #006A6C;
+          padding: 4px 8px;
+          border-radius: 4px;
+          background-color: #e8f5f5;
+
+          &.error {
+            color: #dc3545;
+            background-color: #f8d7da;
+          }
+        }
+
+        .target-value {
+          font-size: 12px;
+          color: #666;
+          font-style: italic;
+        }
+      }
+    }
+  }
+
+  .loading-section {
+    text-align: center;
+    padding: 20px;
+
+    .spinner-border {
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 0;
+      color: #666;
+      font-size: 14px;
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .business-payment-template-form {
+    .form-group {
+      label {
+        color: #e9ecef;
+      }
+
+      .form-control {
+        background-color: #495057;
+        border-color: #6c757d;
+        color: #e9ecef;
+
+        &::placeholder {
+          color: #adb5bd;
+        }
+      }
+    }
+
+    .installments-section {
+      .installment-form {
+        background-color: #343a40;
+        border-color: #495057;
+
+        .installment-header h4 {
+          color: #17a2b8;
+        }
+      }
+    }
+  }
+}

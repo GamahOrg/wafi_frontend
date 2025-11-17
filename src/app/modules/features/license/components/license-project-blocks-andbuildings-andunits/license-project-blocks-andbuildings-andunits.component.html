@@ -6,19 +6,29 @@
             <thead>
                 <tr>
                     <th>النوع</th>
+                    <th>نوع البلوك / نوع العمارة</th>
                     <th>رقم البلوك / رقم العمارة</th>
                     <th>تاريخ بداية الإنشاء </th>
                     <th>تاريخ نهاية الإنشاء </th>
                     <th>عدد أنواع الوحدات </th>
+                    <th>ملف التصميم</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let unit of zone.licenseProjectUnits">
                     <td>{{unit.unitTypeName}}</td>
+                    <td>{{unit?.buildingBlockType?.name}}</td>
                     <td>{{unit.code}}</td>
                     <td>{{unit.constructionStartOn | date:'yyyy-MM-dd'}}</td>
                     <td>{{unit.constructionEndOn | date:'yyyy-MM-dd'}}</td>
                     <td>{{unit.licenseProjectSubUnits.length}}</td>
+                    <td>
+                        <div class="value"  *ngIf="unit.designFile && unit.designFile">
+                            <span class="icon material-icons-outlined">content_copy</span>
+                            <a *ngIf="unit.designFile && unit.designFile"  id="link-file" [href]="baseUrl + unit.designFile.filePath" target="_blank">
+                                {{unit.designFile.fileDescription}}</a>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>

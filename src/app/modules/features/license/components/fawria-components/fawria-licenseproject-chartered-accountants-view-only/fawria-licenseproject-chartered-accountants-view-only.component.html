@@ -1,0 +1,129 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+    <h6 class="title">
+      {{ localizations.CharteredAccountantTitle }}
+    </h6>
+  </div>
+
+  <div class="tab-data-section">
+    <div class="form-group">
+      <label for="commercialRegister" class="form-label">
+        {{ localizations.CharteredAccountant }}
+      </label>
+      <div class="input-group">
+        <input id="commercialRegister" name="commercialRegister" type="text" class="form-control" [ngClass]="{'is-invalid': errorMessage}" 
+        formControlName="commercialRegister" placeholder="أدخل الرقم الموحد للمنشأه" [disabled]="true" [readonly]="true">
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="entity">
+    <div class="tab-data-section">
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="key">
+            <i class="icon hgi hgi-stroke hgi-building-06"></i>
+            اسم الشركة
+          </div>
+          <div class="value">
+            {{ x.facilityName }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-data-section">
+      <h6 class="title">بيانات اتفاقية المحاسب</h6>
+
+      <div class="row row-gap-4">
+        <!-- Monitoring Period -->
+        <div class="col-12 col-lg-6">
+          <label for="financialReportApprovalPeriodInDays" class="form-label">
+            مهلة المصادقة على التقرير المالي
+          </label>
+          <input id="financialReportApprovalPeriodInDays" name="financialReportApprovalPeriodInDays" type="number" class="form-control" formControlName="financialReportApprovalPeriodInDays" max="30" placeholder="أدخل مهلة المصادقة على التقرير المالي" [disabled]="true" [readonly]="true">
+        </div>
+
+        <!-- Contract Value -->
+        <div class="col-12 col-lg-6">
+          <label for="contractValue" class="form-label">
+            قيمة العقد
+          </label>
+
+          <div class="input-group">
+            <input id="contractValue" name="contractValue" type="number" class="form-control" formControlName="contarctValue" placeholder="اختر قيمة العقد" [disabled]="true" [readonly]="true">
+            <span class="input-group-text">
+              <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+            </span>
+          </div>
+        </div>
+
+        <!-- Payment Monitoring -->
+        <div class="col-12 col-lg-6">
+          <label for="paymentDeadline" class="form-label">
+            مهلة السداد
+          </label>
+
+          <input id="paymentDeadline" name="paymentDeadline" type="text" class="form-control" formControlName="paymentDeadline" placeholder="أدخل مهلة السداد" [disabled]="true" [readonly]="true">
+        </div>
+
+        <!-- Authorized Signatories -->
+        <div class="col-12 col-lg-6">
+          <label for="authorizedSignatories" class="form-label">
+            المفوضين بالتوقيع على وثائق الصرف
+          </label>
+          <select id="authorizedSignatories" class="form-select" formControlName="authorizedToSignDelegator" [disabled]="true">
+            <option value="" selected disabled>اختر المفوضين على وثائق الصرف</option>
+            <option *ngFor="let signatory of licenseProjectDelegators" [value]="signatory.id">
+              {{ signatory?.fullName}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Data Section -->
+    <div class="tab-data-section">
+      <h6 class="title">{{ localizations.PaymentData }}</h6>
+
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th scope="col">البند</th>
+              <th scope="col">الكمية</th>
+              <th scope="col">السعر للوحدة</th>
+              <th scope="col">الوصف</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of paymentTableData; let i = index">
+              <td>
+                <input type="text" class="form-control table-input" [(ngModel)]="item.item" [ngModelOptions]="{standalone: true}" placeholder="البند"[disabled]="true" [readonly]="true">
+              </td>
+              <td>
+                <input type="number" class="form-control table-input" [(ngModel)]="item.quantity" [ngModelOptions]="{standalone: true}" placeholder="الكمية" [disabled]="true" [readonly]="true">
+              </td>
+              <td>
+                <div class="input-group">
+                  <input type="number" class="form-control table-input" [(ngModel)]="item.unitPrice" [ngModelOptions]="{standalone: true}" placeholder="السعر للوحدة" [disabled]="true" [readonly]="true">
+                  <span class="input-group-text">
+                    <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+                  </span>
+                </div>
+              </td>
+              <td>
+                <input type="text" class="form-control table-input" [(ngModel)]="item.description" [ngModelOptions]="{standalone: true}" placeholder="الوصف" [disabled]="true" [readonly]="true">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<div class="mt-3" *ngIf="entity">
+  <app-license-project-parties-additional-terms-view-only [TermsPartType]='TermsPartType.Accountant'></app-license-project-parties-additional-terms-view-only>
+</div>

@@ -1,0 +1,28 @@
+<div class="rejection-dialog">
+  <div class="dialog-content">
+    <h2 class="dialog-title">ما هو سبب رفضك للاتفاقية؟</h2>
+
+    <div class="dialog-form">
+      <textarea
+        class="form-control rejection-textarea"
+        [(ngModel)]="rejectionReason"
+        placeholder="سبب الرفض"
+        rows="6"
+        [ngModelOptions]="{standalone: true}">
+      </textarea>
+    </div>
+
+    <div class="dialog-actions">
+      <button mat-button class="cancel-button" (click)="onCancel()">
+        إلغاء
+      </button>
+      <button
+        mat-raised-button
+        class="confirm-button"
+        (click)="onConfirm()"
+        [disabled]="!isReasonValid()">
+        تأكيد الرفض
+      </button>
+    </div>
+  </div>
+</div>

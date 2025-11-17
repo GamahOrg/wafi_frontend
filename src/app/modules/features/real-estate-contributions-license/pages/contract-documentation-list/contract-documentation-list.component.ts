@@ -149,7 +149,7 @@ export class ContractDocumentationListComponent {
           {
             this.subscriptions.push(
       
-              this._licenseProjectBuyerService.acceptOrRejectBuyerContract(this.buyer?.id  as string,this.licenseProjectBuyerStatus.RejectCertified).subscribe((res:CoreResponseDTO<any>) => {
+              this._licenseProjectBuyerService.acceptOrRejectBuyerContract(this.buyer?.id  as string,this.licenseProjectBuyerStatus.Refused).subscribe((res:CoreResponseDTO<any>) => {
                 if (res.isDone) {
                   this._toastrNotificationService.showSuccess(" تم حفظ رفض توثيق العقد ");
                   this.getContracts();

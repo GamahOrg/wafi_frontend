@@ -1,0 +1,45 @@
+<ng-container>
+  <form id="form-addingZoneForm" [formGroup]="partiesAdditionalTermsForm">
+    <h6 class="form-title">بند {{toArabicIndic(maxItemNumber)}}</h6>
+
+    <div class="form-group mb-3">
+      <label class="form-label">{{localization.itemTitle}}</label>
+      <input type="text" id="control-itemText" placeholder="{{localization.itemTitlePlaceholder}}" class="form-control" formControlName="itemTitle" />
+      <div class="invalid-feedback d-block" *ngIf="controls.itemTitle?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label class="form-label">{{localization.itemText}}</label>
+      <textarea type="text" id="control-itemText" placeholder="{{localization.itemTextPlaceholder}}" class="form-control" formControlName="itemText"></textarea>
+      <div class="invalid-feedback d-block" *ngIf="controls.itemText?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+    </div>
+
+    <!-- Dynamic Additional Terms Section -->
+    <ng-container formArrayName="additionalTerms">
+      <!-- Additional Terms List -->
+      <ng-container *ngFor="let additionalTerm of additionalTermsArray.controls; let i = index" [formGroupName]="i">
+        <div class="form-group mb-3">
+          <div class="d-flex justify-content-between align-items-center gap-2">
+            <label class="form-label">{{localization.additionalTermText}} <bdo dir="rtl">{{toArabicIndic(maxItemNumber)}}.{{toArabicIndic(i+1)}}</bdo></label>
+            <button type="button" class="btn-icon btn btn-danger" (click)="removeAdditionalTerm(i)">
+              <i class="hgi hgi-stroke hgi-delete-03"></i>
+            </button>
+          </div>
+          <textarea class="form-control" [id]="'additional-term-' + i" [placeholder]="localization.additionalTermTextPlaceholder" rows="3" formControlName="itemText"></textarea>
+          <div class="invalid-feedback d-block" *ngIf="getAdditionalTermGroup(i).get('itemText')?.hasError('required') && showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+        </div>
+      </ng-container>
+
+      <button type="button" class="btn btn-outline-success w-100 mb-4" style="--bs-btn-border-radius: 10px; border-style: dashed;" (click)="addAdditionalTerm()">
+        <i class="hgi hgi-stroke hgi-plus-sign me-2"></i>{{localization.addAdditionalTerm}}
+      </button>
+    </ng-container>
+
+    <div class="form-check">
+      <input class="form-check-input" id="control-additionalTermsAcknowledgment" type="checkbox" formControlName="additionalTermsAcknowledgment" />
+      <label class="form-check-label fw-semibold" for="control-additionalTermsAcknowledgment" [innerHTML]="acknowledgmentMessage"></label>
+    </div>
+  </form>
+</ng-container>

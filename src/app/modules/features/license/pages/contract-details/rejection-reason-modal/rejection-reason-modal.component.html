@@ -1,0 +1,41 @@
+<!-- Modal Backdrop -->
+<div class="modal-backdrop" *ngIf="isVisible" (click)="handleBackdropClick($event)">
+  <!-- Modal Container -->
+  <div class="modal-container" (click)="$event.stopPropagation()">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h2 class="modal-title">ما هو سبب رفضك للعقد؟</h2>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <textarea
+        class="rejection-textarea"
+        [(ngModel)]="rejectionReason"
+        placeholder="سبب الرفض"
+        rows="6"
+      ></textarea>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button
+        class="btn-cancel"
+        (click)="handleCancel()"
+        type="button"
+      >
+        إلغاء
+      </button>
+      <button
+        class="btn-submit"
+        (click)="handleSubmit()"
+        [disabled]="!rejectionReason.trim()"
+        type="button"
+      >
+        إرسال سبب الرفض
+      </button>
+    </div>
+
+  </div>
+</div>

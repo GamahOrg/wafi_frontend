@@ -1,22 +1,37 @@
 <div class="tab-data-section" *ngIf="projectCharteredData">
-    <div class="row row-gap-3 row-gap-xl-4  mb-3">
+    <!-- <div class="row row-gap-3 row-gap-xl-4  mb-3">
         <div class="col-12 col-lg-6">
             <div class="key"> رقم الترخيص المحاسب القانوني</div>
             <div class="value">{{projectCharteredData.charteredAccountantLicenseNumber}}</div>
         </div>
-    </div>
+    </div> -->
     <div class="row row-gap-3 row-gap-xl-4 ">
         <div class="col-12 col-lg-6">
-            <div class="key"> تم الموافقة </div>
-            <div class="value">{{projectCharteredData.isApproved? 'نعم' : 'لا'}}</div>
+             <div class="key">هل تمت الموافقة</div>
+            <div class="value">               
+            {{ projectCharteredData.approvedOn!=null ? projectCharteredData.isApproved ? "نعم" : "لا":"قيد الانتظار"}}
+            </div>
+            <!-- <div class="value">{{projectCharteredData.isApproved? 'نعم' : 'لا'}}</div> -->
         </div>
-        <div class="col-12 col-lg-6" *ngIf="projectCharteredData.isApproved">
-            <div class="key"> تاريخ الموافقه </div>
+
+         <div class="col-12 col-lg-6" *ngIf="projectCharteredData.isApproved && projectCharteredData.approvedOn">
+            <div class="key"> تاريخ الموافقة </div>
             <div class="value">{{projectCharteredData.approvedOn | date:"MM/dd/yyyy"}}</div>
         </div>
+
+        <div class="col-12 col-lg-6" *ngIf="!projectCharteredData.isApproved && projectCharteredData.approvedOn">
+            <div class="key"> تاريخ الرفض </div>
+            <div class="value">{{projectCharteredData.approvedOn | date:"MM/dd/yyyy"}}</div>
+        </div>
+
+        <!-- <div class="col-12 col-lg-6" *ngIf="projectCharteredData.isApproved">
+            <div class="key"> تاريخ الموافقة / الرفض </div>
+            <div class="value">{{projectCharteredData.approvedOn | date:"MM/dd/yyyy"}}</div>
+        </div> -->
         <div class="col-12 col-lg-6">
-            <div class="key"> اسم المفوض </div>
-            <div class="value">{{projectCharteredData.delegatorCustomer?.fullName}}</div>
+            <!-- <div class="key"> اسم المفوض </div> -->
+            <!-- <div class="value">{{projectCharteredData.delegatorCustomer?.fullName}}</div> -->
+            <!-- <div class="value">{{projectCharteredData.licenseProjectCharteredAccountantAuthorizedToSignDelegators[0].delegatorCustomer?.fullName}}</div> -->
         </div>
         <div class="col-12 col-lg-6">
             <div class="key"> رقم السجل التجاري </div>
@@ -37,23 +52,23 @@
 
     </div>
     <div class="row row-gap-3 row-gap-xl-4 mt-3">
-        <div class="col-12 col-lg-6">
+        <!-- <div class="col-12 col-lg-6">
             <div class="key"> هل تم الموافقة</div>
             <div class="value">{{projectCharteredData.charteredAccountantAgreementIsApproved}}</div>
         </div>
         <div class="col-12 col-lg-6">
             <div class="key">عدد ايام العمل </div>
             <div class="value">{{projectCharteredData.workDaysCount}}</div>
-        </div>
-        <div class="col-12 col-lg-6">
+        </div> -->
+        <!-- <div class="col-12 col-lg-6">
             <div class="key">الشروط الاختيارية </div>
             <div class="value" [innerHTML]="projectCharteredData.optionalTerms"></div>
-        </div>
-        <div class="col-12 col-lg-6">
+        </div> -->
+        <!-- <div class="col-12 col-lg-6">
             <div class="key">المدينة </div>
-            <div class="value">{{projectCharteredData.city.cityName}}</div>
-        </div>
-        <div class="col-12">
+            <div class="value">{{projectCharteredData.city?.cityName}}</div>
+        </div> -->
+        <!-- <div class="col-12">
             <ng-container
                 *ngFor="let delegate of projectCharteredData.licenseProjectCharteredAccountantAuthorizedToSignDelegators">
                 <div class="row row-gap-3 row-gap-xl-4">
@@ -67,6 +82,19 @@
                     </div>
                 </div>
             </ng-container>
+        </div> -->
+
+        <div class="col-12 col-lg-6">
+            <div class="key">ملف الاتفاقية</div>
+            <div class="value">
+                <a *ngIf="agreementFile && agreementFile.id && agreementFile.filePath"
+                   [href]="baseUrl + agreementFile.filePath"
+                   id="link-agreementFile"
+                   target="_blank">
+                    {{ 'عرض' }}
+                </a>
+                <span *ngIf="!agreementFile || !agreementFile.id">جاري إعداد الملف </span>
+            </div>
         </div>
 
     </div>

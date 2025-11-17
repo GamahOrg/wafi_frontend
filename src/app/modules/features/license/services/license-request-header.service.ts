@@ -56,6 +56,7 @@ export class LicenseRequestHeaderService {
       })
     );
   }
+  
   GetCertifiedLicenseData(id: string): Observable<UpdateCertifiedLicenseDataDto | null> {
     return this._httpClient.get<CoreResponseDTO<UpdateCertifiedLicenseDataDto>>(`${Configuration.APIs.LicenseRequestHeader.GetCertifiedLicenseData}/${id}`).pipe(
       map((res: CoreResponseDTO<UpdateCertifiedLicenseDataDto>) => {
@@ -67,6 +68,7 @@ export class LicenseRequestHeaderService {
       })
     );
   }
+
   UpdateCertifiedLicenseData(updateCertifiedLicenseDataDto: UpdateCertifiedLicenseDataDto,id: string): Observable<any | null> {
     return this._httpClient.put<CoreResponseDTO<any>>
       (Configuration.APIs.LicenseRequestHeader.UpdateCertifiedLicenseData + '/'+ id, updateCertifiedLicenseDataDto).pipe(
@@ -75,6 +77,29 @@ export class LicenseRequestHeaderService {
         })
       )
   }
+
+  GetFarzRejectionReason(licenseProjectId: string): Observable<string | null> {
+    return this._httpClient.get<CoreResponseDTO<string>>(`${Configuration.APIs.LicenseRequestHeader.GetFarzRejectionReason}/${licenseProjectId}`).pipe(
+      map((res: CoreResponseDTO<string>) => {
+        if (res.data) {
+          return res.data as string;
+        } else {
+          return null
+        }
+      })
+    );
+  }
+  
+  UpdateFarzStatus(licenseProjectId: string): Observable<any | null> {
+    return this._httpClient.put<CoreResponseDTO<any>>
+      (Configuration.APIs.LicenseRequestHeader.UpdateFarzStatus + '/'+ licenseProjectId,{}).pipe(
+        map((res: CoreResponseDTO<any>) => {
+          return res.isDone ? res : null
+        })
+      )
+  }
+
+
 
   Delete(id: string): Observable<any> {
     return this._httpClient.delete<any>

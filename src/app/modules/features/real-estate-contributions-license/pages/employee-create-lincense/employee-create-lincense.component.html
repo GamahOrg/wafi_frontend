@@ -13,7 +13,7 @@
                          placeholder="اكتب {{localization.commercialRegistrationNo}}"
                          [ngClass]="{'is-invalid': commercialRegistrationNo.touched && commercialRegistrationNo.errors}" />
                   <div *ngIf="commercialRegistrationNo.errors"
-                       class="invalid-feedback">
+                       class="invalid-feedback d-block">
                       <div *ngIf="commercialRegistrationNo.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                       <div *ngIf="commercialRegistrationNo.errors?.['pattern']">{{localization.pattern}}</div>
                       <div *ngIf="commercialRegistrationNo.errors?.['maxlength'] || commercialRegistrationNo.errors?.['minlength']">{{localization.maxLengthErrorMsg}}</div>

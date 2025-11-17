@@ -1,0 +1,177 @@
+.hijri-datepicker {
+  position: relative;
+  width: 100%;
+}
+
+.datepicker-input {
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+
+  input {
+    cursor: pointer;
+    padding-right: 40px;
+    background-color: white;
+    border: 1px solid #ced4da !important;
+    position: relative;
+    z-index: 1;
+
+    &:focus {
+      outline: none;
+      border-color: #005257 !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 82, 87, 0.25) !important;
+    }
+  }
+
+  &.is-open {
+    z-index: 9998;
+
+    input {
+      border-color: #005257 !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 82, 87, 0.25) !important;
+      z-index: 9998;
+    }
+  }
+
+  .calendar-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8A9393;
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &.is-open .calendar-icon {
+    z-index: 9999;
+  }
+}
+
+.calendar-dropdown {
+  position: fixed !important;
+  background: white;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 9999 !important;
+  min-width: 320px;
+  padding: 16px;
+  direction: rtl;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #E5E5E5;
+
+  .month-year {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #005257;
+  }
+
+  .nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #F5F5F5;
+    }
+
+    i {
+      font-size: 24px;
+      color: #005257;
+    }
+  }
+}
+
+.calendar-body {
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+
+    .weekday {
+      text-align: center;
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #8A9393;
+      padding: 8px 0;
+    }
+  }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+
+    .day-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:not(.empty) {
+        &:hover {
+          background-color: #E6F2F3;
+        }
+      }
+
+      &.empty {
+        cursor: default;
+      }
+
+      &.today {
+        border: 2px solid #005257;
+        font-weight: 600;
+      }
+
+      &.selected {
+        background-color: #005257;
+        color: white;
+        font-weight: 600;
+
+        &:hover {
+          background-color: #003d41;
+        }
+      }
+
+      span {
+        display: block;
+      }
+    }
+  }
+}
+
+// RTL Support
+[dir="rtl"] {
+  .calendar-dropdown {
+    right: 0;
+    left: auto;
+  }
+
+  .datepicker-input .calendar-icon {
+    right: 12px;
+    left: auto;
+  }
+}

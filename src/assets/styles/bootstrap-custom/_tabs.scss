@@ -1,9 +1,9 @@
 .nav[role="tablist"],
 .tab-content {
   min-height: 100%;
-  padding: 1rem;
-  border-radius: $card-border-radius;
-  background-color: $white;
+  // padding: 1rem;
+  // border-radius: $card-border-radius;
+  // background-color: $white;
 }
 
 .nav-pills {
@@ -101,10 +101,10 @@
 }
 
 .tab-content {
-  @media (min-width: 1200px) {
-    height: 67vh;
-    overflow-y: auto;
-  }
+  // @media (min-width: 1200px) {
+  //   height: 67vh;
+  //   overflow-y: auto;
+  // }
 
   .tab-pane {
     height: 100%;

@@ -86,25 +86,40 @@
         <input type="text" class="form-control" id="control-email" formControlName="email">
 
       </div>
-      <div class="col-12 col-lg-6">
+      <div class="col-12 col-lg-12">
         <label for="" class="form-label"> صندوق البريد
         </label>
         <input type="text" class="form-control" id="control-poBox" formControlName="poBox">
 
       </div>
+
       <div class="col-12 col-lg-6">
-      <label for="" class="form-label">ملف رخصة فال</label>
-      <div class="value" *ngIf="facilityData.qualificationValFileManagerId">
-        <span class="delete" (click)="deletFile(facilityData.qualificationValFileManager?.id)"><i
-            class="material-icons text-danger">close</i></span>
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + facilityData.qualificationValFileManager?.filePath" target="_blank">
-          {{facilityData.qualificationValFileManager?.fileDescription}}
-        </a>
+        <label for="" class="form-label">ملف رخصة فال</label>
+        <div class="value" *ngIf="facilityData.qualificationValFileManagerId">
+          <span class="delete" (click)="deletFile(facilityData.qualificationValFileManager?.id)"><i
+              class="material-icons text-danger">close</i></span>
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + facilityData.qualificationValFileManager?.filePath" target="_blank">
+            {{facilityData.qualificationValFileManager?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader [data]="singleFileUploaderData"
+          (fileUploaded)="onUploadQualificationValFile($event)"></app-file-uploader>
       </div>
-      <app-file-uploader [data]="singleFileUploaderData"
-        (fileUploaded)="onUploadQualificationValFile($event)"></app-file-uploader>
-    </div>
+
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label">الشعار</label>
+        <div class="value" *ngIf="facilityData.logoFileId">
+          <span class="delete" (click)="deletFile(facilityData.logoFile?.id)"><i
+              class="material-icons text-danger">close</i></span>
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + facilityData.logoFile?.filePath" target="_blank">
+            {{facilityData.logoFile?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader [data]="logoFileUploaderData"
+          (fileUploaded)="onUploadLogoFile($event)"></app-file-uploader>
+      </div>
     </div>
   </div>
 

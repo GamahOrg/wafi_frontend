@@ -34,7 +34,7 @@ import { CreateOrUpdateLiftingTheMarkOnThePropertyTitleDeedRequestDto, LiftingTh
     
     dto: CreateOrUpdateLiftingTheMarkOnThePropertyTitleDeedRequestDto
   ): Observable<any> {
-    debugger
+    
     return this._httpClient.post(
       `${Configuration.APIs.LiftingTheMarkOnThePropertyTitleDeedRequest.SaveLiftingTheMarkOnThePropertyTitleDeedRequest}`,
       dto

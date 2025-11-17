@@ -3,52 +3,39 @@
   display: flex;
   align-items: center;
 
-  padding: .5rem;
-  border-radius: $border-radius-xs;
+  padding: .125rem .5rem;
+  border-radius: $border-radius-xl;
   font-size: $font-size-sm;
   font-weight: 500;
   background-color: $primary-bg;
 
   .icon {
-    display: none;
     margin-inline-end: .5rem;
-    font-size: $font-size-xs;
+    font-size: $font-size-xxs;
   }
 
-  &.Draft {
-    color: #8A9393;
-    background-color: #F8FAFA;
+  &.black {
+    color: #1F2A37;
+    background-color: #F9FAFB;
   }
 
-  &.RequestAccepted,
-  &.RequestVerifiedAssignedToAdmin,
-  &.RequestIsBeingProcessed,
-  &.RequestHasBeenSentForReview,
-  &.ReqIsBeingReviewed {
-    color: $info;
-    background-color: #F8FBFD;
+  &.blue {
+    color: #1849A9;
+    background-color: #EFF8FF;
   }
 
-  &.None,
-  &.RequestProcessedAndFeedbackSent {
-    color: #1EC39A;
-    background-color: #F4FAF9;
+  &.green {
+    color: #085D3A;
+    background-color: #ECFDF3;
   }
 
-  &.FeedbackProcessedAndRequestSent,
-  &.ReqIsBeingStudied {
-    color: #F1BD56;
-    background-color: #FAF6ED;
+  &.orange {
+    color: #93370D;
+    background-color: #FFFAEB;
   }
 
-  &.RequestRejected {
-    color: #FF7A69;
-    background-color: #FCF6F5;
-  }
-
-  &.RequTheRequestHasBeenApproved,
-  &.QualificationCertificateIssued {
-    color: $mintgreen;
-    background-color: #F4FAF9;
+  &.red {
+    color: #912018;
+    background-color: #FEF3F2;
   }
 }

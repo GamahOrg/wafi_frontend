@@ -1,0 +1,191 @@
+<div class="unit-details-container" dir="rtl">
+  <!-- Header -->
+  <div class="header-section">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="page-title">تفاصيل الوحدة</h4>
+      <span
+        class="unit-status-badge"
+        [ngClass]="
+          unitDetails?.unitStatusId === 2 ? 'bg-success' : 'bg-warning'
+        "
+        >{{ unitDetails?.unitStatus }}</span
+      >
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">جاري التحميل...</span>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    <div class="d-flex justify-content-between align-items-center">
+      <span>{{ error }}</span>
+      <button class="btn btn-sm btn-danger" (click)="retry()">
+        إعادة المحاولة
+      </button>
+    </div>
+  </div>
+
+  <!-- Unit Details Content -->
+  <div *ngIf="!loading && !error && unitDetails" class="content-section">
+    <!-- Basic Info Grid -->
+    <div class="details-grid">
+      <!-- Row 1 -->
+      <div class="detail-row">
+        <div class="detail-item">
+          <div class="detail-label">اسم المشروع</div>
+          <div class="detail-value">{{ unitDetails.projectName }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">المدينة</div>
+          <div class="detail-value">{{ unitDetails.city }}</div>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="detail-row">
+        <div class="detail-item">
+          <div class="detail-label">كود الوحدة</div>
+          <div class="detail-value">{{ unitDetails.unitCode }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">نوع الوحدة</div>
+          <div class="detail-value">{{ unitDetails.unitType }}</div>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="detail-row">
+        <div class="detail-item">
+          <div class="detail-label">اسم النموذج</div>
+          <div class="detail-value">{{ unitDetails.modelName }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">رقم المبني</div>
+          <div class="detail-value">{{ unitDetails.blockBuildCode }}</div>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="detail-row">
+        <div class="detail-item">
+          <div class="detail-label">المساحة الإجمالية للوحدة</div>
+          <div class="detail-value">{{ unitDetails.unitSpace }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">رقم الطابق</div>
+          <div class="detail-value">{{ unitDetails.floor }}</div>
+        </div>
+      </div>
+
+      <!-- Row 6 -->
+      <div class="detail-row">
+        <div class="detail-item">
+          <div class="detail-label">تاريخ تسليم الوحدة</div>
+          <div class="detail-value">
+            {{ unitDetails.deliveryOn | date : "dd/MM/yyyy" }}
+          </div>
+        </div>
+        
+        <div class="detail-item">
+          <div class="detail-label">السعر</div>
+          <div class="detail-value price">
+            {{ unitDetails.price | number }}
+            <img src="assets/images/general/riyal-icon.svg" class="riyal-icon">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Contract Button -->
+    <div class="button-container" *ngIf="unitDetails?.unitStatusId !== 2">
+      <button
+        class="btn btn-primary add-contract-btn"
+        (click)="addNewContract()"
+      >
+        إضافة عقد بيع
+      </button>
+    </div>
+
+    <!-- Contracts Table -->
+    <div
+      *ngIf="unitDetails.contracts && unitDetails.contracts.length > 0"
+      class="contracts-section"
+    >
+      <h5 class="contracts-title">السجل</h5>
+
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>سجل الحدث</th>
+              <th>نوع المشتري</th>
+              <th>اسم المشتري</th>
+              <th>رقم الهوية</th>
+              <th>رقم الجوال</th>
+              <th>رقم العقد</th>
+              <th>حالة العقد</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let contract of unitDetails.contracts">
+              <td>{{ contract.creationDate  | date : "dd/MM/yyyy"}}</td>
+              <td *ngIf="contract?.buyerTypeId == 2">{{ contract.buyerType }} {{contract.nationalNumber}}</td>
+              <td *ngIf="contract?.buyerTypeId == 1">{{ contract.buyerType }}</td>
+              <td>{{ contract.buyerName }}</td>
+              <td>{{ contract.nidNumber }}</td>
+              <td>{{ contract.mobile }}</td>
+              <td>{{ contract.contractNumber }}</td>
+              <td>
+                <div class="d-flex align-items-center gap-2 justify-content-center">
+                  <!-- Status Badge with Tooltip for Rejected Contracts -->
+                  <div
+                    class="status-with-tooltip"
+                    [class.has-tooltip]="contract.contractStatusId === 3 && contract.rejectionReason"
+                  >
+                    <span
+                      class="contract-status-badge"
+                      [ngClass]="{
+                        'badge bg-success': contract.contractStatusId === 2,
+                        'badge bg-warning': contract.contractStatusId === 1,
+                        'badge bg-danger': contract.contractStatusId === 3,
+                        'badge bg-info':
+                          contract.contractStatusId !== 1 &&
+                          contract.contractStatusId !== 2 &&
+                          contract.contractStatusId !== 3
+                      }"
+                    >
+                      {{ contract.contractStatus }}
+                    </span>
+
+                    <!-- Tooltip for Rejection Reason -->
+                    <div
+                      *ngIf="contract.contractStatusId === 3 && contract.rejectionReason"
+                      class="rejection-tooltip"
+                    >
+                      <div class="tooltip-header">سبب الرفض:</div>
+                      <div class="tooltip-content">{{ contract.rejectionReason }}</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="viewContractDetails(contract)"
+                >
+                  عرض العقد
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<ng-container>
+  <form [formGroup]="escrowAccountForm" id="form-escrowAccountForm">
+    <div class="tab-data-header">
+      <i class="material-icons-outlined">account_balance</i>
+      <h6 class="title">{{ localization.title }}</h6>
+    </div>
+
+    <div class="tab-data-section">
+      <div class="row row-gap-4">
+        <!-- Bank Dropdown -->
+        <div class="col-12 col-lg-12">
+          <label class="form-label"><span class="required-star">*</span> {{ localization.bank }}</label>
+          <div class="select-group">
+
+            <ng-container *ngFor="let bank of banks">
+            <div (click)="setSelectedBank(bank.id)" class="select-item" [ngClass]="{'selected': controls['bankId']?.value === bank.id}">
+              <img [src]="bank.iconPath" alt="Bank Logo">
+              {{ bank.name }}
+            </div>
+            </ng-container>
+            
+
+             <!-- <div class="select-item">
+              <img src="/assets/images/bank-logos/albelad.svg" alt="Bank Logo">
+              {{ 'بنك البلاد' }}
+            </div>
+            <div class="select-item" [ngClass]="{'selected': true}">
+              <img src="/assets/images/bank-logos/alrajhi.svg" alt="Bank Logo">
+              {{ 'بنك الراجحي' }}
+            </div>
+            <div class="select-item">
+              <img src="/assets/images/bank-logos/albelad.svg" alt="Bank Logo">
+              {{ 'بنك البلاد' }}
+            </div>  -->
+          </div>
+        </div>
+
+        <div hidden class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.bank }}</label>
+            <select class="form-select" id="control-bankId" formControlName="bankId">
+              <option value="" disabled selected>{{ localization.selectBank }}</option>
+              <option *ngFor="let bank of banks" [ngValue]="bank.id">
+                {{ bank.name }}
+              </option>
+            </select>
+            <mat-error *ngIf="controls['bankId']?.hasError('required') && showValidation">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+
+        <!-- Multiselect Delegators Dropdown -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.delegators }}</label>
+            <div class="multiselect-container">
+              <div class="multiselect-wrapper">
+                <div class="multiselect-trigger" [class.open]="isDelegatorsDropdownOpen" (click)="toggleDelegatorsDropdown()">
+                  <span class="multiselect-text">{{ getSelectedDelegatorsText() }}</span>
+                  <i class="material-icons-outlined multiselect-icon">
+                    {{ isDelegatorsDropdownOpen ? 'expand_less' : 'expand_more' }}
+                  </i>
+                </div>
+
+                <div class="multiselect-dropdown" *ngIf="isDelegatorsDropdownOpen">
+                  <div class="multiselect-option" *ngFor="let delegator of delegators" (click)="toggleDelegator(delegator)">
+                    <div class="custom-checkbox">
+                      <input type="checkbox" [checked]="delegator.selected" (click)="$event.stopPropagation()" (change)="toggleDelegator(delegator)" />
+                      <span class="checkmark">
+                        <i class="material-icons-outlined" *ngIf="delegator.selected">check</i>
+                      </span>
+                    </div>
+                    <span class="option-label">{{ delegator.name }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Selected Delegators Chips -->
+              <div class="selected-chips-container" *ngIf="getSelectedDelegators().length > 0">
+                <div class="chip" *ngFor="let delegator of getSelectedDelegators()">
+                  <span class="chip-label">{{ delegator.name }}</span>
+                  <button type="button" class="chip-remove" (click)="removeDelegator(delegator, $event)" aria-label="Remove">
+                    <i class="material-icons-outlined">close</i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <mat-error *ngIf="controls['delegatorIds']?.hasError('required') && showValidation">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+
+        <!-- Saudi Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> الرقم الضريبى السعودى</label>
+            <input type="text" class="form-control" id="control-saudiTaxNumber" formControlName="saudiTaxNumber" placeholder="الرقم الضريبى السعودى" />
+            <mat-error *ngIf="controls['saudiTaxNumber']?.hasError('required') && showValidation">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+
+        <!-- FATCA Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label"> الرقم الضريبى FATCA</label>
+            <input type="text" class="form-control" id="control-fatcaTaxNumber" formControlName="fatcaTaxNumber" placeholder="الرقم الضريبى FATCA" />
+            <mat-error *ngIf="controls['fatcaTaxNumber']?.hasError('required') && showValidation">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+
+        <!-- CRS Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label"> الرقم الضريبى CRS</label>
+            <input type="text" class="form-control" id="control-crsTaxNumber" formControlName="crsTaxNumber" placeholder="الرقم الضريبى CRS" />
+            <mat-error *ngIf="controls['crsTaxNumber']?.hasError('required') && showValidation">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="control-approvedBankTermsConditions" formControlName="approvedBankTermsConditions" />
+              <label class="form-check-label" for="control-approvedBankTermsConditions">
+                <span class="required-star">*</span> <span [innerHTML]="approvedBankTermsConditions()"></span>
+              </label>
+            </div>
+            <mat-error *ngIf="controls['approvedBankTermsConditions']?.hasError('required') && showValidation">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  </form>
+</ng-container>

@@ -29,4 +29,21 @@ export class LicenseProjectCharteredAccountantService {
       params: {id: licenseProjectId}
     });
   }
+  
+  fawryLicenseUpdateAsync(model: LicenseProjectCharteredAccountantCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectCharteredAccountantDto>> {
+    let url = `${this.baseUrl}${Configuration.APIs.LicenseProjectCharteredAccountant.FawryLicenseUpdate}`;
+    return this.httpClient.put<CoreResponseDTO<LicenseProjectCharteredAccountantDto>>(url, model);
+  }
+
+  fawryLicenseCreateAsync(model: LicenseProjectCharteredAccountantCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectCharteredAccountantDto>> {
+    let url = `${this.baseUrl}${Configuration.APIs.LicenseProjectCharteredAccountant.FawryLicenseCreate}`;
+    return this.httpClient.post<CoreResponseDTO<LicenseProjectCharteredAccountantDto>>(url, model);
+  }
+
+  fawryLicenseGetAsync(licenseProjectId: any): Observable<CoreResponseDTO<LicenseProjectCharteredAccountantDto>> {
+    let url = `${this.baseUrl}${Configuration.APIs.LicenseProjectCharteredAccountant.FawryLicenseGet}`;
+    return this.httpClient.get<CoreResponseDTO<LicenseProjectCharteredAccountantDto>>(`${url}`, {
+      params: {id: licenseProjectId}
+    });
+  }
 }

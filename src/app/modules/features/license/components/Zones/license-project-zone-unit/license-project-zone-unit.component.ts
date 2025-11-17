@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { forkJoin, Subscription } from 'rxjs';
 import { PopupData } from 'src/app/shared/models/popup.model';
-import { ProjectUnit } from '../../../models/project-units';
+import { ProjectUnit, SysLicenseProjectBuildingBlockTypeDto } from '../../../models/project-units';
 import { Zone } from '../../../models/zone.model';
 import { Validators, AbstractControl, FormArray, FormBuilder, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ProjectSubUnitDto } from '../../../dataModels/project-sub-unit.dto';
@@ -14,7 +14,8 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ProjectModelService } from '../../../services/project-model.service';
 import { ZonesBlocksBuildingAndUnitsService } from '../../../services/zones-blocks-building-units/zones-blocks-building-and-units.service';
 import { LicenseProjectUnitService } from '../../../services/license-project-unit/license-project-unit.service';
-import type { PopupResult } from '../../../models/popup-result.model';
+import { FileUploader } from 'src/app/shared/models/file-uploader.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-license-project-zone-unit',
@@ -22,6 +23,7 @@ import type { PopupResult } from '../../../models/popup-result.model';
   styleUrls: ['./license-project-zone-unit.component.scss']
 })
 export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
+  baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   selectedProjectZone: string | null = '00000000-0000-0000-0000-000000000000';
@@ -29,6 +31,8 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
   UnitType: DropDownNameDto[] | null = null;
   subUnitType: DropDownSubUnitTypeDto[] | null = null;
   stageNumber: DropDownNameDto[] | null = null;
+  projectBuildingBlockType: SysLicenseProjectBuildingBlockTypeDto[] | null = null;
+  projectBuildingBlockTypeList: SysLicenseProjectBuildingBlockTypeDto[] | null = null;
   licenseProjectSubUnitsArray: ProjectSubUnitDto[] = [] as ProjectSubUnitDto[];
   showValidation: boolean = false;
   showValidationSubUnitsForm: boolean = false;
@@ -38,16 +42,15 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
       id: ['00000000-0000-0000-0000-000000000000', Validators.required],
       zoneId: ['', Validators.required],
       unitTypeId: ['', Validators.required],
+      buildingBlockTypeId: [0, Validators.required],
+      designFileId: ['', Validators.required],
       // unitTypeName: [''],
       code: ['', Validators.required],
       stageNumberId: ['', Validators.required],
       // stageNumber: ['', Validators.required],
       constructionStartOn: ['', Validators.required],
       constructionEndOn: ['', Validators.required],
-      licenseProjectsId: [
-        '00000000-0000-0000-0000-000000000000',
-        Validators.required,
-      ],
+      licenseProjectsId: [ '00000000-0000-0000-0000-000000000000', Validators.required],
       licenseProjectSubUnits: this._formBuilder.array(
         [] as ProjectSubUnitDto[]
       ),
@@ -55,19 +58,13 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
     { validators: dateValidator }
   );
 
-  // licenseProjectSubUnitsForm = this._formBuilder.group({
-  //   id: '00000000-0000-0000-0000-000000000000',
-  //   licenseProjectUnitId: [
-  //     '00000000-0000-0000-0000-000000000000',
-  //     Validators.required,
-  //   ],
-  //   subUnitTypeId: 0,
-  //   subUnitCount: this._formBuilder.control<number | null>(0, [
-  //     Validators.required,
-  //     Validators.min(0),
-  //   ]),
-  // });
-
+  singleFileUploaderData: FileUploader = {
+    multiple: false,
+    allowedExtensionsText: 'dwg',
+    allowedExtensions: ['.dwg'],
+    size: 30720
+  } as FileUploader;
+  
   get controls() {
     return this.addEditUnitForm.controls;
   }
@@ -95,6 +92,8 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
     subUnitCount: 'عدد وحدات الخاص بالبلوك او العمارة  ',
     actions: 'إجراءات',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
+    projectBuildingBlockType: 'نوع البلوك / العمارة',
+    designFile: 'ملف التصميم',
   };
 
   constructor(
@@ -126,6 +125,28 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+  onDesignFileUploaded($event: any) {
+    this.addEditUnitForm.patchValue({ designFileId: $event.eventRes.data[0].id })
+  }
+
+  onUnitTypeChange(unitTypeId?: string) {
+    const selectedUnitTypeId = unitTypeId;
+    if (selectedUnitTypeId == '16075af0-4ac1-4649-8728-8c1672c58660') {
+      if (this.projectBuildingBlockTypeList) {
+        this.projectBuildingBlockType = this.projectBuildingBlockTypeList.filter(
+          (item: SysLicenseProjectBuildingBlockTypeDto) => item.isBlock == true
+        );
+      }
+    } else {
+      if (this.projectBuildingBlockTypeList) {
+        this.projectBuildingBlockType = this.projectBuildingBlockTypeList.filter(
+          (item: SysLicenseProjectBuildingBlockTypeDto) => item.isBuilding == true
+        );
+      }
+    }
+  }
+
   // private observeLicenseProjectSubUnitsForm() {
   //   this.subscriptions.push(
   //     this.licenseProjectSubUnitsForm.valueChanges.subscribe(changes => {
@@ -172,13 +193,17 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
         .getSelectedProjectUnit()
         .subscribe((res: ProjectUnit | null) => {
           if (res) {
+            
             this.selectedProjectUnit = res as ProjectUnit;
+            if(this.selectedProjectUnit.buildingBlockTypeId && this.selectedProjectUnit.buildingBlockTypeId != 0)
+              this.onUnitTypeChange(this.selectedProjectUnit.unitTypeId);
+            
             this.addEditUnitForm.patchValue(this.selectedProjectUnit as any);
+
             this.controls.licenseProjectsId.setValue(this.licenseProjectId);
-            console.log('this.selectedProjectUnit', this.selectedProjectUnit);
+            // console.log('this.selectedProjectUnit', this.selectedProjectUnit);
             if (this.selectedProjectUnit.licenseProjectSubUnits.length > 0) {
-              this.licenseProjectSubUnitsArray =
-                this.selectedProjectUnit.licenseProjectSubUnits;
+              this.licenseProjectSubUnitsArray = this.selectedProjectUnit.licenseProjectSubUnits;
               this.selectedProjectUnit.licenseProjectSubUnits.forEach(
                 (subUnit) => {
                   let subUnitFG = this._formBuilder.group({
@@ -187,6 +212,8 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
                     subUnitTypeId: subUnit.subUnitTypeId,
                     typeName: subUnit.typeName,
                     subUnitCount: subUnit.subUnitCount,
+                    // buildingBlockTypeId: subUnit.buildingBlockTypeId as number,
+                    // designFileId: subUnit.designFileId as string,
                   });
                   this.licenseProjectSubUnits.push(subUnitFG);
                 }
@@ -248,14 +275,15 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       forkJoin({
         UnitType: this._licenseProjectUnitService.getUnitType(),
-        subUnitType:
-          this._projectModelService.GetSysLicenseProjectSubUnitTypeDropDown(),
+        subUnitType: this._projectModelService.GetSysLicenseProjectSubUnitTypeDropDown(),
         stageNumber: this._licenseProjectUnitService.getStageNumber(),
+        projectBuildingBlockTypeList: this._licenseProjectUnitService.GetLicenseProjectBuildingBlockType(),
       }).subscribe({
         next: (res) => {
           this.UnitType = res.UnitType;
           this.subUnitType = res.subUnitType;
           this.stageNumber = res.stageNumber;
+          this.projectBuildingBlockTypeList = res.projectBuildingBlockTypeList;
         },
         error: (err) => {
           this._toastrService.error(this.localization.errorMsg);
@@ -283,8 +311,7 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
     if (this.licenseProjectId) {
       this.controls.licenseProjectsId.setValue(this.licenseProjectId as string);
     }
-    this.selectedProjectUnit = this.addEditUnitForm
-      .value as unknown as ProjectUnit;
+    this.selectedProjectUnit = this.addEditUnitForm.value as unknown as ProjectUnit;
 
     if (this.addEditUnitForm?.invalid) {
       this.showValidation = true;
@@ -294,9 +321,6 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
       this.addEditUnitForm?.markAllAsTouched();
       return;
     }
-
-    console.log(this.selectedProjectUnit);
-    
 
     this.subscriptions.push(
       this._licenseProjectUnitService

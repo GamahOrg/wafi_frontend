@@ -36,6 +36,7 @@ import { LicenseProjectSubDeveloperDto } from '../dataModels/license-project-sub
 import { CustomerShortDto } from './facility-short-dto';
 import { ProjectLandDeedDto } from '../dataModels/project-land-deed.dto';
 import { LicenseProjectScopeEnum } from '../../real-estate-contributions-license/dataModels/project-basic-data.dto';
+import { LicenseProjectBusinessPaymentModel, LicenseProjectBusinessPaymentTemplateModel } from './business-payment.model';
 
 export interface LicenseProject {
   //دراسة الجدوى
@@ -77,6 +78,7 @@ export interface LicenseProject {
   licenseProjectSubUnits: LicenseProjectDetachedUnitRequestDetails[];
   licenseProjectFinancialStatements: LicenseProjectFinancialStatementDto[];
   licenseProjectPromissoryNotes: LicenseProjectPromissoryNoteDto[];
+  licenseProjectBusinessPayments: LicenseProjectBusinessPaymentModel[];
 }
 export interface SysBank {
   name: string;

@@ -1,0 +1,184 @@
+<div class="developer-approval-details-container">
+  <div class="page-header">
+    <h1 class="page-title">تفاصيل اتفاقية التطوير العقارى</h1>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>جاري التحميل...</p>
+    </div>
+
+    <!-- Approval Details -->
+    <div *ngIf="!isLoading && approvalDetails" class="approval-details">
+      <div class="details-section">
+        <h2 class="section-title">معلومات المشروع</h2>
+        <div class="details-grid">
+          <div class="detail-item">
+            <label>اسم المشروع:</label>
+            <span>{{ approvalDetails?.projectName }}</span>
+          </div>
+          <div class="detail-item">
+            <label>رقم الترخيص:</label>
+            <span>{{ approvalDetails?.licenseNumber }}</span>
+          </div>
+          <div class="detail-item">
+            <label>الحالة:</label>
+            <span class="status-badge" [ngClass]="approvalDetails?.status">
+              {{ approvalDetails?.statusName }}
+            </span>
+          </div>
+          <div class="detail-item">
+            <label>التاريخ:</label>
+            <span>{{ approvalDetails?.date | date: 'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="details-section">
+        <h2 class="section-title">تفاصيل الاتفاقية</h2>
+        <div class="details-grid">
+          <div class="detail-item full-width">
+            <label>الوصف:</label>
+            <p>{{ approvalDetails?.description }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-secondary" (click)="goBack()">
+          إلغاء
+        </button>
+        <button class="btn btn-primary">
+          حفظ
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && !approvalDetails" class="empty-state">
+      <i class="bi bi-exclamation-circle"></i>
+      <p>لم يتم العثور على تفاصيل الاتفاقية</p>
+    </div>
+  </div>
+</div>
+
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- BIND BELOW  -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
+
+<div class="tab-data-header">
+  <i class="icon hgi hgi-stroke hgi-file-01"></i>
+  <h6 class="title">
+    {{ 'تفاصيل اتفاقية التطوير العقارى' }}
+  </h6>
+</div>
+
+<div class="tab-data-section">
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-4">
+          <div class="key">
+            المشروع
+          </div>
+          <div class="value">
+            {{ 'المشروع' }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="key">
+            رقم السجل التجاري
+          </div>
+          <div class="value">
+            {{ '142334534535' }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="key">
+            اسم الشركة
+          </div>
+          <div class="value">
+            {{ 'اسم الشركة' }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="key">
+            البريد الإلكتروني
+          </div>
+          <div class="value">
+            {{ 'example@example.com' }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="key">
+            رقم الجوال
+          </div>
+          <div class="value">
+            {{ '142334534535' }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="key">
+            ملف الإتفاقية
+          </div>
+          <div class="value">
+            <a href="#" target="_blank" rel="noreferrer noopener">{{ 'عرض الملف' }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approvals List -->
+  <ng-container *ngIf="true">
+    <div class="table-responsive mt-5">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>رقم الصك</th>
+            <th>مرفقات رخص البناء</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="tag">{{'1'}}</span>
+            </td>
+            <td>
+              <a href="#" target="_blank" rel="noreferrer noopener">{{ 'مرفقات رخص البناء' }}</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <!-- Empty State -->
+  <ng-container *ngIf="!isLoading && !approvalDetails">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false" [showText]="true" [text]="'لا توجد اتفاقيات متاحة'"></app-no-data>
+    </div>
+  </ng-container>
+</div>
+
+<div class="form-actions mt-3">
+  <button class="btn btn-outline-secondary" (click)="goBack()">{{'رجوع'}}</button>
+  <button class="btn btn-link">{{'غير موافق'}}</button>
+  <button class="btn btn-primary">{{'موافق'}}</button>
+</div>
+
+<!-- Loading State -->
+<div *ngIf="isLoading" class="loading-state">
+  <div class="spinner"></div>
+  <p>جاري التحميل...</p>
+</div>

@@ -1,0 +1,42 @@
+// Material Menu Custom Styles
+.mat-menu-panel,
+.mat-mdc-menu-panel {
+  .mat-menu-item,
+  .mat-mdc-menu-item {
+    &.menu-edit-btn {
+      color: #001F21 !important;
+
+      .mat-icon,
+      i,
+      span {
+        color: #001F21 !important;
+      }
+    }
+
+    &.menu-delete-btn {
+      color: #EC0A0A !important;
+
+      .mat-icon,
+      i,
+      span {
+        color: #EC0A0A !important;
+      }
+    }
+  }
+}
+
+.mat-mdc-menu-content {
+  padding: .5rem !important;
+}
+
+.mat-mdc-menu-item {
+  min-height: 2.5rem !important;
+  padding: .5rem !important;
+  border-radius: $border-radius-xs;
+
+  .mdc-list-item__primary-text {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+}

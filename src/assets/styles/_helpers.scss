@@ -75,3 +75,22 @@
     }
   }
 }
+
+.riyal-icon {
+  width: 1rem;
+  opacity: .5;
+}
+
+.tag {
+  display: inline-block;
+  padding: .25rem .5rem;
+
+  font-size: $font-size-xs;
+  font-weight: 500;
+  line-height: normal;
+  color: #1F2A37;
+  
+  border: 1px solid #e5e7eb;
+  border-radius: $border-radius-xs;
+  background-color: #F9FAFB;
+}

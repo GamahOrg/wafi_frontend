@@ -53,17 +53,17 @@ licenseProjectEngineeringActualRelativeWeight?:LicenseProjectEngineeringActualRe
   }
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    debugger;
+    
     if(this.licenseProjectId)
       this.getmonthDate()
   }
   getmonthDate() {
-    debugger;
+    
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
-        debugger;
+        
         if (res) {
-          debugger;
+          
           this.actualValueReport= res as ActualValueReportPagingListDto;
           this.monthDate = this.actualValueReport.monthDate as Date;
          this.getLicenseProjectEngineeringActualRelativeWeight();
@@ -102,13 +102,13 @@ licenseProjectEngineeringActualRelativeWeight?:LicenseProjectEngineeringActualRe
   }
   
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectEngineeringConstructionWorkStatusForm.valid) {
       this.showValidation = true;
       return;
     }
 
-    debugger;
+    
     this.constructionWorkStatusCreateUpdate = this.licenseProjectEngineeringConstructionWorkStatusForm.value as {} as ConstructionWorkStatusCreateUpdateDto;
     this.constructionWorkStatusCreateUpdate.id=this.constructionWorkStatusActual?.id as string;
     this.constructionWorkStatusCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId=this.constructionWorkStatusActual?.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;

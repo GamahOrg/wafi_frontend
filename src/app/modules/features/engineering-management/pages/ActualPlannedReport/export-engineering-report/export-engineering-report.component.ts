@@ -100,7 +100,7 @@ export class ExportEngineeringReportComponent {
   }
 
   save(): void {
-debugger
+
     if (!this.updateMonthSubmittedForm.valid) {
       this.showValidation = true;
       return;

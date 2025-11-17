@@ -45,7 +45,7 @@ export class AddEditConstructionWorkStatusComponent implements OnInit {
 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    debugger
+    
     if (this.licenseProjectId)
       this.getLicenseProjectEngineeringActualRelativeWeightDropdownList();
   }
