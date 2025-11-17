@@ -41,6 +41,9 @@ importers:
       '@angular/router':
         specifier: ^15.1.0
         version: 15.1.5(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/platform-browser@15.1.5(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(rxjs@7.8.0)
+      '@anthropic-ai/claude-agent-sdk':
+        specifier: ^0.1.25
+        version: 0.1.42(zod@3.25.76)
       '@hotjar/browser':
         specifier: ^1.0.9
         version: 1.0.9
@@ -68,15 +71,21 @@ importers:
       font-awesome:
         specifier: ^4.7.0
         version: 4.7.0
+      moment-hijri:
+        specifier: ^3.0.0
+        version: 3.0.0
       ng-circle-progress:
         specifier: ^1.7.1
         version: 1.7.1(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0)
       ng-otp-input:
         specifier: ^1.8.5
         version: 1.8.5(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))
+      ng2-pdf-viewer:
+        specifier: ^9.1.5
+        version: 9.1.5(pdfjs-dist@2.14.305)
       ngx-bootstrap:
-        specifier: ^10.2.0
-        version: 10.2.0(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/forms@15.1.5(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/platform-browser@15.1.5(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(rxjs@7.8.0))(rxjs@7.8.0)
+        specifier: ^10.3.0
+        version: 10.3.0(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/forms@15.1.5(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/platform-browser@15.1.5(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(rxjs@7.8.0))(rxjs@7.8.0)
       ngx-print:
         specifier: ^1.3.1
         version: 1.3.1
@@ -111,6 +120,9 @@ importers:
       '@types/jasmine':
         specifier: ~4.3.0
         version: 4.3.1
+      '@types/moment-hijri':
+        specifier: ^2.1.4
+        version: 2.1.4
       jasmine-core:
         specifier: ~4.5.0
         version: 4.5.0
@@ -295,6 +307,12 @@ packages:
       '@angular/core': 15.1.5
       '@angular/platform-browser': 15.1.5
       rxjs: ^6.5.3 || ^7.4.0
+
+  '@anthropic-ai/claude-agent-sdk@0.1.42':
+    resolution: {integrity: sha512-snz2CTHKxkk4rqgvi2D4oMgITXpgmghWC4XvFXcuYjSxgLCBmvDW9TjBk6MTv0apC5fwW4kLE4ydamkBs+BdPg==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zod: ^3.24.1
 
   '@assemblyscript/loader@0.10.1':
     resolution: {integrity: sha512-H71nDOOL8Y7kWRLqf6Sums+01Q5msqBW2KhDUTemh1tvY04eSkSXrK0uj/4mmY0Xr16/3zyZmsrxN7CKuRbNRg==}
@@ -1011,6 +1029,67 @@ packages:
   '@hotjar/browser@1.0.9':
     resolution: {integrity: sha512-n9akDMod8BLGpYEQCrHwlYWWd63c1HlhUSXNIDfClZtKYXbUjIUOFlNZNNcUxgHTCsi4l2i+SWKsGsO0t93S8w==}
 
+  '@img/sharp-darwin-arm64@0.33.5':
+    resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@img/sharp-darwin-x64@0.33.5':
+    resolution: {integrity: sha512-fyHac4jIc1ANYGRDxtiqelIbdWkIuQaI84Mv45KvGRRxSAa7o7d1ZKAOBaYbnepLC1WqxfpimdeWfvqqSGwR2Q==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [darwin]
+
+  '@img/sharp-libvips-darwin-arm64@1.0.4':
+    resolution: {integrity: sha512-XblONe153h0O2zuFfTAbQYAX2JhYmDHeWikp1LM9Hul9gVPjFY427k6dFEcOL72O01QxQsWi761svJ/ev9xEDg==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@img/sharp-libvips-darwin-x64@1.0.4':
+    resolution: {integrity: sha512-xnGR8YuZYfJGmWPvmlunFaWJsb9T/AO2ykoP3Fz/0X5XV2aoYBPkX6xqCQvUTKKiLddarLaxpzNe+b1hjeWHAQ==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@img/sharp-libvips-linux-arm64@1.0.4':
+    resolution: {integrity: sha512-9B+taZ8DlyyqzZQnoeIvDVR/2F4EbMepXMc/NdVbkzsJbzkUjhXv/70GQJ7tdLA4YJgNP25zukcxpX2/SueNrA==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@img/sharp-libvips-linux-arm@1.0.5':
+    resolution: {integrity: sha512-gvcC4ACAOPRNATg/ov8/MnbxFDJqf/pDePbBnuBDcjsI8PssmjoKMAz4LtLaVi+OnSb5FK/yIOamqDwGmXW32g==}
+    cpu: [arm]
+    os: [linux]
+
+  '@img/sharp-libvips-linux-x64@1.0.4':
+    resolution: {integrity: sha512-MmWmQ3iPFZr0Iev+BAgVMb3ZyC4KeFc3jFxnNbEPas60e1cIfevbtuyf9nDGIzOaW9PdnDciJm+wFFaTlj5xYw==}
+    cpu: [x64]
+    os: [linux]
+
+  '@img/sharp-linux-arm64@0.33.5':
+    resolution: {integrity: sha512-JMVv+AMRyGOHtO1RFBiJy/MBsgz0x4AWrT6QoEVVTyh1E39TrCUpTRI7mx9VksGX4awWASxqCYLCV4wBZHAYxA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [linux]
+
+  '@img/sharp-linux-arm@0.33.5':
+    resolution: {integrity: sha512-JTS1eldqZbJxjvKaAkxhZmBqPRGmxgu+qFKSInv8moZ2AmT5Yib3EQ1c6gp493HvrvV8QgdOXdyaIBrhvFhBMQ==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm]
+    os: [linux]
+
+  '@img/sharp-linux-x64@0.33.5':
+    resolution: {integrity: sha512-opC+Ok5pRNAzuvq1AG0ar+1owsu842/Ab+4qvU879ippJBHvyY5n2mxF1izXqkPYlGuP/M556uh53jRLJmzTWA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [linux]
+
+  '@img/sharp-win32-x64@0.33.5':
+    resolution: {integrity: sha512-MpY/o8/8kj+EcnxwvrP4aTJSWw/aZ7JIGR4aBeZkZw5B7/Jn+tY9/VNwtcoGmdT7GfggGIU4kygOMSbYnOrAbg==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [win32]
+
   '@istanbuljs/load-nyc-config@1.1.0':
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
     engines: {node: '>=8'}
@@ -1328,6 +1407,9 @@ packages:
 
   '@types/mime@3.0.1':
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
+
+  '@types/moment-hijri@2.1.4':
+    resolution: {integrity: sha512-pGX1DaSducJDkJAC3q8fCuemow0pzI4oa0iKcspwQNPXuwlI55WRgBVrA6NVi+rf8bZN1qjWVsGdUatrLhZk6Q==}
 
   '@types/node@18.14.0':
     resolution: {integrity: sha512-5EWrvLmglK+imbCJY0+INViFWUHg1AHel1sq4ZVSfdcNqGy9Edv3UB9IIzzg+xPaUcAgZYcfVs2fBcwDeZzU0A==}
@@ -1934,6 +2016,10 @@ packages:
   domhandler@4.3.1:
     resolution: {integrity: sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==}
     engines: {node: '>= 4'}
+
+  dommatrix@1.0.3:
+    resolution: {integrity: sha512-l32Xp/TLgWb8ReqbVJAFIvXmY7go4nTxxlWiAFyhoQw9RKEOHBZNnyGvJWqDVSPmq3Y9HlM4npqF/T6VMOXhww==}
+    deprecated: dommatrix is no longer maintained. Please use @thednp/dommatrix.
 
   domutils@2.8.0:
     resolution: {integrity: sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==}
@@ -2783,6 +2869,12 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  moment-hijri@3.0.0:
+    resolution: {integrity: sha512-UcBcbHDA8ToVcKjY+vBEa/hI3GZYraueavWUSLY2TdrHDHhx+wUpRw96rssAqsbT4xo/TMimwQVBP4KhJ3EN5A==}
+
+  moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
 
@@ -2829,8 +2921,13 @@ packages:
       '@angular/common': '>=6.0.0'
       '@angular/core': '>=6.0.0'
 
-  ngx-bootstrap@10.2.0:
-    resolution: {integrity: sha512-bn5wdvH6QQ2JGu4TgUbozdULBFMxZNPNTgO7dRiosx9FRrFvKcgxkGSgU/xoj+4kP1vgh8zwzaiDfvH/Bfb+Aw==}
+  ng2-pdf-viewer@9.1.5:
+    resolution: {integrity: sha512-vg+ByLcAiV9aouj6XdZKsGfZljOP1IO2VGVEZtbqW83wKfFD3UzrplZH6fImIG3O7LVxH9jFZpHE7QnqmhrYtg==}
+    peerDependencies:
+      pdfjs-dist: ~2.14.305
+
+  ngx-bootstrap@10.3.0:
+    resolution: {integrity: sha512-Ok9umbq4tqJSXMy/5/+2VZJHcwj7hD3a3x2KkF1A+f0e70BARY8rfr9QKjGgvywWNyZMf0Z5PvE1WEeEiMvCkA==}
     peerDependencies:
       '@angular/animations': ^15.0.0
       '@angular/common': ^15.0.0
@@ -3058,6 +3155,14 @@ packages:
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
+
+  pdfjs-dist@2.14.305:
+    resolution: {integrity: sha512-5f7i25J1dKIBczhgfxEgNxfYNIxXEdxqo6Qb4ehY7Ja+p6AI4uUmk/OcVGXfRGm2ys5iaJJhJUwBFwv6Jl/Qww==}
+    peerDependencies:
+      worker-loader: ^3.0.8
+    peerDependenciesMeta:
+      worker-loader:
+        optional: true
 
   picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
@@ -3729,6 +3834,10 @@ packages:
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
 
+  web-streams-polyfill@3.3.3:
+    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
+    engines: {node: '>= 8'}
+
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
@@ -3874,6 +3983,9 @@ packages:
   yargs@17.6.2:
     resolution: {integrity: sha512-1/9UrdHjDZc0eOU0HxOHoS78C69UD3JRMvzlJ7S79S2nTaWRA/whGCTV8o9e/N/1Va9YIV7Q4sOxD8VV4pCWOw==}
     engines: {node: '>=12'}
+
+  zod@3.25.76:
+    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
   zone.js@0.12.0:
     resolution: {integrity: sha512-XtC+I5dXU14HrzidAKBNMqneIVUykLEAA1x+v4KVrd6AUPWlwYORF8KgsVqvgdHiKZ4BkxxjvYi/ksEixTPR0Q==}
@@ -4171,6 +4283,17 @@ snapshots:
       '@angular/platform-browser': 15.1.5(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))
       rxjs: 7.8.0
       tslib: 2.5.0
+
+  '@anthropic-ai/claude-agent-sdk@0.1.42(zod@3.25.76)':
+    dependencies:
+      zod: 3.25.76
+    optionalDependencies:
+      '@img/sharp-darwin-arm64': 0.33.5
+      '@img/sharp-darwin-x64': 0.33.5
+      '@img/sharp-linux-arm': 0.33.5
+      '@img/sharp-linux-arm64': 0.33.5
+      '@img/sharp-linux-x64': 0.33.5
+      '@img/sharp-win32-x64': 0.33.5
 
   '@assemblyscript/loader@0.10.1': {}
 
@@ -5006,6 +5129,49 @@ snapshots:
 
   '@hotjar/browser@1.0.9': {}
 
+  '@img/sharp-darwin-arm64@0.33.5':
+    optionalDependencies:
+      '@img/sharp-libvips-darwin-arm64': 1.0.4
+    optional: true
+
+  '@img/sharp-darwin-x64@0.33.5':
+    optionalDependencies:
+      '@img/sharp-libvips-darwin-x64': 1.0.4
+    optional: true
+
+  '@img/sharp-libvips-darwin-arm64@1.0.4':
+    optional: true
+
+  '@img/sharp-libvips-darwin-x64@1.0.4':
+    optional: true
+
+  '@img/sharp-libvips-linux-arm64@1.0.4':
+    optional: true
+
+  '@img/sharp-libvips-linux-arm@1.0.5':
+    optional: true
+
+  '@img/sharp-libvips-linux-x64@1.0.4':
+    optional: true
+
+  '@img/sharp-linux-arm64@0.33.5':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-arm64': 1.0.4
+    optional: true
+
+  '@img/sharp-linux-arm@0.33.5':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-arm': 1.0.5
+    optional: true
+
+  '@img/sharp-linux-x64@0.33.5':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-x64': 1.0.4
+    optional: true
+
+  '@img/sharp-win32-x64@0.33.5':
+    optional: true
+
   '@istanbuljs/load-nyc-config@1.1.0':
     dependencies:
       camelcase: 5.3.1
@@ -5763,6 +5929,10 @@ snapshots:
 
   '@types/mime@3.0.1': {}
 
+  '@types/moment-hijri@2.1.4':
+    dependencies:
+      moment: 2.30.1
+
   '@types/node@18.14.0': {}
 
   '@types/parse-json@4.0.0': {}
@@ -6457,6 +6627,8 @@ snapshots:
   domhandler@4.3.1:
     dependencies:
       domelementtype: 2.3.0
+
+  dommatrix@1.0.3: {}
 
   domutils@2.8.0:
     dependencies:
@@ -7403,6 +7575,12 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
+  moment-hijri@3.0.0:
+    dependencies:
+      moment: 2.30.1
+
+  moment@2.30.1: {}
+
   ms@2.0.0: {}
 
   ms@2.1.2: {}
@@ -7444,7 +7622,12 @@ snapshots:
       '@angular/core': 15.1.5(rxjs@7.8.0)(zone.js@0.12.0)
       tslib: 2.5.0
 
-  ngx-bootstrap@10.2.0(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/forms@15.1.5(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/platform-browser@15.1.5(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(rxjs@7.8.0))(rxjs@7.8.0):
+  ng2-pdf-viewer@9.1.5(pdfjs-dist@2.14.305):
+    dependencies:
+      pdfjs-dist: 2.14.305
+      tslib: 2.5.0
+
+  ngx-bootstrap@10.3.0(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/forms@15.1.5(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/platform-browser@15.1.5(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(rxjs@7.8.0))(rxjs@7.8.0):
     dependencies:
       '@angular/animations': 15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))
       '@angular/common': 15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0)
@@ -7707,6 +7890,11 @@ snapshots:
   path-to-regexp@0.1.7: {}
 
   path-type@4.0.0: {}
+
+  pdfjs-dist@2.14.305:
+    dependencies:
+      dommatrix: 1.0.3
+      web-streams-polyfill: 3.3.3
 
   picocolors@1.0.0: {}
 
@@ -8389,6 +8577,8 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
+  web-streams-polyfill@3.3.3: {}
+
   webidl-conversions@3.0.1: {}
 
   webpack-dev-middleware@5.3.3(webpack@5.75.0):
@@ -8564,6 +8754,8 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
+
+  zod@3.25.76: {}
 
   zone.js@0.12.0:
     dependencies:
