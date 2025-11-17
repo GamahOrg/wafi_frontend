@@ -6,3 +6,35 @@
     display: block;
     height: 100%;
 }
+
+// RTL Checkbox Alignment
+.form-check-rtl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    text-align: right;
+    direction: rtl;
+    padding-right: 0;
+    padding-left: 0;
+
+    .form-check-input {
+        grid-column: 1;
+        float: none;
+        margin: 0;
+        width: 1.25rem;
+        height: 1.25rem;
+        min-width: 1.25rem;
+        min-height: 1.25rem;
+        flex-shrink: 0;
+        margin-top: 0.15rem;
+    }
+
+    .form-check-label {
+        grid-column: 2;
+        text-align: right;
+        cursor: pointer;
+        line-height: 1.5;
+        padding-right: 0;
+    }
+}

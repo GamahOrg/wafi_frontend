@@ -9,6 +9,7 @@ import { LicenseProjectBuyerCreateUpdateDto } from '../dataModels/license-projec
 import { ProjectUnit } from '../models/project-units';
 import { ProjectUnitCodeDto } from '../dataModels/project-unit-code.dto';
 import { LicenseProjectBuyerDetailsDto, LicenseProjectBuyerDto, LicenseProjectBuyerLookUpDto, type LicenseProjectBuyerPaymentTypeDto, type LicenseProjectBuyerSettingDto } from '../dataModels/license-project-buyer-dto';
+import { LicenseProjectBuyerContractFilterDto, LicenseProjectBuyerContractListDto, LicenseProjectBusinessPaymentResponseDto } from '../../real-estate-contributions-license/models/license-project-buyer-contracts-dto';
 
 @Injectable()
 export class LicenseProjectBuyerService {
@@ -20,24 +21,113 @@ export class LicenseProjectBuyerService {
   setLicenseProjectBuyerIdInLocalStorage(licenseProjectBuyerId: string): void {
     localStorage.setItem('licenseProjectBuyerId', licenseProjectBuyerId)
   }
+
   getLicenseProjectBuyerIdStorage(): string | null {
     return localStorage.getItem('licenseProjectBuyerId')
   }
+
   removeLicenseProjectBuyerIdfromLocalStorage(): void {
     localStorage.removeItem('licenseProjectBuyerId')
   }
-  getBuyersOnProject ( licenseProjectId:string,pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectBuyerListPagingDto[]>| null> {
+
+  getFilterContracts(filter: LicenseProjectBuyerContractFilterDto): Observable<Pagination<LicenseProjectBuyerContractListDto[]>| null> {
+    let params = new HttpParams()
+      .set('pageNumber', filter.pageNumber.toString())
+      .set('pageSize', filter.pageSize.toString())
+      .set('isDescending', filter.isDescending.toString());
+
+    if (filter.searchText) {
+      params = params.set('searchText', filter.searchText);
+    }
+    if (filter.statusId) {
+      params = params.set('statusId', filter.statusId.toString());
+    }
+    if (filter.sortBy) {
+      params = params.set('sortBy', filter.sortBy);
+    }
+    return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectBuyerContractListDto[]>>>(
+      `${Configuration.APIs.LicenseProjectBuyer.GetFilterContracts}`, { params }
+    ).pipe(
+      map((res: CoreResponseDTO<Pagination<LicenseProjectBuyerContractListDto[]>>) => {
+       
+        return res.isDone? res.data as Pagination<LicenseProjectBuyerContractListDto[]>: null
+      })
+    );
+  }
+
+  getBuyersOnProject ( licenseProjectId:string,pageIndex: number, pageSize: number, nidNumber?: string): Observable<Pagination<LicenseProjectBuyerListPagingDto[]>| null> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("licenseProjectId", licenseProjectId);
     queryParams = queryParams.append("pageIndex", pageIndex);
     queryParams = queryParams.append("pageSize", pageSize);
+    if (nidNumber) {
+      queryParams = queryParams.append("nidNumber", nidNumber);
+    }
     return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>>(`${Configuration.APIs.LicenseProjectBuyer.GetBuyersOnProject}`, { params: queryParams }).pipe(
       map((res: CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>) => {
-       
         return res.isDone? res.data as Pagination<LicenseProjectBuyerListPagingDto[]>: null
       })
     );
   }
+
+  getBuyerTotalsList ( licenseProjectId:string,pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectBuyerListPagingDto[]>| null> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("licenseProjectId", licenseProjectId);
+    queryParams = queryParams.append("pageIndex", pageIndex);
+    queryParams = queryParams.append("pageSize", pageSize);
+    return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>>(`${Configuration.APIs.LicenseProjectBuyer.GetBuyerTotalsList}`, { params: queryParams }).pipe(
+      map((res: CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>) => {
+        return res.isDone? res.data as Pagination<LicenseProjectBuyerListPagingDto[]>: null
+      })
+    );
+  }
+
+  getCancelledAndResoldUnitsList ( licenseProjectId:string,pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectBuyerListPagingDto[]>| null> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("licenseProjectId", licenseProjectId);
+    queryParams = queryParams.append("pageIndex", pageIndex);
+    queryParams = queryParams.append("pageSize", pageSize);
+    return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>>(`${Configuration.APIs.LicenseProjectBuyer.GetCancelledAndResoldUnitsList}`, { params: queryParams }).pipe(
+      map((res: CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>) => {
+        return res.isDone? res.data as Pagination<LicenseProjectBuyerListPagingDto[]>: null
+      })
+    );
+  }
+
+  getCancelledUnitsList ( licenseProjectId:string,pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectBuyerListPagingDto[]>| null> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("licenseProjectId", licenseProjectId);
+    queryParams = queryParams.append("pageIndex", pageIndex);
+    queryParams = queryParams.append("pageSize", pageSize);
+    return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>>(`${Configuration.APIs.LicenseProjectBuyer.GetCancelledUnitsList}`, { params: queryParams }).pipe(
+      map((res: CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>) => {
+        return res.isDone? res.data as Pagination<LicenseProjectBuyerListPagingDto[]>: null
+      })
+    );
+  }
+
+  checkPaymentsVersion(licenseProjectId: string): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.get<CoreResponseDTO<any>>(
+      `${Configuration.APIs.LicenseProjectBuyer.CheckPaymentsVersion}/${licenseProjectId}`
+    ).pipe(
+      map((res: CoreResponseDTO<any>) => {
+        return res;
+      })
+    );
+  }
+  getCompletedUnitsList ( licenseProjectId:string,pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectBuyerListPagingDto[]>| null> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("licenseProjectId", licenseProjectId);
+    queryParams = queryParams.append("pageIndex", pageIndex);
+    queryParams = queryParams.append("pageSize", pageSize);
+    return this._httpClient.get<CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>>(`${Configuration.APIs.LicenseProjectBuyer.GetCompletedUnitsList}`, { params: queryParams }).pipe(
+      map((res: CoreResponseDTO<Pagination<LicenseProjectBuyerListPagingDto[]>>) => {
+        return res.isDone? res.data as Pagination<LicenseProjectBuyerListPagingDto[]>: null
+      })
+    );
+  }
+
+
   getContracts (pageIndex: number, pageSize: number): Observable<Pagination<LicenseProjectBuyerListPagingDto[]>| null> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("pageIndex", pageIndex);
@@ -50,7 +140,6 @@ export class LicenseProjectBuyerService {
     );
   }
   
-  
   saveBuyer(obj: LicenseProjectBuyerCreateUpdateDto): Observable<CoreResponseDTO<any>> {
 
     return this._httpClient.post<CoreResponseDTO<any>>
@@ -60,6 +149,7 @@ export class LicenseProjectBuyerService {
         })
       )
   }
+
   cancelLicenseProjectBuyer(licenseProjectBuyerId: string): Observable<CoreResponseDTO<any>> {
     return this._httpClient.get<CoreResponseDTO<any>>(`${Configuration.APIs.LicenseProjectBuyer.CancelLicenseProjectBuyer}/${licenseProjectBuyerId}`).pipe(
       map((res: CoreResponseDTO<any>) => {
@@ -92,6 +182,7 @@ export class LicenseProjectBuyerService {
       })
     )
   }
+
   getProjectUnitesList(licenseProjectId: string): Observable<ProjectUnitCodeDto[] |null> {
     return this._httpClient.get<CoreResponseDTO<ProjectUnitCodeDto[]>>(`${Configuration.APIs.LicenseProjectBuyer.GetProjectUnitesList}/${licenseProjectId}`).pipe(
       map((res: CoreResponseDTO<ProjectUnitCodeDto[]>) => {
@@ -99,10 +190,11 @@ export class LicenseProjectBuyerService {
       })
     )
   }
-  getLicenseProjectBuyerDetail(licenseProjectBuyerId: string): Observable<LicenseProjectBuyerDto |null> {
-    return this._httpClient.get<CoreResponseDTO<LicenseProjectBuyerDto>>(`${Configuration.APIs.LicenseProjectBuyer.GetLicenseProjectBuyerDetail}/${licenseProjectBuyerId}`).pipe(
-      map((res: CoreResponseDTO<LicenseProjectBuyerDto>) => {
-        return res.data  ? res.data as LicenseProjectBuyerDto : null
+  
+  getLicenseProjectBuyerDetail(licenseProjectBuyerId: string): Observable<LicenseProjectBuyerDto[] |null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectBuyerDto[]>>(`${Configuration.APIs.LicenseProjectBuyer.GetLicenseProjectBuyerDetail}/${licenseProjectBuyerId}`).pipe(
+      map((res: CoreResponseDTO<LicenseProjectBuyerDto[]>) => {
+        return res.data  ? res.data as LicenseProjectBuyerDto[] : null
       })
     )
   }
@@ -114,6 +206,7 @@ export class LicenseProjectBuyerService {
       })
     )
   }
+
   GetBuyersBylicenseProjectId(licenseProjectId: string): Observable<LicenseProjectBuyerLookUpDto[] |null> {
     return this._httpClient.get<CoreResponseDTO<LicenseProjectBuyerLookUpDto[]>>(`${Configuration.APIs.LicenseProjectBuyer.GetBuyersBylicenseProjectId}/${licenseProjectId}`).pipe(
       map((res: CoreResponseDTO<LicenseProjectBuyerLookUpDto[]>) => {
@@ -121,6 +214,7 @@ export class LicenseProjectBuyerService {
       })
     )
   }
+
   GetBuyersDetailByNIDNumber(nidNumber: string,licenseProjectId: string): Observable<LicenseProjectBuyerDetailsDto[] |null> {
     return this._httpClient.get<CoreResponseDTO<LicenseProjectBuyerDetailsDto[]>>(`${Configuration.APIs.LicenseProjectBuyer.GetBuyersDetailByNIDNumber}/${nidNumber}/${licenseProjectId}`).pipe(
       map((res: CoreResponseDTO<LicenseProjectBuyerDetailsDto[]>) => {
@@ -137,5 +231,18 @@ export class LicenseProjectBuyerService {
     )
   }
 
-  
+  getProjectPaymentPlans(licenseProjectId: string): Observable<LicenseProjectBusinessPaymentResponseDto[] | null> {
+      let params = new HttpParams()
+        .set('licenseProjectId', licenseProjectId)
+
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectBusinessPaymentResponseDto[]>>(
+      `${Configuration.APIs.RealStateDeveloper.GetProjectPaymentPlans}`,{params}
+    ).pipe(
+      map((res: CoreResponseDTO<LicenseProjectBusinessPaymentResponseDto[]>) => {
+        return res.data ? res.data as LicenseProjectBusinessPaymentResponseDto[] : null;
+      })
+    );
+  }
+
+
 }

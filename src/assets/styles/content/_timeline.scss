@@ -18,7 +18,7 @@
   .timeline-item {
     padding: 1rem 1.5rem;
 
-    color: $dark;
+    color: $body-color;
 
     border-radius: $border-radius-xs;
     background-color: $white;
@@ -76,7 +76,7 @@
     gap: .5rem;
 
     padding: 1rem 1.5rem;
-    color: $dark;
+    color: $body-color;
 
     &.completed {
       color: $info;

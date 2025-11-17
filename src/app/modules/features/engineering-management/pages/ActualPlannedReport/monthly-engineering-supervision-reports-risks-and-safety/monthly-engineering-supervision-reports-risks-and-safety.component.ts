@@ -39,17 +39,17 @@ export class MonthlyEngineeringSupervisionReportsRisksAndSafetyComponent {
    
     private getLicenseProjectIdStorage(): void {
       this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-      debugger;
+      
       if(this.licenseProjectId)
         this.getmonthDate()
     }
     getmonthDate() {
-      debugger;
+      
       this.subscriptions.push(
         this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
-          debugger;
+          
           if (res) {
-            debugger;
+            
             this.actualValueReport= res as ActualValueReportPagingListDto;
             this.monthDate = this.actualValueReport.monthDate as Date;
            this.getLicenseProjectHealthAndSafetyMonitoringDetails();
@@ -58,12 +58,12 @@ export class MonthlyEngineeringSupervisionReportsRisksAndSafetyComponent {
       )
     }
     getLicenseProjectHealthAndSafetyMonitoringDetails() {
-      debugger;
+      
       this.subscriptions.push(
         this._licenseProjectHealthAndSafetyMonitoringService.getLicenseProjectHealthAndSafetyMonitoringDetails(this.licenseProjectId as string,this.monthDate as Date).subscribe(res => {
-          debugger;
+          
           if (res) {
-            debugger;
+            
            this.licenseProjectHealthAndSafetyMonitoring=res as LicenseProjectHealthAndSafetyMonitoringDto;
           }
         })

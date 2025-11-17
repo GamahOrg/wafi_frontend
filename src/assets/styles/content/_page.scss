@@ -6,8 +6,31 @@
 }
 
 .page-header {
-  padding-bottom: 1rem;
-  border-bottom: 1px solid $lightergray;
+  padding: 1.5rem 1rem;
+  border: 1px solid $lightergray;
+  border-radius: $border-radius-sm;
+  background-color: $white;
+
+  .page-title {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+
+      padding: .5rem 1rem;
+      border-radius: $border-radius-xs;
+      background-color: $light;
+    }
+
+    .type {
+      font-size: 1.125rem;
+      color: #B1B6B8;
+    }
+  }
 
   &.with-abstract {
     padding: 1.5rem 2rem;
@@ -91,6 +114,12 @@
   }
 }
 
+.page-section {
+  &+.page-section {
+    margin-top: 2rem;
+  }
+}
+
 .page-title {
 
   &+.text,
@@ -100,12 +129,7 @@
   }
 
   &+.text {
-    color: $darkgray;
-    font-size: .75rem;
-  }
-
-  .title {
-    font-size: 1rem;
+    color: $black;
   }
 
   .title-bottom-line {
@@ -130,10 +154,14 @@
       background-color: $theme-mid;
     }
   }
-}
 
-.page-section {
-  margin-top: 1.5rem;
+  .title {
+    font-size: 1.125rem;
+
+    .page-section>& {
+      font-size: 1rem;
+    }
+  }
 }
 
 .breadcrumb {
@@ -162,9 +190,16 @@
     }
 
     &.active {
-      color: $dark;
+      color: $body-color;
     }
   }
+}
+
+.page-content {
+  padding: 2rem 1rem;
+  border: 1px solid $lightergray;
+  border-radius: $border-radius;
+  background-color: $white;
 }
 
 ul.order-list {
@@ -187,16 +222,14 @@ ul.order-list {
     height: 1.5rem;
     margin-inline-end: 0.5rem;
 
-    font-size: $font-size-xs;
-    font-weight: bold;
+    font-size: $font-size-sm;
+    font-weight: 600;
     color: $white;
     border-radius: 50%;
     background-color: $theme-main;
   }
 
   .text {
-    font-size: $font-size-sm;
-    font-weight: 500;
     color: $headings-color;
   }
 }

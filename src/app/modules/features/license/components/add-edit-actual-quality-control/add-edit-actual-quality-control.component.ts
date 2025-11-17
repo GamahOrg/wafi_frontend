@@ -61,17 +61,17 @@ licenseProjectEngineeringWorksExaminationDetails?:LicenseProjectEngineeringWorks
 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    debugger;
+    
     if(this.licenseProjectId)
       this.getmonthDate()
   }
   getmonthDate() {
-    debugger;
+    
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
-        debugger;
+        
         if (res) {
-          debugger;
+          
           this.actualValueReport= res as ActualValueReportPagingListDto;
           this.monthDate = this.actualValueReport.monthDate as Date;
          this.getLicenseProjectEngineeringWorksExamination();
@@ -105,9 +105,9 @@ licenseProjectEngineeringWorksExaminationDetails?:LicenseProjectEngineeringWorks
               this.licenseProjectEngineeringWorksExamination.licenseProjectEngineeringSupervisionPlannedReportDetailId as string,
               this.licenseProjectEngineeringWorksExamination.sysLicenseProjectEngineeringWorksId as string
             ).subscribe(res => {
-              debugger;
+              
               if (res) {
-                debugger;
+                
                 this.showUI=true;
                this.licenseProjectEngineeringWorksExaminationDetails=res as LicenseProjectEngineeringWorksExaminationDetails;
                this.licenseProjectEngineeringSupervisionActualQualityControlForm.patchValue(this.licenseProjectEngineeringWorksExaminationDetails as any)
@@ -124,13 +124,13 @@ licenseProjectEngineeringWorksExaminationDetails?:LicenseProjectEngineeringWorks
   }
   onChangeLicenseProjectEngineeringWorks(event:any)
   {
-    debugger;
+    
     let sysLicenseProjectEngineeringWorksId=event.target.value;
 
     this.subscriptions.push(
       this._engineeringSupervisionReportActualQualityAndBusinessService.getLicenseProjectEngineeringActualQualityPlanAndAssuranceObj().subscribe(res => {
         if (res) {
-        debugger;
+        
          this.licenseProjectEngineeringActualQualityPlanAndAssurance=res as LicenseProjectEngineeringActualQualityPlanAndAssuranceDto; 
          if(this.licenseProjectEngineeringActualQualityPlanAndAssurance && this.licenseProjectEngineeringActualQualityPlanAndAssurance.id)
           {
@@ -138,9 +138,9 @@ licenseProjectEngineeringWorksExaminationDetails?:LicenseProjectEngineeringWorks
               this.licenseProjectEngineeringActualQualityPlanAndAssurance.id as string,
               sysLicenseProjectEngineeringWorksId as string
             ).subscribe(res => {
-              debugger;
+              
               if (res) {
-                debugger;
+                
                 this.showUI=true;
                this.licenseProjectEngineeringWorksExaminationDetails=res as LicenseProjectEngineeringWorksExaminationDetails;
                this.licenseProjectEngineeringSupervisionActualQualityControlForm.patchValue(this.licenseProjectEngineeringWorksExaminationDetails as any)
@@ -156,13 +156,13 @@ licenseProjectEngineeringWorksExaminationDetails?:LicenseProjectEngineeringWorks
   }
   
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectEngineeringSupervisionActualQualityControlForm.valid) {
       this.showValidation = true;
       return;
     }
 
-    debugger;
+    
     this.licenseProjectEngineeringWorksExaminationCreateUpdate = this.licenseProjectEngineeringSupervisionActualQualityControlForm.value as {} as LicenseProjectEngineeringWorksExaminationCreateUpdateDto;
     this.licenseProjectEngineeringWorksExaminationCreateUpdate.id=this.licenseProjectEngineeringWorksExamination?.id as string;
     if(this.licenseProjectEngineeringWorksExamination?.licenseProjectEngineeringSupervisionPlannedReportDetailId)

@@ -1,0 +1,271 @@
+<ng-container>
+  <form
+    class="d-flex flex-column h-100"
+    [formGroup]="feasibilityStudyForm"
+    id="form-feasibilityStudyForm"
+  >
+    <div class="tab-data-header">
+      <i class="material-icons-outlined">description</i>
+      <h6 class="title">{{ localization.title }}</h6>
+    </div>
+
+    <div class="tab-data-section">
+      <!-- Basic Information Section -->
+      <div class="form-section-wrapper">
+        <h3 class="section-subtitle">{{ localization.basicInfo }}</h3>
+
+        <div class="row mb-3">
+          <div class="col-12">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.economicActivity }}
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="control-economicActivity"
+                formControlName="economicActivity"
+                [placeholder]="localization.economicActivityPlaceholder"
+              />
+              <mat-error
+                *ngIf="controls['economicActivity']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <hr class="section-divider">
+
+      <!-- Financial Information Section -->
+      <div class="form-section-wrapper">
+        <h3 class="section-subtitle">{{ localization.financialInfo }}</h3>
+
+        <!-- Row 1 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.fixedAssetsCost }}
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="control-fixedAssetsCost"
+                  formControlName="fixedAssetsCost"
+                  [placeholder]="localization.fixedAssetsCostPlaceholder"
+                  (input)="formatNumberWithCommas($event)"
+                  (focus)="onNumberInputFocus($event)"
+                  (blur)="onNumberInputBlur($event)"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+              <mat-error
+                *ngIf="controls['fixedAssetsCost']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.operatingCapital }}
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="control-operatingCapital"
+                  formControlName="operatingCapital"
+                  [placeholder]="localization.operatingCapitalPlaceholder"
+                  (input)="formatNumberWithCommas($event)"
+                  (focus)="onNumberInputFocus($event)"
+                  (blur)="onNumberInputBlur($event)"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+              <mat-error
+                *ngIf="controls['operatingCapital']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.totalFinancing }}
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="control-totalFinancing"
+                  formControlName="totalFinancing"
+                  [placeholder]="localization.totalFinancingPlaceholder"
+                  (input)="formatNumberWithCommas($event)"
+                  (focus)="onNumberInputFocus($event)"
+                  (blur)="onNumberInputBlur($event)"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+              <mat-error
+                *ngIf="controls['totalFinancing']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.annualRevenue }}
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="control-annualRevenue"
+                  formControlName="annualRevenue"
+                  [placeholder]="localization.annualRevenuePlaceholder"
+                  (input)="formatNumberWithCommas($event)"
+                  (focus)="onNumberInputFocus($event)"
+                  (blur)="onNumberInputBlur($event)"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+              <mat-error
+                *ngIf="controls['annualRevenue']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.annualIncome }}
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="control-annualIncome"
+                  formControlName="annualIncome"
+                  [placeholder]="localization.annualIncomePlaceholder"
+                  (input)="formatNumberWithCommas($event)"
+                  (focus)="onNumberInputFocus($event)"
+                  (blur)="onNumberInputBlur($event)"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+              <mat-error
+                *ngIf="controls['annualIncome']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.annualCosts }}
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="control-annualCosts"
+                  formControlName="annualCosts"
+                  [placeholder]="localization.annualCostsPlaceholder"
+                  (input)="formatNumberWithCommas($event)"
+                  (focus)="onNumberInputFocus($event)"
+                  (blur)="onNumberInputBlur($event)"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+              <mat-error
+                *ngIf="controls['annualCosts']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.paybackPeriod }}
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="control-paybackPeriod"
+                  formControlName="paybackPeriod"
+                  [placeholder]="localization.paybackPeriodPlaceholder"
+                  (input)="formatNumberWithCommas($event)"
+                  (focus)="onNumberInputFocus($event)"
+                  (blur)="onNumberInputBlur($event)"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+              <mat-error
+                *ngIf="controls['paybackPeriod']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                <span class="required-star">*</span> {{ localization.internalRateOfReturn }}
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="control-internalRateOfReturn"
+                  formControlName="internalRateOfReturn"
+                  [placeholder]="localization.internalRateOfReturnPlaceholder"
+                  (input)="formatNumberWithCommas($event)"
+                  (focus)="onNumberInputFocus($event)"
+                  (blur)="onNumberInputBlur($event)"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+              <mat-error
+                *ngIf="controls['internalRateOfReturn']?.hasError('required') && showValidation"
+              >
+                {{ localization.requiredErrorMsg }}
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  </form>
+</ng-container>

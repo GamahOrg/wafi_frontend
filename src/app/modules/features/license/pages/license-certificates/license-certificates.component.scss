@@ -1,39 +1,51 @@
 @import "/src/assets/styles/custom-variables";
 
 .card-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 0.5rem;
 
-    font-size: 1rem;
-    color: $dark;
+  font-size: 1rem;
+  color: $body-color;
 }
 
 .card-text {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 0.5rem;
 }
 
 .cert-name {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .cert-number {
-    text-align: center;
-    text-decoration: underline;
-    font-size: 1rem;
-    font-weight: normal;
-    color: $dark;
+  text-align: center;
+  text-decoration: underline;
+  font-size: 1rem;
+  font-weight: normal;
+  color: $body-color;
+}
+
+.cert-wrapper {
+  width: 100%;
+  height: 14rem;
+  overflow: hidden;
+
+  >* {
+    display: block;
+    scale: .25;
+    transform-origin: 75% 0;
+  }
 }
 
 .value {
 
-    display: flex;
-    align-items: center;
-    column-gap: .5rem;
-    color: $dark;
-    
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+  color: $body-color;
+
 }

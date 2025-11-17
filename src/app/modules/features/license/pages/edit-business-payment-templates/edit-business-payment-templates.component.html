@@ -1,0 +1,338 @@
+<div class="payment-schedule-container">
+  
+  <form [formGroup]="paymentForm" class="payment-form">
+    <!-- Back Button -->
+    <div class="back-button-container d-flex align-items-center">
+      <a type="button" (click)="onBackClick()">
+        <i class="fa fa-arrow-right"></i>
+      </a>
+      <span class="me-3">{{ isEditMode ? 'تعديل نموذج دفعة مالية' : 'إضافة نموذج دفعة مالية' }}</span>
+    </div>
+    
+    <!-- Project Name and Number of Payments in same row -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="modelTitle">عنوان النموذج *</label>
+        <input
+          type="text"
+          id="modelTitle"S
+          formControlName="modelTitle"
+          placeholder="عنوان النموذج"
+          class="form-control"
+          [class.invalid]="paymentForm.get('modelTitle')?.invalid && paymentForm.get('modelTitle')?.touched"
+        />
+        <div class="error-message" *ngIf="paymentForm.get('modelTitle')?.invalid && paymentForm.get('modelTitle')?.touched">
+          هذا الحقل مطلوب
+        </div>
+      </div>
+
+      <!-- Number of Payments -->
+      <div class="form-group">
+        <label for="numberOfPayments">عدد الدفعات *</label>
+        <div class="number-input-group">
+          <button
+            type="button"
+            class="btn-increment"
+            (click)="incrementPayments()"
+            [disabled]="!numberOfPayments?.enabled"
+          >
+            +
+          </button>
+          <input
+            type="number"
+            id="numberOfPayments"
+            formControlName="numberOfPayments"
+            class="form-control number-input"
+            [min]="minNumberOfPayments"
+            [max]="maxNumberOfPayments"
+            [class.invalid]="numberOfPayments?.invalid && numberOfPayments?.touched"
+          />
+          <button
+            type="button"
+            class="btn-decrement"
+            (click)="decrementPayments()"
+            [disabled]="!numberOfPayments?.enabled"
+          >
+            -
+          </button>
+        </div>
+        <div class="info-text">
+          <i class="info-icon">ⓘ</i>
+          الحد الأدنى لعدد الدفعات هو {{ minNumberOfPayments }} والحد الأقصى هو {{ maxNumberOfPayments }}
+        </div>
+
+        <div class="error-message" *ngIf="numberOfPayments?.invalid && numberOfPayments?.touched">
+          <span *ngIf="numberOfPayments?.errors?.['required']">هذا الحقل مطلوب</span>
+          <span *ngIf="numberOfPayments?.errors?.['min']">القيمة يجب أن تكون أكبر من او تساوي  {{minNumberOfPayments}}</span>
+          <span *ngIf="numberOfPayments?.errors?.['max']">القيمة يجب أن تكون أقل من أو تساوي {{ maxNumberOfPayments }}</span>
+        </div>
+<!-- 
+        <div class="error-message" *ngIf="numberOfPayments?.invalid && numberOfPayments?.touched">
+            عدد الدفعات يجب أن يكون أكبر من أو يساوي {{minNumberOfPayments}} واقل من{{ maxNumberOfPayments }}
+        </div> -->
+      </div>
+
+
+      <div class="form-group">
+        <label for="refunds">عدد الدفعات المستردة *</label>
+        <div class="number-input-group">
+          <button
+            type="button"
+            class="btn-increment"
+            (click)="incrementRefunds()"
+            [disabled]="!refunds?.enabled"
+          >
+            +
+          </button>
+          <input
+            type="number"
+            id="refunds"
+            formControlName="refunds"
+            class="form-control number-input"
+            min="0"
+            [class.invalid]="refunds?.invalid && refunds?.touched"
+          />
+          <button
+            type="button"
+            class="btn-decrement"
+            (click)="decrementRefunds()"
+            [disabled]="!refunds?.enabled"
+          >
+            -
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+      
+
+    <!-- Payment Options Row - All radio buttons in same row -->
+    <div class="form-row">
+      <div class="form-group full-width">
+        <label>ما هي طريقة جدول الدفعات؟ *</label>
+        <div class="radio-group">
+          <div class="radio-item" *ngFor="let type of paymentTypes">
+            <input
+              type="radio"
+              [id]="type.value"
+              [value]="type.value"
+              formControlName="paymentType"
+            />
+            <label [for]="type.value">{{ type.label }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full-width">
+        <label>ألية الدفع *</label>
+        <div class="radio-group">
+          <div class="radio-item" *ngFor="let type of licenseBuyerPaymentType">
+            <input
+              type="radio"
+              [id]="type.id"
+              [value]="type.id"
+              formControlName="licenseProjectBuyerPaymentTypeId"
+            />
+            <label [for]="type.id">{{ type.name }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Advance Payment Value (Only for cash + installments) -->
+    <div class="form-row" *ngIf="isCashPlusInstallment">
+      <div class="form-group">
+        <label for="advancePaymentValue">قيمة الدفعة المقدمة *</label>
+        <div class="percentage-input-group">
+          <input
+            type="number"
+            id="advancePaymentValue"
+            formControlName="advancePaymentValue"
+            class="form-control"
+            min="0.01"
+            [max]="maxWithholdingRate"
+            step="0.01"
+            placeholder="قيمة الدفعة المقدمة"
+            (input)="onAdvancePaymentChange()"
+            [class.invalid]="advancePaymentValue?.invalid && advancePaymentValue?.touched"
+          />
+          <span class="percentage-symbol">%</span>
+        </div>
+        <div class="error-message" *ngIf="advancePaymentValue?.invalid && advancePaymentValue?.touched">
+          <span *ngIf="advancePaymentValue?.errors?.['required']">هذا الحقل مطلوب</span>
+          <span *ngIf="advancePaymentValue?.errors?.['min']">القيمة يجب أن تكون أكبر من  0</span>
+          <span *ngIf="advancePaymentValue?.errors?.['max']">القيمة يجب أن تكون أقل من أو تساوي {{ maxWithholdingRate }}</span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="completionRateForAdvancePayment">قيمة نسبة الانجاز للدفعة المقدمة *</label>
+        <div class="percentage-input-group">
+          <input
+            type="number"
+            id="completionRateForAdvancePayment"
+            formControlName="completionRateForAdvancePayment"
+            class="form-control"
+            min="0.01"
+            [max]="maxCompletionRate"
+            step="0.01"
+            placeholder="قيمة نسبة الانجاز للدفعة المقدمة"
+            (input)="onAdvancePaymentChange()"
+            [class.invalid]="completionRateForAdvancePayment?.invalid && completionRateForAdvancePayment?.touched"
+          />
+          <span class="percentage-symbol">%</span>
+        </div>
+        <div class="error-message" *ngIf="completionRateForAdvancePayment?.invalid && completionRateForAdvancePayment?.touched">
+          <span *ngIf="completionRateForAdvancePayment?.errors?.['required']">هذا الحقل مطلوب</span>
+          <span *ngIf="completionRateForAdvancePayment?.errors?.['min']">القيمة يجب أن تكون أكبر من  0</span>
+          <span *ngIf="completionRateForAdvancePayment?.errors?.['max']">القيمة يجب أن تكون أقل من أو تساوي {{ maxCompletionRate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="btn btn-primary" 
+        (click)="createPaymentSchedule()"
+        [disabled]="paymentForm.invalid"
+      >
+        إنشاء جدول الدفعات
+      </button>
+    </div>
+  </form>
+
+  <!-- Payment Schedule Table -->
+  <div class="payment-table-container" *ngIf="showTable">
+    <h3 class="table-title">جدول الدفعات</h3>
+    
+    <!-- Validation Error Message -->
+    <div class="validation-error" *ngIf="showValidationError">
+      <i class="error-icon">⚠</i>
+      {{ validationMessage }}
+    </div>
+    
+    <table class="payment-table">
+      <thead>
+        <tr>
+          <th>رقم الدفعة</th>
+          <th>نسبة الاستقطاع</th>
+          <th>نسبة الانجاز</th>
+          <th>وصف الدفعة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of paginatedRows">
+          <td>{{ row.id }}</td>
+          <td>
+            <ng-container *ngIf="!isCustomDistribution && !isFirstRowInCashMode(row.id)">
+              {{ row.deductionRate }}%
+            </ng-container>
+            <ng-container *ngIf="isFirstRowInCashMode(row.id)">
+              {{ row.deductionRate }}%
+            </ng-container>
+            <ng-container *ngIf="isCustomDistribution">
+              <div class="percentage-input-group table-percentage">
+                <input 
+                  type="number" 
+                  [(ngModel)]="row.deductionRate"
+                  [ngModelOptions]="{standalone: true}"
+                  class="form-control table-input"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  placeholder="%"
+                />
+                <span class="percentage-symbol">%</span>
+              </div>
+            </ng-container>
+          </td>
+          <td>
+            <!-- <ng-container *ngIf="!isCustomDistribution && !isFirstRowInCashMode(row.id)">
+              {{ row.completionRate }}%
+            </ng-container>
+            <ng-container *ngIf="isFirstRowInCashMode(row.id)">
+              {{ row.completionRate }}%
+            </ng-container> -->
+            <!-- <ng-container *ngIf="isCustomDistribution"> -->
+            <ng-container>
+              <div class="percentage-input-group table-percentage">
+                <input 
+                  type="number" 
+                  [(ngModel)]="row.completionRate"
+                  [ngModelOptions]="{standalone: true}"
+                  class="form-control table-input"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  placeholder="%"
+                />
+                <span class="percentage-symbol">%</span>
+              </div>
+            </ng-container>
+          </td>
+          <td>
+            <input 
+              type="text" 
+              [(ngModel)]="row.description"
+              [ngModelOptions]="{standalone: true}"
+              class="form-control table-input"
+              placeholder="وصف الدفعة"
+              [readonly]="isFirstRowInCashMode(row.id)"
+              [class.readonly]="isFirstRowInCashMode(row.id)"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button 
+        class="pagination-btn" 
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+      >
+        ❮
+      </button>
+
+      <button 
+        *ngFor="let page of pages"
+        class="pagination-btn"
+        [class.active]="page === currentPage"
+        [class.ellipsis]="page === -1"
+        (click)="page !== -1 && goToPage(page)"
+        [disabled]="page === -1"
+      >
+        {{ page === -1 ? '...' : page }}
+      </button>
+
+      <button 
+        class="pagination-btn" 
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        ❯
+      </button>
+
+      <span class="pagination-info">{{ totalItems }}</span>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="table-actions">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="savePaymentTemplate()"
+        [disabled]="isSubmitting || showValidationError"
+      >
+        <span *ngIf="!isSubmitting && !isEditMode">إنشاء النموذج</span>
+        <span *ngIf="!isSubmitting && isEditMode">تحديث النموذج</span>
+        <span *ngIf="isSubmitting && !isEditMode">جاري الإنشاء...</span>
+        <span *ngIf="isSubmitting && isEditMode">جاري التحديث...</span>
+      </button>
+    </div>
+  </div>
+</div>

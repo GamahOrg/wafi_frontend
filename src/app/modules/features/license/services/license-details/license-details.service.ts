@@ -33,6 +33,7 @@ import { LicenseProjectPromissoryNoteDto } from '../../dataModels/license-projec
 import { LicenseProjectSubDeveloperDto } from '../../dataModels/license-project-sub-developer/license-project-sub-developer-dto';
 import { ProjectLandDeedDto } from '../../dataModels/project-land-deed.dto';
 import { CertifiedLicenseDataDto } from '../../models/certified-license-data-dto';
+import { LicenseProjectBusinessPaymentModel, LicenseProjectBusinessPaymentTemplateModel } from '../../models/business-payment.model';
 
 @Injectable()
 export class LicenseDetailsService {
@@ -70,6 +71,7 @@ export class LicenseDetailsService {
   licenseProjectZoneCaculations$: BehaviorSubject<licenseProjectZoneCaculations | null> = new BehaviorSubject<licenseProjectZoneCaculations | null>(null);
   licenseProjectMainRealStateDeveloper$: BehaviorSubject<LicenseProjectMainRealStateDeveloperDto[] | null> = new BehaviorSubject<LicenseProjectMainRealStateDeveloperDto[] | null>(null);
   beneficiaryContractFormAdditionalTerms$: BehaviorSubject<BeneficiaryContractFormAdditionalTermsDto[] | null> = new BehaviorSubject<BeneficiaryContractFormAdditionalTermsDto[] | null>(null);
+  licenseProjectBusinessPaymentDto$: BehaviorSubject<LicenseProjectBusinessPaymentModel[] | null> = new BehaviorSubject<LicenseProjectBusinessPaymentModel[] | null>(null);
   projectDocumentData$: BehaviorSubject<ProjectDocumentDataDto | null> = new BehaviorSubject<ProjectDocumentDataDto | null>(null);
   bankingAccount$: BehaviorSubject<BankingAccountDto | null> = new BehaviorSubject<BankingAccountDto | null>(null);
   licenseProjectExhibitions$: BehaviorSubject<LicenseProjectExhibitionDto[] | null> = new BehaviorSubject<LicenseProjectExhibitionDto[] | null>(null);
@@ -89,6 +91,18 @@ export class LicenseDetailsService {
       map((res: CoreResponseDTO<LicenseDetails>) => {
         if (res.data) {
           return res.data as LicenseDetails;
+        } else {
+          return null
+        }
+      })
+    );
+  }
+
+  GetRequestTypeById(requestHeaderId: string | null): Observable<string | null> {
+    return this._httpClient.get<CoreResponseDTO<string| null>>(`${Configuration.APIs.LicenseRequestHeader.GetRequestTypeById}/${requestHeaderId}`).pipe(
+      map((res: CoreResponseDTO<string | null>) => {
+        if (res.data) {
+          return res.data as string;
         } else {
           return null
         }

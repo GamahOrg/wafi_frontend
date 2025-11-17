@@ -1,7 +1,17 @@
 :root,
 [data-bs-theme="light"] {
-  --bs-heading-color: #{$black};
+  // --bs-heading-color: #{$black};
   --bs-border-color: #{$lightergray};
+
+  --bs-warning-text: #{$warning};
+  --bs-warning-border-subtle: #{$lightOrange};
+  --bs-warning-bg-subtle: #{$lighterOrange};
+  --bs-danger-text: #{$danger};
+  --bs-danger-border-subtle: #{$lightred};
+  --bs-danger-bg-subtle: #{$lighterred};
+  --bs-success-text: #{$success};
+  --bs-success-border-subtle: #{$lightgreen};
+  --bs-success-bg-subtle: #{$lightergreen};
 }
 
 .ms-auto {

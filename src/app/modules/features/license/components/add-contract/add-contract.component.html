@@ -1,0 +1,253 @@
+<div class="add-contract-container" dir="rtl">
+  <!-- Header -->
+  <div class="header-section">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="page-title">إضافة عقد جديد</h4>
+      <button type="button" class="btn-close" (click)="cancel()" *ngIf="showAsModal"></button>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    <div class="d-flex justify-content-between align-items-center">
+      <span>{{ error }}</span>
+      <button class="btn btn-sm btn-danger" (click)="loadUnitDetails()">إعادة المحاولة</button>
+    </div>
+  </div>
+
+  <!-- Form Content -->
+  <form [formGroup]="contractForm" (ngSubmit)="onSubmit()" *ngIf="!error">
+
+    <!-- Section 1: بيانات المشتري (Buyer Information) -->
+    <div class="form-section">
+      <div class="section-header">
+        <h5 class="section-title">1. بيانات المشتري</h5>
+      </div>
+
+      <div class="section-content">
+        <!-- Buyer Type Selection -->
+        <div class="mb-4">
+          <label class="form-label required mb-3">ما هو نوع المشتري؟ </label>
+          <div class="radio-group">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="company"
+                     formControlName="buyerTypeId" value="2" (change)="onBuyerTypeChange()">
+              <label class="form-check-label" for="company">منشأة</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="individual"
+                     formControlName="buyerTypeId" value="1" (change)="onBuyerTypeChange()">
+              <label class="form-check-label" for="individual">فرد</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Fields Grid -->
+        <div class="row g-4">
+          <!-- Name -->
+          <div class="col-md-6">
+            <label class="form-label required">الاسم </label>
+            <input type="text" class="form-control" formControlName="name"
+                   placeholder="أدخل الاسم الكامل">
+            <div class="invalid-feedback d-block" *ngIf="getFieldError('name')">
+              {{ getFieldError('name') }}
+            </div>
+          </div>
+
+          <!-- National ID -->
+          <div class="col-md-6">
+            <label *ngIf="contractForm.get('buyerTypeId')?.value == 1" class="form-label required">رقم الهوية الوطنية </label>
+            <label *ngIf="contractForm.get('buyerTypeId')?.value == 2" class="form-label required">رقم الهوية المفوض </label>
+            <input type="text" class="form-control" formControlName="nidNumber"
+                   placeholder="أدخل رقم الهوية" maxlength="10">
+            <div class="invalid-feedback d-block" *ngIf="getFieldError('nidNumber')">
+              {{ getFieldError('nidNumber') }}
+            </div>
+          </div>
+
+          <div *ngIf="contractForm.get('buyerTypeId')?.value == 1" class="col-md-6">
+              <label  class="form-label">الجنسية </label>
+                <select
+                class="form-select"
+                formControlName="nationalityName"
+              >
+                <option
+                  *ngFor="let nationality of sysNationalites"
+                  [value]="nationality.nationalityName"
+                >
+                  {{ nationality.nationalityName }}
+                </option>
+              </select>
+          </div>
+
+          <div *ngIf="contractForm.get('buyerTypeId')?.value == 2" class="col-md-6">
+            <label class="form-label required">الرقم الموحد للمنشأة </label>
+            <input type="text" class="form-control" formControlName="nationalNumber"
+                   placeholder="أدخل الموحد للمنشأة" maxlength="10">
+            <button (click)="checkFacility()" type="button" class="btn-verify">تحقق</button>
+            <div class="invalid-feedback d-block" *ngIf="getFieldError('nationalNumber')">
+              {{ getFieldError('nationalNumber') }}
+            </div>
+          </div>
+
+          <!-- Birth Date -->
+          <div class="col-md-6">
+            <label class="form-label">تاريخ الميلاد</label>
+            <div class="date-input-wrapper">
+              <input
+                bsDatepicker
+                type="text"
+                class="form-control"
+                formControlName="birthDate"
+                placeholder="اختر تاريخ الميلاد"
+                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-default' }"
+              />
+              <span class="calendar-icon">
+                <i class="bi bi-calendar3"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Mobile Number -->
+          <div class="col-md-6">
+            <label class="form-label required">رقم الجوال</label>
+            <input type="tel" class="form-control" formControlName="mobileNumber"
+                   placeholder="05xxxxxxxx">
+            <div class="invalid-feedback d-block" *ngIf="getFieldError('mobileNumber')">
+              {{ getFieldError('mobileNumber') }}
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label class="form-label">البريد الإلكتروني</label>
+            <input type="email" class="form-control" formControlName="email"
+                   placeholder="example@email.com">
+            <div class="invalid-feedback d-block" *ngIf="getFieldError('email')">
+              {{ getFieldError('email') }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: بيانات الوحدة (Unit Information) -->
+    <div class="form-section">
+      <div class="section-header">
+        <h5 class="section-title">2. بيانات الوحدة</h5>
+      </div>
+
+      <div class="section-content">
+        <div class="row g-3">
+          <!-- Unit Code -->
+          <div class="col-md-6">
+            <label class="form-label">كود الوحدة</label>
+            <input type="text" class="form-control" formControlName="unitCode" readonly>
+          </div>
+
+          <!-- Unit Type -->
+          <div class="col-md-6">
+            <label class="form-label">نوع الوحدة</label>
+            <input type="text" class="form-control" formControlName="unitType" readonly>
+          </div>
+
+          <!-- Unit Model -->
+          <div class="col-md-6">
+            <label class="form-label">النموذج</label>
+            <input type="text" class="form-control" formControlName="unitModel" readonly>
+          </div>
+
+          <!-- Total Area -->
+          <div class="col-md-6">
+            <label class="form-label">المساحة الإجمالية للوحدة</label>
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="totalArea" readonly>
+              <span class="input-group-text">م²</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: بيانات العقد (Contract Information) -->
+    <div class="form-section">
+      <div class="section-header">
+        <h5 class="section-title">3. بيانات العقد</h5>
+      </div>
+
+      <div class="section-content">
+        <div class="row g-3">
+          <!-- Price -->
+          <div class="col-md-4">
+            <label class="form-label">السعر</label>
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="price" readonly>
+              <span class="input-group-text">﷼</span>
+            </div>
+          </div>
+
+          <!-- Contract Date -->
+          <div class="col-md-4">
+            <label class="form-label">تاريخ إنشاء العقد</label>
+            <input type="date" class="form-control" formControlName="contractDate" readonly>
+          </div>
+
+          <!-- Delivery Date -->
+          <div class="col-md-4">
+            <label class="form-label">تاريخ التسليم</label>
+            <input type="date" class="form-control" formControlName="deliveryDate" readonly>
+          </div>
+
+          <!-- Real Estate Tax -->
+          <div class="col-md-6">
+            <label class="form-label">قيمة ضريبة التصرفات العقارية 5%</label>
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="realEstateTax" readonly>
+              <span class="input-group-text">﷼</span>
+            </div>
+          </div>
+
+          <!-- Total After Tax -->
+          <div class="col-md-6">
+            <label class="form-label">السعر بعد إضافة ضريبة التصرفات العقارية</label>
+            <div class="input-group">
+              <input type="text" class="form-control total-after-tax" formControlName="totalAfterTax" readonly>
+              <span class="input-group-text">﷼</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Authorization File Section - Only for Facility -->
+    <div class="form-section" *ngIf="contractForm.get('buyerTypeId')?.value == 2">
+      <div class="section-header">
+        <h5 class="section-title">رفع ملف التفويض</h5>
+      </div>
+
+      <div class="section-content">
+        <!-- File Upload Component -->
+        <app-file-uploader
+          [data]="multiFilesUploaderData"
+          (fileUploaded)="onFileUploaded($event)"
+          (fileRemoved)="onFileRemoved($event)">
+        </app-file-uploader>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="action-section">
+      <div class="d-flex justify-content-center gap-3">
+        <button type="submit" class="btn btn-primary btn-lg"
+                [disabled]="submitting || contractForm.invalid">
+          <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2"></span>
+          إرسال العقد
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-lg" (click)="cancel()">
+          إلغاء
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

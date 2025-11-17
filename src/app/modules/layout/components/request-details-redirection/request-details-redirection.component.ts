@@ -26,7 +26,7 @@ export class RequestDetailsRedirectionComponent implements OnInit, OnDestroy {
   }
 
   NavigateRequestDetails(requestTypeId: RequestType, requestId: string) { 
-    debugger
+    
     switch (+requestTypeId) {
       case RequestType.license:
         this.navigateToLicenseDetails(requestId)

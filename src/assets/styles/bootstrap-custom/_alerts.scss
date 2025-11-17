@@ -1,23 +1,41 @@
 .alert {
-    display: flex;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  border-radius: $card-border-radius;
+
+  font-weight: 600;
+  border-inline-start: 8px solid transparent;
+
+  .icon {
+    display: inline-flex;
+    justify-content: center;
     align-items: center;
-    column-gap: .5rem;
-    border-radius: $card-border-radius;
+    font-size: $body-font-size * 1.25;
+  }
 
-    .icon {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
+  &.alert-success {
+    border-inline-start-color: #079455;
+  }
 
-        width: 1.5rem;
-        height: 1.5rem;
+  &.alert-warning {
+    border-inline-start-color: $orange;
+  }
 
-        border-radius: 50%;
-        // background-color: rgba($darkgreen, .08);
-        background-color: rgba($theme-dark, .08);
+  &.alert-danger {
+    border-inline-start-color: $red;
+  }
+}
 
-        [class^="material-icons"] {
-            font-size: small;
-        }
-    }
+.alert-dismissible {
+  padding-right: $alert-padding-x;
+  padding-inline-end: $alert-dismissible-padding-r;
+
+  .btn-close {
+    top: 50%;
+    right: auto;
+    inset-inline-end: 0;
+    transform: translateY(-50%);
+    background-size: .75rem;
+  }
 }

@@ -12,7 +12,7 @@
                [ngClass]="{'is-invalid': controls.nIdNumber.errors && showValidation}" />
 
         <div *ngIf="controls.nIdNumber.errors && showValidation"
-             class="invalid-feedback">
+             class="invalid-feedback d-block">
           <div>
             <ng-container *ngIf="controls.nIdNumber.errors?.['required']">
               {{localization.requiredErrorMsg}}
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div *ngIf="RegistrationResponse?.status == RegistrationStatus.wrongId"
-             class="invalid-feedback">
+             class="invalid-feedback d-block">
           <div>{{errorFeedback}}</div>
         </div>
       </div>
@@ -48,7 +48,7 @@
               <option *ngFor="let month of [01,02,03,04,05,06,07,08,09,10,11,12]">{{month}}</option>
             </select>
             <div *ngIf="controls.month.value == 0"
-                 class="invalid-feedback">
+                 class="invalid-feedback d-block">
               {{localization.requiredErrorMsg}}
             </div>
           </div>
@@ -61,7 +61,7 @@
                    [ngClass]="{'is-invalid':  controls.year.errors && showValidation}" />
 
             <div *ngIf="controls.year.errors"
-                 class="invalid-feedback">
+                 class="invalid-feedback d-block">
               <div>
 
                 <ng-container *ngIf="controls.year.errors?.['required']">

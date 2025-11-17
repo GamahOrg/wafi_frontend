@@ -1,0 +1,241 @@
+<!-- Main Container -->
+<div class="contract-details-container">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <p>جاري تحميل البيانات...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage && !isLoading" class="error-container">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!isLoading && !errorMessage && contractDetails">
+    <!-- Header Section with Status -->
+    <div class="header-section">
+      <h2 class="header-title">تفاصيل الوحدة</h2>
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <span class="status-badge" [ngClass]="{
+          'status-approved': contractDetails.contractStatusId == 2,
+          'status-pending': contractDetails.contractStatusId == 1 || contractDetails.contractStatusId == 4,
+          'status-rejected': contractDetails.contractStatusId == 5 || contractDetails.contractStatusId == 3
+        }">
+          {{ contractDetails.contractStatus }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+
+      <!-- Section: تفاصيل الوحدة -->
+      <div *ngIf="activeTab === 'unit'" class="tab-content">
+        <div class="details-section">
+          <!-- Information Grid -->
+          <div class="info-grid">
+            <!-- Row 1 -->
+            <div class="info-item">
+              <label class="info-label">اسم المشروع</label>
+              <span class="info-value">{{ contractDetails.projectName || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <label class="info-label">المدينة</label>
+              <span class="info-value">{{ contractDetails.city || '-' }}</span>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="info-item">
+              <label class="info-label">كود الوحدة</label>
+              <span class="info-value">{{ contractDetails.unitCode || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <label class="info-label">نوع الوحدة</label>
+              <span class="info-value">{{ contractDetails.unitType || '-' }}</span>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="info-item">
+              <label class="info-label">اسم النموذج</label>
+              <span class="info-value">{{ contractDetails.modelName || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <label class="info-label">رقم المبنى</label>
+              <span class="info-value">{{ contractDetails.blockBuildCode || '-' }}</span>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="info-item">
+              <label class="info-label">رقم الطابق</label>
+              <span class="info-value">{{ contractDetails.floor || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <label class="info-label">المساحة الإجمالية للوحدة</label>
+              <span class="info-value">{{ contractDetails.unitSpace || '-' }}</span>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="info-item">
+              <label class="info-label">رقم العقد</label>
+              <span class="info-value">{{ contractDetails.contarctNumber || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <label class="info-label">تاريخ العقد</label>
+              <span class="info-value">{{ contractDetails.contractDate | date:'yyyy-MM-dd' }}</span>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="info-item">
+              <label class="info-label">السعر</label>
+              <span class="info-value price">
+                {{ contractDetails.price }}
+                <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+              </span>
+            </div>
+            <div class="info-item">
+              <label class="info-label">تاريخ تسليم الوحدة</label>
+              <span class="info-value">{{ contractDetails.deliveryOn | date:'yyyy-MM-dd' }}</span>
+            </div>
+
+            <!-- Row 7 -->
+            <div class="info-item">
+              <label class="info-label">نوع المشترى</label>
+              <span class="info-value">{{ contractDetails.buyerType || '-' }}</span>
+            </div>
+
+            <div *ngIf="contractDetails.facilityNationalNumber" class="info-item">
+              <label class="info-label">الرقم الموحد</label>
+              <span class="info-value">{{ contractDetails.facilityNationalNumber || '-' }}</span>
+            </div>
+
+            <!-- Row 8 -->
+            <div *ngIf="contractDetails.facilityName" class="info-item">
+              <label class="info-label">اسم المنشاة</label>
+              <span class="info-value">{{ contractDetails.facilityName || '-' }}</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Cancellation Reason Section -->
+        <div class="section-separator"></div>
+
+        <!-- Cancellation Request Section -->
+        <div class="cancellation-request-section" *ngIf="cancellationRequest">
+
+
+
+          <!-- Warning Header -->
+          <div class="warning-header">
+            <div class="warning-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                </path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+
+            <div class="warning-content">
+              <h3 class="warning-title">عملية إلغاء عقد</h3>
+              <p class="warning-subtitle">
+                تم إرسال طلب إلغاء عقد رقم ({{ cancellationRequest.requestCode || 'REQ_00000516' }}) يرجى إتمام عملية
+                القبول أو الرفض
+              </p>
+            </div>
+          </div>
+
+
+          <div class="cancellation-reason-section">
+            <h3 class="reason-title">سبب إلغاء العقد</h3>
+            <div class="reason-content">
+              <p class="reason-text">{{ cancellationRequest.cancelRequestReason }}</p>
+            </div>
+          </div>
+
+          <!-- قرار -->
+          <div *ngIf="contractDetails.contractStatusId === 4" class="agreement-section">
+            <label class="agreement-checkbox">
+              <input
+                type="checkbox"
+                [(ngModel)]="isAgreementChecked"
+                id="agreementCheck"
+              />
+              <span class="checkbox-label">أتعهد على أن ليس هناك دفعات مالية تم دفعها من قبل المشتري {{ contractDetails.buyerName }} للوحدة العقارية رقم {{ contractDetails.unitCode || '-' }} </span>
+            </label>
+          </div>
+
+          <!-- Action Buttons -->
+          <div *ngIf="contractDetails.contractStatusId === 4" class="action-buttons">
+             <button class="btn-accept" (click)="approveCancellationRequest()">
+              قبول إلغاء العقد
+            </button>
+            <button class="btn-reject" (click)="rejectCancellationRequest()">
+              رفض إلغاء العقد
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <!-- Approve Cancellation Request Modal -->
+  <div *ngIf="showApproveModal" class="modal-overlay" (click)="closeApproveModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-content">
+        <div class="modal-icon-approve">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="28" fill="#ECFDF3"/>
+            <path d="M20 32L28 40L44 24" stroke="#059669" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="modal-title-approve">هل أنت متأكد من الموافقة على إلغاء العقد؟ </h3>
+
+        <div class="modal-buttons">
+          <button class="btn-modal-cancel" (click)="closeApproveModal()">
+            إلغاء
+          </button>
+          <button class="btn-modal-confirm-approve" (click)="confirmApproveCancellationRequest()">
+            إلغاء العقد
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reject Cancellation Request Modal -->
+  <div *ngIf="showRejectModal" class="modal-overlay" (click)="closeRejectModal()">
+    <div class="modal-container modal-reject" (click)="$event.stopPropagation()">
+      <div class="modal-content">
+        <h3 class="modal-reject-title">ما هو سبب رفض إلغاء العقد؟</h3>
+
+        <div class="form-group">
+          <textarea
+            class="form-textarea"
+            [(ngModel)]="rejectReason"
+            placeholder="سبب رفض إلغاء العقد"
+            rows="5">
+          </textarea>
+        </div>
+
+        <div class="modal-buttons">
+          <button class="btn-modal-cancel" (click)="closeRejectModal()">
+            إلغاء
+          </button>
+          <button class="btn-modal-submit-reject" (click)="submitRejectReason()" [disabled]="!rejectReason || rejectReason.trim() === ''">
+            إرسال  
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

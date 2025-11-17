@@ -1,0 +1,164 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/bootstrap-custom/tables";
+@import "/src/assets/styles/content/page";
+@import "/src/assets/styles/content/table-content";
+@import "/src/assets/styles/content/status";
+
+// Back Button
+.btn-back {
+  background-color: #FFFFFF;
+  border: 1.5px solid #005257;
+  border-radius: 8px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease-in-out;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #005257;
+
+  i {
+    font-size: 16px;
+  }
+
+  &:hover {
+    background-color: #F0F9FA;
+    border-color: #004044;
+    color: #004044;
+  }
+
+  &:active {
+    background-color: #E0F2F4;
+    border-color: #003033;
+  }
+}
+
+::ng-deep {
+  .accordion {
+    .card {
+      margin-bottom: 1.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-header {
+      background-color: #ffffff;
+      padding: 0;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+      }
+
+      .version-header {
+        border: 2px solid #2962ff;
+        border-radius: 1.5rem;
+        padding: 1rem 1.5rem;
+        background-color: #ffffff;
+
+        .version-info-right {
+          text-align: right;
+
+          .version-number {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+          }
+
+          .version-date {
+            font-size: 0.875rem;
+            color: #666;
+          }
+
+          .version-status {
+            font-size: 0.875rem;
+            color: #dc3545;
+            font-weight: 500;
+            display: inline-block;
+            white-space: nowrap;
+          }
+        }
+
+        .project-name {
+          font-size: 0.95rem;
+          color: #333;
+          padding-top: 0.5rem;
+          border-top: 1px solid #e0e0e0;
+        }
+      }
+    }
+
+    .accordion-body {
+      padding: 1.5rem;
+      background-color: #fafafa;
+    }
+  }
+
+  // .table {
+  //   background-color: #ffffff;
+
+  //   th {
+  //     background-color: #f8f9fa;
+  //     font-weight: 600;
+  //     color: #495057;
+  //     text-align: right;
+  //     vertical-align: middle;
+  //     border-bottom: 2px solid #dee2e6;
+  //   }
+
+  //   td {
+  //     vertical-align: middle;
+  //     text-align: right;
+  //     padding: 1rem;
+  //   }
+
+  //   .table-primary {
+  //     background-color: rgba(13, 110, 253, 0.1);
+  //   }
+  // }
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  &.status-other {
+    background-color: #ffebeb;
+    color: #930d0d;
+
+    .status-dot {
+      background-color: #930d0d;
+    }
+  }
+}
+
+.table {
+  tbody {
+    tr.child-row {
+      background-color: #f8f9fa;
+
+      td {
+        border-top: 1px dashed #dee2e6;
+      }
+
+      &:hover {
+        background-color: #e9ecef;
+      }
+    }
+  }
+}
+
+.menu-view-btn {
+  i {
+    margin-left: 8px;
+  }
+}
+}

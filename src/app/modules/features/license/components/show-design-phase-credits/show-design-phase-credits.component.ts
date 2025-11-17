@@ -27,7 +27,7 @@ export class ShowDesignPhaseCreditsComponent {
       this.subscriptions.push(
         this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.getLicenseProjectEngineeringStatusOfFundsRequiredFromEntities().subscribe(res => {
           if (res) {
-          debugger;
+          
            this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities=res as LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDto; 
           
           }

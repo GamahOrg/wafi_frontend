@@ -29,6 +29,11 @@ import { PromissoryNoteComponent } from '../promissory-note/promissory-note.comp
 import { CertifiedLicenseDataComponent } from '../certified-license-data/certified-license-data.component';
 import { CertifiedLicenseDataFormComponent } from '../certified-license-data-form/certified-license-data-form.component';
 import { LincenseProjectZonesComponent } from '../Zones/lincense-project-zones/lincense-project-zones.component';
+import { FawriaLicenseprojectMaindataContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-maindata-container/fawria-licenseproject-maindata-container.component';
+import { FawriaLicenseprojectDeedsContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-deeds-container/fawria-licenseproject-deeds-container.component';
+import { FawriaLicenseprojectFeasibilityStudyContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-feasibility-study-container/fawria-licenseproject-feasibility-study-container.component';
+import { FawriaLicenseprojectContactInfoContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-contact-info-container/fawria-licenseproject-contact-info-container.component';
+import { InstantLicenseDeedsComponent } from '../instant-license-deeds/instant-license-deeds.component';
 
 @Component({
   selector: 'app-project-data',
@@ -58,6 +63,50 @@ export class ProjectDataComponent {
       id: 'ProjectBasicDataComponent',
       errNum: 0,
       tabCode: TabCode.licenseProjectMainData,
+      tabErrors: [],
+      isVisible: true,
+    },
+     {
+      icon: '',
+      title: 'البيانات الأساسية',
+      Component: FawriaLicenseprojectMaindataContainerComponent,
+      disabled: false,
+      id: 'fawriaLicenseProjectMainData',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectMainData,
+      tabErrors: [],
+      isVisible: true,
+    },
+     {
+      icon: '',
+      title: 'بيانات التواصل',
+      Component: FawriaLicenseprojectContactInfoContainerComponent,
+      disabled: false,
+      id: 'fawriaLicenseProjectContactInformation',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectContactInformation,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'الصكوك ورخص البناء',
+      Component: FawriaLicenseprojectDeedsContainerComponent,
+      disabled: false,
+      id: 'fawriaLicenseProjectDeeds',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectDeeds,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title: 'بيانات دراسة الجدوى',
+      Component: FawriaLicenseprojectFeasibilityStudyContainerComponent,
+      disabled: false,
+      id: 'fawriaLicenseProjectFeasibilityStudy',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectFeasibilityStudy,
       tabErrors: [],
       isVisible: true,
     },
@@ -128,15 +177,15 @@ export class ProjectDataComponent {
       isVisible: true,
     },
     {
-      icon: '',
-      title: 'الصكوك',
-      Component: ProjectLandTitleDeedsComponent,
-      disabled: false,
-      id: 'ProjectLandTitleDeedsComponent',
-      errNum: 0,
-      tabCode: TabCode.licenseProjectDeed,
-      tabErrors: [],
-      isVisible: true,
+     icon: '',
+     title: 'الصكوك',
+     Component: ProjectLandTitleDeedsComponent,
+     disabled: false,
+     id: 'ProjectLandTitleDeedsComponent',
+     errNum: 0,
+     tabCode: TabCode.licenseProjectDeed,
+     tabErrors: [],
+     isVisible: true,
     },
     {
       icon: '',

@@ -46,6 +46,7 @@ export class LicenseRequestApprovalsComponent implements OnInit, OnDestroy {
     )
   }
   public navigateToDetails(request: LicenseProjectApproval) {
+    
     this.selectedApproval = request;
     this.setSelectedRequestIdInLocalStorage();
     this.routeToRequestDetails();

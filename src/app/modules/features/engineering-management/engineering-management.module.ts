@@ -111,6 +111,8 @@ import { DeveloperProjectListComponent } from './pages/developer-project-list/de
 import { ProjectListService } from './services/project-list.service';
 import { ProjectStatusUpdateComponent } from './pages/project-list/Project-status-update/project-status-update.component';
 import { ExportEngineeringReportComponent } from './pages/ActualPlannedReport/export-engineering-report/export-engineering-report.component';
+import { RecommendationsLogsListComponent } from './pages/recommendations-logs-list/recommendations-logs-list.component';
+import { RecommendationLogsListService } from './services/recommendation-logs-list.service';
 
 @NgModule({
   imports: [
@@ -198,7 +200,8 @@ import { ExportEngineeringReportComponent } from './pages/ActualPlannedReport/ex
     UpdateMonthSubmittedComponent,
     DeveloperProjectListComponent,
     ProjectStatusUpdateComponent,
-    ExportEngineeringReportComponent
+    ExportEngineeringReportComponent,
+    RecommendationsLogsListComponent
   ],
   providers: [
     ProjectListService,
@@ -236,6 +239,7 @@ import { ExportEngineeringReportComponent } from './pages/ActualPlannedReport/ex
     LicenseProjectHealthAndSafetyMonitoringService,
     MonthlyEngineeringReportExternalExpensesService,
     LicenseProjectExchangeDocumentService,
+    RecommendationLogsListService
       
 
   ]

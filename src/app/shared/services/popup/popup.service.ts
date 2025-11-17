@@ -33,22 +33,33 @@ export class PopupService {
   constructor(public dialog: MatDialog) {}
   updatePopupData(data: PopupData) {
     this.popupData.next(data);
-    return this.dialog.open(PopupComponent, {
+    const dialogRef = this.dialog.open(PopupComponent, {
       disableClose: true,
-      width: '80vw',
-      height: '80vh',
+      // width: '80vw',
+      // height: '80vh',
+      maxHeight: '80vh',
       panelClass: data.panelClass,
+      hasBackdrop: true,
     });
+
+    // Prevent backdrop click from closing the dialog
+    dialogRef.backdropClick().subscribe(() => {
+      // Do nothing - prevents backdrop click from closing the dialog
+    });
+
+    return dialogRef;
   }
   updateConfirmationPopupData(
     confirmationData: confirmationPopupData,
     width: string = '600px',
-    height: string = '210px'
+    height: string = 'auto'
   ) {
     this.ConfirmpopupData.next(confirmationData);
-    return this.dialog.open(ConfirmationPopupComponent, {
+    const dialogRef = this.dialog.open(ConfirmationPopupComponent, {
       width: width,
-      height: height,
+      height: 'auto',
+      maxHeight: '90vh',
+      maxWidth: '90vw',
       panelClass: confirmationData.panelClass,
       data: {
         id: confirmationData.id,
@@ -59,11 +70,19 @@ export class PopupService {
       disableClose: true,
       backdropClass: 'confirmDialogComponent',
       hasBackdrop: true,
+      autoFocus: true,
     });
+
+    // Prevent backdrop click from closing the dialog
+    dialogRef.backdropClick().subscribe(() => {
+      // Do nothing - prevents backdrop click from closing the dialog
+    });
+
+    return dialogRef;
   }
   updateNotePopupData(noteData: notePopupData) {
     this.NotePopupData.next(noteData);
-    return this.dialog.open(PopupNoteComponent, {
+    const dialogRef = this.dialog.open(PopupNoteComponent, {
       width: '300',
       height: '600',
       panelClass: noteData.panelClass,
@@ -75,11 +94,19 @@ export class PopupService {
         secondeStaticMessage: noteData.secondeStaticMessage,
         buttonText: noteData.buttonText,
         buttonLink: noteData.buttonLink,
-        surveyTitle:noteData.surveyTitle,        
+        surveyTitle:noteData.surveyTitle,
         surveyLink:noteData.surveyLink
       },
       disableClose: true,
+      hasBackdrop: true,
     });
+
+    // Prevent backdrop click from closing the dialog
+    dialogRef.backdropClick().subscribe(() => {
+      // Do nothing - prevents backdrop click from closing the dialog
+    });
+
+    return dialogRef;
   }
   dismissDialog(): void {
     this.closeDialog.emit();

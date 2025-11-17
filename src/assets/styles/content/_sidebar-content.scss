@@ -55,8 +55,12 @@
   }
 
   nav.nav {
-    max-height: 80vh;
+    max-height: 79vh;
     overflow-y: auto;
+    
+    @media screen and (max-width: 991px) {
+      max-height: 72vh;
+    }
 
     .link-group {
       >.link-group-title {

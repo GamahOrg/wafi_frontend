@@ -1,0 +1,121 @@
+.delete-confirmation-dialog {
+  background-color: #F1F2F2;
+  width: 659px;
+  max-width: 90vw;
+  padding: 16px;
+  border-radius: 12px;
+  opacity: 1;
+
+  .dialog-content {
+    background-color: #FFFFFF;
+    padding: 32px 24px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .dialog-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .delete-icon {
+        width: 5rem;
+        height: 5rem;
+        object-fit: contain;
+      }
+    }
+
+    .dialog-title {
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: #001F21;
+      margin: 0;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      direction: rtl;
+      margin-top: 0.5rem;
+
+      button {
+        min-width: 120px;
+        transition: all 0.2s ease-in-out;
+      }
+
+      .cancel-button {
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #5D5D5D;
+        background-color: #FFFFFF;
+        border: 1px solid #E5E5E5;
+        border-radius: 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #F5F5F5;
+          border-color: #D0D0D0;
+        }
+      }
+
+      .delete-button {
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #FFFFFF;
+        background-color: #E53E3E;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(229, 62, 62, 0.2);
+
+        &:hover {
+          background-color: #C53030;
+          box-shadow: 0 4px 8px rgba(229, 62, 62, 0.3);
+          transform: translateY(-1px);
+        }
+
+        &:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(229, 62, 62, 0.2);
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .delete-confirmation-dialog {
+    width: 100%;
+    padding: 12px;
+
+    .dialog-content {
+      padding: 24px 16px;
+
+      .dialog-icon .delete-icon {
+        width: 4rem;
+        height: 4rem;
+      }
+
+      .dialog-title {
+        font-size: 1.125rem;
+      }
+
+      .dialog-actions {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

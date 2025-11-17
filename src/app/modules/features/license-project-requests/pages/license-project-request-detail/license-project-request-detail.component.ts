@@ -182,31 +182,31 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changePlanSummary}`;
         break;
       case LicenseProjectRequestTypeEnum.ChangeEngineering:
-        debugger;
+        
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeEngineerSummary}`;
         break;
       case LicenseProjectRequestTypeEnum.IncreaseOrDecreaseUnitsNumberOrProjectArea:
-        debugger;
+        
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changespaceorunitssummary}`;
         break;
       case LicenseProjectRequestTypeEnum.ChangeApprovedBuyerOrTenantContractsOfProject:
-        debugger;
+        
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changebuyerortenantcontractsummary}`;
         break;
       case LicenseProjectRequestTypeEnum.ChangeProjectName:
-        debugger;
+        
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeprojectnamesummary}`;
         break;
       case LicenseProjectRequestTypeEnum.AddingDelegator:
-        debugger;
+        
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.addingdelegatorsummary}`;
         break;
       case LicenseProjectRequestTypeEnum.RemovingDelegator:
-        debugger;
+        
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.removingdelegatorsummary}`;
         break;
       case LicenseProjectRequestTypeEnum.ChangeOrAddLicenseProjectUnitModel:
-        debugger;
+        
         this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeoraddunitmodelsummary}`;
         break;
 

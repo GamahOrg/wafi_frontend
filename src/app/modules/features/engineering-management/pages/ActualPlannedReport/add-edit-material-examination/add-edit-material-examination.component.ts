@@ -60,13 +60,13 @@ licenseProjectEngineeringMaterialExamination?: LicenseProjectEngineeringMaterial
 
   
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectEngineeringMaterialExaminationForm.valid) {
       this.showValidation = true;
       return;
     }
 
-    debugger;
+    
     this.licenseProjectEngineeringMaterialExaminationCreateUpdate = this.licenseProjectEngineeringMaterialExaminationForm.value as {} as LicenseProjectEngineeringMaterialExaminationCreateUpdateDto;
     this.licenseProjectEngineeringMaterialExaminationCreateUpdate.id=this.licenseProjectEngineeringMaterialExamination?.id as string;
     this.licenseProjectEngineeringMaterialExaminationCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId=this.licenseProjectEngineeringMaterialExamination?.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;

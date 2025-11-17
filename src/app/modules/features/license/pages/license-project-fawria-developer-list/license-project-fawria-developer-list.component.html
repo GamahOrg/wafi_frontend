@@ -1,0 +1,199 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3">
+      <div class="col-12 col-lg-6">
+        <div class="page-title mb-0">
+          <h5 class="title">قائمة المطورين العقاريين</h5>
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6 d-flex justify-content-end align-items-center"
+      >
+        <button
+          type="button"
+          class="btn"
+          style="
+            background-color: #fff;
+            color: #005257;
+            border: 1px solid #005257;
+          "
+          (click)="openAddModal()"
+        >
+          <i class="material-icons-outlined" style="color: #005257">add</i>
+          إضافة مطور عقاري
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="reqList.totalCount > 0">
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">الرقم الموحّد للمنشأة</th>
+            <th scope="col">اسم المطوّر</th>
+            <th scope="col">درجة تأهيل المطوّر</th>
+            <th scope="col">اسم الموظف الذي قام بالإضافة</th>
+            <th scope="col">تاريخ الاضافة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of reqList.results">
+            <td>
+              <div class="text-dark">
+                {{ request.commercialRegisterNumber }}
+              </div>
+            </td>
+            <td>
+              <div class="text-dark">
+                {{ request.facilityName }}
+              </div>
+            </td>
+            <td>
+              <div class="text-dark">
+                {{ request.qualificationDegree }}
+              </div>
+            </td>
+            <td>
+              <div class="text-dark">
+                {{ request.employeeName }}
+              </div>
+            </td>
+            <td>
+              <span class="text-dark" dir="ltr">{{
+                request.createdOn | date :'yyyy-MM-dd'
+              }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #addDeveloperModal>
+  <div class="modal-overlay">
+    <div class="modal-container">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-title-wrapper">
+          <i class="material-icons-outlined title-icon">add_business</i>
+          <h5 class="modal-title">إضافة مطور عقاري</h5>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Search Form -->
+        <form [formGroup]="searchForm" (ngSubmit)="searchFacility()">
+          <div class="form-group">
+            <label for="commercialRegisterNumber" class="form-label">
+              <span class="text-danger">*</span> الرقم الموحّد للمنشأة
+            </label>
+            <div class="search-input-wrapper">
+              <input
+                type="text"
+                class="form-control"
+                id="commercialRegisterNumber"
+                formControlName="commercialRegisterNumber"
+                placeholder="أدخل الرقم الموحد للمنشأة"
+                [class.is-invalid]="
+                  searchForm.get('commercialRegisterNumber')?.invalid &&
+                  searchForm.get('commercialRegisterNumber')?.touched
+                "
+              />
+              <button
+                type="submit"
+                class="btn btn-verify"
+                [disabled]="isSearching || searchForm.invalid"
+              >
+                <span *ngIf="!isSearching">التحقق من السجل التجاري</span>
+                <span *ngIf="isSearching">
+                  <span class="spinner-border spinner-border-sm ms-2"></span>
+                  جاري البحث...
+                </span>
+              </button>
+            </div>
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                searchForm.get('commercialRegisterNumber')?.invalid &&
+                searchForm.get('commercialRegisterNumber')?.touched
+              "
+            >
+              الرجاء إدخال الرقم الموحد للمنشأة
+            </div>
+        <div class="alert-message" *ngIf="!showAddForm && errorMessage">
+          <div class="alert-content">
+            <i class="material-icons-outlined alert-icon">error_outline</i>
+            <p class="alert-text">
+              {{errorMessage}}
+            </p>
+          </div>
+        </div>
+        </div>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider" *ngIf="facilityInfo"></div>
+
+        <!-- Facility Info Display -->
+        <div *ngIf="facilityInfo" class="facility-info-section">
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-icon-wrapper">
+                <i class="material-icons-outlined">business</i>
+              </div>
+              <div class="info-details">
+                <label class="info-label">اسم المنشأة</label>
+                <div class="info-value">{{ facilityInfo.facilityName }}</div>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon-wrapper">
+                <i class="material-icons-outlined">star_outline</i>
+              </div>
+              <div class="info-details">
+                <label class="info-label">درجة التأهيل</label>
+                <div class="info-value">
+                  {{ facilityInfo.qualificationDegree }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden Form Fields -->
+        <form [formGroup]="addForm" *ngIf="showAddForm">
+          <input type="hidden" formControlName="facilityId" />
+        </form>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer" *ngIf="showAddForm">
+        <button
+          type="button"
+          class="btn btn-add-developer"
+          [disabled]="!showAddForm || addForm.invalid"
+          (click)="addLicenseProject()"
+        >
+          إضافة المطور العقاري
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

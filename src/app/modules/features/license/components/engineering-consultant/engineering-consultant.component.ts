@@ -538,7 +538,7 @@ export class EngineeringConsultantComponent implements OnInit {
 
     // object.engineeringConsultantLicenseNumber =
     //   object.engineeringConsultantLicenseNumber.toString();
-    debugger
+    
     if (this.entity.id !== Guid.empty && this.entity.id) {
       this.update(object, moveToNextTab);
     } else {

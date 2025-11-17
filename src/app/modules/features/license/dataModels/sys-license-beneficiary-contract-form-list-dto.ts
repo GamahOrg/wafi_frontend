@@ -4,8 +4,8 @@ import { SysLicenseBeneficiaryContractFormDto } from './sys-license-beneficiary-
 export class SysLicenseBeneficiaryContractFormListDto {
   public licenseProjectId: string = '';
   public beneficiaryContractFormApproval: boolean = false;
-  public sysLicenseBeneficiaryContractFormDtos: SysLicenseBeneficiaryContractFormDto[] =
-    [];
+  isApprove: boolean = false;
+  public sysLicenseBeneficiaryContractFormDtos: SysLicenseBeneficiaryContractFormDto[] = [];
   BeneficiaryFilesId?: string[] = [];
   beneficiaryFiles: SysFileManagerCreateUpdateDto[] = [];
 }

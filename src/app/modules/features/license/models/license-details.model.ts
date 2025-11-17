@@ -43,6 +43,7 @@ export interface LicenseDetails {
   price: number
   requestOn: Date
   startOn: Date;
+  licenseProjectFarzRequestStatus: LicenseProjectFarzRequestStatusDto;
   licenseRequestType: LicenseRequestType
   licenseRequestVersions: LicenseRequestVersions[]
   licenseProject: LicenseProject
@@ -50,6 +51,23 @@ export interface LicenseDetails {
   licenseRequestCustomerHeaderEventStatus: LicenseRequestCustomerHeaderEventStatus;
  
 }
+
+export interface LicenseProjectFarzRequestStatusDto {
+  id: FarzRequestStatusEnum;
+  name: string;
+}
+
+export enum FarzRequestStatusEnum {
+  //بنتظار وثيقة التملك
+  None = 0,
+  //جاري وثيقة التملك
+  UnderReview = 1,
+  //تم الموافقة على طلب وثيقة التملك
+  Approved = 2,
+  //تم رفض وثيقة التملك لوجود ملاحظات
+  Rejected = 3,
+}
+
 export interface LicenseRequestCustomerHeaderEventStatus {
   allowCompile: boolean
   allowCompileConditionalApproval: boolean

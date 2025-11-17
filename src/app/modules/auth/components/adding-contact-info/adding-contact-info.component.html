@@ -8,7 +8,7 @@
                     <label class="form-label" for="userName">{{localization.userName}}</label>
                     <input type="text" id="control-userName" formControlName="userName" class="form-control"
                         [ngClass]="{'is-invalid': showValidation && controls.userName.errors}" />
-                    <div *ngIf="controls.userName.errors" class="invalid-feedback">
+                    <div *ngIf="controls.userName.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.userName.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <input type="text" formControlName="shortName" id="control-shortName" class="form-control"
                         placeholder="اكتب {{localization.shortName}}"
                         [ngClass]="{'is-invalid': showValidation && controls.shortName.errors}" />
-                    <div *ngIf="controls.shortName.errors" class="invalid-feedback">
+                    <div *ngIf="controls.shortName.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.shortName.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <label class="form-label" for="fullName">{{localization.fullName}}</label>
                     <input type="text" id="control-fullName" formControlName="fullName" class="form-control"
                         [ngClass]="{'is-invalid': showValidation && controls.fullName.errors}" />
-                    <div *ngIf="controls.fullName.errors" class="invalid-feedback">
+                    <div *ngIf="controls.fullName.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.fullName.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <label class="form-label" for="nationality">{{localization.nationality}}</label>
                     <input type="text" id="control-nationality" formControlName="nationality" class="form-control"
                         [ngClass]="{'is-invalid': showValidation && controls.nationality.errors}" />
-                    <div *ngIf="controls.nationality.errors" class="invalid-feedback">
+                    <div *ngIf="controls.nationality.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.nationality.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         <option *ngFor="let nationality of nationalities" [value]="nationality.nationalityName">
                             {{nationality.nationalityName}}</option>
                     </select>
-                    <div *ngIf="controls.nationality.errors" class="invalid-feedback">
+                    <div *ngIf="controls.nationality.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.nationality.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     <input type="text" formControlName="mobile1" class="form-control" id="control-mobile1"
                         placeholder="اكتب {{localization.Mobile1}}"
                         [ngClass]="{'is-invalid': showValidation && controls.mobile1.errors}" />
-                    <div *ngIf="controls.mobile1.errors" class="invalid-feedback">
+                    <div *ngIf="controls.mobile1.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.mobile1.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                         <div *ngIf="controls.mobile1.errors?.['pattern']">{{localization.phoneNumberPattern}}</div>
                         <div *ngIf="controls.mobile1.errors?.['maxlength'] || controls.mobile1.errors?.['minlength']">
@@ -87,7 +87,7 @@
                     <input type="text" formControlName="mobile2" class="form-control" id="control-mobile2"
                         placeholder="اكتب {{localization.Mobile2}}"
                         [ngClass]="{'is-invalid': showValidation && controls.mobile2.errors}" />
-                    <div *ngIf="controls.mobile2.errors" class="invalid-feedback">
+                    <div *ngIf="controls.mobile2.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.mobile2.errors?.['pattern']">{{localization.phoneNumberPattern}}</div>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                     <input type="email" formControlName="email" id="control-email" class="form-control"
                         placeholder="اكتب {{localization.Email}}"
                         [ngClass]="{'is-invalid': showValidation && controls.email.errors}" />
-                    <div *ngIf="controls.email.errors" class="invalid-feedback">
+                    <div *ngIf="controls.email.errors" class="invalid-feedback d-block">
                         <div *ngIf="controls.email.errors?.['required']">{{localization.requiredErrorMsg}}</div>
                         <div *ngIf="controls.email.errors?.['pattern']">{{localization.emailPattern}}</div>
                     </div>

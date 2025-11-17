@@ -73,7 +73,7 @@ export class ProjectStatusUpdateComponent {
     const statusId = this.ProjectStatusForm.controls.statusId.value as string;
 
     if (!projectId) return;
-    debugger
+    
     this.subscriptions.push(
 
       this._projectListService.UpdateLicenseProjectStatus(projectId, statusId).subscribe((res) => {

@@ -6,6 +6,7 @@ import { LicenseNatureTypeEnum } from "../enums/license-nature-type";
 
 export class ProjectBasicDataDto {
   id: string = '';
+  licenseProjectNatureTypeId: number | null = null;
   name: string = '';
   projectDescription: string = '';
   projectServices: string = '';
@@ -19,6 +20,7 @@ export class ProjectBasicDataDto {
   achievementRate!: number;
   landTotalSpace!: number;
   landValue!: number;
+  LicenseProjectNatureTypeId!:number;
   //hasStarted!:boolean | null;
   isProjectStarted!: boolean | null;
   engineeringConsultantReportFileId!: string | null;

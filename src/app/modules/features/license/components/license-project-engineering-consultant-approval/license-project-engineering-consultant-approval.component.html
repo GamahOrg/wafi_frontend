@@ -1,684 +1,870 @@
 <div class="col-12 col-md-12">
-
   <div class="row row-gap-4">
     <div class="col-12 col-lg-6">
       <div class="key">المشروع</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.licenseProject &&
-        engineeringConsultantApproval.licenseProject.name? engineeringConsultantApproval.licenseProject.name: "--"}}
+        {{
+          engineeringConsultantApproval &&
+          engineeringConsultantApproval.licenseProject &&
+          engineeringConsultantApproval.licenseProject.name
+            ? engineeringConsultantApproval.licenseProject.name
+            : "--"
+        }}
       </div>
     </div>
-    <div class="col-12 col-lg-6">
+    <!-- <div class="col-12 col-lg-6">
       <div class="key">المفوض</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.delegatorCustomer &&
-        engineeringConsultantApproval.delegatorCustomer?.fullName ?
-        engineeringConsultantApproval.delegatorCustomer?.fullName: "--"}}
+        {{
+          engineeringConsultantApproval &&
+          engineeringConsultantApproval.delegatorCustomer &&
+          engineeringConsultantApproval.delegatorCustomer?.fullName
+            ? engineeringConsultantApproval.delegatorCustomer?.fullName
+            : "--"
+        }}
       </div>
-    </div>
+    </div> -->
 
     <div class="col-12 col-lg-6">
       <div class="key">رقم السجل التجاري</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.facility &&
-          engineeringConsultantApproval.facility?.commercialRegisterNumber ?
-          engineeringConsultantApproval.facility?.commercialRegisterNumber: "--"}}
+        {{
+          engineeringConsultantApproval &&
+          engineeringConsultantApproval.facility &&
+          engineeringConsultantApproval.facility?.commercialRegisterNumber
+            ? engineeringConsultantApproval.facility?.commercialRegisterNumber
+            : "--"
+        }}
       </div>
     </div>
     <div class="col-12 col-lg-6">
       <div class="key">اسم الشركة</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.facility &&
-          engineeringConsultantApproval.facility?.facilityName ?
-          engineeringConsultantApproval.facility?.facilityName: "--"}}
+        {{
+          engineeringConsultantApproval &&
+          engineeringConsultantApproval.facility &&
+          engineeringConsultantApproval.facility?.facilityName
+            ? engineeringConsultantApproval.facility?.facilityName
+            : "--"
+        }}
       </div>
     </div>
 
     <div class="col-12 col-lg-6">
       <div class="key">البريد الإلكتروني</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.facility &&
-          engineeringConsultantApproval.facility?.email ?
-          engineeringConsultantApproval.facility?.email: "--"}}
+        {{
+          engineeringConsultantApproval &&
+          engineeringConsultantApproval.facility &&
+          engineeringConsultantApproval.facility?.email
+            ? engineeringConsultantApproval.facility?.email
+            : "--"
+        }}
       </div>
     </div>
     <div class="col-12 col-lg-6">
       <div class="key">رقم الجوال</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.facility &&
-          engineeringConsultantApproval.facility?.telephone ?
-          engineeringConsultantApproval.facility?.telephone: "--"}}
+        {{
+          engineeringConsultantApproval &&
+          engineeringConsultantApproval.facility &&
+          engineeringConsultantApproval.facility?.telephone
+            ? engineeringConsultantApproval.facility?.telephone
+            : "--"
+        }}
       </div>
     </div>
 
-    <div class="col-12 col-lg-6"
+    <!-- <div class="col-12 col-lg-6"
          *ngIf="engineeringConsultantApproval && engineeringConsultantApproval.isApproved">
       <div class="key">تاريخ الموافقة</div>
       <div class="value" *ngIf="engineeringConsultantApproval && engineeringConsultantApproval.approvedOn">
       {{ engineeringConsultantApproval?.approvedOn | date:"MM/dd/yyyy" }}
       </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="key">هل تمت الموافقة</div>
+    </div> -->
+
+    <div
+      class="col-12 col-lg-6"
+      *ngIf="
+        engineeringConsultantApproval &&
+        engineeringConsultantApproval.isApproved &&
+        engineeringConsultantApproval.approvedOn
+      "
+    >
+      <div class="key">تاريخ الموافقة</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.isApproved ? 'نعم' : 'لا'}}
+        {{ engineeringConsultantApproval.approvedOn | date : "MM/dd/yyyy" }}
       </div>
     </div>
 
+    <div
+      class="col-12 col-lg-6"
+      *ngIf="
+        engineeringConsultantApproval &&
+        !engineeringConsultantApproval.isApproved &&
+        engineeringConsultantApproval.approvedOn
+      "
+    >
+      <div class="key">تاريخ الرفض</div>
+      <div class="value">
+        {{ engineeringConsultantApproval.approvedOn | date : "MM/dd/yyyy" }}
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <!-- <div class="key">هل تمت الموافقة</div>
+      <div class="value">
+        {{
+          engineeringConsultantApproval.approvedOn != null
+            ? engineeringConsultantApproval.isApproved
+              ? "نعم"
+              : "لا"
+            : "قيد الانتظار"
+        }}
+      </div> -->
+
+      <!-- <div class="value">
+        {{engineeringConsultantApproval && engineeringConsultantApproval.isApproved ? 'نعم' : 'لا'}}
+      </div> -->
+    </div>
   </div>
 
-
-  <div class="row row-gap-4">
+  <!-- <div class="row row-gap-4">
     <div class="col-12 col-lg-6">
       <div class="key">رقم ترخيص المستشار الهندسي</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.engineeringConsultantLicenseNumber ?
-          engineeringConsultantApproval.engineeringConsultantLicenseNumber: "--"}}
+        {{
+          engineeringConsultantApproval &&
+          engineeringConsultantApproval.engineeringConsultantLicenseNumber
+            ? engineeringConsultantApproval.engineeringConsultantLicenseNumber
+            : "--"
+        }}
       </div>
     </div>
     <div class="col-12 col-lg-6">
       <div class="key">undertakeEngineeringStaffRaise</div>
       <div class="value">
-        {{engineeringConsultantApproval && engineeringConsultantApproval.undertakeEngineeringStaffRaise ? 'نعم' : 'لا'}}
+        {{
+          engineeringConsultantApproval &&
+          engineeringConsultantApproval.undertakeEngineeringStaffRaise
+            ? "نعم"
+            : "لا"
+        }}
       </div>
     </div>
-  </div>
+  </div> -->
 
 
-  <label class="form-label">اتفاقية عقد الاستشاري الهندسي</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-6">
-      <div class="key">المدينة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval && engineeringConsultantApproval.city &&
-          engineeringConsultantApproval.city?.cityName ?
-          engineeringConsultantApproval.city?.cityName: "--"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="key">عدد أيام عمل للمراجعة واعتماد وثيقة الصرف المقدمة</div>
-      <div class="value">
-        {{engineeringConsultantApproval.workDaysCount}}
-        <!-- {{engineeringConsultantApproval && engineeringConsultantApproval.workDaysCount
-          engineeringConsultantApproval.workDaysCount?: "--"}} -->
-      </div>
-    </div>
-
-    <div class="col-12 col-lg-12">
-      <div class="key">الشروط الاختيارية</div>
-      <!-- <div class="value">
-          {{engineeringConsultantApproval.optionalTerms}}
-        </div> -->
-      <div class="value"
-           [innerHTML]="engineeringConsultantApproval.optionalTerms"></div>
-    </div>
-  </div>
-
-  <!-- ============= -->
-  <label class="form-label">بيان تواجد طاقم الإشراف الهندسى بالشهر</label>
-
-  <br />
-
-  <label class="form-label">مدير المشروع</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffPMNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffPMExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffPMStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffPMMonthes}}
-      </div>
-    </div>
-  </div>
-
-  <label class="form-label">مهندس انشائي</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffStructuralEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffStructuralEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffStructuralEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffStructuralEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-  <label class="form-label">مهندس معماري</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffArchitectEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffArchitectEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffArchitectEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffArchitectEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">مهندس ميكانيكا</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffMechanicalEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffMechanicalEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffMechanicalEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffMechanicalEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-  <label class="form-label">مهندس كهرباء</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffElectricalEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffElectricalEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffElectricalEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffElectricalEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-  <label class="form-label">مهندس مساحة</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffSurveyEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffSurveyEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffSurveyEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.superviseStaffSurveyEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================== -->
-  <label class="form-label">بيان تواجد طاقم الكادر المساعد للاشراف الهندسي بالشهر</label>
-  <!-- ============================ -->
-
-  <br />
-
-  <label class="form-label">مهندس انشائي</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-        {{engineeringConsultantApproval.assistantStaffStructuralEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-        {{engineeringConsultantApproval.assistantStaffStructuralEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-        {{engineeringConsultantApproval.assistantStaffStructuralEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-        {{engineeringConsultantApproval.assistantStaffStructuralEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">مهندس معماري</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffArchitectEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffArchitectEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffArchitectEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffArchitectEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">مهندس ميكانيكا</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffMechanicalEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffMechanicalEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffMechanicalEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffMechanicalEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">مهندس كهرباء</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffElectricalEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffElectricalEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffElectricalEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffElectricalEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">مهندس مساحة</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffSurveyEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffSurveyEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffSurveyEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.assistantStaffSurveyEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-  <!-- ====================================== -->
-  <label class="form-label">بيان تواجد طاقم الكادر للتخصصات الاخري للاشراف الهندسى بالشهر</label>
-  <!-- ========================================== -->
-
-  <br />
-
-  <label class="form-label">أخصائي ضبط وثائق</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesDocumentControlSpecialistNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesDocumentControlSpecialistExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesDocumentControlSpecialistStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesDocumentControlSpecialistMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">أخصائي صحةوسلامة</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesHealthAndSafetySpecialistNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesHealthAndSafetySpecialistExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesHealthAndSafetySpecialistStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesHealthAndSafetySpecialistMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">مهندس جودة</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesQualityEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesQualityEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesQualityEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesQualityEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">مهنس تخطيط</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesPlanningEngineerNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesPlanningEngineerExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesPlanningEngineerStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-
-        {{engineeringConsultantApproval.otherSpecialtiesPlanningEngineerMonthes}}
-      </div>
-    </div>
-  </div>
-
-
-  <label class="form-label">حاصر كميات</label>
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-3">
-      <div class="key">العدد</div>
-      <div class="value">
-        {{engineeringConsultantApproval.otherSpecialtiesBlockQuantitiesNumber}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">عدد سنوات الخبرة</div>
-      <div class="value">
-        {{engineeringConsultantApproval.otherSpecialtiesBlockQuantitiesExperience}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">تاريخ بداية الدوام</div>
-      <div class="value">
-        {{engineeringConsultantApproval.otherSpecialtiesBlockQuantitiesStartDate | date:"MM/dd/yyyy"}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key">اشهر التواجد</div>
-      <div class="value">
-        {{engineeringConsultantApproval.otherSpecialtiesBlockQuantitiesMonthes}}
-      </div>
-    </div>
-  </div>
-
-  <div class="row row-gap-4">
-    <div class="col-12 col-lg-12">
-      <div class="key">إقرار زيادة الكادر الهندسي</div>
-      <div class="value">
-        {{engineeringConsultantApproval.endorsementIncreaseEngineeringStaff ? 'لا' : 'نعم'}}
-      </div>
-    </div>
-  </div>
-
-  <div class="row row-gap-4"
-       *ngFor="let data of engineeringConsultantApproval.licenseProjectEngineeringConsultantAuthorizedToSignDelegators">
-    <div class="col-12 col-lg-6">
-      <div class="key">المفوض</div>
-      <div class="value">
-        {{data.delegatorCustomer?.fullName}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="key">هل تمت موافقة المفوض؟</div>
-      <div class="value">
-        {{data.delegatorAcknowledgment ? 'نعم' : 'لا'}}
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="key">ملف الاتفاقية</div>
-      <div class="value">
+    <!-- <label class="form-label">اتفاقية عقد الاستشاري الهندسي</label> -->
+    <div class="row row-gap-4">
+      <!-- <div class="col-12 col-lg-6">
+        <div class="key">المدينة</div>
         <div class="value">
-          <a [href]="baseUrl + data.engineeringConsultantDelegatorSignModelFile.filePath"
-             target="_blank">
-            {{data.engineeringConsultantDelegatorSignModelFile.fileDescription}}</a>
+          {{
+            engineeringConsultantApproval &&
+            engineeringConsultantApproval.city &&
+            engineeringConsultantApproval.city?.cityName
+              ? engineeringConsultantApproval.city?.cityName
+              : "--"
+          }}
+        </div>
+      </div> -->
+      <!-- <div class="col-12 col-lg-6">
+        <div class="key">عدد أيام عمل للمراجعة واعتماد وثيقة الصرف المقدمة</div>
+        <div class="value">
+          {{ engineeringConsultantApproval.workDaysCount }}
+ 
+        </div>
+      </div> -->
+
+      <!-- <div class="col-12 col-lg-12">
+        <div class="key">الشروط الاختيارية</div>
+      
+        <div
+          class="value"
+          [innerHTML]="engineeringConsultantApproval.optionalTerms"
+        ></div>
+      </div> -->
+    </div>
+
+    <ng-container *ngIf="false">
+    
+    <!-- ============= -->
+    <label class="form-label">بيان تواجد طاقم الإشراف الهندسى بالشهر</label>
+
+    <br />
+
+    <label class="form-label">مدير المشروع</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{ engineeringConsultantApproval.superviseStaffPMNumber }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{ engineeringConsultantApproval.superviseStaffPMExperience }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffPMStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{ engineeringConsultantApproval.superviseStaffPMMonthes }}
         </div>
       </div>
     </div>
-  </div>
 
+    <label class="form-label">مهندس انشائي</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffStructuralEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffStructuralEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffStructuralEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffStructuralEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس معماري</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffArchitectEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffArchitectEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffArchitectEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffArchitectEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس ميكانيكا</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffMechanicalEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffMechanicalEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffMechanicalEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffMechanicalEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس كهرباء</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffElectricalEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffElectricalEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffElectricalEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffElectricalEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس مساحة</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{ engineeringConsultantApproval.superviseStaffSurveyEngineerNumber }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffSurveyEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffSurveyEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.superviseStaffSurveyEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== -->
+    <label class="form-label"
+      >بيان تواجد طاقم الكادر المساعد للاشراف الهندسي بالشهر</label
+    >
+    <!-- ============================ -->
+
+    <br />
+
+    <label class="form-label">مهندس انشائي</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffStructuralEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffStructuralEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffStructuralEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffStructuralEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس معماري</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffArchitectEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffArchitectEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffArchitectEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffArchitectEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس ميكانيكا</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffMechanicalEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffMechanicalEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffMechanicalEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffMechanicalEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس كهرباء</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffElectricalEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffElectricalEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffElectricalEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffElectricalEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس مساحة</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{ engineeringConsultantApproval.assistantStaffSurveyEngineerNumber }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffSurveyEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffSurveyEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.assistantStaffSurveyEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================== -->
+    <label class="form-label"
+      >بيان تواجد طاقم الكادر للتخصصات الاخري للاشراف الهندسى بالشهر</label
+    >
+    <!-- ========================================== -->
+
+    <br />
+
+    <label class="form-label">أخصائي ضبط وثائق</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesDocumentControlSpecialistNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesDocumentControlSpecialistExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesDocumentControlSpecialistStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesDocumentControlSpecialistMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">أخصائي صحةوسلامة</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesHealthAndSafetySpecialistNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesHealthAndSafetySpecialistExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesHealthAndSafetySpecialistStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesHealthAndSafetySpecialistMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهندس جودة</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesQualityEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesQualityEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesQualityEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesQualityEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">مهنس تخطيط</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesPlanningEngineerNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesPlanningEngineerExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesPlanningEngineerStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesPlanningEngineerMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <label class="form-label">حاصر كميات</label>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-3">
+        <div class="key">العدد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesBlockQuantitiesNumber
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">عدد سنوات الخبرة</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesBlockQuantitiesExperience
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">تاريخ بداية الدوام</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesBlockQuantitiesStartDate
+              | date : "MM/dd/yyyy"
+          }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key">اشهر التواجد</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.otherSpecialtiesBlockQuantitiesMonthes
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-12">
+        <div class="key">إقرار زيادة الكادر الهندسي</div>
+        <div class="value">
+          {{
+            engineeringConsultantApproval.endorsementIncreaseEngineeringStaff
+              ? "لا"
+              : "نعم"
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row row-gap-4"
+      *ngFor="
+        let data of engineeringConsultantApproval.licenseProjectEngineeringConsultantAuthorizedToSignDelegators
+      "
+    >
+      <div class="col-12 col-lg-6">
+        <div class="key">المفوض</div>
+        <div class="value">
+          {{ data.delegatorCustomer?.fullName }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">هل تمت موافقة المفوض؟</div>
+        <div class="value">
+          {{ data.delegatorAcknowledgment ? "نعم" : "لا" }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">ملف الاتفاقية</div>
+        <div class="value">
+          <div class="value">
+            <a
+              [href]="
+                baseUrl +
+                data.engineeringConsultantDelegatorSignModelFile.filePath
+              "
+              target="_blank"
+            >
+              {{
+                data.engineeringConsultantDelegatorSignModelFile.fileDescription
+              }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+ </ng-container>
+
+<div class="col-12 col-lg-6">
+            <div class="key">ملف الاتفاقية</div>
+            <div class="value">
+                
+            <a  *ngIf="
+                engineeringConsultantApproval &&
+                engineeringConsultantApproval.agreementFile
+              "
+                [href]="baseUrl +engineeringConsultantApproval.agreementFile.filePath
+                "
+                id="link-engineeringConsultantReportFile"
+                target="_blank"
+              >
+                {{
+                  'عرض'
+                }}</a
+              >
+                <span *ngIf="!engineeringConsultantApproval.agreementFile || !engineeringConsultantApproval.agreementFile.id">جاري إعداد الملف </span>
+              
+            </div>
+        </div>
 
 </div>

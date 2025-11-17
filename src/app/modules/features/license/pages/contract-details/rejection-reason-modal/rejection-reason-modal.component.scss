@@ -1,0 +1,196 @@
+// ==========================================
+// Color Variables
+// ==========================================
+$primary-teal: #005257;
+$primary-black: #001F21;
+$border-color: #D1D5DB;
+$text-gray: #6B7280;
+$bg-gray: #F9FAFB;
+
+// ==========================================
+// Font Variables
+// ==========================================
+$font-family: 'IBM Plex Sans Arabic', sans-serif;
+
+// ==========================================
+// Modal Backdrop
+// ==========================================
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 20px;
+  direction: rtl;
+}
+
+// ==========================================
+// Modal Container
+// ==========================================
+.modal-container {
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ==========================================
+// Modal Header
+// ==========================================
+.modal-header {
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.modal-title {
+  font-family: $font-family;
+  font-size: 20px;
+  font-weight: 600;
+  color: $primary-black;
+  margin: 0;
+  text-align: right;
+}
+
+// ==========================================
+// Modal Body
+// ==========================================
+.modal-body {
+  padding: 24px;
+}
+
+.rejection-textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 12px 16px;
+  font-family: $font-family;
+  font-size: 16px;
+  color: $primary-black;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &::placeholder {
+    color: #9CA3AF;
+  }
+
+  &:focus {
+    border-color: $primary-teal;
+    box-shadow: 0 0 0 3px rgba(0, 82, 87, 0.1);
+  }
+
+  &:hover {
+    border-color: #9CA3AF;
+  }
+}
+
+// ==========================================
+// Modal Footer
+// ==========================================
+.modal-footer {
+  padding: 20px 24px 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  direction: rtl;
+}
+
+// ==========================================
+// Buttons
+// ==========================================
+.btn-submit {
+  background-color: $primary-teal;
+  color: white;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  min-width: 140px;
+
+  &:hover:not(:disabled) {
+    background-color: darken($primary-teal, 8%);
+  }
+
+  &:active:not(:disabled) {
+    background-color: darken($primary-teal, 12%);
+  }
+
+  &:disabled {
+    background-color: #B1B6B8;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.btn-cancel {
+  background-color: white;
+  color: $primary-black;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 10px 24px;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+
+  &:hover {
+    background-color: $bg-gray;
+    border-color: #9CA3AF;
+  }
+
+  &:active {
+    background-color: #F3F4F6;
+  }
+}
+
+// ==========================================
+// Responsive Design
+// ==========================================
+@media (max-width: 576px) {
+  .modal-container {
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+
+    .btn-submit,
+    .btn-cancel {
+      width: 100%;
+    }
+  }
+}

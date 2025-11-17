@@ -1,0 +1,194 @@
+
+<ng-container>
+  <form class="d-flex flex-column h-100" id="form-bankInfoForm" [formGroup]="bankInfoForm">
+
+    <!-- Header -->
+    <div class="tab-data-header mb-4 d-flex align-items-center">
+      <div class="icon me-2"><span class="material-icons">list_alt</span></div>
+      <h6 class="title mb-0">{{ localization.title }}</h6>
+    </div>
+test
+    <!-- Form Row -->
+    <div class="row g-3">
+      <!-- g-3 adds some spacing between columns -->
+      <!-- Bank Name Dropdown -->
+      <!-- Bank Name (Single Select) -->
+      <div class="col-lg-6 col-md-12">
+        <div class="form-group mb-4">
+          <label class="form-label"><span class="text-danger">*</span>{{ localization.bankName }}</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select id="control-bankId" formControlName="bankId">
+              <mat-option [value]="null">{{ localization.selectBankName }}</mat-option>
+              <mat-option *ngFor="let bank of banks" [value]="bank.id">{{ bank.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error *ngIf="controls.bankId?.hasError('required') && showValidation">
+            {{ localization.requiredErrorMsg }}
+          </mat-error>
+        </div>
+      </div>
+
+
+      <div class="col-lg-6 col-md-12">
+        <label class="form-label">
+          <span class="text-danger">*</span>{{ localization.delegatorName }}
+        </label>
+
+        <!-- Native Multiple Select -->
+        <select multiple
+                class="form-select custom-multiple-select"
+                id="delegator-select">
+          <option *ngFor="let customer of subCustomerList"
+                  [value]="customer.id"
+                  [selected]="delegatorIds.includes(customer.id)"
+                  (click)="toggleDelegator(customer.id)">
+            {{ customer.fullName }}
+          </option>
+        </select>
+
+        <!-- Validation -->
+        <div *ngIf="controls.delegatorCustomerIds?.hasError('required') && showValidation"
+             class="text-danger mt-1">
+          {{ localization.requiredErrorMsg }}
+        </div>
+
+        <!-- Selected Values (Chips Style) -->
+        <div class="selected-values mt-3"
+             *ngIf="delegatorIds?.length">
+
+          <div class="selected-chip"
+               *ngFor="let id of bankInfoForm.value.delegatorCustomerIds">
+            {{ getCustomerName(id) }}
+            <button type="button"
+                    class="remove-btn"
+                    (click)="removeDelegator(id)"
+                    aria-label="remove">
+              &times;
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Delegator Multi-Select -->
+      <!--<div class="col-lg-6 col-md-12">
+        <label class="form-label"><span class="text-danger">*</span>{{ localization.delegatorName }}</label>
+
+        <mat-form-field appearance="outline" class="w-100">-->
+          <!--<mat-label>{{ localization.delegatorName }}</mat-label>-->
+          <!--<mat-select formControlName="delegatorCustomerIds" multiple>
+            <mat-select-trigger>
+              <mat-chip-list>
+                <mat-chip *ngFor="let customerId of bankInfoForm.value.delegatorCustomerIds"
+                          (removed)="removeDelegator(customerId)">
+                  {{ getCustomerName(customerId) }}
+                  <button matChipRemove aria-label="remove">&times;</button>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-select-trigger>
+            <mat-option *ngFor="let customer of subCustomerList" [value]="customer.id">
+              {{ customer.fullName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="controls.delegatorCustomerIds?.hasError('required') && showValidation">
+            {{ localization.requiredErrorMsg }}
+          </mat-error>
+        </mat-form-field>
+      </div>-->
+
+      <!-- Tax Numbers Row -->
+      <div class="row mb-3">
+        <!-- Saudi Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">*</span> الرقم الضريبى السعودى</label>
+            <input
+              type="text"
+              class="form-control"
+              id="control-saudiTaxNumber"
+              formControlName="saudiTaxNumber"
+              placeholder="الرقم الضريبى السعودى"
+            />
+            <mat-error
+              *ngIf="controls['saudiTaxNumber']?.hasError('required') && showValidation"
+            >
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+
+        <!-- FATCA Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">*</span> الرقم الضريبى FATCA</label>
+            <input
+              type="text"
+              class="form-control"
+              id="control-fatcaTaxNumber"
+              formControlName="fatcaTaxNumber"
+              placeholder="الرقم الضريبى FATCA"
+            />
+            <mat-error
+              *ngIf="controls['fatcaTaxNumber']?.hasError('required') && showValidation"
+            >
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+
+        <!-- CRS Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">*</span> الرقم الضريبى CRS</label>
+            <input
+              type="text"
+              class="form-control"
+              id="control-crsTaxNumber"
+              formControlName="crsTaxNumber"
+              placeholder="الرقم الضريبى CRS"
+            />
+            <mat-error
+              *ngIf="controls['crsTaxNumber']?.hasError('required') && showValidation"
+            >
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terms and Conditions Row -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="form-group mb-4">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="control-approvedBankTermsConditions"
+                formControlName="approvedBankTermsConditions"
+              />
+              <label class="form-check-label" for="control-approvedBankTermsConditions">
+                <span class="required-star">*</span> {{ localization.approvedBankTermsConditions }}
+              </label>
+            </div>
+            <mat-error
+              *ngIf="controls['approvedBankTermsConditions']?.hasError('required') && showValidation"
+            >
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+
+
+
+
+    <!-- Navigation Buttons -->
+    <div class="mt-auto">
+      <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    </div>
+
+  </form>
+</ng-container>

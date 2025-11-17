@@ -35,6 +35,13 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
     allowedExtensions: ['.pdf'],
     allowedExtensionsText: '.pdf'
   } as FileUploader;
+
+  logoFileUploaderData: FileUploader = {
+    multiple: false,
+    allowedExtensions: ['.jpg', '.png', '.jpeg'],
+    allowedExtensionsText: '.jpg, .png, .jpeg'
+  } as FileUploader;
+  
   mueltiFilesUploaderData: FileUploader = {
     multiple: true
   } as FileUploader;
@@ -207,6 +214,10 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
   }
   public onUploadQualificationValFile($event: any): void {
     this.FacilityBasicUpdateInfo.qualificationValFileManagerId = $event.eventRes.data[0].id;
+  }
+
+  public onUploadLogoFile($event: any): void {
+    this.FacilityBasicUpdateInfo.logoFileId = $event.eventRes.data[0].id;
   }
 
   onUploadSocialInsuranceEmployeesFile($event: any): void {

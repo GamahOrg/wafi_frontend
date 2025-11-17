@@ -1,0 +1,260 @@
+.units-table {
+  th, td {
+    text-align: right;
+    vertical-align: middle;
+    padding: 1rem;
+    font-size: 14px;
+  }
+
+  thead {
+    th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      color: #495057;
+      border-bottom: 2px solid #dee2e6;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #dee2e6;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f8f9fa;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      color: #212529;
+    }
+  }
+}
+
+// نص نوع الوحدة
+.unit-type-text {
+  color: #212529;
+  font-weight: 500;
+}
+
+// نص كود الوحدة
+.unit-code-text {
+  color: #212529;
+  font-weight: 400;
+}
+
+// نص المساحة
+.area-text {
+  color: #212529;
+  font-weight: 500;
+}
+
+// نص نموذج الوحدة
+.unit-model-text {
+  color: #212529;
+  font-weight: 400;
+}
+
+// نص السعر
+.price-text {
+  color: #212529;
+  font-weight: 500;
+}
+
+// أيقونة الريال
+.riyal-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+// نص تاريخ التسليم
+.delivery-date-text {
+  color: #6c757d;
+  font-weight: 400;
+}
+
+// حالة الوحدة
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  &.status-available {
+    background-color: #d4edda;
+    color: #93370D;
+
+    .status-dot {
+      background-color: #93370D;
+    }
+  }
+
+  &.status-sold {
+    background-color: #ECFDF3;
+    color: #085D3A;
+
+    .status-dot {
+      background-color: #085D3A;
+    }
+  }
+
+  &.status-other {
+    background-color: #FFFAEB;
+    color: #93370D;
+
+    .status-dot {
+      background-color: #93370D;
+    }
+  }
+}
+
+// زر الإجراءات
+.btn-action {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+  }
+}
+
+// تنسيق الكارد
+.card {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  .card-body {
+    padding: 1.5rem;
+  }
+}
+
+// تنسيق الفلاتر
+.form-select {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 14px;
+  color: #495057;
+  transition: border-color 0.15s ease-in-out;
+
+  // &:focus {
+  //   border-color: #80bdff;
+  //   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  // }
+}
+
+.input-group {
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px 0 0 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+
+    // &:focus {
+    //   border-color: #80bdff;
+    //   box-shadow: none;
+    // }
+  }
+
+  .input-group-text {
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+
+    i {
+      color: #6c757d;
+    }
+  }
+}
+
+.search-input-group {
+  .input-group-text {
+    border-left: none;
+    background-color: white !important;
+  }
+
+  .form-control {
+    border-right: none;
+
+    &:focus {
+      border-right: none;
+      box-shadow: none;
+    }
+  }
+
+  // When input is focused, style the icon container too
+  .form-control:focus ~ .input-group-text,
+  .input-group-text:has(~ .form-control:focus) {
+    border-color: inherit;
+  }
+}
+
+// الأيقونات
+.bi {
+  font-size: 16px;
+}
+
+// تنسيق العنوان
+h4 {
+  color: #212529;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.text-muted {
+  color: #6c757d !important;
+  font-size: 14px;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .units-table {
+    font-size: 12px;
+
+    th, td {
+      padding: 0.75rem 0.5rem;
+    }
+  }
+
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+// أيقونة الريال
+.riyal-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}

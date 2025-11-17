@@ -120,7 +120,7 @@ export class MonthlyEngineeringSupervisionReportsQualityAndBusinessProgressCompo
 
     const subscriptions = forkJoin(requests).subscribe((results) => {
       if (results && results[0]) {
-        debugger
+        
         this.showRateFlag = true;
         this.licenseProjectEngineeringActualQualityPlanAndAssurance=results[0] as LicenseProjectEngineeringActualQualityPlanAndAssuranceDto;
       }

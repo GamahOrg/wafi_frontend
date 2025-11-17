@@ -14,17 +14,22 @@ import { EngineeringSupervisionReportActualProjectStatusSummaryService } from '.
 @Component({
   selector: 'app-add-edit-actual-relative-weight',
   templateUrl: './add-edit-actual-relative-weight.component.html',
-  styleUrls: ['./add-edit-actual-relative-weight.component.scss']
+  styleUrls: ['./add-edit-actual-relative-weight.component.scss'],
 })
 export class AddEditActualRelativeWeightComponent {
   subscriptions: Subscription[] = [];
   actualValueReport?: ActualValueReportPagingListDto;
   constructionWorkStatusCreateUpdate?: ConstructionWorkStatusCreateUpdateDto;
-  licenseProjectEngineeringConstructionWorkStatusForm =
-    this._formBuilder.group({
-      actualMonthlyPlannedCompletionPercentage: this._formBuilder.control<number | null>(null, [Validators.required]),
-      notes: this._formBuilder.control<string | null>(null, [Validators.required]),
-    });
+  licenseProjectEngineeringConstructionWorkStatusForm = this._formBuilder.group(
+    {
+      actualMonthlyPlannedCompletionPercentage: this._formBuilder.control<
+        number | null
+      >(null, [Validators.required]),
+      notes: this._formBuilder.control<string | null>(null, [
+        Validators.required,
+      ]),
+    }
+  );
   totalContrastCompletionRateColor?: string;
   contrastCompletionRateColor?: string;
   get controls() {
@@ -34,7 +39,7 @@ export class AddEditActualRelativeWeightComponent {
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   showValidation: boolean = false;
   constructionWorkStatusActual?: ConstructionWorkStatusActualDto;
-  licenseProjectEngineeringActualRelativeWeight?: LicenseProjectEngineeringActualRelativeWeightDto
+  licenseProjectEngineeringActualRelativeWeight?: LicenseProjectEngineeringActualRelativeWeightDto;
 
   constructor(
     private _engineeringSupervisionReportActualQualityAndBusinessService: EngineeringSupervisionReportActualQualityAndBusinessService,
@@ -42,123 +47,140 @@ export class AddEditActualRelativeWeightComponent {
     private _formBuilder: FormBuilder,
     private _toastrNotificationService: ToastrNotificatioService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-    private _engineeringSupervisionReportActualProjectStatusSummaryService: EngineeringSupervisionReportActualProjectStatusSummaryService,
-
-
-  ) { }
+    private _engineeringSupervisionReportActualProjectStatusSummaryService: EngineeringSupervisionReportActualProjectStatusSummaryService
+  ) {}
 
   ngOnInit(): void {
     this.observePopupEvents();
     this.getLicenseProjectIdStorage();
   }
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    debugger;
-    if (this.licenseProjectId)
-      this.getmonthDate()
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+
+    if (this.licenseProjectId) this.getmonthDate();
   }
   getmonthDate() {
-    debugger;
     this.subscriptions.push(
-      this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
-        debugger;
-        if (res) {
-          debugger;
-          this.actualValueReport = res as ActualValueReportPagingListDto;
-          this.monthDate = this.actualValueReport.monthDate as Date;
-          this.getLicenseProjectEngineeringActualRelativeWeight();
-        }
-      })
-    )
+      this._engineeringSupervisionReportActualProjectStatusSummaryService
+        .getmonthDate()
+        .subscribe((res) => {
+          if (res) {
+            this.actualValueReport = res as ActualValueReportPagingListDto;
+            this.monthDate = this.actualValueReport.monthDate as Date;
+            this.getLicenseProjectEngineeringActualRelativeWeight();
+          }
+        })
+    );
   }
 
   getLicenseProjectEngineeringActualRelativeWeight() {
     this.subscriptions.push(
-      this._engineeringSupervisionReportActualQualityAndBusinessService.getLicenseProjectEngineeringActualRelativeWeightObj().subscribe(res => {
-        if (res) {
-
-          this.licenseProjectEngineeringActualRelativeWeight = res as LicenseProjectEngineeringActualRelativeWeightDto;
-          this.getlicenseProjectActualRelativeWeightDetails()
-
-        }
-      })
-    )
+      this._engineeringSupervisionReportActualQualityAndBusinessService
+        .getLicenseProjectEngineeringActualRelativeWeightObj()
+        .subscribe((res) => {
+          if (res) {
+            this.licenseProjectEngineeringActualRelativeWeight =
+              res as LicenseProjectEngineeringActualRelativeWeightDto;
+            this.getlicenseProjectActualRelativeWeightDetails();
+          }
+        })
+    );
   }
   getlicenseProjectActualRelativeWeightDetails() {
     this.subscriptions.push(
-      this._engineeringSupervisionReportActualQualityAndBusinessService.getLicenseProjectActualRelativeWeightDetails(this.licenseProjectId as string, this.licenseProjectEngineeringActualRelativeWeight?.licenseRelativeWeightId as string, this.monthDate as Date).subscribe(res => {
-        if (res) {
-
-          this.constructionWorkStatusActual = res as ConstructionWorkStatusActualDto;
-          if (this.constructionWorkStatusActual && this.constructionWorkStatusActual.totalContrastCompletionRate < 0)
-            this.totalContrastCompletionRateColor = 'red';
-          if (this.constructionWorkStatusActual && this.constructionWorkStatusActual.contrastCompletionRate < 0)
-            this.contrastCompletionRateColor = 'red';
-          this.licenseProjectEngineeringConstructionWorkStatusForm.patchValue(this.constructionWorkStatusActual as any)
-
-        }
-      })
-    )
+      this._engineeringSupervisionReportActualQualityAndBusinessService
+        .getLicenseProjectActualRelativeWeightDetails(
+          this.licenseProjectId as string,
+          this.licenseProjectEngineeringActualRelativeWeight
+            ?.licenseRelativeWeightId as string,
+          this.monthDate as Date
+        )
+        .subscribe((res) => {
+          if (res) {
+            this.constructionWorkStatusActual =
+              res as ConstructionWorkStatusActualDto;
+            if (
+              this.constructionWorkStatusActual &&
+              this.constructionWorkStatusActual.totalContrastCompletionRate < 0
+            )
+              this.totalContrastCompletionRateColor = 'red';
+            if (
+              this.constructionWorkStatusActual &&
+              this.constructionWorkStatusActual.contrastCompletionRate < 0
+            )
+              this.contrastCompletionRateColor = 'red';
+            this.licenseProjectEngineeringConstructionWorkStatusForm.patchValue(
+              this.constructionWorkStatusActual as any
+            );
+          }
+        })
+    );
   }
 
   save(): void {
-    debugger;
     if (!this.licenseProjectEngineeringConstructionWorkStatusForm.valid) {
       this.showValidation = true;
       return;
     }
 
-    debugger;
-    this.constructionWorkStatusCreateUpdate = this.licenseProjectEngineeringConstructionWorkStatusForm.value as {} as ConstructionWorkStatusCreateUpdateDto;
-    this.constructionWorkStatusCreateUpdate.id = this.constructionWorkStatusActual?.id as string;
-    this.constructionWorkStatusCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId = this.constructionWorkStatusActual?.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;
-
+    this.constructionWorkStatusCreateUpdate = this
+      .licenseProjectEngineeringConstructionWorkStatusForm
+      .value as {} as ConstructionWorkStatusCreateUpdateDto;
+    this.constructionWorkStatusCreateUpdate.id = this
+      .constructionWorkStatusActual?.id as string;
+    this.constructionWorkStatusCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId =
+      this.constructionWorkStatusActual
+        ?.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;
 
     this.subscriptions.push(
-      this._engineeringSupervisionReportActualQualityAndBusinessService.savelicenseProjectAcualRelativeWeightRates(this.constructionWorkStatusCreateUpdate).subscribe((res) => {
-
-        if (res?.isDone) {
-          this._engineeringSupervisionReportActualQualityAndBusinessService.submitSuccessfullyEventEmitter.emit()
-          this._toastrNotificationService.showSuccess('تم الحفظ');
-          this.closeDialog();
-        }
-
-      })
-    )
+      this._engineeringSupervisionReportActualQualityAndBusinessService
+        .savelicenseProjectAcualRelativeWeightRates(
+          this.constructionWorkStatusCreateUpdate
+        )
+        .subscribe((res) => {
+          if (res?.isDone) {
+            this._engineeringSupervisionReportActualQualityAndBusinessService.submitSuccessfullyEventEmitter.emit();
+            this._toastrNotificationService.showSuccess('تم الحفظ');
+            this.closeDialog();
+          }
+        })
+    );
   }
   private observeLicenseProjectEngineeringSupervisionActualReportForm() {
     this.subscriptions.push(
       this.licenseProjectEngineeringConstructionWorkStatusForm.valueChanges.subscribe(
-        (changes) => {
-        }))
+        (changes) => {}
+      )
+    );
   }
   // popup
   observePopupEvents(): void {
-    this.observecancelAction()
-    this.observeconfirmAction()
+    this.observecancelAction();
+    this.observeconfirmAction();
   }
 
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
-        console.log(res)
+        console.log(res);
       })
-    )
+    );
   }
 
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        console.log(res)
-        this.save()
+        console.log(res);
+        this.save();
       })
-    )
+    );
   }
 
   private closeDialog(): void {
-    this._popupService.dismissDialog()
+    this._popupService.dismissDialog();
   }
   ngOnDestroy(): void {
-    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 }

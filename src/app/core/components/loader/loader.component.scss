@@ -13,17 +13,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1030;
+    z-index: 10100;
 
     .bg {
         background: rgba(18, 22, 18, 0.7);
         backdrop-filter: blur(7.5px);
-        z-index: 1031;
+        z-index: 10101;
     }
 
     .spinner {
         position: relative;
-        z-index: 1032;
+        z-index: 10102;
 
         img {
             animation: 1s rotate infinite linear;

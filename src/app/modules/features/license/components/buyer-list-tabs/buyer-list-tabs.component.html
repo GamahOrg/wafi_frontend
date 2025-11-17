@@ -1,0 +1,33 @@
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="flex-fill" (selectedTabChange)="updateActiveTabIndex($event);" [selectedIndex]="activeTabIndex">
+
+  <ng-container *ngFor="let tab of tabs; index as i">
+    <mat-tab>
+
+      <ng-template mat-tab-label class="collapseTitle">
+        {{tab.title}}
+      </ng-template>
+
+      <ng-container *ngIf="activeTabIndex == i">
+        <div class="tab-content">
+          <ng-container *ngIf="i === 0">
+            <app-license-project-buyer-list></app-license-project-buyer-list>
+          </ng-container>
+          <!-- <ng-container *ngIf="i === 1">
+            <app-buyer-totals-list></app-buyer-totals-list>
+          </ng-container>
+          <ng-container *ngIf="i === 2">
+            <app-cancelled-and-resold-units-list></app-cancelled-and-resold-units-list>
+          </ng-container>
+          <ng-container *ngIf="i === 3">
+            <app-cancelled-units-list></app-cancelled-units-list>
+          </ng-container>
+          <ng-container *ngIf="i === 4">
+            <app-completed-units-list></app-completed-units-list>
+          </ng-container> -->
+        </div>
+      </ng-container>
+
+    </mat-tab>
+  </ng-container>
+
+</mat-tab-group>

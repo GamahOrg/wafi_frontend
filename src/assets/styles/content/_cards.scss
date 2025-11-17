@@ -1,8 +1,8 @@
 .card {
   --bs-card-title-spacer-y: 0;
-  --bs-card-cap-bg: $card-bg;
-
-  border: 1px solid $lightergray;
+  --bs-card-cap-bg: #{$card-bg};
+  --bs-card-border-width: 0;
+  --bs-card-border-color: #{$lightergray};
 
   .card-header {
     display: flex;
@@ -262,100 +262,190 @@
   }
 
   &.phases-card {
-    box-shadow: 0px 4px 20px rgba($black, 0.08);
+    --bs-card-spacer-y: 1rem;
+    --bs-card-spacer-x: 1rem;
+    --bs-card-border-width: 1px;
+    --bs-card-border-radius: #{$border-radius-xl};
+    --bs-card-inner-border-radius: #{$border-radius-xl};
 
-    .card-body {
-      padding: 2rem 1.5rem;
+    --bs-card-cap-padding-y: 2.5rem;
+    --bs-card-cap-padding-x: 1.5rem;
 
-      .card-title {
-        margin-bottom: 1.5rem;
-      }
+    .card-header {
+      padding-bottom: 0;
+      border-bottom: none;
     }
 
     .phase {
-      display: flex;
-      flex-direction: column;
-      row-gap: .5rem;
+      $number-size: 2.5rem;
 
-      &:not(:last-child) {
-        padding-bottom: .75rem;
-        border-bottom: 1px solid rgba($bluegray, .4);
-      }
+      display: flex;
+      gap: 1rem;
 
       &+.phase {
         margin-top: 1.5rem;
       }
 
-      .phase-header,
-      .phase-date {
+      &:last-child {
+        overflow: hidden;
+      }
+
+      .number-area {
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          right: 50%;
+          top: $number-size;
+          bottom: $number-size * -1;
+          transform: translateX(50%);
+
+          width: .25rem;
+        }
+
+        .number {
+          position: relative;
+          z-index: 2;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: $number-size;
+          height: $number-size;
+          border-radius: 50%;
+        }
+      }
+
+      .info-area {
+        flex: 1;
+        padding: 1rem;
+        border: 1px solid $lightergray;
+        border-radius: $border-radius-sm;
+      }
+
+      .title {
         display: flex;
         align-items: center;
-        column-gap: .5rem;
+        gap: .5rem;
 
-        .icon {
+        font-weight: 600;
+        color: $headings-color;
+
+        img {
+          height: 1.25rem;
+          margin-inline-start: auto;
+        }
+      }
+
+      .info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+
+        margin-top: .5rem;
+        font-size: $font-size-sm;
+
+        .status {
           display: flex;
-          justify-content: center;
           align-items: center;
-          flex-shrink: 0;
+          gap: .5rem;
 
-          [class^="material-icons"] {
-            font-size: $body-font-size;
-          }
-        }
-      }
+          padding: .5rem;
+          font-weight: 500;
+          border-radius: $border-radius-pill;
 
-      .phase-header {
-        .icon {
-          width: 1.5rem;
-          height: 1.5rem;
-          border-radius: 50%;
-
-          [class^="material-icons"] {
-            color: $theme-dark;
+          &::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: currentColor;
           }
         }
 
-        .title {
-          color: $theme-dark;
+        .date {
+          display: flex;
+          align-items: center;
+          gap: .5rem;
+
+          color: #353B3B;
         }
       }
 
-      &.done {
-        .phase-header {
-          .icon {
+      &.completed {
+        .number-area {
+          color: $theme-main;
+
+          &::before,
+          .number {
+            background-color: $theme-light;
+          }
+        }
+
+        .info {
+          .status {
+            color: $theme-main;
             background-color: $theme-light;
           }
         }
       }
 
       &.current {
-        .phase-header {
-          .icon {
-            background-color: $theme-light;
+        .number-area {
+          color: $warning;
+
+          &::before,
+          .number {
+            background-color: $lighterOrange;
+          }
+        }
+
+        .info {
+          .status {
+            color: $warning;
+            background-color: $lighterOrange;
           }
         }
       }
 
-      &.next {
-        .phase-header {
-          .icon {
-            background-color: $lightergray;
+      &.pending {
+        .number-area {
+          color: $white;
+
+          &::before,
+          .number {
+            background-color: $darkgray;
+          }
+        }
+
+        .info {
+          .status {
+            color: $darkgray;
+            background-color: $lightgray;
           }
         }
       }
 
-      .phase-status,
-      .phase-date {
-        margin-inline-start: 2rem;
-      }
+      &.rejected {
+        .number-area {
+          color: #912018;
 
-      .title,
-      .text {
-        font-size: $font-size-sm;
-      }
+          &::before,
+          .number {
+            background-color: #FEF3F2;
+          }
+        }
 
-      .value {
-        font-size: $font-size-xs;
+        .info {
+          .status {
+            color: #912018;
+            background-color: #FEF3F2;
+          }
+        }
       }
     }
   }
@@ -371,7 +461,7 @@
   //     }
 
   //     .title {
-  //       color: $dark;
+  //       color: $body-color;
   //     }
 
   //     .date {
@@ -388,7 +478,7 @@
   //         column-gap: .25rem;
 
   //         height: 100%;
-  //         color: $dark;
+  //         color: $body-color;
   //       }
   //     }
 
@@ -432,7 +522,7 @@
   //       .name {
   //         font-size: $font-size-sm;
   //         font-weight: bold;
-  //         color: $dark;
+  //         color: $body-color;
   //       }
   //     }
 

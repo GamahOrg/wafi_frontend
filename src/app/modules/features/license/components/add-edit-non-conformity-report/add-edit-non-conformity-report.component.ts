@@ -60,13 +60,13 @@ licenseProjectEngineeringNonConformityReport?: LicenseProjectEngineeringNonConfo
 
   
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectEngineeringNonConformityReportForm.valid) {
       this.showValidation = true;
       return;
     }
 
-    debugger;
+    
     this.licenseProjectEngineeringNonConformityReportCreateUpdate = this.licenseProjectEngineeringNonConformityReportForm.value as {} as LicenseProjectEngineeringNonConformityReportCreateUpdateDto;
     this.licenseProjectEngineeringNonConformityReportCreateUpdate.id=this.licenseProjectEngineeringNonConformityReport?.id as string;
     this.licenseProjectEngineeringNonConformityReportCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId=this.licenseProjectEngineeringNonConformityReport?.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;

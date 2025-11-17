@@ -29,7 +29,7 @@
            'is-invalid': usernameControl.touched && usernameControl.errors
          }"
        />
-       <div *ngIf="usernameControl.errors" class="invalid-feedback">
+       <div *ngIf="usernameControl.errors" class="invalid-feedback d-block">
          <div
            *ngIf="usernameControl.touched && usernameControl.errors?.['required']"
          >

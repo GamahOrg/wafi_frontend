@@ -1,0 +1,250 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+    <h6 class="title">
+      {{ localizations.NewEngineeringConsultantTitle }}
+    </h6>
+  </div>
+
+  <div class="tab-data-section">
+    <div class="form-group">
+      <label for="commercialRegister" class="form-label">
+        {{ localizations.EngineeringConsultant }}
+      </label>
+      <div class="input-group">
+        <input id="commercialRegister" name="commercialRegister" type="number" class="form-control" [ngClass]="{'is-invalid': errorMessage}" formControlName="commercialRegister" placeholder="أدخل الرقم الموحد للمنشأه">
+        <button class="btn btn-primary" type="button" (click)="validate()">
+          {{ localizations.ValidateConsultant }}
+        </button>
+      </div>
+
+      <div class="invalid-feedback d-block" *ngIf="controls['commercialRegister']?.hasError('required') && controls['commercialRegister']?.touched">
+        {{ localizations.EngineeringConsultantRequired }}
+      </div>
+
+      <div class="form-text">
+        <span class="icon" [ngClass]="{'text-danger': errorMessage}">
+          <i class="hgi hgi-stroke hgi-alert-circle"></i>
+        </span>
+        <span class="text" *ngIf="errorMessage == null">يجب أن يكون الاستشاري الهندسي مسجَل في المنصة ومؤهل ليتم إضافته للمشروع</span>
+        <span class="text" [ngClass]="{'text-danger': errorMessage}" *ngIf="errorMessage != null">{{ errorMessage }} </span>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="entity">
+    <div class="tab-data-section">
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="key">
+            <i class="icon hgi hgi-stroke hgi-building-06"></i>
+            اسم الشركة
+          </div>
+          <div class="value">
+            {{ x.facilityName }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-data-section">
+      <h6 class="title">بيانات اتفاقية الاستشاري</h6>
+
+      <div class="row row-gap-4">
+        <!-- Monitoring Period -->
+        <div class="col-12 col-lg-6">
+          <label for="financialReportApprovalPeriodInDays" class="form-label">
+            <span class="required-asterisk">*</span>
+            مهلة المصادقة على التقرير المالي
+          </label>
+          <input id="financialReportApprovalPeriodInDays" name="financialReportApprovalPeriodInDays" type="number" class="form-control" formControlName="financialReportApprovalPeriodInDays" max="30" placeholder="أدخل مهلة المصادقة على التقرير المالي">
+
+          <div class="invalid-feedback d-block" *ngIf="controls['financialReportApprovalPeriodInDays']?.hasError('required') && controls['financialReportApprovalPeriodInDays']?.touched">
+            هذا الحقل مطلوب
+          </div>
+
+          <div class="form-text">
+            <span class="icon" [ngClass]="{'text-danger': errorMessage}">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <p>مدة المصادقة لا يجب أن تتعدى 30 يوماً</p>
+          </div>
+        </div>
+
+        <!-- Contract Value -->
+        <div class="col-12 col-lg-6">
+          <label for="contractValue" class="form-label">
+            <span class="required-asterisk">*</span>
+            قيمة العقد
+          </label>
+
+          <div class="input-group">
+            <input id="contractValue" name="contractValue" type="number" class="form-control" formControlName="contarctValue" placeholder="اختر قيمة العقد">
+            <span class="input-group-text">
+              <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+            </span>
+          </div>
+
+          <div class="invalid-feedback d-block" *ngIf="controls['contractValue']?.hasError('required') && controls['contractValue']?.touched">
+            هذا الحقل مطلوب
+          </div>
+        </div>
+
+        <!-- Payment Monitoring -->
+        <div class="col-12 col-lg-6">
+          <label for="paymentDeadline" class="form-label d-flex align-items-center">
+            <span class="required-asterisk">*</span>
+            مهلة السداد
+
+            <span class="ms-auto cursor-pointer" [popover]="popTemplate" triggers="mouseenter:mouseleave">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <ng-template #popTemplate>
+              <div class="d-flex align-items-center gap-2">
+                <i class="hgi hgi-stroke hgi-help-circle"></i>
+                <span>مهلة السداد المطلوبة</span>
+              </div>
+            </ng-template>
+          </label>
+
+          <input id="paymentDeadline" name="paymentDeadline" type="text" class="form-control" formControlName="paymentDeadline" placeholder="أدخل مهلة السداد">
+          <div class="invalid-feedback d-block" *ngIf="controls['paymentDeadline']?.hasError('required') && controls['paymentDeadline']?.touched">
+            هذا الحقل مطلوب
+          </div>
+        </div>
+
+        <!-- Authorized Signatories -->
+        <div class="col-12 col-lg-6">
+          <label for="authorizedSignatories" class="form-label">
+            <span class="required-asterisk">*</span>
+            المفوض بالتوقيع على وثائق الصرف
+          </label>
+          <select id="authorizedSignatories" class="form-select" formControlName="authorizedToSignDelegator" (change)="onDelegatorChange()">
+            <option value="" selected disabled>اختر المفوض على وثائق الصرف</option>
+            <option *ngFor="let signatory of licenseProjectDelegators" [value]="signatory.id">
+              {{ signatory.fullName}}
+            </option>
+          </select>
+
+          <!-- Selected Signatories Display -->
+          <!-- <div class="selected-items-container" *ngIf="selectedSignatories.length > 0">
+              <div class="selected-chip" *ngFor="let selected of selectedSignatories">
+                <span class="chip-text">{{ selected.name }}</span>
+                <button type="button" class="chip-remove" (click)="removeSignatory(selected.id)">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div> -->
+
+          <div class="invalid-feedback d-block" *ngIf="controls['authorizedToSignDelegator']?.hasError('required') && controls['authorizedToSignDelegator']?.touched">
+            هذا الحقل مطلوب
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert" *ngIf="showMissingDateOfBirthAlert">
+        <span class="icon">
+          <i class="hgi hgi-stroke hgi-alert-02"></i>
+        </span>
+        <span>الرجاء إعلام المفوض بإعادة تسجيل الدخول من جديد لإسترجاع تاريخ الميلاد من منصة نفاذ</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+
+    <!-- Payment Data Section -->
+    <div class="tab-data-section">
+      <h6 class="title">{{ localizations.PaymentData }}</h6>
+
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th scope="col">البند</th>
+              <th scope="col">الكمية</th>
+              <th scope="col" class="w-25">السعر للوحدة</th>
+              <th scope="col" class="w-40">الوصف</th>
+              <th scope="col" class="text-center">
+                <button type="button" class="btn-icon btn btn-secondary" (click)="addPaymentRow()">
+                  <i class="hgi hgi-stroke hgi-add-circle"></i>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of paymentTableData; let i = index">
+              <td>
+                <div>
+                  <input type="text" class="form-control table-input" [(ngModel)]="item.item" (ngModelChange)="clearPaymentError(i, 'item')" [ngModelOptions]="{standalone: true}" placeholder="البند" [class.is-invalid]="paymentTableErrors[i]?.item">
+                  <div *ngIf="paymentTableErrors[i]?.item" class="text-danger" style="font-size: 12px; margin-top: 4px;">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <input type="number" class="form-control table-input" [(ngModel)]="item.quantity" (ngModelChange)="clearPaymentError(i, 'quantity')" [ngModelOptions]="{standalone: true}" placeholder="الكمية" [class.is-invalid]="paymentTableErrors[i]?.quantity">
+                  <div *ngIf="paymentTableErrors[i]?.quantity" class="text-danger" style="font-size: 12px; margin-top: 4px;">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <div class="input-group">
+                    <input type="number" class="form-control table-input" [(ngModel)]="item.unitPrice" (ngModelChange)="clearPaymentError(i, 'unitPrice')" [ngModelOptions]="{standalone: true}" placeholder="السعر للوحدة" [class.is-invalid]="paymentTableErrors[i]?.unitPrice">
+                    <span class="input-group-text">
+                      <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon opacity-100">
+                    </span>
+                  </div>
+                  <div *ngIf="paymentTableErrors[i]?.unitPrice" class="text-danger" style="font-size: 12px; margin-top: 4px;">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <input type="text" class="form-control table-input" [(ngModel)]="item.description" (ngModelChange)="clearPaymentError(i, 'description')" [ngModelOptions]="{standalone: true}" placeholder="الوصف" [class.is-invalid]="paymentTableErrors[i]?.description">
+                  <div *ngIf="paymentTableErrors[i]?.description" class="text-danger" style="font-size: 12px; margin-top: 4px;">
+                    حقل مطلوب
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="table-actions">
+                  <button type="button" class="btn-icon btn btn-danger" (click)="deletePaymentRow(i)">
+                    <i class="hgi hgi-stroke hgi-delete-03"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<div class="mt-3" *ngIf="entity">
+  <app-license-project-parties-additional-terms [TermsPartType]='TermsPartType.EngineeringConsultant'></app-license-project-parties-additional-terms>
+</div>
+
+<!-- Next/Previous Buttons -->
+<app-next-and-previus-buttons></app-next-and-previus-buttons>
+
+<!-- Delete Confirmation Modal -->
+<!-- <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteConfirmation()">
+  <div class="confirmation-modal" (click)="$event.stopPropagation()">
+    <div class="modal-icon">
+      <i class="hgi hgi-stroke hgi-delete-03"></i>
+    </div>
+    <h3 class="modal-title">هل أنت متأكد من حذف البند؟</h3>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-cancel" (click)="closeDeleteConfirmation()">
+        إلغاء
+      </button>
+      <button type="button" class="btn btn-delete" (click)="confirmDelete()">
+        حذف البند
+      </button>
+    </div>
+  </div>
+</div> -->

@@ -1,62 +1,34 @@
 <form class="d-flex flex-column h-100">
-  <div class="tab-data-section">
-    <div class="row row-gap-4 mb-3">
-      <div class="col-12 col-lg-12">
-        <ng-container
-          *ngIf="
-            sysLicenseBeneficiaryContractFormListDto &&
-            sysLicenseBeneficiaryContractFormListDto.sysLicenseBeneficiaryContractFormDtos &&
-            sysLicenseBeneficiaryContractFormListDto
-              .sysLicenseBeneficiaryContractFormDtos.length > 0
-          "
-        >
-          <div
-            class="file-bar"
-            *ngFor="
-              let file of sysLicenseBeneficiaryContractFormListDto.sysLicenseBeneficiaryContractFormDtos
-            "
-          >
-            <div class="details">
-              <span class="material-icons-outlined">picture_as_pdf</span>
-              {{ file?.description }}
-            </div>
-            <div class="actions">
-              <a
-                *ngIf="file && file.contractFormFile"
-                [href]="baseUrl + file?.contractFormFile?.filePath"
-                target="_blank"
-                >عرض الملف</a
-              >
-            </div>
-          </div>
-        </ng-container>
-      </div>
-      <!-- <div class="col-12 col-lg-12">
-                <div class="form-check form-check-inline">
-                    <input type="checkbox" [disabled]="true" formControlName="beneficiaryContractFormApproval" id="beneficiaryContractFormApproval" class="form-check-input" />
-                    <label for="beneficiaryContractFormApproval" class="form-check-label">الموافقة على عقد المستفيد</label>
-                </div>
-            </div> -->
-    </div>
-    <h6 class="title">ملفات الاتفاقية</h6>
-    <div class="col-12 col-lg-12">
-      <div class="form-group mb-4">
-        <div
-          class="value"
-          *ngFor="
-            let proposedFile of sysLicenseBeneficiaryContractFormListDto.beneficiaryFiles
-          "
-        >
-          <span class="icon material-icons-outlined">content_copy</span>
-          <a
-            *ngIf="proposedFile && proposedFile.id"
-            id="link-proposedScheduleFile"
-            [href]="proposedFile.filePath"
-            target="_blank"
-          >
-            {{ proposedFile.fileDescription }}</a
-          >
-        </div>
+  <!-- PDF Viewer Container -->
+  <app-pdf-viewer
+    *ngIf="!isFullscreen"
+    [pdfUrl]="selectedPdfUrl"
+    [isLoading]="isLoadingPdf"
+    [loadError]="pdfLoadError"
+    [retryCallback]="retryGenerateContract"
+    [loadingMessage]="'جاري تحميل العقد'"
+    [loadingDescription]="'يرجى الانتظار بينما يتم تحميل عقد المستفيد النهائي'"
+    [noContentMessage]="'لا يوجد عقد متاح'"
+    [noContentDescription]="'لم يتم العثور على عقد المستفيد النهائي'"
+    [errorMessage]="'حدث خطأ في تحميل العقد'">
+  </app-pdf-viewer>
+
+  <!-- Contract Files Section - Hide in fullscreen -->
+  <div class="contract-files-section" *ngIf="!isFullscreen">
+    <!-- Contract Approval -->
+    <div class="contract-approval">
+      <div class="form-check">
+        <input
+        disabled
+          type="checkbox"
+          [value]="sysLicenseBeneficiaryContractFormListDto.isApprove"
+          id="beneficiaryContractFormApproval"
+          class="form-check-input"
+        />
+        <label for="beneficiaryContractFormApproval" class="form-check-label">
+          <i class="material-icons">check_circle</i>
+          الموافقة على عقد المستفيد النهائي
+        </label>
       </div>
     </div>
   </div>

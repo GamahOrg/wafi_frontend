@@ -1,0 +1,233 @@
+<ng-container>
+  <form
+    class="d-flex flex-column h-100"
+    [formGroup]="licenseProjectFeasibilityStudyForm"
+    id="form-licenseProjectFeasibilityStudyForm"
+  >
+    <div class="tab-data-header">
+      <i class="material-icons-outlined">description</i>
+      <h6 class="title">بيانات دراسة الجدوى</h6>
+    </div>
+
+    <div class="tab-data-section">
+      <!-- Basic Information Section -->
+      <div class="form-section-wrapper">
+        <h3 class="section-subtitle">البيانات الأساسية للمشروع</h3>
+
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                إجمالى مساحة الأجزاء المشتركة
+              </label>
+              <input
+                type="text"
+                id="control-totlaAreaOfCommonAreas"
+                class="form-control"
+                formControlName="totlaAreaOfCommonAreas"
+                placeholder="إجمالى مساحة الأجزاء المشتركة"
+                [disabled]="true" [readonly]="true"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <hr class="section-divider">
+
+      <!-- Financial Information Section -->
+      <div class="form-section-wrapper">
+        <h3 class="section-subtitle">بيانات دراسة الجدوى للمشروع</h3>
+
+        <!-- Row 1 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                تكاليف تطوير البنية التحتية
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-infrastructureDevelopmentCosts"
+                  class="form-control"
+                  formControlName="infrastructureDevelopmentCosts"
+                  placeholder="أدخل تكاليف تطوير البنية التحتية"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                إجمالي التكاليف الإنشائية
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-totalConstructionCosts"
+                  class="form-control"
+                  formControlName="totalConstructionCosts"
+                  placeholder="أدخل إجمالي التكاليف الإنشائية"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                إجمالي التكاليف غير الإنشائية
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-totalNonConstructionCosts"
+                  class="form-control"
+                  formControlName="totalNonConstructionCosts"
+                  placeholder="أدخل إجمالي التكاليف غير الإنشائية"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                إجمالي تكلفة الأرض
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-totalLandCost"
+                  class="form-control"
+                  formControlName="totalLandCost"
+                  placeholder="أدخل إجمالي تكلفة الأرض"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                إجمالي قيمة المبيعات (الإيرادات)
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-totalSalesValue"
+                  class="form-control"
+                  formControlName="totalSalesValue"
+                  placeholder="أدخل إجمالي قيمة المبيعات (الإيرادات)"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                إجمالي تكاليف المشروع
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-totalProjectCosts"
+                  class="form-control"
+                  formControlName="totalProjectCosts"
+                  placeholder="أدخل إجمالي تكاليف المشروع"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                صافي الربح المتوقع
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-expectedNetProfit"
+                  class="form-control"
+                  formControlName="expectedNetProfit"
+                  placeholder="أدخل صافي الربح المتوقع"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                متوسط سعر المتر البيعي
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-averageSalesPricePerMeter"
+                  class="form-control"
+                  formControlName="averageSalesPricePerMeter"
+                  placeholder="أدخل متوسط سعر المتر البيعي"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="row mb-3">
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label class="form-label">
+                متوسط تكلفة المتر الإنشائي
+              </label>
+              <div class="input-with-currency">
+                <input
+                  type="text"
+                  id="control-averageConstructionCostPerMeter"
+                  class="form-control"
+                  formControlName="averageConstructionCostPerMeter"
+                  placeholder="أدخل متوسط تكلفة المتر الإنشائي"
+                  [disabled]="true" [readonly]="true"
+                />
+                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <app-next-and-previus-buttons></app-next-and-previus-buttons> -->
+  </form>
+</ng-container>

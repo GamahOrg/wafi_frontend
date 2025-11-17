@@ -15,6 +15,8 @@ export interface LicenseProject {
   projectCode: string;
   licenseProjectEngineeringConsultants: EngineeringConsultantDto[];
   sysLicenseProjectStatus: ProjectStatusDto;
+  startOn?:Date;
+  endOn?:Date;
 }
 
 export interface EngineeringConsultantDto {
@@ -43,4 +45,8 @@ export class FilterProjectList {
   pageIndex: number = 1;
   pageSize: number = 10;
   searchText?: string;
+  cityId?: string;
+  areaId?: string;
+  projectStartOn?: Date | null;
+  projectEndOn?: Date | null;
 }

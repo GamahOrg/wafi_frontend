@@ -1,0 +1,39 @@
+<div class="edit-farz-note h-100">
+  <div class="d-flex flex-column row-gap-3 h-100">
+    <div class="row">
+      <div class="col-md-12">
+        <app-breadcrumb></app-breadcrumb>
+      </div>
+    </div>
+
+    <div class="card flex-fill">
+      <div class="card-body d-flex flex-column h-100">
+        <div class="card-title">
+          <h6 class="title">معالجة ملاحظات فرز</h6>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-9 d-flex align-items-center">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">سبب الرفض</h6>
+                <p class="card-text">{{this.farzRejectionReason}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary w-100"
+              (click)="openConfirmtionSendTOFarzDialog()" type="button">
+                 اعادة ارسال الطلب لفرز
+            </button>
+          </div>
+          
+        </div>
+
+        <div class="tab-wrapper flex-fill">
+          <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

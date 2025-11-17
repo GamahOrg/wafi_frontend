@@ -1,75 +1,126 @@
-
-<div class="row row-gap-4">
-    <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
-        <table class="table">
-            <thead>
-                <tr>
-                     <th scope="col">نوع السجل</th>
-                    <th scope="col">اسم المشترى</th>
-                    <th scope="col"> رقم هوية المشترى</th>
-                    <th scope="col"> رقم الجوال</th>
-                    <th scope="col">رقم العقد</th>
-                    <th scope="col">ملف العقد</th>
-                    <th scope="col">الحالة</th>
-                    <th scope="col">العمليات</th>
-                   
-                </tr>
-            </thead>
-            <tbody *ngFor="let comdata of reqList.results;let i=index;">
-                <tr>
-                     <td>
-                        <span class="text-dark">{{comdata.licenseProjectBuyerType.name}}</span>
-                    </td> 
-                    <td>
-                        <div class="d-flex align-items-center column-gap-2">
-                            {{comdata.name}}
-                        </div>
-                    </td>
-                    <td>
-                        <div class="d-flex align-items-center column-gap-2">
-                            {{comdata.nidNumber}}
-                        </div>
-                    </td>
-                    <td>
-                        <span class="d-flex align-items-center column-gap-2">{{comdata.mobile}}</span>
-                    </td>
-                    <td>
-                        <div class="d-flex align-items-center column-gap-2">
-                            {{comdata.contractNumber}}
-                        </div>
-                    </td>
-                   <td>
-                        <span class="text-dark">
-                            <a
-                            *ngIf="comdata.contractFile && comdata.contractFile.filePath"
-                            [href]="baseUrl + comdata.contractFile.filePath"
-                            id="link-contractFile"
-                            target="_blank"
-                          >
-                            {{ comdata.contractFile.fileDescription }}
-                          </a>
-                        </span>
-                    </td> 
-                    <td>
-                        <span class="text-dark">{{comdata?.status?.name}}</span>
-                    </td>
-                    <td>
-                       <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary mx-4" (click)="confirmAccepted(comdata)">قبول توثيق العقد</button>
-                        <button type="button" *ngIf="comdata.statusId==licenseProjectBuyerStatus.New" class="btn btn-outline-primary" (click)="confirRejected(comdata)">رفض توثيق العقد</button> 
-                        <button type="button"  class="btn btn-outline-primary" (click)="showDetailDialog(comdata.id,comdata.licenseProjectId)">التفاصيل</button> 
-                     </td>
-                </tr>
-            </tbody>
-        </table>
+<div class="container-fluid p-4" dir="rtl">
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="mb-1">عقود البيع</h4>
+      <p class="text-muted mb-0">
+        إدارة ومتابعة عقود البيع والتوثيق
+      </p>
     </div>
+  </div>
 
-    <div class="mt-auto" *ngIf="reqList.totalCount > 0">
-        <app-pagination></app-pagination>
-    </div>
-    <ng-container *ngIf="reqList.totalCount === 0">
-        <div class="mt-4">
-            <app-no-data [showCompleteBtn]="false"></app-no-data>
+  <!-- Search and Filters -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3 justify-content-end">
+        <!-- Search -->
+        <div class="col-3">
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">
+              <i class="material-icons-outlined">search</i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="البحث برقم العقد، اسم المشروع أو رقم الوحدة"
+              [value]="searchTerm"
+              (input)="onSearchChange($any($event.target).value)"
+            />
+          </div>
         </div>
-    </ng-container>
-</div>
 
+        <!-- Status Filter -->
+        <div class="col-md-2">
+          <select
+            class="form-select"
+            [(ngModel)]="statusFilter"
+            (change)="onStatusFilterChange()"
+          >
+            <option *ngFor="let status of contractStatus" [value]="status.id">
+              {{ status.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 units-table">
+        <thead class="table-light">
+          <tr>
+            <th>اسم المشروع</th>
+            <th>رقم العقد</th>
+            <th>مصدر العقد</th>
+            <th>رقم الوحدة</th>
+            <th>نوع الوحدة</th>
+            <th>السعر</th>
+            <th>نوع الشراء</th>
+            <!-- <th>رقم البلوك</th> -->
+            <th>الحالة</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contract of buyers.results">
+            <td>
+              <span>{{ contract.licenseProjectName }}</span>
+            </td>
+            <td>
+              <span>
+                {{ contract.contractNumber }}
+              </span>
+            </td>
+            <td>{{ contract.contractSourceName || "-" }}</td>
+            <td>{{ contract.unitCodeNumber || "-" }}</td>
+            <td>
+              <span *ngIf="contract.unitTypeName">
+                {{ contract.unitTypeName }}
+              </span>
+              <span *ngIf="!contract.unitTypeName">-</span>
+            </td>
+            <td>
+               <span class="d-inline-flex align-items-center gap-1">
+                <span class="price-text">{{ contract.price | number:'1.0-0' }}</span>
+                <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+              </span>            </td>
+            <td>{{ contract.buyerTypeName || "-" }}</td>
+            <!-- <td>{{ contract.blockNumber || "-" }}</td> -->
+            <td>
+              <span
+                class="status-badge"
+                [ngClass]="getStatusClass(contract.statusId)"
+              >
+                {{ contract.statusName }}
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-primary"
+                title="عرض التفاصيل"
+                (click)="showDetails(contract)"
+              >
+                <i class="bi bi-eye"></i>
+                التفاصيل
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-auto p-3">
+      <app-pagination></app-pagination>
+    </div>
+
+    <!-- No Data Message -->
+    <ng-container *ngIf="buyers?.totalCount === 0">
+      <div class="mt-4">
+        <app-no-data [showCompleteBtn]="false"></app-no-data>
+      </div>
+    </ng-container>
+  </div>
+</div>

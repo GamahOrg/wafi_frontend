@@ -1,0 +1,45 @@
+
+<!-- Approval Committee Section -->
+<div class="tab-data-section">
+  <ng-container *ngIf="getParentItems().length > 0">
+    <div *ngIf="getParentItems().length > 0" class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>رقم البند الرئيسي</th>
+            <th class="w-10"></th>
+            <th>عنوان البند الرئيسي</th>
+            <th class="w-40">نص البند</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let parentBeneficiary of getParentItems(); let parentIndex = index">
+            <!-- Parent Row -->
+            <tr>
+              <td colspan="2">
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <span class="tag">{{getItemNumberDisplay(parentBeneficiary)}}</span>
+                  <button *ngIf="hasChildren(parentBeneficiary.id)" class="btn btn-icon" (click)="toggleExpand(parentBeneficiary.id)">
+                    <i class="hgi hgi-stroke hgi-arrow-{{isExpanded(parentBeneficiary.id) ? 'up' : 'down'}}-01"></i>
+                  </button>
+                </div>
+              </td>
+              <td>{{parentBeneficiary?.itemTitle}}</td>
+              <td>{{parentBeneficiary?.itemText && parentBeneficiary.itemText.length > 100 ?
+                (parentBeneficiary.itemText | slice:0:100) + '...' : parentBeneficiary.itemText}}</td>
+            </tr>
+
+            <!-- Child Rows -->
+            <ng-container *ngIf="isExpanded(parentBeneficiary.id)">
+              <tr *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index">
+                <td colspan="2" class="bg-light"><span class="tag">{{getItemNumberDisplay(childBeneficiary)}}</span></td>
+                <td class="bg-light">{{childBeneficiary?.itemTitle ?? '-'}}</td>
+                <td colspan="2" class="bg-light">{{childBeneficiary?.itemText && childBeneficiary.itemText.length > 100 ? (childBeneficiary.itemText | slice:0:100) + '...' : childBeneficiary?.itemText}}</td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</div>

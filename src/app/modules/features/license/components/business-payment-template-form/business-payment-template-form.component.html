@@ -1,0 +1,116 @@
+<div class="business-payment-template-form">
+  <form [formGroup]="businessPaymentForm">
+    <!-- Model Title -->
+    <div class="form-section">
+      <div class="form-group">
+        <label>{{ localization.modelTitle }} <span class="required">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="modelTitle"
+          [class.is-invalid]="businessPaymentForm.get('modelTitle')?.invalid && (businessPaymentForm.get('modelTitle')?.dirty || businessPaymentForm.get('modelTitle')?.touched || showValidation)"
+          placeholder="أدخل عنوان النموذج">
+        <div class="invalid-feedback d-block" *ngIf="businessPaymentForm.get('modelTitle')?.invalid && (businessPaymentForm.get('modelTitle')?.dirty || businessPaymentForm.get('modelTitle')?.touched || showValidation)">
+          {{ localization.requiredErrorMsg }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Installments Forms -->
+    <div class="installments-section" formArrayName="paymentInstallments">
+      <div
+        class="installment-form"
+        *ngFor="let installment of paymentInstallmentsFormArray.controls; let i = index"
+        [formGroupName]="i">
+
+        <div class="installment-header">
+          <h4>{{ getFormInstallmentTitle(i) }}</h4>
+          <button
+            type="button"
+            class="delete-installment-btn"
+            *ngIf="paymentInstallmentsFormArray.length > 2"
+            (click)="removeInstallmentFromForm(i)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>{{ localization.rentPercentage }} <span class="required">*</span></label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="rentPercentage"
+              [class.is-invalid]="installment.get('rentPercentage')?.invalid && (installment.get('rentPercentage')?.dirty || installment.get('rentPercentage')?.touched || showValidation)"
+              placeholder="أدخل نسبة الإنجاز"
+              min="0" max="100">
+            <div class="invalid-feedback d-block" *ngIf="installment.get('rentPercentage')?.invalid && (installment.get('rentPercentage')?.dirty || installment.get('rentPercentage')?.touched || showValidation)">
+              {{ localization.requiredErrorMsg }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label>{{ localization.deductionPercentage }} <span class="required">*</span></label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="deductionPercentage"
+              [class.is-invalid]="installment.get('deductionPercentage')?.invalid && (installment.get('deductionPercentage')?.dirty || installment.get('deductionPercentage')?.touched || showValidation)"
+              placeholder="أدخل نسبة الاستقطاع"
+              min="0" max="100">
+            <div class="invalid-feedback d-block" *ngIf="installment.get('deductionPercentage')?.invalid && (installment.get('deductionPercentage')?.dirty || installment.get('deductionPercentage')?.touched || showValidation)">
+              {{ localization.requiredErrorMsg }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>{{ localization.description }}</label>
+          <textarea
+            class="form-control"
+            formControlName="description"
+            rows="2"
+            placeholder="أدخل وصف الدفعة"></textarea>
+        </div>
+
+      </div>
+
+      <!-- Add Another Payment Button -->
+      <div class="add-payment-section" *ngIf="paymentInstallmentsFormArray.length < 7">
+        <button
+          type="button"
+          class="btn-add-payment"
+          (click)="addInstallmentToForm()">
+          <i class="fas fa-plus"></i>
+          {{ localization.addAnotherPayment }}
+        </button>
+      </div>
+
+      <!-- Totals Summary -->
+      <div class="totals-summary">
+        <div class="summary-item">
+          <label>إجمالي نسب الاستقطاع:</label>
+          <span class="total-value" [class.error]="getTotalDeductionPercentage() !== 100">
+            {{ getTotalDeductionPercentage() }}%
+          </span>
+          <span class="target-value">(المطلوب: 100%)</span>
+        </div>
+        <div class="summary-item">
+          <label>إجمالي نسب الإنجاز:</label>
+          <span class="total-value" [class.error]="getTotalRentPercentage() !== 100">
+            {{ getTotalRentPercentage() }}%
+          </span>
+          <span class="target-value">(المطلوب: 100%)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-section" *ngIf="loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>جاري الحفظ...</p>
+    </div>
+  </form>
+</div>

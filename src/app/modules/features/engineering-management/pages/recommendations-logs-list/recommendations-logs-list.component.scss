@@ -1,0 +1,43 @@
+.search-input-group {
+  .input-group-text {
+    border-left: none;
+    background-color: white !important;
+  }
+
+  .form-control {
+    border-right: none;
+
+    &:focus {
+      border-right: none;
+      box-shadow: none;
+    }
+  }
+
+  // When input is focused, style the icon container too
+  .form-control:focus ~ .input-group-text,
+  .input-group-text:has(~ .form-control:focus) {
+    border-color: inherit;
+  }
+}
+
+// Filters styling
+.filter {
+  .form-select,
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out;
+
+    &:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    &::placeholder {
+      color: #6c757d;
+    }
+  }
+}

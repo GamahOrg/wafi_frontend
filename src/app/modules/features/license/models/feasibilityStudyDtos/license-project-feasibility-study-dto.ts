@@ -23,6 +23,16 @@ export class LicenseProjectFeasibilityStudyDto {
   public phoneNumber: string = "";
   public mobileNumber: string = "";
   public emailAddress: string = "";
+  totalAreaOfCommonAreas: number | null = null;
+  infrastructureDevelopmentCosts: number | null = null;
+  totalConstructionCosts: number | null = null;
+  totalNonConstructionCosts: number | null = null;
+  totalLandCost: number | null = null;
+  totalSalesValue: number | null = null;
+  totalProjectCosts: number | null = null;
+  expectedNetProfit: number | null = null;
+  averageSalesPricePerMeter: number | null = null;
+  averageConstructionCostPerMeter: number | null = null;
   public licenseProjectProposedScheduleFiles: LicenseProjectProposedScheduleFileDto[] = [];
   public licenseProjectMarketingPlanFiles: LicenseProjectMarketingPlanFileDto[] = [];
   public licenseProjectFeasibilityStudyFiles :LicenseProjectFeasibilityStudyFileDto[]=[];

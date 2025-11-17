@@ -180,7 +180,7 @@ export class AddChangeCharteredAccountantRequestComponent {
     this.changeCharteredAccountantForm.controls['clearanceCharteredAccountantFileId'].setValue(filesData.eventRes.data[0].id);
   }
   save(): void {
-    debugger;
+    
 
     let charteredAccountantFacilityId = this.controls.charteredAccountantFacilityId.value;
 

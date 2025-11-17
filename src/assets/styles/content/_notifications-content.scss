@@ -111,7 +111,7 @@
 
       .filter-by {
         padding: 1rem;
-        color: $dark;
+        color: $body-color;
         transition: all ease-in-out .15s;
 
         &.active {
@@ -160,7 +160,7 @@
           width: 2rem;
           height: 2rem;
 
-          // background-color: $lightgreen;
+          // background-color: $lightergreen;
           background-color: $theme-light;
           border-radius: 50%;
 
@@ -193,7 +193,7 @@
         .notification-link {
           text-decoration: none;
           font-size: $font-size-sm;
-          color: $dark;
+          color: $body-color;
         }
 
         .note {

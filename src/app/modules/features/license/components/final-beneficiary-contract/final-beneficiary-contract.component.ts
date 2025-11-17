@@ -1,12 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SysLicenseBeneficiaryContractFormService } from '../../services/sys-license-beneficiary-contract-form.service';
 import { SysLicenseBeneficiaryContractFormListDto } from '../../dataModels/sys-license-beneficiary-contract-form-list-dto';
-import { Subscription, takeUntil } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 import { environment } from 'src/environments/environment';
 import { NextAndPreviusButtonsService } from '../../services/next-and-previous-buttons/next-and-previus-buttons.service';
-import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { UploadFileModel } from 'src/app/shared/models/upload-file.model';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { SysFileManagerCreateUpdateDto } from 'src/app/shared/models/sys-file-manager-create-update-dto';
@@ -20,10 +19,12 @@ import { FileManagementService } from 'src/app/shared/services/fileManagement/fi
 export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
+  fileId: string | null = '00000000-0000-0000-0000-000000000000';
   sysLicenseBeneficiaryContractForm = this._formBuilder.group({
     beneficiaryContractFormApproval: [false],
   });
   baseUrl = `${environment.baseURL}/`;
+// baseUrl = 'https://localhost:7253/';  
 
   beneficiaryFiles: SysFileManagerCreateUpdateDto[] = [];
   savedBeneficiaryFiles: SysFileManagerCreateUpdateDto[] = [];
@@ -32,6 +33,13 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
   } as FileUploader;
   sysLicenseBeneficiaryContractFormListDto: SysLicenseBeneficiaryContractFormListDto =
     new SysLicenseBeneficiaryContractFormListDto();
+
+  // PDF Viewer Properties
+  selectedPdfUrl: string = '';
+  isFullscreen: boolean = false;
+  isLoadingPdf: boolean = false;
+  pdfLoadError: string = '';
+  retryGenerateContract = () => this.GenerateContractWithLogo();
 
   localization = {
     addingNewItem: ' إضافة بند جديد',
@@ -47,8 +55,9 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
     private _filemangementService: FileManagementService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
-    private _popupService: PopupService
+    private _cdr: ChangeDetectorRef
   ) { }
+  
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
     this.GetLicenseBeneficiaryContractForm();
@@ -65,6 +74,7 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
   }
 
   GetLicenseBeneficiaryContractForm(): void {
+    // First get the contract data
     this.subscriptions.push(
       this._sysLicenseBeneficiaryContractFormService
         .GetLicenseBeneficiaryContractForm(this.licenseProjectId as string)
@@ -80,9 +90,45 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
           }
         })
     );
+
+    // Generate contract with logo
+    this.GenerateContractWithLogo();
   }
 
-  deletFile(id: string) {
+
+  GenerateContractWithLogo(): void {
+  this.isLoadingPdf = true;
+  this.pdfLoadError = '';
+  this.selectedPdfUrl = '';
+
+  this.subscriptions.push(
+    this._sysLicenseBeneficiaryContractFormService
+      .GenerateContractWithLogo(this.licenseProjectId as string)
+      .subscribe({
+        next: (res) => {
+          this.isLoadingPdf = false;
+
+          if (res && res.filePath) {
+            // Construct the full URL for the download endpoint
+            this.selectedPdfUrl = this.baseUrl + res.filePath;
+            this.fileId = res.licenseProjectBeneficiaryFileId; // Store the File ID for deletion
+            this._cdr.detectChanges();
+          } else {
+            this.selectedPdfUrl = '';
+            this.pdfLoadError = 'لم يتم استلام مسار الملف';
+          }
+        },
+        error: (error) => {
+          this.isLoadingPdf = false;
+          this.selectedPdfUrl = '';
+          this.pdfLoadError = 'حدث خطأ أثناء تحميل العقد';
+          this._cdr.detectChanges();
+        }
+      })
+  );
+  }
+
+  deleteFile(id: string) {
     this._filemangementService.DeletFile(id).subscribe(res => {
       if (res.isDone) {
         this.GetLicenseBeneficiaryContractForm();
@@ -90,15 +136,16 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
     })
   }
 
-
   UpdateLicenseBeneficiaryContractForm(moveToNextTab: boolean = false): void {
-    this.sysLicenseBeneficiaryContractFormListDto = this
-      .sysLicenseBeneficiaryContractForm
-      .value as SysLicenseBeneficiaryContractFormListDto;
-    this.sysLicenseBeneficiaryContractFormListDto.licenseProjectId = this
-      .licenseProjectId as string;
-    this.sysLicenseBeneficiaryContractFormListDto.BeneficiaryFilesId =
-      this.beneficiaryFiles.flatMap((f) => f.id);
+    this.sysLicenseBeneficiaryContractFormListDto.isApprove = this.sysLicenseBeneficiaryContractForm.value.beneficiaryContractFormApproval as boolean;
+    this.sysLicenseBeneficiaryContractFormListDto.beneficiaryContractFormApproval = this.sysLicenseBeneficiaryContractForm.value.beneficiaryContractFormApproval as boolean;
+    this.sysLicenseBeneficiaryContractFormListDto.licenseProjectId = this.licenseProjectId as string;
+    
+    const beneficiaryFileIds : string[] = []
+    beneficiaryFileIds.push(this.fileId as string);
+
+    this.sysLicenseBeneficiaryContractFormListDto.BeneficiaryFilesId = beneficiaryFileIds
+    // this.sysLicenseBeneficiaryContractFormListDto.BeneficiaryFilesId = this.beneficiaryFiles.flatMap((f) => f.id);
     this.subscriptions.push(
       this._sysLicenseBeneficiaryContractFormService
         .UpdateLicenseBeneficiaryContractForm(
@@ -127,8 +174,9 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
   private observeNextButtonIsCliced() {
     this.subscriptions.push(
       this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
-        (res: null) => {
+        () => {
           this.UpdateLicenseBeneficiaryContractForm(true);
+          this.moveToNextTab();
         }
       )
     );
@@ -136,13 +184,15 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
   private observeSaveAsDraftIsClicked() {
     this.subscriptions.push(
       this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(
-        (res: null) => {
-          this.UpdateLicenseBeneficiaryContractForm();
+        () => {
+          this.UpdateLicenseBeneficiaryContractForm(true);
+          // this.moveToNextTab();
         }
       )
     );
   }
   private observeTabsButtons(): void {
+    
     this.observeNextButtonIsCliced();
     this.observeSaveAsDraftIsClicked();
   }
@@ -161,13 +211,16 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
       message: string;
     };
   }): void {
-    this.beneficiaryFiles = filesData.eventRes.data?.map((file) => {
-      return {
-        id: file.id,
-        fileDescription: file.fileName,
-        filePath: file.path,
-        fileType: file.fileType,
-      };
-    });
+    if (filesData?.eventRes?.data) {
+      this.beneficiaryFiles = filesData.eventRes.data.map((file) => {
+        return {
+          id: file.id,
+          fileDescription: file.fileName,
+          filePath: file.path,
+          fileType: file.fileType,
+        };
+      });
+    }
   }
+
 }

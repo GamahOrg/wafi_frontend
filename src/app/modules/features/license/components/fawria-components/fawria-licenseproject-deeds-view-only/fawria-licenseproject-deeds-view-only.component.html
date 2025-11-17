@@ -1,0 +1,7 @@
+<!-- <app-instant-license-deeds></app-instant-license-deeds> -->
+<app-fawria-licenseproject-deeds-list-view-only
+  *ngIf="pageMode==PagemodeEnum.List"
+  (changePage)="onChangePage($event)">
+</app-fawria-licenseproject-deeds-list-view-only>
+
+<app-fawria-licenseproject-deeds-details-view-only  *ngIf="pageMode==PagemodeEnum.View"></app-fawria-licenseproject-deeds-details-view-only>

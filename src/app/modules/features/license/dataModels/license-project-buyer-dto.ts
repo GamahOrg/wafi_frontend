@@ -1,3 +1,4 @@
+import { LicenseProjectBusinessPaymentResponseDto } from '../../real-estate-contributions-license/models/license-project-buyer-contracts-dto';
 import { SysFileManagerCreateUpdateDto } from '../models/license-request-project-details-dto';
 
 export interface LicenseProjectBuyerDto {
@@ -65,6 +66,10 @@ export interface LicenseProjectBuyerDto {
   space: number;
   contractFile: SysFileManagerCreateUpdateDto;
   paymentType: LicenseProjectBuyerPaymentTypeDto;
+  licenseProjectBuyerBusinessPayment?: LicenseProjectBusinessPaymentResponseDto;
+  
+
+
 }
 export interface LicenseProjectBuyerTypeDto {
   id: number;

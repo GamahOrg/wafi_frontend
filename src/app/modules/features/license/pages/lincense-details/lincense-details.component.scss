@@ -8,3 +8,11 @@
     display: block;
     height: 100%;
 }
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+}

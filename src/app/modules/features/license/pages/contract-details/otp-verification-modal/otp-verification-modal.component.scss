@@ -1,0 +1,528 @@
+// ==========================================
+// Color Variables
+// ==========================================
+$primary-teal: #005257;
+$light-gray: #8A9393;
+$medium-gray: #5D5D5D;
+$lighter-gray: #B1B6B8;
+$border-color: #dee2e6;
+$danger-red: #dc3545;
+$success-green: #28a745;
+$background-white: #FFFFFF;
+$overlay-bg: rgba(0, 0, 0, 0.5);
+
+// ==========================================
+// Typography Variables
+// ==========================================
+$font-family: 'IBM Plex Sans Arabic', sans-serif;
+
+// ==========================================
+// Modal Overlay
+// ==========================================
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $overlay-bg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.verify-text{
+  padding: 20px;
+}
+
+// ==========================================
+// Modal Content
+// ==========================================
+.modal-content {
+  background: $background-white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  font-family: $font-family;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// ==========================================
+// Modal Header
+// ==========================================
+.modal-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: $primary-teal;
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: $medium-gray;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba($danger-red, 0.1);
+    color: $danger-red;
+  }
+}
+
+// ==========================================
+// Modal Body
+// ==========================================
+.modal-body {
+  padding: 2rem;
+}
+
+.phone-info {
+  text-align: center;
+  font-size: 16px;
+  color: $medium-gray;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+// ==========================================
+// OTP Container
+// ==========================================
+.otp-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  direction: ltr;
+}
+
+.otp-input {
+  width: 70px;
+  height: 70px;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid $border-color;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: $font-family;
+  color: $primary-teal;
+
+  &:focus {
+    border-color: $primary-teal;
+    box-shadow: 0 0 0 3px rgba($primary-teal, 0.1);
+  }
+
+  &:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+}
+
+// ==========================================
+// Rejection Reason
+// ==========================================
+.rejection-reason-container {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: $medium-gray;
+  margin-bottom: 0.5rem;
+}
+
+.required-asterisk {
+  color: $danger-red;
+  margin-right: 0.25rem;
+}
+
+.rejection-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 16px;
+  font-family: $font-family;
+  border: 2px solid $border-color;
+  border-radius: 8px;
+  resize: vertical;
+  transition: all 0.3s ease;
+  color: $medium-gray;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-teal;
+    box-shadow: 0 0 0 3px rgba($primary-teal, 0.1);
+  }
+
+  &::placeholder {
+    color: $lighter-gray;
+  }
+
+  &:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+}
+
+// ==========================================
+// Alerts
+// ==========================================
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
+
+  &-success {
+    background-color: rgba($success-green, 0.1);
+    border: 1px solid $success-green;
+    color: $success-green;
+  }
+
+  &-danger {
+    background-color: rgba($danger-red, 0.1);
+    border: 1px solid $danger-red;
+    color: $danger-red;
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+// ==========================================
+// Resend Container
+// ==========================================
+.resend-container {
+  text-align: center;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.resend-text {
+  font-size: 14px;
+  color: $medium-gray;
+}
+
+.resend-link {
+  background: none;
+  border: none;
+  color: $primary-teal;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    color: darken($primary-teal, 10%);
+  }
+
+  &:disabled {
+    color: $lighter-gray;
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+}
+
+// ==========================================
+// Modal Footer
+// ==========================================
+.modal-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid $border-color;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-verify {
+  background-color: $primary-teal;
+  color: white;
+  font-size: 18px;
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 0.75rem 3rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba($primary-teal, 0.2);
+  width: 100%;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background-color: darken($primary-teal, 10%);
+    box-shadow: 0 4px 12px rgba($primary-teal, 0.3);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba($primary-teal, 0.2);
+  }
+
+  &:disabled {
+    background-color: $lighter-gray;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.6;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+// ==========================================
+// Spinner
+// ==========================================
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
+  border: 0.15rem solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+  display: inline-block;
+
+  &.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15rem;
+  }
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ms-2 {
+  margin-right: 0.5rem;
+}
+
+// ==========================================
+// Success Popup (shown after OTP success)
+// ==========================================
+.success-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease;
+  padding: 1rem;
+}
+
+.success-popup-content {
+  background: white;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.success-title {
+  color: #001F21;
+  font-size: 28px;
+  font-family: $font-family;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.success-subtitle {
+  color: $medium-gray;
+  font-size: 18px;
+  font-family: $font-family;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.success-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-view-unit-details {
+  background-color: $primary-teal;
+  color: white;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba($primary-teal, 0.3);
+  min-width: 220px;
+
+  &:hover {
+    background-color: darken($primary-teal, 10%);
+    box-shadow: 0 6px 16px rgba($primary-teal, 0.4);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-download-contract {
+  background-color: white;
+  color: $primary-teal;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 1rem 2.5rem;
+  border: 2px solid $primary-teal;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 220px;
+
+  &:hover {
+    background-color: rgba($primary-teal, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($primary-teal, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ==========================================
+// Responsive Design
+// ==========================================
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-width: none;
+    margin: 1rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-header,
+  .modal-footer {
+    padding: 1rem 1.5rem;
+  }
+
+  .otp-input {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+
+  .otp-container {
+    gap: 0.5rem;
+  }
+
+  .success-popup-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .success-title {
+    font-size: 22px;
+  }
+
+  .success-subtitle {
+    font-size: 16px;
+  }
+
+  .success-actions {
+    flex-direction: column;
+    gap: 1rem;
+
+    .btn-view-unit-details,
+    .btn-download-contract {
+      width: 100%;
+      min-width: unset;
+    }
+  }
+}

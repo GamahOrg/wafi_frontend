@@ -1,0 +1,26 @@
+<div class="contract-details-container" dir="rtl">
+  <!-- Header with Back Button -->
+  <div class="header-section">
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-outline-secondary back-btn" (click)="goBack()">
+        <i class="bi bi-arrow-right"></i> رجوع
+      </button>
+      <h4 class="page-title mb-0">عرض العقد</h4>
+    </div>
+  </div>
+
+  <!-- PDF Viewer Section -->
+  <div class="pdf-viewer-section">
+    <app-pdf-viewer
+      [fileId]="contractFileId"
+      [isLoading]="isLoadingPdf"
+      [loadError]="pdfLoadError"
+      [retryCallback]="retryLoadContract"
+      [noContentMessage]="'لا يوجد عقد متاح'"
+      [noContentDescription]="'لم يتم العثور على العقد'"
+      [loadingMessage]="'جاري تحميل العقد'"
+      [loadingDescription]="'يرجى الانتظار بينما يتم تحميل العقد'"
+      [errorMessage]="'حدث خطأ في تحميل العقد'"
+    ></app-pdf-viewer>
+  </div>
+</div>

@@ -54,6 +54,12 @@ export class UnitCodesFormComponent implements OnInit, OnDestroy {
     deliveryOn: ['', [Validators.required]],
     price: this._formBuilder.control<number | null>(null, [Validators.required, Validators.min(0)]),
     floorNumber: [0, [Validators.required, Validators.min(0)]],
+    space: [0, [Validators.required, Validators.min(0)]],
+    buildingFlatSpace: [0, [Validators.required, Validators.min(0)]],
+    unitLandShare: [0, [Validators.required, Validators.min(0)]],
+    unitShareOfCommonAreas: [0, [Validators.required, Validators.min(0)]],
+    unitFacilities: ['', [Validators.required]],
+    courtyardArea: [0, [Validators.required, Validators.min(0)]],
   })
 
   get controls() {
@@ -123,6 +129,12 @@ export class UnitCodesFormComponent implements OnInit, OnDestroy {
     dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
     MinValueError: 'قيمة الحقل يجب الا تقل عن صفر',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
+    space: 'المساحة الإجمالية للوحدة',
+    buildingFlatSpace: 'مساحة مسطح البناء',
+    unitLandShare: 'حصة الوحدة من الأرض',
+    unitShareOfCommonAreas: 'حصة الوحدة من الأجزاء المشتركه',
+    unitFacilities: 'مرافق الوحدة',
+    courtyardArea: 'مساحة الفناء',
   };
 
   setResponseToForm(res: ProjectUnitCodeDto): void {

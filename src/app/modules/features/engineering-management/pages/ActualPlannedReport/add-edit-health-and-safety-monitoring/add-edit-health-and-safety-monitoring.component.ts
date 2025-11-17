@@ -66,7 +66,7 @@ showValidation: boolean = false;
     this.subscriptions.push(
       this._licenseProjectHealthAndSafetyMonitoringService.getLicenseProjectHealthAndSafetyMonitoring().subscribe(res => {
         if (res) {
-        debugger;
+        
          this.licenseProjectHealthAndSafetyMonitoring=res as LicenseProjectHealthAndSafetyMonitoringDto; 
          this.licenseProjectHealthAndSafetyMonitoringForm.patchValue(this.licenseProjectHealthAndSafetyMonitoring as any)
         // this.licenseProjectHealthAndSafetyMonitoringForm.controls.hSEPlanStatusId.setValue(this.licenseProjectHealthAndSafetyMonitoring?.hSEPlanStatusId as number);
@@ -78,13 +78,13 @@ showValidation: boolean = false;
 
   
   save(): void {
-    debugger;
+    
     if (!this.licenseProjectHealthAndSafetyMonitoringForm.valid) {
       this.showValidation = true;
       return;
     }
 
-    debugger;
+    
     this.licenseProjectHealthAndSafetyMonitoringCreateUpdate = this.licenseProjectHealthAndSafetyMonitoringForm.value as {} as LicenseProjectHealthAndSafetyMonitoringCreateUpdateDto;
     this.licenseProjectHealthAndSafetyMonitoringCreateUpdate.id=this.licenseProjectHealthAndSafetyMonitoring?.id as string;
     this.licenseProjectHealthAndSafetyMonitoringCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId=this.licenseProjectHealthAndSafetyMonitoring?.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;

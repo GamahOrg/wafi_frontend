@@ -52,9 +52,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
     lincenseList: `/${Configuration.pages.license.lincenseList}`,
     lincenseCertificates: `/${Configuration.pages.license.lincenseCertificates}`,
     lincenseRequestApprovals: `/${Configuration.pages.license.lincenseRequestApprovals}`,
+    developerApprovalsList: '/developer-approvals-list',
     projectList: `/${Configuration.pages.license.projectList}`,
     renewLicensesList: `/${Configuration.pages.license.RenewLicensesList}`,
     renewQualifyingList: `/${Configuration.pages.qualifying.renewQualifyingList}`,
+    licenseProjectFawriaDeveloperList: `/${Configuration.pages.license.licenseProjectFawriaDeveloperList}`,
     training: `${Configuration.modules.wafi}/${Configuration.modules.training}`,
     trainingTypes: `/${Configuration.pages.training.trainingTypes}`,
     trainingList: `/${Configuration.pages.training.trainingList}`,
@@ -63,6 +65,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     contractdocumentation: `/${Configuration.pages.license.contractdocumentation}`,
     licensecertificatetemplate: `/${Configuration.pages.license.licensecertificatetemplate}`,
     zones: `/${Configuration.pages.license.zones}`,
+    itemsLog: `/${Configuration.pages.license.itemsLog}`,
 
     engineeringManagement: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}`,
 
@@ -74,6 +77,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     createLincenceProjectRequestList: `/${Configuration.pages.licenseProjectRequests.licenseProjectRequests}`,
 
     developerProjects: `${Configuration.modules.engineeringManagement}/${Configuration.pages.license.developerProjectList}`,
+    recommendationLogsList: `${Configuration.modules.engineeringManagement}/${Configuration.pages.license.recommendationLogsList}`,
+    contractRequestList: `${Configuration.modules.license}/${Configuration.pages.license.contractRequestList}`,
   };
 
   constructor(
@@ -123,6 +128,26 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.userData?.facilities.unshift(facility);
     this._userDataService.updateCustomerData(this.userData as customerResponse)
   }
+
+  /**
+   * Check if contract request menu should be active
+   * Active when route includes: contract-request-details, contract-request-list
+   */
+  isContractRequestMenuActive(): boolean {
+    return this.currentUrl.includes('contract-request-details') ||
+           this.currentUrl.includes('contract-request-list');
+  }
+
+  /**
+   * Check if licensed projects menu should be active
+   * Active when route includes: recommendations-logs-list, real-state-developer-units-list, unit-details
+   */
+  isLicensedProjectsMenuActive(): boolean {
+    return this.currentUrl.includes('recommendations-logs-list') ||
+           this.currentUrl.includes('real-state-developer-units-list') ||
+           this.currentUrl.includes('unit-details');
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription: Subscription) => {
       subscription.unsubscribe();

@@ -1,3 +1,4 @@
+import { SysFileManagerCreateUpdateDto } from "../models/license-request-project-details-dto";
 import { SysCityCreateUpdateDto } from "../models/sys-city-create-update-dto";
 import { CustomerApproval } from "./customer-approval.model";
 import { FacilityApproval } from "./facility-approval.model";
@@ -13,6 +14,8 @@ export interface LicenseProjectEngineeringConsultantApproval {
     delegatorCustomer: CustomerApproval | null;
     facility: FacilityApproval;
     licenseProject: LicenseProjectShortApproval;
+     agreementFileId: string | null;
+      agreementFile: SysFileManagerCreateUpdateDto | null;
     //
     cityId: string;
     engineeringConsultantLicenseNumber: string | null;

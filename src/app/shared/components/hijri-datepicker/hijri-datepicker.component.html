@@ -1,0 +1,45 @@
+<div class="hijri-datepicker" (click)="$event.stopPropagation()" (document:click)="onDocumentClick($event)">
+  <div class="datepicker-input" [class.is-open]="isOpen" (click)="toggleCalendar()" #dateInput>
+    <input
+      type="text"
+      [value]="displayValue"
+      [placeholder]="placeholder"
+      readonly
+      class="form-control"
+    />
+    <i class="material-icons-outlined calendar-icon">calendar_today</i>
+  </div>
+
+  <div class="calendar-dropdown" *ngIf="isOpen" [style.top.px]="dropdownTop" [style.left.px]="dropdownLeft">
+    <div class="calendar-header">
+      <button type="button" class="nav-btn" (click)="previousMonth()">
+        <i class="material-icons-outlined">chevron_right</i>
+      </button>
+      <div class="month-year">
+        <span>{{ hijriMonths[currentHijriMonth] }} {{ currentHijriYear }}</span>
+      </div>
+      <button type="button" class="nav-btn" (click)="nextMonth()">
+        <i class="material-icons-outlined">chevron_left</i>
+      </button>
+    </div>
+
+    <div class="calendar-body">
+      <div class="weekdays">
+        <div class="weekday" *ngFor="let day of weekDays">{{ day }}</div>
+      </div>
+
+      <div class="days-grid">
+        <div
+          class="day-cell"
+          *ngFor="let day of daysInMonth"
+          [class.empty]="!day"
+          [class.today]="day?.isToday"
+          [class.selected]="day?.isSelected"
+          (click)="selectDate(day)"
+        >
+          <span *ngIf="day">{{ day.hijriDay }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

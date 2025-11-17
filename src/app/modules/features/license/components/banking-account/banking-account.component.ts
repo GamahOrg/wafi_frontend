@@ -96,7 +96,7 @@ export class BankingAccountComponent {
         this._projectBasicDataService.GetBankingAccountByLicenseProjectId(
           this.licenseProjectId as string
         ),
-        this._bankSerive.GetAreasDropDown(),
+        this._bankSerive.GetBankDropDown(),
       ];
 
       const subscriptions = forkJoin(requests).subscribe((results) => {

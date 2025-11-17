@@ -6,6 +6,7 @@ import { Pagination } from 'src/app/shared/models/pagination.model';
 import { LicenseProjectBuyerListPagingDto, LicenseProjectBuyerStatusEnum } from '../models/license-project-buyer-list-paging-dto';
 import { LicenseProjectBuyerCreateUpdateDto } from '../models/license-project-buyer-create-update-dto';
 import { Configuration } from 'src/app/core/configurations/shared.config';
+import { LicenseProjectBuyerContractFilterDto, LicenseProjectBuyerContractListDto } from '../models/license-project-buyer-contracts-dto';
 
 @Injectable()
 export class LicenseProjectBuyerService {

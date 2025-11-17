@@ -19,8 +19,8 @@
             <thead>
                 <tr>
                     <th>اسم النموذج</th>
-                    <th>المساحه الاجماليه</th>
-                    <th> مساحة مسطح ابناء</th>
+                    <!--<th>المساحه الاجماليه</th>
+                    <th> مساحة مسطح ابناء</th>-->
                     <th> عدد الوحدات</th>
                     <th> ملفات التصاميم</th>
                     <th></th>
@@ -29,8 +29,8 @@
             <tbody>
                 <tr *ngFor="let model of models">
                     <td>{{model.name}}</td>
-                    <td>{{model.space}}</td>
-                    <td>{{model.buildingFlatSpace}}</td>
+                    <!--<td>{{model.space}}</td>
+                    <td>{{model.buildingFlatSpace}}</td>-->
                     <td>{{model.unitsCount}}</td>
                     <td>
                         <div class="value"  *ngFor="let file of model.licenseProjectModelDesignFiles">

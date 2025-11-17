@@ -23,6 +23,7 @@ import { LicenseDetailsService } from '../../services/license-details/license-de
 import { ApprovalComponent } from '../../components/approval/approval.component';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { GoogleAnalyticsService } from 'src/app/shared/services/GoogleAnalytics.service';
+import { RequestStep } from '../fawria-license-details/fawria-license-details.component';
 
 @Component({
   selector: 'app-lincense-summary',
@@ -31,6 +32,46 @@ import { GoogleAnalyticsService } from 'src/app/shared/services/GoogleAnalytics.
 })
 export class LincenseSummaryComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
+
+   requestSteps: RequestStep[] = [
+    {
+      title: 'إنشاء طلب الترخيص رقم 133132323328',
+      status: 'completed',
+      statusText: 'تم الإنشاء',
+      date: '20/20/2020'
+    },
+    {
+      title: 'إرسال الإخطارات لبنك المضمون',
+      status: 'current',
+      statusText: 'قيد الانتظار'
+    },
+    {
+      title: 'إرسال الإخطارات للمحاسب والمستشار',
+      status: 'pending',
+      statusText: 'قيد الانتظار'
+    },
+    {
+      title: 'فتح حساب الضمان',
+      status: 'pending',
+      statusText: 'قيد الانتظار'
+    },
+    {
+      title: 'سداد الفاتورة',
+      status: 'pending',
+      statusText: 'قيد الانتظار'
+    },
+    {
+      title: 'تهميش المضمون',
+      status: 'pending',
+      statusText: 'قيد الانتظار'
+    },
+    {
+      title: 'إصدار الرخصة',
+      status: 'pending',
+      statusText: 'قيد الانتظار'
+    }
+  ];
+  
   localization = {
     send: "إرسال الطلب",
     approvalDecisions: "الموافقه على الاقرارات",
@@ -46,7 +87,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
       tabCode: TabCode.mainData,
       tabErrors: [],
       isVisible: true,
-    },
+    },    
     {
       icon: 'holiday_village',
       title: 'بيانات المشروع',
@@ -148,13 +189,18 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   resetDataVisibilityOfLicenseProject() {
     this._dataVisibilityOfLicenseProjectService.resetDataVisibilityOfLicenseProject()
   }
+
+  typeCode: string | null = null;
+  // licenseProjectId: string | null = null;
   send() {
     let licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (!licenseProjectId) return;
     this.subscriptions.push(
       this._licenseRequestService.SendByProjectId(licenseProjectId).subscribe((res: RequestValidation | RequestSuccessResponse | null) => {
         if (res) {
-          if ('id' in res && 'requestCode' in res) {
+          if ('id' in res && 'requestCode' in res && 'typeCode' in res) {
+            this.typeCode = res.typeCode
+            this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(res.licenseProjectId);
             this.requestSubmittedSuccessfully = true;
             this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(res.id);
             this.openConfirmaDialog(res.requestCode as string);
@@ -180,24 +226,56 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   private updateAndOpenData(data: PopupData) {
     this._popupService.updatePopupData(data);
   }
+
+  licenseLink(): string {
+    
+    if(this.typeCode === 'FSRSU'){
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.licenseProjectId as string);
+      return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseList}`;
+    }else
+      return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`
+    return '';
+  }
   openConfirmaDialog(res: string): void {
-    let Data = {
-      imagePath: 'assets/images/auth/ForgotPass.svg',
-      title: 'تم انشاء الطلب بنجاح',
-      staticMessage: 'تم انشاء طلبك بنجاح ويمكنك عرض الطلب',
-      dynamicMessage: res,
-      buttonText: 'عرض الطلب',
-      buttonLink:
-      Configuration.modules.wafi +
-      '/' +
-        Configuration.modules.license +
-        '/' +
-        Configuration.pages.license.lincenseDetails,
-        
-        surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
-        surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
-    } as notePopupData;
-    this._popupService.updateNotePopupData(Data);
+    // Check if it's a fawria license type
+    if (this.typeCode === 'FSRSU') {
+ // Show regular success popup
+      let Data = {
+        imagePath: 'assets/images/auth/ForgotPass.svg',
+        title: 'تم إرسال الطلب بنجاح !',
+        staticMessage: 'تم إنشاء الاتفاقيات بين الأطراف وفي انتظار موافقتهم',
+        dynamicMessage: res,
+        buttonText: 'متابعة طلبك',
+        buttonLink: this.licenseLink(),
+
+          // surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
+          // surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
+      } as notePopupData;
+      this._popupService.updateNotePopupData(Data);
+
+      // Show fawria certificate popup
+      // let fawriaData = {
+      //   title: "",
+      //   component: FawriaCertificateComponent,
+      //   id: "FawriaCertificateComponent",
+      //   disableClose: true
+      // } as PopupData;
+      // this._popupService.updatePopupData(fawriaData);
+    } else {
+      // Show regular success popup
+      let Data = {
+        imagePath: 'assets/images/auth/ForgotPass.svg',
+        title: 'تم ارسال الطلب بنجاح',
+        staticMessage: 'تم ارسال طلبك بنجاح ويمكنك عرض الطلب',
+        dynamicMessage: res,
+        buttonText: 'عرض الطلب',
+        buttonLink: this.licenseLink(),
+
+          surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
+          surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
+      } as notePopupData;
+      this._popupService.updateNotePopupData(Data);
+    }
   }
   openValidationDialog(): void {
     let Data = {
@@ -306,7 +384,8 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
     let Data = {
       title: "يجب الموافقه على جميع الاقرارات الخاصة بالرخصة حتى يتم ارسال الطلب",
       component: ApprovalComponent,
-      id: "ApprovalComponent"
+      id: "ApprovalComponent",
+      disableClose: true
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }

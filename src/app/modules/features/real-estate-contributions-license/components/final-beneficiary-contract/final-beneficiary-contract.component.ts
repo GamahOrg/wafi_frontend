@@ -76,6 +76,7 @@ export class FinalBeneficiaryContractComponent implements OnInit, OnDestroy {
         .GetLicenseBeneficiaryContractForm(this.licenseProjectId as string)
         .subscribe((res) => {
           if (res) {
+            
             this.beneficiaryFiles = res.beneficiaryFiles;
             this.savedBeneficiaryFiles = res.beneficiaryFiles;
             this.sysLicenseBeneficiaryContractFormListDto =

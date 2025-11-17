@@ -1,26 +1,21 @@
-// .cdk-global-overlay-wrapper {
-//   justify-content: start !important;
-// }
-
-// .cdk-overlay-pane {
-//   height: 100vh !important;
-// }
-
 .cdk-overlay-dark-backdrop {
-  background: rgba(#556364, .5);
+  background: rgba(#000, .4);
 }
 
 .mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 1.5rem;
+  --mdc-dialog-container-color: #F1F2F2;
+
   --mdc-dialog-subhead-font: "IBM_Plex_Sans_Arabic", sans-serif;
-  --mdc-dialog-subhead-size: 1.25rem;
+  --mdc-dialog-subhead-size: 1rem;
   --mdc-dialog-subhead-weight: 700;
+  --mdc-dialog-subhead-color: #{$headings-color};
   --mdc-dialog-subhead-tracking: 0;
+
   --mdc-dialog-supporting-text-font: "IBM_Plex_Sans_Arabic", sans-serif;
+  --mdc-dialog-supporting-text-color: inherit;
 
   .mdc-dialog__surface {
-    border-start-start-radius: 0 !important;
-    border-end-start-radius: 0 !important;
-    border-start-end-radius: $card-border-radius !important;
-    border-end-end-radius: $card-border-radius !important;
+    padding: 1.5rem 1rem;
   }
 }

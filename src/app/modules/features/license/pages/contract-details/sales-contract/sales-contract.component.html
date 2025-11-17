@@ -1,0 +1,97 @@
+<div class="sales-contract-container" *ngIf="projectDetails">
+
+  <div class="card-custom">
+    <h3 class="section-title">
+      <i class="bi bi-file-text"></i>
+      عقد البيع
+    </h3>
+
+      <!-- PDF Viewer Section -->
+  <div class="pdf-viewer-section">
+    <app-pdf-viewer
+      [fileId]="contractFileId"
+      [isLoading]="isLoadingPdf"
+      [loadError]="pdfLoadError"
+      [retryCallback]="retryLoadContract"
+      [noContentMessage]="'لا يوجد عقد متاح'"
+      [noContentDescription]="'لم يتم العثور على العقد'"
+      [loadingMessage]="'جاري تحميل العقد'"
+      [loadingDescription]="'يرجى الانتظار بينما يتم تحميل العقد'"
+      [errorMessage]="'حدث خطأ في تحميل العقد'"
+    ></app-pdf-viewer>
+  </div>
+
+  </div>
+
+  <!-- Success Message -->
+  <div class="alert alert-success" *ngIf="successMessage && !isUpdatingStatus" role="alert">
+    <i class="bi bi-check-circle"></i>
+    {{ successMessage }}
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-danger" *ngIf="errorMessage && !isUpdatingStatus" role="alert">
+    <i class="bi bi-exclamation-circle"></i>
+    {{ errorMessage }}
+  </div>
+
+  <!-- Agreement Checkbox -->
+  <div class="agreement-section">
+    <label class="agreement-checkbox">
+      <input
+        type="checkbox"
+        [(ngModel)]="isAgreementChecked"
+        (ngModelChange)="onAgreementChange()"
+        id="agreementCheck"
+      />
+      <span class="checkbox-label"> أقر بأنني قد قمت بقراءة بنود العقد كاملة والاطلاع على خطة الدفعات</span>
+    </label>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="d-flex justify-content-end mt-3 gap-3">
+    <button
+      class="btn-reject"
+      [disabled]="isUpdatingStatus"
+      (click)="rejectContract()"
+    >
+      <span *ngIf="!isUpdatingStatus">رفض العقد</span>
+      <span *ngIf="isUpdatingStatus">
+        <span class="spinner-border spinner-border-sm ms-2"></span>
+        جاري الرفض...
+      </span>
+    </button>
+    <button
+      class="btn-accept"
+      [disabled]="isUpdatingStatus"
+      (click)="acceptContract()"
+    >
+      <span *ngIf="!isUpdatingStatus">قبول العقد</span>
+      <span *ngIf="isUpdatingStatus">
+        <span class="spinner-border spinner-border-sm ms-2"></span>
+        جاري القبول...
+      </span>
+    </button>
+  </div>
+
+  <!-- Rejection Reason Modal -->
+  <app-rejection-reason-modal
+    [isVisible]="isRejectionModalVisible"
+    (onSubmit)="onRejectionReasonSubmit($event)"
+    (onClose)="onRejectionReasonClose()"
+  ></app-rejection-reason-modal>
+
+  <!-- OTP Verification Modal -->
+  <app-otp-verification-modal
+    [isVisible]="isOtpModalVisible"
+    [contractId]="contracts[0].contractId"
+    [phoneNumber]="phoneNumber"
+    [actionType]="otpModalAction"
+    [showSuccessPopup]="showSuccessPopup"
+    (onVerify)="onOtpVerified($event)"
+    (onClose)="onOtpModalClose()"
+    (onViewDetails)="onSuccessViewDetails()"
+    (onDownloadContract)="onSuccessDownloadContract()"
+  ></app-otp-verification-modal>
+
+</div>

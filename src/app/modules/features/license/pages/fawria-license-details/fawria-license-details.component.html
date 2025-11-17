@@ -1,0 +1,137 @@
+<div class="container-fluid">
+  <div class="row row-gap-4">
+    <!-- Main Content - Right Side -->
+    <div class="col-lg-7 col-xl-8 col-xxl-9 order-1 order-lg-1">
+      <!-- <div class="col-12" *ngIf="!availabilityToUpdate">
+        <div class="buttona bg-white px-3 py-2 mb-3 d-flex justify-content-end">
+          <div>
+            <button
+              type="button"
+              mat-flat-button
+              color="primary"
+              (click)="send()"
+              [disabled]="!disabledSend || requestSubmittedSuccessfully"
+            >
+              {{ localization.send }}
+            </button>
+            &nbsp;
+            <button
+              type="button"
+              [disabled]="requestSubmittedSuccessfully"
+              class="btn btn-outline-primary"
+              (click)="openApprovalDialog()"
+            >
+              {{ localization.approvalDecisions }}
+            </button>
+          </div>
+        </div>
+      </div> -->
+
+      <app-tabs></app-tabs>
+    </div>
+
+    <!-- Stepper - Left Side -->
+    <div class="col-lg-5 col-xl-4 col-xxl-3 order-2 order-lg-2">
+      <div class="card phases-card" *ngIf="licenseRequestHeaderProcessingStepList && licenseRequestHeaderProcessingStepList.length > 0">
+        <div class="card-header no-separetor">
+          <h6 class="card-title">مراحل الطلب</h6>
+        </div>
+
+        <!-- [ngClass]="{
+            'completed': step.status === 'completed',
+            'current': step.status === 'current',
+            'pending': step.status === 'pending'
+          }" -->
+        <div class="card-body">
+          <!-- <div class="alert alert-danger mb-4" role="alert">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-help-circle"></i>
+            </span>
+            <span>لا يمكن استكمال الطلب، درجة التأهيل الحالية أقل من الحد المسموح لإجمالي مساحة مسطح البناء للمشروع</span>
+          </div> -->
+
+          <!-- <div class="phase rejected">
+            <div class="number-area">
+              <span class="number">{{ '1' }}</span>
+            </div>
+
+            <div class="info-area">
+              <h6 class="title">
+                {{'step.step.name'}}
+                <img src="/assets/images/icons/flag.svg" alt="flag">
+              </h6>
+              <div class="info">
+                <span class="status">{{'step.stepStatus.name'}}</span>
+                <div class="date">
+                  <i class="hgi hgi-stroke hgi-calendar-03"></i>
+                  <span>{{'--/--/----'}}</span>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm btn-primary w-100 mt-2">تفقد حالة المحاسب والإستشاري</button>
+            </div>
+          </div> -->
+
+          <div class="phase" *ngFor="let step of licenseRequestHeaderProcessingStepList; let i = index" [ngClass]="{
+            'completed':getCompleted(step.stepStatusId),
+            'current': getCurrentStatus(step),
+            'pending': step.stepStatusId == stepStatus.PendingApproval,
+            'rejected': getRejectStatus(step.stepStatusId)
+          }">
+
+            <div class="number-area">
+              <span class="number">{{ i + 1 }}</span>
+            </div>
+
+            <div class="info-area">
+              <h6 class="title">{{step.step.name}}</h6>
+              <div class="info">
+                <span class="status">{{step.stepStatus.name}}</span>
+                <div class="date">
+                  <i class="hgi hgi-stroke hgi-calendar-03"></i>
+                  <span>{{(step.endAt | date: 'dd/MM/yyyy') || '--/--/----'}}</span>
+                </div>
+              </div>
+
+              <button *ngIf="step.stepId==stepType.SendAgreementsToDeedOwners" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(true)">تفقد حالة أطراف المشروع</button>
+              <button *ngIf="step.stepId==stepType.SendAgreementsToAccountantAndConsultant" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">تفقد حالة المحاسب والإستشاري</button>
+              <!-- <button *ngIf="step.stepId==stepType.PayInvoice" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">عرض الفاتورة</button>
+              <button *ngIf="step.stepId==stepType.PayInvoice" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">إعادة المحاولة</button>
+              <button *ngIf="step.stepId==stepType.OpenEscrowAccount" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">إعادة التكامل مع البنك</button>
+             -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-12 col-lg-3 order-2 order-lg-2">
+      <div class="stepper-container">
+        <h5 class="stepper-title">مراحل الطلب</h5>
+
+        <div class="stepper">
+          <div *ngFor="let step of requestSteps; let i = index" class="stepper-item" [class.completed]="step.status === 'completed'" [class.current]="step.status === 'current'" [class.pending]="step.status === 'pending'">
+            <div class="stepper-indicator">
+              <div class="stepper-number">{{ i + 1 }}</div>
+              <div class="stepper-line" *ngIf="i < requestSteps.length - 1"></div>
+            </div>
+
+            <div class="stepper-content">
+              <h6 class="stepper-step-title">{{ step.title }}</h6>
+              <div class="stepper-details">
+                <span class="stepper-date" *ngIf="step.date">
+                  <i class="material-icons-outlined">calendar_today</i>
+                  {{ step.date }}
+                </span>
+                <span class="stepper-status" [class]="'status-' + step.status">
+                  {{ step.statusText }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+  </div>
+</div>

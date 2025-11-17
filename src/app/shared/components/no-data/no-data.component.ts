@@ -9,9 +9,15 @@ import { ButtonType } from '../../models/enums/button-type.model';
 })
 export class NoDataComponent implements AfterViewInit{
 
-  @Input() showCompleteBtn:boolean = true;
   @Input() title:string = "لا توجد بيانات مدخلة";
+  @Input() showText:boolean = true;
+  @Input() text:string = "يُمكنك ملء البيانات لمساعدتك في إرسال طلباتك الخاصة.";
+  
+  @Input() showCompleteBtn:boolean = true;
+  @Input() completeBtnTitle:string = "إستكمال البيانات";
+  
   @Output() onNoDataButtonClicked: EventEmitter<null> = new EventEmitter<null>();
+  
   @Input() noDataActionsButtons: Button[] = [
     // {
     //   icon: "",

@@ -48,6 +48,9 @@ export class CreateLincenseComponent {
   renewLicense: boolean = false;
   licenseProjectId: string = '';
   facilityId: string = '';
+  requestStudyingDuration: any
+  paymentMethod: string = ''
+
   constructor(
     private _formBuilder: FormBuilder,
     private _licenseRequestTypeService: LicenseRequestTypeService,
@@ -113,8 +116,21 @@ export class CreateLincenseComponent {
           this.getLicenseProjectId();
           this.getFacilityId();
         }
+              
+        this.updateDataWhenFawria();
       })
-    );
+    )
+  }
+
+
+  updateDataWhenFawria(){
+    if(this.requestTypeCode  == 'FSRSU'){
+      this.requestStudyingDuration = 'فورية'
+      this.paymentMethod = 'طريقة الدفع'
+    }else{
+      this.requestStudyingDuration = this.licenseRequestType.requestStudyingDuration
+      this.paymentMethod = 'طريقة الدفع'
+    }
   }
 
   getRequestTypeCode(): void {
@@ -132,7 +148,20 @@ export class CreateLincenseComponent {
       this._licenseRequestTypeService
         .GetByCode(this.requestTypeCode, this.renewLicense)
         .subscribe((res) => {
-          if (res) this.licenseRequestType = res;
+          if (res) {
+            this.licenseRequestType = res;
+
+            // If requestTypeCode is 'FSRSU', set first item as default and disable
+            if (this.requestTypeCode === 'FSRSU' && this.licenseRequestType.licenseRequestPeriods && this.licenseRequestType.licenseRequestPeriods.length > 0) {
+              const firstItem = this.licenseRequestType.licenseRequestPeriods[0];
+              this.createRequstForm.patchValue({
+                priod: firstItem.period
+              });
+              this.price = firstItem.price;
+              this.periodTypeId = firstItem.sysPeriodType?.id as string;
+              this.controls.priod.disable();
+            }
+          }
           console.log(this.licenseRequestType);
         })
     );
@@ -141,7 +170,8 @@ export class CreateLincenseComponent {
    * CreateOrRenewLicense
    */
   public CreateOrRenewLicense(): void {
-    if (this.controls.priod.value) {
+    const formValue = this.createRequstForm.getRawValue();
+    if (formValue.priod) {
       if (this.licenseRequestType.typeCode == LicenseRequestTypeTypeCodeEnum.SellRealEstateUnits) {
         this.showSRSULicenseRequestTypeWarnings();
       } else {
@@ -175,12 +205,13 @@ export class CreateLincenseComponent {
     );
   }
   private renew(): void {
+    const formValue = this.createRequstForm.getRawValue();
     this.subscriptions.push(
       this._licenseRequestService
         .renew(
           this.facilityId as string,
           this.requestTypeCode,
-          this.controls.priod.value as number,
+          formValue.priod as number,
           this.periodTypeId as string,
           this.licenseProjectId
         )
@@ -250,17 +281,17 @@ export class CreateLincenseComponent {
     );
   }
   Create(): void {
-    
+    const formValue = this.createRequstForm.getRawValue();
 
     if (this.facilityId == '00000000-0000-0000-0000-000000000000' || this.facilityId == null)
       this.facilityId = this.userData?.facilities[0].id as string;
 
     // this.subscriptions.push(
     //   this._licenseRequestService.CreateLicense(this.facilityId as string, this.requestTypeCode,
-    //     this.controls.priod.value as number, this.periodTypeId as string, this.controls.startDate.value as Date)
+    //     formValue.priod as number, this.periodTypeId as string, this.controls.startDate.value as Date)
     //     .subscribe((res) => {
     //       if (res) {
-            
+
     //         this.setProjectIdInlocalStorage(res);
     //         this.navigate();
     //       }
@@ -269,9 +300,9 @@ export class CreateLincenseComponent {
 
     this.subscriptions.push(
       this._licenseRequestService.Create(this.facilityId as string, this.requestTypeCode,
-        this.controls.priod.value as number, this.periodTypeId as string)
+        formValue.priod as number, this.periodTypeId as string)
         .subscribe((res) => {
-          if (res) {            
+          if (res) {
             this.setProjectIdInlocalStorage(res);
             this.navigate();
           }

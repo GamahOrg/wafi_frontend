@@ -163,7 +163,7 @@
               <span class="nav-link-text">شهادات الترخيص</span>
             </a>
             <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.renewLicensesList"
-              routerLinkActive="active">
+               routerLinkActive="active">
               <span class="icon"><i class="material-icons-outlined">new_releases</i></span>
               <span class="nav-link-text">تجديد الرخص</span>
             </a>
@@ -174,42 +174,64 @@
               <span class="nav-link-text">الموافقات</span>
             </a>
 
-
-            <a *ngIf="isDeveloper" class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}"
-              [routerLink]="links.developerProjects" routerLinkActive="active">
-              <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
-              <span class="nav-link-text">قائمة المشاريع</span>
+            <a *ngIf="isDeveloper" class="nav-link" [routerLink]="
+                '/' + links.license + '/' + links.developerApprovalsList
+              " routerLinkActive="active">
+              <span class="icon"><i class="material-icons-outlined">handshake</i></span>
+              <span class="nav-link-text">اتفاقيات التطوير العقارى</span>
             </a>
+
+
+            <a *ngIf="isDeveloper" class="nav-link"
+               [ngClass]="{'justify-content-center': hideSideBar, 'active': isLicensedProjectsMenuActive()}"
+               [routerLink]="links.recommendationLogsList">
+              <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
+              <span class="nav-link-text"> المشاريع المرخصة</span>
+            </a>
+
+            <a *ngIf="isDeveloper" class="nav-link"
+               [ngClass]="{'justify-content-center': hideSideBar, 'active': isContractRequestMenuActive()}"
+               [routerLink]="links.contractRequestList">
+              <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
+              <span class="nav-link-text">طلبات إلغاء العقود</span>
+            </a>
+            
+            <a *ngIf="isDeveloper" class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}"
+               [routerLink]="links.developerProjects" routerLinkActive="active">
+              <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
+              <span class="nav-link-text"> سجل التوصيات والإشعارات</span>
+              
+            </a>
+            
 
 
 
             <!-- <a *ngIf="isEngineer"
-              class="nav-link"
-              [routerLink]="'/' + links.license + '/' + links.projectList"
-              routerLinkActive="active"
-            >
-              قائمة المشاريع
-            </a> -->
-
+    class="nav-link"
+    [routerLink]="'/' + links.license + '/' + links.projectList"
+    routerLinkActive="active"
+  >
+    قائمة المشاريع
+  </a> -->
             <!-- <a
-              *ngIf="isAccountant"
-              class="nav-link"
-              [routerLink]="'/' + links.license + '/' + links.buyerList"
-              routerLinkActive="active"
-            >
-              قائمة سجل المشترين
-            </a>            -->
+    *ngIf="isAccountant"
+    class="nav-link"
+    [routerLink]="'/' + links.license + '/' + links.buyerList"
+    routerLinkActive="active"
+  >
+    قائمة سجل المشترين
+  </a>            -->
             <!-- <a *ngIf="isDeveloper"
-              class="nav-link"
-              [routerLink]="
-                '/' + links.license + '/' + links.licensecertificatetemplate
-              "
-              routerLinkActive="active"
-            >
-              قائمة المشاريع السابقة
-            </a> -->
+    class="nav-link"
+    [routerLink]="
+      '/' + links.license + '/' + links.licensecertificatetemplate
+    "
+    routerLinkActive="active"
+  >
+    قائمة المشاريع السابقة
+  </a> -->
             <a *ngIf="isAccountant" class="nav-link" [routerLink]="'/' + links.charteredaccountprojectlist"
-              [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+               [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text"> مشاريع المحاسب القانوني</span>
             </a>
@@ -217,6 +239,8 @@
         </ng-container>
       </accordion>
     </div>
+
+   
 
     <div *ngIf="
         !this.userData?.isEmployee && isDeveloper &&
@@ -332,9 +356,16 @@
       <a [routerLink]="'/' + links.license + '/' + links.contractdocumentation" routerLinkActive="active"
         class="nav-link">
         <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
-        <span class="nav-link-text"> توثيق العقود</span>
+        <span class="nav-link-text"> عقود البيع</span>
 
       </a>
+
+       <a class="nav-link" [routerLink]="
+                '/' + links.license + '/' + links.lincenseRequestApprovals
+              " routerLinkActive="active">
+              <span class="icon"><i class="material-icons-outlined">approval</i></span>
+              <span class="nav-link-text">الموافقات</span>
+            </a>
     </div>
 
     <div *ngIf="

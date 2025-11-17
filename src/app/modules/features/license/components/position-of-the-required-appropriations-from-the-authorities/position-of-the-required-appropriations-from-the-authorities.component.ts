@@ -46,17 +46,17 @@ showRateFlag:boolean=true;
    
     private getLicenseProjectIdStorage(): void {
       this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-      debugger;
+      
       if(this.licenseProjectId)
         this.getmonthDate()
     }
     getmonthDate() {
-      debugger;
+      
       this.subscriptions.push(
         this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
-          debugger;
+          
           if (res) {
-            debugger;
+            
             this.actualValueReport= res as ActualValueReportPagingListDto;
             this.monthDate = this.actualValueReport.monthDate as Date;
            this.getLicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesList();
@@ -65,12 +65,12 @@ showRateFlag:boolean=true;
       )
     }
     getLicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesList() {
-      debugger;
+      
       this.subscriptions.push(
         this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.getLicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesList(this.licenseProjectId as string,this.monthDate as Date).subscribe(res => {
-          debugger;
+          
           if (res) {
-            debugger;
+            
             this.masterLicenseProjectEngineeringStatusOfFundsRequiredFromEntities=res as MasterLicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDto;
             this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.
             setLicenseProjectEngineeringSupervisionPlannedReportDetailIds(this.masterLicenseProjectEngineeringStatusOfFundsRequiredFromEntities.id);

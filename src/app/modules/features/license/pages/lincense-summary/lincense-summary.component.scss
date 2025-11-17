@@ -1,5 +1,8 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/cards";
+
 :host {
-    display: block;
-    height: 100%;
-    overflow-y: auto;
+  display: block;
+  height: 100%;
+  overflow-y: auto;
 }

@@ -1,0 +1,691 @@
+<!-- Popup Overlay -->
+<div class="popup-overlay" (click)="closePopup()">
+  <div class="popup-container" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="popup-header">
+      <h2 class="popup-title">إضافة عقد جديد</h2>
+      <button class="close-btn" (click)="closePopup()">
+        <span>✕</span>
+      </button>
+    </div>
+
+    <!-- Form Content -->
+    <div class="popup-content">
+      <form [formGroup]="contractForm">
+        <!-- Section 1: Buyer Information -->
+        <div class="form-section">
+          <h3 class="section-title">1. بيانات المشتري</h3>
+
+          <!-- Buyer Type -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label required"
+                ><span class="required-star">*</span> ما هو نوع المشتري؟</label
+              >
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="buyerType"
+                    [value]="buyerTypeEnum.Individual"
+                    [checked]="buyerType === buyerTypeEnum.Individual"
+                    (change)="onBuyerTypeChange(buyerTypeEnum.Individual)"
+                  />
+                  <span class="radio-label">فرد</span>
+                </label>
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="buyerType"
+                    [value]="buyerTypeEnum.Facility"
+                    [checked]="buyerType === buyerTypeEnum.Facility"
+                    (change)="onBuyerTypeChange(buyerTypeEnum.Facility)"
+                  />
+                  <span class="radio-label">منشأة</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buyer Status -->
+          <div
+            class="form-row"
+            *ngIf="
+              contractForm.get('buyerTypeId')?.value == buyerTypeEnum.Individual
+            "
+          >
+            <div class="form-group">
+              <label class="form-label required"
+                ><span class="required-star">*</span> حالة المشترى</label
+              >
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="buyerStatus"
+                    [value]="false"
+                    [checked]="isSupported === false"
+                    (change)="onBuyerStatusChange(false)"
+                  />
+                  <span class="radio-label">غير مدعوم</span>
+                </label>
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="buyerStatus"
+                    [value]="true"
+                    [checked]="isSupported === true"
+                    (change)="onBuyerStatusChange(true)"
+                  />
+                  <span class="radio-label">مدعوم</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- Entity/Individual ID Number with Verify Button -->
+
+          <!-- For Enter External number of facility and display facility name will be retrieved -->
+          <ng-container *ngIf="buyerType === buyerTypeEnum.Facility">
+            <div class="form-row">
+              <div class="form-group">
+                <div class="date-input-with-button">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [placeholder]="
+                      buyerType === buyerTypeEnum.Facility
+                        ? 'الرقم الموحد للمنشأه'
+                        : '  '
+                    "
+                    formControlName="nationalNumber"
+                    [class.is-invalid]="hasError('nationalNumber')"
+                  />
+                  <button
+                    class="btn-verify"
+                    type="button"
+                    (click)="verifyFacility()"
+                    [disabled]="verifyingFacility"
+                  >
+                    {{ verifyingFacility ? "جاري التحقق..." : "تحقق" }}
+                  </button>
+                </div>
+                <div class="error-message" *ngIf="hasError('nationalNumber')">
+                  {{ getErrorMessage("nationalNumber") }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Entity Name - Only shown when has data after verification -->
+            <div
+              class="form-row"
+              *ngIf="contractForm.get('facilityName')?.value"
+            >
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-input readonly-input"
+                  placeholder="اسم المنشأة"
+                  formControlName="facilityName"
+                  readonly
+                  [class.is-invalid]="hasError('facilityName')"
+                />
+                <div class="error-message" *ngIf="hasError('facilityName')">
+                  {{ getErrorMessage("facilityName") }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- This will always display but the placeholder will change according to buyer type -->
+
+          <div class="form-row">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                [placeholder]="
+                  buyerType === buyerTypeEnum.Facility
+                    ? 'رقم هوية المفوض'
+                    : 'رقم الهوية الوطنية'
+                "
+                formControlName="nidNumber"
+                [class.is-invalid]="hasError('nidNumber')"
+              />
+              <div class="error-message" *ngIf="hasError('nidNumber')">
+                {{ getErrorMessage("nidNumber") }}
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="date-input-with-button">
+                <app-hijri-datepicker
+                  [placeholder]="
+                    buyerType === buyerTypeEnum.Facility
+                      ? 'تاريخ ميلاد المفوض'
+                      : 'تاريخ ميلاد'
+                  "
+                  formControlName="birthDate"
+                  [showGregorian]="true"
+                >
+                </app-hijri-datepicker>
+                <button
+                  class="btn-verify"
+                  type="button"
+                  (click)="verifyCustomer()"
+                  [disabled]="verifyingCustomer"
+                >
+                  {{ verifyingCustomer ? "جاري التحقق..." : "تحقق" }}
+                </button>
+              </div>
+              <div class="error-message" *ngIf="hasError('birthDate')">
+                {{ getErrorMessage("birthDate") }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Buyer Name - Only shown when has data after verification -->
+          <div class="form-row" *ngIf="contractForm.get('name')?.value">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control readonly-input"
+                placeholder="اسم المشترى"
+                formControlName="name"
+                readonly
+                [class.is-invalid]="hasError('name')"
+              />
+              <div class="error-message" *ngIf="hasError('name')">
+                {{ getErrorMessage("name") }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Email and Phone - Common for both types -->
+          <div class="form-row">
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="البريد الإلكتروني"
+                formControlName="email"
+                [class.is-invalid]="hasError('email')"
+              />
+              <div class="error-message" *ngIf="hasError('email')">
+                {{ getErrorMessage("email") }}
+              </div>
+            </div>
+            <div class="form-group">
+              <input
+                type="tel"
+                class="form-control"
+                placeholder="رقم الجوال"
+                formControlName="mobileNumber"
+                [class.is-invalid]="hasError('mobileNumber')"
+              />
+              <div class="error-message" *ngIf="hasError('mobileNumber')">
+                {{ getErrorMessage("mobileNumber") }}
+              </div>
+            </div>
+          </div>
+
+          <!-- File Upload - Only for Facility -->
+          <div class="form-row" *ngIf="buyerType === buyerTypeEnum.Facility">
+            <div class="form-group">
+              <label class="form-control">رفع ملف التفويض</label>
+              <app-file-uploader
+                [data]="singleFileUploaderData"
+                (fileUploaded)="onFileUploaded($event)"
+              ></app-file-uploader>
+              <div class="error-message" *ngIf="showDelegatorFileError">
+                يرجى رفع ملف التفويض
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Unit Information -->
+
+        <div class="form-section">
+          <h3 class="section-title">2. بيانات الوحدة</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">كود الوحدة</label>
+              <div class="form-value">{{ unitDetails?.unitCode }}</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">السعر</label>
+              <div class="form-value price-value">
+                <span>{{ unitDetails?.price | number : "1.0-0" }}</span>
+                <img
+                  src="assets/images/general/riyal-icon.svg"
+                  alt="ريال"
+                  class="riyal-icon"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">النموذج</label>
+              <div class="form-value">{{ unitDetails?.modelName }}</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">نوع الوحدة</label>
+              <div class="form-value">{{ unitDetails?.unitType }}</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label class="form-label">المساحة الإجمالية للوحدة</label>
+              <div class="form-value">{{ unitDetails?.unitSpace }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Contract Information -->
+        <div class="form-section">
+          <h3 class="section-title">3. بيانات العقد</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label"> السعر </label>
+              <div class="form-input-with-currency">
+                <input
+                  type="text"
+                  class="form-input"
+                  formControlName="price"
+                  appNumberFormat
+                  [class.is-invalid]="hasError('price')"
+                />
+                <img
+                  src="assets/images/general/riyal-icon.svg"
+                  alt="ريال"
+                  class="riyal-icon"
+                />
+              </div>
+              <div class="error-message" *ngIf="hasError('price')">
+                {{ getErrorMessage("price") }}
+              </div>
+            </div>
+
+            <!-- Deed Dropdown -->
+            <div class="form-group">
+              <label class="form-label required"
+                ><span class="required-star">*</span> الصك</label
+              >
+              <select
+                class="form-control"
+                formControlName="licenseProjectDeedId"
+                [class.is-invalid]="hasError('licenseProjectDeedId')"
+              >
+                <option value="" disabled selected>اختر الصك</option>
+                <option *ngFor="let deed of deedsList" [value]="deed.id">
+                  {{ deed.data?.deedNo || "صك رقم " + deed.id }}
+                </option>
+              </select>
+              <div
+                class="error-message"
+                *ngIf="hasError('licenseProjectDeedId')"
+              >
+                هذا الحقل مطلوب
+              </div>
+              <div class="info-text" *ngIf="loadingDeeds">
+                <i class="info-icon">⏳</i>
+                جاري تحميل الصكوك...
+              </div>
+            </div>
+          </div>
+
+          <!-- Old Contract Radio Button -->
+          <!-- <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">عقد قديم</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="isOldContract" [value]="false"
+                    [checked]="!isOldContract"
+                    (change)="onOldContractChange(false)" />
+                  <span class="radio-label">لا</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="isOldContract" [value]="true"
+                    [checked]="isOldContract"
+                    (change)="onOldContractChange(true)" />
+                  <span class="radio-label">نعم</span>
+                </label>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Conditional Fields for Old Contract -->
+          <!-- <div class="form-row" *ngIf="isOldContract">
+            <!-- Contract File Upload -->
+          <!-- <div class="form-group">
+              <label class="form-label">ملف العقد</label>
+              <div class="file-upload-area">
+                <app-file-uploader
+                  [data]="singleFileUploaderData"
+                  (fileUploaded)="onContractFileUploaded($event)">
+                </app-file-uploader>
+              </div>
+            </div> -->
+
+          <!-- Sale Date -->
+          <!-- <div class="form-group">
+              <label class="form-label">تاريخ البيع</label>
+              <div class="input-group">
+                  <input bsDatepicker type="text" class="form-control"
+                    placeholder="تاريخ البيع"
+                    formControlName="saleDate"
+                    [class.is-invalid]="hasError('saleDate')" />
+                  <span class="input-group-text">
+                    <i class="material-icons-outlined">calendar_today</i>
+                  </span>
+                </div>
+            </div>
+          </div>  -->
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label"> السعر </label>
+              <div class="form-value price-value">
+                <span>{{ unitDetails?.price | number : "1.0-0" }}</span>
+                <img
+                  *ngIf="unitDetails?.price"
+                  src="assets/images/general/riyal-icon.svg"
+                  alt="ريال"
+                  class="riyal-icon"
+                />
+              </div>
+            </div>
+            <div class="form-group" *ngIf="unitDetails?.supportedPrice">
+              <label class="form-label">السعر المدعوم</label>
+              <div class="form-value price-value">
+                <span>{{
+                  unitDetails?.supportedPrice | number : "1.0-0"
+                }}</span>
+                <img
+                  *ngIf="unitDetails?.supportedPrice"
+                  src="assets/images/general/riyal-icon.svg"
+                  alt="ريال"
+                  class="riyal-icon"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">قيمة ضريبة التصرفات العقارية</label>
+              <div class="form-value" style="display: LTR">
+                {{ taxRate * 100 }}%
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"
+                >السعر بعد إضافة ضريبة التصرفات العقارية</label
+              >
+              <div class="form-value price-value">
+                <span>{{ priceAfterTax | number : "1.0-0" }}</span>
+                <img
+                  src="assets/images/general/riyal-icon.svg"
+                  alt="ريال"
+                  class="riyal-icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-row" *ngIf="isOldContract">
+            <div class="form-group">
+              <label class="form-label">تاريخ أنشاء العقد</label>
+              <div class="date-input-wrapper">
+                <input
+                  bsDatepicker
+                  type="text"
+                  class="form-control"
+                  formControlName="saleDate"
+                  placeholder="تاريخ أنشاء العقد"
+                  [bsConfig]="{
+                    dateInputFormat: 'YYYY-MM-DD',
+                    containerClass: 'theme-default'
+                  }"
+                />
+                <span class="calendar-icon">
+                  <i class="bi bi-calendar3"></i>
+                </span>
+                <div
+                class="error-message"
+                *ngIf="hasError('saleDate')"
+              >
+                هذا الحقل مطلوب
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">تاريخ التسليم</label>
+              <div class="date-input-wrapper">
+                <input
+                  bsDatepicker
+                  type="text"
+                  class="form-control"
+                  formControlName="deliveryDate"
+                  placeholder="تاريخ التسليم"
+                  [bsConfig]="{
+                    dateInputFormat: 'YYYY-MM-DD',
+                    containerClass: 'theme-default'
+                  }"
+                />
+                <span class="calendar-icon">
+                  <i class="bi bi-calendar3"></i>
+                </span>
+                <div
+                class="error-message"
+                *ngIf="hasError('deliveryDate')"
+              >
+                هذا الحقل مطلوب
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section" *ngIf="isOldContract">
+          <h3 class="section-title">4. خطط الدفع</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">ماهو نوع الدفعة ؟ *</label>
+              <div class="radio-group">
+                <div
+                  class="radio-option"
+                  *ngFor="let type of licenseBuyerPaymentType"
+                >
+                  <input
+                    type="radio"
+                    [id]="type.id"
+                    [value]="type.id"
+                    formControlName="paymentTypeId"
+                  />
+                  <label [for]="type.id">{{ type.name }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">أختر خطة الدفع*</label>
+              <select
+                class="form-control"
+                formControlName="paymentPlanId"
+                [class.is-invalid]="hasError('paymentPlanId')"
+                [disabled]="
+                  !contractForm.get('paymentTypeId')?.value ||
+                  filteredPaymentPlansList.length === 0
+                "
+              >
+                <option value="" disabled selected>
+                  {{
+                    !contractForm.get("paymentTypeId")?.value
+                      ? "يرجى اختيار نوع الدفعة أولاً"
+                      : filteredPaymentPlansList.length === 0
+                      ? "لا توجد خطط دفع متاحة"
+                      : "اختر خطة الدفع"
+                  }}
+                </option>
+                <option
+                  *ngFor="let plan of filteredPaymentPlansList"
+                  [value]="plan.paymentPlanId"
+                >
+                  {{ plan.modelTitle }}
+                </option>
+              </select>
+              <div class="error-message" *ngIf="hasError('paymentPlanId')">
+                {{ getErrorMessage("paymentPlanId") }}
+              </div>
+              <div class="info-text" *ngIf="loadingPaymentPlans">
+                <i class="info-icon">⏳</i>
+                جاري تحميل خطط الدفع...
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section" *ngIf="isOldContract">
+          <h3 class="section-title">5. العقد</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">رفع المرفقات</label>
+              <div class="file-upload-area">
+                <app-file-uploader
+                  [data]="singleFileUploaderData"
+                  (fileUploaded)="onContractFileUploaded($event)"
+                >
+                </app-file-uploader>
+              </div>
+                <div
+                class="error-message"
+                *ngIf="hasError('contractFileId')"
+              >
+                هذا الحقل مطلوب
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button type="button" class="btn-submit" (click)="onSubmit()">
+            إرسال العقد
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Dialog -->
+<div
+  class="confirmation-overlay"
+  *ngIf="showConfirmation"
+  (click)="cancelSubmit()"
+>
+  <div class="confirmation-dialog" (click)="$event.stopPropagation()">
+    <div class="confirmation-icon">
+      <svg
+        width="100"
+        height="80"
+        viewBox="0 0 100 80"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Left decorative shapes (4 puzzle-like pieces) -->
+        <rect
+          x="5"
+          y="32"
+          width="8"
+          height="4"
+          rx="2"
+          fill="#D0D5DD"
+          opacity="0.4"
+        />
+        <rect
+          x="5"
+          y="44"
+          width="8"
+          height="4"
+          rx="2"
+          fill="#D0D5DD"
+          opacity="0.4"
+        />
+        <circle cx="9" cy="40" r="3" fill="#D0D5DD" opacity="0.4" />
+        <path
+          d="M13 40L18 40"
+          stroke="#D0D5DD"
+          stroke-width="3"
+          stroke-linecap="round"
+          opacity="0.4"
+        />
+
+        <!-- Right decorative shapes (4 puzzle-like pieces) -->
+        <rect
+          x="87"
+          y="32"
+          width="8"
+          height="4"
+          rx="2"
+          fill="#D0D5DD"
+          opacity="0.4"
+        />
+        <rect
+          x="87"
+          y="44"
+          width="8"
+          height="4"
+          rx="2"
+          fill="#D0D5DD"
+          opacity="0.4"
+        />
+        <circle cx="91" cy="40" r="3" fill="#D0D5DD" opacity="0.4" />
+        <path
+          d="M82 40L87 40"
+          stroke="#D0D5DD"
+          stroke-width="3"
+          stroke-linecap="round"
+          opacity="0.4"
+        />
+
+        <!-- Center circle with checkmark -->
+        <circle cx="50" cy="40" r="22" fill="#005257" />
+        <path
+          d="M41 40L46 46L59 33"
+          stroke="white"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+    <div class="confirmation-message">هل أنت متأكد من إرسال العقد؟</div>
+    <div class="confirmation-actions">
+      <button
+        class="btn-confirm"
+        (click)="$event.stopPropagation(); confirmSubmit()"
+      >
+        إرسال العقد
+      </button>
+      <button
+        class="btn-cancel"
+        (click)="$event.stopPropagation(); cancelSubmit()"
+      >
+        إلغاء
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" *ngIf="isSubmitting">
+  <div class="loading-spinner">
+    <div class="spinner"></div>
+    <p class="loading-text">جاري إرسال العقد...</p>
+  </div>
+</div>

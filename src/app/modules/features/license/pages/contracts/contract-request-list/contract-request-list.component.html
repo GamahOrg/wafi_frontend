@@ -1,0 +1,77 @@
+<div class="container-fluid p-4" dir="rtl">
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="mb-1">طلبات إلغاء عقود البيع</h4>
+      <p class="text-muted mb-0">
+       
+      </p>
+    </div>
+  </div>
+
+
+  <!-- Table -->
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 units-table">
+        <thead class="table-light">
+          <tr>
+              <th>رقم الطلب</th>
+              <th>رقم العقد</th>
+              <!-- <th>اسم المشروع</th> -->
+            <th>تاريخ الطلب</th>
+            <th>الحالة</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contract of requests.results">
+            <td>
+              <span>{{ contract.requestCode }}</span>
+            </td>
+            <td>
+              <span>
+                {{ contract.contarctNumber }}
+              </span>
+            </td>
+            <td>{{contract.cancelRequestDate | date:'yyyy-MM-dd'}}</td>
+
+            <td>
+              <span
+                class="status-badge"
+                [ngClass]="getStatusClass(contract.cancelRequestStatusId)"
+              >
+              <span class="status-dot"></span>
+                {{ contract.cancelRequestStatusName }}
+              </span>
+            </td>
+
+           
+            <td>
+              <button
+                class="btn btn-primary"
+                title="عرض التفاصيل"
+                (click)="showDetails(contract)"
+              >
+                <i class="bi bi-eye"></i>
+                التفاصيل
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-auto p-3">
+      <app-pagination></app-pagination>
+    </div>
+
+    <!-- No Data Message -->
+    <ng-container *ngIf="requests?.totalCount === 0">
+      <div class="mt-4">
+        <app-no-data [showCompleteBtn]="false"></app-no-data>
+      </div>
+    </ng-container>
+  </div>
+</div>

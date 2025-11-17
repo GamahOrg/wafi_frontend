@@ -9,6 +9,7 @@ import { LicenseRequestHeaderService } from '../../../license/services/license-r
 import { SharedLicenseProjectService } from '../../../license/services/sharedLicenseProject/shared-license-project.service';
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
 import { environment } from 'src/environments/environment';
+import { LicenseInternalStatus } from '../../../license/enums/license-internal-status';
 
 @Component({
   selector: 'app-license-list',
@@ -123,15 +124,25 @@ export class LicenseListComponent implements OnInit, OnDestroy{
 
   routeToRequestDetails(request :licenseRequest): void {
     if(request.requestCode)
-      this._router.navigateByUrl(`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`)
+      if(request.licenseRequestType?.typeCode === 'FSRSU'){
+        this._router.navigateByUrl(`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`);
+      }
+      else
+        this._router.navigateByUrl(`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`)
     else
       this._router.navigate([this.requestDetailsRoute]);
   }
   public navigateToCreateRequest(): void {
     this._router.navigateByUrl(`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}`);
   }
+
   setSelectedRequestIdInLocalStorage() {
     if(this.selectedRequest.requestCode)
+      if(this.selectedRequest.licenseRequestType?.typeCode === 'FSRSU'){
+        this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(this.selectedRequest.id)
+        this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.selectedRequest?.licenseProjectId);
+      }
+      else
       this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(this.selectedRequest.id)
     else
       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.selectedRequest.licenseProjectId)
@@ -162,6 +173,30 @@ export class LicenseListComponent implements OnInit, OnDestroy{
 
     this.getLicensesRequests()
   }
+
+   getStatusClass(statusId: number) {
+      switch (statusId) {
+        case LicenseInternalStatus.Draft:
+        case LicenseInternalStatus.UnderStudy:
+          return 'black';
+        case LicenseInternalStatus.OwnerAgreementsApproved:
+        case LicenseInternalStatus.PartyAgreementsApproved:
+        case LicenseInternalStatus.InvoicePaid:
+        case LicenseInternalStatus.EscrowAccountOpened:
+        case LicenseInternalStatus.RequestCertifiedAndFinallicenseIssued:
+          return 'green';
+        case LicenseInternalStatus.PendingApproval:
+        case LicenseInternalStatus.WaitingApproval:
+          return 'orange';
+        case LicenseInternalStatus.RequestCanceled:
+        case LicenseInternalStatus.RequestRejected:
+          return 'red';
+        case LicenseInternalStatus.ProcessingNotes:
+          return 'blue';
+      }
+      return '';
+    }
+  
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

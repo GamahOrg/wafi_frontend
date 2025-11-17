@@ -7,7 +7,7 @@
     column-gap: 0.5rem;
 
     font-size: 1rem;
-    color: $dark;
+    color: $body-color;
 }
 
 .card-text {
@@ -26,7 +26,7 @@
     text-decoration: underline;
     font-size: 1rem;
     font-weight: normal;
-    color: $dark;
+    color: $body-color;
 }
 
 .value {
@@ -34,6 +34,6 @@
     display: flex;
     align-items: center;
     column-gap: .5rem;
-    color: $dark;
+    color: $body-color;
     
 }

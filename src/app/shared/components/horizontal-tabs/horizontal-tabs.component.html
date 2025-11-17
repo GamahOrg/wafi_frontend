@@ -8,6 +8,7 @@
           <i class="material-icons-outlined">{{component.icon}}</i>
         </span>
         {{component.title}}
+        <span class="count" *ngIf="component.errNum">{{ component.errNum }}</span>
       </ng-template>
 
       <ng-container *ngIf="tabContent.activeTabIndex == i && component.Component">

@@ -1,10 +1,21 @@
+.mdc-dialog__title,
+.mdc-dialog__content,
+.mdc-dialog__actions {
+  background-color: #{$white};
+}
+
 .mdc-dialog__title {
   display: flex;
   align-items: center;
+  margin: 0;
+  padding: 1.5rem 1.5rem 0;
+  border-start-start-radius: 1rem;
+  border-start-end-radius: 1rem;
 
-  margin-inline: 2rem;
-  padding: 1rem 0;
-  color: $headings-color;
+  .icon {
+    color: $dark;
+    margin-inline-end: 1rem;
+  }
 
   button {
     margin-inline-start: auto;
@@ -12,17 +23,14 @@
 }
 
 .mdc-dialog__content {
-  flex-grow: 1;
-  max-height: none;
-  margin-inline: 1rem;
-  padding-inline: 1rem;
-
-  letter-spacing: normal;
-  overflow-x: hidden;
+  max-height: 50vh;
+  padding: 1rem 1.5rem 1.5rem;
+  border-end-start-radius: 1rem;
+  border-end-end-radius: 1rem;
 }
 
 .mdc-dialog__actions {
-  margin-inline: 2rem;
-  padding: 1rem 0;
-  border-top: 3px solid #E4E4E4;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
 }

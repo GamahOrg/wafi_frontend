@@ -12,10 +12,13 @@
 <app-license-project-main-real-state-developer-approval *ngIf="selectedApproval?.approvalRole == aprovalRole.MainDeveloper"></app-license-project-main-real-state-developer-approval>
 <!-- EngineeringConsultant -->
 <app-license-project-engineering-consultant-approval *ngIf="selectedApproval?.approvalRole == aprovalRole.EngineeringConsultant"></app-license-project-engineering-consultant-approval>
+<!-- Deed Owner -->
+<app-license-project-deed-owner-approval *ngIf="selectedApproval?.approvalRole == aprovalRole.DeedOwner"></app-license-project-deed-owner-approval>
+
 </div>
     <div class="tab-data-section">
-        <div class="row mb-3">
-            <div class="col-12 col-lg-6">
+         <div class="row mb-3">
+           <!-- <div *ngIf="false" class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                   <label class="form-label">اختر مفوض</label>
                   <select class="form-select"  id="control-delegatorCustomerId"
@@ -29,32 +32,87 @@
                   *ngIf="controls.delegatorCustomerId?.hasError('required') && showValidation">حقل مطلوب  </mat-error>
                 </div>
               </div>
-              <div class="col-12 col-lg-6" *ngIf="!selectedApproval?.isApproved">
+              <div class="col-12 col-lg-6" *ngIf="!selectedApproval?.isApproved && !selectedApproval?.approvedOn">
                 <div class="row row-gap-3 mb-3">
                     <div class="col-12 col-lg-6">
-                        <label for="isApproved" class="form-label"> موافق على كوني ضمن هذا المشورع</label>
+                        <label for="isApproved" class="form-label"> موافق على كوني ضمن هذا المشروع</label>
                     </div>
                     <div class="col-12 col-lg-6">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" id="control-isApproved" type="radio" name="isApproved" id="yes" value="1" (click)="updateIsApproved(true)">
-                            <label class="form-check-label" for="yes">نعم</label>
+                            <label class="form-check-label" for="yes">موافق</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio"  id="control-isApproved" name="isApproved" id="no" value="0" (click)="updateIsApproved(false)">
                             <label class="form-check-label" for="no">لا</label>
                         </div>
                     </div>
+
+                </div>
+            </div> -->
+
+            <!-- National Address Section (for DeedOwner) -->
+            <div class="col-12" *ngIf="selectedApproval?.approvalRole == aprovalRole.DeedOwner && !selectedApproval?.isApproved && !selectedApproval?.approvedOn">
+                <div class="address-section" [class.has-error]="addressValidationAttempted && !Form.controls.nationalAddress.value">
+                    <h5 class="section-title mb-3">
+                        العنوان الوطنى للمالك
+                        <span class="text-danger">*</span>
+                    </h5>
+
+                    <!-- Loading State -->
+                    <div class="text-center py-3" *ngIf="isLoadingAddresses">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">جاري التحميل...</span>
+                        </div>
+                        <p class="mt-2">جاري تحميل العناوين...</p>
+                    </div>
+
+                    <!-- Address Options -->
+                    <div class="address-selection" *ngIf="!isLoadingAddresses && ownerAddresses.length > 0">
+                        <div class="address-option" *ngFor="let addressItem of ownerAddresses">
+                            <input
+                                type="radio"
+                                [id]="'owner-address-' + addressItem.id"
+                                name="ownerAddress"
+                                [value]="addressItem.id"
+                                [(ngModel)]="selectedAddressId"
+                                [ngModelOptions]="{standalone: true}"
+                                (change)="onAddressSelect(addressItem.id)"
+                                class="form-check-input">
+                            <label [for]="'owner-address-' + addressItem.id" class="address-label">
+                                <span class="address-text">{{ addressItem.address }}</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- No Addresses Message -->
+                    <div class="alert alert-warning" *ngIf="!isLoadingAddresses && ownerAddresses.length === 0">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        لا توجد عناوين وطنية مسجلة. يرجى تسجيل عنوانك الوطني أولاً.
+                    </div>
+
+                    <!-- Validation Message -->
+                    <div class="alert alert-danger mt-3" *ngIf="!isLoadingAddresses && ownerAddresses.length > 0 && addressValidationAttempted && !Form.controls.nationalAddress.value">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                        <strong>حقل مطلوب:</strong> يجب اختيار العنوان الوطني للمالك قبل الموافقة
+                    </div>
                 </div>
             </div>
 
-            <div class="form-actions mt-auto" *ngIf="!selectedApproval?.isApproved">
-                <button mat-flat-button color="primary" (click)="saveApproval()">
-                  حفظ
+            <div class="form-actions mt-auto" *ngIf="!selectedApproval?.isApproved && !selectedApproval?.approvedOn">
+                <button mat-flat-button color="primary" (click)="updateIsApproved(true); saveApproval()" [disabled]="isSaving">
+                  <span *ngIf="!isSaving">موافق</span>
+                  <span *ngIf="isSaving">جاري الحفظ...</span>
+                </button>
+                <button mat-flat-button color="warn" (click)="openRejectionDialog()" [disabled]="isSaving">
+                  <span *ngIf="!isSaving">غير موافق</span>
+                  <span *ngIf="isSaving">جاري الحفظ...</span>
                 </button>
               </div>
               <div class="form-actions mt-auto" *ngIf="selectedApproval?.isApproved">
-                <button mat-flat-button color="primary" (click)="updateApproval()">
-                  تعديل
+                <button *ngIf="false" mat-flat-button color="primary" (click)="updateApproval()" [disabled]="isUpdating">
+                  <span *ngIf="!isUpdating">تعديل</span>
+                  <span *ngIf="isUpdating">جاري التعديل...</span>
                 </button>
               </div>
         </div>

@@ -7,6 +7,7 @@
   column-gap: .25rem;
 
   .icon {
+    line-height: 1;
     font-size: inherit;
   }
 }
@@ -36,7 +37,7 @@
   --bs-btn-disabled-color: #{$white};
 
   --bs-btn-border-color: transparent;
-  --bs-btn-bg: #E7F2ED;
+  --bs-btn-bg: #{$lightblue};
 }
 
 .btn-dark {
@@ -49,4 +50,37 @@
 
   text-decoration: none;
   font-weight: 500;
+}
+
+.btn-icon {
+  --bs-btn-padding-x: 0;
+  --bs-btn-padding-y: 0;
+  --bs-btn-font-size: 1.25rem;
+  --bs-btn-border-width: 0;
+
+  --bs-btn-bg: transparent;
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-active-bg: transparent;
+
+  >* {
+    line-height: 1;
+  }
+
+  &.btn-primary {
+    --bs-btn-color: #{$theme-main};
+    --bs-btn-hover-color: #{$theme-main};
+    --bs-btn-active-color: #{$theme-main};
+  }
+
+  &.btn-secondary {
+    --bs-btn-color: #{$dark};
+    --bs-btn-hover-color: #{$dark};
+    --bs-btn-active-color: #{$dark};
+  }
+
+  &.btn-danger {
+    --bs-btn-color: #{$danger};
+    --bs-btn-hover-color: #{$danger};
+    --bs-btn-active-color: #{$danger};
+  }
 }

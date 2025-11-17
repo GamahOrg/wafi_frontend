@@ -6,6 +6,7 @@ import { pagination, Pagination } from 'src/app/shared/models/pagination.model';
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
 import { ProjectListDto } from '../../../models/project-list';
 import { CharteredAccountProjectService } from 'src/app/modules/features/license/services/chareted-account-project-service';
+import { GetLicenseProjectListRequestDto } from 'src/app/modules/features/license/dataModels/get-license-project-list-request-dto';
 
 @Component({
   selector: 'app-chartered-account-project-list',
@@ -47,10 +48,17 @@ export class CharteredAccountProjectListComponent implements OnInit {
   }
 
   observeProjectList(): void {
+    const request: GetLicenseProjectListRequestDto = {
+      pageNumber: this.pagintationData.currentPage,
+      pageSize: this.pagintationData.pageSize,
+      currentSelectedFacilityId: this.facilityId as string,
+      searchText: null,
+      natureTypeId: null
+    };
+
     this.subscriptions.push(
       this._charteredAccount
-        .GetLicenseProjectList(this.pagintationData.currentPage,
-          this.pagintationData.pageSize, this.facilityId as string)
+        .GetLicenseProjectList(request)
         .subscribe((res: Pagination<ProjectListDto[]>) => {
           this.updateRequestList(res as Pagination<ProjectListDto[]>);
         })

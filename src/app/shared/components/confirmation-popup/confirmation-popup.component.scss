@@ -1,2 +1,254 @@
 @import "/src/assets/styles/custom-variables";
-@import "/src/assets/styles/material-custom/dialog-content";
+
+.confirmation-dialog-wrapper {
+  background: #ffffff;
+  border-radius: 4px;
+  min-width: 400px;
+  max-width: 90vw;
+  width: auto;
+  font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  direction: rtl;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  // Close Button
+  .close-button {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    color: #333;
+    font-size: 32px;
+    line-height: 1;
+    transition: color 0.2s ease;
+
+    span {
+      font-weight: 300;
+      display: block;
+    }
+
+    &:hover {
+      color: #000;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  // Title Section
+  .dialog-title-section {
+    padding: 20px 50px 15px 30px;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+
+    .dialog-title {
+      margin: 0;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      text-align: right;
+      line-height: 1.5;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+  }
+
+  // Body with Sidebar
+  .dialog-body {
+    display: flex;
+    position: relative;
+    overflow: visible;
+    flex: 1 1 auto;
+
+    .side-bar {
+      width: 8px;
+      background: linear-gradient(to bottom, #005257 0%, #003237 100%);
+      flex-shrink: 0;
+    }
+
+    .content-area {
+      flex: 1;
+      padding: 25px 30px;
+      background: #fafafa;
+      overflow: visible;
+      min-height: fit-content;
+
+      .content-text {
+        color: #424242;
+        font-size: 0.95rem;
+        line-height: 1.9;
+        text-align: right;
+        white-space: normal;
+        word-wrap: break-word;
+
+        ::ng-deep br {
+          display: block;
+          content: "";
+          margin: 0.4rem 0;
+        }
+      }
+    }
+  }
+
+  // Footer Buttons
+  .dialog-footer {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    background: #ffffff;
+    flex-shrink: 0;
+
+    button {
+      padding: 10px 32px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      min-width: 110px;
+      white-space: nowrap;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .btn-save {
+      background-color: #005257;
+      color: #ffffff;
+      order: 1;
+
+      &:hover {
+        background-color: #004247;
+      }
+
+      &:active {
+        background-color: #003237;
+      }
+    }
+
+    .btn-cancel {
+      background-color: #e0e0e0;
+      color: #666666;
+      order: -1;
+
+      &:hover {
+        background-color: #d0d0d0;
+      }
+
+      &:active {
+        background-color: #c0c0c0;
+      }
+    }
+  }
+}
+
+// RTL Support
+[dir="rtl"] {
+  .confirmation-dialog-wrapper {
+    .close-button {
+      left: auto;
+      right: 20px;
+    }
+
+    .dialog-title-section .dialog-title {
+      text-align: right;
+    }
+
+    .dialog-body .content-area .content-text {
+      text-align: right;
+    }
+
+    .dialog-footer {
+      justify-content: flex-start;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .confirmation-dialog-wrapper {
+    min-width: 90vw;
+    max-width: 95vw;
+
+    .dialog-title-section {
+      padding: 18px 45px 12px 25px;
+
+      .dialog-title {
+        font-size: 1rem;
+      }
+    }
+
+    .dialog-body {
+      .side-bar {
+        width: 6px;
+      }
+
+      .content-area {
+        padding: 20px 25px;
+
+        .content-text {
+          font-size: 0.9rem;
+          line-height: 1.8;
+        }
+      }
+    }
+
+    .dialog-footer {
+      padding: 15px 25px;
+      flex-direction: row;
+
+      button {
+        flex: 1;
+        min-width: unset;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .confirmation-dialog-wrapper {
+    .dialog-title-section {
+      padding: 15px 40px 10px 20px;
+
+      .dialog-title {
+        font-size: 0.95rem;
+      }
+    }
+
+    .dialog-body {
+      .content-area {
+        padding: 18px 20px;
+
+        .content-text {
+          font-size: 0.875rem;
+          line-height: 1.7;
+        }
+      }
+    }
+
+    .dialog-footer {
+      padding: 12px 20px;
+      flex-direction: column;
+      gap: 10px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { DeedData } from "../dataModels/project-land-deed.dto";
 import { ProjectSubUnitDto } from "../dataModels/project-sub-unit.dto";
 import { SysFileManagerCreateUpdateDto } from "src/app/shared/models/sys-file-manager-create-update-dto";
 import { ProjectUnitCodeDto } from "../dataModels/project-unit-code.dto";
+import { FileManagerBE } from "../../facilities/dataModels/financial-capability.model";
 
 export interface ProjectUnit {
   id: string;
@@ -14,9 +15,11 @@ export interface ProjectUnit {
   constructionStartOn: Date,
   constructionEndOn: Date,
   licenseProjectsId: string;
+  buildingBlockTypeId: number;
   licenseProjectSubUnits: ProjectSubUnitDto[];
   licenseProjectSubUnitsListCodes: ProjectUnitCodeDto[]
-  
+  designFileId: string;
+  designFile: FileManagerBE;
 }
 
 export interface licenseProjectSubUnits {
@@ -46,6 +49,8 @@ export interface licenseProjectUnits {
   unitTypeName: string,
   licenseProjectSubUnits: licenseProjectSubUnits[]
   licenseProjectSubUnitsListCodes: licenseProjectSubUnitsListCodes[],
+  buildingBlockType: SysLicenseProjectBuildingBlockTypeDto,
+  designFile: FileManagerBE;
 }
 
 export interface licenseProjectSubUnitsListCodes {
@@ -121,4 +126,12 @@ export interface licenseProjectServices {
 
 export interface sysLicenseProjectService{
   name: string,
+}
+
+
+export interface SysLicenseProjectBuildingBlockTypeDto {
+  id: number;
+  name: string;
+  isBuilding: boolean;
+  isBlock: boolean;
 }

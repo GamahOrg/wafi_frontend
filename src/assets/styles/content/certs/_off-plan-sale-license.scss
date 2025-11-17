@@ -1,0 +1,168 @@
+article {
+  direction: rtl;
+  position: relative;
+  overflow: hidden;
+
+  width: 794px;
+  min-height: 1122px;
+  margin: 0 auto;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+
+  article {
+    width: auto;
+    min-height: auto;
+    padding: 20mm;
+  }
+}
+
+.license-container {
+  position: relative;
+  overflow: hidden;
+
+  break-inside: avoid;
+
+  background-image: url('/assets/images/licenses/certs/off-plan-sale/body-abstract.svg');
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 46%;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 40px;
+  break-inside: avoid;
+
+  .cert-logo {
+    max-height: 36px;
+  }
+
+  .main-title {
+    font-weight: bold;
+    color: #002F56;
+
+    .title-ar {
+      font-size: 16px;
+    }
+
+    .title-en {
+      text-align: right;
+      font-size: 12px;
+    }
+  }
+}
+
+.intro-text,
+.footer-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #005257;
+}
+
+.intro-text {
+  margin-bottom: 18px;
+}
+
+.section {
+  margin-bottom: 16px;
+  break-inside: avoid;
+
+  .section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 5px;
+    padding: 5px;
+
+    font-size: 11px;
+    color: white;
+
+    background-color: #005257;
+    break-inside: avoid;
+  }
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9px;
+
+  thead,
+  tbody,
+  tfoot,
+  tr,
+  td,
+  th {
+    border-width: 1px;
+    border-color: #BBBBBB;
+  }
+
+  td,
+  th {
+    padding: 5px;
+    vertical-align: middle;
+    color: #2F2F2F;
+  }
+
+  th {
+    width: 25%;
+    text-align: right;
+    font-weight: bold;
+    background-color: #F2F2F2;
+
+    &[dir=ltr] {
+      text-align: left;
+    }
+  }
+
+  td {
+    text-align: center;
+  }
+
+  .ar-title {
+    font-weight: bold;
+    text-align: right;
+  }
+
+  .en-title {
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .value {
+    text-align: right;
+  }
+}
+
+.qr-section {
+  text-align: center;
+  margin-top: 40px;
+
+  .cert-qr {
+    max-width: 40px;
+  }
+}
+
+.footer-text {
+  text-align: center;
+  margin-top: 40px;
+  line-height: 1.6;
+}
+
+.footer-abstract {
+  text-align: left;
+  margin-top: 40px;
+
+  .cert-footer-abstract {
+    max-height: 16px;
+  }
+}

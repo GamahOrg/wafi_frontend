@@ -109,12 +109,12 @@ export class CreateLiftingTheMarkOnThePropertyTitleDeedRequestComponent {
     );
   }
   save() {
-    debugger
+    
     if (!this.liftingTheMarkOnThePropertyTitleDeedForm.valid) {
       this.showValidation = true;
       return;
     }
-    debugger
+    
 
     var requestPayload = this.liftingTheMarkOnThePropertyTitleDeedForm
       .value as {} as CreateOrUpdateLiftingTheMarkOnThePropertyTitleDeedRequestDto;
@@ -131,7 +131,7 @@ export class CreateLiftingTheMarkOnThePropertyTitleDeedRequestComponent {
     
       .saveLiftingTheMarkOnThePropertyTitleDeedRequest(requestPayload)
       .subscribe((res: any) => {
-      debugger
+      
         if (res.isDone === true) {
           this._projectRequestLocalStorageService.setSelectedSelectedProjectLicenseRequestIdInLocalStorage(
             res?.data?.licenseProjectRequestId
@@ -204,7 +204,7 @@ export class CreateLiftingTheMarkOnThePropertyTitleDeedRequestComponent {
     );
   }
   loadliftingDeeds(){
-    debugger
+    
     this._liftingDeedService.getLicenseProjectDeeds(this .liftingTheMarkOnThePropertyTitleDeedForm.controls.licenseProjectId.value as string).subscribe(
       (response:LicenseDeedDropDownList[] | null) => {
         this.liftingDeeds = response as LicenseDeedDropDownList [];

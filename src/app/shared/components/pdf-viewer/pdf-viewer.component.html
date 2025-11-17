@@ -1,0 +1,64 @@
+<!-- PDF Viewer Container -->
+<div class="pdf-viewer-container" [class.fullscreen]="isFullscreen">
+  <!-- PDF Toolbar -->
+  <div class="pdf-toolbar">
+    <div class="toolbar-left">
+      <span style="color: #ccc; font-size: 12px;">
+        استخدم Ctrl + و Ctrl - للتكبير والتصغير
+      </span>
+    </div>
+
+    <div class="toolbar-center">
+      <!-- Empty or add any center controls -->
+    </div>
+
+    <div class="toolbar-right">
+      <!-- Fullscreen toggle button - changes icon based on state -->
+      <button class="toolbar-btn" (click)="toggleFullscreen()" [title]="isFullscreen ? 'خروج من وضع ملء الشاشة' : 'وضع ملء الشاشة'">
+        <i class="material-icons">{{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}</i>
+      </button>
+    </div>
+  </div>
+
+  <div class="pdf-display-area">
+    <div class="pdf-content">
+      <iframe
+        *ngIf="safePdfUrl && !isLoading && !loadError"
+        [src]="safePdfUrl"
+        frameborder="0"
+        style="width: 100%; height: 100%; border: none; background: white;">
+      </iframe>
+
+      <!-- Loading State -->
+      <div class="no-pdf-state" *ngIf="isLoading">
+        <div class="no-pdf-content">
+          <i class="material-icons rotating">hourglass_empty</i>
+          <h3>{{ loadingMessage }}</h3>
+          <p>{{ loadingDescription }}</p>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div class="no-pdf-state" *ngIf="loadError && !isLoading">
+        <div class="no-pdf-content">
+          <i class="material-icons" style="color: #f44336;">error</i>
+          <h3>{{ errorMessage }}</h3>
+          <p>{{ loadError }}</p>
+          <button class="retry-btn" (click)="onRetry()" *ngIf="retryCallback">
+            <i class="material-icons">refresh</i>
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+
+      <!-- No content Selected State -->
+      <div class="no-pdf-state" *ngIf="!pdfUrl && !isLoading && !loadError">
+        <div class="no-pdf-content">
+          <i class="material-icons">description</i>
+          <h3>{{ noContentMessage }}</h3>
+          <p>{{ noContentDescription }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

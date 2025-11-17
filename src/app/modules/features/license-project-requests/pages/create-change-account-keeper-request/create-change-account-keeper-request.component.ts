@@ -144,7 +144,7 @@ export class CreateChangeAccountKeeperRequestComponent implements OnInit {
       this.showValidation = true;
       return;
     }
-    debugger
+    
     var requestPayload = this.changeAccountKeeperForm
       .value as {} as CreateOrUpdateChangeAccountKeeperRequestDto;
     requestPayload.facilityId = this.facilityId;

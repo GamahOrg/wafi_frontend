@@ -3,14 +3,16 @@ import {
   TechnicalCapabilitiesRequirementsService
 } from '../facilities/services/technicalCapabilitiesRequirements/technical-capabilities-requirements.service';
 import { ProjectBasicDataService } from './services/licenseProjects/project-basic-data.service';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LicenseRoutingModule } from './license-routing.module';
 import { CreateLincenseComponent } from './pages/create-license/create-license.component';
 import { LincenseSummaryComponent } from './pages/lincense-summary/lincense-summary.component';
 import { LincenseTypesComponent } from './pages/lincense-types/lincense-types.component';
 import { LincenseListComponent } from './pages/lincense-list/lincense-list.component';
 import { LincenseDetailsComponent } from './pages/lincense-details/lincense-details.component';
+import { FawriaLicenseDetailsComponent } from './pages/fawria-license-details/fawria-license-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 // import { TranslateModule } from '@ngx-translate/core';
@@ -337,7 +339,8 @@ import { AddLicenseCertificateUnitComponent } from './components/add-license-cer
 import { FinalTenantContractComponent } from './components/final-tenant-contract/final-tenant-contract.component';
 import { LicenseRequestFinalTenantContractComponent } from './components/license-request-final-tenant-contract/license-request-final-tenant-contract.component';
 import { LicenseProjectBuyerListComponent } from './components/license-project-buyer-list/license-project-buyer-list.component';
-import { ShowDetailBuyerComponent } from './components/show-detail-buyer/show-detail-buyer.component';import { CharteredAccountProjectListComponent } from './pages/chareted-account-project-list/chartered-account-project-list/chartered-account-project-list.component';
+import { ShowDetailBuyerComponent } from './components/show-detail-buyer/show-detail-buyer.component';
+import { CharteredAccountProjectListComponent } from './pages/chareted-account-project-list/chartered-account-project-list/chartered-account-project-list.component';
 import { CharteredAccountProjectService } from './services/chareted-account-project-service';
 import { LicenseProjectAccountantComponent } from './pages/License-project-accountant/License-project-accountant.component';
 import { LicenseProjectAccountantLocalStorageService } from './services/license-project-accountant-local-storage.service';
@@ -399,6 +402,93 @@ import { MonthlyEngineeringReportExternalExpensesService } from './services/mont
 import { AddEditConstructionWorkStatusComponent } from './components/add-edit-construction-work-status/add-edit-construction-work-status.component';
 import { LicenseProjectRelativeWeightService } from './services/licenseProjects/license-project-relative-weight.service';
 import { AccountantMonthlySupervisionReportsComponent } from './pages/accountant-monthly-supervision-reports/accountant-monthly-supervision-reports.component';
+import { BusinessPaymentTemplatesComponent } from './pages/business-payment-templates/business-payment-templates.component';
+import { BusinessPaymentTemplateFormComponent } from './components/business-payment-template-form/business-payment-template-form.component';
+import { LicenseProjectBusinessPaymentService } from './services/business-payment.service';
+import { EditBusinessPaymentTemplatesComponent } from './pages/edit-business-payment-templates/edit-business-payment-templates.component';
+import { RealStateDeveloperService } from './services/real-state-developer.service';
+import { RealStateDeveloperUnitsListComponent } from './pages/real-state-developer-units-list/real-state-developer-units-list.component';
+import { UnitDetailsComponent } from './components/unit-details/unit-details.component';
+import { AddContractComponent } from './components/add-contract/add-contract.component';
+import { CreateContractPopupComponent } from './components/create-contract-popup/create-contract-popup.component';
+import { ViewBusinessPaymentTemplatesComponent } from './components/view-business-payment-templates/view-business-payment-templates.component';
+import { ContractDetailsComponent } from './pages/contract-details/contract-details.component';
+import { SalesContractComponent } from './pages/contract-details/sales-contract/sales-contract.component';
+import { OtpVerificationModalComponent } from './pages/contract-details/otp-verification-modal/otp-verification-modal.component';
+import { RejectionReasonModalComponent } from './pages/contract-details/rejection-reason-modal/rejection-reason-modal.component';
+import { ContractReadonlyViewComponent } from './pages/contract-readonly-view/contract-readonly-view.component';
+import { ViewContractComponent } from './components/view-contract/view-contract.component';
+import { CharteredAccountProjectTotalComponent } from './pages/chartered-account-project-total/chartered-account-project-total.component';
+import { EditFarzNoteComponent } from './pages/edit-farz-note/edit-farz-note.component';
+import { ContractUnitDetailsComponent } from './pages/contracts/contract-unit-details/contract-unit-details.component';
+import { AddContractPopupComponent } from './pages/contracts/add-contract-popup/add-contract-popup.component';
+import { BuyerContractViewDetailsComponent } from './pages/contracts/buyer-contract-view-details/buyer-contract-view-details.component';
+import { BuyerContractUpdateComponent } from './pages/contracts/buyer-contract-update/buyer-contract-update.component';
+import { NationalityService } from '../../auth/services/nationality/nationality.service';
+import { ContractRequestDetailsComponent } from './pages/contracts/contract-request-details/contract-request-details.component';
+import { LicenseProjectBuyerCancellationRequestService } from './services/license-project-buyer-cancellation-request.service';
+import { ContractRequestListComponent } from './pages/contracts/contract-request-list/contract-request-list.component';
+import { ContractViewerComponent } from './components/contract-viewer/contract-viewer.component';
+import { PaymentTermsTabsComponent } from './components/payment-terms-tabs/payment-terms-tabs.component';
+import { BuyerTotalsListComponent } from './components/buyer-totals-list/buyer-totals-list.component';
+import { BuyerListTabsComponent } from './components/buyer-list-tabs/buyer-list-tabs.component';
+import { CancelledUnitsListComponent } from './components/cancelled-units-list/cancelled-units-list.component';
+import { CancelledAndResoldUnitsListComponent } from './components/cancelled-and-resold-units-list/cancelled-and-resold-units-list.component';
+import { CompletedUnitsListComponent } from './components/completed-units-list/completed-units-list.component';
+import { ItemsLogComponent } from './pages/items-log/items-log.component';
+import { PaymentVersionsHistoryComponent } from './components/payment-versions-history/payment-versions-history.component';
+import { FawriaLicenseprojectMaindataContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-maindata-container/fawria-licenseproject-maindata-container.component';
+import { FawriaLicenseprojectDeedsContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deeds-container/fawria-licenseproject-deeds-container.component';
+import { FawriaLicenseprojectEngineeringConsultantsContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-engineering-consultants-container/fawria-licenseproject-engineering-consultants-container.component';
+import { FawriaLicenseprojectFeasibilityStudyContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-feasibility-study-container/fawria-licenseproject-feasibility-study-container.component';
+import { FawriaLicenseprojectCharteredAccountantsContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-chartered-accountants-container/fawria-licenseproject-chartered-accountants-container.component';
+import { FawriaLicenseprojectMaindataCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-maindata-create/fawria-licenseproject-maindata-create.component';
+import { FawriaLicenseprojectDeedOwnersContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deed-owners-container/fawria-licenseproject-deed-owners-container.component';
+import { FawriaLicenseprojectEscrowAccountContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-escrow-account-container/fawria-licenseproject-escrow-account-container.component';
+import { FawriaLicenseprojectDeedOwnersCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deed-owners-create/fawria-licenseproject-deed-owners-create.component';
+import { FawriaLicenseprojectDeedsCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deeds-create/fawria-licenseproject-deeds-create.component';
+import { FawriaLicenseprojectEngineeringConsultantsCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-engineering-consultants-create/fawria-licenseproject-engineering-consultants-create.component';
+import { FawriaLicenseprojectFeasibilityStudyCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-feasibility-study-create/fawria-licenseproject-feasibility-study-create.component';
+import { FawriaLicenseprojectCharteredAccountantsCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-chartered-accountants-create/fawria-licenseproject-chartered-accountants-create.component';
+import { FawriaLicenseprojectEscrowAccountCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-escrow-account-create/fawria-licenseproject-escrow-account-create.component';
+import { FawriaLicenseprojectContactInfoContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-contact-info-container/fawria-licenseproject-contact-info-container.component';
+import { FawriaLicenseprojectContactInfoCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-contact-info-create/fawria-licenseproject-contact-info-create.component';
+import { LicenseProjectPartiesAdditionalTermsComponent } from './components/license-project-parties-additional-terms/license-project-parties-additional-terms.component';
+import { LicenseProjectPartiesAdditionalTermsFormComponent } from './components/license-project-parties-additional-terms-form/license-project-parties-additional-terms-form.component';
+import { LicenseProjectPartiesAdditionalTermsService } from './services/LicenseProjectPartiesAdditionalTerms.service';
+import { InstantLicenseDeedsComponent } from './components/instant-license-deeds/instant-license-deeds.component';
+import { ProjectInstantLicenseDeedService } from '../real-estate-contributions-license/services/project-instant-license-deed.service';
+import { FawriaLicenseProjectContactInfoService } from './services/licenseProjects/fawria-license-project-contact-info.service';
+import { LicenseProjectFawriaDeveloperListComponent } from './pages/license-project-fawria-developer-list/license-project-fawria-developer-list.component';
+import { LicenseProjectFawriaDeveloperService } from './services/license-project-fawria-developer.service';
+import { FawriaLicenseProjectBankInfoService } from './services/licenseProjects/fawria-license-project-bank-info.service';
+import { FawriaLicenseprojectDeedsDetailsComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deeds-details/fawria-licenseproject-deeds-details.component';
+import { FawriaLicenseprojectDeedsListComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deeds-list/fawria-licenseproject-deeds-list.component';
+import { DeleteDeedConfirmationDialogComponent } from './components/FawriaLicenseProject/delete-deed-confirmation-dialog/delete-deed-confirmation-dialog.component';
+import { CustomTooltipComponent } from './components/FawriaLicenseProject/custom-tooltip/custom-tooltip.component';
+import { LicenseProjectDeedOwnerApprovalComponent } from './components/license-project-deed-owner-approval/license-project-deed-owner-approval.component';
+import { RejectionReasonDialogComponent } from './components/rejection-reason-dialog/rejection-reason-dialog.component';
+import { FawriaProjectPartiesComponent } from './components/fawria-components/fawria-project-parties/fawria-project-parties.component';
+import { FawriaLicenseprojectCharteredAccountantsContainerViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-chartered-accountants-container-view-only/fawria-licenseproject-chartered-accountants-container-view-only.component';
+import { FawriaLicenseprojectCharteredAccountantsViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-chartered-accountants-view-only/fawria-licenseproject-chartered-accountants-view-only.component';
+import { FawriaLicenseprojectEngineeringConsultantsViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-engineering-consultants-view-only/fawria-licenseproject-engineering-consultants-view-only.component';
+import { FawriaLicenseprojectEngineeringConsultantsContainerViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-engineering-consultants-container-view-only/fawria-licenseproject-engineering-consultants-container-view-only.component';
+import { FawriaLicenseprojectDeedOwnersContainerViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-deed-owners-container-view-only/fawria-licenseproject-deed-owners-container-view-only.component';
+import { FawriaLicenseprojectEscrowAccountViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-escrow-account-create-view-only/fawria-licenseproject-escrow-account-create-view-only.component';
+import { LicenseProjectPartiesAdditionalTermsViewOnlyComponent } from './components/fawria-components/license-project-parties-additional-terms-view-only/license-project-parties-additional-terms-view-only.component';
+import { FawriaProjectDataComponent } from './components/fawria-components/fawria-project-data/fawria-project-data.component';
+import { FawriaLicenseprojectMainDataViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-maindata-view-only/fawria-licenseproject-maindata-view-only.component';
+import { FawriaLicenseprojectContactInfoViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-contact-info-view-only/fawria-licenseproject-contact-info-view-only.component';
+import { FawriaLicenseprojectFeasibilityStudyViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-feasibility-study-view-only/fawria-licenseproject-feasibility-study-view-only.component';
+import { FawriaLicenseprojectDeedsViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-deeds-view-only/fawria-licenseproject-deeds-view-only.component';
+import { FawriaLicenseprojectDeedsListViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-deeds-list-view-only/fawria-licenseproject-deeds-list-view-only.component';
+import { FawriaLicenseprojectDeedsDetailsViewOnlyComponent } from './components/fawria-components/fawria-licenseproject-deeds-details-view-only/fawria-licenseproject-deeds-details-view-only.component';
+import { LicenseRequestHeaderProcessingStepService } from './services/license-request-header-processing-step.service';
+import { FawriaProjectPartiesStatusComponent } from './components/fawria-components/fawria-project-parties-status/fawria-project-parties-status.component';
+import { OffPlanSaleLicenseComponent } from './components/off-plan-sale-license/off-plan-sale-license.component';
+import { FawriaUpdateBuildingFlatAreaComponent } from './components/FawriaLicenseProject/fawria-update-building-flat-area/fawria-update-building-flat-area.component';
+import { DeveloperApprovalsListComponent } from './pages/developer-approvals-list/developer-approvals-list.component';
+import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-details/developer-approval-details.component';
 
 @NgModule({
   declarations:[
@@ -407,6 +497,7 @@ import { AccountantMonthlySupervisionReportsComponent } from './pages/accountant
     LincenseTypesComponent,
     LincenseListComponent,
     LincenseDetailsComponent,
+    FawriaLicenseDetailsComponent,
     CompletionRatesComponent,
     PlannedEngineeringSupervisionReportsQualityAndBusinessProgressComponent,
     MainDataComponent,
@@ -527,6 +618,7 @@ import { AccountantMonthlySupervisionReportsComponent } from './pages/accountant
     BeneficiaryContractFormAdditionalTermsComponent,
     BeneficiaryContractFormAdditionalTermsFormComponent,
     LicenseBeneficiaryContractFormAdditionalTermsComponent,
+    ViewBusinessPaymentTemplatesComponent,
     ProjectDeveloperComponent,
     LicenseProjectDeveloperComponent,
     RequestAttachmentsComponent,
@@ -670,13 +762,93 @@ import { AccountantMonthlySupervisionReportsComponent } from './pages/accountant
     RecordDangerLogComponent,
     AddEditMonthlyEngineeringReportExternalExpensesComponent,
     AddEditConstructionWorkStatusComponent,
-    AccountantMonthlySupervisionReportsComponent
+    AccountantMonthlySupervisionReportsComponent,
+    BusinessPaymentTemplatesComponent,
+    EditBusinessPaymentTemplatesComponent,
+    BusinessPaymentTemplateFormComponent,
+    RealStateDeveloperUnitsListComponent,
+    UnitDetailsComponent,
+    AddContractComponent,
+    CreateContractPopupComponent,
+    ContractDetailsComponent,
+    ViewContractComponent,
+    SalesContractComponent,
+    OtpVerificationModalComponent,
+    RejectionReasonModalComponent,
+    ContractReadonlyViewComponent,
+    EditFarzNoteComponent,
+    CharteredAccountProjectTotalComponent,
+    ContractUnitDetailsComponent,
+    AddContractPopupComponent,
+    BuyerContractViewDetailsComponent,
+    BuyerContractUpdateComponent,
+    ContractRequestDetailsComponent,
+    ContractRequestListComponent,
+    ItemsLogComponent,
+    CancelledUnitsListComponent,
+    ContractViewerComponent,
+    PaymentTermsTabsComponent,
+    BuyerTotalsListComponent,
+    BuyerListTabsComponent,
+    CancelledAndResoldUnitsListComponent,
+    CompletedUnitsListComponent,
+    PaymentVersionsHistoryComponent,
+    FawriaLicenseprojectMaindataContainerComponent,
+    FawriaLicenseprojectDeedsContainerComponent,
+    FawriaLicenseprojectEngineeringConsultantsContainerComponent,
+    FawriaLicenseprojectFeasibilityStudyContainerComponent,
+    FawriaLicenseprojectCharteredAccountantsContainerComponent,
+    FawriaLicenseprojectMaindataCreateComponent,
+    FawriaLicenseprojectDeedOwnersContainerComponent,
+    FawriaLicenseprojectEscrowAccountContainerComponent,
+    FawriaLicenseprojectDeedOwnersCreateComponent,
+    FawriaLicenseprojectDeedsCreateComponent,
+    FawriaLicenseprojectEngineeringConsultantsCreateComponent,
+    FawriaLicenseprojectFeasibilityStudyCreateComponent,
+    FawriaLicenseprojectCharteredAccountantsCreateComponent,
+    FawriaLicenseprojectEscrowAccountCreateComponent,
+    FawriaLicenseprojectContactInfoContainerComponent,
+    FawriaLicenseprojectContactInfoCreateComponent,
+    LicenseProjectPartiesAdditionalTermsComponent,
+    LicenseProjectPartiesAdditionalTermsFormComponent,
+    InstantLicenseDeedsComponent,
+    LicenseProjectFawriaDeveloperListComponent,
+    FawriaLicenseprojectDeedsDetailsComponent,
+    FawriaLicenseprojectDeedsListComponent,
+    DeleteDeedConfirmationDialogComponent,
+    CustomTooltipComponent,
+    LicenseProjectDeedOwnerApprovalComponent,
+    RejectionReasonDialogComponent,
+    FawriaProjectPartiesComponent,
+    FawriaLicenseprojectCharteredAccountantsContainerViewOnlyComponent,
+    FawriaLicenseprojectCharteredAccountantsViewOnlyComponent,
+    FawriaLicenseprojectEngineeringConsultantsViewOnlyComponent,
+    FawriaLicenseprojectEngineeringConsultantsContainerViewOnlyComponent,
+    FawriaLicenseprojectDeedOwnersContainerViewOnlyComponent,
+    FawriaLicenseprojectEscrowAccountViewOnlyComponent,
+    LicenseProjectPartiesAdditionalTermsViewOnlyComponent,
+    FawriaProjectDataComponent,
+    FawriaLicenseprojectMainDataViewOnlyComponent,
+    FawriaLicenseprojectContactInfoViewOnlyComponent,
+    FawriaLicenseprojectFeasibilityStudyViewOnlyComponent,
+    FawriaLicenseprojectDeedsViewOnlyComponent,
+    FawriaLicenseprojectDeedsListViewOnlyComponent,
+    FawriaLicenseprojectDeedsDetailsViewOnlyComponent,
+    // FawriaCertificateComponent,
+    FawriaProjectPartiesStatusComponent,
+    OffPlanSaleLicenseComponent,
+    FawriaUpdateBuildingFlatAreaComponent,
+    DeveloperApprovalsListComponent,
+    DeveloperApprovalDetailsComponent,
   ],
   providers: [
+    LicenseRequestHeaderProcessingStepService,
+    LicenseRequestHeaderProcessingStepService,
     LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService,
     LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService,
     EngineeringSupervisionPlannedReportActualInfrastructureService,
     LicenseProjectHealthAndSafetyMonitoringService,
+    NationalityService,
     EngineeringSupervisionReportActualProjectDeteilsService,
     EngineeringSupervisionReportActualQualityAndBusinessService,
     PeriodicCharteredAccountantReportService,
@@ -689,6 +861,7 @@ import { AccountantMonthlySupervisionReportsComponent } from './pages/accountant
     AccountKeeperService,
     SysBankService,
     NationalAddressService,
+    RealStateDeveloperService,
     ProjectRealStateDeveloperService,
     TechnicalCapabilitiesRequirementsService,
     ProjectBasicDataService,
@@ -770,6 +943,14 @@ import { AccountantMonthlySupervisionReportsComponent } from './pages/accountant
     SysProjectStatusService,
     MonthlyEngineeringReportExternalExpensesService,
     LicenseProjectRelativeWeightService,
+    LicenseProjectBusinessPaymentService,
+    LicenseProjectBuyerCancellationRequestService,
+    LicenseProjectPartiesAdditionalTermsService,
+    ProjectInstantLicenseDeedService,
+    FawriaLicenseProjectContactInfoService,
+    LicenseProjectFawriaDeveloperService,
+    FawriaLicenseProjectBankInfoService,
+    LicenseRequestHeaderProcessingStepService,
   ],
   imports: [
     CommonModule,
@@ -777,9 +958,10 @@ import { AccountantMonthlySupervisionReportsComponent } from './pages/accountant
     LicenseRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    // TranslateModule.forChild(),
-    FormsModule
-  ]
+    FormsModule,
+    PdfViewerModule
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 

@@ -1,0 +1,122 @@
+<ng-container>
+
+  <form
+    class="d-flex flex-column h-100"
+    [formGroup]="escrowAccountForm"
+    id="form-escrowAccountForm"
+  >
+    <div class="tab-data-header">
+      <i class="material-icons-outlined">account_balance</i>
+      <h6 class="title">{{ localization.title }}</h6>
+    </div>
+
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <!-- Bank Dropdown -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.bank }}</label>
+            <select
+              class="form-select"
+              id="control-bankId"
+              formControlName="bankId"
+              [disabled]="true"
+            >
+              <option value="" disabled selected>{{ localization.selectBank }}</option>
+              <option *ngFor="let bank of banks" [ngValue]="bank.id">
+                {{ bank.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Selected Delegators (View Only) -->
+       <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.delegators }}</label>
+
+            <!-- Selected Delegators Chips (Read-only) -->
+            <div class="selected-chips-container" *ngIf="getSelectedDelegators().length > 0">
+              <div
+                class="chip"
+                *ngFor="let delegator of getSelectedDelegators()"
+              >
+                <span class="chip-label">{{ delegator.name }}</span>
+              </div>
+            </div>
+            <div *ngIf="getSelectedDelegators().length === 0" class="text-muted">
+              {{ localization.selectDelegators }}
+            </div>
+          </div>
+        </div> 
+
+        <!-- Tax Numbers Row -->
+      <div class="row mb-3">
+        <!-- Saudi Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">*</span> الرقم الضريبى السعودى</label>
+            <input
+              type="text"
+              class="form-control"
+              id="control-saudiTaxNumber"
+              formControlName="saudiTaxNumber"
+              placeholder="الرقم الضريبى السعودى"
+            />
+          
+          </div>
+        </div>
+
+        <!-- FATCA Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">*</span> الرقم الضريبى FATCA</label>
+            <input
+              type="text"
+              class="form-control"
+              id="control-fatcaTaxNumber"
+              formControlName="fatcaTaxNumber"
+              placeholder="الرقم الضريبى FATCA"
+            />
+          </div>
+        </div>
+
+        <!-- CRS Tax Number -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">*</span> الرقم الضريبى CRS</label>
+            <input
+              type="text"
+              class="form-control"
+              id="control-crsTaxNumber"
+              formControlName="crsTaxNumber"
+              placeholder="الرقم الضريبى CRS"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Terms and Conditions Row -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="form-group mb-4">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="control-approvedBankTermsConditions"
+                formControlName="approvedBankTermsConditions"
+              />
+              <label class="form-check-label" for="control-approvedBankTermsConditions">
+                <span class="required-star">*</span> {{ localization.approvedBankTermsConditions }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </form>
+  
+</ng-container>

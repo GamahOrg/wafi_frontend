@@ -28,13 +28,13 @@ export class LicenseProjectAccountantComponent implements OnInit, OnDestroy {
     verticalTabs: false,
     activeTabIndex: 0,
     tabsComponentList: [
-      {
-        icon: '',
-        title: this.localization.registerBuyers,
-        Component: LicenseProjectBuyerListComponent,
-        disabled: false,
-        isVisible: true,
-      },
+      // {
+      //   icon: '',
+      //   title: this.localization.registerBuyers,
+      //   Component: LicenseProjectBuyerListComponent,
+      //   disabled: false,
+      //   isVisible: true,
+      // },
       {
         icon: '',
         title: this.localization.disbursementDocuments,

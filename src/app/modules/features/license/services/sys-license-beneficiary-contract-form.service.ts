@@ -17,6 +17,14 @@ export class SysLicenseBeneficiaryContractFormService {
       })
     )
   }
+
+  GenerateContractWithLogo(licenseProjectId: string): Observable<any> {
+    return this._httpClient.get(`${Configuration.APIs.SysLicenseBeneficiaryContractForm.GenerateContractWithLogo}/${licenseProjectId}`).pipe(
+      map((res: any) => {
+        return res.data;
+      })
+    )
+  }
   UpdateLicenseBeneficiaryContractForm(model: SysLicenseBeneficiaryContractFormListDto): Observable<SysLicenseBeneficiaryContractFormListDto> {
 
     return this._httpClient.post<CoreResponseDTO<SysLicenseBeneficiaryContractFormListDto>>

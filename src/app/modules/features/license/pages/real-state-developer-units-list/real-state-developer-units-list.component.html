@@ -1,0 +1,151 @@
+<div class="container-fluid p-4" dir="rtl">
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="mb-1">{{projects.results[0]?.licenseProjectName}}</h4>
+    </div>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3 justify-content-end">
+
+        <!-- Search -->
+        <div class="col-3">
+          <div class="input-group search-input-group">
+            <span class="input-group-text" id="basic-addon1">
+              <i class="material-icons-outlined">search</i>
+            </span>
+            <input
+              type="text"
+              id="control-search"
+              class="form-control"
+              placeholder="البحث بنوع الوحدة أو نموذج الوحدة"
+              [value]="searchTerm"
+              (input)="onSearchChange($any($event.target).value)"
+            />
+          </div>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="col-md-2">
+          <select
+            class="form-select"
+            [(ngModel)]="statusFilter"
+            (change)="onStatusFilterChange()">
+            <option [value]="0">حالة الوحدة</option>
+            <option *ngFor="let status of unitCodeStatuses" [value]="status.id">
+              {{ status.name }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Unit Type Filter -->
+        <div class="col-md-2">
+          <select
+            class="form-select"
+            [(ngModel)]="unitType"
+            (change)="onStatusFilterChange()">
+            <option [value]="0">نوع الوحدة</option>
+            <option *ngFor="let type of subUnitTypes" [value]="type.id">
+              {{ type.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    <div class="d-flex justify-content-between align-items-center">
+      <span>{{ error }}</span>
+      <button class="btn btn-sm btn-danger" (click)="retry()">
+        إعادة المحاولة
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div *ngIf="!error" class="card">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 units-table">
+        <thead class="table-light">
+          <tr>
+            <th>نوع الوحدة</th>
+            <th>كود الوحدة</th>
+            <th>المساحة</th>
+            <th>نموذج الوحدة</th>
+            <!-- <th>السعر</th> -->
+            <th>تاريخ التسليم</th>
+            <th>حالة الوحدة</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of projects.results">
+            <td>
+              <span class="unit-type-text">{{ project.unitType }}</span>
+            </td>
+            <td>
+              <span class="unit-code-text">{{ project.unitCode }}</span>
+            </td>
+            <td>
+              <span class="d-inline-flex align-items-center gap-1">
+                <i class="bi bi-rulers text-muted"></i>
+                <span class="area-text">{{ project.unitSpace }}</span>
+                <span class="text-muted">م²</span>
+              </span>
+            </td>
+            <td>
+              <span class="unit-model-text">{{ project.unitModel }}</span>
+            </td>
+            <!-- <td>
+              <span class="d-inline-flex align-items-center gap-1">
+                <span class="price-text">{{ project.price | number:'1.0-0' }}</span>
+                <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+              </span>
+            </td> -->
+            <td>
+              <span class="delivery-date-text">{{ project.deliveryOn | date : "dd/MM/yyyy" }}</span>
+            </td>
+            <td>
+              <span
+                class="status-badge"
+                [ngClass]="{
+                  'status-available': project.unitStatus === 'متاحة',
+                  'status-sold': project.unitStatus === 'محجوزة' || project.unitStatus === 'مباعة',
+                  'status-other': project.unitStatus !== 'متاحة' && project.unitStatus !== 'محجوزة' && project.unitStatus !== 'مباعة'
+                }"
+              >
+                <span class="status-dot"></span>
+                {{ project.unitStatus }}
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-primary"
+                (click)="viewDetails(project.id)"
+              >
+                عرض تفاصيل الوحدة
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-auto p-3">
+      <app-pagination></app-pagination>
+    </div>
+
+    <!-- No Data -->
+    <ng-container *ngIf="projects?.totalCount === 0">
+      <div class="mt-4">
+        <app-no-data [showCompleteBtn]="false"></app-no-data>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -28,4 +28,5 @@ export interface CustomerShortDto {
   nationalityId: string;
   facility: FacilityShortDto;
   nationality?:NationalityModel;
+  dateOfBirth?:Date;
 }

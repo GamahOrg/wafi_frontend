@@ -1,40 +1,126 @@
 <div class="d-flex flex-column h-100">
-    <div class="tab-data-header">
-      <div class="icon"><span class="material-icons">list_alt</span></div>
-      <h6 class="title">{{localization.title}}</h6>
-      <button class="edit-icon btn btn-outline-primary"
-              (click)="openDialog()"><span class="material-icons">add</span></button>
-    </div>
+    <!-- Main View -->
+    <div *ngIf="!showItemsLog">
+      <div class="tab-data-header">
+        <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+        <h6 class="title">{{localization.title}}</h6>
+        <div class="buttons-group">
+
+          <button *ngIf="!isNew" class="record-btn btn btn-outline-primary"
+                  (click)="openRecordDialog()">
+                  <i class="fa fa-refresh"></i>
+                  <span>سجل البنود</span>
+          </button>
+          <button class="edit-icon btn btn-primary"
+                  (click)="openDialog()">
+                  <span>إضافة بند</span>
+                  <i class="hgi hgi-stroke hgi-plus-sign"></i>
+          </button>
+        </div>
+      </div>
     <div class="tab-data-section">
-      <div class="table-responsive">
+      <!-- Empty State -->
+      <!-- <div *ngIf="getParentItems().length === 0" class="empty-state-container">
+        <div class="empty-state-icon">
+          <img src="assets/images/general/no-data-found.SVG" alt="No data found" />
+        </div>
+        <p class="empty-state-text">لا يوجد بنود اضافية</p>
+      </div> -->
+  <ng-container *ngIf="getParentItems().length === 0">
+      <div class="mt-4">
+          <app-no-data [showCompleteBtn]="false"></app-no-data>
+      </div>
+  </ng-container>
+      <!-- Table with Data -->
+      <div *ngIf="getParentItems().length > 0" class="table-responsive">
         <table class="table table-light">
           <thead>
             <tr>
-              <th>{{localization.licenseBeneficiaryContractFormId}}</th>
+              <!-- <th>{{localization.licenseBeneficiaryContractFormId}}</th> -->
               <th>{{localization.itemNumber}}</th>
+              <th> {{localization.itemTitle}}</th>
               <th> {{localization.itemText}}</th>
+              <th> {{localization.status}}</th>
+              <th> {{localization.date}}</th>
               <th class="w-25"></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let beneficiary of beneficiaryContractFormAdditionalTerms; let i = index">
-              <td>
-                {{beneficiary?.licenseBeneficiaryContractForm?.description}}
-              </td>
-              <td>{{beneficiary?.itemNumber}}</td>
-              <td>{{beneficiary?.itemText}}</td>
-              <td>
-                <div class="d-flex align-items-center justify-content-end column-gap-2">
-                   <button mat-icon-button
-                          color="warn"
-                          (click)="delete(beneficiary.id,i)"><mat-icon>delete</mat-icon></button>
-                </div>
-              </td>
-            </tr>
+            <ng-container *ngFor="let parentBeneficiary of getParentItems(); let parentIndex = index">
+              <!-- Parent Row -->
+              <tr>
+                <td>
+                  <span>{{getItemNumberDisplay(parentBeneficiary)}}</span>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <button *ngIf="hasChildren(parentBeneficiary.id)" mat-icon-button class="me-2" (click)="toggleExpand(parentBeneficiary.id)">
+                      <mat-icon>{{isExpanded(parentBeneficiary.id) ? 'expand_less' : 'expand_more'}}</mat-icon>
+                    </button>
+                    <span> {{parentBeneficiary?.itemTitle}}</span>
+                  </div>
+                </td>
+                <td>{{parentBeneficiary?.itemText && parentBeneficiary.itemText.length > 100 ? (parentBeneficiary.itemText | slice:0:100) + '...' : parentBeneficiary.itemText}}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="parentBeneficiary?.isActive ? 'status-active' : 'status-inactive'">
+                    {{ parentBeneficiary?.isActive ? localization.activeStatus : localization.inActiveStatus }}
+                  </span>
+                </td>
+                <td>{{parentBeneficiary?.createdOn | date:'dd-MM-yyyy'}}</td>
+
+                <td>
+                  <div class="d-flex align-items-center justify-content-end">
+                    <button mat-icon-button disableRipple="true" [matMenuTriggerFor]="parentMenu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #parentMenu="matMenu">
+                      <button *ngIf="parentBeneficiary.isActive" mat-menu-item (click)="edit(parentBeneficiary, parentIndex)" class="menu-edit-btn">
+                        <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                        <span>تعديل البند</span>
+                        <!-- {{parentBeneficiary.isActive}} -->
+                      </button>
+                      <button *ngIf="parentBeneficiary.isActive && !isNew" mat-menu-item (click)="deActivate(parentBeneficiary.id, parentIndex)" class="menu-delete-btn">
+                        <i class="fa fa-ban"></i>
+                        <span>تعطيل البند</span>
+                      </button>
+                      <button *ngIf="!parentBeneficiary.isActive" mat-menu-item (click)="activate(parentBeneficiary.id, parentIndex)" class="menu-activate-btn">
+                        <i class="fa fa-check-circle"></i>
+                        <span>تفعيل البند</span>
+                      </button>
+                      <button *ngIf="isNew" mat-menu-item (click)="confirmDeleteContractTerm(parentBeneficiary)" class="menu-delete-btn">
+                        <i class="hgi hgi-stroke hgi-delete-03"></i>
+                        <span>حذف البند</span>
+                      </button>
+                    </mat-menu>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Child Rows -->
+              <ng-container *ngIf="isExpanded(parentBeneficiary.id)">
+                <tr *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index" class="child-row">
+                  <td class="ps-5">{{getItemNumberDisplay(childBeneficiary)}}</td>
+                  <td>{{childBeneficiary?.itemTitle}}</td>
+                  <td>{{childBeneficiary?.itemText && childBeneficiary.itemText.length > 100 ? (childBeneficiary.itemText | slice:0:100) + '...' : childBeneficiary?.itemText}}</td>
+                  <!-- <td>
+                    <div class="d-flex align-items-center justify-content-end column-gap-2">
+                       <button mat-icon-button color="primary"  (click)="edit(childBeneficiary, childIndex)"><mat-icon>edit</mat-icon></button>
+                       <button mat-icon-button color="warn" (click)="delete(childBeneficiary.id, childIndex)"><mat-icon>delete</mat-icon></button>
+                    </div>
+                  </td> -->
+                </tr>
+              </ng-container>
+            </ng-container>
           </tbody>
         </table>
       </div>
     </div>
-    <app-next-and-previus-buttons></app-next-and-previus-buttons>
-    
+    <!-- <app-next-and-previus-buttons *ngIf="isActive"></app-next-and-previus-buttons> -->
   </div>
+
+  <!-- Items Log View -->
+  <div *ngIf="showItemsLog">
+    <app-items-log (onBack)="closeItemsLog()"></app-items-log>
+  </div>
+
+</div>

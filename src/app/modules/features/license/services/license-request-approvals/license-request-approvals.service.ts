@@ -10,6 +10,7 @@ import { LicenseProjectCharteredAccountantApproval } from '../../dataModels/lice
 import { LicenseProjectEngineeringConsultantApproval } from '../../dataModels/license-project-engineering-consultant-approval.model';
 import { LicenseProjectRealStateMarketerApproval } from '../../dataModels/license-project-real-state-marketer-approval.model';
 import { CustomerShortDto } from '../../models/facility-short-dto';
+import { LicenseProjectDeedOwnerApproval } from '../../dataModels/license-project-deed-owner-approval.model';
 
 @Injectable()
 export class LicenseRequestApprovalsService {
@@ -62,6 +63,15 @@ setLicenseProjectMainRealStateDeveloperApprovalBS(LatestValue: LicenseProjectMai
  return this.LicenseProjectMainRealStateDeveloperApprovalBS.next(LatestValue);
 }
 
+
+private LicenseProjectDeedOwnerApprovalBS: BehaviorSubject<LicenseProjectDeedOwnerApproval | null> = new BehaviorSubject<LicenseProjectDeedOwnerApproval | null>(null)
+private LicenseProjectDeedOwnerApprovalBS$ = this.LicenseProjectDeedOwnerApprovalBS.asObservable();
+getLicenseProjectDeedOwnerApprovalBS(): Observable<LicenseProjectDeedOwnerApproval|null> {
+ return this.LicenseProjectDeedOwnerApprovalBS$;
+}
+setLicenseProjectDeedOwnerApprovalBS(LatestValue: LicenseProjectDeedOwnerApproval) {
+ return this.LicenseProjectDeedOwnerApprovalBS.next(LatestValue);
+}
 
   GetApprovals(facilityId: string): Observable<LicenseProjectApproval[] | null> {
     return this._httpClient.get<CoreResponseDTO<LicenseProjectApproval[]>>(`${Configuration.APIs.LicenseRequestService.GetApprovals}/${facilityId}`).pipe(

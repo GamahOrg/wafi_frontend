@@ -2,7 +2,7 @@
   <div class="login">
     <form [formGroup]="loginForm" id="form-loginForm">
       <div class="form-group mb-4">
-        <div class="invalid-feedback">{{ errorFeedback }}</div>
+        <div class="invalid-feedback d-block">{{ errorFeedback }}</div>
         <label for="username" class="form-label"> رقم الهوية</label>
         <input
           type="text"
@@ -17,7 +17,7 @@
         />
         <div
           *ngIf="usernameControl.errors && !errorFeedback"
-          class="invalid-feedback"
+          class="invalid-feedback d-block"
         >
           <div
             *ngIf="usernameControl.touched && usernameControl.errors?.['required']"

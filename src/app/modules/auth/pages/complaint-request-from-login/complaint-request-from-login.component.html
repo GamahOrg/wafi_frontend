@@ -36,7 +36,7 @@
               </select>
               <div
                 *ngIf="controls.complaintRequestTypeId.errors"
-                class="invalid-feedback"
+                class="invalid-feedback d-block"
               >
                 <div
                   *ngIf="controls.complaintRequestTypeId.errors?.['required']"
@@ -64,7 +64,7 @@
               />
               <div
                 *ngIf="controls.customerName.errors"
-                class="invalid-feedback"
+                class="invalid-feedback d-block"
               >
                 <div *ngIf="controls.customerName.errors?.['required']">
                   حقل مطلوب
@@ -85,7 +85,7 @@
                   'is-invalid': showValidation && controls.nIDNumber.errors
                 }"
               />
-              <div *ngIf="controls.nIDNumber.errors" class="invalid-feedback">
+              <div *ngIf="controls.nIDNumber.errors" class="invalid-feedback d-block">
                 <div *ngIf="controls.nIDNumber.errors?.['required']">
                   حقل مطلوب
                 </div>
@@ -108,7 +108,7 @@
               />
               <div
                 *ngIf="controls.facilityName.errors"
-                class="invalid-feedback"
+                class="invalid-feedback d-block"
               >
                 <div *ngIf="controls.facilityName.errors?.['required']">
                   حقل مطلوب
@@ -134,7 +134,7 @@
               />
               <div
                 *ngIf="controls.commercialRegisterNumber.errors"
-                class="invalid-feedback"
+                class="invalid-feedback d-block"
               >
                 <div
                   *ngIf="controls.commercialRegisterNumber.errors?.['required']"
@@ -157,7 +157,7 @@
                   'is-invalid': showValidation && controls.email.errors
                 }"
               />
-              <div *ngIf="controls.email.errors" class="invalid-feedback">
+              <div *ngIf="controls.email.errors" class="invalid-feedback d-block">
                 <div *ngIf="controls.email.errors?.['required']">حقل مطلوب</div>
                 <div *ngIf="controls.email.errors?.['pattern']">
                   من فضلك ادخل البريد الإلكتروني صحيح
@@ -178,7 +178,7 @@
                   'is-invalid': showValidation && controls.phone.errors
                 }"
               />
-              <div *ngIf="controls.phone.errors" class="invalid-feedback">
+              <div *ngIf="controls.phone.errors" class="invalid-feedback d-block">
                 <div *ngIf="controls.phone.errors?.['required']">حقل مطلوب</div>
                 <div *ngIf="controls.phone.errors?.['pattern']">
                   من فضلك ادخل رقم جوال صحيح
@@ -206,7 +206,7 @@
                   'is-invalid': showValidation && controls.description.errors
                 }"
               ></textarea>
-              <div *ngIf="controls.description.errors" class="invalid-feedback">
+              <div *ngIf="controls.description.errors" class="invalid-feedback d-block">
                 <div *ngIf="controls.description.errors?.['required']">
                   حقل مطلوب
                 </div>
