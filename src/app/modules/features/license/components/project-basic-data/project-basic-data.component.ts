@@ -228,6 +228,11 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
       this.projectBasicData.id = '00000000-0000-0000-0000-000000000000';
       // this.projectBasicData.typeId = parseInt(this.projectBasicData.typeId.toString())
     }
+    
+     if (this.projectBasicData.licenseProjectNatureTypeId) {
+      this.projectBasicData.licenseProjectNatureTypeId = Number(this.projectBasicData.licenseProjectNatureTypeId);
+    }
+
     this.subscriptions.push(
       this._projectBasicDataService.SaveMainData(this.projectBasicData).subscribe(res => {
         if (res.isDone) {

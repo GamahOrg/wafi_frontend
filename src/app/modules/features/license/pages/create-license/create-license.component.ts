@@ -172,7 +172,9 @@ export class CreateLincenseComponent {
   public CreateOrRenewLicense(): void {
     const formValue = this.createRequstForm.getRawValue();
     if (formValue.priod) {
-      if (this.licenseRequestType.typeCode == LicenseRequestTypeTypeCodeEnum.SellRealEstateUnits) {
+      if (this.licenseRequestType.typeCode == LicenseRequestTypeTypeCodeEnum.SellRealEstateUnits ||
+        this.licenseRequestType.typeCode == LicenseRequestTypeTypeCodeEnum.Fawria
+      ) {
         this.showSRSULicenseRequestTypeWarnings();
       } else {
         this.CheckCreateOrRenewLicense();
