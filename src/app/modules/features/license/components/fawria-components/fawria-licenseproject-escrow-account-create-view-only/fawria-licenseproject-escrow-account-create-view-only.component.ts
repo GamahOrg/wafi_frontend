@@ -1,8 +1,6 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, forkJoin } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { ToastrNotificatioService } from '../../../../../../core/services/toastr-notification/toastr-notificatio.service';
 import { UserDataService } from '../../../../../../core/services/user-data/user-data.service';
 import { BankDto } from '../../../dataModels/bank.dto';
 import { customerResponse } from '../../../../../../shared/models/customer.model';
@@ -14,6 +12,7 @@ import { ProjectRealStateDeveloperService } from '../../../services/licenseProje
 import { FawriaLicenseProjectBankInfoService } from '../../../services/licenseProjects/fawria-license-project-bank-info.service';
 import { CustomerShortDto } from '../../../models/facility-short-dto';
 import { FawriaLicenseBankInfoResponseDto } from '../../../models/FawriaLicenseProject/fawria-license-bank-info-response-dto';
+import { environment } from 'src/environments/environment';
 
 interface Delegator {
   id: string;
@@ -27,6 +26,7 @@ interface Delegator {
   styleUrls: ['./fawria-licenseproject-escrow-account-create-view-only.component.scss']
 })
 export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnInit, OnDestroy {
+  baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
   escrowAccountForm: FormGroup;
   showValidation: boolean = false;
@@ -52,19 +52,17 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
     selectDelegators: 'اختر المفوضين بالتوقيع على وثائق الصرف للمطور',
     delegator: 'المفوضين',
     requiredErrorMsg: 'هذا الحقل مطلوب',
-    savedSuccessfully: 'تم حفظ الطلب كمسودة، يمكنك استكماله لاحقا',
+    savedSuccessfully: 'تم الحفظ بنجاح',
     PleaseAddAllRequiredFields: 'لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة',
     saveAsDraft: 'حفظ كمسودة',
     next: 'السابق',
     previous: 'التالي',
-    approvedBankTermsConditions: 'أقر بالموافقة علي شروط وأحكام البنك.'
+    approvedBankTermsConditions: 'أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_engineering_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية الاستشاري الهندسي</a>'
   };
 
   constructor(
     private _formBuilder: FormBuilder,
     private _bankService: SysBankService,
-    private _toastrService: ToastrService,
-    private _toastrNotificationService: ToastrNotificatioService,
     private _userDataService: UserDataService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
@@ -76,8 +74,8 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
       delegatorIds: [[], [Validators.required]],
       approvedBankTermsConditions: [false, [Validators.required]],
       saudiTaxNumber: ['', [Validators.required]],
-      fatcaTaxNumber: ['', [Validators.required]],
-      crsTaxNumber: ['', [Validators.required]],
+      fatcaTaxNumber: [''],
+      crsTaxNumber: [''],
     });
   }
 
@@ -86,16 +84,12 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
     this.loadLicenseProjectId();
     this.observeFormChanges();
     this.loadComponentData();
-    this.disableFormForViewOnly();
     this.observeTabButtons();
-    this.updateSaveAsDraftBtnIsvisible();
+    this.hideSaveAsDraftButton();
   }
 
-  private disableFormForViewOnly(): void {
-    // Disable all form controls for view-only mode
-    if (this.escrowAccountForm) {
-      this.escrowAccountForm.disable();
-    }
+  approvedBankTermsConditions(): string {
+    return ' أقر بالموافقة على شروط وأحكام البنك.';
   }
 
   ngOnDestroy(): void {
@@ -129,7 +123,11 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
         ...this.fawriaLicenseBankInfoDto,
         bankId: rawValue.bankId ?? '',
         delegatorCustomerIds: rawValue.delegatorIds ?? [],
-        licenseProjectId: this.licenseProjectId
+        licenseProjectId: this.licenseProjectId,
+        approvedBankTermsConditions: rawValue.approvedBankTermsConditions ?? false,
+        crsTaxNumber: rawValue.crsTaxNumber ?? '',
+        fatcaTaxNumber: rawValue.fatcaTaxNumber ?? '',
+        saudiTaxNumber: rawValue.saudiTaxNumber ?? ''
       };
     });
     this.subscriptions.push(sub);
@@ -137,7 +135,7 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
 
   private loadComponentData(): void {
     const sub = forkJoin({
-      banksResponse: this._bankService.GetBankDropDown(),
+      banksResponse: this._bankService.GetIntegrationBanks(),
       subCustomers: this._projectRealStateDeveloperService.GetFacilitySubCustomers(this.facilityId),
     }).subscribe({
       next: ({ banksResponse, subCustomers }) => {
@@ -173,12 +171,11 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
   }
 
   toggleDelegatorsDropdown(): void {
-    this.isDelegatorsDropdownOpen = !this.isDelegatorsDropdownOpen;
+    // Disabled for view-only mode
   }
 
-  toggleDelegator(delegator: Delegator): void {
-    delegator.selected = !delegator.selected;
-    this.updateDelegatorIds();
+  toggleDelegator(_delegator: Delegator): void {
+    // Disabled for view-only mode
   }
 
   updateDelegatorIds(): void {
@@ -204,48 +201,8 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
     return this.delegators.filter(d => d.selected);
   }
 
-  removeDelegator(delegator: Delegator, event: Event): void {
-    event.stopPropagation();
-    delegator.selected = false;
-    this.updateDelegatorIds();
-  }
-
-  save(moveToNextTab: boolean = false): void {
-    if (!this.isExistingValidation && !this.escrowAccountForm.valid) {
-      this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
-      this.escrowAccountForm.markAllAsTouched();
-      return;
-    }
-
-    // Use getRawValue to include disabled controls
-    const formValue = this.escrowAccountForm.getRawValue();
-
-    const dto: FawriaLicenseBankInfoDto = {
-      licenseProjectId: this.licenseProjectId,
-      bankId: formValue.bankId ?? '',
-      delegatorCustomerIds: formValue.delegatorIds ?? [],
-      approvedBankTermsConditions: formValue.approvedBankTermsConditions,
-      crsTaxNumber: formValue.crsTaxNumber,
-      fatcaTaxNumber: formValue.fatcaTaxNumber ,
-      saudiTaxNumber: formValue.saudiTaxNumber,
-    };
-
-    const sub = this._projectBankInfoService.SaveFawriaLicenseprojectBankInfo(dto).subscribe(res => {
-      if (res.isDone) {
-        this._toastrService.success(this.localization.savedSuccessfully);
-        this.escrowAccountForm.patchValue({
-          bankId: res.data.bankId,
-          delegatorIds: res.data.delegatorCustomerIds ?? [],
-        });
-        this.fawriaLicenseBankInfoDto = res.data;
-        if (moveToNextTab) this.moveToNextTab();
-      } else {
-        this._toastrService.error(res.message);
-      }
-    });
-
-    this.subscriptions.push(sub);
+  removeDelegator(_delegator: Delegator, _event: Event): void {
+    // Disabled for view-only mode
   }
 
   private selectBankAlBilad(): void {
@@ -262,7 +219,7 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
     if (bankAlBilad) {
       // Set بنك البلاد as selected
       this.escrowAccountForm.patchValue({
-        bankId: bankAlBilad.id
+        bankId: bankAlBilad.id,
       });
 
       console.log('Bank form after patch:', this.escrowAccountForm.get('bankId')?.value);
@@ -286,38 +243,49 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
         next: (res: FawriaLicenseBankInfoResponseDto) => {
           console.log('Existing bank info response:', res);
 
-          if (res && res.delegatorCustomerIds && res.delegatorCustomerIds.length > 0) {
-            const delegatorIds: string[] = (res.delegatorCustomerIds ?? []).filter(
-              (id): id is string => id !== null
-            );
+          if (res) {
+            // Set bank in form if exists
+            if (res.bankId) {
+              this.escrowAccountForm.patchValue({
+                bankId: res.bankId
+              });
+            }
 
-            console.log('Found existing delegators:', delegatorIds);
+            // Set other fields if delegators exist
+            if (res.delegatorCustomerIds && res.delegatorCustomerIds.length > 0) {
+              const delegatorIds: string[] = (res.delegatorCustomerIds ?? []).filter(
+                (id): id is string => id !== null
+              );
 
-            // Set delegators in form
-            this.escrowAccountForm.patchValue({
-              delegatorIds: delegatorIds,
-              saudiTaxNumber: res.saudiTaxNumber,
-              fatcaTaxNumber: res.fatcaTaxNumber,
-              approvedBankTermsConditions: res.approvedBankTermsConditions,
-              crsTaxNumber: res.crsTaxNumber
-            });
+              console.log('Found existing delegators:', delegatorIds);
 
-            // Update delegators selected state
-            this.delegators.forEach(delegator => {
-              delegator.selected = delegatorIds.includes(delegator.id);
-            });
+              // Set delegators and other fields in form
+              this.escrowAccountForm.patchValue({
+                delegatorIds: delegatorIds,
+                saudiTaxNumber: res.saudiTaxNumber,
+                fatcaTaxNumber: res.fatcaTaxNumber,
+                approvedBankTermsConditions: res.approvedBankTermsConditions,
+                crsTaxNumber: res.crsTaxNumber
+              });
+
+              // Update delegators selected state
+              this.delegators.forEach(delegator => {
+                delegator.selected = delegatorIds.includes(delegator.id);
+              });
+            }
 
             // Update DTO
             this.fawriaLicenseBankInfoDto = {
               ...this.fawriaLicenseBankInfoDto,
               licenseProjectId: res.licenseProjectId,
-              delegatorCustomerIds: delegatorIds
+              bankId: res.bankId ?? '',
+              delegatorCustomerIds: (res.delegatorCustomerIds ?? []).filter((id): id is string => id !== null)
             };
 
-            // Ensure form stays disabled after loading data
+            // Disable all form controls for view-only mode
             this.disableFormForViewOnly();
           } else {
-            console.log('No existing delegators found');
+            console.log('No existing data found');
           }
         },
         error: err => {
@@ -328,16 +296,23 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
     this.subscriptions.push(sub);
   }
 
+  private disableFormForViewOnly(): void {
+    // Disable all form controls for view-only mode
+    Object.keys(this.escrowAccountForm.controls).forEach(key => {
+      this.escrowAccountForm.get(key)?.disable();
+    });
+  }
+
   private observeNextButtonIsClicked(): void {
     const sub = this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(() => {
-      this.save(true);
+      this.moveToNextTab();
     });
     this.subscriptions.push(sub);
   }
 
   private observeSaveAsDraftIsClicked(): void {
     const sub = this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(() => {
-      this.save();
+      // Do nothing in view-only mode
     });
     this.subscriptions.push(sub);
   }
@@ -347,12 +322,7 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
     this.observeSaveAsDraftIsClicked();
   }
 
-  private showSaveAsDraftButton(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(true);
-    this._nextAndPreviusButtonsService.saveAsDraftBtnText.next('حفظ');
-  }
-
-  private updateSaveAsDraftBtnIsvisible(): void {
+  private hideSaveAsDraftButton(): void {
     this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
   }
 
@@ -360,21 +330,8 @@ export class FawriaLicenseprojectEscrowAccountViewOnlyComponent implements OnIni
     this._nextAndPreviusButtonsService.moveToNextTab.emit();
   }
 
-  onSubmit(): void {
-    this.save(true);
-  }
-
-  saveAsDraft(): void {
-    this.save();
-  }
-
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    const clickedInside = target.closest('.multiselect-wrapper');
-
-    if (!clickedInside && this.isDelegatorsDropdownOpen) {
-      this.isDelegatorsDropdownOpen = false;
-    }
+  onDocumentClick(_event: MouseEvent): void {
+    // Disabled for view-only mode
   }
 }
