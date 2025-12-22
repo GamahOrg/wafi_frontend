@@ -134,6 +134,7 @@ export class LincenseListComponent implements OnInit, OnDestroy{
   }
 
   routeToRequestDetails(request :licenseRequest): void {
+    this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(request.licenseRequestType.typeCode)
     if(request.requestCode)
       this._router.navigateByUrl(`${Configuration.modules.realEstateContributions}/${Configuration.modules.realEstateContributionsLicense}/${Configuration.pages.realEstateContributionslicense.lincenseDetails}`)
     else

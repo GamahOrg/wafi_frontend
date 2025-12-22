@@ -110,7 +110,6 @@ export class LicenseListComponent implements OnInit, OnDestroy{
     this._paginationService.updatePaginationData(this.pagintationData);
   }
   public navigateToDetails(request: licenseRequest) {
-
     this.selectedRequest = request;
     this.setSelectedRequestIdInLocalStorage();
     this.routeToRequestDetails(request)

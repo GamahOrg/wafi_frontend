@@ -123,6 +123,7 @@ export class LicenseListComponent implements OnInit, OnDestroy{
   }
 
   routeToRequestDetails(request :licenseRequest): void {
+    this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(request.licenseRequestType.typeCode)
     if(request.requestCode)
       if(request.licenseRequestType?.typeCode === 'FSRSU'){
         this._router.navigateByUrl(`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`);

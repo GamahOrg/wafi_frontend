@@ -22,6 +22,7 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
   showValidation: boolean = false;
   qualificationDegree: number = 0;
   facilityId: string | null = "00000000-0000-0000-0000-000000000000";
+  typeCode: string = ''
   constructor(
     private _projectLandService: ProjectLandService,
     private _formBuilder: FormBuilder,
@@ -60,7 +61,9 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
   }
   getQualificationDegree() {
-    this._projectLandService.GetQualificationDegree(this.facilityId as string).subscribe({
+        this.typeCode = this._sharedLicenseProjectService.getQualificationTypeCodeStorage() as string;
+    if(this.typeCode) {
+    this._projectLandService.GetQualificationDegree(this.facilityId as string , this.typeCode).subscribe({
       next: (degree) => {
         this.qualificationDegree = degree as number;
       },
@@ -68,6 +71,7 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
         console.error('Error fetching qualification degree:', err);
       }
     });
+  }
   }
   localization = {
     PleaseAddAllRequiredFields:
@@ -104,8 +108,7 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
       this.projectLandForm.valueChanges.subscribe(changes => {
         this.projectLand = this.projectLandForm.value as ProjectLandDto;
         this.projectLand.facilityId = this.facilityId as string
-        this.projectLand.qualificationDegree = this.qualificationDegree as number
-      })
+        this.projectLand.qualificationDegree = this.qualificationDegree as number      })
     )
   }
 

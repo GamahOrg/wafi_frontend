@@ -32,7 +32,7 @@ export class CreateLincenseComponent {
   price: Number = 0;
   periodTypeId: string = "";
   userData: customerResponse | null = null;
-
+  typeCode: string = ''
   get controls() {
     return this.createRequstForm.controls;
   }
@@ -220,7 +220,9 @@ export class CreateLincenseComponent {
     }
   }
   private setProjectIdInlocalStorage(projectId: string): void {
+    debugger
     this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(projectId)
+    this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(this.requestTypeCode as string); 
   }
 
 

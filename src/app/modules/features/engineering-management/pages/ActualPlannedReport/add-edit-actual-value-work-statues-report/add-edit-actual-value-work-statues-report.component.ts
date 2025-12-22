@@ -230,6 +230,7 @@ export class AddEditActualValueWorkStatuesReportComponent {
                     oneDay
                 )
               );
+              
 
               if (
                 expectedEndDateFromTimelineUpdate <
@@ -311,56 +312,60 @@ export class AddEditActualValueWorkStatuesReportComponent {
     );
   }
 
-  reEvaluateTimePerofamanceRate() {
-    debugger;
-    if (
-      this.controls.projectMonthlyActualCompletionRate &&
-      this.licenseProjectEngineeringSupervisionActualMonthReportDetailObj &&
-      this.licenseProjectEngineeringActualReportMonthDetails
-    ) {
-      this.actualAchievementMemorial =
-        Number(this.controls.projectMonthlyActualCompletionRate.value) -
-        this.licenseProjectEngineeringSupervisionActualMonthReportDetailObj
-          .projectMonthlyPlannedCompletionRate;
-      this.cumulativeActualAchievementRates =
-        Number(this.controls.projectMonthlyActualCompletionRate.value) +
-        this.licenseProjectEngineeringActualReportMonthDetails
-          .cumulativeActualAmountPriorToThatMonth;
-      this.cumulativeInsurance =
-        this.cumulativeActualAchievementRates -
-        this.licenseProjectEngineeringActualReportMonthDetails
-          .cumulativeAmountPriorToThatMonth;
-      this.SPI =
-        Number(this.cumulativeActualAchievementRates) /
-        this.licenseProjectEngineeringActualReportMonthDetails
-          .cumulativeAmountPriorToThatMonth;
+  reEvaluateTimePerofamanceRate(){
+    
+     if (
+              this.controls.projectMonthlyActualCompletionRate &&
+              this.licenseProjectEngineeringSupervisionActualMonthReportDetailObj &&
+                this.licenseProjectEngineeringActualReportMonthDetails
+            ) {
+              this.actualAchievementMemorial =
+                Number(this.controls.projectMonthlyActualCompletionRate.value) -
+                this
+                  .licenseProjectEngineeringSupervisionActualMonthReportDetailObj
+                  .projectMonthlyPlannedCompletionRate;
+              this.cumulativeActualAchievementRates =
+                Number(this.controls.projectMonthlyActualCompletionRate.value) +
+                this.licenseProjectEngineeringActualReportMonthDetails
+                  .cumulativeActualAmountPriorToThatMonth;
+              this.cumulativeInsurance =
+                this.cumulativeActualAchievementRates -
+                this.licenseProjectEngineeringActualReportMonthDetails
+                  .cumulativeAmountPriorToThatMonth;
+              this.SPI =
+                Number(this.cumulativeActualAchievementRates) /
+                this.licenseProjectEngineeringActualReportMonthDetails
+                  .cumulativeAmountPriorToThatMonth;
 
-      if (this.SPI && this.SPI > 1) {
-        this.projectTimelineStatus = 'متقدم';
-        this.projectTimelineStatusColor = 'green';
-      } else if (this.SPI && this.SPI == 1) {
-        this.projectTimelineStatus = 'طبقا للبرنامج الزمني ';
-        this.projectTimelineStatusColor = 'lightgreen';
-      } else if (this.SPI && this.SPI > 0.9 && this.SPI < 1) {
-        this.projectTimelineStatus = 'تأخير بسيط';
-        this.projectTimelineStatusColor = 'yellow';
-      } else if (this.SPI && this.SPI >= 0.8 && this.SPI < 0.9) {
-        this.projectTimelineStatus = 'تأخير متوسط';
-        this.projectTimelineStatusColor = 'orange';
-      } else if (this.SPI && this.SPI >= 0.5 && this.SPI < 0.8) {
-        this.projectTimelineStatus = 'تأخير شديد';
-        this.projectTimelineStatusColor = 'red';
-      } else if (this.SPI && this.SPI > 0.5) {
-        this.projectTimelineStatus = 'خطر التعثر';
-        this.projectTimelineStatusColor = 'brown';
-      } else if (this.SPI && this.SPI < 0.5) {
-        this.projectTimelineStatus = 'خطر التعثر';
-        this.projectTimelineStatusColor = 'brown';
-      }
-    }
+              if (this.SPI && this.SPI > 1) {
+                this.projectTimelineStatus = 'متقدم';
+                this.projectTimelineStatusColor = 'green';
+              } else if (this.SPI && this.SPI == 1) {
+                this.projectTimelineStatus = 'طبقا للبرنامج الزمني ';
+                this.projectTimelineStatusColor = 'lightgreen';
+              } else if (this.SPI && this.SPI > 0.9 && this.SPI < 1) {
+                this.projectTimelineStatus = 'تأخير بسيط';
+                this.projectTimelineStatusColor = 'yellow';
+              } else if (this.SPI && this.SPI >= 0.8 && this.SPI < 0.9) {
+                this.projectTimelineStatus = 'تأخير متوسط';
+                this.projectTimelineStatusColor = 'orange';
+              } else if (this.SPI && this.SPI >= 0.5 && this.SPI < 0.8) {
+                this.projectTimelineStatus = 'تأخير شديد';
+                this.projectTimelineStatusColor = 'red';
+              } else if (this.SPI && this.SPI > 0.5) {
+                this.projectTimelineStatus = 'خطر التعثر';
+                this.projectTimelineStatusColor = 'brown';
+              }else if (this.SPI && this.SPI < 0.5) {
+                this.projectTimelineStatus ='خطر التعثر'
+                this.projectTimelineStatusColor = 'brown';
+              }
+            }
+
   }
 
   reEvaluateCPI() {
+    
+    
     if (
       this.cumulativeActualAchievementRates &&
       this.licenseProjectEngineeringActualReportMonthDetails &&

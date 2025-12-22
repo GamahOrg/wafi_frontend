@@ -23,9 +23,9 @@ export class ProjectLandService {
         })
       )
     }
-    GetQualificationDegree(facilityId: string){      
+    GetQualificationDegree(facilityId: string , typeCode: string){      
       return this._httpClient.get<CoreResponseDTO<number|null>>
-      (`${Configuration.APIs.QualificationRequestHeader.GetQualificationDegree}/${facilityId}`).pipe(
+      (`${Configuration.APIs.QualificationRequestHeader.GetQualificationDegree}/${facilityId}/${typeCode}`).pipe(
         map((res: CoreResponseDTO<number|null>) => {
           return res.data;
         })

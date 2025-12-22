@@ -27,6 +27,15 @@ export class SharedLicenseProjectService {
   getLicenseProjectIdStorage(): string | null {
     return localStorage.getItem('licenseProjectId')
   }
+  setQualificationTypeCodeInLocalStorage(typeCode: string): void {
+    localStorage.setItem('typeCode', typeCode);
+  }
+  getQualificationTypeCodeStorage(): string | null {
+    return localStorage.getItem('typeCode');
+  }
+  removeQualificationTypeCodefromLocalStorage(): void {
+    localStorage.removeItem('typeCode');
+  }
   removeLicenseProjectIdfromLocalStorage(): void {
     localStorage.removeItem('licenseProjectId')
   }

@@ -41,7 +41,7 @@ export class LoginComponent {
   subscriptions: Subscription[] = [];
   loginForm: FormGroup = this._formBuilder.group({
     username: ['', Validators.required],
-    password: ['123456'],
+    password: [''],
     loginUserType: [this.loginUserTypeEnum.wafiPartner, Validators.required],
     // password: ['', Validators.required],
   });
@@ -116,7 +116,7 @@ export class LoginComponent {
       userName: this.loginForm.value.username,
       password: this.loginForm.value.password,
       userType: UserType.client,
-      loginUserType: this.loginForm.value.loginUserType
+      loginUserType: +this.loginForm.value.loginUserType
     };
     if (this.isProduction) {
       this.loginService.LoginWithIAM(loginParams).subscribe(res => {
