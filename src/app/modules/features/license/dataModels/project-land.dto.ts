@@ -7,5 +7,6 @@ export class ProjectLandDto {
     sellingSpace: number = 0;
     facilityId: string = "";
     qualificationDegree: number = 0;
+    typeCode: string = '';
 }
 

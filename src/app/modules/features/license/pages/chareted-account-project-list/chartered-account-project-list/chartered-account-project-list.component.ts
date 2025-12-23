@@ -86,7 +86,7 @@ export class CharteredAccountProjectListComponent implements OnInit {
 
   observeProjectList(): void {
     const request: GetLicenseProjectListRequestDto = {
-      pageNumber: this.pagintationData.currentPage,
+      pageIndex: this.pagintationData.currentPage,
       pageSize: this.pagintationData.pageSize,
       currentSelectedFacilityId: this.facilityId as string,
       searchText: this.searchText && this.searchText.trim() ? this.searchText.trim() : null,

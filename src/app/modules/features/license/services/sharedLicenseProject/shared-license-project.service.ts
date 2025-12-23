@@ -50,7 +50,15 @@ export class SharedLicenseProjectService {
   removeIsActiveTermsFlag(): void {
     localStorage.removeItem('IsActiveTerms');
   }
-
+  setQualificationTypeCodeInLocalStorage(typeCode: string): void {
+    localStorage.setItem('typeCode', typeCode);
+  }
+  getQualificationTypeCodeStorage(): string | null {
+    return localStorage.getItem('typeCode');
+  }
+  removeQualificationTypeCodefromLocalStorage(): void {
+    localStorage.removeItem('typeCode');
+  }
   setIsActivePaymentLocalStorage(licenseProjectId: string): void {
     localStorage.setItem('IsActivePayment', licenseProjectId);
   }

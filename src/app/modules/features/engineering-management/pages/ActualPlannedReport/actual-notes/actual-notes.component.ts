@@ -10,57 +10,52 @@ import { LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteServic
 @Component({
   selector: 'app-actual-notes',
   templateUrl: './actual-notes.component.html',
-  styleUrls: ['./actual-notes.component.scss'],
+  styleUrls: ['./actual-notes.component.scss']
 })
 export class ActualNotesComponent {
-  licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList?: LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteDto[];
+  licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList?: LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteDto[]
   subscriptions: Subscription[] = [];
-  ownerTypes = LicenseProjectTimeScheduleOwnerType;
+  ownerTypes = LicenseProjectTimeScheduleOwnerType
   monthDate?: Date;
-  actualValueReport?: ActualValueReportPagingListDto;
+  actualValueReport?: ActualValueReportPagingListDto
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
-  constructor(
-    private _engineeringSupervisionReportActualProjectStatusSummaryService: EngineeringSupervisionReportActualProjectStatusSummaryService,
+  constructor(private _engineeringSupervisionReportActualProjectStatusSummaryService: EngineeringSupervisionReportActualProjectStatusSummaryService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-    private _licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService: LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService
-  ) {}
+    private _licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService: LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService) {
+
+  }
 
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
   }
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId =
-      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-
-    if (this.licenseProjectId) this.getmonthDate();
+    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    
+    if (this.licenseProjectId)
+      this.getmonthDate()
   }
   getmonthDate() {
+    
     this.subscriptions.push(
-      this._engineeringSupervisionReportActualProjectStatusSummaryService
-        .getmonthDate()
-        .subscribe((res) => {
-          if (res) {
-            this.actualValueReport = res as ActualValueReportPagingListDto;
-            this.monthDate = this.actualValueReport.monthDate as Date;
-            this.getLicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList();
-          }
-        })
-    );
+      this._engineeringSupervisionReportActualProjectStatusSummaryService.getmonthDate().subscribe(res => {
+        
+        if (res) {
+          
+          this.actualValueReport = res as ActualValueReportPagingListDto;
+          this.monthDate = this.actualValueReport.monthDate as Date;
+          this.getLicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList();
+        }
+      })
+    )
   }
 
   getLicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList() {
     this.subscriptions.push(
-      this._licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService
-        .getLicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList(
-          this.licenseProjectId as string,
-          this.monthDate as Date
-        )
-        .subscribe((res) => {
-          this.licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList =
-            res as LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteDto[];
-          console.log(res);
-        })
-    );
+      this._licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService.getLicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList(this.licenseProjectId as string, this.monthDate as Date).subscribe(res => {
+        this.licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList = res as LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteDto[];
+        console.log(res)
+      })
+    )
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 export interface GetLicenseProjectListRequestDto {
-  pageNumber: number;
+  pageIndex: number;
   pageSize: number;
   currentSelectedFacilityId: string;
   searchText?: string | null;

@@ -41,7 +41,7 @@ export class CreateLincenseComponent {
   price: Number = 0;
   periodTypeId: string = '';
   userData: customerResponse | null = null;
-
+  typeCode: string = ''
   get controls() {
     return this.createRequstForm.controls;
   }
@@ -150,7 +150,8 @@ export class CreateLincenseComponent {
         .subscribe((res) => {
           if (res) {
             this.licenseRequestType = res;
-
+            debugger
+            this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(this.requestTypeCode as string); 
             // If requestTypeCode is 'FSRSU', set first item as default and disable
             if (this.requestTypeCode === 'FSRSU' && this.licenseRequestType.licenseRequestPeriods && this.licenseRequestType.licenseRequestPeriods.length > 0) {
               const firstItem = this.licenseRequestType.licenseRequestPeriods[0];
