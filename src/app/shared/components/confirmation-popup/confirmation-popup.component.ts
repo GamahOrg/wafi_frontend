@@ -13,17 +13,22 @@ export class ConfirmationPopupComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   // message = '';
   confirmationPopupData: confirmationPopupData = {} as confirmationPopupData;
+  disableClose?: boolean;
+
   constructor(
     private dialogRef: MatDialogRef<ConfirmationPopupComponent>,
     @Inject(MAT_DIALOG_DATA) data: { message: string },
     private _popupService: PopupService,
   ) {
     // this.message = data ? data.message : '';
+    this.disableClose = this.dialogRef.disableClose;
   }
+
   ngOnInit(): void {
     this.observeConfirmationPopupData();
     this.observeCloseModalEvent();
   }
+  
   observeConfirmationPopupData(): void {
     this.subscriptions.push(
       this._popupService.ConfirmpopupData.subscribe((data: confirmationPopupData) => {

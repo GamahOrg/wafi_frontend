@@ -6,10 +6,6 @@ import { RequestValidation } from '../../../dataModels/request-validation.model'
 import { TabsError } from 'src/app/core/models/request-validation.model';
 import { DataVisibilityOfLicenseProjectService } from '../../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { TabCode } from '../../../models/tab-code.model';
-import { FawriaLicenseprojectMaindataContainerComponent } from '../../FawriaLicenseProject/fawria-licenseproject-maindata-container/fawria-licenseproject-maindata-container.component';
-import { FawriaLicenseprojectDeedsContainerComponent } from '../../FawriaLicenseProject/fawria-licenseproject-deeds-container/fawria-licenseproject-deeds-container.component';
-import { FawriaLicenseprojectFeasibilityStudyContainerComponent } from '../../FawriaLicenseProject/fawria-licenseproject-feasibility-study-container/fawria-licenseproject-feasibility-study-container.component';
-import { FawriaLicenseprojectContactInfoContainerComponent } from '../../FawriaLicenseProject/fawria-licenseproject-contact-info-container/fawria-licenseproject-contact-info-container.component';
 import { FawriaLicenseprojectMainDataViewOnlyComponent } from '../fawria-licenseproject-maindata-view-only/fawria-licenseproject-maindata-view-only.component';
 import { FawriaLicenseprojectContactInfoViewOnlyComponent } from '../fawria-licenseproject-contact-info-view-only/fawria-licenseproject-contact-info-view-only.component';
 import { FawriaLicenseprojectFeasibilityStudyViewOnlyComponent } from '../fawria-licenseproject-feasibility-study-view-only/fawria-licenseproject-feasibility-study-view-only.component';

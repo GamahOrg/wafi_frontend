@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { GetProjectUnitDetailsResponseDto, LicenseProjectBuyerPaymentTypeDto, LicenseProjectBusinessPaymentResponseDto } from '../../../models/real-state-developer-dto';
@@ -10,6 +10,9 @@ import { ProjectLandDeedDto } from '../../../dataModels/project-land-deed.dto';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import * as momentHijri from 'moment-hijri';
 import { LicenseProjectBuyerService } from '../../../services/license-project-buyer.service';
+import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { environment } from 'src/environments/environment';
+import { FileUploaderComponent } from '../../../../../../shared/components/file-uploader/file-uploader.component';
 
 @Component({
   selector: 'app-add-contract-popup',
@@ -20,9 +23,9 @@ export class AddContractPopupComponent implements OnInit {
   @Input() unitDetails: GetProjectUnitDetailsResponseDto | null = null;
   @Output() onClose = new EventEmitter<void>();
   @Output() onContractSaved = new EventEmitter<void>();
-
+  @ViewChild(FileUploaderComponent) fileUploader!: FileUploaderComponent;
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
-
+  baseUrl: string = environment.baseURL
   contractForm!: FormGroup;
   buyerTypeEnum = BuyerTypeEnum;
   authorizationFileId: string = '';
@@ -77,6 +80,7 @@ export class AddContractPopupComponent implements OnInit {
     private toasterService: ToastrNotificatioService,
     private licenseBuyerService: LicenseProjectBuyerService,
     private projectLandDeedService: ProjectLandDeedService,
+    private _fileManagment: FileManagementService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
   ) { }
 
@@ -100,6 +104,7 @@ export class AddContractPopupComponent implements OnInit {
         this.contractForm.get('isOldContract')?.setValue(true)
         this.onOldContractChange(true)
       }
+      
     }) 
   }
   // Custom validator for birth date
@@ -264,6 +269,9 @@ export class AddContractPopupComponent implements OnInit {
       // Add required validators when نعم is selected
       this.contractForm.get('contractFileId')?.setValidators([Validators.required]);
       this.contractForm.get('saleDate')?.setValidators([Validators.required]);
+      this.contractForm.get('deliveryDate')?.setValidators([Validators.required]);
+      this.contractForm.get('paymentPlanId')?.setValidators([Validators.required]);
+      this.contractForm.get('paymentTypeId')?.setValidators([Validators.required]);
     } else {
       // Remove validators and reset fields when لا is selected
       this.contractForm.get('contractFileId')?.clearValidators();
@@ -283,8 +291,23 @@ export class AddContractPopupComponent implements OnInit {
     // Update validity
     this.contractForm.get('contractFileId')?.updateValueAndValidity();
     this.contractForm.get('saleDate')?.updateValueAndValidity();
+    this.contractForm.get('deliveryDate')?.updateValueAndValidity();
+    this.contractForm.get('paymentTypeId')?.updateValueAndValidity();
+    this.contractForm.get('paymentPlanId')?.updateValueAndValidity();
   }
-
+  openFile(file: any): void {
+  if (file?.path) {
+    window.open(this.baseUrl +'/'+ file.path, "_blank");
+  }
+}
+  deletFile(id: string) {
+    this._fileManagment.DeletFile(id).subscribe(res => {
+      if(res.isDone)
+      {
+        this.toasterService.showSuccess(res.message)
+      }
+    })
+  }
   onContractFileUploaded(fileData: any): void {
     // Handle the uploaded contract file
     if (fileData && fileData.eventRes && fileData.eventRes.data && fileData.eventRes.data.length > 0) {
@@ -292,6 +315,22 @@ export class AddContractPopupComponent implements OnInit {
       this.contractFile = fileData.eventRes.data[0];
       this.contractForm.patchValue({ contractFileId: this.contractFileId });
     }
+  }
+
+  removeContractFile(): void {
+    this.deletFile(this.contractFileId)
+    this.contractFileId = '';
+    this.contractFile = null;
+    this.contractForm.patchValue({ contractFileId: '' });
+    this.fileUploader.clearSelectedFiles();
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
   }
 
   onFileUploaded(fileData: any): void {
@@ -310,6 +349,7 @@ export class AddContractPopupComponent implements OnInit {
     })
   }
   onSubmit(): void {
+    
     // Check verification flags first
     if (this.buyerType === BuyerTypeEnum.Facility && !this.isNationalNumberVerified) {
       this.toasterService.showError('يرجى التحقق من الرقم الموحد للمنشأة');
@@ -367,6 +407,11 @@ export class AddContractPopupComponent implements OnInit {
 
     // Show loader
     this.isSubmitting = true;
+
+    if(!this.isOldContract){
+      formData.paymentPlanId = null;
+      formData.paymentTypeId = null;
+    }
 
     // Call API service to save contract
     this.realStateDeveloperService.saveContract(formData).subscribe({

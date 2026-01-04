@@ -4,4 +4,5 @@ export enum ZoneActionType {
     AddUnit,
     UpdateUnit,
     AddSubUnit,
+    UpdateSubUnit,
 }

@@ -67,6 +67,10 @@ export enum LicenseRequestHeaderStepStatusEnum {
 
   //تم إصدار الرخصة
   LicenseIssued = 14,
+  //قيد الانتظار
+  PendingWait = 15,
+  //تخطي مهلة السداد
+  SkipPaymentDeadline = 16,
 }
 
 export enum LicenseRequestHeaderStepTypeEnum {
@@ -90,4 +94,24 @@ export enum LicenseRequestHeaderStepTypeEnum {
 
   //إصدار الرخصة
   IssueLicense = 7,
+}
+
+
+export interface InvoiceData {
+  id: string;
+  invoiceRequestId: string | null;
+  invoiceStatus: number | null;
+  price: number;
+  serviceID: number;
+  quantity: number;
+  typeOfInvoice: number;
+  type: number;
+  invDueDate: string;
+}
+
+export interface LicenseProjectBankAccountInformationDto {
+  bankName: string | null;
+  accountNumber: string | null;
+  accountStatus: string | null;
+  escrowCreationDate: string | null;
 }

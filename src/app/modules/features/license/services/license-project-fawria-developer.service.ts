@@ -87,4 +87,15 @@ export class LicenseProjectFawriaDeveloperService {
       { params }
     );
   }
+
+  deleteLicenseProjectEngineeringWorksExamination(id: string): Observable<any | null> {
+    return this._http.get<CoreResponseDTO<any>>(
+      `${Configuration.APIs.LicenseProjectFawria.DeleteLicenseProjectFawriaDeveloper}/${id}`
+    )
+      .pipe(
+        map((res: CoreResponseDTO<any>) => {
+          return res;
+        })
+      );
+  }
 }

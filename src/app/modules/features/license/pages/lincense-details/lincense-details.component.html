@@ -1,266 +1,129 @@
-<div class="RequestDetails h-100">
-  <div class="d-flex flex-column row-gap-3 h-100">
-    <div class="row">
-      <div class="col-md-12">
-        <app-breadcrumb></app-breadcrumb>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <div class="card-title">
-          <div class="row">
-            <div class="col-12 col-lg-3">
-              <h6 class="title">
-                {{ selectedRequest?.isRenewal ? "تجديد " : "" }}
-                {{ selectedRequest?.licenseRequestType?.name }}
-              </h6>
-            </div>
-            <div class="col-12 col-lg-3">
-              <h6>{{ selectedRequest?.requestCode }}</h6>
-              <div class="date">
-                <span class="key">تاريخ تقديم الطلب</span>
-                <span class="value"
-                  ><i class="icon material-icons">calendar_month</i>
-                  {{ selectedRequest?.requestOn | date : "dd MMMM yyyy" }}</span
-                >
-              </div>
-            </div>
-            <div class="col-12 col-lg-6">
-              <!-- buttons -->
-              <div class="actions">
-                <ng-container *ngFor="let button of clientActionsButtons">
-                  <button
-                    *ngIf="button.isVisable"
-                    [disabled]="button.isDisables"
-                    class="btn d-flex align-items-center justify-content-between"
-                    (click)="button.onclick()"
-                    type="button"
-                    [ngClass]="button.classes"
-                  >
-                    {{ button.title }}
-                  </button>
-                </ng-container>
-                <button
-                  *ngIf="selectedRequest?.licenseProject?.availabilityToUpdate"
-                  class="btn d-flex align-items-center justify-content-between btn-primary"
-                  (click)="editRequest()"
-                  type="button">
-                  {{ localization.editButtonTitle }}
-                </button>
-                <button
-                  *ngIf="selectedRequest && selectedRequest.licenseProjectFarzRequestStatus?.id === farzRequestStatusEnum.Rejected"
-                  class="btn d-flex align-items-center justify-content-between btn-primary"
-                  (click)="editFarz()"
-                  type="button">
-                  {{ localization.farzStatus }}
-                </button>
-                <button
-                  *ngIf="selectedRequest && selectedRequest.externalStatusId === 18"
-                  class="btn d-flex align-items-center justify-content-between btn-primary"
-                  (click)="openPaymentTermsModal()"
-                  type="button">
-                  {{ localization.editPaymentandAdditionalTermsTitle }}
-                </button>
-              </div>
-            </div>
+<div class="d-flex flex-column gap-3">
+  <div class="card req-details-header-card">
+    <div class="card-header with-separator">
+      <div class="row row-gap-4 w-100">
+        <div class="col-12 col-xl-3">
+          <h6 class="card-title">
+            {{ selectedRequest?.isRenewal ? "تجديد " : "" }} {{ selectedRequest?.licenseRequestType?.name }} - <span class="text-primary">{{ selectedRequest?.requestCode }}</span>
+          </h6>
+          <div class="key-value horiz">
+            <span class="key">تاريخ تقديم الطلب</span>
+            <span class="value">{{ selectedRequest?.requestOn | date : "dd MMMM yyyy" }}</span>
           </div>
         </div>
-        <div class="row mt-3">
-          <div class="col-12 col-xxl">
-            <div class="applicant">
-              <div class="row">
-                <div class="col-auto">
-                  <span class="key">مقدم من</span>
-                </div>
-
-                <div class="col">
-                  <div class="value">
-                    <div class="image">
-                      <span class="avatar material-icons">person</span>
-                    </div>
-                    <span class="name">{{selectedRequest?.customer?.fullName??selectedRequest?.facility?.facilityName}}</span>
-                  </div>
-
-                  <div class="details">
-                    <div class="row mt-3">
-                      <div class="col-12 col-lg-6">
-                        <div class="row">
-                          <label class="col-5">رقم الهوية </label>
-                          <span class="col-auto">{{selectedRequest?.customer?.nidnumber??selectedRequest?.facility?.commercialRegisterNumber}}</span>
-                        </div>
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <div class="row">
-                          <label class="col-5">الجنسية </label>
-                          <span class="col-auto">{{
-                            selectedRequest?.customer?.nationality
-                              ?.nationalityName
-                          }}</span>
-                        </div>
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <div class="row">
-                          <label class="col-5">رقم الجوال</label>
-                          <span class="col-auto">{{
-                            selectedRequest?.customer?.mobile1
-                          }}</span>
-                        </div>
-                      </div>
-                      <div class="col-12 col-lg-4">
-                        <div class="row">
-                          <label class="col-5">رسوم الخدمة</label>
-                          <span class="col-auto">{{
-                            selectedRequest?.price
-                          }}</span>
-                        </div>
-                      </div>
-                      
-                      <div class="col-12 col-lg-4">
-                        <div class="row">
-                          <label class="col-5">مدة الطلب </label>
-                          <span class="col-auto">
-                            {{ selectedRequest?.periodTypeName }}
-                          </span>
-                        </div>
-                      </div>
-                      <div class="col-12 col-lg-4">
-                        <div class="row">
-                          <label class="col-5">درجة التأهيل</label>
-                          <span class="col-auto">{{
-                            selectedRequest?.qualificationDegree
-                          }}</span>
-                        </div>
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <div class="row">
-                          <label class="col-5">البريد الإلكتروني</label>
-                          <span class="col-auto">{{
-                            selectedRequest?.customer?.email
-                          }}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div class="col-12 col-xl-6">
+          <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+            <div class="status-badge fw-semibold orange" *ngIf="selectedRequest && !selectedRequest.licenseRequestVersions[0].isFinished">
+              {{ localization.remainingDaysToStudy }} {{ StudyDaysProgressSetting.title }} {{ localization.day }}
             </div>
+
+            <div class="status-badge fw-semibold orange" *ngIf="selectedRequest && selectedRequest.licenseRequestCustomerHeaderEventStatus.allowCompileDeedMarginalizationPeriod != -1">
+              {{ localization.remainingDaysToCompileDeedMarginalizationPeriod }}
+              <span>{{ allowCompileDeedMarginalizationProgressSetting.title }}</span>
+            </div>
+
+            <div class="status-badge fw-semibold orange" *ngIf="selectedRequest && selectedRequest.licenseRequestCustomerHeaderEventStatus.allowCompileGuaranteeLetterActivationPeriod != -1">
+              {{ localization.remainingDaysToCompileGuaranteeLetterActivationPeriod }}
+              <span>{{ allowCompileGuaranteeLetterActivationProgressSetting.title }}</span>
+            </div>
+
+            <div class="status-badge fw-semibold orange" *ngIf="selectedRequest && selectedRequest.licenseRequestCustomerHeaderEventStatus.allowCompileQWTablePeriod != -1">
+              {{ localization.remainingDaysToCompileQWTablePeriod }}
+              <span>{{ allowCompileQWTableProgressSetting.title }}</span>
+            </div>
+
+            <div class="status-badge fw-semibold orange" *ngIf="selectedRequest && selectedRequest.licenseRequestCustomerHeaderEventStatus.AllowCompileOpenBankAccountPeriod != -1">
+              {{ localization.remainingDaysToCompileOpenBankAccountPeriod }}
+              <span>{{ allowCompileOpenBankAccountProgressSetting.title }}</span>
+            </div>
+
+            <div class="status-badge fw-semibold orange" *ngIf="selectedRequest && selectedRequest.licenseProjectFarzRequestStatus">
+              {{selectedRequest.licenseProjectFarzRequestStatus.name}}
+              <span>{{ allowCompileOpenBankAccountProgressSetting.title }}</span>
+            </div>
+
+            <span class="status-badge fw-semibold green">{{ selectedRequest?.externalStatus }}</span>
           </div>
-          <div class="col-12 col-xxl-5">
-            <div class="d-flex justify-content-end align-items-end h-100">
-              <div
-                class="circularProgress"
-                *ngIf="
-                  selectedRequest &&
-                  !selectedRequest.licenseRequestVersions[0].isFinished
-                "
-              >
-                <p>{{ localization.remainingDaysToStudy }}</p>
-                <app-circular-progress
-                  [circularProgressSetting]="StudyDaysProgressSetting"
-                ></app-circular-progress>
-              </div>
-              <!-- 
-                            <div class="circularProgress"
-                                 *ngIf="selectedRequest && selectedRequest.licenseRequestCustomerHeaderEventStatus.allowCompileConditionalApprovalPeriod !=-1">
-                                <p>{{localization.remainingDaysToCompile}}</p>
-                                <app-circular-progress
-                                                       [circularProgressSetting]="allowCompileConditionalApprovalProgressSetting"></app-circular-progress>
-                            </div> -->
-
-              <div
-                class="circularProgress"
-                *ngIf="
-                  selectedRequest &&
-                  selectedRequest.licenseRequestCustomerHeaderEventStatus
-                    .allowCompileDeedMarginalizationPeriod != -1
-                "
-              >
-                <p>
-                  {{
-                    localization.remainingDaysToCompileDeedMarginalizationPeriod
-                  }}
-                </p>
-                <app-circular-progress
-                  [circularProgressSetting]="
-                    allowCompileDeedMarginalizationProgressSetting
-                  "
-                ></app-circular-progress>
-              </div>
-
-              <div
-                class="circularProgress"
-                *ngIf="
-                  selectedRequest &&
-                  selectedRequest.licenseRequestCustomerHeaderEventStatus
-                    .allowCompileGuaranteeLetterActivationPeriod != -1
-                "
-              >
-                <p>
-                  {{
-                    localization.remainingDaysToCompileGuaranteeLetterActivationPeriod
-                  }}
-                </p>
-                <app-circular-progress
-                  [circularProgressSetting]="
-                    allowCompileGuaranteeLetterActivationProgressSetting
-                  "
-                ></app-circular-progress>
-              </div>
-
-              <div
-                class="circularProgress"
-                *ngIf="
-                  selectedRequest &&
-                  selectedRequest.licenseRequestCustomerHeaderEventStatus
-                    .allowCompileQWTablePeriod != -1
-                "
-              >
-                <p>{{ localization.remainingDaysToCompileQWTablePeriod }}</p>
-                <app-circular-progress
-                  [circularProgressSetting]="allowCompileQWTableProgressSetting"
-                ></app-circular-progress>
-              </div>
-
-              <div
-                class="circularProgress"
-                *ngIf="
-                  selectedRequest &&
-                  selectedRequest.licenseRequestCustomerHeaderEventStatus
-                    .AllowCompileOpenBankAccountPeriod != -1
-                "
-              >
-                <p>
-                  {{ localization.remainingDaysToCompileOpenBankAccountPeriod }}
-                </p>
-                <app-circular-progress
-                  [circularProgressSetting]="
-                    allowCompileOpenBankAccountProgressSetting
-                  "
-                ></app-circular-progress>
-              </div>
-
-              <div class="circularProgress" *ngIf="selectedRequest && selectedRequest.licenseProjectFarzRequestStatus">
-                <p>
-                  {{selectedRequest.licenseProjectFarzRequestStatus.name}}
-                </p>
-                <app-circular-progress [circularProgressSetting]="allowCompileOpenBankAccountProgressSetting"></app-circular-progress>
-              </div>
-
-              <span
-                class="status-pill"
-                [class]="
-                  selectedRequest && selectedRequest.externalStatus ? externalStatusId[selectedRequest.externalStatusId] : '' ">
-                {{ selectedRequest?.externalStatus }}
-              </span>
-            </div>
+        </div>
+        <div class="col-12 col-xl-3">
+          <div class="d-flex flex-wrap justify-content-end align-items-center gap-3">
+            <ng-container *ngFor="let button of clientActionsButtons">
+              <button *ngIf="button.isVisable" [disabled]="button.isDisables" class="btn d-flex align-items-center justify-content-between" (click)="button.onclick()" type="button" [ngClass]="button.classes">
+                {{ button.title }}
+              </button>
+            </ng-container>
+            <button *ngIf="selectedRequest?.licenseProject?.availabilityToUpdate" class="btn d-flex align-items-center justify-content-between btn-primary" (click)="editRequest()" type="button">
+              {{ localization.editButtonTitle }}
+            </button>
+            <button *ngIf="selectedRequest && selectedRequest.licenseProjectFarzRequestStatus?.id === farzRequestStatusEnum.Rejected" class="btn d-flex align-items-center justify-content-between btn-primary" (click)="editFarz()" type="button">
+              {{ localization.farzStatus }}
+            </button>
+            <button *ngIf="selectedRequest && selectedRequest.externalStatusId === 18" class="btn d-flex align-items-center justify-content-between btn-primary" (click)="openPaymentTermsModal()" type="button">
+              {{ localization.editPaymentandAdditionalTermsTitle }}
+            </button>
           </div>
         </div>
       </div>
     </div>
+    <div class="card-body">
+      <div class="row row-gap-4">
+        <div class="col-12">
+          <div class="key-value">
+            <span class="key">مقدم من</span>
+            <span class="value">{{ selectedRequest?.customer?.fullName?? selectedRequest?.facility?.facilityName }}</span>
+          </div>
+        </div>
 
-    <div class="tab-wrapper flex-fill">
-      <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">رقم الهوية </span>
+            <span class="value">{{ selectedRequest?.customer?.nidnumber?? selectedRequest?.facility?.commercialRegisterNumber }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">الجنسية </span>
+            <span class="value">{{ selectedRequest?.customer?.nationality?.nationalityName }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">رقم الجوال</span>
+            <span class="value">{{ selectedRequest?.customer?.mobile1 }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">رسوم الخدمة</span>
+            <span class="value">{{ selectedRequest?.price }}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">مدة الطلب </span>
+            <span class="value">
+              {{ selectedRequest?.periodTypeName }}
+            </span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">درجة التأهيل</span>
+            <span class="value">{{ selectedRequest?.qualificationDegree }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">البريد الإلكتروني</span>
+            <span class="value">{{ selectedRequest?.customer?.email }}</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="tab-wrapper flex-fill">
+    <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
   </div>
 </div>

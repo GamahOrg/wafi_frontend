@@ -6,6 +6,7 @@ import { LicenseProjectApproval } from '../../dataModels/license-project-approva
 import { customerResponse } from '../../models/employee-registration-dto';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { LicenseRequestApprovalsService } from '../../services/license-request-approvals/license-request-approvals.service';
+import { ApprovalRole } from '../../dataModels/approval-role.model';
 
 @Component({
   selector: 'app-developer-approvals-list',
@@ -16,7 +17,7 @@ export class DeveloperApprovalsListComponent implements OnInit, OnDestroy {
   approvals: any[] = [];
   isLoading: boolean = false;
   private subscriptions: Subscription[] = [];
-
+  approveEnum = ApprovalRole
   requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseRequestApprovalDetails}`;
   approvalList: LicenseProjectApproval[] = [] as LicenseProjectApproval[];
   selectedApproval: LicenseProjectApproval = {} as LicenseProjectApproval;
@@ -85,7 +86,10 @@ export class DeveloperApprovalsListComponent implements OnInit, OnDestroy {
   }
 
   viewDetails(approval: any): void {
-    this.router.navigate(['/wafi/license/developer-approval-details', approval.id]);
+    this.router.navigate(['/wafi/license/developer-approval-details', approval.id],
+      {
+        queryParams: { approvalRole: approval.approvalRole }
+      });
   }
 
   ngOnDestroy(): void {

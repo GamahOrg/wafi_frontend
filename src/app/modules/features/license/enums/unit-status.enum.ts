@@ -1,6 +1,7 @@
 export enum LicenseProjectUnitCodeStatus {
   NotSold = 1,
   Sold = 2,
+  PendingBuyerApproval = 3,
 }
 
 export enum BuyerTypeEnum {
@@ -19,4 +20,12 @@ export enum LicenseProjectBuyerStatusEnum {
   Refused = 3,
   PendingCancellation = 4,
   Cancelled = 5,
+}
+export enum LicenseProjectNatureTypeEnum {
+  Units = 1,
+  Lands = 2
+}
+export enum LicenseProjectUnitTypeEnum {
+  Building = 1,
+  Block = 2
 }

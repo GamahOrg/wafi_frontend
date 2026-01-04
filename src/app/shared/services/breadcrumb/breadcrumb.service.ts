@@ -13,8 +13,14 @@ export class BreadcrumbService {
   // Subject emitting the breadcrumb hierarchy
   private readonly _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([]);
 
+  // Subject to control visibility of breadcrumb
+  private readonly _showBreadcrumb$ = new BehaviorSubject<boolean>(true);
+
   // Observable exposing the breadcrumb hierarchy
   readonly breadcrumbs$ = this._breadcrumbs$.asObservable();
+
+  // Observable exposing breadcrumb visibility
+  readonly showBreadcrumb$ = this._showBreadcrumb$.asObservable();
 
   constructor(private router: Router) {
     this.router.events
@@ -26,10 +32,13 @@ export class BreadcrumbService {
         // Construct the breadcrumb hierarchy
         const root = this.router.routerState.snapshot.root;
         const breadcrumbs: Breadcrumb[] = [];
-        this.addBreadcrumb(root, [], breadcrumbs);
+        const shouldHide = this.addBreadcrumb(root, [], breadcrumbs);
 
         // Emit the new hierarchy
         this._breadcrumbs$.next(breadcrumbs);
+
+        // Hide breadcrumb if route has hideBreadcrumb: true
+        this._showBreadcrumb$.next(!shouldHide);
       });
   }
 
@@ -37,8 +46,15 @@ export class BreadcrumbService {
     route: ActivatedRouteSnapshot,
     parentUrl: string[],
     breadcrumbs: Breadcrumb[]
-  ) {
+  ): boolean {
+    let shouldHide = false;
+
     if (route) {
+      // Check if this route should hide breadcrumb
+      if (route.data['hideBreadcrumb']) {
+        shouldHide = true;
+      }
+
       // Construct the route URL
       const routeUrl = parentUrl.concat(route.url.map((url) => url.path));
 
@@ -53,9 +69,12 @@ export class BreadcrumbService {
 
       // Add another element for the next route part
       if (route.firstChild) {
-        this.addBreadcrumb(route.firstChild, routeUrl, breadcrumbs);
+        const childShouldHide = this.addBreadcrumb(route.firstChild, routeUrl, breadcrumbs);
+        shouldHide = shouldHide || childShouldHide;
       }
     }
+
+    return shouldHide;
   }
 
   private getLabel(data: Data) {

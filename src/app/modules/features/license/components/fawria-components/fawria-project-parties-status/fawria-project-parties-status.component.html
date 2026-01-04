@@ -26,13 +26,13 @@
                 <td *ngIf="!isOwner">{{item.contarctValue}}</td>
                 <td *ngIf="!isOwner">{{item.nId}}</td>
                 <td *ngIf="isOwner">{{item.nId}}</td>
-                <td *ngIf="isOwner">{{item.totalLandValue}}</td>
+                <td *ngIf="isOwner">{{item.owningArea}}</td>
                 <td>{{item.sendDate | date: 'dd/MM/yyyy'}}</td>
                 <!-- <td>{{item.sendUpdatedDate | date: 'dd/MM/yyyy'}}</td> -->
-                <td *ngIf="isOwner">{{item.owningArea}}</td>
+                <td *ngIf="isOwner">{{item.totalLandValue}}</td>
                 <td>{{item.status == 1 ? 'معتمد' : item.status == 2 ? 'مرفوض' : 'قيد الاعتماد'}}</td>
                 <td>
-                  <button *ngIf="item.rejectReason" type="button" class="btn btn-sm btn-danger" (click)="showRejectionReason(item.rejectReason, item.name)">
+                  <button *ngIf="item.status == 2" type="button" class="btn btn-sm btn-danger" (click)="showRejectionReason(item.rejectReason ?? '', item.name)">
                     سبب الرفض
                   </button>
                 </td>

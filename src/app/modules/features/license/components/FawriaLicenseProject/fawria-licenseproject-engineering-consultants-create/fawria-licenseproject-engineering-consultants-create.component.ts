@@ -17,6 +17,8 @@ import { LicenseProjectPartiesAdditionalTermsService } from '../../../services/L
 import { NextAndPreviusButtonsService } from '../../../services/next-and-previous-buttons/next-and-previus-buttons.service';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import { ToastrService } from 'ngx-toastr';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { LicenseRequestService } from '../../../services/license-request.service';
 
 @Component({
   selector: 'app-fawria-licenseproject-engineering-consultants-create',
@@ -104,8 +106,10 @@ baseUrl = `${environment.baseURL}/`;
     private _toastrNotificationService: ToastrService,
     private _engineeringConsultantService: LicenseProjectEngineeringConsultantService,
     private _licenseProjectDelegatorService: LicenseProjectDelegatorService,
+    private _licenseRequestService: LicenseRequestService,
     private _popupService: PopupService,
     private _licenseProjectPartiesAdditionalTermsService: LicenseProjectPartiesAdditionalTermsService,
+    private _tabsService: TabsService
   ) {}
 
   ngOnInit() {
@@ -113,6 +117,17 @@ baseUrl = `${environment.baseURL}/`;
     this.buildForm();
     this.observeTabsButtons();
     this.updateSaveAsDraftBtnIsvisible();
+    this.trackFormChanges();
+  }
+
+  private trackFormChanges(): void {
+    this.subscriptions.push(
+      this.form.valueChanges.subscribe(() => {
+        if (this.form.dirty) {
+          this._tabsService.setUnsavedChanges(true);
+        }
+      })
+    );
   }
 
   private getLicenseProjectIdStorage(): void {
@@ -138,13 +153,20 @@ baseUrl = `${environment.baseURL}/`;
   }
 
   errorMessage: string | null = null;
+  onCommercialRegisterChange() {
+    if (this.errorMessage) {
+      this.errorMessage = null;
+    }
+  }
+
   validate() {
     this.errorMessage = null;
     let commercialRegister = this.controls['commercialRegister'].value;
     if (commercialRegister) {
-      this._engineeringConsultantService.validateCommercialRegisterNumber(commercialRegister, QualificationTypeCode.EngineeringConsultant, this.licenseProjectId)
+      this._engineeringConsultantService.validateCommercialRegisterNumber(commercialRegister, QualificationTypeCode.EngineeringConsultant, this.licenseProjectId, true)
         .pipe(takeUntil(this.destroyed$))
         .subscribe((result) => {
+          
           if (result && result.data) {
             if(!this.entity || this.entity == undefined)
               this.entity = {} as LicenseProjectEngineeringConsultantDto;
@@ -155,6 +177,19 @@ baseUrl = `${environment.baseURL}/`;
           }
           else {
             this.errorMessage = result.message;
+            this.entity = {} as  LicenseProjectEngineeringConsultantDto;
+            this.x.facilityName = '';
+            const commercialRegisterValue = this.controls['commercialRegister'].value;
+            this.form.reset();
+            this.controls['commercialRegister'].setValue(commercialRegisterValue);
+            this.paymentTableData  = [
+              {
+                item: '',
+                quantity: null,
+                unitPrice: null,
+                description: '',
+              },
+            ];
           }
         });
     }
@@ -170,7 +205,7 @@ baseUrl = `${environment.baseURL}/`;
       contarctValue: ['', Validators.compose([Validators.required, Validators.min(0)])],
       financialReportApprovalPeriodInDays: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(30)])],
       paymentDeadline: ['', Validators.compose([Validators.required])],
-      authorizedToSignDelegator: ['', Validators.compose([Validators.required])],
+      authorizedToSignDelegator: [null, Validators.compose([Validators.required])],
     });
   }
 
@@ -183,6 +218,7 @@ baseUrl = `${environment.baseURL}/`;
   }
 
   ngOnDestroy() {
+    this._tabsService.setUnsavedChanges(false);
     this.destroyed$.next(true);
     this.destroyed$.complete();
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
@@ -212,6 +248,7 @@ baseUrl = `${environment.baseURL}/`;
 
   private updateSaveAsDraftBtnIsvisible(): void {
     this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
+    this._nextAndPreviusButtonsService.nextBtnIsVisible.next(true);
   }
 
   private moveToNextTab(): void {
@@ -258,26 +295,22 @@ baseUrl = `${environment.baseURL}/`;
           description: false,
         };
       }
-
       // Validate item
       this.paymentTableErrors[index].item = !row.item || row.item.trim() === '';
       if (this.paymentTableErrors[index].item) isValid = false;
-
       // Validate quantity
       this.paymentTableErrors[index].quantity = row.quantity === null || row.quantity === undefined || row.quantity === '';
       if (this.paymentTableErrors[index].quantity) isValid = false;
-
       // Validate unitPrice
       this.paymentTableErrors[index].unitPrice = row.unitPrice === null || row.unitPrice === undefined || row.unitPrice === '';
       if (this.paymentTableErrors[index].unitPrice) isValid = false;
-
       // Validate description
       this.paymentTableErrors[index].description = !row.description || row.description.trim() === '';
       if (this.paymentTableErrors[index].description) isValid = false;
-    });
+      });
 
-    return isValid;
-  }
+      return isValid;
+    }
 
   clearPaymentError(index: number, field: 'item' | 'quantity' | 'unitPrice' | 'description'): void {
     if (this.paymentTableErrors[index]) {
@@ -325,6 +358,17 @@ baseUrl = `${environment.baseURL}/`;
             ? this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators[0].delegatorCustomerId
             : ''
         });
+
+        // Format contract value with commas after loading
+        setTimeout(() => {
+          const contractValueInput = document.getElementById('contarctValue') as HTMLInputElement;
+          if (contractValueInput && this.entity.contarctValue) {
+            const parts = this.entity.contarctValue.toString().split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            contractValueInput.value = parts.join('.');
+          }
+        }, 0);
+
         this.paymentTableData = this.entity.licenseProjectEngineeringConsultantPayments?.map(payment => ({
           item: payment.item,
           quantity: payment.quantity,
@@ -347,6 +391,7 @@ baseUrl = `${environment.baseURL}/`;
   }
 
   save(moveToNextTab: boolean = false) {
+    
     if (!this.licenseProjectId) {
       this._toastrNotificationService.error(this.localizations.PleaseAddProject);
       return;
@@ -405,6 +450,9 @@ baseUrl = `${environment.baseURL}/`;
         if (result && result.data) this.entity.id = result.data.id;
         // this._toastrNotificationService.showSuccess(this.localizations.CreatedSuccessfully);
         this._toastrNotificationService.success(this.localizations.requestWasSentToEngineeringConsultant);
+        this.form.markAsPristine();
+        this._tabsService.setUnsavedChanges(false);
+        this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
         if (moveToNextTab) {
           this.moveToNextTab();
         } else {
@@ -417,11 +465,54 @@ baseUrl = `${environment.baseURL}/`;
     this._engineeringConsultantService.fawryLicenseUpdateAsync(object).pipe(takeUntil(this.destroyed$)).subscribe(() => {
       // this._toastrNotificationService.showSuccess(this.localizations.UpdatedSuccessfully);
       this._toastrNotificationService.success(this.localizations.requestWasSentToEngineeringConsultant);
+      this.form.markAsPristine();
+      this._tabsService.setUnsavedChanges(false);
       if (moveToNextTab) {
         this.moveToNextTab();
       } else {
         this.onGet()
       }
     });
+  }
+
+  // Format contract value with thousand separators
+  formatContractValue(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+
+    // Convert Arabic numbers to English
+    const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    arabicNumbers.forEach((arabic, index) => {
+      value = value.replace(new RegExp(arabic, 'g'), index.toString());
+    });
+
+    // Remove all non-numeric characters except decimal point
+    value = value.replace(/[^0-9.]/g, '');
+
+    // Store numeric value in form control
+    const numericValue = value ? parseFloat(value) : null;
+    this.form.get('contarctValue')?.setValue(numericValue, { emitEvent: false });
+
+    // Format with commas for display
+    if (value) {
+      const parts = value.split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      input.value = parts.join('.');
+    }
+  }
+
+  formatContractValueOnBlur(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = this.form.get('contarctValue')?.value;
+    if (value) {
+      const parts = value.toString().split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      input.value = parts.join('.');
+    }
+  }
+
+  removeContractValueFormatting(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/,/g, '');
   }
 }

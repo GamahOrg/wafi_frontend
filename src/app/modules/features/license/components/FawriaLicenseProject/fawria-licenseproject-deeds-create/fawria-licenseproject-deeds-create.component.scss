@@ -3,35 +3,10 @@
 @import "/src/assets/styles/content/table-content";
 @import "/src/assets/styles/content/tab-content";
 @import "/src/assets/styles/content/form-conent";
+@import "/src/assets/styles/content/status";
 
 :host {
   display: block;
   height: 100%;
 }
 
-// Ensure datepicker dropdown is fully visible
-.tab-data-section {
-  overflow: visible !important;
-}
-
-form {
-  overflow: visible !important;
-}
-
-// Styling for table rows with validation errors
-.table-danger {
-  background-color: #ffe6e6 !important;
-  border-left: 3px solid #dc3545;
-
-  td {
-    border-color: #f5c6cb !important;
-  }
-}
-
-// Make invalid feedback more visible in tables
-table {
-  .invalid-feedback {
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-  }
-}

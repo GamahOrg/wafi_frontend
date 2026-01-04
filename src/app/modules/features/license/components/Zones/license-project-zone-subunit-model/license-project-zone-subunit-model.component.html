@@ -13,10 +13,24 @@
                     <div class="col-12 col-lg-6">
                       <div class="form-group mb-4">
                         <label class="form-label">{{localization.name}}</label>
-                        <input type="text" id="control-name" placeholder="{{localization.name}}" class="form-control"
-                          formControlName="name">
-                        <mat-error
-                          *ngIf="controls.name?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                        <!--<input type="text" id="control-name" placeholder="{{localization.name}}" class="form-control"
+                               formControlName="name">-->
+                        <select id="control-name"
+                                class="form-select"
+                                formControlName="name">
+
+                          <!-- optional placeholder -->
+                          <option value="" disabled selected>
+                            {{ localization.name }}
+                          </option>
+
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                          <option value="D">D</option>
+                          <option value="E">E</option>
+                        </select>
+                        <mat-error *ngIf="controls.name?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
                       </div>
                     </div>
 
@@ -93,7 +107,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="!hideActionButtons">
                   <div class="d-flex gap-2 col-12 col-lg-12">
                     <button type="button" class="btn btn-outline-primary mx-3" (click)="save()">حفظ واضافة نموذج جديد</button>
                     <!-- <button type="button" class="btn btn-outline-primary">حفظ النموذج</button> -->
@@ -125,7 +139,7 @@
                           {{subUnitModel.buildingFlatSpace}}</p>-->
                       </div>
 
-                      <div class="item-actions">
+                      <div class="item-actions" *ngIf="!hideActionButtons">
                         <button class="p-0 border-0 bg-transparent" (click)="delete(subUnitModel.id)"><mat-icon
                             color="warn">delete</mat-icon></button>
                       </div>

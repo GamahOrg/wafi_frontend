@@ -444,11 +444,9 @@ import { FawriaLicenseprojectFeasibilityStudyContainerComponent } from './compon
 import { FawriaLicenseprojectCharteredAccountantsContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-chartered-accountants-container/fawria-licenseproject-chartered-accountants-container.component';
 import { FawriaLicenseprojectMaindataCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-maindata-create/fawria-licenseproject-maindata-create.component';
 import { FawriaLicenseprojectDeedOwnersContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deed-owners-container/fawria-licenseproject-deed-owners-container.component';
-import { FawriaLicenseprojectEscrowAccountContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-escrow-account-container/fawria-licenseproject-escrow-account-container.component';
 import { FawriaLicenseprojectDeedOwnersCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deed-owners-create/fawria-licenseproject-deed-owners-create.component';
 import { FawriaLicenseprojectDeedsCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-deeds-create/fawria-licenseproject-deeds-create.component';
 import { FawriaLicenseprojectEngineeringConsultantsCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-engineering-consultants-create/fawria-licenseproject-engineering-consultants-create.component';
-import { FawriaLicenseprojectFeasibilityStudyCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-feasibility-study-create/fawria-licenseproject-feasibility-study-create.component';
 import { FawriaLicenseprojectCharteredAccountantsCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-chartered-accountants-create/fawria-licenseproject-chartered-accountants-create.component';
 import { FawriaLicenseprojectEscrowAccountCreateComponent } from './components/FawriaLicenseProject/fawria-licenseproject-escrow-account-create/fawria-licenseproject-escrow-account-create.component';
 import { FawriaLicenseprojectContactInfoContainerComponent } from './components/FawriaLicenseProject/fawria-licenseproject-contact-info-container/fawria-licenseproject-contact-info-container.component';
@@ -489,6 +487,21 @@ import { OffPlanSaleLicenseComponent } from './components/off-plan-sale-license/
 import { FawriaUpdateBuildingFlatAreaComponent } from './components/FawriaLicenseProject/fawria-update-building-flat-area/fawria-update-building-flat-area.component';
 import { DeveloperApprovalsListComponent } from './pages/developer-approvals-list/developer-approvals-list.component';
 import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-details/developer-approval-details.component';
+import { FawriaLicenseComplateComponent } from './pages/fawria-license-complate/fawria-license-complate.component';
+import { FawriaArchitecturalUnitsAndDesignsComponent } from './components/fawria-architectural-units-and-designs/fawria-architectural-units-and-designs.component';
+import { FawriaEngineeringSupervisionStaffComponent } from './components/fawria-engineering-supervision-staff/fawria-engineering-supervision-staff.component';
+import { FawriaUnifiedSalesModelComponent } from './components/fawria-unified-sales-model/fawria-unified-sales-model.component';
+import { FawriaContactInfoEndBeneficiaryComponent } from './pages/fawria-contact-info-end-beneficiary/fawria-contact-info-end-beneficiary.component';
+import { FawriaLicenseEndBeneficiaryContactsInfoService } from './services/licenseProjects/fawria-license-end-beneficiary-contacts-info.service';
+import { FawriaEscrowAccountComponent } from './components/fawria-escrow-account/fawria-escrow-account.component';
+import { LicenseProjectService } from '../license-project-requests/services/license-project.service';
+import { FawriaFinalBeneficiaryAgreementComponent } from './pages/fawria-final-beneficiary-agreement/fawria-final-beneficiary-agreement.component';
+import { BankTermsConditionsPopupComponent } from './components/FawriaLicenseProject/bank-terms-conditions-popup/bank-terms-conditions-popup.component';
+import { FawriaLicenseCompleteInvoiceViewComponent } from './components/fawria-license-complete-invoice-view/fawria-license-complete-invoice-view.component';
+import { FawriaLicenseBankAccountInfoComponent } from './components/fawria-license-bank-account-info/fawria-license-bank-account-info.component';
+import { CorrectingUnitsListComponent } from './pages/correcting-units-list/correcting-units-list.component';
+import { LicenseTabsComponent } from './pages/license-tabs/license-tabs.component';
+import { CorrectingUnitsService } from './services/correct-units/correcting-units.service';
 
 @NgModule({
   declarations:[
@@ -800,11 +813,9 @@ import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-de
     FawriaLicenseprojectCharteredAccountantsContainerComponent,
     FawriaLicenseprojectMaindataCreateComponent,
     FawriaLicenseprojectDeedOwnersContainerComponent,
-    FawriaLicenseprojectEscrowAccountContainerComponent,
     FawriaLicenseprojectDeedOwnersCreateComponent,
     FawriaLicenseprojectDeedsCreateComponent,
     FawriaLicenseprojectEngineeringConsultantsCreateComponent,
-    FawriaLicenseprojectFeasibilityStudyCreateComponent,
     FawriaLicenseprojectCharteredAccountantsCreateComponent,
     FawriaLicenseprojectEscrowAccountCreateComponent,
     FawriaLicenseprojectContactInfoContainerComponent,
@@ -817,6 +828,7 @@ import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-de
     FawriaLicenseprojectDeedsListComponent,
     DeleteDeedConfirmationDialogComponent,
     CustomTooltipComponent,
+    BankTermsConditionsPopupComponent,
     LicenseProjectDeedOwnerApprovalComponent,
     RejectionReasonDialogComponent,
     FawriaProjectPartiesComponent,
@@ -840,8 +852,20 @@ import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-de
     FawriaUpdateBuildingFlatAreaComponent,
     DeveloperApprovalsListComponent,
     DeveloperApprovalDetailsComponent,
+    FawriaLicenseComplateComponent,
+    FawriaArchitecturalUnitsAndDesignsComponent,
+    FawriaEngineeringSupervisionStaffComponent,
+    FawriaUnifiedSalesModelComponent,
+    FawriaContactInfoEndBeneficiaryComponent,
+    FawriaEscrowAccountComponent,
+    FawriaFinalBeneficiaryAgreementComponent,
+    FawriaLicenseCompleteInvoiceViewComponent,
+    FawriaLicenseBankAccountInfoComponent,
+    CorrectingUnitsListComponent,
+    LicenseTabsComponent,
   ],
   providers: [
+    LicenseProjectService,
     LicenseRequestHeaderProcessingStepService,
     LicenseRequestHeaderProcessingStepService,
     LicenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteService,
@@ -951,6 +975,8 @@ import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-de
     LicenseProjectFawriaDeveloperService,
     FawriaLicenseProjectBankInfoService,
     LicenseRequestHeaderProcessingStepService,
+    FawriaLicenseEndBeneficiaryContactsInfoService,
+    CorrectingUnitsService
   ],
   imports: [
     CommonModule,

@@ -192,7 +192,7 @@ export class CreateLincenseComponent {
     }
   }
   private showSRSULicenseRequestTypeWarnings() {
-    let deleteConfirmationObj: confirmationPopupData = {
+    let deleteConfirmationObj: confirmationPopupData = {     
       staticMessage: `يجب على المنشأة إضافة مفوض للتوقيع على وثيقة الصرف عن طريق "إدارة المنشأة"
                 <br/> يجب أن يكون لدى الاستشاري الهندسي حساب في منصة البيع على الخارطة وبأن يكون مؤهل
                 <br/> يجب أن يكون لدى المحاسب القانوني حساب في منصة البيع على الخارطة وبأن يكون مؤهل`,
@@ -203,8 +203,8 @@ export class CreateLincenseComponent {
     };
     this._popupService.updateConfirmationPopupData(
       deleteConfirmationObj,
-      '50vw',
-      '30vh'
+      '40vw',
+      // '43vh'
     );
   }
   private renew(): void {

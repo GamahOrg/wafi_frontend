@@ -28,7 +28,7 @@
     <!-- Header Actions -->
     <div class="header-actions">
       <button class="btn-status pending">
-        <span class="status-dot"></span>
+        <span class="status-pill"></span>
         <span>بانتظار الاعتماد</span>
       </button>
     </div>
@@ -130,7 +130,7 @@
       <!-- Separator Line -->
       <div class="section-separator"></div>
 
-<ng-container *ngIf="false && contractDetails && this.contractDetails?.isOldContract == true && contractDetails.licenseProjectBuyerBusinessPayment && contractDetails.licenseProjectBuyerBusinessPayment.paymentInstallments && contractDetails.licenseProjectBuyerBusinessPayment.paymentInstallments.length>0">
+<ng-container *ngIf="contractDetails && this.contractDetails?.isOldContract == true && contractDetails.licenseProjectBuyerBusinessPayment && contractDetails.licenseProjectBuyerBusinessPayment.paymentInstallments && contractDetails.licenseProjectBuyerBusinessPayment.paymentInstallments.length>0">
 
   <div class="section-header">
           <h2 class="section-title">خطة الدفع</h2>

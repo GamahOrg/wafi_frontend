@@ -1,14 +1,38 @@
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="flex-fill {{tabClassName}}" (selectedTabChange)="updateActiveTabIndex($event);" [selectedIndex]="tabContent.activeTabIndex">
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="flex-fill" 
+[class.with-progress]="hasProgress"
+[ngClass]="[
+    tabClassName
+      ]" 
+
+  (selectedTabChange)="updateActiveTabIndex($event);" [selectedIndex]="tabContent.activeTabIndex">
+
 
   <ng-container *ngFor="let component of tabContent.tabsComponentList; index as i">
     <mat-tab [disabled]="component.disabled" *ngIf="component.isVisible">
 
       <ng-template mat-tab-label class="collapseTitle">
-        <span *ngIf="component.icon" class="icon">
+        <!-- <span class="icon" *ngIf="component.icon && !component.isCompleted">
           <i class="material-icons-outlined">{{component.icon}}</i>
+        </span> -->
+        <span class="number" *ngIf="component.number && !component.isCompleted">
+          {{i+1}}
+        </span>
+        <span class="icon completed-icon" *ngIf="component.isCompleted">
+          <i class="material-icons-outlined">check</i>
         </span>
         {{component.title}}
       </ng-template>
+
+
+      <ng-container *ngIf="hasProgress">
+        <div class="tabs-progress">
+           <!-- استبدل الرقم 40 فقط بمتغير قيمة التقدم - -->
+          <span class="value-indication" style="--progress-value: {{
+            ProgressPercentage && (ProgressPercentage < 3 ? 3 : ProgressPercentage > 97 ? 97 : ProgressPercentage)
+          }}%"><i class="material-icons">arrow_drop_up</i>{{ProgressPercentage}}%</span>
+          <mat-progress-bar mode="determinate" value="{{ProgressPercentage}}"></mat-progress-bar>
+        </div>
+      </ng-container>
 
       <ng-container *ngIf="tabContent.activeTabIndex == i && component.Component">
         <div class="tab-content">

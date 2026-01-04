@@ -8,7 +8,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LicenseProjectBuyerCreateUpdateDto } from '../dataModels/license-project-buyer-create-update-dto';
 import { ProjectUnit } from '../models/project-units';
 import { ProjectUnitCodeDto } from '../dataModels/project-unit-code.dto';
-import { LicenseProjectBuyerDetailsDto, LicenseProjectBuyerDto, LicenseProjectBuyerLookUpDto, type LicenseProjectBuyerPaymentTypeDto, type LicenseProjectBuyerSettingDto } from '../dataModels/license-project-buyer-dto';
+import { BuyerBusinessPaymentInstallementsDto, LicenseProjectBuyerDetailsDto, LicenseProjectBuyerDto, LicenseProjectBuyerLookUpDto, type LicenseProjectBuyerPaymentTypeDto, type LicenseProjectBuyerSettingDto } from '../dataModels/license-project-buyer-dto';
 import { LicenseProjectBuyerContractFilterDto, LicenseProjectBuyerContractListDto, LicenseProjectBusinessPaymentResponseDto } from '../../real-estate-contributions-license/models/license-project-buyer-contracts-dto';
 
 @Injectable()
@@ -207,8 +207,12 @@ export class LicenseProjectBuyerService {
     )
   }
 
-  GetBuyersBylicenseProjectId(licenseProjectId: string): Observable<LicenseProjectBuyerLookUpDto[] |null> {
-    return this._httpClient.get<CoreResponseDTO<LicenseProjectBuyerLookUpDto[]>>(`${Configuration.APIs.LicenseProjectBuyer.GetBuyersBylicenseProjectId}/${licenseProjectId}`).pipe(
+  GetBuyersBylicenseProjectId(licenseProjectId: string,paymentTypeId?:number): Observable<LicenseProjectBuyerLookUpDto[] |null> {
+   let params = new HttpParams();
+
+   if(paymentTypeId)
+        params = params.append('paymentTypeId', paymentTypeId);
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectBuyerLookUpDto[]>>(`${Configuration.APIs.LicenseProjectBuyer.GetBuyersBylicenseProjectId}/${licenseProjectId}`,{params}).pipe(
       map((res: CoreResponseDTO<LicenseProjectBuyerLookUpDto[]>) => {
         return res.data  ? res.data as LicenseProjectBuyerLookUpDto[] : []
       })
@@ -243,6 +247,15 @@ export class LicenseProjectBuyerService {
       })
     );
   }
+
+  GetBuyersBusinessPaymentInstallements(licenseProjectBuyerId: string): Observable<BuyerBusinessPaymentInstallementsDto[] | null> {
+    return this._httpClient.get<CoreResponseDTO<BuyerBusinessPaymentInstallementsDto[]>>(`${Configuration.APIs.LicenseProjectBuyer.GetBuyersBusinessPaymentInstallements}/${licenseProjectBuyerId}`).pipe(
+      map((res: CoreResponseDTO<BuyerBusinessPaymentInstallementsDto[]>) => {
+        return res.data ? res.data as BuyerBusinessPaymentInstallementsDto[] : []
+      })
+    )
+  }
+
 
 
 }

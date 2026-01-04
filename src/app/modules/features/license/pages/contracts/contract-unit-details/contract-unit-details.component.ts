@@ -105,7 +105,9 @@ export class ContractUnitDetailsComponent implements OnInit {
       }
     });
   }
-
+  navigateToPaymentTab() {
+    this.router.navigate(['/wafi/license/payment-terms-tabs']);
+  }
   addNewContract(): void {
     // Navigate to add contract page using Configuration
     this.router.navigate([

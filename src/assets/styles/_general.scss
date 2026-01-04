@@ -3,6 +3,12 @@ body {
   font-family: "IBM_Plex_Sans_Arabic", sans-serif !important;
   font-size: $body-font-size;
   height: 100vh;
+  overflow-x: hidden;
+}
+
+hr {
+  border-color: #E5E5E5;
+  opacity: 1;
 }
 
 ol,

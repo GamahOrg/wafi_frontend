@@ -1,5 +1,5 @@
 <div class="hijri-datepicker" (click)="$event.stopPropagation()" (document:click)="onDocumentClick($event)">
-  <div class="datepicker-input" [class.is-open]="isOpen" (click)="toggleCalendar()" #dateInput>
+  <div class="datepicker-input" [class.is-open]="isOpen" (click)="toggleCalendar()" #dateInput [ngClass]="{ 'icon-left': iconDirection === 'left' }">
     <input
       type="text"
       [value]="displayValue"

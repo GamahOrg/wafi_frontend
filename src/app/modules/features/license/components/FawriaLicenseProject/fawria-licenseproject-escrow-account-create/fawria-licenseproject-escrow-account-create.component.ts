@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ToastrNotificatioService } from '../../../../../../core/services/toastr-notification/toastr-notificatio.service';
@@ -15,6 +15,11 @@ import { FawriaLicenseProjectBankInfoService } from '../../../services/licensePr
 import { CustomerShortDto } from '../../../models/facility-short-dto';
 import { FawriaLicenseBankInfoResponseDto } from '../../../models/FawriaLicenseProject/fawria-license-bank-info-response-dto';
 import { environment } from 'src/environments/environment';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { BankTermsConditionsPopupComponent } from '../bank-terms-conditions-popup/bank-terms-conditions-popup.component';
+import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
+import { LicenseRequestService } from '../../../services/license-request.service';
 
 interface Delegator {
   id: string;
@@ -32,7 +37,7 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
   subscriptions: Subscription[] = [];
   escrowAccountForm: FormGroup;
   showValidation: boolean = false;
-
+  termsCondtition: any[] = []
   banks: BankDto[] = [];
   delegators: Delegator[] = [];
   subCustomerList: CustomerShortDto[] = [];
@@ -56,6 +61,7 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     requiredErrorMsg: 'هذا الحقل مطلوب',
     savedSuccessfully: 'تم الحفظ بنجاح',
     PleaseAddAllRequiredFields: 'لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة',
+    approvedBankTermsConditionsMessage: 'يجب الموافقة على اقرار شروط البنك',
     saveAsDraft: 'حفظ كمسودة',
     next: 'السابق',
     previous: 'التالي',
@@ -71,10 +77,13 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
     private _projectRealStateDeveloperService: ProjectRealStateDeveloperService,
-    private _projectBankInfoService: FawriaLicenseProjectBankInfoService
+    private _projectBankInfoService: FawriaLicenseProjectBankInfoService,
+    private _licenseRequestService: LicenseRequestService,
+    private _tabsService: TabsService,
+    private _popupService: PopupService
   ) {
     this.escrowAccountForm = this._formBuilder.group({
-      bankId: ['', [Validators.required]],
+      bankId: [null, [this.requiredGuidValidator()]],
       delegatorIds: [[], [Validators.required]],
       approvedBankTermsConditions: [false, [Validators.required]],
       saudiTaxNumber: ['', [Validators.required]],
@@ -90,21 +99,53 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     this.loadComponentData();
     this.observeTabButtons();
     this.showSaveAsDraftButton();
+    this.showSaveAsNextButton();
   }
 
-  
-  setSelectedBank(bankId:string){
-    this.escrowAccountForm.get('bankId')?.setValue(bankId);
 
+  setSelectedBank(bankId: string) {
+    const control = this.escrowAccountForm.get('bankId');
+
+    control?.setValue(bankId);
+    control?.markAsTouched();
+    control?.markAsDirty();
+    control?.updateValueAndValidity();
+    this.loadTermsCondition();
   }
-
-  approvedBankTermsConditions(): string{
+  requiredGuidValidator() {
+    return (control: AbstractControl) => {
+      debugger
+      const emptyGuid = '00000000-0000-0000-0000-000000000000';
+      return !control.value || control.value === emptyGuid
+        ? { required: true }
+        : null;
+    };
+  }
+  approvedBankTermsConditions(): string {
     return ' أقر بالموافقة على شروط وأحكام البنك.';
-    return `أقر بالموافقة على <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_engineering_temp.pdf" disabled="disabled" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">شروط وأحكام البنك</a>.`;
+    // return `أقر بالموافقة على <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_engineering_temp.pdf" disabled="disabled" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">شروط وأحكام البنك</a>.`;
     // return `أقر بالموافقة على <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_engineering_temp.pdf" disabled="disabled" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">شروط وأحكام البنك</a>.`;
   }
 
+  openTermsConditionsPopup(): void {
+    if (this.termsCondtition.length === 0) {
+      this._toastrNotificationService.showInfo('لا توجد شروط وأحكام متاحة للبنك المحدد');
+      return;
+    }
+
+    this._popupService.updatePopupData({
+      title: 'شروط وأحكام البنك',
+      iconClass: 'material-icons-outlined',
+      component: BankTermsConditionsPopupComponent,
+      data: this.termsCondtition,
+      panelClass: ['terms-conditions-dialog', 'large-dialog'],
+      buttons: [
+      ]
+    });
+  }
+
   ngOnDestroy(): void {
+    this._tabsService.setUnsavedChanges(false);
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
@@ -130,6 +171,10 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
 
   private observeFormChanges(): void {
     const sub = this.escrowAccountForm.valueChanges.subscribe(() => {
+      if (this.escrowAccountForm.dirty) {
+        this._tabsService.setUnsavedChanges(true);
+      }
+      debugger
       const rawValue = this.escrowAccountForm.getRawValue();
       this.fawriaLicenseBankInfoDto = {
         ...this.fawriaLicenseBankInfoDto,
@@ -145,6 +190,12 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     this.subscriptions.push(sub);
   }
 
+  private loadTermsCondition(): void {
+    const rawValue = this.escrowAccountForm.getRawValue();
+    this._bankService.GetSysBankTermsCondition(rawValue.bankId).subscribe((res) => {
+      this.termsCondtition = res.data as any[]
+    })
+  }
   private loadComponentData(): void {
     const sub = forkJoin({
       banksResponse: this._bankService.GetIntegrationBanks(),
@@ -152,6 +203,14 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     }).subscribe({
       next: ({ banksResponse, subCustomers }) => {
         this.banks = banksResponse.data as BankDto[];
+
+        debugger
+        //set default selected Bank if only one Bank
+        if(this.banks.length==1){
+          this.setSelectedBank(this.banks[0].id)
+        }
+
+
         this.subCustomerList = subCustomers;
         // Convert subCustomerList to delegators array
         this.delegators = this.subCustomerList.map(customer => ({
@@ -159,9 +218,6 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
           name: customer.fullName,
           selected: false
         }));
-
-        // Always select بنك البلاد and disable the dropdown
-        this.selectBankAlBilad();
 
         // Load existing delegators if any
         this.loadExistingDelegators();
@@ -221,9 +277,26 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
   }
 
   save(moveToNextTab: boolean = false): void {
-    if (!this.isExistingValidation && !this.escrowAccountForm.valid) {
+    const bankControl = this.escrowAccountForm.get('bankId');
+
+    if (bankControl?.value === '00000000-0000-0000-0000-000000000000') {
+      bankControl.setValue(null);
+    }
+    if (!this.escrowAccountForm.valid) {
+      if (!this.isExistingValidation) {
+        this.showValidation = true;
+        this._toastrNotificationService.showError(
+          this.localization.PleaseAddAllRequiredFields
+        );
+      }
+
+      this.escrowAccountForm.markAllAsTouched();
+      return;
+    }
+
+    if (this.escrowAccountForm.get('approvedBankTermsConditions')?.value == false) {
       this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+      this._toastrNotificationService.showError(this.localization.approvedBankTermsConditionsMessage);
       this.escrowAccountForm.markAllAsTouched();
       return;
     }
@@ -233,7 +306,7 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
 
     const dto: FawriaLicenseBankInfoDto = {
       licenseProjectId: this.licenseProjectId,
-      bankId: formValue.bankId ?? '',
+      bankId: formValue.bankId,
       delegatorCustomerIds: formValue.delegatorIds ?? [],
       approvedBankTermsConditions: formValue.approvedBankTermsConditions,
       crsTaxNumber: formValue.crsTaxNumber,
@@ -244,10 +317,14 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     const sub = this._projectBankInfoService.SaveFawriaLicenseprojectBankInfo(dto).subscribe(res => {
       if (res.isDone) {
         this._toastrService.success(this.localization.savedSuccessfully);
+        this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
+
         this.escrowAccountForm.patchValue({
           bankId: res.data.bankId,
           delegatorIds: res.data.delegatorCustomerIds ?? [],
         });
+        this.escrowAccountForm.markAsPristine();
+        this._tabsService.setUnsavedChanges(false);
         this.fawriaLicenseBankInfoDto = res.data;
         if (moveToNextTab) this.moveToNextTab();
       } else {
@@ -258,32 +335,6 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     this.subscriptions.push(sub);
   }
 
-  private selectBankAlBilad(): void {
-    console.log('selectBankAlBilad called');
-    console.log('Banks:', this.banks);
-
-    // Find بنك البلاد by name or isDefaultSelected
-    const bankAlBilad = this.banks.find(bank =>
-      bank.name === 'بنك البلاد' || bank.isDefaultSelected
-    );
-
-    console.log('بنك البلاد found:', bankAlBilad);
-
-    if (bankAlBilad) {
-      // Set بنك البلاد as selected
-      this.escrowAccountForm.patchValue({
-        bankId: bankAlBilad.id,
-      });
-
-      console.log('Bank form after patch:', this.escrowAccountForm.get('bankId')?.value);
-
-      // Always disable the bank dropdown
-      this.escrowAccountForm.get('bankId')?.disable();
-      console.log('Bank dropdown disabled - بنك البلاد is the only option');
-    } else {
-      console.log('بنك البلاد not found in the banks list');
-    }
-  }
 
   private loadExistingDelegators(): void {
     if (!this.licenseProjectId) return;
@@ -297,11 +348,13 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
           console.log('Existing bank info response:', res);
 
           if (res) {
-            // Set bank in form if exists
-            if (res.bankId) {
+            const emptyGuid = '00000000-0000-0000-0000-000000000000';
+            // Set bank in form if exists and is not the default empty GUID
+            if (res.bankId && res.bankId !== emptyGuid) {
               this.escrowAccountForm.patchValue({
                 bankId: res.bankId
               });
+              this.loadTermsCondition();
             }
 
             // Set other fields if delegators exist
@@ -363,6 +416,10 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
   private observeTabButtons(): void {
     this.observeNextButtonIsClicked();
     this.observeSaveAsDraftIsClicked();
+  }
+
+  private showSaveAsNextButton(): void {
+    this._nextAndPreviusButtonsService.nextBtnIsVisible.next(false);
   }
 
   private showSaveAsDraftButton(): void {

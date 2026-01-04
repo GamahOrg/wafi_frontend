@@ -11,6 +11,9 @@ import { LoginUserTypeEnum } from 'src/app/modules/auth/models/login.model';
 import { LicenseProjectBuyerService } from 'src/app/modules/features/license/services/license-project-buyer.service';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { QualificationType } from 'src/app/modules/features/qualifying/dataModels/enum/qualification-request-type';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UnsavedChangesDialogComponent } from 'src/app/core/guards/unsaved-changes-guard/unsaved-changes-dialog/unsaved-changes-dialog.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -76,9 +79,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     lincenceProjectRequestList: `/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`,
     createLincenceProjectRequestList: `/${Configuration.pages.licenseProjectRequests.licenseProjectRequests}`,
 
-    developerProjects: `${Configuration.modules.engineeringManagement}/${Configuration.pages.license.developerProjectList}`,
-    recommendationLogsList: `${Configuration.modules.engineeringManagement}/${Configuration.pages.license.recommendationLogsList}`,
-    contractRequestList: `${Configuration.modules.license}/${Configuration.pages.license.contractRequestList}`,
+    developerProjects: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}/${Configuration.pages.license.developerProjectList}`,
+    recommendationLogsList: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}/${Configuration.pages.license.recommendationLogsList}`,
+    contractRequestList: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.contractRequestList}`,
   };
 
   constructor(
@@ -86,6 +89,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private _userDataService: UserDataService,
     private _storageService: StorageService,
     private router: Router,
+    private _tabsService: TabsService,
+    private _dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -146,6 +151,36 @@ export class SidebarComponent implements OnInit, OnDestroy {
     return this.currentUrl.includes('recommendations-logs-list') ||
            this.currentUrl.includes('real-state-developer-units-list') ||
            this.currentUrl.includes('unit-details');
+  }
+
+  /**
+   * Navigate with unsaved changes check
+   * Shows confirmation dialog if there are unsaved changes
+   */
+  navigateWithCheck(route: string, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this._tabsService.getUnsavedChanges()) {
+      const dialogRef = this._dialog.open(UnsavedChangesDialogComponent, {
+        width: '600px',
+        maxWidth: '90vw',
+        maxHeight: '90vh',
+        panelClass: 'confirmation-dialog',
+        disableClose: true,
+        hasBackdrop: true,
+        autoFocus: false,
+      });
+
+      dialogRef.afterClosed().subscribe((canLeave: boolean) => {
+        if (canLeave) {
+          this._tabsService.setUnsavedChanges(false);
+          this.router.navigate([route]);
+        }
+      });
+    } else {
+      this.router.navigate([route]);
+    }
   }
 
   ngOnDestroy(): void {

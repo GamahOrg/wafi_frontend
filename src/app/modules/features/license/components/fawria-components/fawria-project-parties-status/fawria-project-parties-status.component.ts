@@ -4,7 +4,7 @@ import { ProjectListService } from '../../../services/project-list.service';
 import { ProjectPartiesStatusDto } from '../../../models/project-parties-status-model';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
-import { notePopupData, PopupData } from 'src/app/shared/models/popup.model';
+import { confirmationPopupData, notePopupData, PopupData } from 'src/app/shared/models/popup.model';
 
 @Component({
   selector: 'app-fawria-project-parties-status',
@@ -36,7 +36,7 @@ export class FawriaProjectPartiesStatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
+    
     this.route.queryParams.subscribe(params => {
       this.isOwner = params['isOwner'] === 'true';
     });
@@ -63,11 +63,14 @@ export class FawriaProjectPartiesStatusComponent implements OnInit {
 
   showRejectionReason(rejectReason: string, name: string): void {
     let Data = {
-      title: name + " أسباب الرفض", 
+      popupType: 'primary',
+      title: " أسباب الرفض " + name,
       staticMessage: rejectReason,
-      id: "AddEditConnectionWithServicesProviderComponent"
-    } as notePopupData;
-    this._popupService.updateNotePopupData(Data);
+      id: "AddEditConnectionWithServicesProviderComponent",
+      showCloseButtonOnly: true,
+      closeButtonText: 'إغلاق'
+    } as confirmationPopupData;
+    this._popupService.updateConfirmationPopupData(Data);
   }
   
 }

@@ -157,9 +157,14 @@ export class SalesContractComponent implements OnDestroy {
     // Set phone number if available
     this.phoneNumber = this.contracts[0]?.mobile || '';
 
-    // Show OTP modal for reject action
-    this.otpModalAction = 'reject';
-    this.isOtpModalVisible = true;
+    //// Show OTP modal for reject action
+    //this.otpModalAction = 'reject';
+    //this.isOtpModalVisible = true;
+    const contractId = this.contracts[0].contractId;
+    const status = 
+      LicenseProjectBuyerStatusEnum.Refused;
+
+    this.updateContractStatus(contractId, status, this.rejectionReason, '');
   }
 
   /**

@@ -124,8 +124,9 @@
 
   &+.text,
   &+.order-list,
+  &+.content,
   &+.page-content {
-    margin-top: 1rem;
+    margin-top: 2rem;
   }
 
   &+.text {
@@ -159,47 +160,19 @@
     font-size: 1.125rem;
 
     .page-section>& {
-      font-size: 1rem;
-    }
-  }
-}
-
-.breadcrumb {
-  .breadcrumb-item {
-    &+.breadcrumb-item {
-      padding-left: 0;
-      padding-inline-start: .5rem;
-
-      &::before {
-        float: right;
-        padding-right: 0;
-        padding-inline-end: .5rem;
-        color: rgba($black, .4);
-      }
-    }
-
-    &:not(.active) {
-      a {
-        text-decoration: none;
-        color: rgba($black, .4);
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-
-    &.active {
-      color: $body-color;
+      font-size: 1.5rem;
     }
   }
 }
 
 .page-content {
   padding: 2rem 1rem;
-  border: 1px solid $lightergray;
   border-radius: $border-radius;
   background-color: $white;
+
+  &+.page-content {
+    margin-top: .5rem;
+  }
 }
 
 ul.order-list {

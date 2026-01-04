@@ -1,13 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
-import { RequestSuccessResponse, RequestValidation } from '../dataModels/request-validation.model';
+import { FarzStatusWhenNaturalTypeUnitDto, RequestSuccessResponse, RequestValidation } from '../dataModels/request-validation.model';
 import { CreateLicenseRequestHeaderDto } from '../models/license-request-header.model';
+import { LicenseProjectCompletionData } from '../dataModels/license-project-model.dto';
 
 @Injectable()
 export class LicenseRequestService {
+  updateCompletedTapCodesIsClicked : EventEmitter<null> = new EventEmitter()
+  updatedCompletePercentage : EventEmitter<null> = new EventEmitter()
+  
   Requestvalidation$: BehaviorSubject<RequestValidation | null> = new BehaviorSubject<RequestValidation | null>(null);
   constructor(private _httpClient: HttpClient) { }
 
@@ -54,6 +58,27 @@ export class LicenseRequestService {
       })
     )
   }
+  
+  GetFarzStatusWhenNaturalTypeUnit(licenseProjectId: string): Observable<FarzStatusWhenNaturalTypeUnitDto | null> {
+    return this._httpClient.get<CoreResponseDTO<FarzStatusWhenNaturalTypeUnitDto>>(`${Configuration.APIs.LicenseRequestService.GetFarzStatusWhenNaturalTypeUnit}/${licenseProjectId}`).pipe(
+      map((res) => {
+        if (res.isDone && res.data) {
+          return res.data as FarzStatusWhenNaturalTypeUnitDto;
+        } else {
+          return null
+        }
+      })
+    )
+  }
+
+  GetLicenseProjectCompletionData(id: string): Observable<LicenseProjectCompletionData|null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectCompletionData>>(`${Configuration.APIs.LicenseProject.GetLicenseProjectCompletionData}/${id}`).pipe(
+      map((res) => {
+          return res.isDone?res.data as LicenseProjectCompletionData:null;
+        })
+    )
+  }
+  
   Send(requestId: string) {
     return this._httpClient.get<CoreResponseDTO<string>>(`${Configuration.APIs.LicenseRequestService.Send}/${requestId}`);
   }
@@ -67,6 +92,24 @@ export class LicenseRequestService {
           return null;
         }
       })
+    );
+  }
+
+  SendFawriaLicenseByProjectId(projectId: string, tabCodes: string[]): Observable<RequestValidation | RequestSuccessResponse | null> {
+    const params = new HttpParams({
+      fromObject: {
+        typeCode: tabCodes
+      }
+    });
+
+    return this._httpClient.get<CoreResponseDTO<RequestValidation | RequestSuccessResponse>>(
+        `${Configuration.APIs.LicenseRequestService.SendFawriaLicenseByProjectId}/${projectId}`, { params } ).pipe(
+          map((res: CoreResponseDTO<RequestValidation | RequestSuccessResponse>) => {
+            if (!res || !res.data) {
+              return null;
+            }
+            return res.data;
+        })
     );
   }
 

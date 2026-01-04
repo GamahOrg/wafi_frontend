@@ -112,7 +112,7 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
     HasStarted: "هل تم بدأ المشروع ؟",
     Yes: "نعم",
     No: "لا",
-    title: 'بيانات المشروع الأساسية',
+    title: 'البيانات الأساسية للمشروع',
     projectLandData: 'بيانات أرض المشروع',
     name: 'اسم المشروع',
     quantitiesTableFileId: 'ملف جدول الكميات',
@@ -240,7 +240,7 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
           this.setResponseToForm(res.data as ProjectBasicDataDto);
           if (moveToNextTab) this.moveToNextTab()
         } else {
-          this._toastrNotificationService.showError(res.message);
+          //this._toastrNotificationService.showError(res.message);
         }
       })
     )

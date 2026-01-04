@@ -21,7 +21,7 @@
               type="text"
               id="control-search"
               class="form-control"
-              placeholder="البحث بنوع الوحدة أو نموذج الوحدة"
+              placeholder="البحث بكود الوحدة أو نموذج الوحدة"
               [value]="searchTerm"
               (input)="onSearchChange($any($event.target).value)"
             />
@@ -119,7 +119,7 @@
                   'status-other': project.unitStatus !== 'متاحة' && project.unitStatus !== 'محجوزة' && project.unitStatus !== 'مباعة'
                 }"
               >
-                <span class="status-dot"></span>
+                <span class="status-pill"></span>
                 {{ project.unitStatus }}
               </span>
             </td>

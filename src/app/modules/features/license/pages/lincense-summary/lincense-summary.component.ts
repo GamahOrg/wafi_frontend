@@ -24,6 +24,8 @@ import { ApprovalComponent } from '../../components/approval/approval.component'
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { GoogleAnalyticsService } from 'src/app/shared/services/GoogleAnalytics.service';
 import { RequestStep } from '../fawria-license-details/fawria-license-details.component';
+import { LicenseNatureTypeEnum } from '../../enums/license-nature-type';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-lincense-summary',
@@ -32,7 +34,9 @@ import { RequestStep } from '../fawria-license-details/fawria-license-details.co
 })
 export class LincenseSummaryComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-
+  licenseTypeCode:string = '';
+  licenseTypeCodeEnum = LicenseRequestTypeTypeCodeEnum;
+  isFawri:boolean = false;
    requestSteps: RequestStep[] = [
     {
       title: 'إنشاء طلب الترخيص رقم 133132323328',
@@ -78,7 +82,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   };
   mainTabsComponentList: tabsComponent[] = [
     {
-      icon: 'person',
+      number: 1,
       title: 'البيانات الأساسية',
       Component: MainDataComponent,
       disabled: false,
@@ -87,9 +91,10 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
       tabCode: TabCode.mainData,
       tabErrors: [],
       isVisible: true,
-    },    
+      isCompleted: false,
+    },
     {
-      icon: 'holiday_village',
+      number: 2,
       title: 'بيانات المشروع',
       Component: ProjectDataComponent,
       disabled: false,
@@ -98,9 +103,10 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
       tabCode: TabCode.projectData,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
-      icon: 'insert_drive_file',
+      number: 3,
       title: 'دراسة الجدوى',
       Component: FeasibilityStudyComponent,
       disabled: false,
@@ -109,9 +115,10 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
       tabCode: TabCode.feasibilityStudy,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
-      icon: 'people',
+      number: 4,
       title: 'أطراف المشروع',
       Component: ProjectPartiesComponent,
       disabled: false,
@@ -120,6 +127,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
       tabCode: TabCode.projectParties,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
   ]
   tabContent: Tabs = {
@@ -161,6 +169,31 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
     )
   }
 
+  completedTapCodes: string[] = [];
+
+  private observeUpdateCompletedTapCodes() {
+    this._licenseRequestService.updateCompletedTapCodesIsClicked.subscribe(
+      (res) => {
+        this.GetCompletedLicenseProjectProfileTaps();
+      }
+    );
+  }
+
+  GetCompletedLicenseProjectProfileTaps() {
+    this._dataVisibilityOfLicenseProjectService
+      .GetCompletedLicenseProjectProfileTaps(this.licenseProjectId!)
+      .subscribe((res) => {
+        this.completedTapCodes = res;
+
+        // Update isCompleted for tabs that are in completedTapCodes
+        this.mainTabsComponentList.forEach(tab => {
+          if (tab.tabCode && this.completedTapCodes.includes(tab.tabCode)) {
+            tab.isCompleted = true;
+          }
+        });
+      });
+  }
+
   private observeDataVisibilityOfLicenseProject() {
     this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProjectForCertainTab(this.subscriptions, this.mainTabsComponentList, true, false)
   }
@@ -184,7 +217,18 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   }
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (this.licenseProjectId) this.GetLicenseRequestHeadersByLicenseProjectId()
+    this.licenseTypeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage() as string;
+    
+    if(this.licenseTypeCode && this.licenseTypeCode === this.licenseTypeCodeEnum.Fawria)
+      this.isFawri = true;
+    else
+      this.isFawri = false;
+
+    if (this.licenseProjectId) {
+      this.GetLicenseRequestHeadersByLicenseProjectId();
+      this.GetCompletedLicenseProjectProfileTaps();
+      this.observeUpdateCompletedTapCodes();
+    }
   }
   resetDataVisibilityOfLicenseProject() {
     this._dataVisibilityOfLicenseProjectService.resetDataVisibilityOfLicenseProject()
@@ -228,10 +272,10 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   }
 
   licenseLink(): string {
-    
     if(this.typeCode === 'FSRSU'){
       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.licenseProjectId as string);
-      return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseList}`;
+      this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage() as string);
+      return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`
     }else
       return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`
     return '';

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LicenseProjectModelDto, LicenseProjectModelDesignFileDto } from '../../../dataModels/license-project-model.dto';
+import { LicenseProjectModelDto, LicenseProjectModelDesignFileDto, LicenseProjectCompletionData } from '../../../dataModels/license-project-model.dto';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { ProjectModuleModelsFormComponent } from '../../project-module-models-form/project-module-models-form.component';
 import { forkJoin, Subscription } from 'rxjs';
@@ -13,6 +13,10 @@ import { ToastrService } from 'ngx-toastr';
 import { Validators, FormBuilder } from '@angular/forms';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
+import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
+import { DataVisibilityOfLicenseProjectService } from '../../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
+import { TabCode } from '../../../models/tab-code.model';
+import { LicenseRequestService } from '../../../services/license-request.service';
 
 @Component({
   selector: 'app-license-project-zone-subunit-model',
@@ -26,12 +30,16 @@ export class LicenseProjectZoneSubunitModelComponent implements OnInit, OnDestro
   baseUrl = `${environment.baseURL}/`;
   showValidation: boolean = false;
   models: LicenseProjectModelDto[] = [];
+  hideActionButtons: boolean = false;
 
   constructor(private _projectModelService: ProjectModelService,
     private _formBuilder: FormBuilder,
     private _toastrService: ToastrService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _popupService: PopupService) { }
+    private _popupService: PopupService,
+    private _licenseRequestService: LicenseRequestService,
+    private _sharedLicenseProjectService: SharedLicenseProjectService,
+    private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService) { }
 
   multipleFileUploaderData: FileUploader = {
     multiple: true,
@@ -51,10 +59,43 @@ export class LicenseProjectZoneSubunitModelComponent implements OnInit, OnDestro
   }
 
   ngOnInit() {
-
     this.observeForm();
-    this.getSelectedProjectSubUnit()
+    this.getSelectedProjectSubUnit();
     this.observePopupEvents();
+    this.checkIfShouldHideActionButtons();
+  }
+
+ 
+  private checkIfShouldHideActionButtons(): void {
+     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
+    const licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    if (typeCode === 'FSRSU' && licenseProjectId) {
+
+      const requests = [
+        this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(licenseProjectId),
+        this._licenseRequestService.GetLicenseProjectCompletionData(licenseProjectId)
+      ];
+      const subscriptions = forkJoin(requests).subscribe((results) => {
+        if (results) {
+          let completedTabs = results[0] as string[];
+          let complete = results[1] as LicenseProjectCompletionData | null;
+          if (completedTabs && complete)
+            this.hideActionButtons = completedTabs.includes(TabCode.fawriaArchitecturalUnitsAndDesigns) && complete && (complete.isProfileCompleted || complete.isProjectHasUnitForFarzIntegration);
+
+        }
+      });
+      this.subscriptions.push(subscriptions);
+
+      // this.subscriptions.push(
+      //   this._dataVisibilityOfLicenseProjectService
+      //     .GetCompletedLicenseProjectProfileTaps(this.licenseProjectId)
+      //     .subscribe((completedTabs: string[]) => {
+      //       this.hideActionButtons = completedTabs.includes(TabCode.fawriaArchitecturalUnitsAndDesigns);
+      //     })
+      // );
+
+
+    }
   }
 
   localization = {
@@ -202,6 +243,7 @@ export class LicenseProjectZoneSubunitModelComponent implements OnInit, OnDestro
           this.projectModel.licenseProjectModelDesignFiles = []
           this.licenseProjectModelDesignFiles=[]
           // this._popupService.dismissDialog();
+          this.getSelectedProjectSubUnit();
         }
         // else
         //   this._toastrNotificationService.showError(res.message);

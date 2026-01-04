@@ -247,9 +247,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        if (res.id === 'RequestApprovalComponent') {
-          this.isApprovalRequired();
-        } else {
+        if (res.id !== 'RequestApprovalComponent') {
           this.compilePlannedReport();
         }
       })

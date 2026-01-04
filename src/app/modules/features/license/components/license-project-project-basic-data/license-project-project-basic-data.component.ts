@@ -19,7 +19,7 @@ export class LicenseProjectProjectBasicDataComponent implements OnInit {
   constructor(private _licenseDetailService: LicenseDetailsService) { }
 
   localization = {
-    title: 'بيانات المشروع الأساسية',
+    title: 'البيانات الأساسية للمشروع',
     projectLandData: 'بيانات أرض المشروع',
     name: 'اسم المشروع',
     quantitiesTableFileId: 'ملف جدول الكميات',

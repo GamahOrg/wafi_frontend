@@ -20,6 +20,7 @@ export interface ProjectUnit {
   licenseProjectSubUnitsListCodes: ProjectUnitCodeDto[]
   designFileId: string;
   designFile: FileManagerBE;
+  licenseProjectDeedId: string ;
 }
 
 export interface licenseProjectSubUnits {
@@ -134,4 +135,16 @@ export interface SysLicenseProjectBuildingBlockTypeDto {
   name: string;
   isBuilding: boolean;
   isBlock: boolean;
+  isLands: boolean;
+}
+export interface LicenseProjectDeedLookupDto {
+  id: string;
+  number: string;
+  name: string;
+  integrationTypeId: number | null;
+}
+export interface LicenseProjectNatureTypeDto {
+  projectId: string;
+  natureTypeId: number;
+  natureTypeName: string;
 }

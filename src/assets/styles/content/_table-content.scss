@@ -56,3 +56,17 @@ td {
     }
   }
 }
+
+tr {
+  &.info-row {
+    td {
+      background-color: #F5FCFC !important;
+    }
+  }
+
+  &.child-row {
+    td {
+      background-color: #F4F6F6 !important;
+    }
+  }
+}

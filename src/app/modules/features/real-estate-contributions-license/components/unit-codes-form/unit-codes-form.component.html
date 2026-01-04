@@ -1,6 +1,6 @@
 <ng-container>
     <!-- <div class="tab-data-header">
-        <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+        <i class="icon hgi hgi-stroke hgi-profile"></i>
         <h6 class="title">{{localization.title}}</h6>
     </div> -->
     <!-- (ngModelChange)="ProjectModelChange($event)" -->
@@ -23,6 +23,7 @@
 
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
+                <span class="required-star">*</span>
                     <label for=""
                            class="form-label">{{localization.code}}</label>
                     <input type="text" id="control-code"
@@ -34,6 +35,7 @@
 
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
+                    <span class="required-star">*</span>
                     <label for=""
                            class="form-label">{{localization.deliveryOn}}</label>
                     <div class="input-group">
@@ -50,6 +52,7 @@
 
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
+                    <span class="required-star">*</span>
                     <label for=""
                            class="form-label">{{localization.price}}</label>
                     <input type="number" id="control-price"
@@ -62,6 +65,7 @@
 
             <div class="col-12 col-lg-6" *ngIf="showfloorNumber">
                 <div class="form-group mb-4">
+                <span class="required-star">*</span>
                     <label for=""
                            class="form-label">{{localization.floorNumber}}</label>
                     <input type="number" id="control-floorNumber"

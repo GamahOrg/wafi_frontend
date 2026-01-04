@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
-import { LicenseProjectDetailsDto } from '../models/license-project.model';
+import { EscrowAccountDto, LicenseProjectDetailsDto } from '../models/license-project.model';
 
 @Injectable()
 export class LicenseProjectService {
@@ -19,5 +19,16 @@ export class LicenseProjectService {
         })
       );
   }
+
+  getEscrowAccount(id: string | null): Observable<any> {
+    return this._httpClient.get<CoreResponseDTO<EscrowAccountDto>>(`${Configuration.APIs.LicenseProject.GetEscrowAccount}/${id}`,)
+      .pipe(
+        map((res: CoreResponseDTO<EscrowAccountDto>) => {
+          return res.data as any;
+        })
+      );
+  }
+
+  
 
 }

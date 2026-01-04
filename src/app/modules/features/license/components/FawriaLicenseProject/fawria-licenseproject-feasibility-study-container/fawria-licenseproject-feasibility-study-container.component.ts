@@ -14,6 +14,7 @@ import { NextAndPreviusButtonsService } from '../../../services/next-and-previou
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { ToastrService } from 'ngx-toastr';
 import { LicenseProjectFeasibilityStudyFileCreateUpdateDto } from '../../../models/feasibilityStudyDtos/license-project-feasibility-study-file-create-update-dto';
+import { LicenseRequestService } from '../../../services/license-request.service';
  
 @Component({
   selector: 'app-fawria-licenseproject-feasibility-study-container',
@@ -54,6 +55,7 @@ export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements O
     private _formBuilder: FormBuilder,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
+    private _licenseRequestService: LicenseRequestService,
     private _toastrNotificationService: ToastrNotificatioService,
     private _toastrService: ToastrService,
   ) { }
@@ -74,7 +76,21 @@ export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements O
       this._licenseProjectFeasibilityStudyService.GetByLicenseProjectId(this.licenseProjectId as string).subscribe(res => {
         if (res) {
           this.licenseProjectFeasibilityStudyDto = res as LicenseProjectFeasibilityStudyDto;
-          this.licenseProjectFeasibilityStudyForm.patchValue(this.licenseProjectFeasibilityStudyDto);
+
+          // Convert 0 values to null so placeholders are displayed
+          this.licenseProjectFeasibilityStudyForm.patchValue({
+            totlaAreaOfCommonAreas: this.licenseProjectFeasibilityStudyDto.totalAreaOfCommonAreas || null,
+            infrastructureDevelopmentCosts: this.licenseProjectFeasibilityStudyDto.infrastructureDevelopmentCosts || null,
+            totalConstructionCosts: this.licenseProjectFeasibilityStudyDto.totalConstructionCosts || null,
+            totalNonConstructionCosts: this.licenseProjectFeasibilityStudyDto.totalNonConstructionCosts || null,
+            totalLandCost: this.licenseProjectFeasibilityStudyDto.totalLandCost || null,
+            totalSalesValue: this.licenseProjectFeasibilityStudyDto.totalSalesValue || null,
+            totalProjectCosts: this.licenseProjectFeasibilityStudyDto.totalProjectCosts || null,
+            expectedNetProfit: this.licenseProjectFeasibilityStudyDto.expectedNetProfit || null,
+            averageSalesPricePerMeter: this.licenseProjectFeasibilityStudyDto.averageSalesPricePerMeter || null,
+            averageConstructionCostPerMeter: this.licenseProjectFeasibilityStudyDto.averageConstructionCostPerMeter || null,
+          });
+
           this.licenseProjectMarketingPlanFiles = this.licenseProjectFeasibilityStudyDto.licenseProjectMarketingPlanFiles;
           this.licenseProjectProposedScheduleFiles = this.licenseProjectFeasibilityStudyDto.licenseProjectProposedScheduleFiles;
           this.licenseProjectFeasibilityStudyFiles=this.licenseProjectFeasibilityStudyDto.licenseProjectFeasibilityStudyFiles;
@@ -106,6 +122,7 @@ export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements O
           this.licenseProjectFeasibilityStudyDto = res.data as LicenseProjectFeasibilityStudyDto;
           this._licenseProjectFeasibilityStudyService.setFeasibilityStudyId(this.licenseProjectFeasibilityStudyDto.id);
           this._toastrService.success('تم الحفظ');
+          this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
           if (moveToNextTab) this.moveToNextTab()
         }
       else{
@@ -140,6 +157,7 @@ export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements O
   }
   private updateSaveAsDraftBtnIsvisible(): void {
     this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false)
+    this._nextAndPreviusButtonsService.nextBtnIsVisible.next(true);
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())

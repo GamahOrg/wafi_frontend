@@ -116,23 +116,30 @@
 
 .form-check {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: .75rem;
 
-  padding: $input-padding-y $input-padding-x;
-  border: $input-border-width solid $input-border-color;
-  border-radius: $input-border-radius;
-  padding-right: $form-check-padding-start;
+  padding: 0;
   cursor: pointer;
 
-  &:has(:checked[type=radio]) {
-    border-color: $theme-main;
-    background-color: $light;
+  &:not(.form-check-normal) {
+    justify-content: center;
+    padding: $input-padding-y $input-padding-x;
+    border: $input-border-width solid $input-border-color;
+    border-radius: $input-border-radius;
+
+    &:has(:checked[type=radio]) {
+      border-color: $theme-main;
+      background-color: $light;
+    }
   }
 
   .form-check-input {
     float: none;
+  }
+
+  .multi-select & {
+    padding: $dropdown-item-padding-y $dropdown-item-padding-x;
   }
 }
 
@@ -143,6 +150,12 @@
 .form-check-label {
   font-weight: 600;
   color: $darkgray;
+
+  .form-check-normal & {
+    flex: 1;
+    font-weight: 500;
+    color: #1F2A37;
+  }
 }
 
 .form-check-input {
@@ -153,5 +166,9 @@
     &~.form-check-label {
       color: $theme-main;
     }
+  }
+
+  &:focus[type=radio] {
+    border-color: $white !important;
   }
 }

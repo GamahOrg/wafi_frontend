@@ -20,7 +20,7 @@ export class ProjectRealStateDeveloperDto {
      salesEmail: string = "";
      paymentReceiptFileId: string | null = null;
    // المفوض
-    delegatorCustomerId : string = "";
+    delegatorCustomerId : string | null = "";
     delegatorCustomer ?: CustomerShortDto
     licenseRequestHeaders: LicenseRequestHeaderDto[] = [];
     paymentReceiptFile: SysFileManagerCreateUpdateDto | null = null;

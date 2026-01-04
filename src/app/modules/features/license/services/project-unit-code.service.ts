@@ -1,11 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { ProjectUnitCodeDto } from '../dataModels/project-unit-code.dto';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { ProjectUnitCodeDto, ProjectUnitCodesPaginationParams } from '../dataModels/project-unit-code.dto';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { HttpClient } from '@angular/common/http';
 import { ProjectUnit } from '../models/project-units';
 import { LicenseProjectSubUnitsListCodeFile } from '../dataModels/license-project-sub-units-list-code-file';
+import { Pagination } from '../../../../shared/models/pagination.model';
 
 @Injectable()
 export class ProjectUnitCodeService {
@@ -28,7 +29,26 @@ export class ProjectUnitCodeService {
   SetSubjectListObjs(LatestValue: ProjectUnitCodeDto[]) {
     return this.listObjSubject.next(LatestValue);
   }
+  // ProjectUnitCodeService
+  private listObjSubjectPaginated =
+    new BehaviorSubject<Pagination<ProjectUnitCodeDto[]> | null>(null);
 
+
+  getSubjectListObjsPaginated(): Observable<Pagination<ProjectUnitCodeDto[]> | null> {
+    return this.listObjSubjectPaginated.asObservable();
+  }
+  SetSubjectListObjsPaginated(latestValue: Pagination<ProjectUnitCodeDto[]>): void {
+    this.listObjSubjectPaginated.next(latestValue);
+  }
+  private _refreshPaginatedList$ = new Subject<void>();
+
+  triggerRefreshPaginatedList(): void {
+    this._refreshPaginatedList$.next();
+  }
+
+  onRefreshPaginatedList(): Observable<void> {
+    return this._refreshPaginatedList$.asObservable();
+  }
 
   Save(projectUnits: ProjectUnitCodeDto): Observable<CoreResponseDTO<ProjectUnit[]>> {
     return this._httpClient.post<CoreResponseDTO<ProjectUnit[]>>
@@ -44,6 +64,28 @@ export class ProjectUnitCodeService {
     return this._httpClient.get<CoreResponseDTO<ProjectUnitCodeDto[]>>
       (`${Configuration.APIs.LicenseProjectSubUnitsListCode.GetByProjectUnitId}/${projectId}`)
   }
+  GetUnitsCodesListByProjectUnitId(projectId: string): Observable<CoreResponseDTO<ProjectUnitCodeDto[]>> {
+    return this._httpClient.get<CoreResponseDTO<ProjectUnitCodeDto[]>>
+      (`${Configuration.APIs.LicenseProjectSubUnitsListCode.GetUnitsCodesListByProjectUnitId}/${projectId}`)
+  }
+  GetUnitsCodesListByProjectUnitIdPaginated(
+    params: ProjectUnitCodesPaginationParams
+  ): Observable<Pagination<ProjectUnitCodeDto[]> | null> {
+
+    return this._httpClient
+      .post<CoreResponseDTO<Pagination<ProjectUnitCodeDto[]>>>(
+        `${Configuration.APIs.LicenseProjectSubUnitsListCode.GetUnitsCodesListByProjectUnitIdPaginated}`,
+        params
+      )
+      .pipe(
+        map((res: CoreResponseDTO<Pagination<ProjectUnitCodeDto[]>>) => {
+          return res.isDone
+            ? (res.data as Pagination<ProjectUnitCodeDto[]>)
+            : null;
+        })
+      );
+  }
+
   Delete(id: string): Observable<CoreResponseDTO<ProjectUnitCodeDto[]>> {
     return this._httpClient.delete<CoreResponseDTO<ProjectUnitCodeDto[]>>
       (`${Configuration.APIs.LicenseProjectSubUnitsListCode.Delete}?id=${id}`)
@@ -52,7 +94,7 @@ export class ProjectUnitCodeService {
   saveFileData(fileData: LicenseProjectSubUnitsListCodeFile): Observable<any | null> {
     return this._httpClient.post<CoreResponseDTO<any>>(Configuration.APIs.LicenseProjectSubUnitsListCode.SaveFileData, fileData).pipe(
       map((res: CoreResponseDTO<any>) => {
-        if (res.data) {
+        if (res.isDone) {
           return res
         } else {
           return null

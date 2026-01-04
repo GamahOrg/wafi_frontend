@@ -1,50 +1,47 @@
 <div class="d-flex flex-column h-100">
-    <!-- <div class="tab-data-header">
-      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+  <!-- <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
       <h6 class="title">{{localization.title}}</h6>
     </div> -->
-    <div class="tab-data-section">
-      <div class="table-responsive">
-        <table class="table table-light">
-          <thead>
+  <div class="tab-data-section">
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <!-- <th>{{localization.licenseBeneficiaryContractFormId}}</th> -->
+            <th>{{localization.itemNumber}}</th>
+            <th> {{localization.itemTitle}}</th>
+            <th> {{localization.itemText}}</th>
+            <th class="w-25"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let parentBeneficiary of getParentItems(); let parentIndex = index">
+            <!-- Parent Row -->
             <tr>
-              <!-- <th>{{localization.licenseBeneficiaryContractFormId}}</th> -->
-              <th>{{localization.itemNumber}}</th>
-              <th> {{localization.itemTitle}}</th>
-              <th> {{localization.itemText}}</th>
-              <th class="w-25"></th>
+              <td>
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <span class="tag">{{getItemNumberDisplay(parentBeneficiary)}}</span>
+                  <button *ngIf="hasChildren(parentBeneficiary.id)" mat-icon-button class="me-2" (click)="toggleExpand(parentBeneficiary.id)">
+                    <mat-icon>{{isExpanded(parentBeneficiary.id) ? 'expand_less' : 'expand_more'}}</mat-icon>
+                  </button>
+                </div>
+              </td>
+              <td>{{parentBeneficiary?.itemTitle}}</td>
+              <td colspan="2">{{parentBeneficiary?.itemText}}</td>
             </tr>
-          </thead>
-          <tbody>
-            <ng-container *ngFor="let parentBeneficiary of getParentItems(); let parentIndex = index">
-              <!-- Parent Row -->
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <button *ngIf="hasChildren(parentBeneficiary.id)" mat-icon-button class="me-2"
-                      (click)="toggleExpand(parentBeneficiary.id)"
-                      >
-                      <mat-icon>{{isExpanded(parentBeneficiary.id) ? 'expand_less' : 'expand_more'}}</mat-icon>
-                    </button>
-                    <span>{{getItemNumberDisplay(parentBeneficiary)}}</span>
-                  </div>
-                </td>
-                <td>{{parentBeneficiary?.itemTitle}}</td>
-                <td>{{parentBeneficiary?.itemText}}</td>
+
+            <!-- Child Rows -->
+            <ng-container *ngIf="isExpanded(parentBeneficiary.id)">
+              <tr class="child-row" *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index">
+                <td><span class="tag">{{getItemNumberDisplay(childBeneficiary)}}</span></td>
+                <td>{{childBeneficiary?.itemTitle}}</td>
+                <td colspan="2">{{childBeneficiary?.itemText}}</td>
               </tr>
-
-              <!-- Child Rows -->
-              <ng-container *ngIf="isExpanded(parentBeneficiary.id)">
-                <tr *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index" class="child-row">
-                  <td class="ps-5">{{getItemNumberDisplay(childBeneficiary)}}</td>
-                  <td>{{childBeneficiary?.itemTitle}}</td>
-                  <td>{{childBeneficiary?.itemText}}</td>
-                </tr>
-              </ng-container>
             </ng-container>
-          </tbody>
-        </table>
-      </div>
-    </div>    
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
   </div>
-
+</div>

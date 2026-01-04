@@ -9,6 +9,7 @@ export class LicenseProjectRelativeWeightDto {
     id: string = "";
     elementName: string = '';
     elementValue: number = 0;
+    variancePercentage: number = 0;
     modifiedRelativeWeight:number = 0;
     licenseProjectId: string = "";
     licenseRelativeWeightId: string = "";

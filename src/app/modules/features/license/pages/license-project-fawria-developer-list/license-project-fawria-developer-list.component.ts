@@ -11,6 +11,10 @@ import {
 import { LicenseProjectFawriaDeveloperService } from '../../services/license-project-fawria-developer.service';
 import { pagination, Pagination } from 'src/app/shared/models/pagination.model';
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
+import { DisableItemConfirmationComponent } from '../../../../../shared/components/disable-item-confirmation/disable-item-confirmation.component';
+import { confirmationPopupData } from '../../../../../shared/models/popup.model';
+import { PopupService } from '../../../../../shared/services/popup/popup.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-license-project-fawria-developer-list',
@@ -43,7 +47,10 @@ export class LicenseProjectFawriaDeveloperListComponent
     private _fb: FormBuilder,
     private _paginationService: PaginationService,
     private _toastr: ToastrNotificatioService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _popupService: PopupService,
+    private _toastrService: ToastrService,
+
   ) {
     this.searchForm = this._fb.group({
       commercialRegisterNumber: ['', [Validators.required]],
@@ -53,6 +60,13 @@ export class LicenseProjectFawriaDeveloperListComponent
       facilityId: ['', [Validators.required]],
     });
   }
+
+
+  localization = {
+
+    deletedSuccessfully: 'تم حذف المطور بنجاح',
+
+  };
 
   ngOnInit(): void {
     this.loadDevelopers();
@@ -92,6 +106,50 @@ export class LicenseProjectFawriaDeveloperListComponent
           }
         )
     );
+  }
+
+
+  confirmDeleteDeveloper(
+    developer: LicenseProjectFawriaDeveloperListDto
+  ): void {
+
+
+    const confirmationData: confirmationPopupData = {
+      id: developer.id,
+      staticMessage: 'هل أنت متأكد من حذف المطور؟',
+      dynamicMessage: developer.employeeName ?? '',
+      popupType:'primary'
+
+    };
+    const dialogRef =
+      this._popupService.updateConfirmationPopupData(confirmationData);
+
+
+    // Subscribe to confirm action
+    const confirmSub = this._popupService.confirmAction.subscribe((data) => {
+
+      this.delete(developer.id);
+      dialogRef.close();
+      confirmSub.unsubscribe(); // clean up to avoid memory leaks
+    });
+  }
+  delete(id: string) {
+   
+    this.subscriptions.push(
+      this._licenseProjectFawriaService.deleteLicenseProjectEngineeringWorksExamination(id).subscribe(res => {
+        if (res.isDone) {
+          //delete here
+          console.log("delete here ");
+          this._toastrService.success(this.localization.deletedSuccessfully);
+
+          this.loadDevelopers();
+
+       
+        }
+        else
+          this._toastr.showError(res.message);
+      })
+    )
   }
 
   /**

@@ -1,6 +1,15 @@
 .table-responsive {
+  // max-width: 90vw;
   border: var(--bs-border-width) solid $table-border-color;
   border-radius: $border-radius-sm;
+
+  tbody {
+    tr:last-child {
+      td {
+        border-bottom: none;
+      }
+    }
+  }
 }
 
 .table {
@@ -31,8 +40,9 @@
 .table-light {
   >thead {
     th {
-      color: $headings-color;
-      background-color: #F4F6F6;
+      font-size: .75rem;
+      color: #384250;
+      background-color: #F3F4F6;
     }
   }
 

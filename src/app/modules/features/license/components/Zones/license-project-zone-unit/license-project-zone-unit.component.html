@@ -1,195 +1,134 @@
-<form
-  class="d-flex flex-column"
-  [formGroup]="addEditUnitForm"
-  id="form-addEditUnitForm"
->
-
-  <h6 class="form-title">{{ localization.UnitType }}</h6>
-  <div class="row">
+<form [formGroup]="addEditUnitForm" id="form-addEditUnitForm">
+  <div class="row row-gap-4">
     <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <div class="form-check form-check-inline" *ngFor="let type of UnitType">
-          <input
-            class="form-check-input"
-            type="radio"
-            id="control-unitTypeId"
-            [id]="type.id"
-            [value]="type.id"
-            formControlName="unitTypeId"
-            (change)="onUnitTypeChange(type.id)"
-          />
-          <label class="form-check-label" [for]="type.id">{{
-            type.name
-          }}</label>
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.UnitType }}</label>
+        <div class="row g-2">
+          <div class="col-12 col-lg-6" *ngFor="let type of UnitType">
+            <label class="form-check" [for]="type.id">
+              <input class="form-check-input" type="radio" id="control-unitTypeId" [id]="type.id" [value]="type.id" formControlName="unitTypeId" (change)="onUnitTypeChange(type.id)" [attr.disabled]="isBlockDisabled(type) ? true : null" />
+              <label class="form-check-label" [for]="type.id">{{
+                type.name
+                }}</label>
+            </label>
+          </div>
         </div>
-        <div
-          class="invalid-feedback d-block"
-          *ngIf="controls.unitTypeId.errors?.['required'] && showValidation"
-        >
+        <div class="invalid-feedback d-block" *ngIf="controls.unitTypeId.errors?.['required'] && showValidation">
           حقل مطلوب
         </div>
       </div>
     </div>
 
-     <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <label for="" class="form-label">{{ localization.projectBuildingBlockType }}</label>
-        <select
-          class="form-select"
-          id="control-projectBuildingBlockType"
-          aria-label="Default select example"
-          formControlName="buildingBlockTypeId"
-        >
+    <div class="col-12 col-lg-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.projectBuildingBlockType }}</label>
+        <select class="form-select" id="control-projectBuildingBlockType" aria-label="Default select example" formControlName="buildingBlockTypeId">
           <option selected disabled>{{ localization.projectBuildingBlockType }}</option>
           <option *ngFor="let item of projectBuildingBlockType" [value]="item.id">
             {{ item.name }}
           </option>
         </select>
-        <div
-          class="invalid-feedback d-block"
-          *ngIf="controls.buildingBlockTypeId.errors?.['required'] && showValidation"
-        >
-          حقل مطلوب
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <label for="" class="form-label">{{ localization.unitCode }}</label>
-        <input
-          type="text"
-          class="form-control"
-          id="control-code"
-          [placeholder]="localization.unitCode"
-          formControlName="code"
-        />
-        <div
-          class="invalid-feedback d-block"
-          *ngIf="controls.code.errors?.['required'] && showValidation"
-        >
+        <div class="invalid-feedback d-block" *ngIf="controls.buildingBlockTypeId.errors?.['required'] && showValidation">
           حقل مطلوب
         </div>
       </div>
     </div>
 
     <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <label for="" class="form-label">{{ localization.stageNo }}</label>
-        <select
-          class="form-select"
-          id="control-stageNumberId"
-          aria-label="Default select example"
-          formControlName="stageNumberId"
-        >
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.unitCode }}</label>
+        <input type="text" class="form-control" id="control-code" [placeholder]="localization.unitCode" formControlName="code" />
+        <div class="invalid-feedback d-block" *ngIf="controls.code.errors?.['required'] && showValidation">
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.stageNo }}</label>
+        <select class="form-select" id="control-stageNumberId" aria-label="Default select example" formControlName="stageNumberId">
           <option selected disabled>{{ localization.stageNo }}</option>
           <option *ngFor="let stage of stageNumber" [value]="stage.id">
             {{ stage.name }}
           </option>
         </select>
-        <div
-          class="invalid-feedback d-block"
-          *ngIf="controls.stageNumberId.errors?.['required'] && showValidation"
-        >
+        <div class="invalid-feedback d-block" *ngIf="controls.stageNumberId.errors?.['required'] && showValidation">
           حقل مطلوب
         </div>
       </div>
     </div>
 
     <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <label for="" class="form-label">{{
-          localization.constructionStartOn
-        }}</label>
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span>{{ localization.constructionStartOn }}</label>
         <div class="input-group">
-          <input
-            bsDatepicker
-            id="control-constructionStartOn"
-            type="text"
-            class="form-control"
-            formControlName="constructionStartOn"
-            [placeholder]="localization.constructionStartOn"
-            value="{{
+          <input bsDatepicker id="control-constructionStartOn" type="text" class="form-control" formControlName="constructionStartOn" [placeholder]="localization.constructionStartOn" value="{{
               controls.constructionStartOn.value
                 ? (controls.constructionStartOn.value | date : 'yyyy-MM-dd')
                 : null
-            }}"
-          />
-          <span class="input-group-text"
-            ><i class="material-icons-outlined">calendar_today</i></span
-          >
+            }}" />
+          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
         </div>
-        <div
-          class="invalid-feedback d-block"
-          *ngIf="controls.constructionStartOn.errors?.['required'] && showValidation"
-        >
+        <div class="invalid-feedback d-block" *ngIf="controls.constructionStartOn.errors?.['required'] && showValidation">
           حقل مطلوب
         </div>
-        <mat-error
-          class="mt-2"
-          *ngIf="
+        <mat-error class="mt-2" *ngIf="
             addEditUnitForm.errors &&
             addEditUnitForm.errors!['dateInvalid'] &&
             showValidation
-          "
-          >{{ localization.dateValidator }}</mat-error
-        >
+          ">{{ localization.dateValidator }}</mat-error>
       </div>
     </div>
 
     <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <label for="" class="form-label">{{
-          localization.constructionEndOn
-        }}</label>
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span>{{ localization.constructionEndOn }}</label>
         <div class="input-group">
-          <input
-            bsDatepicker
-            id="control-constructionEndOn"
-            type="text"
-            class="form-control"
-            formControlName="constructionEndOn"
-            [placeholder]="localization.constructionEndOn"
-            value="{{
+          <input bsDatepicker id="control-constructionEndOn" type="text" class="form-control" formControlName="constructionEndOn" [placeholder]="localization.constructionEndOn" value="{{
               controls.constructionEndOn.value
                 ? (controls.constructionEndOn.value | date : 'yyyy-MM-dd')
                 : null
-            }}"
-          />
-          <span class="input-group-text"
-            ><i class="material-icons-outlined">calendar_today</i></span
-          >
+            }}" />
+          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
         </div>
-        <div
-          class="invalid-feedback d-block"
-          *ngIf="controls.constructionEndOn.errors?.['required'] && showValidation"
-        >
+        <div class="invalid-feedback d-block" *ngIf="controls.constructionEndOn.errors?.['required'] && showValidation">
           حقل مطلوب
         </div>
       </div>
     </div>
 
     <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <label for="" class="form-label">{{ localization.designFile }}</label>
-            <div class="value m-3" *ngIf="controls.designFileId.value && selectedProjectUnit && selectedProjectUnit.designFile">
-                <span class="icon material-icons-outlined">content_copy</span>
-                <a [href]="baseUrl + selectedProjectUnit.designFile?.filePath" target="_blank">
-                    {{selectedProjectUnit.designFile?.fileDescription}}
-                </a>
-            </div>
-            <app-file-uploader (fileUploaded)="onDesignFileUploaded($event)"
-            [data]="singleFileUploaderData"
-            ></app-file-uploader> 
-            <div class="invalid-feedback d-block"
-                *ngIf="controls.designFileId.errors && controls.designFileId.errors['required']">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.deed }}</label>
+        <select class="form-select" id="control-licenseProjectDeedId" aria-label="Default select example" formControlName="licenseProjectDeedId">
+          <option selected disabled>{{ localization.deed }}</option>
+          <option *ngFor="let item of projectDeedsDDLList" [value]="item.id">
+            {{ item.name }}
+          </option>
+        </select>
+        <div class="invalid-feedback d-block" *ngIf="controls.licenseProjectDeedId.errors?.['required'] && showValidation">
           حقل مطلوب
-            </div>
         </div>
       </div>
-    
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.designFile }}</label>
+        <div class="value m-3" *ngIf="controls.designFileId.value && selectedProjectUnit && selectedProjectUnit.designFile">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + selectedProjectUnit.designFile?.filePath" target="_blank">
+            {{selectedProjectUnit.designFile?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader (fileUploaded)="onDesignFileUploaded($event)" [data]="singleFileUploaderData"></app-file-uploader>
+        <div class="invalid-feedback d-block" *ngIf="controls.designFileId.errors?.['required'] && showValidation">
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
   </div>
 </form>
 
@@ -202,8 +141,8 @@
   </h6>
   <div class="row">
     <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <label for="" class="form-label">{{ localization.subUnitsType }}</label>
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.subUnitsType }}</label>
         <select
           class="form-select"
           id="control-subUnitTypeId"
@@ -230,8 +169,8 @@
     </div>
 
     <div class="col-12 col-lg-6">
-      <div class="form-group mb-4">
-        <label for="" class="form-label">{{ localization.subUnitCount }}</label>
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.subUnitCount }}</label>
         <input
           type="number"
           id="control-subUnitCount"
@@ -308,7 +247,7 @@
 <!-- <div class="row">
     <div class="col-12">
         <label for="prevExpert"
-               class="form-label">هل لديك خبرات سابقة </label>
+               class="form-label"><span class="required-star">*</span> هل لديك خبرات سابقة </label>
     </div>
     <div class="col-12">
         <div class="form-check form-check-inline">
@@ -335,7 +274,7 @@
 <div class="row">
     <div class="col-12 col-lg-6">
         <label for=""
-               class="form-label">رقم رخصة المحاسب القانوني المعتمد</label>
+               class="form-label"><span class="required-star">*</span> رقم رخصة المحاسب القانوني المعتمد</label>
         <input type="text"
                class="form-control"
                id=""
@@ -362,7 +301,7 @@
     <div class="row">
         <div class="col-12 col-lg-6">
             <label for=""
-                   class="form-label">تصنيف المشروع</label>
+                   class="form-label"><span class="required-star">*</span> تصنيف المشروع</label>
             <select class="form-select"
                     aria-label="Default select example">
                 <option selected>Open this select menu</option>
@@ -373,7 +312,7 @@
         </div>
         <div class="col-12 col-lg-6">
             <label for=""
-                   class="form-label">نوع المشروع</label>
+                   class="form-label"><span class="required-star">*</span> نوع المشروع</label>
             <input type="text"
                    class="form-control"
                    id=""
@@ -383,7 +322,7 @@
     <div class="row">
         <div class="col-12 col-lg-6">
             <label for=""
-                   class="form-label">اسم المشروع</label>
+                   class="form-label"><span class="required-star">*</span> اسم المشروع</label>
             <input type="text"
                    class="form-control"
                    id=""
@@ -391,7 +330,7 @@
         </div>
         <div class="col-12 col-lg-6">
             <label for=""
-                   class="form-label">مالك المشروع</label>
+                   class="form-label"><span class="required-star">*</span> مالك المشروع</label>
             <input type="text"
                    class="form-control"
                    id=""

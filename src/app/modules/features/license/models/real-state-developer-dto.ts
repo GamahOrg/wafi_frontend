@@ -58,7 +58,8 @@ export interface LicenseProjectBuyerUnitListFilterDto {
 export enum LicenseProjectUnitCodeStatus
 {   All = 0 ,
     NotSold = 1,
-    Sold = 2
+  Sold = 2,
+  PendingBuyerApproval = 3
 }
 export enum LicenseProjectUnitType
 {   All = 0,
@@ -72,6 +73,7 @@ export interface LicenseProjectBusinessPaymentInstallmentResponseDto {
   rentPercentage: number;
   deductionPercentage: number;
   description: string;
+  isPaid: boolean | null;
 }
 
 export interface LicenseProjectBusinessPaymentResponseDto {

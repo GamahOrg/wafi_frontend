@@ -18,4 +18,12 @@ export class LicenseCertificateService {
     )
   }
 
+  GetCertificatesByHeaderId(headerId: string): Observable<LicenseCertificateDto|null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseCertificateDto>>(`${Configuration.APIs.LicenseProjectCertificate.GetCertificatesByHeaderId}/${headerId}`).pipe(
+      map((res: CoreResponseDTO<LicenseCertificateDto>) => {
+        return res.data  ? res.data as LicenseCertificateDto : null
+      })
+    )
+  }
+
 }

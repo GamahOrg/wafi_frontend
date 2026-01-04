@@ -18,13 +18,15 @@ import { UserDataService } from 'src/app/core/services/user-data/user-data.servi
 import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 import { LicenseNatureTypeListDto } from '../../../models/license-nature-type-list-dto';
 import { LicenseNatureTypeEnum } from '../../../enums/license-nature-type';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { LicenseRequestService } from '../../../services/license-request.service';
 
 @Component({
   selector: 'app-fawria-licenseproject-maindata-container',
   templateUrl: './fawria-licenseproject-maindata-container.component.html',
   styleUrls: ['./fawria-licenseproject-maindata-container.component.scss']
 })
-export class FawriaLicenseprojectMaindataContainerComponent  implements OnInit, OnDestroy {
+export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   projectBasicData: ProjectBasicDataDto = new ProjectBasicDataDto();
   baseUrl = `${environment.baseURL}/`;
@@ -57,6 +59,8 @@ export class FawriaLicenseprojectMaindataContainerComponent  implements OnInit, 
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
     private _toastrNotificationService: ToastrNotificatioService,
     private _userDataService: UserDataService,
+    private _licenseRequestService: LicenseRequestService,
+    private _tabsService: TabsService
   ) { }
 
   projectBasicDataForm = this._formBuilder.group({
@@ -96,7 +100,7 @@ export class FawriaLicenseprojectMaindataContainerComponent  implements OnInit, 
       this.isExistingValidation = this.userData?.isEmployee as boolean;
     })
   }
-  getLicenseNatureType(){
+  getLicenseNatureType() {
     this._projectBasicDataService.GetLicenseNatureType().subscribe((res: LicenseNatureTypeListDto[]) => {
       this.licenseNatureType = res;
     })
@@ -110,7 +114,7 @@ export class FawriaLicenseprojectMaindataContainerComponent  implements OnInit, 
     HasStarted: "هل تم بدأ المشروع ؟",
     Yes: "نعم",
     No: "لا",
-    title: 'بيانات المشروع الأساسية',
+    title: 'البيانات الأساسية للمشروع',
     projectLandData: 'بيانات أرض المشروع',
     name: 'اسم المشروع',
     quantitiesTableFileId: 'ملف جدول الكميات',
@@ -204,6 +208,9 @@ export class FawriaLicenseprojectMaindataContainerComponent  implements OnInit, 
   observeForm(): void {
     this.subscriptions.push(
       this.projectBasicDataForm.valueChanges.subscribe(changes => {
+        if (this.projectBasicDataForm.dirty) {
+          this._tabsService.setUnsavedChanges(true);
+        }
         let engineeringConsultantReportFile = this.projectBasicData.engineeringConsultantReportFile;
         this.projectBasicData = this.projectBasicDataForm.value as ProjectBasicDataDto;
         this.projectBasicData.engineeringConsultantReportFile = engineeringConsultantReportFile
@@ -212,6 +219,7 @@ export class FawriaLicenseprojectMaindataContainerComponent  implements OnInit, 
   }
 
   ngOnDestroy() {
+    this._tabsService.setUnsavedChanges(false);
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
@@ -259,9 +267,12 @@ export class FawriaLicenseprojectMaindataContainerComponent  implements OnInit, 
         if (res.isDone) {
           this._toastrService.success(this.localization.savedSuccessfully);
           this.setResponseToForm(res.data as ProjectBasicDataDto);
+          this.projectBasicDataForm.markAsPristine();
+          this._tabsService.setUnsavedChanges(false);
+           this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
           if (moveToNextTab) this.moveToNextTab()
         } else {
-          this._toastrNotificationService.showError(res.message);
+          //this._toastrNotificationService.showError(res.message);
         }
       })
     )

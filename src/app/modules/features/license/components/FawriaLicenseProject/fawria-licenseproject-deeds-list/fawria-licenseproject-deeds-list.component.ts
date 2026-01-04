@@ -14,7 +14,8 @@ import { NextAndPreviusButtonsService } from '../../../services/next-and-previou
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { ConstructionLicenseTypeEnum } from '../../../dataModels/project-land-deed.dto';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
-import { PopupData } from 'src/app/shared/models/popup.model';
+import { confirmationPopupData, PopupData } from 'src/app/shared/models/popup.model';
+import { LicenseRequestService } from '../../../services/license-request.service';
 
 @Component({
   selector: 'app-fawria-licenseproject-deeds-list',
@@ -22,8 +23,7 @@ import { PopupData } from 'src/app/shared/models/popup.model';
   styleUrls: ['./fawria-licenseproject-deeds-list.component.scss'],
 })
 export class FawriaLicenseprojectDeedsListComponent
-  implements OnInit, OnDestroy
-{
+  implements OnInit, OnDestroy {
   @Output() changePage = new EventEmitter<Pagemode>();
   @Output() isIntegrationFlag = new EventEmitter<boolean | null>();
   @Output() isUnitFlag = new EventEmitter<boolean | null>();
@@ -42,7 +42,7 @@ export class FawriaLicenseprojectDeedsListComponent
 
   // Deeds list
   deedsList: LicenseProjectInstantDeedResponseDto[] = [];
-  deedHeaderProjectDataDto?:DeedHeaderProjectDataDto;
+  deedHeaderProjectDataDto?: DeedHeaderProjectDataDto;
 
   isUnit: boolean | null = null;
   licenseProjectId: string = '';
@@ -78,6 +78,7 @@ export class FawriaLicenseprojectDeedsListComponent
     buildingPermitNumber: 'رقم رخصة البناء',
     actions: '',
     savedSuccessfully: 'تم الحفظ بنجاح',
+    deletedSuccessfully: 'تم حذف الصك بنجاح',
     deleteConfirmation: 'هل أنت متأكد من حذف الصك؟',
     noDeedsError: 'يجب إضافة صك واحد على الأقل',
   };
@@ -88,9 +89,10 @@ export class FawriaLicenseprojectDeedsListComponent
     private _toastrService: ToastrService,
     private _dialog: MatDialog,
     private _popupService: PopupService,
+    private _licenseRequestService: LicenseRequestService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
     private _toastrNotificationService: ToastrNotificatioService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
@@ -119,7 +121,7 @@ export class FawriaLicenseprojectDeedsListComponent
     this.subscriptions.push(
       this._projectInstantDeedService
         .GetInstantDeedsByLicenseProjectId(this.licenseProjectId)
-        .subscribe((res:any) => {
+        .subscribe((res: any) => {
           if (res) {
             this.deedsList = res;
           }
@@ -127,13 +129,18 @@ export class FawriaLicenseprojectDeedsListComponent
     );
   }
 
+  enableAddDeedButton: boolean = true;
   getNatureTypeIdByLicenseProjectId(): void {
     this.subscriptions.push(
       this._projectInstantDeedService
         .GetNatureTypeIdByLicenseProjectId(this.licenseProjectId)
-        .subscribe((res:any) => {
-          if (res) {
+        .subscribe((res: any) => {
+          debugger
+          if (res.isDone) {
             this.isUnit = res;
+          }
+          else{
+            this.enableAddDeedButton = false;
           }
         })
     );
@@ -143,7 +150,7 @@ export class FawriaLicenseprojectDeedsListComponent
     this.subscriptions.push(
       this._projectInstantDeedService
         .GetDeedHeaderProjectData(this.licenseProjectId)
-        .subscribe((res:any) => {
+        .subscribe((res: any) => {
           if (res) {
             this.deedHeaderProjectDataDto = res;
           }
@@ -156,9 +163,13 @@ export class FawriaLicenseprojectDeedsListComponent
     return this.deedsList.some(deed => deed.licenseProjectConstructionLicenseTypeId !== 1);
   }
 
+  hasAnyConstructionLicenseNumber(): boolean {
+    return this.deedsList.some(deed => deed.constructionLicenseNumber != null);
+  }
+
   // x(): void{
   //   let isIntegration: boolean | null = null;
-    
+
   //   if (this.deedsList && this.deedsList.length > 0) {
   //     // If any deed is type 2 or 3, return false; otherwise check for type 1
   //     const hasNonBalady = this.deedsList.some(deed =>
@@ -180,22 +191,22 @@ export class FawriaLicenseprojectDeedsListComponent
   // }
 
   addDeeds(): void {
-    debugger
+
     let isIntegration: boolean | null = null;
-    
+
     if (this.deedsList && this.deedsList.length > 0) {
       // If any deed is type 2 or 3, return false; otherwise check for type 1
       const hasNonBalady = this.deedsList.some(deed =>
-        deed.licenseProjectConstructionLicenseTypeId === 2 || 
+        deed.licenseProjectConstructionLicenseTypeId === 2 ||
         deed.licenseProjectConstructionLicenseTypeId === 3
       );
 
-      isIntegration = hasNonBalady 
-        ? false 
+      isIntegration = hasNonBalady
+        ? false
         : this.deedsList.some(deed => deed.licenseProjectConstructionLicenseTypeId === 1);
 
       // Find first deed with licenseProjectNatureTypeId = 1 or 2
-      const firstDeed = this.deedsList.find(deed => 
+      const firstDeed = this.deedsList.find(deed =>
         deed.licenseProjectNatureTypeId === 1 || deed.licenseProjectNatureTypeId === 2
       );
 
@@ -214,26 +225,34 @@ export class FawriaLicenseprojectDeedsListComponent
   }
 
   deleteDeed(id: string): void {
-    const dialogRef = this._dialog.open(DeleteDeedConfirmationDialogComponent, {
-      width: '659px',
-      maxWidth: '90vw',
-      disableClose: true,
-      panelClass: 'delete-deed-dialog',
-      autoFocus: false
+    let deleteConfirmation: confirmationPopupData = {
+      popupType: 'danger',
+      title: 'هل أنت متأكد من حذف الصك؟',
+      staticMessage: '',
+      acceptButtonText: 'حذف الصك',
+      dynamicMessage: '',
+      secondeStaticMessage: '',
+    };
+    // Subscribe BEFORE opening popup
+    const sub = this._popupService.confirmAction.subscribe(() => {
+      this.performDelete(id);
+      sub.unsubscribe(); // prevent memory leaks / multiple calls
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.performDelete(id);
-      }
-    });
+    this._popupService.updateConfirmationPopupData(deleteConfirmation);
   }
+
+  private closeDialog(): void {
+    this._popupService.dismissDialog();
+  }
+
 
   private performDelete(id: string): void {
     this.subscriptions.push(
       this._projectInstantDeedService.DeleteInstantDeed(id).subscribe((res: any) => {
         if (res.isDone) {
-          this._toastrService.success(this.localization.savedSuccessfully);
+          this._toastrService.success(this.localization.deletedSuccessfully);
+           this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
+          this.closeDialog();
           this.GetDeedHeaderProjectData();
           this.loadData();
         } else {
@@ -246,11 +265,11 @@ export class FawriaLicenseprojectDeedsListComponent
   viewDeedDetails(deed: LicenseProjectInstantDeedResponseDto): void {
     // View deed details
     console.log('View deed details:', deed);
-     this._sharedLicenseProjectService.setSelectedDeed(deed);
+    this._sharedLicenseProjectService.setSelectedDeed(deed);
     this.changePage.emit(Pagemode.View);
   }
 
-    // TabsButtons
+  // TabsButtons
   private observeNextButtonIsCliced() {
     this.subscriptions.push(
       this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
@@ -279,6 +298,7 @@ export class FawriaLicenseprojectDeedsListComponent
 
   private updateSaveAsDraftBtnIsvisible(): void {
     this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false)
+    this._nextAndPreviusButtonsService.nextBtnIsVisible.next(true);
   }
 
   private moveToNextTab(): void {
@@ -287,7 +307,7 @@ export class FawriaLicenseprojectDeedsListComponent
 
   openUpdateBuildingAreaDialog(isUnitData: boolean): void {
     let Data = {
-      title:isUnitData?"عدد الوحدات": "إجمالي مساحة مسطح البناء للمشروع",
+      title: isUnitData ? "عدد الوحدات" : "إجمالي مساحة مسطح البناء للمشروع",
       component: FawriaUpdateBuildingFlatAreaComponent,
       id: 'FawriaUpdateBuildingFlatAreaComponent',
       data: { isUnit: isUnitData }
@@ -295,7 +315,7 @@ export class FawriaLicenseprojectDeedsListComponent
     this._popupService.updatePopupData(Data);
   }
 
- observeConfirmAction() {
+  observeConfirmAction() {
     this.subscriptions.push(
       this._projectInstantDeedService.closeDialog.subscribe((res: PopupData) => {
         this.GetDeedHeaderProjectData();

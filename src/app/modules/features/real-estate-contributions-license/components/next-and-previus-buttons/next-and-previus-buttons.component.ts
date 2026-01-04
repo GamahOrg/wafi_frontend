@@ -75,6 +75,10 @@ export class NextAndPreviusButtonsComponent implements OnInit, OnDestroy {
   observeMoveToNextTab(): void {
     this.subscriptions.push(
       this._nextAndPreviusButtonsService.moveToNextTab.subscribe((res: null) => {
+        
+
+      
+
         let lastVerticalTabIndex = this.VerticalTabContent?.tabsComponentList && this.VerticalTabContent?.tabsComponentList.length - 1
         if (this.VerticalTabContent?.activeTabIndex == lastVerticalTabIndex) {
           this._tabsService.updateActiveTabIndex(this.activeTabIndex + 1);

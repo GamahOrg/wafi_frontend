@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
-import { NextAndPreviusButtonsService } from '../../services/next-and-previous-buttons/next-and-previus-buttons.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { LicenseProjectPartiesAdditionalTermsFormComponent } from '../license-project-parties-additional-terms-form/license-project-parties-additional-terms-form.component';
 import { LicenseProjectPartiesAdditionalTermsDto, TermsPartType } from '../../models/license-project-parties-additional-terms-model';
 import { LicenseProjectPartiesAdditionalTermsService } from '../../services/LicenseProjectPartiesAdditionalTerms.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
+import { DeebOwnerList } from '../../../real-estate-contributions-license/dataModels/project-land-owner.dto';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-license-project-parties-additional-terms',
@@ -21,12 +21,12 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
   // SysLicenseBeneficiaryContractFormList: SysLicenseBeneficiaryContractFormDto[] = [];
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
   expandedItems: Set<string> = new Set();
-  
+ 
   // Delete confirmation modal
   showDeleteModal: boolean = false;
   deleteItemId: string | null = null;
   deleteItemIndex: number | null = null;
-
+  baseUrl = `${environment.baseURL}/`;
   // showItemsLog: boolean = false;
   @Input() TermsPartType:TermsPartType = null as any;
 
@@ -66,6 +66,7 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
     title: 'البنود الإضافية للاستشاري الهندسي',
     NoItemsAdded: 'لا يوجد بنود إضافية بعد',
     AddNew:'إضافة بند',
+    Owners:'ملاك الصك',
     titlePoupupAdd: 'إضافة البنود الإضافية لنموذج عقد المستفيد النهائي',
     titlePoupupEdit: 'إضافة البنود الإضافية لنموذج عقد المستفيد النهائي',
     itemNumber: 'رقم البند التسلسلي',
@@ -154,10 +155,11 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
 
   addNewItem(): void {
     let Data = {
-      iconClass: "hgi hgi-stroke hgi-filter-mail-square",
+      iconClass: "hgi hgi-stroke hgi-profile",
       title: this.localization.titlePoupupAdd,
       component: LicenseProjectPartiesAdditionalTermsFormComponent,
-      data: { actionType: this.TermsPartType } // Pass actionType through data
+      data: { actionType: this.TermsPartType, pageNode: 'add' },
+      submitButtonTitle: 'إضافة بند',
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
@@ -176,10 +178,10 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
       }
   
       let Data = {
-      iconClass: "hgi hgi-stroke hgi-filter-mail-square",
+      iconClass: "hgi hgi-stroke hgi-profile",
       title: this.localization.titlePoupupEdit,
         component: LicenseProjectPartiesAdditionalTermsFormComponent,
-        data: { actionType: this.TermsPartType, obj: dataToPass } // Pass actionType through data
+        data: { actionType: this.TermsPartType, obj: dataToPass, pageNode: 'edit' } // Pass actionType through data
       } as PopupData;
       this._popupService.updatePopupData(Data);
   }

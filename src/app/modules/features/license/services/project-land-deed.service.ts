@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { DeedData, FawriaLicenseDeedAndConstructionLicenseDto, FawriaLicenseDeedAndConstructionLicenseResponseDto, OwnersDto, ProjectLandDeedCreateUpdateDto, ProjectLandDeedDto, type SaveLicenseProjectDeed } from '../dataModels/project-land-deed.dto';
+import { ApprovalDeedConstructionDto, DeedData, FawriaLicenseDeedAndConstructionLicenseDto, FawriaLicenseDeedAndConstructionLicenseResponseDto, OwnersDto, ProjectLandDeedCreateUpdateDto, ProjectLandDeedDto, type SaveLicenseProjectDeed } from '../dataModels/project-land-deed.dto';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { DropDownSubUnitTypeDto } from '../dataModels/drop-down-name.dto';
@@ -43,6 +43,15 @@ export class ProjectLandDeedService {
     return this._httpClient.get<CoreResponseDTO<ProjectLandDeedDto[]>>
       (`${Configuration.APIs.LicenseProjectDeed.GetByLicenseProjectId}/${id}`).pipe(
         map((res: CoreResponseDTO<ProjectLandDeedDto[]>) => {
+          return res.data;
+        })
+      )
+  }
+
+  GetDeedConstructionApprovalList(id: string) {
+    return this._httpClient.get<CoreResponseDTO<ApprovalDeedConstructionDto[]>>
+      (`${Configuration.APIs.LicenseProjectDeed.GetDeedConstructionApprovalList}/${id}`).pipe(
+        map((res: CoreResponseDTO<ApprovalDeedConstructionDto[]>) => {
           return res.data;
         })
       )

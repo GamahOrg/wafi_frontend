@@ -45,12 +45,12 @@ const routes: Routes = [
   {
     path: Configuration.pages.licenseProjectRequests.licenseProjectRequests,
     component: RequestsComponent,
-    data: { breadcrumb: 'الطلبات الاعتيادية والغير اعتيادية'},
+    // data: { breadcrumb: 'الطلبات الاعتيادية والغير اعتيادية'},
   }, 
   {
     path: Configuration.pages.licenseProjectRequests.licenseProjectRequestList,
     component: LincenseRequestListComponent,
-    data: { breadcrumb: 'الطلبات الاعتيادية والغير اعتيادية'},
+    data: { breadcrumb: 'قائمة الطلبات' },
   }, 
   {
     path: Configuration.pages.licenseProjectRequests.createLicenseProjectRequestList,

@@ -1,7 +1,6 @@
-
 <!-- Approval Committee Section -->
-<div class="tab-data-section">
-  <ng-container *ngIf="getParentItems().length > 0">
+<ng-container *ngIf="getParentItems().length > 0">
+  <div class="tab-data-section mt-3">
     <div *ngIf="getParentItems().length > 0" class="table-responsive">
       <table class="table table-light">
         <thead>
@@ -31,15 +30,15 @@
 
             <!-- Child Rows -->
             <ng-container *ngIf="isExpanded(parentBeneficiary.id)">
-              <tr *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index">
-                <td colspan="2" class="bg-light"><span class="tag">{{getItemNumberDisplay(childBeneficiary)}}</span></td>
-                <td class="bg-light">{{childBeneficiary?.itemTitle ?? '-'}}</td>
-                <td colspan="2" class="bg-light">{{childBeneficiary?.itemText && childBeneficiary.itemText.length > 100 ? (childBeneficiary.itemText | slice:0:100) + '...' : childBeneficiary?.itemText}}</td>
+              <tr class="child-row" *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index">
+                <td colspan="2"><span class="tag">{{getItemNumberDisplay(childBeneficiary)}}</span></td>
+                <td>{{childBeneficiary?.itemTitle ?? '-'}}</td>
+                <td colspan="2">{{childBeneficiary?.itemText && childBeneficiary.itemText.length > 100 ? (childBeneficiary.itemText | slice:0:100) + '...' : childBeneficiary?.itemText}}</td>
               </tr>
             </ng-container>
           </ng-container>
         </tbody>
       </table>
     </div>
-  </ng-container>
-</div>
+  </div>
+</ng-container>

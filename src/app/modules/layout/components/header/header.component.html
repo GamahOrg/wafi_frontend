@@ -24,40 +24,48 @@
 </header> -->
 
 <header class="d-flex justify-content-end align-items-center gap-3">
-    <!-- <div class="language dropdown">
+  <!-- <div class="language dropdown">
         <app-language></app-language>
     </div> -->
-<!-- <div class="w-100 text-center">
+  <!-- <div class="w-100 text-center">
     <h5 class="card-title">{{localization.beta}}</h5>
 </div> -->
-    <div class="notifications dropdown">
-        <app-notifications></app-notifications>
-    </div>
 
-    <div class="user dropdown">
-        <!-- <div class="image">
+  <!-- <nav class="me-auto" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a [routerLink]="'/'">الترخيص</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{ 'الرخص الفورية' }}
+      </li>
+    </ol>
+  </nav> -->
+  <nav class="me-auto" aria-label="breadcrumb">
+  <app-breadcrumb></app-breadcrumb>
+  </nav>
+  <div class="notifications dropdown">
+    <app-notifications></app-notifications>
+  </div>
+
+  <div class="user dropdown">
+    <!-- <div class="image">
             <span class="avatar material-icons">person</span>
             <img src="assets/images/general/static-person.jpeg"
                  alt=""
                  class="d-block w-100">
         </div> -->
-        <div class="image" *ngIf="userData?.profileImageFile">
-            <img width="200" height="200" [src]="baseUrl + userData?.profileImageFile?.filePath" class="d-block w-100 h-100"/>
-        </div>
-        <a class="dropdown-toggle"
-           href="#"
-           role="button"
-           data-bs-toggle="dropdown"
-           aria-expanded="false">{{userData?.fullName}}<i class="icon material-icons">expand_more</i></a>
-        <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item"
-                routerLink='{{links.modules.userManagement}}/{{links.pages.userManagement.editProfile}}'> تعديل الملف الشخصي</a>
-            </li>
-            <li>
-                <a class="dropdown-item"
-                   (click)="logout()">تسجيل الخروج</a>
-            </li>
-        </ul>
+    <div class="image" *ngIf="userData?.profileImageFile">
+      <img width="200" height="200" [src]="baseUrl + userData?.profileImageFile?.filePath" class="d-block w-100 h-100" />
     </div>
+    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{userData?.fullName}}<i class="icon material-icons">expand_more</i></a>
+    <ul class="dropdown-menu">
+      <li>
+        <a class="dropdown-item" routerLink='{{links.modules.userManagement}}/{{links.pages.userManagement.editProfile}}'> تعديل الملف الشخصي</a>
+      </li>
+      <li>
+        <a class="dropdown-item" (click)="logout()">تسجيل الخروج</a>
+      </li>
+    </ul>
+  </div>
 </header>

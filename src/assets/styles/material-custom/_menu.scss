@@ -1,8 +1,17 @@
 // Material Menu Custom Styles
 .mat-menu-panel,
 .mat-mdc-menu-panel {
+  border: 1px solid $lightgray;
+  box-shadow: 0px 8px 8px -4px rgba(16, 24, 40, 0.031), 0px 20px 24px -4px rgba(16, 24, 40, 0.078) !important;
+
   .mat-menu-item,
   .mat-mdc-menu-item {
+
+    .mat-icon,
+    i {
+      font-size: 1.25rem;
+    }
+
     &.menu-edit-btn {
       color: #001F21 !important;
 
@@ -26,6 +35,8 @@
 }
 
 .mat-mdc-menu-content {
+  --mdc-typography-body1-font-size: #{$font-size-sm};
+
   padding: .5rem !important;
 }
 
@@ -33,6 +44,10 @@
   min-height: 2.5rem !important;
   padding: .5rem !important;
   border-radius: $border-radius-xs;
+
+  &:hover:not([disabled]) {
+    background-color: #F3F4F6;
+  }
 
   .mdc-list-item__primary-text {
     display: flex;

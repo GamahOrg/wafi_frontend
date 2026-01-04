@@ -7,26 +7,89 @@ accordion {
     .card {
       --bs-card-border-radius: #{$border-radius-xs};
       --bs-card-cap-padding-y: 1rem;
-      --bs-card-cap-bg: #{$white};
+      --bs-card-cap-bg: #F5F8F8;
+
+      .card-header {
+        .accordion-heading {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem;
+
+          >.icon {
+            height: 1.5rem;
+
+            .open {
+              display: inline-block;
+            }
+
+            .close {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    &.panel-open {
+      .card-header {
+        .accordion-heading {
+          .icon {
+            .open {
+              display: none;
+            }
+
+            .close {
+              display: inline-block;
+            }
+          }
+        }
+      }
     }
   }
 
   &:not(.simple) {
     accordion-group {
       .card {
-        --bs-card-spacer-y: 2.5rem;
-        --bs-card-spacer-x: 2.5rem;
-        --bs-card-border-width: 1px;
-        --bs-card-border-color: #{$lightergray};
+        --bs-card-spacer-y: 2rem;
+        --bs-card-spacer-x: 1rem;
+        --bs-card-border-width: 0;
 
         .card-header {
-          border-bottom: none;
-        }
-      }
+          &:first-child {
+            border-radius: $border-radius-sm;
+          }
 
-      &.panel-open {
-        .card {
-          --bs-card-border-color: #{$midgreen};
+          .accordion-heading {
+
+            &,
+            & .title {
+              color: $headings-color;
+            }
+
+            .title {
+              flex: 1;
+              font-weight: 600;
+            }
+
+            >.icon {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-shrink: 0;
+
+              width: 2rem;
+              height: 2rem;
+              border-radius: $border-radius-xs;
+              background-color: $white;
+
+              .open,
+              .close {
+                font-size: $font-size-base*1.5;
+                color: $headings-color;
+              }
+            }
+          }
         }
       }
     }
@@ -51,26 +114,10 @@ accordion {
           border-radius: 0;
 
           .accordion-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
             .title {
               font-size: $font-size-sm;
               font-weight: normal;
               color: $black;
-            }
-
-            >.icon {
-              height: 1.5rem;
-
-              .open {
-                display: inline-block;
-              }
-
-              .close {
-                display: none;
-              }
             }
           }
         }
@@ -83,18 +130,6 @@ accordion {
       &.panel-open {
         .card-header {
           box-shadow: none;
-
-          .accordion-heading {
-            .icon {
-              .open {
-                display: none;
-              }
-
-              .close {
-                display: inline-block;
-              }
-            }
-          }
         }
       }
     }

@@ -109,9 +109,9 @@ export class ProjectModuleModelsComponent implements OnInit, OnDestroy {
 
         this.accordionContent.accordionComponentList.push({
           icon: '',
-          title: `${this.typeName as string} - ${unit.unitTypeName} - ${
-            unit.code
-          } - ${this.localization.zone} - ${this.zoneName}`,
+          title: `${unit.unitTypeName} رقم ${unit.code} - المرحلة ${unit.stageNumber}
+<br>
+تاريخ البداية: ${this.formatDate(unit.constructionStartOn)} &nbsp; تاريخ النهاية: ${this.formatDate(unit.constructionEndOn)}`,
           component: SubUnitModelsComponent,
           disabled: false,
           isVisible: true,
@@ -175,8 +175,28 @@ export class ProjectModuleModelsComponent implements OnInit, OnDestroy {
   moveToNextTab(): void {
     this._nextAndPreviusButtonsService.moveToNextTab.emit();
   }
+
+  isFawriaValidation(): boolean{
+    const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
+    if(typecode == 'FSRSU')
+      return true;
+    else
+      return false;
+  }
+
   private updateSaveAsDraftBtnIsvisible(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
+    if(this.isFawriaValidation())
+      this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
+    else
+      this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(true);
+  }
+  private formatDate(date?: string | Date): string {
+    if (!date) return '';
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
   }
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

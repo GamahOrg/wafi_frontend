@@ -116,11 +116,11 @@
 
 <!-- Deeds List Section -->
 <div class="tab-data-header">
-  <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+  <i class="icon hgi hgi-stroke hgi-file-01"></i>
   <h6 class="title">
     {{ localization.projectLandDeeds }}
   </h6>
-  <button class="btn btn-outline-primary ms-auto" (click)="addDeeds()" *ngIf="deedsList && deedsList.length > 0">
+  <button class="btn btn-outline-primary ms-auto" (click)="addDeeds()" *ngIf="deedsList && deedsList.length > 0 && enableAddDeedButton">
     <i class="icon hgi hgi-stroke hgi-add-square me-2"></i> {{ localization.addDeeds }}
   </button>
 </div>
@@ -137,7 +137,7 @@
             <th scope="col">{{localization.deedDate}}</th>
             <th scope="col">{{localization.unitsCount}}</th>
             <th scope="col">{{localization.licenseType}}</th>
-            <th scope="col">{{localization.buildingPermitNumber}}</th>
+            <th scope="col" *ngIf="hasAnyConstructionLicenseNumber()">{{localization.buildingPermitNumber}}</th>
             <th scope="col">{{localization.actions}}</th>
           </tr>
         </thead>
@@ -152,27 +152,30 @@
               <span class="tag">{{deed.ownersCount}}</span>
             </td>
             <td> {{deed.licenseProjectConstructionLicenseType}} </td>
-            <td *ngIf="deed.constructionLicenseNumber != null">
-              <span class="tag">{{deed.constructionLicenseNumber}}</span>
+            <td *ngIf="hasAnyConstructionLicenseNumber()">
+              <span class="tag" *ngIf="deed.constructionLicenseNumber != null">{{deed.constructionLicenseNumber}}</span>
+              <span *ngIf="deed.constructionLicenseNumber == null">-</span>
             </td>
             <td>
-              <button mat-icon-button [matMenuTriggerFor]="actionMenu" class="action-menu-trigger">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #actionMenu="matMenu" class="deed-action-menu">
-                <button mat-menu-item (click)="viewDeedDetails(deed)">
-                  <mat-icon>description</mat-icon>
-                  <span>تفاصيل الصك</span>
+              <div class="d-flex align-items-center justify-content-end">
+                <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
+                  <mat-icon>more_vert</mat-icon>
                 </button>
-                <!-- <button mat-menu-item (click)="editDeed(deed)">
-                  <mat-icon>edit</mat-icon>
-                  <span>تعديل الصك</span>
-                </button> -->
-                <button mat-menu-item (click)="deleteDeed(deed.id)" class="delete-action">
-                  <mat-icon>delete</mat-icon>
-                  <span>حذف الصك</span>
-                </button>
-              </mat-menu>
+                <mat-menu #tableActionsMenu="matMenu">
+                  <button mat-menu-item (click)="viewDeedDetails(deed)" class="menu-edit-btn">
+                    <i class="hgi hgi-stroke hgi-profile-02"></i>
+                    <span>تفاصيل الصك</span>
+                  </button>
+                  <!-- <button mat-menu-item (click)="editDeed(deed)" class="menu-edit-btn">
+                    <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                    <span>تعديل الصك</span>
+                  </button> -->
+                  <button mat-menu-item (click)="deleteDeed(deed.id)" class="menu-delete-btn">
+                    <i class="hgi hgi-stroke hgi-delete-03"></i>
+                    <span>حذف الصك</span>
+                  </button>
+                </mat-menu>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -182,7 +185,7 @@
 
   <!-- No Data Message -->
   <ng-container *ngIf="!deedsList || deedsList.length === 0">
-    <app-no-data (onNoDataButtonClicked)="addDeeds()" [showText]="false" [completeBtnTitle]="'إضافة صكوك'"></app-no-data>
+    <app-no-data (onNoDataButtonClicked)="addDeeds()" [showCompleteBtn]="enableAddDeedButton" [text]="'لا يوجد صكوك لأرض المشروع بعد!'" [showText]="true" [showTitle]="false" [useTitleClass]="true" [completeBtnTitle]="'إضافة صكوك'"></app-no-data>
   </ng-container>
 </div>
 

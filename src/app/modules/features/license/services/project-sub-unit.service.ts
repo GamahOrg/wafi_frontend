@@ -38,10 +38,14 @@ addLicenseProjectSubUnit(model:LicenseProjectSubUnitCreateUpdateDto): Observable
   return this._httpClient.post<CoreResponseDTO<LicenseProjectSubUnitCreateUpdateDto>>
     (`${Configuration.APIs.LicenseProjectSubUnit.Create}`,model)
 }
+updateLicenseProjectSubUnit(model:LicenseProjectSubUnitCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectSubUnitCreateUpdateDto>> {
+  return this._httpClient.put<CoreResponseDTO<LicenseProjectSubUnitCreateUpdateDto>>
+    (`${Configuration.APIs.LicenseProjectSubUnit.Update}`,model)
+}
 
 removeSubUnit(id: string): Observable<CoreResponseDTO<any>> {
   return this._httpClient.delete<CoreResponseDTO<any>>
-    (`${Configuration.APIs.LicenseProjectSubUnit.Remove}?id=${id}`)
+    (`${Configuration.APIs.LicenseProjectSubUnit.DeleteLicenseProjectSubUnitsAsync}/${id}`)
 }
 
 

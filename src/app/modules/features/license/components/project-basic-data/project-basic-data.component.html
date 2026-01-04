@@ -5,7 +5,7 @@
     id="form-projectBasicDataForm"
   >
     <div class="tab-data-header">
-      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
       <h6 class="title">{{ localization.title }}</h6>
     </div>
     <div class="tab-data-section">
@@ -34,7 +34,7 @@
               id="control-categoryId"
               formControlName="categoryId"
             >
-              <option [label]="localization.categoryId"></option>
+              <option [label]="localization.categoryId" disabled></option>
               <option *ngFor="let category of categories" [value]="category.id">
                 {{ category.categoryName }}
               </option>
@@ -55,7 +55,7 @@
               id="control-subCategoryId"
               formControlName="subCategoryId"
             >
-              <option [label]="localization.subCategoryId"></option>
+              <option [label]="localization.subCategoryId" disabled></option>
               <option
                 *ngFor="let subCategory of tempSubCategories"
                 [value]="subCategory.id"
@@ -79,7 +79,7 @@
               id="control-licenseNatureType"
               formControlName="licenseProjectNatureTypeId"
             >
-              <option [label]="localization.licenseNatureType"></option>
+              <option [label]="localization.licenseNatureType" disabled></option>
               <option
                 *ngFor="let licenseNatureType of licenseNatureType"
                 [value]="licenseNatureType.id"
@@ -103,7 +103,7 @@
               id="control-typeId"
               formControlName="typeId"
             >
-              <option [label]="localization.typeId"></option>
+              <option [label]="localization.typeId" disabled></option>
               <option *ngFor="let type of types" [ngValue]="type.id">
                 {{ type.name }}
               </option>
@@ -242,7 +242,7 @@
               id="control-licenseProjectScopeId"
               formControlName="licenseProjectScopeId"
             >
-              <option [label]="localization.licenseProjectScopeId"></option>
+              <option [label]="localization.licenseProjectScopeId" disabled></option>
               <option
                 *ngFor="let scope of licenseProjectScopes"
                 [value]="scope.id"

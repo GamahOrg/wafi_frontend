@@ -1,0 +1,8 @@
+<div class="page-section">
+  <ul class="order-list">
+    <li *ngFor="let step of termsConditions; index as i">
+      <span class="order">{{ step.order | number:'1.0-2' }}</span>
+      <p class="text">{{ step.description }}</p>
+    </li>
+  </ul>
+</div>

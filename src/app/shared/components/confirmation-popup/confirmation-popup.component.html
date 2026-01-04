@@ -1,36 +1,33 @@
-<div class="confirmation-dialog-wrapper">
-  <!-- Close Button -->
-  <button class="close-button" (click)="onClickOnCancel()" aria-label="Close">
-    <span>×</span>
+<div mat-dialog-title>
+  <div class="d-flex flex-column align-items-center gap-2">
+    <span class="icon text-{{confirmationPopupData.popupType}}">
+      <i class="hgi hgi-stroke" [ngClass]="{
+        'hgi-message-question': confirmationPopupData.popupType === 'primary',
+        'hgi-alert-02': confirmationPopupData.popupType === 'warning',
+        'hgi-delete-03': confirmationPopupData.popupType === 'danger'
+        }"></i>
+      <!-- <i class="hgi hgi-stroke hgi-delete-03"></i> -->
+    </span>
+    <h6 class="title" *ngIf="confirmationPopupData.title">{{confirmationPopupData.title}}</h6>
+  </div>
+
+  <button class="btn btn-link p-0" (click)="onClickOnCancel()" mat-dialog-close tabindex="-1" aria-label="Close" *ngIf="!disableClose">
+    <i class="material-icons h6">close</i>
   </button>
+</div>
 
-  <!-- Title -->
-  <div class="dialog-title-section" *ngIf="confirmationPopupData.title">
-    <h2 class="dialog-title">{{ confirmationPopupData.title }}</h2>
-  </div>
+<div mat-dialog-content>
+  <div *ngIf="confirmationPopupData.staticMessage" class="text-center mb-4" [innerHTML]="confirmationPopupData.staticMessage"></div>
+  <div *ngIf="confirmationPopupData.dynamicMessage" class="text-center mb-4">{{ confirmationPopupData.dynamicMessage }}</div>
+  <div *ngIf="confirmationPopupData.secondeStaticMessage" class="text-center mb-4">{{ confirmationPopupData.secondeStaticMessage }}</div>
 
-  <!-- Content with Side Bar -->
-  <div class="dialog-body">
-    <div class="side-bar"></div>
-    <div class="content-area">
-      <div *ngIf="confirmationPopupData.staticMessage" class="content-text" [innerHTML]="confirmationPopupData.staticMessage">
-      </div>
-      <div *ngIf="confirmationPopupData.dynamicMessage" class="content-text">
-        {{ confirmationPopupData.dynamicMessage }}
-      </div>
-      <div *ngIf="confirmationPopupData.secondeStaticMessage" class="content-text">
-        {{ confirmationPopupData.secondeStaticMessage }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer Buttons -->
-  <div class="dialog-footer">
-    <button class="btn-cancel" (click)="onClickOnCancel()">
-      إلغاء
-    </button>
-    <button class="btn-save" (click)="onClickOnConfirm()">
-      {{confirmationPopupData.acceptButtonText ?? 'حفظ البيانات'}}
-    </button>
+  <div class="d-flex justify-content-center align-items-center gap-3">
+    <ng-container *ngIf="confirmationPopupData.showCloseButtonOnly; else defaultButtons">
+      <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnCancel()">{{confirmationPopupData.closeButtonText ?? 'إغلاق'}}</button>
+    </ng-container>
+    <ng-template #defaultButtons>
+      <button class="btn btn-link" (click)="onClickOnCancel()">إلغاء</button>
+      <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnConfirm()">{{confirmationPopupData.acceptButtonText ?? 'حفظ '}}</button>
+    </ng-template>
   </div>
 </div>

@@ -19,3 +19,34 @@
     padding: 1.5rem 1rem;
   }
 }
+
+.confirmation-dialog {
+
+  .mdc-dialog__title,
+  .mdc-dialog__content {
+    border-radius: 0 !important;
+  }
+
+  .mdc-dialog__title {
+    justify-content: center;
+
+    .icon {
+      font-size: 4rem;
+      line-height: 1;
+    }
+  }
+
+  .text-danger {
+    color: #E40A0A !important;
+  }
+
+  .btn-link {
+    --bs-btn-color: #{$theme-main};
+    font-weight: 600;
+  }
+
+  .btn-danger {
+    --bs-btn-bg: #E40A0A;
+    --bs-btn-border-color: #E40A0A;
+  }
+}

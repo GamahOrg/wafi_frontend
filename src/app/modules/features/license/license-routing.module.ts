@@ -7,6 +7,7 @@ import { CreateLincenseComponent } from './pages/create-license/create-license.c
 import { LincenseSummaryComponent } from './pages/lincense-summary/lincense-summary.component';
 import { LincenseDetailsComponent } from './pages/lincense-details/lincense-details.component';
 import { FawriaLicenseDetailsComponent } from './pages/fawria-license-details/fawria-license-details.component';
+import { FawriaLicenseComplateComponent } from './pages/fawria-license-complate/fawria-license-complate.component';
 import { LicenseCertificatesComponent } from './pages/license-certificates/license-certificates.component';
 import { LicenseRequestApprovalsComponent } from './pages/license-request-approvals/license-request-approvals.component';
 import { LicenseRequestApprovalsDetailsComponent } from './pages/license-request-approvals-details/license-request-approvals-details.component';
@@ -46,6 +47,7 @@ import { LicenseProjectFawriaDeveloperListComponent } from './pages/license-proj
 import { FawriaProjectPartiesStatusComponent } from './components/fawria-components/fawria-project-parties-status/fawria-project-parties-status.component';
 import { DeveloperApprovalsListComponent } from './pages/developer-approvals-list/developer-approvals-list.component';
 import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-details/developer-approval-details.component';
+import { LicenseTabsComponent } from './pages/license-tabs/license-tabs.component';
 
 const routes: Routes = [
   {
@@ -60,7 +62,7 @@ const routes: Routes = [
   },
   {
     path: Configuration.pages.license.lincenseList,
-    component: LincenseListComponent,
+    component: LicenseTabsComponent,
     data: { breadcrumb: 'قائمة التراخيص' },
   }, 
   {
@@ -92,6 +94,11 @@ const routes: Routes = [
     path: Configuration.pages.license.fawriaLicenseDetails,
     component: FawriaLicenseDetailsComponent,
     data: { breadcrumb: 'تفاصيل الطلب الفوري' },
+  },
+  {
+    path: 'fawria-license-complate',
+    component: FawriaLicenseComplateComponent,
+    data: { breadcrumb: 'استكمال الرخصة الفورية' },
   },
   {
     path: Configuration.pages.license.farzNote,

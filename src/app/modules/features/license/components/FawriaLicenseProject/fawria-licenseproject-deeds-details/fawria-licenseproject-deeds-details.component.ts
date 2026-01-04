@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProjectLandDeedService } from '../../../services/project-land-deed.service';
-import { DeedIntegrationErrorCode, FawriaLicenseDeedAndConstructionLicenseResponseDto } from '../../../dataModels/project-land-deed.dto';
+import { ConstructionLicenseTypeEnum, DeedIntegrationErrorCode, DeedIntegrationTypeEnum, FawriaLicenseDeedAndConstructionLicenseResponseDto } from '../../../dataModels/project-land-deed.dto';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import { environment } from 'src/environments/environment';
 import { LicenseProjectInstantDeedResponseDto } from '../../../../real-estate-contributions-license/dataModels/license-project-instant-deed-response-dto';
+import { ProjectInstantLicenseDeedService } from 'src/app/modules/features/real-estate-contributions-license/services/project-instant-license-deed.service';
 
 @Component({
   selector: 'app-fawria-licenseproject-deeds-details',
@@ -13,6 +14,10 @@ import { LicenseProjectInstantDeedResponseDto } from '../../../../real-estate-co
 export class FawriaLicenseprojectDeedsDetailsComponent implements OnInit {
   @Input() deedData?: LicenseProjectInstantDeedResponseDto;
 
+  isUnit: boolean | null = null;
+
+  DeedIntegrationTypeEnum = DeedIntegrationTypeEnum;
+  ConstructionLicenseTypeEnum = ConstructionLicenseTypeEnum;
   baseUrl = `${environment.baseURL}/`;
   deedIntegrationErrorCode: typeof DeedIntegrationErrorCode = DeedIntegrationErrorCode;
   fawriaLicenseDeedAndConstructionLicenseResponse?: FawriaLicenseDeedAndConstructionLicenseResponseDto;
@@ -26,11 +31,12 @@ export class FawriaLicenseprojectDeedsDetailsComponent implements OnInit {
 
   constructor(
     private _projectLandDeedService: ProjectLandDeedService,
-    private _shareservice: SharedLicenseProjectService
+    private _shareservice: SharedLicenseProjectService,
+    private _projectInstantDeedService: ProjectInstantLicenseDeedService,
   ) {}
 selectedDeedId:string=''
   ngOnInit(): void {
-    // this.getLicenseProjectId();
+    this.getLicenseProjectId();
 
     // // Check if deed data is passed from the shared service
     const selectedDeed = this._shareservice.getSelectedDeed();
@@ -41,8 +47,17 @@ selectedDeedId:string=''
     this.loadDeedData();
   }
 
+
+  getNatureTypeIdByLicenseProjectId(): void {
+    this._projectInstantDeedService.GetNatureTypeIdByLicenseProjectId(this.licenseProjectId).subscribe((res:any) => {
+      if (res)
+          this.isUnit = res;
+      })
+  }
+
   private getLicenseProjectId() {
     this.licenseProjectId = this._shareservice.getLicenseProjectIdStorage() as string;
+    this.getNatureTypeIdByLicenseProjectId();
   }
 
   totalLand: number = 0;

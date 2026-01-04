@@ -1,6 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ViewEncapsulation } from '@angular/compiler';
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 import { FileUploader } from '../../models/file-uploader.model';
 // import { FileManagementService } from '../../services/fileManagement/file-management.service';
@@ -14,6 +14,8 @@ export class FileUploaderComponent implements OnInit {
   @Input() data: FileUploader = new FileUploader;
   @Output() fileRemoved = new EventEmitter<any>();
   @Output() fileUploaded = new EventEmitter<any>();
+  @ViewChild('fileInputMultiple') fileInputMultiple!: any;
+  @ViewChild('fileInputSingle') fileInputSingle!: any;
   // @Input() data: FileUploader = new FileUploader();
   // @Output() fileRemoved = new EventEmitter<any>();
   // @Output() fileUploaded = new EventEmitter<any>();
@@ -131,4 +133,18 @@ export class FileUploaderComponent implements OnInit {
     this
     this.selectedFilesName = []
   }
+  clearSelectedFiles(): void {
+    this.deleteAll(); // your existing logic to reset variables
+
+    if (this.data.multiple) {
+      if (this.fileInputMultiple) {
+        this.fileInputMultiple.nativeElement.value = null;
+      }
+    } else {
+      if (this.fileInputSingle) {
+        this.fileInputSingle.nativeElement.value = null;
+      }
+    }
+  }
+
 }

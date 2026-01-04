@@ -7,7 +7,8 @@ export class Tabs {
   tabsComponentList: tabsComponent[] = [];
 }
 export interface tabsComponent {
-  icon: string,
+  icon?: string,
+  number?: number,
   title: string,
   Component?: Type<any> | null,
   disabled: boolean,
@@ -16,6 +17,7 @@ export interface tabsComponent {
   errNum?: number,
   tabCode?: string
   tabErrors?: tabError[],
+  isCompleted?:boolean,
 }
 export interface tabError {
   errorCode: string;

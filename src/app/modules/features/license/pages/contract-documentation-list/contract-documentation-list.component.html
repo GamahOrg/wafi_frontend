@@ -31,11 +31,11 @@
 
         <!-- Status Filter -->
         <div class="col-md-2">
-          <select
-            class="form-select"
-            [(ngModel)]="statusFilter"
-            (change)="onStatusFilterChange()"
-          >
+          <select class="form-select"
+                  [(ngModel)]="statusFilter"
+                  (change)="onStatusFilterChange()">
+            <!-- Placeholder -->
+            <option value="" disabled selected>حالة العقد</option>
             <option *ngFor="let status of contractStatus" [value]="status.id">
               {{ status.name }}
             </option>

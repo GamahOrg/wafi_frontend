@@ -5,6 +5,7 @@ import { LicenseProjectModelCreateUpdateDto, LicenseProjectModelDto } from '../d
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { DropDownNameDto, DropDownSubUnitTypeDto } from '../dataModels/drop-down-name.dto';
+import { LicenseRequestUnitFacilitiesDto } from '../dataModels/license-facilities-dto';
 
 @Injectable()
 export class ProjectModelService {
@@ -57,7 +58,14 @@ Save(obj: LicenseProjectModelCreateUpdateDto): Observable<CoreResponseDTO<Licens
   return this._httpClient.post<CoreResponseDTO<LicenseProjectModelDto[]>>
     (Configuration.APIs.LicenseProjectModel.Save,obj)
 }
-
+  GetLicenseRequestUnitFacilitiesList(): Observable<LicenseRequestUnitFacilitiesDto[]> {
+    return this._httpClient.get<CoreResponseDTO<LicenseRequestUnitFacilitiesDto[]>>
+      (`${Configuration.APIs.LicenseProjectModel.GetLicenseRequestUnitFacilitiesList}`).pipe(
+        map((res: CoreResponseDTO<LicenseRequestUnitFacilitiesDto[]>) => {
+          return res?.data as LicenseRequestUnitFacilitiesDto[];
+        })
+      )
+  }
 GetSysLicenseProjectSubUnitTypeDropDown(): Observable<DropDownSubUnitTypeDto[] | null> {
   return this._httpClient
       .get<CoreResponseDTO<DropDownSubUnitTypeDto[]>>(`${Configuration.APIs.SysLicenseProjectSubUnitType.GetDropDown}`)

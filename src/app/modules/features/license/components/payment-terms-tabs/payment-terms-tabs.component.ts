@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-payment-terms-tabs',
@@ -8,6 +9,7 @@ import { Location } from '@angular/common';
 })
 export class PaymentTermsTabsComponent implements OnInit {
   activeTabIndex: number = 0;
+  isOpenedWhenComplated: boolean = false;
 
   tabs = [
     {
@@ -20,12 +22,18 @@ export class PaymentTermsTabsComponent implements OnInit {
       id: 'business-payment',
       index: 1
     },
-    
+
   ];
 
-  constructor(private location: Location) { }
+  constructor(
+    private location: Location,
+    private _activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    this._activatedRoute.queryParams.subscribe(params => {
+      this.isOpenedWhenComplated = params['isOpenedWhenComplated'] === 'true';
+    });
   }
 
   /**

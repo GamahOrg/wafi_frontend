@@ -14,14 +14,20 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { LicenseDepositDocumentService } from '../../services/license-deposit-document.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import {
+    BuyerBusinessPaymentInstallementsDto,
   LicenseProjectAccountsDto,
   LicenseProjectBuyerDetailsDto,
   LicenseProjectBuyerLookUpDto,
+  LicenseProjectBuyerPaymentTypeDto,
   LicenseProjectBuyerTypeEnum,
 } from '../../dataModels/license-project-buyer-dto';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { PeriodicCharteredAccountantReportService } from '../../services/periodic-chartered-accountant-report.service';
 import { SysDepositTypeDto } from '../../models/periodic-chartered-accountant-report-details-dto';
+import { LicenseProjectBuyerPaymentTypeEnum } from '../../enums/unit-status.enum';
+import { SysBank } from '../../models/license-project.model';
+import { SysBankService } from '../../services/sysBank/sys-bank.service';
+import { BankDto } from 'src/app/shared/models/bank.dto';
 
 @Component({
   selector: 'app-add-deposit-document',
@@ -34,7 +40,7 @@ export class AddDepositDocumentComponent implements OnInit {
   subscriptions: Subscription[] = [];
   nidNumber: string = '';
   licenseProjectAccounts: LicenseProjectAccountsDto = {} as LicenseProjectAccountsDto;
-  licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
+  licenseProjectId: string = '00000000-0000-0000-0000-000000000000';
   sysDepositTypeList: SysDepositTypeDto[] = [];
   licenseProjectBuyerId: string | null = null;
   buyerDto: LicenseProjectBuyerLookUpDto[] | null = [];
@@ -44,16 +50,18 @@ export class AddDepositDocumentComponent implements OnInit {
   mainItemsDto: MainItemsDto[] = [];
   sysSettings: SysSettingsDto[] = [];
   licenseProjectDepositDocumentMainItemEnum = LicenseProjectDepositDocumentMainItemEnum;
-
+  licenseBaymentType: LicenseProjectBuyerPaymentTypeDto[] = []
   administrativeAndMarketingAccountRatio: number = 0;
   accountRatioForSavingsAccountRatio: number = 0;
   constructionCostsRatio: number = 0;
-
+  banksDto: BankDto[] = []
+  licenseProjectBuyerPaymentTypeEnum = LicenseProjectBuyerPaymentTypeEnum
   showOtherField: boolean = false;
   showDescriptionField: boolean = false;
   showValidation: boolean = false;
   showBuyerDetails: boolean = false;
   showBuyerType: boolean = false;
+  showBankTypes:boolean = false;
 
   formGroup = this.fb.group({
     batchNumber: [''],
@@ -69,8 +77,13 @@ export class AddDepositDocumentComponent implements OnInit {
     escrowAccountAmount: [0],
     administrativeAndMarketingAmount: [0, Validators.required],
     constructionCostsAmount: [0, Validators.required],
-    licenseProjectBuyerId:[null]
+    licenseProjectBuyerId:[null],
+    bankId:[null],
+    paymentTypeId: [0],
+    installmentId: [null]
   });
+
+  buyerBusinessPaymentInstallementsList: BuyerBusinessPaymentInstallementsDto[] | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -80,6 +93,7 @@ export class AddDepositDocumentComponent implements OnInit {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _licenseProjectBuyerService: LicenseProjectBuyerService,
     private cdr: ChangeDetectorRef,
+    private _sysBank: SysBankService,
     private _licenseDepositDocument: LicenseDepositDocumentService,
     private _periodicCharteredAccountantReportService: PeriodicCharteredAccountantReportService,
   ) { }
@@ -97,6 +111,7 @@ export class AddDepositDocumentComponent implements OnInit {
   }
 
   calcAccounts(){
+    debugger
     const amount = this.controls.amount.value || 0;
     if (LicenseProjectDepositDocumentMainItemEnum.collectionFromClients === this.formGroup.value.mainItemId) {
       let constructionCostsAmount = (amount * this.constructionCostsRatio)
@@ -115,14 +130,47 @@ export class AddDepositDocumentComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  private getBanks() {
+    this._sysBank.GetBankDropDown().subscribe((res)=>{
+      if(res.isDone) {
+        this.banksDto = res.data as BankDto[]
+      }
+    })  
+  }
+
+  private getPaymentType() {
+    this._licenseProjectBuyerService.getLicenseProjectBuyerPaymentTypes().subscribe((res)=>{
+      if (res) {
+        this.licenseBaymentType = res
+      }
+    })
+  }
+
+  onLicenseProjectBuyerTypeIdChange(event:Event) {
+      const selectedValue = +(event.target as HTMLSelectElement).value;
+      if(selectedValue === this.licenseProjectBuyerPaymentTypeEnum.Finance) {
+        this.getBanks();
+        this.showBankTypes = true;
+        this.formGroup.controls.bankId.setValidators([Validators.required])
+        this.formGroup.controls.paymentTypeId.setValidators([Validators.required])
+        this.formGroup.updateValueAndValidity()
+      }
+      else {
+        this.showBankTypes = false;
+        this.formGroup.controls.bankId.clearValidators()
+        this.formGroup.controls.paymentTypeId.clearValidators()
+        this.formGroup.updateValueAndValidity()
+      }
+      this.getLicenseProjectBuyers(this.licenseProjectId,selectedValue);
+  }
+
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage() as string;
 
     if (this.licenseProjectId) {
       this._licenseDepositDocument.GetAccountNumber(this.licenseProjectId as string).subscribe((result) => {
         this.licenseProjectAccounts = result as LicenseProjectAccountsDto
       })
-      this.getLicenseProjectBuyers(this.licenseProjectId);
     }
   }
 
@@ -134,6 +182,15 @@ export class AddDepositDocumentComponent implements OnInit {
     }
   }
 
+  private GetBuyersBusinessPaymentInstallements(licenseProjectBuyerId :string): void {
+    this.buyerBusinessPaymentInstallementsList = [];
+  
+    this._licenseProjectBuyerService
+      .GetBuyersBusinessPaymentInstallements(licenseProjectBuyerId).subscribe((result) => {
+        this.buyerBusinessPaymentInstallementsList = result;
+      });
+  }
+
   onBuyerTypeSelect(event: Event): void {
     const selectedId = (event.target as HTMLSelectElement).value;
     this.selectedBuyerType = this.buyerDetailsDto?.find(buyer => buyer.id === selectedId) || null;
@@ -141,11 +198,12 @@ export class AddDepositDocumentComponent implements OnInit {
     if (this.selectedBuyerType) {
       this.showBuyerType = true;
     }
+    this.GetBuyersBusinessPaymentInstallements(selectedId);
   }
 
-  private getLicenseProjectBuyers(licenseProjectId: string): void {
+  private getLicenseProjectBuyers(licenseProjectId: string,paymentTypeId?:number): void {
     this._licenseProjectBuyerService
-      .GetBuyersBylicenseProjectId(licenseProjectId)
+      .GetBuyersBylicenseProjectId(licenseProjectId,paymentTypeId)
       .subscribe((result) => {
         this.buyerDto = result;
       });
@@ -161,12 +219,16 @@ export class AddDepositDocumentComponent implements OnInit {
   }
 
   onMainItemChange(event: Event): void {
+    this.formGroup.controls.bankId.clearValidators()
+    this.formGroup.controls.paymentTypeId.clearValidators()
+    this.formGroup.updateValueAndValidity()
     const selectedValue = +(event.target as HTMLSelectElement).value;
     this.showOtherField = selectedValue === LicenseProjectDepositDocumentMainItemEnum.collectionFromClients;
     this.showDescriptionField = selectedValue === LicenseProjectDepositDocumentMainItemEnum.others;
     this.formGroup.controls.mainItemId.setValue(selectedValue)
     if (!this.showDescriptionField) {
       this.formGroup.patchValue({ mianItemDescription: '' });
+      this.getPaymentType()
     }
 
     if (!this.showOtherField) {
@@ -193,11 +255,12 @@ export class AddDepositDocumentComponent implements OnInit {
     if(data.mainItemId !== LicenseProjectDepositDocumentMainItemEnum.collectionFromClients){
       data.LicenseProjectBuyerId = null;
     }
-
     // data.constructionCostsAvailableAmount = this.controls.constructionCostsAmount.value || 0 + this.licenseProjectAccounts.constructionCostsAvailableAmount;
     // data.administrativeAndMarketingAvailableAmount = this.controls.administrativeAndMarketingAmount.value || 0 + this.licenseProjectAccounts.administrativeAndMarketingAvailableAmount;
     // data.custodyAvailableAmount = this.controls.escrowAccountAmount.value || 0 + this.licenseProjectAccounts.custodyAvailableAmount;
     data.sysDepositTypeId = Number(this.controls.sysDepositTypeId.value);
+    if(this.controls.paymentTypeId.value)
+       data.paymentTypeId = Number(this.controls.paymentTypeId.value)
     this.subscriptions.push(
       this._licenseDepositDocument.SaveLicenseDepositDocument(data).subscribe((res) => {
         if (res?.isDone) {

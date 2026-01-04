@@ -21,6 +21,8 @@ import {
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { LicenseDepositDocumentDetailsDto } from '../../models/license-deposit-document-model/deposit-document-details-dto';
 import { DatePipe } from '@angular/common';
+import { SysBankService } from '../../services/sysBank/sys-bank.service';
+import { BankDto } from '../../dataModels/bank.dto';
 
 @Component({
   selector: 'app-update-license-deposit-document',
@@ -53,6 +55,7 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
   administrativeAndMarketingAccountRatio: number = 0;
   accountRatioForSavingsAccountRatio: number = 0;
   constructionCostsRatio: number = 0;
+  banksDto: BankDto[] = []
 
   formGroup = this.fb.group({
     batchNumber: [''],
@@ -68,6 +71,7 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
     escrowAccountAmount: [0],
     administrativeAndMarketingAmount: [0, Validators.required],
     constructionCostsAmount: [0, Validators.required],
+    bankId:['']
   });
 
   constructor(
@@ -78,6 +82,7 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _licenseProjectBuyerService: LicenseProjectBuyerService,
     private datePipe: DatePipe,
+    private _sysBank: SysBankService,
     private _licenseDepositDocument: LicenseDepositDocumentService,
     private cdr: ChangeDetectorRef,
   ) { }
@@ -124,6 +129,7 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
               licenseProjectBuyerId: result?.licenseProjectBuyerId,
               administrativeAndMarketingAmount: result.administrativeAndMarketingAmount,
               constructionCostsAmount: result?.constructionCostsAmount,
+              bankId:result?.bankId,
               escrowAccountAmount: result?.escrowAccountAmount
             });
 
@@ -143,6 +149,7 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (this.licenseProjectId) {
       this.getLicenseDepositDocumentId();
+      this.getBanks();
     }
   }
 
@@ -162,7 +169,13 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
       this.showBuyerType = true;
     }
   }
-
+  private getBanks() {
+    this._sysBank.GetBankDropDown().subscribe((res)=>{
+      if(res.isDone) {
+      this.banksDto = res.data as BankDto[]
+      }
+    })  
+  }
   private getLicenseProjectBuyers(licenseProjectId: string): void {
     this._licenseProjectBuyerService.GetBuyersBylicenseProjectId(licenseProjectId).subscribe((result) => {
         this.buyerDto = result;

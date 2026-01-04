@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Tabs } from '../../models/tabs.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TabsService {
   tabContent: BehaviorSubject<Tabs>=new BehaviorSubject<Tabs>(new Tabs)
   secondTabContent: BehaviorSubject<Tabs>=new BehaviorSubject<Tabs>(new Tabs)
@@ -10,7 +12,38 @@ export class TabsService {
   activeTabIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   activeSecondTabIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   activeVerticalTabIndex: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  // Unsaved changes tracking
+  private hasUnsavedChanges: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  pendingTabIndex: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
+
   constructor() { }
+
+  // Unsaved changes methods
+  setUnsavedChanges(hasChanges: boolean): void {
+    this.hasUnsavedChanges.next(hasChanges);
+  }
+
+  getUnsavedChanges(): boolean {
+    return this.hasUnsavedChanges.value;
+  }
+
+  getUnsavedChanges$(): Observable<boolean> {
+    return this.hasUnsavedChanges.asObservable();
+  }
+
+  confirmTabChange(): void {
+    const pendingIndex = this.pendingTabIndex.value;
+    if (pendingIndex !== null) {
+      this.setUnsavedChanges(false);
+      this.activeTabIndex.next(pendingIndex);
+      this.pendingTabIndex.next(null);
+    }
+  }
+
+  cancelTabChange(): void {
+    this.pendingTabIndex.next(null);
+  }
     // update 
     updateTabContent(tabs: Tabs) {
       this.tabContent.next(tabs)

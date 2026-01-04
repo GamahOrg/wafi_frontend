@@ -1,7 +1,7 @@
 <ng-container>
   <form class="d-flex flex-column h-100" id="form-projectContactsDataForm" [formGroup]="projectContactsDataForm">
     <div class="tab-data-header">
-      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
       <h6 class="title">{{ localization.title }}</h6>
     </div>
     <div class="tab-data-section">
@@ -10,8 +10,7 @@
       <div class="row mb-3">
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
-            <span class="text-danger">*</span>
-
+            <span class="required-star">*</span>
             <label class="form-label">
               {{ localization.delegatorName }}
             </label>
@@ -21,9 +20,7 @@
               aria-label="Default select example"
               formControlName="delegatorCustomerId"
               [class.is-invalid]="controls.delegatorCustomerId?.invalid && (controls.delegatorCustomerId?.touched || showValidation)">
-              <option disabled value="">
-                {{ localization.delegatorName }}
-              </option>
+              <option [ngValue]="null" disabled hidden>{{ localization.delegatorName }}</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>
@@ -44,12 +41,11 @@
 
     <div class="tab-data-section">
       <h6 class="title">{{ localization.officerData }}</h6>
-
       <div class="row mb-3">
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">
-              <span class="text-danger">*</span>
+              <span class="required-star">*</span>
               {{ localization.officerName }}
             </label>
             <select
@@ -58,9 +54,7 @@
               aria-label="Default select example"
               formControlName="officerCustomerId"
               [class.is-invalid]="controls.officerCustomerId?.invalid && (controls.officerCustomerId?.touched || showValidation)">
-              <option disabled value="">
-                {{ localization.officerName }}
-              </option>
+              <option [ngValue]="null" disabled hidden>{{ localization.officerName }}</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>

@@ -61,6 +61,18 @@
         <div class="form-value">{{ unitDetails?.unitSpace }}</div>
       </div>
 
+      <ng-container *ngIf="unitDetails && unitDetails.contracts && unitDetails.contracts.length>0 as hasContracts">
+        <div class="form-group">
+          <label class="form-label">رقم العقد</label>
+          <div class="form-value">{{ hasContracts ? unitDetails?.contracts?.[0]?.contractNumber : '-' }}</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">تاريخ العقد</label>
+          <div class="form-value">{{ hasContracts ? (unitDetails?.contracts?.[0]?.creationDate | date:'dd/MM/yyyy') : '-' }}</div>
+        </div>
+      </ng-container>
+
       <!-- Row 5 -->
       <div class="form-group">
         <label class="form-label">السعر</label>
@@ -76,19 +88,14 @@
         </div>
       </div>
 
-      <div *ngIf="unitDetails?.supportedPrice" class="form-group">
+      <!--<div *ngIf="unitDetails?.supportedPrice" class="form-group">
         <label class="form-label">السعر المدعوم</label>
         <div class="form-value">
           <span>{{ unitDetails?.supportedPrice | number }}</span>
-          <img
-            *ngIf="unitDetails?.supportedPrice"
-            src="assets/images/general/riyal-icon.svg"
-            alt="ريال"
-            class="riyal-icon"
-          />
+          <img *ngIf="unitDetails?.supportedPrice" src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">-->
           <!-- <span *ngIf="unitDetails?.supportedPrice" class="price-icon">﷼</span> -->
-        </div>
-      </div>
+        <!--</div>
+      </div>-->
 
       <div class="form-group">
         <label class="form-label">تاريخ تسليم الوحدة</label>
@@ -107,15 +114,17 @@
       <i class="bi bi-info-circle-fill ms-2" style="font-size: 1.2rem"></i>
       <div>
         <span>{{ paymentPlansError }}</span>
-        <br />
+        <br/>
+        <a style="color: black;" (click)="navigateToPaymentTab()">أنشاء خطط دفع ></a>
+        <br/>
         <!-- <a href="javascript:void(0)" class="alert-link me-1" style="text-decoration: underline;">إنشاء خطط الدفع</a> -->
       </div>
     </div>
 
     <!-- Action Button Section -->
-    <!-- <div class="action-section">
+    <div class="action-section" *ngIf="hasPaymentPlans && !paymentPlansError">
       <button *ngIf="unitDetails?.unitStatusId === unitStatus.NotSold" class="btn-add-contract" (click)="openAddContractPopup()" [disabled]="!hasPaymentPlans" [class.disabled]="!hasPaymentPlans">انشاء عقد بيع</button>
-    </div> -->
+    </div> 
   </div>
 
   <!-- Add Contract Popup -->
@@ -236,8 +245,7 @@
                   class="btn-cancel-top mx-4"
                   (click)="openCancelModal(contract)"
                   *ngIf="
-                    contract.contractStatusId !== contractStatus.Refused &&
-                    contract.contractStatusId !== contractStatus.Cerified
+                    contract.contractStatusId === contractStatus.New 
                   "
                 >
                   إلغاء العقد

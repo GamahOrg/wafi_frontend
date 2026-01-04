@@ -2,10 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Tabs, tabsComponent } from 'src/app/shared/models/tabs.model';
-import { MainDataComponent } from '../../components/main-data/main-data.component';
-import { ProjectDataComponent } from '../../components/project-data/project-data.component';
-import { FeasibilityStudyComponent } from '../../components/feasibility-study/feasibility-study.component';
-import { ProjectPartiesComponent } from '../../components/project-parties/project-parties.component';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 import { LicenseRequestService } from '../../services/license-request.service';
 import {
@@ -27,10 +23,18 @@ import { FawriaProjectPartiesComponent } from '../../components/fawria-component
 import { FawriaProjectDataComponent } from '../../components/fawria-components/fawria-project-data/fawria-project-data.component';
 import { LicenseRequestHeaderProcessingStepService } from '../../services/license-request-header-processing-step.service';
 import {
+  InvoiceData,
+  LicenseProjectBankAccountInformationDto,
   LicenseRequestHeaderProcessingStepDto,
   LicenseRequestHeaderStepStatusEnum,
   LicenseRequestHeaderStepTypeEnum,
 } from '../../models/license-request-header-processing-step-model';
+import { LicenseCertificateService } from '../../services/license-certificate.service';
+import { LicenseCertificateDto } from '../../models/license-certification.model';
+import { OffPlanSaleLicenseComponent } from '../../components/off-plan-sale-license/off-plan-sale-license.component';
+import { FawriaLicenseCompleteInvoiceViewComponent } from '../../components/fawria-license-complete-invoice-view/fawria-license-complete-invoice-view.component';
+import { FawriaLicenseBankAccountInfoComponent } from '../../components/fawria-license-bank-account-info/fawria-license-bank-account-info.component';
+import { ToastrService } from 'ngx-toastr';
 
 export interface RequestStep {
   title: string;
@@ -92,7 +96,7 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
 
   mainTabsComponentList: tabsComponent[] = [
     {
-      icon: 'holiday_village',
+      number: 1,
       title: 'بيانات المشروع',
       Component: FawriaProjectDataComponent,
       disabled: false,
@@ -103,7 +107,7 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
       isVisible: true,
     },
     {
-      icon: 'people',
+      number: 2,
       title: 'أطراف المشروع',
       Component: FawriaProjectPartiesComponent,
       disabled: false,
@@ -121,6 +125,7 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
     tabsComponentList: [],
   };
 
+  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
   disabledSend: boolean = false;
   requestSubmittedSuccessfully: boolean = false;
   requestValidationData: RequestValidation | null = null;
@@ -128,7 +133,7 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
   licenseRequestHeaderId: string | null =
     '00000000-0000-0000-0000-000000000000';
   availabilityToUpdate: boolean = false;
-
+  invoiceDataDto!: InvoiceData;
   constructor(
     private _licenseRequestService: LicenseRequestService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
@@ -136,12 +141,14 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
     private _popupService: PopupService,
     private _projectApprovalsService: ProjectApprovalsService,
     private _googleAnalyticsService: GoogleAnalyticsService,
+    private toastrService: ToastrService,
     private _licenseRequestHeaderProcessingStepService: LicenseRequestHeaderProcessingStepService,
-    private _router: Router // private _licenseDetailsService: LicenseDetailsService,
-  ) {}
+    private _licenseCertificateService: LicenseCertificateService,
+    private _router: Router
+  ) { }
   ngOnInit(): void {
     this.GetLicenseRequestHeaderProcessingStep();
-    this.getLicenseProjectIdStorage();
+    // this.getLicenseProjectIdStorage();
     this.observeDataVisibilityOfLicenseProject();
     this.getApprovalSubject();
     this.getAvailabilityToUpdateFromLocalStorage();
@@ -206,10 +213,20 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
 
   licenseRequestHeaderProcessingStepList: LicenseRequestHeaderProcessingStepDto[] =
     [];
+
+  requestCode: string = '';
   private GetLicenseRequestHeaderProcessingStep() {
     this.licenseRequestHeaderId =
       this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage();
     if (this.licenseRequestHeaderId) {
+      this.subscriptions.push(
+        this._licenseRequestHeaderProcessingStepService
+          .GetLicenseRequestHeaderCode(this.licenseRequestHeaderId as string)
+          .subscribe((res) => {
+            if (res) this.requestCode = res;
+          })
+      );
+
       this.subscriptions.push(
         this._licenseRequestHeaderProcessingStepService
           .GetLicenseRequestHeaderProcessingStep(
@@ -217,16 +234,28 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
           )
           .subscribe((res) => {
             this.licenseRequestHeaderProcessingStepList = res ?? [];
-            this.licenseProjectId =
-              res != null
-                ? res[0]?.licenseProjectId
-                : '00000000-0000-0000-0000-000000000000';
-            this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-              this.licenseProjectId
-            );
+            const projectIdFromResponse = res?.[0]?.licenseProjectId;
+            if (
+              projectIdFromResponse &&
+              projectIdFromResponse !== '00000000-0000-0000-0000-000000000000'
+            ) {
+              this.licenseProjectId = projectIdFromResponse;
+              this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+                this.licenseProjectId
+              );
+              this.getLicenseProjectIdStorage();
+            }
           })
       );
     }
+  }
+
+  shoDangerAlert(stepStatusId: LicenseRequestHeaderStepStatusEnum) {
+    return (
+      this.licenseRequestHeaderProcessingStepList.filter(
+        (x) => x.stepStatusId == stepStatusId
+      ).length > 0
+    );
   }
 
   getRejectStatus(stepStatusId: LicenseRequestHeaderStepStatusEnum) {
@@ -243,12 +272,12 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
   getCompleted(stepStatusId: LicenseRequestHeaderStepStatusEnum) {
     return (
       stepStatusId ==
-        LicenseRequestHeaderStepStatusEnum.AccountantAndConsultantAgreementsApproved ||
+      LicenseRequestHeaderStepStatusEnum.AccountantAndConsultantAgreementsApproved ||
       stepStatusId == LicenseRequestHeaderStepStatusEnum.AllDeedsMarginalized ||
       stepStatusId == LicenseRequestHeaderStepStatusEnum.IntegrationSucceeded ||
       stepStatusId == LicenseRequestHeaderStepStatusEnum.LicenseIssued ||
       stepStatusId ==
-        LicenseRequestHeaderStepStatusEnum.OwnersAgreementsApproved ||
+      LicenseRequestHeaderStepStatusEnum.OwnersAgreementsApproved ||
       stepStatusId == LicenseRequestHeaderStepStatusEnum.PaymentCompleted ||
       stepStatusId == LicenseRequestHeaderStepStatusEnum.RequestCreated
     );
@@ -264,70 +293,6 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  getInvoiceData() {
-    if (this.licenseRequestHeaderId) {
-      this.subscriptions.push(
-        this._licenseRequestHeaderProcessingStepService
-          .GetLicenseRequestHeaderProcessingStep(
-            this.licenseRequestHeaderId as string
-          )
-          .subscribe((res) => {
-            this.licenseRequestHeaderProcessingStepList = res ?? [];
-            this.licenseProjectId =
-              res != null
-                ? res[0]?.licenseProjectId
-                : '00000000-0000-0000-0000-000000000000';
-            this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-              this.licenseProjectId
-            );
-          })
-      );
-    }
-  }
-
-  reSendInvoice() {
-    if (this.licenseRequestHeaderId) {
-      this.subscriptions.push(
-        this._licenseRequestHeaderProcessingStepService
-          .GetLicenseRequestHeaderProcessingStep(
-            this.licenseRequestHeaderId as string
-          )
-          .subscribe((res) => {
-            this.licenseRequestHeaderProcessingStepList = res ?? [];
-            this.licenseProjectId =
-              res != null
-                ? res[0]?.licenseProjectId
-                : '00000000-0000-0000-0000-000000000000';
-            this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-              this.licenseProjectId
-            );
-          })
-      );
-    }
-  }
-
-  reSendOpenBankAccount() {
-    if (this.licenseRequestHeaderId) {
-      this.subscriptions.push(
-        this._licenseRequestHeaderProcessingStepService
-          .GetLicenseRequestHeaderProcessingStep(
-            this.licenseRequestHeaderId as string
-          )
-          .subscribe((res) => {
-            this.licenseRequestHeaderProcessingStepList = res ?? [];
-            this.licenseProjectId =
-              res != null
-                ? res[0]?.licenseProjectId
-                : '00000000-0000-0000-0000-000000000000';
-            this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-              this.licenseProjectId
-            );
-          })
-      );
-    }
-  }
-
-  
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId =
       this._sharedLicenseProjectService.getLicenseProjectIdStorage();
@@ -362,7 +327,7 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
         })
     );
   }
-  approvalDecisions() {}
+  approvalDecisions() { }
   public openCompilNotesDialog() {
     let Data = {
       id: ButtonType.allowCompile,
@@ -521,5 +486,138 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
         state: { licenseProjectId: this.licenseProjectId },
       }
     );
+  }
+
+  licenseCertificates!: LicenseCertificateDto;
+
+  GetCertificatesByHeaderId() {
+    this.subscriptions.push(
+      this._licenseCertificateService
+        .GetCertificatesByHeaderId(
+          this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage() as string
+        )
+        .subscribe((res: LicenseCertificateDto | null) => {
+          if (res) {
+            this.licenseCertificates = res;
+            this.openOffPlanSaleLicenseDialog();
+          }
+        })
+    );
+  }
+
+  openOffPlanSaleLicenseDialog(): void {
+    const popupData: PopupData = {
+      title: 'رخصة البيع على الخارطة',
+      component: OffPlanSaleLicenseComponent,
+      id: 'OffPlanSaleLicenseComponent',
+      buttons: [],
+      data: {
+        certificateData: this.licenseCertificates,
+      },
+    };
+    this._popupService.updatePopupData(popupData);
+  }
+
+  InitiateInvoice() {
+    this.subscriptions.push(
+      this._licenseRequestHeaderProcessingStepService
+        .InitiateInvoice(
+          this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage() as string
+        )
+        .subscribe((res) => {
+          if (res && res.data) {
+          }
+        })
+    );
+  }
+
+  GetInvoiceData() {
+    this.subscriptions.push(
+      this._licenseRequestHeaderProcessingStepService
+        .GetInvoice(
+          this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage() as string
+        )
+        .subscribe((res) => {
+          if (res && res.data) {
+            this.invoiceDataDto = res.data;
+            this.openInvoiceViewDialog();
+          }
+        })
+    );
+  }
+  openInvoiceViewDialog(): void {
+    const popupData: PopupData = {
+      title: 'بيانات الفاتورة',
+      component: FawriaLicenseCompleteInvoiceViewComponent,
+      id: 'FawriaLicenseCompleteInvoiceViewComponent',
+      buttons: [],
+      data: {
+        invoiceData: this.invoiceDataDto,
+      },
+    };
+    this._popupService.updatePopupData(popupData);
+  }
+
+  reSendInvoice() {
+    if (this.licenseRequestHeaderId) {
+      this.subscriptions.push(
+        this._licenseRequestHeaderProcessingStepService
+          .InitiateInvoice(this.licenseRequestHeaderId as string)
+          .subscribe((res) => {
+            if (res.isDone) {
+              this.GetLicenseRequestHeaderProcessingStep();
+              this.toastrService.success('تم انشاء الفاتورة');
+            } else {
+              this.toastrService.error(res.message);
+            }
+          })
+      );
+    }
+  }
+
+  reSendOpenBankAccount() {
+    if (this.licenseRequestHeaderId) {
+      this.subscriptions.push(
+        this._licenseRequestHeaderProcessingStepService
+          .GenerateBankAccount(this.licenseRequestHeaderId as string)
+          .subscribe((res) => {
+            if (res.isDone) {
+              this.GetLicenseRequestHeaderProcessingStep();
+              this.toastrService.success('تم انشاء حساب الضمان');
+            } else {
+              this.toastrService.error(res.message);
+            }
+          })
+      );
+    }
+  }
+
+  displayBankAccountInfo() {
+    this.subscriptions.push(
+      this._licenseRequestHeaderProcessingStepService
+        .GetBankAccountInformation(
+          this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage() as string
+        )
+        .subscribe((res) => {
+          if (res && res.data) {
+            this.openBankAccountViewDialog(res.data);
+          }
+        })
+    );
+  }
+
+  openBankAccountViewDialog(
+    bankAccount: LicenseProjectBankAccountInformationDto
+  ): void {
+    const popupData: PopupData = {
+      title: 'بيانات حساب الضمان',
+      component: FawriaLicenseBankAccountInfoComponent,
+      id: 'FawriaLicenseCompleteInvoiceViewComponent',
+      buttons: [],
+      data: {
+        bankAccount: bankAccount,
+      },
+    };
+    this._popupService.updatePopupData(popupData);
   }
 }

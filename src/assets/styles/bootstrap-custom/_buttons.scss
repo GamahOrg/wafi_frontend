@@ -1,5 +1,5 @@
 .btn {
-  --bs-btn-font-weight: 500;
+  --bs-btn-font-weight: 600;
 
   display: inline-flex;
   justify-content: center;
@@ -8,7 +8,7 @@
 
   .icon {
     line-height: 1;
-    font-size: inherit;
+    font-size: 1rem !important;
   }
 }
 
@@ -26,7 +26,7 @@
   --bs-btn-active-border-color: #{$darkgreen};
   --bs-btn-active-bg: #{$darkgreen};
 
-  --bs-btn-bg: #E7F2ED;
+  --bs-btn-bg: #F5FCFC;
   --bs-btn-hover-bg: #{$darkgreen};
 }
 
@@ -41,7 +41,8 @@
 }
 
 .btn-dark {
-  --bs-btn-bg: #0D121C;
+  --bs-btn-bg: #{$black};
+  --bs-btn-hover-color: #{$black};
 }
 
 .btn-link {

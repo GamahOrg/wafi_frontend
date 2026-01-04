@@ -36,6 +36,10 @@ export interface AddUpdateLicenseProjectDepositDto {
   administrativeAndMarketingAmount: number;
   //المبلغ المضاف لحساب الحفظ
   escrowAccountAmount: number;
+  bankId:string ;
+  paymentTypeId: number;
+  installmentId: string | null;
+
 }
 
 export enum LicenseProjectDepositDocumentMainItemEnum {

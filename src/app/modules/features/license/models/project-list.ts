@@ -12,5 +12,6 @@ export interface ProjectListDto {
 
 export interface LicenseProjectNatureTypeDto {
   id: number;
+  natureTypeId: number;
   name: string;
 }

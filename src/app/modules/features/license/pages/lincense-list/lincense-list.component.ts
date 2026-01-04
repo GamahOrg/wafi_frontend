@@ -30,6 +30,7 @@ export class LincenseListComponent implements OnInit, OnDestroy {
   currentSortOrder: 'asc' | 'desc' | null = null;
   currentSortColumn: string = '';
   showFilter: boolean = false;
+  requestStatusEnum = ExternalStatus
   requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseSummary}`;
   @HostListener('document:click', ['$event']) onDocumentClick() {
     this.showFilter = false;
@@ -46,6 +47,7 @@ export class LincenseListComponent implements OnInit, OnDestroy {
   bsInlineRangeValue: Date[];
   maxDate = new Date();
   searchText: string = '';
+  hasSearched: boolean = false;
   // Pagination
   newPageNo: number = 1;
   pagintationData: pagination = {
@@ -94,6 +96,7 @@ export class LincenseListComponent implements OnInit, OnDestroy {
     this.getLicensesRequests();
   }
   search() {
+    this.hasSearched = true;
     this.getLicensesRequests();
   }
   getLicensesRequests() {
@@ -143,8 +146,30 @@ export class LincenseListComponent implements OnInit, OnDestroy {
   }
   public navigateToDetails(request: licenseRequest) {
     this.selectedRequest = request;
+    this._sharedLicenseProjectService.setLicenseTypeCodeInLocalStorage(
+      request.licenseRequestType.typeCode
+    );
     this.setSelectedRequestIdInLocalStorage();
     this.routeToRequestDetails(request);
+  }
+
+  public navigateToFawriaLicenseComplate(request: licenseRequest): void {
+    this.selectedRequest = request;
+    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      request.licenseProjectId
+    );
+    
+    this._sharedLicenseProjectService.setLicenseTypeCodeInLocalStorage(
+      request.licenseRequestType.typeCode
+    );
+
+     this._sharedLicenseProjectService.setfacilityIdInLocalStorage(
+      request.facilityId
+    );
+
+    this._router.navigateByUrl(
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/fawria-license-complate`
+    );
   }
 
   routeToRequestDetails(request: licenseRequest): void {
@@ -222,7 +247,12 @@ export class LincenseListComponent implements OnInit, OnDestroy {
             this._toastrNotificationService.showSuccess('تم الحذف');
             this.closeDialog();
             this.getLicensesRequests();
-          } else this._toastrNotificationService.showError(' لم يتم حذف ');
+          } else {
+            //const message = res.message || 'لم يتم الحذف';
+            //this._toastrNotificationService.showError(message);
+            ////this._toastrNotificationService.showError(' لم يتم حذف ');
+
+          }
         })
     );
   }

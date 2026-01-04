@@ -1,21 +1,34 @@
 .card {
-  --bs-card-title-spacer-y: 0;
-  --bs-card-cap-bg: #{$card-bg};
-  --bs-card-border-width: 0;
+  --bs-card-spacer-y: 1.5rem;
+  --bs-card-spacer-x: 1rem;
   --bs-card-border-color: #{$lightergray};
+  --bs-card-border-radius: #{$border-radius};
+  --bs-card-inner-border-radius: #{$border-radius};
+
+  --bs-card-title-spacer-y: 0;
+  --bs-card-cap-padding-y: 2.5rem;
+  --bs-card-cap-padding-x: 1rem;
+  --bs-card-cap-bg: #{$card-bg};
+  --bs-card-title-color: #{$headings-color};
 
   .card-header {
+    --bs-card-border-width: 0;
+
+    position: relative;
     display: flex;
     justify-content: space-between;
     gap: .5rem;
-
-    position: relative;
+    padding-bottom: 1rem;
 
     .icon {
       font-size: $font-size-sm;
     }
 
-    &:not(.no-separetor) {
+    &:not(.with-separator) {
+      padding-bottom: 0;
+    }
+
+    &.with-separator {
       &::after {
         content: '';
         position: absolute;
@@ -173,6 +186,54 @@
     }
   }
 
+  &.req-details-header-card {
+    .key-value {
+      .key {
+        font-weight: 500;
+      }
+
+      .value {
+        font-size: $font-size-sm;
+        color: $headings-color;
+      }
+    }
+
+    .card-header {
+      .key-value {
+        .key {
+          font-size: $font-size-xs;
+          color: #586161;
+        }
+
+        .value {
+          font-weight: 500;
+        }
+      }
+
+      .status-badge {
+        padding: .5rem;
+
+        &.orange {
+          color: #E39A0D;
+          background-color: #FCFAF5;
+        }
+      }
+    }
+
+    .card-body {
+      .key-value {
+        .key {
+          font-size: $font-size-sm;
+          color: $darkgray;
+        }
+
+        .value {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
   &.brief-card {
     position: relative;
     margin-bottom: 2rem;
@@ -264,7 +325,6 @@
   &.phases-card {
     --bs-card-spacer-y: 1rem;
     --bs-card-spacer-x: 1rem;
-    --bs-card-border-width: 1px;
     --bs-card-border-radius: #{$border-radius-xl};
     --bs-card-inner-border-radius: #{$border-radius-xl};
 
@@ -288,6 +348,12 @@
 
       &:last-child {
         overflow: hidden;
+
+        .number-area {
+          &::before {
+            display: none;
+          }
+        }
       }
 
       .number-area {
@@ -416,7 +482,10 @@
         .number-area {
           color: $white;
 
-          &::before,
+          &::before {
+            background-color: #F5F8F8;
+          }
+
           .number {
             background-color: $darkgray;
           }
@@ -424,8 +493,8 @@
 
         .info {
           .status {
-            color: $darkgray;
-            background-color: $lightgray;
+            color: #1F2A37;
+            background-color: #F9FAFB;
           }
         }
       }
@@ -449,93 +518,4 @@
       }
     }
   }
-
-  // &.qualiication-reqest-card {
-  //   .card-title {
-
-  //     .title,
-  //     .date,
-  //     .actions {
-  //       display: flex;
-  //       align-items: center;
-  //     }
-
-  //     .title {
-  //       color: $body-color;
-  //     }
-
-  //     .date {
-  //       column-gap: .5rem;
-
-  //       .key {
-  //         font-size: $font-size-sm;
-  //         color: $darkgray;
-  //       }
-
-  //       .value {
-  //         display: flex;
-  //         align-items: center;
-  //         column-gap: .25rem;
-
-  //         height: 100%;
-  //         color: $body-color;
-  //       }
-  //     }
-
-  //     .actions {
-  //       justify-content: end;
-  //       column-gap: .5rem;
-  //     }
-  //   }
-
-  //   .applicant {
-  //     column-gap: .5rem;
-
-  //     .key {
-  //       font-size: $font-size-xs;
-  //       color: $darkgray;
-  //     }
-
-  //     .value {
-  //       display: flex;
-  //       align-items: center;
-  //       column-gap: .5rem;
-
-  //       .image {
-  //         display: flex;
-  //         align-items: center;
-  //         justify-content: center;
-
-  //         width: 2rem;
-  //         height: 2rem;
-
-  //         border: 1px solid $darkgreen;
-  //         border-radius: 50%;
-  //         overflow: hidden;
-  //         box-shadow: 0px 4px 8px rgba($black, 0.1);
-
-  //         .avatar {
-  //           font-size: 3rem;
-  //         }
-  //       }
-
-  //       .name {
-  //         font-size: $font-size-sm;
-  //         font-weight: bold;
-  //         color: $body-color;
-  //       }
-  //     }
-
-  //     .details {
-  //       label {
-  //         font-size: $font-size-sm;
-  //         color: rgba($darkgray, .5);
-  //       }
-
-  //       span {
-  //         color: $darkgray;
-  //       }
-  //     }
-  //   }
-  // }
 }

@@ -2,14 +2,14 @@
 
   <form class="d-flex flex-column h-100" [formGroup]="projectBasicDataForm" id="form-projectBasicDataForm">
     <div class="tab-data-header">
-      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
       <h6 class="title">{{ localization.title }}</h6>
     </div>
     <div class="tab-data-section">
       <div class="row row-gap-3">
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{ localization.name }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.name }}</label>
             <input type="text" id="control-name" placeholder="{{ localization.name }}" class="form-control" formControlName="name" />
             <mat-error *ngIf="controls.name?.hasError('required') && showValidation">{{ localization.requiredErrorMsg }}</mat-error>
           </div>
@@ -17,9 +17,9 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{ localization.typeId }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.typeId }}</label>
             <select class="form-select" id="control-typeId" formControlName="typeId">
-              <option [label]="localization.typeId"></option>
+              <option [ngValue]="null" disabled hidden>{{ localization.typeId }}</option>
               <option *ngFor="let type of types" [ngValue]="type.id">
                 {{ type.name }}
               </option>
@@ -30,9 +30,9 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{ localization.categoryId }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.categoryId }}</label>
             <select class="form-select" id="control-categoryId" formControlName="categoryId">
-              <option [label]="localization.categoryId"></option>
+              <option [ngValue]="null" disabled hidden>{{ localization.categoryId }}</option>
               <option *ngFor="let category of categories" [value]="category.id">
                 {{ category.categoryName }}
               </option>
@@ -45,9 +45,9 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{ localization.subCategoryId }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.subCategoryId }}</label>
             <select class="form-select" id="control-subCategoryId" formControlName="subCategoryId">
-              <option [label]="localization.subCategoryId"></option>
+              <option [ngValue]="null" disabled hidden>{{ localization.subCategoryId }}</option>
               <option *ngFor="let subCategory of tempSubCategories" [value]="subCategory.id">
                 {{ subCategory.subCategoryName }}
               </option>
@@ -60,9 +60,10 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{ localization.licenseNatureType }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.licenseNatureType }}</label>
             <select class="form-select" id="control-licenseNatureType" formControlName="licenseProjectNatureTypeId">
-              <option *ngFor="let licenseNatureType of licenseNatureType" [value]="licenseNatureType.id" >
+              <option [ngValue]="null" disabled hidden>{{ localization.licenseNatureType }}</option>
+              <option *ngFor="let licenseNatureType of licenseNatureType" [value]="licenseNatureType.id">
                 {{ licenseNatureType.name }}
               </option>
             </select>
@@ -74,11 +75,11 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{
+            <label class="form-label"><span class="required-star">*</span> {{
               localization.licenseProjectScopeId
               }}</label>
             <select class="form-select" id="control-licenseProjectScopeId" formControlName="licenseProjectScopeId">
-              <option [label]="localization.licenseProjectScopeId"></option>
+              <option [ngValue]="null" disabled hidden>{{ localization.licenseProjectScopeId }}</option>
               <option *ngFor="let scope of licenseProjectScopes" [value]="scope.id">
                 {{ scope.name }}
               </option>
@@ -92,9 +93,9 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{ localization.startOn }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.startOn }}</label>
             <div class="input-group">
-              <input bsDatepicker id="control-startOn" type="text" class="form-control" formControlName="startOn" value="{{ controls.startOn.value | date : 'yyyy-MM-dd' }}" />
+              <input bsDatepicker id="control-startOn" type="text" class="form-control" formControlName="startOn" value="{{ controls.startOn.value | date : 'yyyy-MM-dd' }}" autocomplete="off" />
               <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
             </div>
 
@@ -113,9 +114,9 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{ localization.endOn }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.endOn }}</label>
             <div class="input-group">
-              <input bsDatepicker id="control-endOn" type="text" class="form-control" formControlName="endOn" value="{{ controls.endOn.value | date : 'yyyy-MM-dd' }}" />
+              <input bsDatepicker id="control-endOn" type="text" class="form-control" formControlName="endOn" value="{{ controls.endOn.value | date : 'yyyy-MM-dd' }}" autocomplete="off" />
               <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
             </div>
             <mat-error *ngIf="controls.endOn?.hasError('required') && showValidation">{{ localization.requiredErrorMsg }}</mat-error>
@@ -239,11 +240,8 @@
 
         <div class="col-12 col-lg-6" *ngIf="isProjectStarted()">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{ localization.achievementRate }}</label>
-            <div class="input-group">
-              <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate" min="1" max="100" />
-              <span class="input-group-text"><i class="material-icons-outlined">percent</i></span>
-            </div>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.achievementRate }}</label>
+            <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate" min="1" max="100" />
             <mat-error *ngIf="
                 controls.achievementRate?.hasError('required') && showValidation
               ">{{ localization.requiredErrorMsg }}</mat-error>
@@ -258,9 +256,7 @@
 
         <div class="col-12 col-lg-12" *ngIf="isProjectStarted()">
           <div class="form-group">
-            <label class="form-label"><span class="text-danger">*</span> {{
-              localization.engineeringConsultantReportFileId
-              }}</label>
+            <label class="form-label">{{ localization.engineeringConsultantReportFileId }}</label>
             <div class="col-12 col-lg-12" *ngIf="
                 projectBasicData &&
                 projectBasicData.engineeringConsultantReportFile

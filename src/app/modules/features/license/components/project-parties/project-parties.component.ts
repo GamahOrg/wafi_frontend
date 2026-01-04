@@ -19,6 +19,8 @@ import { FawriaLicenseprojectEngineeringConsultantsContainerComponent } from '..
 import { FawriaLicenseprojectCharteredAccountantsContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-chartered-accountants-container/fawria-licenseproject-chartered-accountants-container.component';
 import { FawriaLicenseprojectDeedOwnersContainerComponent } from '../FawriaLicenseProject/fawria-licenseproject-deed-owners-container/fawria-licenseproject-deed-owners-container.component';
 import { FawriaLicenseprojectEscrowAccountCreateComponent } from '../FawriaLicenseProject/fawria-licenseproject-escrow-account-create/fawria-licenseproject-escrow-account-create.component';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 
 @Component({
   selector: 'app-project-parties',
@@ -28,6 +30,8 @@ import { FawriaLicenseprojectEscrowAccountCreateComponent } from '../FawriaLicen
 export class ProjectPartiesComponent {
   subscriptions: Subscription[] = [];
   validationError: RequestValidation | null = null;
+    licenseProjectId: string | null = null;
+  completedTapCodes: string[] = [];
   mainTabsComponentList = [
     {
       icon: '',
@@ -39,6 +43,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.licenseProjectEngineeringConsultants,
       tabErrors: [],
       isVisible: true,
+      isCompleted:false
     },
     {
       icon: '',
@@ -50,6 +55,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.licenseProjectCharteredAccountants,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
      {
       icon: '',
@@ -61,6 +67,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.fawriaLicenseProjectDeedOwners,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -72,6 +79,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.fawriaLicenseProjectEngineeringConsultants,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -83,6 +91,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.fawriaLicenseProjectCharteredAccountants,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -94,6 +103,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.fawriaLicenseProjectEscrowAccount,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -105,6 +115,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.licenseProjectSubDevelopers,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -116,7 +127,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.licenseProjectRealStateMarketers,
       tabErrors: [],
       isVisible: true,
-
+      isCompleted: false,
     },
     {
       icon: '',
@@ -128,6 +139,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.licenseProjectMainRealStateDeveloper,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -139,6 +151,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.sysLicenseBeneficiaryContractForms,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -150,6 +163,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.FinalTenantContract,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -161,6 +175,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.beneficiaryContractFormAdditionalTerms,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
     {
       icon: '',
@@ -172,6 +187,7 @@ export class ProjectPartiesComponent {
       tabCode: TabCode.LicenseProjectBusinessPayment,
       tabErrors: [],
       isVisible: true,
+      isCompleted: false,
     },
   ]
   tabContent: Tabs = {
@@ -183,10 +199,55 @@ export class ProjectPartiesComponent {
   constructor(
     private _licenseRequestService: LicenseRequestService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
+    private _sharedLicenseProjectService: SharedLicenseProjectService,
+     private _tabsService: TabsService,
 
   ) { };
   ngOnInit(): void {
     this.observeValidationError();
+    this.getLicenseProjectIdStorage();
+  }
+
+  private getLicenseProjectIdStorage(): void {
+    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    console.log('ProjectDataComponent - licenseProjectId:', this.licenseProjectId);
+    if (this.licenseProjectId) {
+      this.GetCompletedLicenseProjectProfileTaps();
+      this.observeUpdateCompletedTapCodes();
+    }
+  }
+
+  private observeUpdateCompletedTapCodes() {
+    this._licenseRequestService.updateCompletedTapCodesIsClicked.subscribe(
+      (res) => {
+        this.GetCompletedLicenseProjectProfileTaps();
+      }
+    );
+  }
+
+  GetCompletedLicenseProjectProfileTaps() {
+    console.log('ProjectDataComponent - GetCompletedLicenseProjectProfileTaps called');
+    this._dataVisibilityOfLicenseProjectService
+      .GetCompletedLicenseProjectProfileTaps(this.licenseProjectId!)
+      .subscribe((res) => {
+        console.log('ProjectDataComponent - completedTapCodes:', res);
+        this.completedTapCodes = res;
+
+        // Update isCompleted for tabs that are in completedTapCodes
+        this.mainTabsComponentList.forEach(tab => {
+          if (tab.tabCode && this.completedTapCodes.includes(tab.tabCode)) {
+            tab.isCompleted = true;
+            console.log('ProjectDataComponent - tab marked as completed:', tab.tabCode);
+          }
+        });
+
+        // Refresh the vertical tabs to reflect the isCompleted changes
+        const currentTabContent = this._tabsService.verticalTabContent.getValue();
+        console.log('ProjectDataComponent - currentTabContent:', currentTabContent);
+        if (currentTabContent && currentTabContent.tabsComponentList) {
+          this._tabsService.updateVerticalTabContent({ ...currentTabContent });
+        }
+      });
   }
   private getDataVisibilityOfLicenseProject() {
     this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProjectForCertainTab(this.subscriptions, this.mainTabsComponentList, false, true)

@@ -30,3 +30,10 @@ export class LicenseProjectModelDesignFileDto {
   designFileId: string = '';
   designFile: SysFileManagerCreateUpdateDto | null = null;
 }
+
+
+export interface LicenseProjectCompletionData {
+  isProfileCompleted: boolean;
+  completedProfilePercentage: number;
+  isProjectHasUnitForFarzIntegration: boolean;
+}

@@ -1,13 +1,16 @@
 <div class="form-actions">
-  <button mat-stroked-button class="nav-button prev-button" (click)="back()" *ngIf="previousBtnIsVisible">
+  <button class="btn btn-outline-primary" (click)="back()" *ngIf="previousBtnIsVisible">
     <span class="icon material-icons">arrow_forward</span>
     {{localization.previous}}
   </button>
-  <button mat-stroked-button class="nav-button draft-button" *ngIf="saveAsDraftBtnIsVisible" (click)="saveAsDraft()">
+  <button class="btn btn-outline-primary" *ngIf="saveAsDraftBtnIsVisible" (click)="saveAsDraft()">
     {{localization.saveAsDraft}}
   </button>
-  <button mat-stroked-button class="nav-button next-button" (click)="next()" *ngIf="nextBtnIsVisible">
+  <button class="btn btn-outline-primary" (click)="next()" *ngIf="nextBtnIsVisible">
     {{localization.next}}
     <span class="icon material-icons">arrow_back</span>
+  </button>
+   <button class="btn btn-primary" *ngIf="verifyBtnIsVisible" (click)="verify()">
+    {{localization.verify}}
   </button>
 </div>

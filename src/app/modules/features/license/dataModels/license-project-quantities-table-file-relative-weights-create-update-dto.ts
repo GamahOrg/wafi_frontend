@@ -12,4 +12,5 @@ export class LicenseProjectRelativeWeightCreateUpdateDto {
     licenseProjectId: string = "";
     licenseRelativeWeightId: string = "";
     modifiedReferenceWeight: number = 0;
+    variancePercentage: number = 0;
   }

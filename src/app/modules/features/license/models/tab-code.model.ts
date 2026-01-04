@@ -3,6 +3,10 @@ export enum TabCode {
   projectData = 'ProjectData',
   feasibilityStudy = 'FeasibilityStudy',
   projectParties = 'ProjectParties',
+  fawriaArchitecturalUnitsAndDesigns = 'FawriaArchitecturalUnitsAndDesigns',
+  fawriaEngineeringSupervisionStaff = 'FawriaEngineeringSupervisionStaff',
+  fawriaUnifiedSalesModel = 'FawriaUnifiedSalesModel',
+  fawriaEscrowAccount = 'FawriaEscrowAccount',
   certifiedLicenseData = 'CertifiedLicenseData',
   priceFinancialAnalysis = 'PriceFinancialAnalysis',
   listOfProjectExpectedIncome = 'ListOfProjectExpectedIncome',
@@ -20,12 +24,17 @@ export enum TabCode {
   projectLandData = 'ProjectLandData',
   licenseProjectDeed = 'LicenseProjectDeed',
   licenseProjectZone = 'LicenseProjectZone',
+  fawriaLicenseProjectZone = 'FawriaLicenseProjectZone',
   licenseProjectModel = 'LicenseProjectModel',
+  fawriaLicenseProjectModel = 'FawriaLicenseProjectModel',
   licenseProjectCodes = 'LicenseProjectCodes',
+  fawriaLicenseProjectCodes = 'FawriaLicenseProjectCodes',
   licenseProjectDesign = 'LicenseProjectDesign',
+  fawriaLicenseProjectDesign = 'FawriaLicenseProjectDesign',
   constructionLicense = 'ConstructionLicense',
   externalProjectInformation = 'ExternalProjectInformation',
   licenseProjectQuantitiesTableFiles = 'LicenseProjectQuantitiesTableFiles',
+  fawriaProjectQuantitiesTable = 'FawriaProjectQuantitiesTable',
   licenseProjectServices = 'LicenseProjectServices',
   projectUnitsStatement = 'ProjectUnitsStatement',
   licenseProjectEngineeringConsultants = 'LicenseProjectEngineeringConsultants',
@@ -35,6 +44,8 @@ export enum TabCode {
   sysLicenseBeneficiaryContractForms = 'SysLicenseBeneficiaryContractForms',
   FinalTenantContract = 'FinalTenantContract',
   LicenseProjectBusinessPayment = 'LicenseProjectBusinessPayment',
+  fawriaLicenseProjectBusinessPayment = 'FawriaLicenseProjectBusinessPayment',
+  fawriaContactInfoEndBeneficiaryComponent = 'FawriaContactInfoEndBeneficiary',
   licenseProjectDelegator = 'LicenseProjectDelegator',
   licenseProjectMainRealStateDeveloper = 'LicenseProjectMainRealStateDeveloper',
   projectDocumentData = 'ProjectDocumentData',
@@ -44,7 +55,10 @@ export enum TabCode {
   requestAttachments = 'RequestAttachments',
   visitorEngineeringConsultant = 'VisitorEngineeringConsultant',
   beneficiaryContractFormAdditionalTerms = 'BeneficiaryContractFormAdditionalTerms',
+  fawriaBeneficiaryContractFormAdditionalTerms = 'FawriaBeneficiaryContractFormAdditionalTerms',
   licenseProjectPromissoryNote = 'LicenseProjectPromissoryNote', // سند لأمر
+  FawriaFinalBeneficiaryAgreement = 'FawriaFinalBeneficiaryAgreement',
+
 
   // Data Section
   facilityInfo = 'FacilityInfo', // بيانات اساسيه - بيانات مقدم الطلب - بيانات المنشأة

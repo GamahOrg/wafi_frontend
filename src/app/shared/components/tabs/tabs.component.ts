@@ -10,6 +10,8 @@ import { TabsService } from '../../services/tabs/tabs.service';
 })
 export class TabsComponent implements OnInit, OnDestroy {
   @Input() tabClassName?: string = '';
+  @Input() hasProgress?: boolean = false;
+  @Input() ProgressPercentage?: number = 60;
 
   subscriptions: Subscription[] = [];
   tabContent: Tabs = new Tabs();
@@ -26,6 +28,7 @@ export class TabsComponent implements OnInit, OnDestroy {
       );
     }
     updateActiveTabIndex(event: any) {
+      
       this.tabContent.activeTabIndex = event.index;
       this.restVerticalTabIndex()
       this._tabsService.updateActiveTabIndex(event.index)

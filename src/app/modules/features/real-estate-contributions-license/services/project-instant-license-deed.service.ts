@@ -35,7 +35,7 @@ export class ProjectInstantLicenseDeedService {
     return this._httpClient.get<CoreResponseDTO<boolean>>
       (`${Configuration.APIs.LicenseProjectDeed.GetNatureTypeIdByLicenseProjectId}/${id}`).pipe(
         map((res: CoreResponseDTO<boolean>) => {
-          return res.data;
+          return res;
         })
       )
   }

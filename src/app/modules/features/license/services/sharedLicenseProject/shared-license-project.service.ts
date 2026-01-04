@@ -31,14 +31,47 @@ export class SharedLicenseProjectService {
   removeAvailabilityToUpdatefromLocalStorage(): void {
     localStorage.removeItem('availabilityToUpdate');
   }
+
+  setLicenseAvailabilityToUpdateFarzInLocalStorage(
+    availabilityToUpdate: boolean
+  ): void {
+    localStorage.setItem(
+      'availabilityToUpdateFarz',
+      availabilityToUpdate ? 'true' : 'false'
+    );
+  }
+  getAvailabilityToUpdateFarzFromLocalStorage(): boolean | null {
+    return localStorage.getItem('availabilityToUpdateFarz') == 'true'
+      ? true
+      : false;
+  }
+  removeAvailabilityToUpdateFarzfromLocalStorage(): void {
+    localStorage.removeItem('availabilityToUpdateFarz');
+  }
   setLicenseProjectIdInLocalStorage(licenseProjectId: string): void {
     localStorage.setItem('licenseProjectId', licenseProjectId);
   }
   getLicenseProjectIdStorage(): string | null {
     return localStorage.getItem('licenseProjectId');
   }
+  setIsProfileCompletedInLocalStorage(isProfileCompleted: string): void {
+    localStorage.setItem('isProfileCompleted', isProfileCompleted);
+  }
+  getIsProfileCompletedStorage(): string | null {
+    return localStorage.getItem('isProfileCompleted');
+  }
   removeLicenseProjectIdfromLocalStorage(): void {
     localStorage.removeItem('licenseProjectId');
+  }
+
+  setLicenseTypeCodeInLocalStorage(typeCode: string): void {
+    localStorage.setItem('LicenseTypeCode', typeCode);
+  }
+  getLicenseTypeCodeStorage(): string | null {
+    return localStorage.getItem('LicenseTypeCode');
+  }
+  removeLicenseTypeCodefromLocalStorage(): void {
+    localStorage.removeItem('LicenseTypeCode');
   }
 
   setIsActiveTermsLocalStorage(licenseProjectId: string): void {
@@ -100,5 +133,20 @@ export class SharedLicenseProjectService {
 
   clearSelectedDeed(): void {
     this.selectedDeed = null;
+  }
+
+  setLicenseProjectNatureTypeId(natureTypeId: string): void {
+    localStorage.setItem('licenseProjectNatureTypeId', natureTypeId);
+  }
+  getLicenseProjectNatureTypeId(): string | null {
+    let seclectRequest = localStorage.getItem('licenseProjectNatureTypeId');
+    return seclectRequest as string;
+  }
+  removeLicenseProjectNatureTypeId(): void {
+    localStorage.removeItem('licenseProjectNatureTypeId');
+  }
+
+  stripHtml(value: string): string {
+    return value.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ');
   }
 }

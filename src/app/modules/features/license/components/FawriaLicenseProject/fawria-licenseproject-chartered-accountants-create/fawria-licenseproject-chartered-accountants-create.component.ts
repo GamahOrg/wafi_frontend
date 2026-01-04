@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
 import { Guid } from 'src/app/core/configurations/guid';
@@ -15,13 +15,15 @@ import { LicenseProjectEngineeringConsultantService } from '../../../services/li
 import { NextAndPreviusButtonsService } from '../../../services/next-and-previous-buttons/next-and-previus-buttons.service';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import { ToastrService } from 'ngx-toastr';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { LicenseRequestService } from '../../../services/license-request.service';
 
 @Component({
   selector: 'app-fawria-licenseproject-chartered-accountants-create',
   templateUrl: './fawria-licenseproject-chartered-accountants-create.component.html',
   styleUrls: ['./fawria-licenseproject-chartered-accountants-create.component.scss']
 })
-export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
+export class FawriaLicenseprojectCharteredAccountantsCreateComponent implements OnInit, OnDestroy {
  baseUrl = `${environment.baseURL}/`;
     subscriptions: Subscription[] = [];
   
@@ -104,9 +106,11 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
       private _toastrNotificationService: ToastrService,
       private _charteredAccountantService: LicenseProjectCharteredAccountantService,
       private _licenseProjectDelegatorService: LicenseProjectDelegatorService,
+      private _licenseRequestService: LicenseRequestService,
       // private _popupService: PopupService,
       // private _licenseProjectPartiesAdditionalTermsService: LicenseProjectPartiesAdditionalTermsService,
-      private engineeringConsultantService: LicenseProjectEngineeringConsultantService
+      private engineeringConsultantService: LicenseProjectEngineeringConsultantService,
+      private _tabsService: TabsService
     ) {}
   
     ngOnInit() {
@@ -115,6 +119,15 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
       this.buildForm();
       this.observeTabsButtons();
       this.updateSaveAsDraftBtnIsvisible();
+      this.trackFormChanges();
+    }
+
+    private trackFormChanges(): void {
+      this.subscriptions.push(
+        this.form.valueChanges.subscribe(() => {
+          this._tabsService.setUnsavedChanges(this.form.dirty);
+        })
+      );
     }
   
     private getLicenseProjectIdStorage(): void {
@@ -140,11 +153,19 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
   }
   
     errorMessage: string | null = null;
+
+    onCommercialRegisterChange() {
+      
+      if (this.errorMessage) {
+        this.errorMessage = null;
+      }
+    }
+
     validate() {
       this.errorMessage = null;
       let commercialRegister = this.controls['commercialRegister'].value;
       if (commercialRegister) {
-        this.engineeringConsultantService.validateCommercialRegisterNumber(commercialRegister, QualificationTypeCode.CharteredAccountant, this.licenseProjectId)
+        this.engineeringConsultantService.validateCommercialRegisterNumber(commercialRegister, QualificationTypeCode.CharteredAccountant, this.licenseProjectId, true)
           .pipe(takeUntil(this.destroyed$))
           .subscribe((result) => {
             
@@ -157,8 +178,21 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
               this.setFacility(this.facility.facility);
             }
             else {
-              this.errorMessage = result.message;
-            }
+            this.errorMessage = result.message;
+            this.entity = {} as  LicenseProjectCharteredAccountantDto;
+            this.x.facilityName = '';
+            const commercialRegisterValue = this.controls['commercialRegister'].value;
+            this.form.reset();
+            this.controls['commercialRegister'].setValue(commercialRegisterValue);
+            this.paymentTableData  = [
+              {
+                item: '',
+                quantity: null,
+                unitPrice: null,
+                description: '',
+              },
+            ];
+          }
           });
       }
     }
@@ -173,7 +207,7 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
         contarctValue: ['', Validators.compose([Validators.required, Validators.min(0)])],
         financialReportApprovalPeriodInDays: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(30)])],
         paymentDeadline: ['', Validators.compose([Validators.required])],
-        authorizedToSignDelegator: ['', Validators.compose([Validators.required])],
+        authorizedToSignDelegator: [null, Validators.compose([Validators.required])],
       });
     }
   
@@ -186,6 +220,7 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
     }
   
     ngOnDestroy() {
+      this._tabsService.setUnsavedChanges(false);
       this.destroyed$.next(true);
       this.destroyed$.complete();
       this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
@@ -215,6 +250,7 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
   
     private updateSaveAsDraftBtnIsvisible(): void {
       this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
+      this._nextAndPreviusButtonsService.nextBtnIsVisible.next(true);
     }
   
     private moveToNextTab(): void {
@@ -338,6 +374,16 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
               ? this.entity.licenseProjectCharteredAccountantAuthorizedToSignDelegators[0].delegatorCustomerId
               : ''
           });
+
+          // Format contract value with commas after loading
+          setTimeout(() => {
+            const contractValueInput = document.getElementById('contractValue') as HTMLInputElement;
+            if (contractValueInput && this.entity.contarctValue) {
+              const parts = this.entity.contarctValue.toString().split('.');
+              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+              contractValueInput.value = parts.join('.');
+            }
+          }, 0);
           this.paymentTableData = this.entity.licenseProjectCharteredAccountantPayments?.map(payment => ({
             item: payment.item,
             quantity: payment.quantity,
@@ -420,6 +466,9 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
           if (result && result.data) this.entity.id = result.data.id;
           // this._toastrNotificationService.showSuccess(this.localizations.CreatedSuccessfully);
           this._toastrNotificationService.success(this.localizations.requestSentToCharteredAccountant);
+          this.form.markAsPristine();
+          this._tabsService.setUnsavedChanges(false);
+          this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
           if (moveToNextTab) {
             this.moveToNextTab();
           } else {
@@ -427,11 +476,13 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
           }
         });
     }
-  
+
     update(object: LicenseProjectCharteredAccountantCreateUpdateDto, moveToNextTab: boolean = false) {
       this._charteredAccountantService.fawryLicenseUpdateAsync(object).pipe(takeUntil(this.destroyed$)).subscribe(() => {
         // this._toastrNotificationService.showSuccess(this.localizations.UpdatedSuccessfully);
         this._toastrNotificationService.success(this.localizations.requestSentToCharteredAccountant);
+        this.form.markAsPristine();
+        this._tabsService.setUnsavedChanges(false);
         if (moveToNextTab) {
           this.moveToNextTab();
         } else {
@@ -439,6 +490,47 @@ export class FawriaLicenseprojectCharteredAccountantsCreateComponent {
         }
       });
     }
-  
+
+    // Format contract value with thousand separators
+    formatContractValue(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      let value = input.value;
+
+      // Convert Arabic numbers to English
+      const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+      arabicNumbers.forEach((arabic, index) => {
+        value = value.replace(new RegExp(arabic, 'g'), index.toString());
+      });
+
+      // Remove all non-numeric characters except decimal point
+      value = value.replace(/[^0-9.]/g, '');
+
+      // Store numeric value in form control
+      const numericValue = value ? parseFloat(value) : null;
+      this.form.get('contarctValue')?.setValue(numericValue, { emitEvent: false });
+
+      // Format with commas for display
+      if (value) {
+        const parts = value.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        input.value = parts.join('.');
+      }
+    }
+
+    formatContractValueOnBlur(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      const value = this.form.get('contarctValue')?.value;
+      if (value) {
+        const parts = value.toString().split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        input.value = parts.join('.');
+      }
+    }
+
+    removeContractValueFormatting(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      input.value = input.value.replace(/,/g, '');
+    }
+
 }
   

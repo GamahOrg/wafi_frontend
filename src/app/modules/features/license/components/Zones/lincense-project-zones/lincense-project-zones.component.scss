@@ -12,18 +12,15 @@
   gap: .5rem;
 
   padding: .75rem;
-
-  border: {
-    width: 2px;
-    style: solid;
-    color: var(--bs-border-color);
-  }
-
+  border: 2px solid var(--bs-border-color);
   border-radius: .25rem;
 
   .icon {
-    font-size: $font-size-sm;
+    width: .5rem;
+    height: .5rem;
+    font-size: .5rem;
     color: $lightergray;
+    border-radius: 50%;
   }
 
   .item-part {
@@ -31,15 +28,21 @@
       padding-inline-start: 1.5rem;
       border-inline-start: 1px solid var(--bs-border-color);
     }
+
+    .tag {
+      padding: .5rem .75rem;
+      font-size: $font-size-sm;
+      color: $headings-color;
+      border-color: $lightergray;
+      background-color: #FAFFFF;
+    }
   }
 
   .item-actions {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
     margin-inline-start: auto;
-
-    .icon {
-      font-size: inherit;
-      color: $theme-main;
-    }
   }
 
   &.active {
@@ -47,16 +50,42 @@
 
     .icon {
       color: $theme-main;
+      outline: 4px solid #EAF7F8;
     }
   }
 }
 
 .side-card {
-  box-shadow: -41px 0px 11px 0px rgba($bluegray, .06);
-
   .item {
     &:not(.active) {
       border-color: transparent;
     }
+  }
+}
+
+.stats-square,
+.tab-square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+
+  font-weight: 600;
+  border-radius: $border-radius-xs;
+}
+
+.stats-square {
+  min-width: 8rem;
+  padding: 1rem;
+  border: 1px solid #E7E9EA;
+}
+
+.tab-square {
+  padding: .75rem 1rem;
+  color: $darkgray;
+
+  &.active {
+    color: $theme-main;
+    background-color: #FAFFFF;
   }
 }

@@ -21,4 +21,10 @@ SaveDesignFilesForProjectLicenseAsync(obj: ArchitecturalDesignFilesDto): Observa
     (Configuration.APIs.LicenseProjectDesignFile.SaveDesignFilesForProjectLicenseAsync,obj)
 }
 
+
+DleteFile(fileId: string, isLicenseProjectDesignFiles: boolean): Observable<CoreResponseDTO<any>> {
+  return this._httpClient.get<CoreResponseDTO<any>>
+    (`${Configuration.APIs.LicenseProjectDesignFile.DleteFile}/${fileId}/${isLicenseProjectDesignFiles}`)
+}
+
 }

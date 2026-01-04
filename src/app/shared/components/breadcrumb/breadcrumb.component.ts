@@ -10,8 +10,10 @@ import { BreadcrumbService } from 'src/app/shared/services/breadcrumb/breadcrumb
 })
 export class BreadcrumbComponent {
   breadcrumbs$: Observable<Breadcrumb[]>;
+  showBreadcrumb$: Observable<boolean>;
 
   constructor(private readonly breadcrumbService: BreadcrumbService) {
     this.breadcrumbs$ = this.breadcrumbService.breadcrumbs$;
+    this.showBreadcrumb$ = this.breadcrumbService.showBreadcrumb$;
   }
 }

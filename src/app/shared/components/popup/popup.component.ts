@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { PopupData } from '../../models/popup.model';
@@ -14,37 +14,46 @@ import { ButtonType } from '../../models/enums/button-type.model';
 export class PopupComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   popupData = {} as PopupData;
-  popupActionsButtons: Button[] = [
-    {
-      icon: "",
-      title: "إلغاء",
-      actionType: ButtonType.cancel,
-      isVisable: true,
-      isDisables: false,
-      // onclick: () => this.openNotesDialog()
-    },
-    {
-      icon: "",
-      title: "حفظ البيانات",
-      actionType: ButtonType.confirm,
-      isVisable: true,
-      isDisables: false,
-      // onclick: () => this.openAssignEmployeeDialog()
-    },
-  ]
+  @Input() submitButtonTitle: string = 'حفظ البيانات';
+  popupActionsButtons: Button[] = []
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
     private _popupService: PopupService,
   ) { }
   ngOnInit(): void {
+    this.initDefaultButtons();
     this.observePopupData();
     this.observeCloseModalEvent();
   }
+
+  private initDefaultButtons(): void {
+    this.popupActionsButtons = [
+      {
+        icon: "",
+        title: "إلغاء",
+        actionType: ButtonType.cancel,
+        isVisable: true,
+        isDisables: false,
+      },
+      {
+        icon: "",
+        title: this.submitButtonTitle,
+        actionType: ButtonType.confirm,
+        isVisable: true,
+        isDisables: false,
+      },
+    ];
+  }
+
   observePopupData(): void {
     this.subscriptions.push(
       this._popupService.popupData.subscribe((data: PopupData) => {
         this.popupData = data;
-        this.popupActionsButtons = data.buttons ? data.buttons : this.popupActionsButtons
+        if (data.submitButtonTitle) {
+          this.submitButtonTitle = data.submitButtonTitle;
+          this.initDefaultButtons();
+        }
+        this.popupActionsButtons = data.buttons ? data.buttons : this.popupActionsButtons;
       })
     )
   }

@@ -3,13 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Configuration } from 'src/app/core/configurations/shared.config';
-import { LicenseRequestHeaderProcessingStepDto } from '../models/license-request-header-processing-step-model';
+import { LicenseRequestHeaderProcessingStepDto, InvoiceData, LicenseProjectBankAccountInformationDto } from '../models/license-request-header-processing-step-model';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 
 @Injectable()
 export class LicenseRequestHeaderProcessingStepService {
   constructor(private _httpClient: HttpClient) {}
 
+    GetLicenseRequestHeaderCode(licenseRequestHeaderId: string): Observable<string | null> {
+    return this._httpClient
+      .get<CoreResponseDTO<string>>(`${Configuration.APIs.LicenseRequestHeader.GetLicenseRequestHeaderCode}/${licenseRequestHeaderId}`)
+      .pipe(
+        map((res) => {
+          if (res.isDone && res.data) {
+            return res.data;
+          } else {
+            return null;
+          }
+        })
+      );
+  }
 
 
   GetLicenseRequestHeaderProcessingStep(licenseRequestHeaderId: string): Observable<LicenseRequestHeaderProcessingStepDto[] | null> {
@@ -33,12 +46,16 @@ export class LicenseRequestHeaderProcessingStepService {
       .pipe(
         map((res) => {
           return res;
-          // if (res.isDone && res.data) {
-          //   return res.;
-          // } else {
-          //   return null;
-          // }
+        })
+      );
+  }
 
+  GetBankAccountInformation(licenseRequestHeaderId: string): Observable<CoreResponseDTO<LicenseProjectBankAccountInformationDto>> {
+    return this._httpClient
+      .get<CoreResponseDTO<LicenseProjectBankAccountInformationDto>>(`${Configuration.APIs.BankAccount.GetBankAccountInformation}/${licenseRequestHeaderId}`)
+      .pipe(
+        map((res) => {
+          return res;
         })
       );
   }
@@ -49,27 +66,17 @@ export class LicenseRequestHeaderProcessingStepService {
       .pipe(
         map((res) => {
           return res;
-          // if (res.isDone && res.data) {
-          //   return res.;
-          // } else {
-          //   return null;
-          // }
 
         })
       );
   }
 
-  GetInvoice(licenseRequestHeaderId: string): Observable<CoreResponseDTO<any>> {
+  GetInvoice(licenseRequestHeaderId: string): Observable<CoreResponseDTO<InvoiceData>> {
     return this._httpClient
-      .get<CoreResponseDTO<any>>(`${Configuration.APIs.Fawtarah.GetInvoice}/${licenseRequestHeaderId}`)
+      .get<CoreResponseDTO<InvoiceData>>(`${Configuration.APIs.Fawtarah.GetInvoice}/${licenseRequestHeaderId}`)
       .pipe(
         map((res) => {
           return res;
-          // if (res.isDone && res.data) {
-          //   return res.;
-          // } else {
-          //   return null;
-          // }
 
         })
       );

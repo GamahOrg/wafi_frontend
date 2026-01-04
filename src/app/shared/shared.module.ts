@@ -9,7 +9,6 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
 import { StepperComponent } from './components/stepper/stepper.component';
 import { StepperService } from './services/stepper/stepper.service';
 import { TabsComponent } from './components/tabs/tabs.component';
-import { TabsService } from './services/tabs/tabs.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { PopupService } from './services/popup/popup.service';
@@ -74,6 +73,8 @@ import { DisableItemConfirmationComponent } from './components/disable-item-conf
 import { SaveUpdateConfirmationComponent } from './components/save-update-confirmation/save-update-confirmation.component';
 import { HijriDatepickerComponent } from './components/hijri-datepicker/hijri-datepicker.component';
 import { HijriDatepickerDirective } from './directives/hijri-datepicker.directive';
+import { RejectionConfirmationPopupComponent } from './components/rejection-confirmation-popup/rejection-confirmation-popup.component';
+import { ArabicToEnglishNumbersDirective } from './directives/arabic-to-english-numbers.directive';
 
 export function getDatepickerConfig(): BsDatepickerConfig {
   return Object.assign(new BsDatepickerConfig(), {
@@ -122,7 +123,9 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     DisableItemConfirmationComponent,
     SaveUpdateConfirmationComponent,
     HijriDatepickerComponent,
-    HijriDatepickerDirective
+    HijriDatepickerDirective,
+    RejectionConfirmationPopupComponent,
+    ArabicToEnglishNumbersDirective
   ],
   imports: [
     CommonModule,
@@ -152,7 +155,6 @@ export function getDatepickerConfig(): BsDatepickerConfig {
   ],
   providers: [
     StepperService,
-    TabsService,
     PopupService,
     FileManagementService,
     PaginationService,
@@ -207,7 +209,8 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     NumberFormatDirective,
     PdfViewerComponent,
     HijriDatepickerComponent,
-    HijriDatepickerDirective
+    HijriDatepickerDirective,
+    ArabicToEnglishNumbersDirective
   ],
 })
 export class SharedModule {}

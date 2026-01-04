@@ -36,16 +36,17 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label">{{ localization.delegators }}</label>
-            <div class="multiselect-container">
-              <!-- Selected Delegators Chips (Read-only - no remove button) -->
-              <div class="selected-chips-container" *ngIf="getSelectedDelegators().length > 0">
-                <div class="chip" *ngFor="let delegator of getSelectedDelegators()">
-                  <span class="chip-label">{{ delegator.name }}</span>
-                </div>
+            <!-- Selected Delegators Chips (Read-only - no remove button) -->
+            <div class="d-flex flex-wrap align-items-center gap-2" *ngIf="getSelectedDelegators().length > 0">
+              <div class="chip" *ngFor="let delegator of getSelectedDelegators()">
+                {{ delegator.name }}
+                <!-- <button type="button" class="btn-icon btn btn-dark" (click)="true">
+                      <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                    </button> -->
               </div>
-              <div *ngIf="getSelectedDelegators().length === 0" class="text-muted">
-                {{ localization.selectDelegators }}
-              </div>
+            </div>
+            <div *ngIf="getSelectedDelegators().length === 0" class="text-muted">
+              {{ localization.selectDelegators }}
             </div>
           </div>
         </div>
@@ -76,7 +77,7 @@
 
         <div class="col-12">
           <div class="form-group">
-            <div class="form-check">
+            <div class="form-check form-check-normal">
               <input type="checkbox" class="form-check-input" id="control-approvedBankTermsConditions" formControlName="approvedBankTermsConditions" [disabled]="true" />
               <label class="form-check-label" for="control-approvedBankTermsConditions">
                 <span [innerHTML]="approvedBankTermsConditions()"></span>

@@ -164,7 +164,10 @@
                 [(ngModel)]="isAgreementChecked"
                 id="agreementCheck"
               />
-              <span class="checkbox-label">أتعهد على أن ليس هناك دفعات مالية تم دفعها من قبل المشتري {{ contractDetails.buyerName }} للوحدة العقارية رقم {{ contractDetails.unitCode || '-' }} </span>
+              <span class="checkbox-label">
+                أتعهد على أن ليس هناك دفعات مالية تم دفعها من قبل المشتري {{ contractDetails.buyerName }} للوحدة العقارية رقم {{ contractDetails.unitCode || '-' }}، وأتعهد برد أي دفعات قد تم دفعها على الوحدة المذكورة
+
+              </span>
             </label>
           </div>
 

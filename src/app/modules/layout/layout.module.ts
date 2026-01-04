@@ -11,6 +11,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { LincenseRequestProjectService } from '../features/license-project-requests/services/lincense-request-project.service';
 import { RequestDetailsRedirectionComponent } from './components/request-details-redirection/request-details-redirection.component';
+import { LicenseRequestHeaderService } from '../features/license/services/license-request-header.service';
+import { SharedLicenseProjectService } from '../features/license/services/sharedLicenseProject/shared-license-project.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,6 @@ import { RequestDetailsRedirectionComponent } from './components/request-details
     // TranslateModule.forChild(),
     SharedModule,
   ],
-  providers:[LincenseRequestProjectService]
+  providers:[LincenseRequestProjectService,LicenseRequestHeaderService,SharedLicenseProjectService ]
 })
 export class LayoutModule {}

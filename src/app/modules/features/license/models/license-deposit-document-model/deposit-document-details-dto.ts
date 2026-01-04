@@ -43,4 +43,6 @@ export interface LicenseDepositDocumentDetailsDto {
   administrativeAndMarketingAmount: number;
   //المبلغ المضاف لحساب الحفظ
   escrowAccountAmount: number;
+  bankId:string;
+  bankName:string;
 }
