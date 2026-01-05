@@ -61,6 +61,7 @@ export class LicenseProjectQuantitiesTableFileCreateUpdateDto {
   licenseProjectId: string = '';
   quantitiesTableFileId: string = '';
   fileType: string = '';
+  fileName?: string = '';
 }
 
 export enum ProjectSizeEnum {

@@ -5,6 +5,7 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { SysLicenseBeneficiaryContractFormDto } from '../dataModels/sys-license-beneficiary-contract-form-dto';
+import { DeebOwnerList } from '../../real-estate-contributions-license/dataModels/project-land-owner.dto';
 
 @Injectable()
 export class LicenseProjectPartiesAdditionalTermsService {
@@ -16,6 +17,10 @@ export class LicenseProjectPartiesAdditionalTermsService {
   GetAllAdditionalAsync(licenseProjectId:string, termsPartType:TermsPartType): Observable<CoreResponseDTO<LicenseProjectPartiesAdditionalTermsDto[]>> {
     return this._httpClient.get<CoreResponseDTO<LicenseProjectPartiesAdditionalTermsDto[]>>
       (`${Configuration.APIs.LicenseProjectPartiesAdditionalTerms.GetAllAdditionalAsync}/${licenseProjectId}/${termsPartType}`)
+  }
+  GetDeedOwnersListAsync(licenseProjectId:string): Observable<CoreResponseDTO<DeebOwnerList[]>> {
+    return this._httpClient.get<CoreResponseDTO<DeebOwnerList[]>>
+      (`${Configuration.APIs.LicenseProjectDeed.GetDeedOwnersListAsync}/${licenseProjectId}`)
   }
 
   GetMaxItemNumberByLicenseProjectId(licenseProjectId:string, termsPartType:TermsPartType): Observable<CoreResponseDTO<number>> {
@@ -45,5 +50,12 @@ export class LicenseProjectPartiesAdditionalTermsService {
         })
       )
   }
-
+  DeleteOwner(id : string):Observable<CoreResponseDTO<any>> {
+    return this._httpClient.delete<CoreResponseDTO<any>>
+      (`${Configuration.APIs.LicenseProjectDeed.DeleteDeepLandOwner}/${id}`).pipe(
+        map((res) => {
+          return res;
+        })
+      )
+    }
 }

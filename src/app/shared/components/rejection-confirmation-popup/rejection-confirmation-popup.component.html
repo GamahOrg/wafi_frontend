@@ -1,0 +1,34 @@
+<div mat-dialog-title>
+  <div class="d-flex flex-column align-items-center gap-2">
+    <span class="icon text-{{confirmationPopupData.popupType}}">
+      <i class="hgi hgi-stroke" [ngClass]="{
+        'hgi-message-question': confirmationPopupData.popupType === 'primary',
+        'hgi-alert-02': confirmationPopupData.popupType === 'warning',
+        'hgi-delete-03': confirmationPopupData.popupType === 'danger'
+        }"></i>
+      <!-- <i class="hgi hgi-stroke hgi-delete-03"></i> -->
+    </span>
+    <h6 class="title" *ngIf="confirmationPopupData.title">{{confirmationPopupData.title}}</h6>
+  </div>
+
+  <button class="btn btn-link p-0" (click)="onClickOnCancel()" mat-dialog-close tabindex="-1" aria-label="Close" *ngIf="!disableClose">
+    <i class="material-icons h6">close</i>
+  </button>
+</div>
+
+<div mat-dialog-content [formGroup]="rejectionForm">
+
+  <div *ngIf="confirmationPopupData.staticMessage" class="text-center mb-4" [innerHTML]="confirmationPopupData.staticMessage"></div>
+  <div *ngIf="confirmationPopupData.dynamicMessage" class="text-center mb-4">{{ confirmationPopupData.dynamicMessage }}</div>
+  <div *ngIf="confirmationPopupData.secondeStaticMessage" class="text-center mb-4">{{ confirmationPopupData.secondeStaticMessage }}</div>
+
+  <textarea class="rejection-reason" formControlName="notes"  placeholder="سبب الرفض" rows="5"></textarea>
+  <div class="error-message" *ngIf="rejectionForm.get('notes')?.touched && rejectionForm.get('notes')?.hasError('required')">
+    هذا الحقل مطلوب
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center gap-3">
+    <button class="btn btn-link" (click)="onClickOnCancel()">إلغاء</button>
+    <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnConfirm()">{{confirmationPopupData.acceptButtonText ?? 'حفظ '}}</button>
+  </div>
+</div>

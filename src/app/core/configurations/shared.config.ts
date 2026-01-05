@@ -49,6 +49,9 @@ export const Configuration = {
       Reject: '/api/LicenseProjectBuyerCancellationRequest/Reject',
       GetPagedList: '/api/LicenseProjectBuyerCancellationRequest/GetPagedList',
     },
+    CorrectedUnitRequest: {
+      GetCorrectedUnitRequest: '/api/CorrectedUnitRequestHeader/GetCorrectedUnitRequest',
+    },
     LicenseProjectFawria: {
       GetAll: '/api/LicenseProjectFawria/GetAll',
       CheckCommercialRegisterNumber:
@@ -56,6 +59,7 @@ export const Configuration = {
       AddLicenseProjectFawria:
         '/api/LicenseProjectFawria/AddLicenseProjectFawria',
       IsFawriaLicenseAllow: '/api/LicenseProjectFawria/IsFawriaLicenseAllow',
+      DeleteLicenseProjectFawriaDeveloper: '/api/LicenseProjectFawria/DeleteLicenseProjectFawriaDeveloper',
     },
     LicenseProjectRequestProcessingLog: {
       GetByRequestId: '/api/LicenseProjectRequestProcessingLog/GetByRequestId',
@@ -85,6 +89,7 @@ export const Configuration = {
     Bank: {
       GetDropDown: '/api/SysBank/Get',
       GetIntegrationBanks: '/api/SysBank/GetIntegrationBanks',
+      GetSysBankTermsCondition: '/api/SysBank/GetSysBankTermsCondition',
     },
     SysRequestApproval: {
       GetSysRequestApprovalList:
@@ -617,7 +622,7 @@ export const Configuration = {
     },
     LicenseProjectPartiesAdditionalTerms: {
       GetAllAdditionalAsync:
-        '/api/LicenseProjectPartiesAdditionalTerms/GetAllAdditionalAsync',
+        '/api/LicenseProjectPartiesAdditionalTerms/GetAllAdditionalAsync',      
       GetMaxItemNumberByLicenseProjectId:
         '/api/LicenseProjectPartiesAdditionalTerms/GetMaxItemNumberByLicenseProjectId',
       Save: '/api/LicenseProjectPartiesAdditionalTerms/Save',
@@ -642,6 +647,7 @@ export const Configuration = {
       Save: '/api/LicenseProjectExhibition/Save',
     },
     LicenseProject: {
+      GetLicenseProjectCompletionData: '/api/LicenseProject/GetLicenseProjectCompletionData',
       GetLicenseProjectById: '/api/LicenseProject/GetLicenseProjectById',
       GetLicenseProjectByFacilityId:
         '/api/LicenseProjectService/GetLicenseProjectByFacilityId/',
@@ -692,6 +698,7 @@ export const Configuration = {
       SaveContributionData: '/api/LicenseProject/SaveContributionData',
       GetRequetType: '/api/LicenseProject/GetRequetType',
       GetLicenseProjectDetails: '/api/LicenseProject/GetLicenseProjectDetails',
+      GetEscrowAccount: '/api/LicenseProject/GetEscrowAccount',
       GetSupervisionReportStatusByLicenseProjectId:
         '/api/LicenseProject/GetSupervisionReportStatusByLicenseProjectId',
       GetRecommendationsLogsList:
@@ -705,6 +712,8 @@ export const Configuration = {
       GetFawriaLicenseprojectBankInfoById:
         '/api/LicenseProject/GetFawriaLicenseprojectBankInfoById',
       GetDeedHeaderProjectData: '/api/LicenseProject/GetDeedHeaderProjectData',
+      GetFawriaEndBeneficiaryContactsInfoById: '/api/LicenseProject/GetFawriaEndBeneficiaryContactsInfoById',
+      SaveFawriaEndBeneficiaryContactsInfoAsync: '/api/LicenseProject/SaveFawriaEndBeneficiaryContactsInfoAsync',
     },
     LicenseProjectExchangeDocument: {
       GetExchangeDocumentOnProject:
@@ -760,6 +769,8 @@ export const Configuration = {
         '/api/LicenseProjectBuyer/GetBuyersDetailByNIDNumber',
       GetFilterContracts: '/api/RealStateDeveloper/GetContracts',
       CheckPaymentsVersion: '/api/LicenseProjectBuyer/CheckPaymentsVersion',
+      GetBuyersBusinessPaymentInstallements:
+        '/api/LicenseProjectBuyer/GetBuyersBusinessPaymentInstallements',
     },
     SupervisionFollowupCostsRatio: {
       getSupervisionFollowupCostsRatio:
@@ -798,7 +809,8 @@ export const Configuration = {
       GetDesignFilesByLicenseProjectId:
         '/api/LicenseProjectDesignFile/GetDesignFilesByLicenseProjectId',
       SaveDesignFilesForProjectLicenseAsync:
-        '/api/LicenseProjectDesignFile/SaveDesignFilesForProjectLicenseAsync',
+        '/api/LicenseProjectDesignFile/SaveDesignFilesForProjectLicenseAsync', 
+      DleteFile: '/api/LicenseProjectDesignFile/DleteFile',
     },
     LicenseProjectAnnualBalanceSheet: {
       Save: '/api/LicenseProjectAnnualBalanceSheet/Save',
@@ -874,6 +886,7 @@ export const Configuration = {
     },
     LicenseProjectDeed: {
       GetByLicenseProjectId: '/api/LicenseProjectDeed/GetByLicenseProjectId',
+      GetDeedConstructionApprovalList: '/api/LicenseProjectDeed/GetDeedConstructionApprovalList',
       Save: '/api/LicenseProjectDeed/SaveData',
       UpdateTotalAreaForProject:
         '/api/LicenseProjectDeed/UpdateTotalAreaForProject',
@@ -887,17 +900,20 @@ export const Configuration = {
       GetNatureTypeIdByLicenseProjectId:
         '/api/LicenseProjectDeed/GetNatureTypeIdByLicenseProjectId',
       DeleteInstantDeeds: '/api/LicenseProjectDeed/DeleteInstantDeedsAsync',
+      DeleteDeepLandOwner:'/api/LicenseProjectDeed/DeleteDeepLandOwner',
       FawriaLicenseDeedAndConstructionLicense:
         '/api/LicenseProjectDeed/FawriaLicenseDeedAndConstructionLicense',
       SaveFawriaLicenseDeedAndConstructionLicense:
         '/api/LicenseProjectDeed/SaveFawriaLicenseDeedAndConstructionLicense',
       GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId:
         '/api/LicenseProjectDeed/GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId',
+        GetDeedOwnersListAsync:'/api/LicenseProjectDeed/GetDeedOwnersListAsync',
     },
     LicenseProjectQuantitiesTableFiles: {
       GetByLicenseProjectId:
         '/api/LicenseProjectQuantitiesTableFiles/GetByLicenseProjectId',
       Save: '/api/LicenseProjectQuantitiesTableFiles/Save',
+      DeleteFile: '/api/LicenseProjectQuantitiesTableFiles/DeleteFile',
     },
     LicenseProjectRelativeWeight: {
       GetByLicenseProjectId:
@@ -930,6 +946,7 @@ export const Configuration = {
       GetDropDown: '/api/LicenseProjectModel/Get',
       Save: '/api/LicenseProjectModel/Save',
       Delete: '/api/LicenseProjectModel/Remove',
+      GetLicenseRequestUnitFacilitiesList: '/api/LicenseProjectModel/GetLicenseRequestUnitFacilitiesList',
     },
     LicenseProjectSubUnit: {
       GetByLicenseProjectId: '/api/LicenseProjectSubUnit/GetByLicenseProjectId',
@@ -940,6 +957,7 @@ export const Configuration = {
       GetLicenseProjectSubUnitsByLicenseProjectId:
         '/api/LicenseProjectSubUnit/GetLicenseProjectSubUnitsByLicenseProjectId',
       Create: '/api/LicenseProjectSubUnit/Create',
+      Update: '/api/LicenseProjectSubUnit/Update',
       Remove: '/api/LicenseProjectSubUnit/Remove',
     },
     LicenseProjectService: {
@@ -962,6 +980,7 @@ export const Configuration = {
       FawryLicenseCreate: 'FawryLicenseCreate',
       FawryLicenseGet: 'FawryLicenseGetByIdAsync',
       FawryLicenseUpdate: 'FawryLicenseUpdate',
+      FawryLicenseUpdateComplatedInfo: 'FawryLicenseUpdateComplatedInfo',
     },
     LicenseProjectRealStateMarketer: {
       baseUrl: '/api/LicenseProjectRealStateMarketer/',
@@ -1008,6 +1027,7 @@ export const Configuration = {
     },
     BankAccount: {
       GenerateBankAccount: '/api/BankAccount/GenerateBankAccount',
+      GetBankAccountInformation: '/api/BankAccount/GetBankAccountInformation',
     },
     Fawtarah: {
       InitiateInvoice: '/api/Fawtarah/InitiateInvoice',
@@ -1035,8 +1055,10 @@ export const Configuration = {
     LicenseRequestService: {
       Create: '/api/LicenseRequestService/Create',
       renew: '/api/LicenseRequestService/Renew',
+      GetFarzStatusWhenNaturalTypeUnit: '/api/LicenseRequestHeader/GetFarzStatusWhenNaturalTypeUnit',
       Send: '/api/LicenseRequestService/Send',
       SendByProjectId: '/api/LicenseRequestService/SendByProjectId',
+      SendFawriaLicenseByProjectId: '/api/LicenseRequestService/SendFawriaLicenseByProjectId',
       Compile: '/api/LicenseRequestService/Compile',
       CompileConditionalApproval:
         '/api/LicenseRequestService/CompileConditionalApproval',
@@ -1078,17 +1100,26 @@ export const Configuration = {
         '/api/LicenseRequestHeader/GetLicenseRequestsByEmployeeId',
       GetLicenseRequestHeadersByLicenseProjectId:
         '/api/LicenseRequestHeader/GetLicenseRequestHeadersByLicenseProjectId',
+        GetLicenseProjectProfileCompleteTap:
+        '/api/LicenseRequestHeader/GetLicenseProjectProfileCompleteTap',
+        GetCompletedLicenseProjectProfileTaps:
+        '/api/LicenseRequestHeader/GetCompletedLicenseProjectProfileTaps',
       GetLicenseRequestHeaderTimeLine:
         '/api/LicenseRequestHeader/GetLicenseRequestHeaderTimeLine',
       Delete: '/api/LicenseRequestHeader/Remove',
+      GetLicenseRequestHeaderCode: '/api/LicenseRequestHeader/GetLicenseRequestHeaderCode',
+      GetLicenseRequestHeaderById: '/api/LicenseRequestHeader/GetLicenseRequestHeaderById',
     },
     LicenseProjectUnit: {
       Save: '/api/LicenseProjectUnit/Save',
+      GetLicenseProjectNatureType: '/api/LicenseProjectUnit/GetLicenseProjectNatureType',
       GetByLicenseProjectId: '/api/LicenseProjectUnit/GetByLicenseProjectId',
       GetByZoneId: '/api/LicenseProjectUnit/GetByZoneId',
       Delete: '/api/LicenseProjectUnit/Remove',
       GetLicenseProjectBuildingBlockType:
         '/api/LicenseProjectUnit/GetLicenseProjectBuildingBlockType',
+      GetDeedsDDLByLicenseProjectId:
+        '/api/LicenseProjectUnit/GetDeedsDDLByLicenseProjectId',
     },
     LincenseProjectRequest: {
       GetLincenseRequestProject:
@@ -1182,6 +1213,10 @@ export const Configuration = {
       GetByProjectUnitId:
         '/api/LicenseProjectSubUnitsListCode/GetByProjectUnitId',
       Delete: '/api/LicenseProjectSubUnitsListCode/Remove',
+      GetUnitsCodesListByProjectUnitId:
+        '/api/LicenseProjectSubUnitsListCode/GetUnitsCodesListByProjectUnitId',
+      GetUnitsCodesListByProjectUnitIdPaginated:
+        '/api/LicenseProjectSubUnitsListCode/GetUnitsCodesListByProjectUnitIdPaginated',
     },
     ChangeLicenseProjectDelegatorRequest: {
       GetChangeLicenseProjectDelegatorRequestDetail:
@@ -1297,6 +1332,7 @@ export const Configuration = {
     },
     LicenseProjectCertificate: {
       GetCertificates: '/api/LicenseProjectCertificate/GetCertificates',
+      GetCertificatesByHeaderId: '/api/LicenseProjectCertificate/GetCertificatesByHeaderId',
     },
     // ------ End of License Endpoints  ------
     Integration: {

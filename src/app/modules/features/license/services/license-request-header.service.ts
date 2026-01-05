@@ -5,7 +5,7 @@ import { Pagination } from 'src/app/shared/models/pagination.model';
 import { licenseRequest } from '../models/license-requests';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { LicenseDetails } from '../models/license-details.model';
+import { GetRequestHeaderByIdDto, LicenseDetails } from '../models/license-details.model';
 import { UpdateCertifiedLicenseDataDto } from '../models/certified-license-data-dto';
 
 @Injectable()
@@ -57,6 +57,18 @@ export class LicenseRequestHeaderService {
     );
   }
   
+   GetLicenseRequestHeaderById(requestId: string): Observable<GetRequestHeaderByIdDto | null> {
+    return this._httpClient.get<CoreResponseDTO<GetRequestHeaderByIdDto>>(`${Configuration.APIs.LicenseRequestHeader.GetLicenseRequestHeaderById}/${requestId}`).pipe(
+      map((res: CoreResponseDTO<GetRequestHeaderByIdDto>) => {
+        if (res.data) {
+          return res.data as GetRequestHeaderByIdDto;
+        } else {
+          return null
+        }
+      })
+    );
+  }
+
   GetCertifiedLicenseData(id: string): Observable<UpdateCertifiedLicenseDataDto | null> {
     return this._httpClient.get<CoreResponseDTO<UpdateCertifiedLicenseDataDto>>(`${Configuration.APIs.LicenseRequestHeader.GetCertifiedLicenseData}/${id}`).pipe(
       map((res: CoreResponseDTO<UpdateCertifiedLicenseDataDto>) => {

@@ -217,6 +217,7 @@ export class LincenseDetailsComponent {
     farzStatus: 'معالجة ملاحظات فرز',
     editPaymentandAdditionalTermsTitle: 'تعديل الدفعات و البنود الإضافية',
     editButtonForRenewTitle: 'تعديل الطلب قبل التجديد',
+    day: 'يوم',
   };
   constructor(
     private _requestService: LicenseRequestHeaderService,

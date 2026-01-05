@@ -27,7 +27,7 @@ export class FawriaLicenseprojectFeasibilityStudyViewOnlyComponent implements On
   licenseProjectFeasibilityStudyCreateUpdateDto: LicenseProjectFeasibilityStudySaveDto = new LicenseProjectFeasibilityStudySaveDto();
 
   licenseProjectFeasibilityStudyForm = this._formBuilder.group({
-    totlaAreaOfCommonAreas: this._formBuilder.control<number | null>(null, [Validators.required, Validators.min(0)]),
+    totalAreaOfCommonAreas: this._formBuilder.control<number | null>(null, [Validators.required, Validators.min(0)]),
     infrastructureDevelopmentCosts: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
     totalConstructionCosts: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
     totalNonConstructionCosts: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),

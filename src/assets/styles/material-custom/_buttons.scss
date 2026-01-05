@@ -7,3 +7,29 @@
     background-color: $theme-main;
   }
 }
+
+.mat-mdc-icon-button {
+  border-radius: $border-radius-xs !important;
+
+  &.mat-mdc-button-base {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+
+    .mat-mdc-button-touch-target {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .mat-icon {
+      display: block;
+      width: 1rem;
+      height: 1rem;
+      margin-inline: auto;
+    }
+  }
+
+  .mat-mdc-button-persistent-ripple {
+    border-radius: inherit !important;
+  }
+}

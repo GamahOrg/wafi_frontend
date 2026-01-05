@@ -38,7 +38,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     itemNumber: 'رقم البند التسلسلي',
     itemTitle: 'عنوان البند',
     itemTitlePlaceholder: 'برجاء إدخال عنوان البند',
-    itemText: 'نص الأساسي',
+    itemText: 'نص البند الأساسي',
     itemTextPlaceholder: 'برجاء إدخال نص البند الأساسي',
     additionalTermsAcknowledgment: 'إقرار البنود الاضافية',
     licenseBeneficiaryContractFormId: ' نوع البند',
@@ -49,6 +49,8 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     additionalTermText: 'نص البند الاضافي',
     additionalTermTextPlaceholder: 'برجاء إدخال نص البند الإضافي',
     remove: 'حذف',
+    maxLengthErrorMsg150: 'يجب ألا يتجاوز عنوان البند 150 حرفًا.',
+    maxLengthErrorMsg2000: 'يجب ألا يتجاوز نص البند 2000 حرف',
   };
 
   constructor(
@@ -69,8 +71,8 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
       [Validators.required],
     ],
     itemNumber: [0, [Validators.required]],
-    itemTitle: ['', [Validators.required]],
-    itemText: ['', [Validators.required]],
+    itemTitle: ['', [Validators.required, Validators.maxLength(150)]],
+    itemText: ['', [Validators.required, Validators.maxLength(2000)]],
     isMainTerm: [true, [Validators.required]],
     additionalTermsAcknowledgment: [false, [Validators.required]],
     additionalTerms: this._formBuilder.array([]), // FormArray for dynamic additional terms
@@ -129,7 +131,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
   // Add new additional term
   addAdditionalTerm(): void {
     const additionalTermGroup = this._formBuilder.group({
-      itemText: ['', [Validators.required]],
+      itemText: ['', [Validators.required, Validators.maxLength(2000)]],
     });
     this.additionalTermsArray.push(additionalTermGroup);
   }
@@ -207,7 +209,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     // Add each additional term to the form array
     additionalTerms.forEach((term) => {
       const additionalTermGroup = this._formBuilder.group({
-        itemText: [term.itemText || '', [Validators.required]],
+        itemText: [term.itemText || '', [Validators.required, Validators.maxLength(2000)]],
       });
       this.additionalTermsArray.push(additionalTermGroup);
     });
@@ -265,7 +267,8 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
 }
 
   save(): void {
-    
+
+      
     this.controls.licenseProjectId.setValue(this.licenseProjectId);
 
     // Check if this is an update (existing record)
@@ -354,45 +357,45 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
         }
       });
     }
+    this._beneficiaryContractFormAdditionalTermsService
+      .SaveAsync(termsToSave)
+      .subscribe((res) => {
+        if (res.isDone) {
+          this._toastrService.success(this.localization.savedSuccessfully);
+          this._beneficiaryContractFormAdditionalTermsService.setBeneficiaryList(
+            res.data as BeneficiaryContractFormAdditionalTermsDto[]
+          );
 
-    this.subscriptions.push(
-      this._beneficiaryContractFormAdditionalTermsService
-        .SaveAsync(termsToSave)
-        .subscribe((res) => {
-          if (res.isDone) {
-            this._toastrService.success(this.localization.savedSuccessfully);
-            this._beneficiaryContractFormAdditionalTermsService.setBeneficiaryList(
-              res.data as BeneficiaryContractFormAdditionalTermsDto[]
+          const title = 'تم تعديل البنود';
+          const message = 'سيتم إنشاء نسخة بنود جديدة';
+
+          // Show confirmation popup only if this was an update
+          if (isUpdate) {
+            const dialogRef = this._dialog.open(SaveUpdateConfirmationComponent, {
+              width: '600px',
+              disableClose: true,
+              panelClass: 'save-update-confirmation-dialog',
+              data: {
+                title,
+                message
+              }
+            });
+
+            // Close the form popup when user clicks OK on the confirmation
+            this.subscriptions.push(
+              dialogRef.afterClosed().subscribe(() => {
+                this._popupService.dismissDialog();
+              })
             );
-
-             const title ='تم تعديل البنود';
-             const message =  'سيتم إنشاء نسخة بنود جديدة';
-
-            // Show confirmation popup only if this was an update
-            if (isUpdate) {
-              const dialogRef = this._dialog.open(SaveUpdateConfirmationComponent, {
-                width: '600px',
-                disableClose: true,
-                panelClass: 'save-update-confirmation-dialog',
-                data:{
-                  title,
-                  message
-                }
-              });
-
-              // Close the form popup when user clicks OK on the confirmation
-              this.subscriptions.push(
-                dialogRef.afterClosed().subscribe(() => {
-                  this._popupService.dismissDialog();
-                })
-              );
-            } else {
-              // For new records, just close the form popup
-              this._popupService.dismissDialog();
-            }
-          } else this._toastrService.error(res.message);
-        })
-    );
+          } else {
+            // For new records, just close the form popup
+            this._popupService.dismissDialog();
+          }
+        } //else this._toastrService.error(res.message);
+      })
+    //this.subscriptions.push(
+      
+    //);
   }
 
   ngOnDestroy() {

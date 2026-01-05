@@ -9,6 +9,7 @@ import {
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { PopupComponent } from '../../components/popup/popup.component';
 import { PopupNoteComponent } from '../../components/popup-note/popup-note.component';
+import { RejectionConfirmationPopupComponent } from '../../components/rejection-confirmation-popup/rejection-confirmation-popup.component';
 
 @Injectable()
 export class PopupService {
@@ -27,8 +28,6 @@ export class PopupService {
   cancelAction: EventEmitter<
     PopupData | confirmationPopupData | notePopupData
   > = new EventEmitter<PopupData | confirmationPopupData | notePopupData>();
-
-  
 
   constructor(public dialog: MatDialog) {}
   updatePopupData(data: PopupData) {
@@ -49,26 +48,31 @@ export class PopupService {
 
     return dialogRef;
   }
+
   updateConfirmationPopupData(
     confirmationData: confirmationPopupData,
-    width: string = '600px',
-    height: string = 'auto'
+    width?: string,
+    height?: string
   ) {
-    this.ConfirmpopupData.next(confirmationData);
+    const dataWithDefaults = {
+      ...confirmationData,
+      popupType: confirmationData.popupType ?? 'primary',
+    };
+    this.ConfirmpopupData.next(dataWithDefaults);
     const dialogRef = this.dialog.open(ConfirmationPopupComponent, {
-      width: width,
-      height: 'auto',
+      width: width ?? '600px',
+      height: height ?? 'auto',
       maxHeight: '90vh',
       maxWidth: '90vw',
-      panelClass: confirmationData.panelClass,
+      panelClass: 'confirmation-dialog',
       data: {
+        popupType: confirmationData.popupType ?? 'primary',
         id: confirmationData.id,
         staticMessage: confirmationData.staticMessage,
         dynamicMessage: confirmationData.dynamicMessage,
         secondeStaticMessage: confirmationData.secondeStaticMessage,
       },
       disableClose: true,
-      backdropClass: 'confirmDialogComponent',
       hasBackdrop: true,
       autoFocus: true,
     });
@@ -80,6 +84,39 @@ export class PopupService {
 
     return dialogRef;
   }
+
+  updateRejectionConfirmationPopupData(
+    confirmationData: confirmationPopupData,
+    width: string = '600px',
+    height: string = 'auto'
+  ) {
+    this.ConfirmpopupData.next(confirmationData);
+    const dialogRef = this.dialog.open(RejectionConfirmationPopupComponent, {
+      width: '600px',
+      height: 'auto',
+      maxHeight: '90vh',
+      maxWidth: '90vw',
+      panelClass: 'confirmation-dialog',
+      data: {
+        popupType: confirmationData.popupType ?? 'primary',
+        id: confirmationData.id,
+        staticMessage: confirmationData.staticMessage,
+        dynamicMessage: confirmationData.dynamicMessage,
+        secondeStaticMessage: confirmationData.secondeStaticMessage,
+      },
+      disableClose: true,
+      hasBackdrop: true,
+      autoFocus: true,
+    });
+
+    // Prevent backdrop click from closing the dialog
+    dialogRef.backdropClick().subscribe(() => {
+      // Do nothing - prevents backdrop click from closing the dialog
+    });
+
+    return dialogRef;
+  }
+
   updateNotePopupData(noteData: notePopupData) {
     this.NotePopupData.next(noteData);
     const dialogRef = this.dialog.open(PopupNoteComponent, {
@@ -108,6 +145,7 @@ export class PopupService {
 
     return dialogRef;
   }
+
   dismissDialog(): void {
     this.closeDialog.emit();
   }

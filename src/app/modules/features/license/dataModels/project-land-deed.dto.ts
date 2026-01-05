@@ -13,6 +13,12 @@ export interface SaveLicenseProjectDeed {
   issueOn: string;
   deedOwners: DeedOwnersDto[] | null;
 }
+export interface ApprovalDeedConstructionDto {
+  deedNumber: string;
+  constructionNumber: string;
+  constructionFile: SysFileManagerCreateUpdateDto;
+}
+
 
 export class ProjectLandDeedDto {
   id: string = "";
@@ -434,6 +440,8 @@ export class DeedOwnersDto {
   deedMarginalizationFileId: string = '';
   isCustomer: boolean | null = false;
   deedMarginalizationFile: FileManagerBE | null = null;
+  identityTypeCode?:number;
+  typeCode?:number;
 }
 
 export class OwnersDto {
@@ -480,6 +488,6 @@ export enum DeedIntegrationErrorCode {
 }
 export enum ConstructionLicenseTypeEnum {
   Balady = 1,
-  RiyadhAmanah = 2,
-  Itmam = 3,
+  RiyadhAmanah = 3,
+  Itmam = 2,
 }

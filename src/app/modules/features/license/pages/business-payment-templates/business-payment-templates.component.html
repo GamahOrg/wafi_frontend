@@ -1,159 +1,124 @@
 <div class="business-payment-templates">
+
   <!-- Payment Versions History Page -->
   <app-payment-versions-history *ngIf="showVersionsHistory" (onClose)="closeVersionsHistory()"></app-payment-versions-history>
 
-  <!-- Header Section -->
+  <!-- <ng-container *ngIf="!loading && getFilteredTemplates().length > 0 && !isCreateUpdateMode && showVersionsHistory"> -->
+  <div class="buttons-wrapper mb-3">
+    <div class="btn-group" role="group" aria-label="Filter">
+      <button type="button" class="btn" [ngClass]="{
+        'btn-primary active': selectedPaymentTypeFilter === PaymentTypeEnum.Cash,
+        'btn-light': selectedPaymentTypeFilter !== PaymentTypeEnum.Cash
+        }" (click)="onPaymentTypeFilterChange(PaymentTypeEnum.Cash)" [disabled]="isCreateUpdateMode">نقدي</button>
+      <button type="button" class="btn" [ngClass]="{
+        'btn-primary active': selectedPaymentTypeFilter === PaymentTypeEnum.Finance,
+        'btn-light': selectedPaymentTypeFilter !== PaymentTypeEnum.Finance
+        }" (click)="onPaymentTypeFilterChange(PaymentTypeEnum.Finance)" [disabled]="isCreateUpdateMode">تمويل</button>
+    </div>
+  </div>
+  <!-- </ng-container> -->
+
   <div class="tab-data-header" *ngIf="!isCreateUpdateMode && !showVersionsHistory">
-      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
-      <h6 class="title">نماذج الدفعات المالية</h6>
-      <div class="buttons-group">
-        <button *ngIf="!isNew" type="button" class="record-btn btn btn-outline-primary" (click)="openRecordDialog()">
-          <i class="fa fa-refresh"></i>
-          <span>سجل الدفعات</span>
-        </button>
-        <button type="button" class="edit-icon btn btn-primary" (click)="openAddPaymentModal()">
-          <span>إضافة نموذج</span>
-          <i class="hgi hgi-stroke hgi-plus-sign"></i>
-        </button>
-      </div>
-    </div>
+    <span class="icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.5 20.75H7.5C6.75 20.75 6.2 20.72 5.73 20.65C2.41 20.29 1.75 18.3 1.75 15V9C1.75 5.7 2.41 3.71 5.76 3.34C6.2 3.28 6.75 3.25 7.5 3.25H16.5C17.25 3.25 17.8 3.28 18.27 3.35C21.59 3.71 22.25 5.7 22.25 9V15C22.25 18.3 21.59 20.29 18.24 20.66C17.8 20.72 17.25 20.75 16.5 20.75ZM7.5 4.75C6.82 4.75 6.34 4.78 5.95 4.83C3.92 5.06 3.25 5.69 3.25 9V15C3.25 18.31 3.92 18.94 5.92 19.17C6.34 19.23 6.82 19.25 7.5 19.25H16.5C17.18 19.25 17.66 19.22 18.05 19.17C20.08 18.95 20.75 18.31 20.75 15V9C20.75 5.69 20.08 5.06 18.08 4.83C17.66 4.77 17.18 4.75 16.5 4.75H7.5Z" fill="#001F21" />
+        <path d="M17 10.75H13.5C13.09 10.75 12.75 10.41 12.75 10C12.75 9.59 13.09 9.25 13.5 9.25H17C17.41 9.25 17.75 9.59 17.75 10C17.75 10.41 17.41 10.75 17 10.75Z" fill="#001F21" />
+        <path d="M10.0996 11C9.54961 11 9.09961 10.55 9.09961 10C9.09961 9.45 9.53961 9 10.0996 9H10.1096C10.6596 9 11.1096 9.45 11.1096 10C11.1096 10.55 10.6596 11 10.0996 11Z" fill="#001F21" />
+        <path d="M7.09961 11C6.54961 11 6.09961 10.55 6.09961 10C6.09961 9.45 6.53961 9 7.09961 9C7.64961 9 8.09961 9.45 8.09961 10C8.09961 10.55 7.65961 11 7.09961 11Z" fill="#61686B" />
+        <path d="M16.9998 16.25H7.01977C6.60977 16.25 6.25977 15.91 6.25977 15.5C6.25977 15.09 6.58977 14.75 6.99977 14.75H16.9998C17.4098 14.75 17.7498 15.09 17.7498 15.5C17.7498 15.91 17.4098 16.25 16.9998 16.25Z" fill="#61686B" />
+      </svg>
+    </span>
+    <h6 class="title">
+      نماذج الدفعات المالية
 
-  <!-- <div class="page-header" *ngIf="!isCreateUpdateMode">
-     <div class="header-content"> -->
-      <!-- <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
-      <h6 class="title">نماذج الدفعات المالية</h6>
-      <div class="header-actions">
-        <button  type="button" class="edit-icon btn btn-primary" (click)="openAddPaymentModal()">
-          <span>إضافة نموذج</span>
-          <i class="hgi hgi-stroke hgi-plus-sign"></i>
-        </button>
-      </div> -->
-  <!-- </div> -->
-<!-- </div>  -->
+      <!-- Refunds Input Field -->
+      <span class="small" *ngIf="selectedTemplate">(عدد الدفعات المستردة: {{selectedTemplate.licenseProjectBusinessPayment.refunds}})</span>
+    </h6>
 
-<app-edit-business-payment-templates
-  *ngIf="isCreateUpdateMode"
-  [paymentId]="editingPaymentId"
-  [isActive]="isActive"
-  [isUpdateVersion]="!isNew"
-  (backClicked)="onBackFromEdit()">
-</app-edit-business-payment-templates>
+    <button class="opposite-title btn btn-primary" (click)="openAddPaymentModal()"><span class="material-icons">add</span> إضافة نموذج</button>
+  </div>
 
-  <!-- Empty State -->
+  <div class="tab-data-section">
+    <app-edit-business-payment-templates *ngIf="isCreateUpdateMode" [paymentId]="editingPaymentId" [isActive]="isActive" [isUpdateVersion]="!isNew" [selectedPaymentType]="selectedPaymentTypeFilter" (backClicked)="onBackFromEdit()">
+    </app-edit-business-payment-templates>
 
-  <ng-container *ngIf="!loading && paymentTemplates.length === 0 && !isCreateUpdateMode && !showVersionsHistory" >
+    <!-- Empty State -->
+    <ng-container *ngIf="!loading && getFilteredTemplates().length === 0 && !isCreateUpdateMode && !showVersionsHistory">
       <div class="mt-4">
-          <app-no-data [showCompleteBtn]="false"></app-no-data>
+        <app-no-data [title]="'لا يوجد خطط دفع'" [showCompleteBtn]="false" [showText]="false"></app-no-data>
       </div>
-  </ng-container>
-  <!-- Payment Installments Table -->
-<div class="payment-data-section" *ngIf="!loading && paymentTemplates.length > 0 && !isCreateUpdateMode && !showVersionsHistory">
-  
-  <div class="payment-content-wrapper">
-    <!-- Right Sidebar: Templates List -->
-    <div class="templates-sidebar">
-      <div 
-        class="template-item"
-        [class.active]="selectedTemplateId === template.id"
-        *ngFor="let template of paymentTemplates"
-        (click)="selectTemplate(template.id)">
-        <span class="template-name">{{ template.templateName }}</span>
-        <div class="template-item-actions" (click)="$event.stopPropagation()">
-          <button *ngIf="template.isActive"
-            type="button"
-            style="font-size: 16px; color: #005257; border: none; justify-content: center; background: transparent;"
-            (click)="$event.stopPropagation(); editTemplate()"
-            [disabled]="selectedTemplateId !== template.id">
-            <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
-          </button>
-          <button *ngIf="template.isActive  && !isNew"
-            type="button"
-            style="font-size: 16px; color: #EC0A0A; border: none; justify-content: center; width: 32px; height: 32px; background: transparent;"
-            (click)="$event.stopPropagation(); confirmDeactivateTemplate(template)">
-            <i class="fa fa-ban"></i>
-          </button>
-          <button *ngIf="isNew"
-            type="button"
-            style="font-size: 16px; color: #EC0A0A; border: none; justify-content: center; width: 32px; height: 32px; background: transparent;"
-            (click)="$event.stopPropagation(); confirmDeleteTemplate(template)">
-            <i class="hgi hgi-stroke hgi-delete-03"></i>
-          </button>
-          <button *ngIf="!template.isActive && !isNew"
-            type="button"
-            style="font-size: 16px; color: #28a745; border: none; justify-content: center; width: 32px; height: 32px; background: transparent;"
-            (click)="$event.stopPropagation(); confirmActivateTemplate(template)"
-            title="تفعيل النموذج">
-            <i class="fa fa-check-circle"></i>
-          </button>
+    </ng-container>
+
+    <div class="payment-data-section" *ngIf="!loading && getFilteredTemplates().length > 0 && !isCreateUpdateMode && !showVersionsHistory">
+      <!-- Payment Type Filter -->
+      <div class="row row-gap-4">
+        <div class="col-xl-3">
+          <!-- Right Sidebar: Templates List -->
+          <div class="templates-sidebar">
+            <div class="template-item" [class.active]="selectedTemplateId === template.id" *ngFor="let template of getFilteredTemplates()" (click)="selectTemplate(template.id)">
+              <span class="template-name">{{ template.templateName }}</span>
+              <div class="template-item-actions" *ngIf="!hideActionButtons" (click)="$event.stopPropagation()">
+                <button type="button" class="btn-icon btn btn-primary" (click)="$event.stopPropagation(); editTemplate()" [disabled]="selectedTemplateId !== template.id" *ngIf="template.isActive">
+                  <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                </button>
+                <button type="button" class="btn-icon btn btn-primary" (click)="$event.stopPropagation(); confirmActivateTemplate(template)" title="تفعيل النموذج" *ngIf="!template.isActive && !isNew">
+                  <i class="fa fa-check-circle"></i>
+                </button>
+                <button type="button" class="btn-icon btn btn-danger" (click)="$event.stopPropagation(); confirmDeactivateTemplate(template)" *ngIf="template.isActive  && !isNew">
+                  <i class="hgi hgi-stroke hgi-remove-circle"></i>
+                </button>
+                <button type="button" class="btn-icon btn btn-danger" (click)="$event.stopPropagation(); confirmDeleteTemplate(template)" *ngIf="isNew">
+                  <i class="hgi hgi-stroke hgi-delete-03"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-9">
+          <!-- Main Content: Payment Table -->
+          <div class="payment-main-content">
+            <!-- Template Actions (Optional - يمكن إزالتها إذا لم تكن مطلوبة) -->
+            <div class="template-actions" *ngIf="selectedTemplate && !hideActionButtons" style="display: none;">
+              <button type="button" class="btn btn-edit" (click)="editTemplate()">
+                <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                تعديل النموذج
+              </button>
+              <button type="button" class="btn btn-delete" (click)="confirmDeleteTemplate(selectedTemplate)">
+                <i class="fa fa-ban"></i>
+                تعطيل النموذج
+              </button>
+            </div>
+
+            <!-- Payment Table -->
+            <div class="table-responsive">
+              <table class="table table-light">
+                <thead>
+                  <tr>
+                    <th>رقم الدفعة</th>
+                    <th>نسبة الاستقطاع</th>
+                    <th>نسبة الإنجاز</th>
+                    <th>وصف الدفعة</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let payment of paymentInstallments; let i = index">
+                    <td class="payment-number">{{ i + 1 }}</td>
+                    <td>{{ payment.deductionPercentage }}%</td>
+                    <td>{{ payment.rentPercentage }}%</td>
+                    <td>{{payment.description && payment.description.length > 70 ? (payment.description | slice:0:100) + '...' : payment.description}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Main Content: Payment Table -->
-    <div class="payment-main-content">
-      <!-- Template Actions (Optional - يمكن إزالتها إذا لم تكن مطلوبة) -->
-      <div class="template-actions" *ngIf="selectedTemplate" style="display: none;">
-        <button
-          type="button"
-          class="btn btn-edit"
-          (click)="editTemplate()">
-          <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
-          تعديل النموذج
-        </button>
-        <button
-          type="button"
-          class="btn btn-delete"
-          (click)="confirmDeleteTemplate(selectedTemplate)">
-          <i class="fa fa-ban"></i>
-          تعطيل النموذج
-        </button>
-      </div>
-
-      <!-- Payment Table -->
-      <div class="payment-table">
-        <!-- Refunds Input Field -->
-        <div class="refunds-section" *ngIf="selectedTemplate">
-          <label for="refunds">عدد الدفعات المستردة: </label>
-          <label id="refunds">{{selectedTemplate.licenseProjectBusinessPayment.refunds}}</label>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>رقم الدفعة</th>
-              <th>نسبة الاستقطاع</th>
-              <th>نسبة الإنجاز</th>
-              <th>وصف الدفعة</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let payment of paymentInstallments; let i = index">
-              <td class="payment-number">{{ i + 1 }}</td>
-              <td>{{ payment.deductionPercentage }}%</td>
-              <td>{{ payment.rentPercentage }}%</td>
-              <td class="payment-description">{{payment.description && payment.description.length > 70 ? (payment.description | slice:0:100) + '...' : payment.description}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
-      <!-- Navigation Buttons -->
-      <!-- <div class="nav-buttons">
-        <button class="nav-btn nav-btn-prev" (click)="goPrevious()">
-          <i class="fa fa-arrow-right"></i>
-          السابق
-        </button>
-        <button class="nav-btn nav-btn-draft" (click)="saveDraft()">
-          حفظ كمسودة
-        </button>
-        <button class="nav-btn nav-btn-next" (click)="goNext()">
-          التالي
-          <i class="fa fa-arrow-left"></i>
-        </button>
-      </div> -->
-  </div>
-    <!-- <app-next-and-previus-buttons *ngIf="(!isCreateUpdateMode || isActive) && !showVersionsHistory"></app-next-and-previus-buttons> -->
 
+  <!-- <app-next-and-previus-buttons *ngIf="(!isCreateUpdateMode || isActive) && !showVersionsHistory"></app-next-and-previus-buttons> -->
+  <app-next-and-previus-buttons *ngIf="!isCreateUpdateMode"></app-next-and-previus-buttons>
 
   <!-- Loading State -->
   <div class="loading-state" *ngIf="loading && !showVersionsHistory">
@@ -163,4 +128,3 @@
     <p>جاري التحميل...</p>
   </div>
 </div>
-

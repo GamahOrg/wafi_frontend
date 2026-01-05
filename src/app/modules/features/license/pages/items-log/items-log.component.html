@@ -63,9 +63,7 @@
                       <ng-container *ngFor="let parentItem of getParentItems(version.additionalTermsVersionItems); let parentIndex = index">
                         <!-- Parent Row -->
                         <tr>
-                          <td>
-                            <span>{{getItemNumberDisplay(parentItem, version.additionalTermsVersionItems)}}</span>
-                          </td>
+                          <td><span class="tag">{{getItemNumberDisplay(parentItem, version.additionalTermsVersionItems)}}</span></td>
                           <td>
                             <div class="d-flex align-items-center">
                               <button *ngIf="hasChildren(parentItem.id, version.additionalTermsVersionItems)" mat-icon-button class="me-2" (click)="toggleExpand(parentItem.id)">
@@ -80,8 +78,8 @@
 
                         <!-- Child Rows -->
                         <ng-container *ngIf="isExpanded(parentItem.id)">
-                          <tr *ngFor="let childItem of getChildItems(parentItem.id, version.additionalTermsVersionItems); let childIndex = index" class="child-row">
-                            <td class="ps-5">{{getItemNumberDisplay(childItem, version.additionalTermsVersionItems)}}</td>
+                          <tr class="child-row" *ngFor="let childItem of getChildItems(parentItem.id, version.additionalTermsVersionItems); let childIndex = index">
+                            <td><span class="tag">{{getItemNumberDisplay(childItem, version.additionalTermsVersionItems)}}</span></td>
                             <td>{{childItem?.itemTitle || '-'}}</td>
                             <td>{{childItem?.itemText && childItem.itemText.length > 100 ? (childItem.itemText | slice:0:100) + '...' : childItem?.itemText}}</td>
                             <td></td>

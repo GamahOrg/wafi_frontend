@@ -3,7 +3,7 @@
     <!-- Main Content - Right Side -->
     <div class="col-lg-7 col-xl-8 col-xxl-9 order-1 order-lg-1">
       <!-- <div class="col-12" *ngIf="!availabilityToUpdate">
-        <div class="buttona bg-white px-3 py-2 mb-3 d-flex justify-content-end">
+        <div class="buttons-wrapper mb-3 d-flex justify-content-end">
           <div>
             <button
               type="button"
@@ -27,13 +27,14 @@
         </div>
       </div> -->
 
-      <app-tabs></app-tabs>
+      <app-tabs [hasProgress]="false"></app-tabs>
     </div>
 
     <!-- Stepper - Left Side -->
     <div class="col-lg-5 col-xl-4 col-xxl-3 order-2 order-lg-2">
-      <div class="card phases-card" *ngIf="licenseRequestHeaderProcessingStepList && licenseRequestHeaderProcessingStepList.length > 0">
-        <div class="card-header no-separetor">
+      <div class="card phases-card"
+        *ngIf="licenseRequestHeaderProcessingStepList && licenseRequestHeaderProcessingStepList.length > 0">
+        <div class="card-header">
           <h6 class="card-title">مراحل الطلب</h6>
         </div>
 
@@ -43,12 +44,38 @@
             'pending': step.status === 'pending'
           }" -->
         <div class="card-body">
-          <!-- <div class="alert alert-danger mb-4" role="alert">
+          <!-- رفض احد الملاك -->
+          <div *ngIf="shoDangerAlert(stepStatus.SomeOwnersRejected)" class="alert alert-danger mb-4" role="alert">
             <span class="icon">
               <i class="hgi hgi-stroke hgi-help-circle"></i>
             </span>
-            <span>لا يمكن استكمال الطلب، درجة التأهيل الحالية أقل من الحد المسموح لإجمالي مساحة مسطح البناء للمشروع</span>
+            <span>أحد الملاك رفض اتفاقية التطوير العقاري يُرجى التقديم على الرخصة من جديد.</span>
+          </div>
+
+          <!-- رفض احد الاطراف -->
+          <div *ngIf="shoDangerAlert(stepStatus.OnePartyRejected)" class="alert alert-danger mb-4" role="alert">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-help-circle"></i>
+            </span>
+            <span>أحد أطراف المشروع رفض اتفاقية التطوير العقاري يُرجى التقديم على الرخصة من جديد.</span>
+          </div>
+
+          <div *ngIf="shoDangerAlert(stepStatus.SkipPaymentDeadline)" class="alert alert-danger mb-4" role="alert">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-help-circle"></i>
+            </span>
+            <span>تم إلغاء الرخصة بسبب تخطي مهلة السداد.</span>
+          </div>
+
+
+          <!-- 
+             <div class="alert alert-danger mb-4" role="alert">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-help-circle"></i>
+            </span>
+            <span></span>
           </div> -->
+
 
           <!-- <div class="phase rejected">
             <div class="number-area">
@@ -74,7 +101,7 @@
           <div class="phase" *ngFor="let step of licenseRequestHeaderProcessingStepList; let i = index" [ngClass]="{
             'completed':getCompleted(step.stepStatusId),
             'current': getCurrentStatus(step),
-            'pending': step.stepStatusId == stepStatus.PendingApproval,
+            'pending': step.stepStatusId == stepStatus.PendingApproval || (!getCompleted(step.stepStatusId) && !getCurrentStatus(step) && !getRejectStatus(step.stepStatusId)),
             'rejected': getRejectStatus(step.stepStatusId)
           }">
 
@@ -83,7 +110,12 @@
             </div>
 
             <div class="info-area">
-              <h6 class="title">{{step.step.name}}</h6>
+              <h6 class="title">
+                {{step.step.name}}
+
+                <span *ngIf="step.step.order==1">رقم {{requestCode}}</span>
+              </h6>
+
               <div class="info">
                 <span class="status">{{step.stepStatus.name}}</span>
                 <div class="date">
@@ -92,12 +124,28 @@
                 </div>
               </div>
 
-              <button *ngIf="step.stepId==stepType.SendAgreementsToDeedOwners" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(true)">تفقد حالة أطراف المشروع</button>
-              <button *ngIf="step.stepId==stepType.SendAgreementsToAccountantAndConsultant" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">تفقد حالة المحاسب والإستشاري</button>
-              <!-- <button *ngIf="step.stepId==stepType.PayInvoice" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">عرض الفاتورة</button>
-              <button *ngIf="step.stepId==stepType.PayInvoice" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">إعادة المحاولة</button>
-              <button *ngIf="step.stepId==stepType.OpenEscrowAccount" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">إعادة التكامل مع البنك</button>
-             -->
+              <button
+                *ngIf="step.stepId==stepType.SendAgreementsToDeedOwners && step.stepStatusId==stepStatus.SomeOwnersRejected"
+                type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(true)">تفقد
+                حالة أطراف المشروع</button>
+              <button
+                *ngIf="step.stepId==stepType.SendAgreementsToAccountantAndConsultant && step.stepStatusId==stepStatus.OnePartyRejected"
+                type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openProjectPartiesStatus(false)">تفقد
+                حالة المحاسب والإستشاري</button>
+              <button *ngIf="step.stepId==stepType.PayInvoice && step.stepStatusId==stepStatus.PendingApproval"
+                type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="GetInvoiceData()">عرض الفاتورة</button>
+              <button *ngIf="step.stepId==stepType.PayInvoice && step.stepStatusId==stepStatus.SystemFailure"
+                type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="reSendInvoice()">إعادة
+                المحاولة</button>
+              <button *ngIf="step.stepId==stepType.OpenEscrowAccount && step.stepStatusId==stepStatus.IntegrationFailed"
+                type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="reSendOpenBankAccount()">إعادة التكامل
+                مع البنك</button>
+              <button
+                *ngIf="step.stepId==stepType.OpenEscrowAccount && step.stepStatusId==stepStatus.IntegrationSucceeded"
+                type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="displayBankAccountInfo()">بيانات حساب
+                الضمان</button>
+              <button *ngIf="step.stepId==stepType.IssueLicense && step.isFinished" type="button"
+                class="btn btn-sm btn-primary w-100 mt-2" (click)="GetCertificatesByHeaderId()">عرض الرخصة</button>
             </div>
           </div>
         </div>

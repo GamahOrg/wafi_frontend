@@ -35,8 +35,8 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          
-          if (!req.url.includes('i18n')&&!req.url.includes('CreateExcel')) {
+          const skipErrorToast = req.headers.has('X-Skip-Error-Toast');
+          if (!req.url.includes('i18n')&&!req.url.includes('CreateExcel') && !skipErrorToast) {
             let responseBody = event.body as BaseResponse<any>;
             if (responseBody && !responseBody.isDone) {
               this._toastrNotificatioService.showError(responseBody.message);

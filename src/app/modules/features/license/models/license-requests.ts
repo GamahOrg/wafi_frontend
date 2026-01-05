@@ -36,6 +36,9 @@ export interface licenseRequest {
     facilityName: string;
     id: string;
   },
+  licenseProject?:{
+    name:string
+  }
   customer?: Customer,
   creatorEmployee?: CreatorEmployeeDto,
   licenseRequestType: SysLicenseRequestTypeCreateUpdateDto

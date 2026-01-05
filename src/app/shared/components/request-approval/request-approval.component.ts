@@ -4,6 +4,7 @@ import { SysRequestApprovalService } from '../../services/sysRequestApproval/sys
 import { SysRequestApprovalDto } from '../../models/sys-request-approval.dto';
 import { PopupService } from '../../../shared/services/popup/popup.service';
 import { PopupData } from '../../../shared/models/popup.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-request-approval',
@@ -17,7 +18,8 @@ export class RequestApprovalComponent implements OnInit, OnDestroy {
 
   constructor(
     private sysRequestApprovalService: SysRequestApprovalService,
-    private _popupService: PopupService
+    private _popupService: PopupService,
+    private _toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -44,8 +46,10 @@ export class RequestApprovalComponent implements OnInit, OnDestroy {
   save(){
     if(this.areAllItemsApproved())
       this.sysRequestApprovalService.isApprovalRequired.emit(true);
-    else
+    else {
+      this._toastrService.error('يجب الموافقة على الاقرار');
       this.sysRequestApprovalService.isApprovalRequired.emit(false);
+    }
   }
 
   observePopupEvents(): void {

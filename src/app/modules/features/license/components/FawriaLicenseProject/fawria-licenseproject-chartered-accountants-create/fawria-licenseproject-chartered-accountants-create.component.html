@@ -1,6 +1,6 @@
 <ng-container *ngIf="form" [formGroup]="form">
   <div class="tab-data-header">
-    <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
     <h6 class="title">
       {{ localizations.CharteredAccountantTitle }}
     </h6>
@@ -8,19 +8,20 @@
 
   <div class="tab-data-section">
     <div class="form-group">
+      <span class="text-danger">*</span>
       <label for="commercialRegister" class="form-label">
         {{ localizations.CharteredAccountant }}
       </label>
       <div class="input-group">
-        <input id="commercialRegister" name="commercialRegister" type="text" class="form-control" [ngClass]="{'is-invalid': errorMessage}" formControlName="commercialRegister" placeholder="أدخل الرقم الموحد للمنشأه">
+        <input id="commercialRegister" name="commercialRegister" type="text" class="form-control" [ngClass]="{'is-invalid': errorMessage}" formControlName="commercialRegister" placeholder="أدخل الرقم الموحد للمنشأه" (input)="onCommercialRegisterChange()">
         <button class="btn btn-primary" type="button" (click)="validate()">
           {{ localizations.ValidateConsultant }}
         </button>
       </div>
 
-      <div class="invalid-feedback d-block" *ngIf="controls['commercialRegister']?.hasError('required') && controls['commercialRegister']?.touched">
-        {{ localizations.CharteredAccountantRequired }}
-      </div>
+      <!-- <div class="invalid-feedback d-block" *ngIf="controls['commercialRegister']?.hasError('required') && controls['commercialRegister']?.touched">
+    {{ localizations.CharteredAccountantRequired }}
+  </div> -->
 
       <div class="form-text">
         <span class="icon" [ngClass]="{'text-danger': errorMessage}">
@@ -32,7 +33,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="entity">
+  <ng-container *ngIf="entity?.charteredAccountant">
     <div class="tab-data-section">
       <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
@@ -57,19 +58,30 @@
             <span class="required-asterisk">*</span>
             مهلة المصادقة على التقرير المالي
           </label>
-          <input id="financialReportApprovalPeriodInDays" name="financialReportApprovalPeriodInDays" type="number" class="form-control" formControlName="financialReportApprovalPeriodInDays" max="30" placeholder="أدخل مهلة المصادقة على التقرير المالي">
+          <input id="financialReportApprovalPeriodInDays" name="financialReportApprovalPeriodInDays" type="number" class="form-control" formControlName="financialReportApprovalPeriodInDays" min="1" max="30" placeholder="أدخل مهلة المصادقة على التقرير المالي">
 
-          <div class="invalid-feedback d-block" *ngIf="controls['financialReportApprovalPeriodInDays']?.hasError('required') && controls['financialReportApprovalPeriodInDays']?.touched">
-            هذا الحقل مطلوب
+          <div class="form-text text-danger" *ngIf="controls['financialReportApprovalPeriodInDays']?.hasError('required') && controls['financialReportApprovalPeriodInDays']?.touched">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <p> الحقل مطلوب</p>
           </div>
 
-          <div class="form-text">
-            <span class="icon" [ngClass]="{'text-danger': errorMessage}">
+          <div class="form-text text-danger" *ngIf="controls['financialReportApprovalPeriodInDays']?.hasError('min') && controls['financialReportApprovalPeriodInDays']?.touched">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <p>يجب أن تكون القيمة أكبر من صفر</p>
+          </div>
+
+          <div class="form-text" [ngClass]="{'text-danger': controls['financialReportApprovalPeriodInDays']?.hasError('max')}" *ngIf="!controls['financialReportApprovalPeriodInDays']?.hasError('required') && !controls['financialReportApprovalPeriodInDays']?.hasError('min')">
+            <span class="icon">
               <i class="hgi hgi-stroke hgi-alert-circle"></i>
             </span>
             <p>مدة المصادقة لا يجب أن تتعدى 30 يوماً</p>
           </div>
         </div>
+
 
         <!-- Contract Value -->
         <div class="col-12 col-lg-6">
@@ -79,7 +91,8 @@
           </label>
 
           <div class="input-group">
-            <input id="contractValue" name="contractValue" type="number" class="form-control" formControlName="contarctValue" placeholder="اختر قيمة العقد">
+            <input id="contractValue" name="contractValue" type="text" class="form-control" formControlName="contarctValue" placeholder="اختر قيمة العقد"
+              (input)="formatContractValue($event)" (blur)="formatContractValueOnBlur($event)" (focus)="removeContractValueFormatting($event)">
             <span class="input-group-text">
               <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
             </span>
@@ -94,7 +107,7 @@
         <div class="col-12 col-lg-6">
           <label for="paymentDeadline" class="form-label d-flex align-items-center">
             <span class="required-asterisk">*</span>
-            مهلة السداد
+            مهلة السداد بالأيام
 
             <span class="ms-auto cursor-pointer" [popover]="popTemplate" triggers="mouseenter:mouseleave">
               <i class="hgi hgi-stroke hgi-alert-circle"></i>
@@ -120,7 +133,7 @@
             المفوض بالتوقيع على وثائق الصرف
           </label>
           <select id="authorizedSignatories" class="form-select" formControlName="authorizedToSignDelegator" (change)="onDelegatorChange()">
-            <option value="" selected disabled>اختر المفوض على وثائق الصرف</option>
+            <option [ngValue]="null" disabled hidden>اختر المفوض على وثائق الصرف</option>
             <option *ngFor="let signatory of licenseProjectDelegators" [value]="signatory.id">
               {{ signatory?.fullName}}
             </option>
@@ -224,7 +237,7 @@
   </ng-container>
 </ng-container>
 
-<div class="mt-3" *ngIf="entity">
+<div class="mt-3" *ngIf="entity?.charteredAccountant">
   <app-license-project-parties-additional-terms [TermsPartType]='TermsPartType.Accountant'></app-license-project-parties-additional-terms>
 </div>
 

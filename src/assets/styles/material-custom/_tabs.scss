@@ -1,7 +1,7 @@
 .mat-mdc-tab-header {
   padding: 1rem;
-  border-end-start-radius: $card-border-radius;
-  border-end-end-radius: $card-border-radius;
+  border: 1px solid $lightergray;
+  border-radius: $card-border-radius;
   background-color: $card-bg;
 }
 
@@ -18,13 +18,13 @@
 
   font-family: "IBM_Plex_Sans_Arabic", sans-serif;
   font-size: $font-size-sm;
-  font-weight: 600;
+  font-weight: bolder;
   letter-spacing: normal;
 
   border-radius: $border-radius-xs;
 
   .mdc-tab__text-label {
-    color: $lightgray;
+    color: #B1B6B8;
   }
 
   &.mdc-tab--active {
@@ -34,31 +34,17 @@
       .mdc-tab__text-label {
         color: $theme-main !important;
 
+        .number,
         .icon {
           background-color: $theme-main;
         }
       }
     }
   }
-
-  .mdc-tab-indicator {
-    .mdc-tab-indicator__content--underline {
-      border-width: 4px;
-    }
-  }
 }
 
-.mat-mdc-tab,
-.mat-mdc-tab-link {
-  &:not(.mat-mdc-tab-disabled) {
-    .mdc-tab__text-label {
-      color: $lightgray !important;
-    }
-
-    .mdc-tab-indicator__content--underline {
-      border: none;
-    }
-  }
+.mdc-tab-indicator {
+  --mdc-tab-indicator-active-indicator-color: transparent;
 }
 
 .mat-mdc-tab-body-wrapper {
@@ -91,6 +77,96 @@
       margin-top: .5rem;
       border-radius: .5rem;
       background-color: $primary-bg;
+    }
+  }
+}
+
+.with-progress {
+  >.mat-mdc-tab-header {
+    padding: 1.5rem 1rem 0;
+    border-bottom-width: 0;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+
+    .mdc-tab--active {
+      border-bottom: 2px solid $theme-main;
+      background-color: $light;
+    }
+  }
+
+  .tabs-progress {
+    position: relative;
+    margin-bottom: 1rem;
+    padding: 1.5rem 1rem;
+
+    border: 1px solid $lightergray;
+    border-top-width: 0;
+    border-end-start-radius: $card-border-radius;
+    border-end-end-radius: $card-border-radius;
+    background-color: $card-bg;
+
+    .value-indication {
+      --progress-value: 0%;
+
+      position: absolute;
+      z-index: 1;
+      inset-inline-start: var(--progress-value);
+      bottom: 0;
+      transform: translate(40%, 50%);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 2.25rem;
+      height: 2.25rem;
+      font-size: $font-size-xs;
+      color: #384250;
+
+      border-radius: $border-radius-xs;
+      background-color: $white;
+      box-shadow: 0px 8px 19px 0px #00000026,
+        0px 34px 34px 0px #00000021,
+        0px 76px 46px 0px #00000014,
+        0px 135px 54px 0px #00000005,
+        0px 211px 59px 0px #00000000;
+
+      [class^="material-icons"] {
+        position: absolute;
+        z-index: 2;
+        bottom: 100%;
+        right: 50%;
+        transform: translateX(50%);
+
+        height: 5px;
+        line-height: 6px;
+        font-size: 1.5rem;
+        color: $white;
+      }
+    }
+  }
+
+  .mat-mdc-progress-bar {
+    --mdc-linear-progress-track-height: .5rem;
+    --mdc-linear-progress-active-indicator-color: #{$theme-main};
+
+    border-radius: $border-radius-sm;
+
+    .mdc-linear-progress__buffer-bar {
+      background-color: #B1B6B8;
+    }
+  }
+
+  >.mat-mdc-tab-body-wrapper {
+    margin-top: 0;
+  }
+}
+
+.mat-mdc-tab-body-content {
+  .mat-mdc-tab-group {
+    >.mat-mdc-tab-header {
+      border-start-start-radius: $card-border-radius;
+      border-start-end-radius: $card-border-radius;
     }
   }
 }

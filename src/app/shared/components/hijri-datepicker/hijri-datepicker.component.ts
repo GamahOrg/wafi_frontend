@@ -20,6 +20,7 @@ const moment = momentHijri;
 export class HijriDatepickerComponent implements ControlValueAccessor, OnInit {
   @Input() placeholder: string = 'اختر التاريخ';
   @Input() showGregorian: boolean = true;
+  @Input() iconDirection: 'left' | 'right' = 'right';
   @ViewChild('dateInput', { static: false }) dateInput!: ElementRef;
 
   isOpen: boolean = false;
@@ -220,10 +221,10 @@ export class HijriDatepickerComponent implements ControlValueAccessor, OnInit {
     if (this.selectedDate) {
       try {
         const hijri = this.gregorianToHijri(this.selectedDate);
-        const hijriFormatted = `${this.pad(hijri.day)}/${this.pad(hijri.month)}/${hijri.year}`;
+        const hijriFormatted = `${this.pad(hijri.day)}-${this.pad(hijri.month)}-${hijri.year}`;
 
         if (this.showGregorian) {
-          const gregorianFormatted = `${this.pad(this.selectedDate.getDate())}/${this.pad(this.selectedDate.getMonth() + 1)}/${this.selectedDate.getFullYear()}`;
+          const gregorianFormatted = `${this.pad(this.selectedDate.getDate())}-${this.pad(this.selectedDate.getMonth() + 1)}-${this.selectedDate.getFullYear()}`;
           this.displayValue = `${hijriFormatted} (${gregorianFormatted})`;
         } else {
           this.displayValue = hijriFormatted;

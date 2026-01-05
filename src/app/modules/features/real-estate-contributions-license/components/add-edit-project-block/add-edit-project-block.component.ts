@@ -75,7 +75,7 @@ export class AddEditProjectBlockComponent implements OnInit, OnDestroy {
     constructionEndOn: "تاريخ نهاية الإنشاء",
     chooseUnitTitle: "تحديد نوع الوحدات داخل البلوك",
     addingNewUnit: "حفظ و إضافة نوع وحدة جديد ",
-    chooseUnitTitleHint: "( يمكنك اختيار اختر من نوع من الوحدات داخل البلوك )",
+    chooseUnitTitleHint: "( يمكنك اختيار أكثر من نوع من الوحدات داخل البلوك)",
     subUnitsType: " أنواع الوحدات بالبلوك / العمارة ",
     subUnitCount: "عدد وحدات الخاص بالبلوك او العمارة  ",
     actions: "إجراءات",

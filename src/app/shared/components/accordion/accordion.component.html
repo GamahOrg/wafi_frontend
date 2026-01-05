@@ -6,24 +6,21 @@
         <accordion-group [attr.heading]="accordion.title" [id]="accordion.id" [isDisabled]="accordion.disabled" [isOpen]="accordion.isOpen!" (isOpenChange)="onClickOnTitle($event, accordion)" *ngIf="accordion.isVisible">
 
           <div class="accordion-heading" accordion-heading (click)="[updateisViewed(i), updateisRendered(i)]">
-            <h6 class="title">
-              <span class="icon"><i class="material-icons">content_paste</i></span>
-              {{ accordion.title }}
+            <h6 class="title"  [innerHTML]="accordion.title">
+              <!--<span class="icon"><i class="material-icons">content_paste</i></span>-->
+              <!--{{ accordion.title }}-->
             </h6>
 
-            <span class="ms-auto">
+            <!--<span class="ms-auto">
               {{ accordion.isViewed ? "تم" : "عرض" }}
+            </span>-->
+
+            <span class="icon">
+              <i class="open material-icons">arrow_drop_down</i>
+              <i class="close material-icons">arrow_drop_up</i>
             </span>
 
-            <span class="opened">
-              <i class="material-icons">expand_less</i>
-            </span>
-
-            <span class="closed">
-              <i class="material-icons">expand_more</i>
-            </span>
-
-            <button class="btn btn-outline-primary" *ngIf="accordion.isDeletebtn" (click)="confirmDelete(accordion.id, i)">
+            <button class="btn btn-outline-light" *ngIf="accordion.isDeletebtn" (click)="confirmDelete(accordion.id, i)">
               حذف
             </button>
           </div>

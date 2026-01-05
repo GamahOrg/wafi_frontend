@@ -67,6 +67,7 @@ export class LicenseDepositDocumentComponent {
   openDialog(id: string): void {
     this._licenseDepositDocument.setLicenseProjectDepositDocumentIdInLocalStorage(id)
     let Data = {
+      iconClass: 'hgi hgi-stroke hgi-profile',
       title: "اضافة وثيقة الايداع",
       component: AddDepositDocumentComponent,
       id: "AddDepositDocumentComponent",

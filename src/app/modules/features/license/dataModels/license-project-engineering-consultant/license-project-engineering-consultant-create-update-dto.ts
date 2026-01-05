@@ -83,6 +83,10 @@ export interface LicenseProjectEngineeringConsultantCreateUpdateDto {
   contarctValue?: number;
   financialReportApprovalPeriodInDays?: number;
   paymentDeadline?: string;
+
+  executiveDirectorName?: string | null;
+  executiveDirectorEmail?: string | null;
+  executiveDirectorMobile?: string | null;
 }
 
 export class LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto {

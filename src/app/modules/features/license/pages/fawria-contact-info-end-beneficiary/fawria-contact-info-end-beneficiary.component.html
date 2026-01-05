@@ -1,0 +1,63 @@
+<ng-container>
+  <form class="d-flex flex-column h-100" id="form-contactInfoEndBeneficiaryForm" [formGroup]="contactInfoEndBeneficiaryForm">
+    <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
+      <h6 class="title">{{ localization.title }}</h6>
+    </div>
+    <div class="tab-data-section">
+     
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            
+            <label class="form-label"><span class="required-star">*</span>{{ localization.problemsEmail }}</label>
+            <input type="text" id="control-complaintEmail" [placeholder]="localization.problemsPlaceholderEmail" class="form-control" formControlName="complaintEmail" />
+            <mat-error *ngIf="controls.complaintEmail?.invalid 
+                  && controls.complaintEmail?.touched 
+                  && !controls.complaintEmail?.hasError('required')">
+              {{
+              localization.emailPattern
+              }}
+            </mat-error>
+            <mat-error *ngIf="
+                controls.complaintEmail?.hasError('required') && showValidation
+              ">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            
+            <label class="form-label"><span class="required-star">*</span>{{ localization.salesEmail }}</label>
+            <input type="text" id="control-salesEmail" [placeholder]="localization.salesPlaceholderEmail" class="form-control" formControlName="salesEmail" />
+            <mat-error  *ngIf="controls.salesEmail?.invalid 
+                  && controls.salesEmail?.touched 
+                  && !controls.salesEmail?.hasError('required')">
+              {{
+              localization.emailPattern
+              }}
+            </mat-error>
+            <mat-error *ngIf="
+                controls.salesEmail?.hasError('required') && showValidation
+              ">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-data-section" *ngIf="isFawriaValidation() && !isTabCompleted">
+      <div class="form-group">
+        <mat-checkbox [(ngModel)]="dataConfirmationChecked" [ngModelOptions]="{standalone: true}" class="data-confirmation-checkbox">
+          اقرار صحة البيانات المدخلة
+        </mat-checkbox>
+        <div class="invalid-feedback d-block" *ngIf="!dataConfirmationChecked && showValidation">
+          {{localization.requiredErrorMsg}}
+        </div>
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  </form>
+</ng-container>
+

@@ -47,15 +47,16 @@ export class CodesFileComponent implements OnInit, OnDestroy {
     data.licenseProjectsId = this.licenseProjectId as string;
     data.fileId = this.fileId;
     this._codeService.saveFileData(data).subscribe((res) => {
+      
       if (res && res.isDone) {
         this._toastrNotificationService.showSuccess("تم الحفظ");
         this._popupService.dismissDialog();
 
       }
-      else {
-        this._toastrNotificationService.showError("حدث خطأ اثناء الحفظ");
+      // else {
+      //   this._toastrNotificationService.showError("حدث خطأ اثناء الحفظ");
 
-      }
+      // }
     });
   }
   observePopupEvents(): void {

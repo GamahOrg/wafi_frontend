@@ -1,258 +1,295 @@
 <div class="page">
-  <div class="page-header mb-4">
-    <div class="row row-gap-3">
-      <div class="col-12 d-flex justify-content-between align-items-center">
-        <div class="page-title mb-0">
-          <h5 class="title">تفاصيل المشتري</h5>
+  <div class="page-content">
+    <div class="page-section">
+      <div class="page-title">
+        <h2 class="title">تفاصيل المشتري</h2>
+      </div>
+
+      <div class="content">
+        <div class="row row-gap-4">
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">اسم المشروع</div>
+              <div class="value">{{ licenseProjectBuyer[0]?.projectName }}</div>
+            </div>
+          </div>
+          <!-- First Row: اسم المشتري و رقم الهوية -->
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">اسم المشتري</div>
+              <div class="value">{{ licenseProjectBuyer[0]?.name }}</div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">رقم الهوية</div>
+              <div class="value">{{ licenseProjectBuyer[0]?.nidNumber }}</div>
+            </div>
+          </div>
+
+          <!-- Second Row: رقم الجوال -->
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">رقم الجوال</div>
+              <div class="value">{{ licenseProjectBuyer[0]?.mobile }}</div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key"> الحي</div>
+              <div class="value">{{ licenseProjectBuyer[0]?.neighborhoodName }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="buyer-info-header mb-4">
-      <div class="row">
-        <!-- First Row: اسم المشتري و رقم الهوية -->
-        <div class="col-12 col-lg-6">
-          <div class="detail-row">
-            <label class="info-label">اسم المشتري</label>
-            <label class="info-value">{{ licenseProjectBuyer[0]?.name }}</label>
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="detail-row">
-            <span class="info-label">رقم الهوية</span>
-            <span class="info-value">{{ licenseProjectBuyer[0]?.nidNumber }}</span>
-          </div>
-        </div>
-
-        <!-- Second Row: رقم الجوال -->
-        <div class="col-12 col-lg-6">
-          <div class="detail-row">
-            <span class="info-label">رقم الجوال</span>
-            <span class="info-value">{{ licenseProjectBuyer[0]?.mobile }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-
-  <div class="content">
-    <!-- Show message if no buyers found -->
-    <div *ngIf="!licenseProjectBuyer || licenseProjectBuyer.length === 0" class="alert alert-info">
-      لا توجد بيانات مشترين
-    </div>
-
-    <!-- Buyer Information Section (if buyers exist) -->
-    <div *ngIf="licenseProjectBuyer && licenseProjectBuyer.length > 0">
-      
-      <!-- Buyer Basic Info Header (from first buyer) -->
-      <div class="buyer-info-header mb-4">
-        
-      <!-- </div> -->
-
-      <!-- Units Purchased Section Title -->
-      <div class="mb-3">
-        <h6>الوحدات التي تم شراءها من قبل {{ licenseProjectBuyer[0].name }} ({{ licenseProjectBuyer.length }})</h6>
+  <div class="page-content">
+    <div class="page-section">
+      <div class="page-title">
+        <h2 class="title">الوحدات التي تم شراءها من قبل {{ licenseProjectBuyer[0].name }} ({{ licenseProjectBuyer.length }})</h2>
       </div>
 
-      <!-- Loop through each unit/buyer in collapsible cards -->
-      <div *ngFor="let buyer of licenseProjectBuyer; let i = index" class="buyer-collapsible-card mb-3">
-        
-        <!-- Collapsible Header -->
-        <div class="collapsible-header" 
-             (click)="toggleBuyer(i)"
-             [class.collapsed]="!isBuyerExpanded(i)">
-          <div class="header-content">
-            <span class="unit-number">وحدة برقم عقد {{ buyer.contractNumber || (i + 1) }}</span>
-            <button class="toggle-btn" type="button">
-              <i class="fa" [ngClass]="isBuyerExpanded(i) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </button>
-          </div>
-        </div>
+      <div class="content">
+        <!-- Show message if no buyers found -->
+        <ng-container *ngIf="!licenseProjectBuyer || licenseProjectBuyer.length === 0">
+          <app-no-data [showCompleteBtn]="false" [text]="'توجد بيانات مشترين'"></app-no-data>
+        </ng-container>
 
-        <!-- Collapsible Content -->
-        <div class="collapsible-content" [class.show]="isBuyerExpanded(i)">
-          <div class="content-inner">
-            <div class="row">
+        <ng-container *ngIf="licenseProjectBuyer && licenseProjectBuyer.length > 0">
+          <accordion [closeOthers]="false" [isAnimated]="true">
+            <ng-container *ngFor="let buyer of licenseProjectBuyer; let i = index">
+              <accordion-group [isOpen]="i === 0">
+                <div class="accordion-heading" accordion-heading>
+                  <h6 class="title">وحدة برقم عقد {{ buyer.contractNumber || (i + 1) }}</h6>
 
-              <!-- Right Column -->
-              <div class="col-12 col-lg-6">
-
-                <!-- طريقة الدفع -->
-                <div class="detail-row">
-                  <span class="detail-label">طريقة الدفع</span>
-                  <span class="detail-value">{{ buyer.paymentType?.name }}</span>
+                  <span class="icon">
+                    <i class="open material-icons">arrow_drop_down</i>
+                    <i class="close material-icons">arrow_drop_up</i>
+                  </span>
                 </div>
 
-                <!--  -->
-                <!-- نوع الوحدة -->
-                <div class="detail-row">
-                  <span class="detail-label">نوع الوحدة</span>
-                  <span class="detail-value">{{ buyer.licenseProjectBuyerType.name }}</span>
-                </div>
+                <!-- Collapsible Content -->
+                <div class="collapsible-content" [class.show]="isBuyerExpanded(i)">
+                  <div class="content-inner">
+                    <div class="row row-gap-4">
+                      <div class="col-12 col-xl col-xxl-10 order-2 order-xl-1">
+                        <!-- Right Column -->
+                        <div class="row row-gap-4">
+                          <!-- طريقة الدفع -->
+                          <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="key-value">
+                              <span class="key">طريقة الدفع</span>
+                              <span class="value">{{ buyer.paymentType?.name }}</span>
+                            </div>
+                          </div>
+
+                          <!-- نوع الوحدة -->
+                          <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="key-value">
+                              <span class="key">نوع الوحدة</span>
+                              <span class="value">{{ buyer.licenseProjectBuyerType.name }}</span>
+                            </div>
+                          </div>
 
 
-                <!-- تاريخ بيع الوحدة -->
-                <div class="detail-row">
-                  <span class="detail-label">تاريخ بيع الوحدة</span>
-                  <span class="detail-value">{{ buyer.saleDate | date:'yyyy-MM-dd' }}</span>
-                </div>
+                          <!-- تاريخ بيع الوحدة -->
+                          <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="key-value">
+                              <span class="key">تاريخ بيع الوحدة</span>
+                              <span class="value">{{ buyer.saleDate | date:'dd-MM-yyyy' }}</span>
+                            </div>
+                          </div>
 
-                <!-- ضريبة التصرفات العقارية (5%) -->
-                <div class="detail-row">
-                  <span class="detail-label">ضريبة التصرفات العقارية ({{ (buyer.currentTax * 100) | number:'1.0-0' }}%)</span>
-                  <span class="detail-value">{{ buyer.priceAfterTax | number:'1.0-0' }} ر.س</span>
-                </div>
+                          <!-- ضريبة التصرفات العقارية (5%) -->
+                          <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="key-value">
+                              <span class="key">ضريبة التصرفات العقارية ({{ (buyer.currentTax * 100) | number:'1.0-0' }}%)</span>
+                              <div class="value">
+                                <span>{{ buyer.priceAfterTax | number:'1.0-0' }} </span>
+                                <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+                              </div>
 
-                <!-- نسبة الإشراف والمتابعة اليومي -->
-                <div class="detail-row" *ngIf="buyer.licenseProjectBuyerTypeId == licenseProjectBuyerTypeEnum.Units">
-                  <span class="detail-label">نسبة الإشراف والمتابعة اليومي</span>
-                  <span class="detail-value">{{ (buyer.percentageSupervisionOrFees * 100) | number:'1.2-2' }}%</span>
-                </div>
+                            </div>
+                          </div>
 
-                <!--  -->
-                <!-- نسبة الإشراف والمتابعة لعام كامل -->
-                <div class="detail-row" *ngIf="buyer.licenseProjectBuyerTypeId == licenseProjectBuyerTypeEnum.Units">
-                  <span class="detail-label">نسبة الإشراف والمتابعة لعام كامل</span>
-                  <span class="detail-value">{{ buyer.percentageSupervisionOrFees * 365 | number:'1.2-2' }}%</span>
-                </div>
+                          <!-- نسبة الإشراف والمتابعة اليومي -->
+                          <ng-container *ngIf="buyer.licenseProjectBuyerTypeId == licenseProjectBuyerTypeEnum.Units">
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">قيمة الإشراف والمتابعة اليومي</span>
+                                <span class="value">{{ (buyer.percentageSupervisionOrFees * 100) | number:'1.2-2' }}%</span>
+                              </div>
+                            </div>
 
-                <!-- المحصل من بداية المشروع -->
-                <div class="detail-row" *ngIf="buyer.licenseProjectBuyerTypeId == licenseProjectBuyerTypeEnum.Units">
-                  <span class="detail-label">المحصل من بداية المشروع</span>
-                  <span class="detail-value">{{ buyer.amountsCollected | number:'1.0-0' }} ر.س</span>
-                </div>
+                            <!-- نسبة الإشراف والمتابعة لعام كامل -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">قيمة الإشراف والمتابعة لعام كامل</span>
+                                <span class="value">{{ buyer.percentageSupervisionOrFees * 365 | number:'1.2-2' }}%</span>
+                              </div>
+                            </div>
 
-                <!-- نسبة التحصيل -->
-                <div class="detail-row" *ngIf="buyer.licenseProjectBuyerTypeId == licenseProjectBuyerTypeEnum.Units">
-                  <span class="detail-label">نسبة التحصيل</span>
-                  <span class="detail-value">{{ buyer.percentageOfAmountsCollected | number:'1.0-0' }}%</span>
-                </div>
-                <!--نسبة الإنجاز-->
-                <div class="detail-row">
-                  <span class="detail-label">نسبة الإنجاز</span>
-                  <span class="detail-value">{{buyer.unitCompletionRate | number:'1.0-0'  }}%</span>
-                </div>
-              </div>
+                            <!-- المحصل من بداية المشروع -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">المحصل من بداية المشروع</span>
+                                <div class="value">
+                                  <span>{{ buyer.amountsCollected | number:'1.0-0' }} </span>
+                                  <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+                                </div>
+                              </div>
+                            </div>
 
-              <!-- Left Column (Supervision fields for authorized users) -->
-              <div class="col-12 col-lg-6" *ngIf="userType != '0'">
+                            <!-- نسبة التحصيل -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">نسبة التحصيل</span>
+                                <span class="value">{{ buyer.percentageOfAmountsCollected | number:'1.0-0' }}%</span>
+                              </div>
+                            </div>
+                          </ng-container>
 
-                <!-- رقم الوحدة -->
-                <div class="detail-row">
-                  <span class="detail-label">رقم الوحدة</span>
-                  <span class="detail-value">{{buyer.unitCode}}</span>
-                </div>
+                          <!--نسبة الإنجاز-->
+                          <div class="col-12 col-lg-6 col-xl-3">
+                            <div class="key-value">
+                              <span class="key">نسبة الإنجاز</span>
+                              <span class="value">{{buyer.unitCompletionRate | number:'1.0-0' }}%</span>
+                            </div>
+                          </div>
 
-                <!-- المساحة -->
-                <div class="detail-row">
-                  <span class="detail-label">المساحة</span>
-                  <span class="detail-value">{{ buyer.space }} م²</span>
-                </div>
+                          <!-- Left Column (Supervision fields for authorized users) -->
+                          <ng-container *ngIf="userType != '0'">
+                            <!-- رقم الوحدة -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">رقم الوحدة</span>
+                                <span class="value">{{buyer.unitCode}}</span>
+                              </div>
+                            </div>
 
-                <!-- سعر الوحدة قبل ضريبة التصرفات العقارية -->
-                <div class="detail-row">
-                  <span class="detail-label">سعر الوحدة قبل ضريبة التصرفات العقارية</span>
-                  <span class="detail-value">{{ buyer.price | number:'1.0-0' }} ر.س</span>
-                </div>
+                            <!-- المساحة -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">المساحة</span>
+                                <span class="value">{{ buyer.space }} م²</span>
+                              </div>
+                            </div>
 
-                <!-- قيمة الوحدة شاملة ضريبة التصرفات العقارية -->
-                <div class="detail-row">
-                  <span class="detail-label">قيمة الوحدة شاملة ضريبة التصرفات العقارية</span>
-                  <span class="detail-value">{{ buyer.totalPrice | number:'1.0-0' }} ر.س</span>
-                </div>
+                            <!-- سعر الوحدة قبل ضريبة التصرفات العقارية -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">سعر الوحدة قبل ضريبة التصرفات العقارية</span>
+                                <div class="value">
+                                  <span>{{ buyer.price | number:'1.0-0' }}</span>
+                                  <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+                                </div>
+                              </div>
+                            </div>
 
-                <!--  -->
-                <!-- نسبة الإشراف لستة أشهر -->
-                <div class="detail-row">
-                  <span class="detail-label">نسبة الإشراف لستة أشهر</span>
-                  <span class="detail-value">{{ (buyer.percentageSupervisionOrFees * (6 * 30)) | number:'1.2-2' }}%</span>
-                </div>
+                            <!-- قيمة الوحدة شاملة ضريبة التصرفات العقارية -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">قيمة الوحدة شاملة ضريبة التصرفات العقارية</span>
+                                <div class="value">
+                                  <span>{{ buyer.totalPrice | number:'1.0-0' }} </span>
+                                  <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+                                </div>
+                              </div>
+                            </div>
 
-                <!--  -->
-                <!-- النسبة المستقطعة -->
-                <div class="detail-row">
-                  <span class="detail-label">النسبة المستقطعة</span>
-                  <span class="detail-value">{{ buyer.blockCode | number:'1.2-2' }}%</span>
-                </div>
+                            <!--  -->
+                            <!-- نسبة الإشراف لستة أشهر -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">قيمة الإشراف لستة أشهر</span>
+                                <span class="value">{{ (buyer.percentageSupervisionOrFees * (6 * 30)) | number:'1.2-2' }}%</span>
+                              </div>
+                            </div>
 
-                <!-- المبلغ المتبقي من قيمة الوحدة -->
-                <div class="detail-row">
-                  <span class="detail-label">المبلغ المتبقي من قيمة الوحدة</span>
-                  <span class="detail-value">{{ buyer.remainingAmounts | number:'1.0-0' }} ر.س</span>
-                </div>
+                            <!--  -->
+                            <!-- النسبة المستقطعة -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">النسبة المستقطعة</span>
+                                <span class="value">{{ buyer.blockCode | number:'1.2-2' }}%</span>
+                              </div>
+                            </div>
 
-                <!-- سعر المتر -->
-                <div class="detail-row">
-                  <span class="detail-label">سعر المتر</span>
-                  <span class="detail-value">{{ (buyer.price/buyer.space) | number:'1.2-2' }} ر.س/م²</span>
-                </div>
-                
+                            <!-- المبلغ المتبقي من قيمة الوحدة -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">المبلغ المتبقي من قيمة الوحدة</span>
+                                <div class="value">
+                                  <span>{{ buyer.remainingAmounts | number:'1.0-0' }} </span>
+                                  <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+                                </div>
+                              </div>
+                            </div>
 
+                            <!-- سعر المتر -->
+                            <div class="col-12 col-lg-6 col-xl-3">
+                              <div class="key-value">
+                                <span class="key">سعر المتر</span>
+                                <span class="value">{{ (buyer.price/buyer.space) | number:'1.2-2' }} ر.س/م²</span>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </div>
+                      </div>
 
-              </div>
-              <!-- Contract File Button -->
-              <!-- <div class="row mt-3"> -->
-              <div class="col-12 col-lg-6">
-                <button *ngIf="buyer.contractFile && buyer.contractFile.id"
-                        (click)="viewContract(buyer)"
-                        class="btn-contract">
-                  عقد البيع
-                </button>
-                <button *ngIf="!buyer.contractFile || !buyer.contractFile.id"
-                        class="btn-contract disabled"
-                        disabled>
-                  عقد البيع
-                </button>
-              </div>
+                      <!-- Contract File Button -->
+                      <div class="col-12 col-xl-auto col-xxl-2 order-1 order-xl-2">
+                        <div class="d-flex justify-content-end align-items-center gap-3">
+                          <button *ngIf="buyer.contractFile && buyer.contractFile.id" (click)="viewContract(buyer)" class="btn btn-primary">
+                            عقد البيع
+                          </button>
+                          <button *ngIf="!buyer.contractFile || !buyer.contractFile.id" class="btn btn-primary" disabled>
+                            عقد البيع
+                          </button>
+                        </div>
+                      </div>
+                    </div>
 
-            </div>
+                    <!-- Payment Plan -->
+                    <ng-container *ngIf="buyer.licenseProjectBuyerBusinessPayment?.paymentInstallments && buyer.licenseProjectBuyerBusinessPayment?.paymentInstallments?.length !== 0">
+                      <!-- Installments Table -->
+                      <div class="table-responsive mt-5">
+                        <table class="table table-light">
+                          <thead>
+                            <tr>
+                              <th>رقم الدفعة</th>
+                              <th>نسبة الاستقطاع</th>
+                              <th>نسبة الإنجاز</th>
+                              <th>وصف الدفعة</th>
+                              <th>حالة الدفعة</th>
 
-            <!-- Payment Plan -->
-            <div class="payment-plans-container"  *ngIf="buyer.licenseProjectBuyerBusinessPayment?.paymentInstallments
-                 && buyer.licenseProjectBuyerBusinessPayment?.paymentInstallments?.length !== 0">
-              <div class="payment-plan-item selected">
-                
-
-                <!-- Installments Table -->
-                <div class="plan-details">
-                  <div class="table-responsive">
-                    <table class="payment-table">
-                      <thead>
-                        <tr>
-                          <th>رقم الدفعة</th>
-                          <th>نسبة الاستقطاع</th>
-                          <th>نسبة الإنجاز</th>
-                          <th>وصف الدفعة</th>
-                          <th>حالة الدفعة</th>
-
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let installment of buyer.licenseProjectBuyerBusinessPayment?.paymentInstallments">
-                          <td>{{ installment.installmentNumber }}</td>
-                          <td>{{ installment.deductionPercentage }}%</td>
-                          <td>{{ installment.rentPercentage }}%</td>
-                          <td>{{ installment.description || "-" }}</td>
-                          <td>
-                            <span class="status-badge" [ngClass]="installment.isPaid ? 'status-active' : 'status-inactive'">
-                              {{ installment.isPaid ? 'مدفوع' : 'غير مدفوع'}}
-
-                            </span>
-                          </td>
-
-                        </tr>
-                      </tbody>
-                    </table>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let installment of buyer.licenseProjectBuyerBusinessPayment?.paymentInstallments">
+                              <td>{{ installment.installmentNumber }}</td>
+                              <td>{{ installment.deductionPercentage }}%</td>
+                              <td>{{ installment.rentPercentage }}%</td>
+                              <td>{{ installment.description || "-" }}</td>
+                              <td>
+                                <span class="status-badge" [ngClass]="installment.isPaid ? 'green' : 'red'">
+                                  {{ installment.isPaid ? 'مدفوع' : 'غير مدفوع'}}
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </ng-container>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+              </accordion-group>
+            </ng-container>
+          </accordion>
+        </ng-container>
       </div>
-    </div>
     </div>
   </div>
 </div>

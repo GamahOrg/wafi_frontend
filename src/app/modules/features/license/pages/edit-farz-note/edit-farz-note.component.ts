@@ -8,14 +8,17 @@ import { ProjectUnitCodesComponent } from '../../components/project-unit-codes/p
 import { TabCode } from '../../models/tab-code.model';
 import { LicenseRequestHeaderService } from '../../services/license-request-header.service';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
-import { confirmationPopupData, PopupData } from 'src/app/shared/models/popup.model';
+import {
+  confirmationPopupData,
+  PopupData,
+} from 'src/app/shared/models/popup.model';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 
 @Component({
   selector: 'app-edit-farz-note',
   templateUrl: './edit-farz-note.component.html',
-  styleUrls: ['./edit-farz-note.component.scss']
+  styleUrls: ['./edit-farz-note.component.scss'],
 })
 export class EditFarzNoteComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
@@ -58,14 +61,13 @@ export class EditFarzNoteComponent implements OnInit, OnDestroy {
     private _requestService: LicenseRequestHeaderService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _popupService: PopupService,
-    private _router: Router,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
     this.updateTabContent();
     this.observeconfirmAction();
     this.getSelectedRequestIdFromLocalStorage();
-
   }
 
   private updateTabContent() {
@@ -73,55 +75,83 @@ export class EditFarzNoteComponent implements OnInit, OnDestroy {
     this._tabsService.updateActiveTabIndex(0);
   }
 
-
   private getSelectedRequestIdFromLocalStorage() {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage() as string;
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage() as string;
     if (this.licenseProjectId) {
       this.getFarzRejectionReason();
     }
   }
-  
+
   private getFarzRejectionReason() {
     this.subscriptions.push(
-      this._requestService.GetFarzRejectionReason(this.licenseProjectId).subscribe(
-        (res) => {
+      this._requestService
+        .GetFarzRejectionReason(this.licenseProjectId)
+        .subscribe((res) => {
           this.farzRejectionReason = res as string;
-        }
-      )
+        })
     );
   }
 
   openConfirmtionSendTOFarzDialog() {
     let obj = {
-      staticMessage: "هل انت متأكد من اعادة ارسال الطلب لفرز",
-      dynamicMessage: "",
+      staticMessage: 'هل انت متأكد من اعادة ارسال الطلب لفرز',
+      dynamicMessage: '',
       secondeStaticMessage: '',
-      acceptButtonText:'نعم'
-    } as confirmationPopupData
+      acceptButtonText: 'نعم',
+    } as confirmationPopupData;
     this._popupService.updateConfirmationPopupData(obj);
   }
 
   private updateFarzStatus() {
     this.subscriptions.push(
-      this._requestService.UpdateFarzStatus(this.licenseProjectId).subscribe(
-        (res) => {
-          
-          if(res.isDone) {
-            this.setSelectedRequestIdInLocalStorage(res.data as string);
+      this._requestService
+        .UpdateFarzStatus(this.licenseProjectId)
+        .subscribe((res) => {
+          if (res.isDone) {
+            this.setSelectedRequestIdInLocalStorage(res.data.id as string);
             this.closeDialog();
-            const licenseDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
-            this._router.navigate([licenseDetailsRoute]);
+            if (res.data) {
+              this._sharedLicenseProjectService.setLicenseTypeCodeInLocalStorage(
+                res.data.typeCode
+              );
+
+              this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
+                res.data.id
+              );
+
+              this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+                res.data.licenseProjectId
+              );
+
+              this._sharedLicenseProjectService.setfacilityIdInLocalStorage(
+                res.data.facilityId
+              );
+
+              let route = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`;
+              this._router.navigateByUrl(
+                `${Configuration.modules.wafi}/${Configuration.modules.license}/fawria-license-complate`
+              );
+            }
+
+            // else {
+            //   const licenseDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
+            //   this._router.navigate([licenseDetailsRoute]);
+            // }
           }
-        }
-      )
+        })
     );
   }
 
   setSelectedRequestIdInLocalStorage(selectedRequestId: string) {
-    if(selectedRequestId)
-      this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(selectedRequestId as string)
+    if (selectedRequestId)
+      this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
+        selectedRequestId as string
+      );
     else
-      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.licenseProjectId as string)
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+        this.licenseProjectId as string
+      );
   }
 
   private observeconfirmAction() {
@@ -129,14 +159,15 @@ export class EditFarzNoteComponent implements OnInit, OnDestroy {
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.updateFarzStatus();
       })
-    )
+    );
   }
 
   private closeDialog(): void {
-    this._popupService.dismissDialog()
+    this._popupService.dismissDialog();
   }
 
   ngOnDestroy(): void {
+    this._sharedLicenseProjectService.removeAvailabilityToUpdateFarzfromLocalStorage();
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 }

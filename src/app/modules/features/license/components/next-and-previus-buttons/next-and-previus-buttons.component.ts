@@ -16,6 +16,7 @@ export class NextAndPreviusButtonsComponent implements OnInit, OnDestroy {
   nextBtnIsVisible: boolean = false;
   previousBtnIsVisible: boolean = false;
   saveAsDraftBtnIsVisible: boolean = false;
+  verifyBtnIsVisible: boolean = false;
   tabContent: Tabs | null = null;
   VerticalTabContent: Tabs | null = null;
   activeTabIndex: number = 0;
@@ -24,6 +25,7 @@ export class NextAndPreviusButtonsComponent implements OnInit, OnDestroy {
     next: 'التالي',
     saveAsDraft: 'حفظ كمسودة',
     previous: 'السابق',
+    verify: 'التحقق'
   };
   availabilityToUpdate: boolean = false;
   constructor(
@@ -35,11 +37,13 @@ export class NextAndPreviusButtonsComponent implements OnInit, OnDestroy {
     this.observeTabsContent();
     this.observeMoveToNextTab();
     this.ObserveSaveAsDraftBtnIsvisible();
+    this.ObserveVerifyBtnIsvisible();
+    this.ObserveNextBtnIsvisible();
     this.getAvailabilityToUpdateFromLocalStorage()
   }
   private getAvailabilityToUpdateFromLocalStorage() {
     this.availabilityToUpdate = this._sharedLicenseProjectService.getAvailabilityToUpdateFromLocalStorage() as boolean;
-    if(this.availabilityToUpdate){
+    if (this.availabilityToUpdate) {
       this.localization.saveAsDraft = "حفظ"
     }
   }
@@ -50,12 +54,35 @@ export class NextAndPreviusButtonsComponent implements OnInit, OnDestroy {
       })
     )
 
-     this.subscriptions.push(
+    this.subscriptions.push(
       this._nextAndPreviusButtonsService.saveAsDraftBtnText.subscribe((res: string) => {
         this.localization.saveAsDraft = res
       })
     )
   }
+
+  private ObserveVerifyBtnIsvisible() {
+    this.subscriptions.push(
+      this._nextAndPreviusButtonsService.verifyBtnIsvisible.subscribe((res: boolean) => {
+        this.verifyBtnIsVisible = res
+      })
+    )
+
+    this.subscriptions.push(
+      this._nextAndPreviusButtonsService.verifyBtnText.subscribe((res: string) => {
+        this.localization.verify = res
+      })
+    )
+  }
+
+  private ObserveNextBtnIsvisible() {
+    this.subscriptions.push(
+      this._nextAndPreviusButtonsService.nextBtnIsVisible.subscribe((res: boolean) => {
+        this.nextBtnIsVisible = res
+      })
+    )
+  }
+
   private observeTabsContent(): void {
     this.subscriptions.push(
       combineLatest(
@@ -64,6 +91,7 @@ export class NextAndPreviusButtonsComponent implements OnInit, OnDestroy {
           VerticalTabContent: this._tabsService.getVerticalTabContent(),
         }).pipe().subscribe({
           next: res => {
+            
             this.tabContent = res.HorziontalTabContent;
             this.VerticalTabContent = res.VerticalTabContent;
             this.updateActiveTabIndex()
@@ -91,21 +119,39 @@ export class NextAndPreviusButtonsComponent implements OnInit, OnDestroy {
   observeMoveToNextTab(): void {
     this.subscriptions.push(
       this._nextAndPreviusButtonsService.moveToNextTab.subscribe((res: null) => {
+        
         let lastVerticalTabIndex = this.VerticalTabContent?.tabsComponentList && this.VerticalTabContent?.tabsComponentList.length - 1
-        if (this.VerticalTabContent?.activeTabIndex == lastVerticalTabIndex) {
+       
+      var activeTap=  this.tabContent?.tabsComponentList[this.tabContent.activeTabIndex];
+      if(activeTap?.tabCode=='FawriaProjectQuantitiesTable' || activeTap?.tabCode=='FawriaEngineeringSupervisionStaff' || activeTap?.tabCode=='FawriaLicenseProjectModel'){
+        this._tabsService.updateActiveTabIndex(this.activeTabIndex + 1);
+      }else{       
+        if (this.VerticalTabContent?.tabsComponentList.length == 0) {
           this._tabsService.updateActiveTabIndex(this.activeTabIndex + 1);
         } else {
-          this._tabsService.updateActiveVerticalTabIndex(this.activeVerticalTabIndex + 1);
+          if (this.VerticalTabContent?.activeTabIndex == lastVerticalTabIndex) {
+            this._tabsService.updateActiveTabIndex(this.activeTabIndex + 1);
+          } else {
+            this._tabsService.updateActiveVerticalTabIndex(this.activeVerticalTabIndex + 1);
+          }
         }
+      }
       })
+    
     )
   }
   public next(): void {
     this._nextAndPreviusButtonsService.nextButtonIsClicked.emit()
   }
+
   public saveAsDraft(): void {
     this._nextAndPreviusButtonsService.saveAsDraftIsClicked.emit()
   }
+
+  public verify(): void {
+    this._nextAndPreviusButtonsService.verifyIsClicked.emit()
+  }
+
   public back(): void {
     if (this.VerticalTabContent?.activeTabIndex == 0) {
       this._tabsService.updateActiveTabIndex(this.activeTabIndex - 1);

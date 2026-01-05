@@ -1,4 +1,7 @@
 .sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   border-inline-end: 1px solid rgba($black, 0.1);
   background-color: $white;
 
@@ -55,9 +58,9 @@
   }
 
   nav.nav {
-    max-height: 79vh;
+    max-height: 75vh;
     overflow-y: auto;
-    
+
     @media screen and (max-width: 991px) {
       max-height: 72vh;
     }
@@ -111,9 +114,7 @@
   }
 
   &:not(.closed) {
-    min-width: 20rem;
-
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1200px) {
       position: fixed;
       z-index: 1000;
       inset-block: 0;

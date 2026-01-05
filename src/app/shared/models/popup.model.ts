@@ -11,20 +11,24 @@ export interface PopupData {
   buttons?: Button[];
   disableClose?: boolean;
   data?: any;
+  submitButtonTitle?: string;
 }
 
 export interface BeneficiaryPopupData extends PopupData {
   data?: BeneficiaryContractFormAdditionalTermsDto[] | BeneficiaryContractFormAdditionalTermsDto;
 }
 
+type confirmationPopupType = 'primary' | 'warning' | 'danger';
 export interface confirmationPopupData {
-  panelClass?: string[];
+  popupType?: confirmationPopupType;
   id?: string;
   title?: string;
   staticMessage: string;
   dynamicMessage: string;
   secondeStaticMessage?: string;
   acceptButtonText?: string;
+  showCloseButtonOnly?: boolean;
+  closeButtonText?: string;
 }
 export interface notePopupData {
   panelClass?: string[];

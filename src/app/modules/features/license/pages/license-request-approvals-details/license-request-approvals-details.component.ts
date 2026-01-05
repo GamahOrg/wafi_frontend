@@ -125,7 +125,7 @@ export class LicenseRequestApprovalsDetailsComponent implements OnInit, OnDestro
     }
 
     this.isLoadingAddresses = true;
-    debugger
+    
 if(this.licenseProjectDeedOwnerApproval && this.licenseProjectDeedOwnerApproval.isFacilityOwner==true){
 //commercial
  this.subscriptions.push(

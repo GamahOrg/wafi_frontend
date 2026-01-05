@@ -1,0 +1,24 @@
+.btn-group {
+
+  >.btn:not(:last-child):not(.dropdown-toggle),
+  >.btn.dropdown-toggle-split:first-child,
+  >.btn-group:not(:last-child)>.btn {
+    html:lang(ar) & {
+      border-top-right-radius: $btn-border-radius;
+      border-bottom-right-radius: $btn-border-radius;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  >.btn:nth-child(n+3),
+  > :not(.btn-check)+.btn,
+  >.btn-group:not(:first-child)>.btn {
+    html:lang(ar) & {
+      border-top-left-radius: $btn-border-radius;
+      border-bottom-left-radius: $btn-border-radius;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}

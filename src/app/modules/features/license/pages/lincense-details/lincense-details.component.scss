@@ -2,17 +2,8 @@
 @import "/src/assets/styles/content/page";
 @import "/src/assets/styles/content/cards";
 @import "/src/assets/styles/content/status";
-@import "/src/assets/styles/content/circular-progresss";
 
 :host {
-    display: block;
-    height: 100%;
-}
-
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    justify-content: flex-end;
+  display: block;
+  height: 100%;
 }

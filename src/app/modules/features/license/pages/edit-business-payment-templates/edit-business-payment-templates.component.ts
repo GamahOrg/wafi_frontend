@@ -1,6 +1,8 @@
 import {
   Component,
   OnInit,
+  OnChanges,
+  SimpleChanges,
   ViewEncapsulation,
   Output,
   EventEmitter,
@@ -24,6 +26,7 @@ import {
 } from 'src/app/shared/components/save-update-confirmation/save-update-confirmation.component';
 import { LicenseProjectBuyerService } from '../../services/license-project-buyer.service';
 import { LicenseProjectBuyerPaymentTypeDto } from '../../models/real-state-developer-dto';
+import { LicenseRequestService } from '../../services/license-request.service';
 
 @Component({
   selector: 'app-edit-business-payment-templates',
@@ -31,11 +34,12 @@ import { LicenseProjectBuyerPaymentTypeDto } from '../../models/real-state-devel
   styleUrls: ['./edit-business-payment-templates.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class EditBusinessPaymentTemplatesComponent implements OnInit {
+export class EditBusinessPaymentTemplatesComponent implements OnInit, OnChanges {
   @Output() backClicked = new EventEmitter<void>();
   @Input() paymentId: string | null = null;
   @Input() isActive: boolean | null = null;
   @Input() isUpdateVersion: boolean = false;
+  @Input() selectedPaymentType: number | null = null;
 
   paymentForm: FormGroup;
   paymentRows: PaymentRow[] = [];
@@ -65,12 +69,13 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
     private fb: FormBuilder,
     private licenseProjectBusinessPaymentService: LicenseProjectBusinessPaymentService,
     private toastrService: ToastrService,
+    private _licenseRequestService: LicenseRequestService,
     private licenseBuyerService: LicenseProjectBuyerService,
     private sharedLicenseProjectService: SharedLicenseProjectService,
     private dialog: MatDialog
   ) {
     this.paymentForm = this.fb.group({
-      modelTitle: ['', Validators.required],
+      modelTitle: ['', [Validators.required, Validators.maxLength(50)]],
       paymentType: ['', Validators.required],
       licenseProjectBuyerPaymentTypeId:[0,Validators.required],
       refunds: [0, Validators.required],
@@ -82,21 +87,36 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
         { value: '', disabled: true },
         [Validators.required, Validators.min(0.01), Validators.max(5)],
       ],
-
-      completionRateForAdvancePayment: [
-        { value: '', disabled: true },
-        [Validators.required, Validators.min(0.01), Validators.max(5)],
-      ],
     });
   }
 
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
     this.getLicenseBuyerPaymentType();
+
+    // Set payment type from filter if provided and not in edit mode
+    if (this.selectedPaymentType && !this.paymentId) {
+      this.paymentForm.patchValue({
+        licenseProjectBuyerPaymentTypeId: this.selectedPaymentType
+      });
+    }
+
     // If paymentId is provided, load the payment data for editing
     if (this.paymentId) {
       this.isEditMode = true;
       this.loadPaymentData(this.paymentId);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Update payment type when selectedPaymentType input changes
+    if (changes['selectedPaymentType'] && !changes['selectedPaymentType'].firstChange) {
+      if (this.selectedPaymentType && !this.paymentId) {
+        // Only update the payment type, keep all other fields as they are
+        this.paymentForm.patchValue({
+          licenseProjectBuyerPaymentTypeId: this.selectedPaymentType
+        });
+      }
     }
   }
 
@@ -143,8 +163,6 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
               const advancePaymentControl = this.paymentForm.get(
                 'advancePaymentValue'
               );
-              const completionRateForAdvancePaymentControl =
-                this.paymentForm.get('completionRateForAdvancePayment');
 
               if (value === 1 || value === 2 || value === 3) {
                 paymentsControl?.enable();
@@ -165,25 +183,14 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
                   Validators.min(0.01),
                   Validators.max(this.maxWithholdingRate),
                 ]);
-
-                completionRateForAdvancePaymentControl?.enable();
-                completionRateForAdvancePaymentControl?.setValidators([
-                  Validators.required,
-                  Validators.min(0.01),
-                  Validators.max(this.maxCompletionRate),
-                ]);
               } else {
                 advancePaymentControl?.disable();
                 advancePaymentControl?.clearValidators();
                 advancePaymentControl?.setValue('');
-                completionRateForAdvancePaymentControl?.disable();
-                completionRateForAdvancePaymentControl?.clearValidators();
-                completionRateForAdvancePaymentControl?.setValue('');
               }
 
               paymentsControl?.updateValueAndValidity();
               advancePaymentControl?.updateValueAndValidity();
-              completionRateForAdvancePaymentControl?.updateValueAndValidity();
               this.showTable = false;
               this.paymentRows = [];
             });
@@ -202,9 +209,6 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
     this.paymentForm
       .get('advancePaymentValue')
       ?.addValidators(Validators.max(this.maxWithholdingRate));
-    this.paymentForm
-      .get('completionRateForAdvancePayment')
-      ?.addValidators(Validators.max(this.maxCompletionRate));
     this.paymentForm.updateValueAndValidity();
   }
 
@@ -218,10 +222,6 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
 
   get advancePaymentValue() {
     return this.paymentForm.get('advancePaymentValue');
-  }
-
-  get completionRateForAdvancePayment() {
-    return this.paymentForm.get('completionRateForAdvancePayment');
   }
 
   get isEqualInstallment(): boolean {
@@ -321,6 +321,8 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
   }
 
   createPaymentSchedule(): void {
+    
+    console.log(this.paymentForm);
     
     if (this.paymentForm.invalid) {
       Object.keys(this.paymentForm.controls).forEach((key) => {
@@ -450,7 +452,7 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
     ) {
       return {
         isValid: false,
-        message: `الدفعة رقم 1: نسبة الانجاز يجب أن تكون أقل من أو تساوي ${this.maxWithholdingRate}%`,
+        message: `الدفعة رقم 1: نسبة الاستقطاع يجب أن تكون أقل من أو تساوي ${this.maxWithholdingRate}%`,
       };
     }
 
@@ -462,7 +464,7 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
     ) {
       return {
         isValid: false,
-        message: `الدفعة رقم 1: نسبة الانجاز يجب أن تكون أقل من أو تساوي ${this.maxCompletionRate}%`,
+        message: `الدفعة رقم 1: نسبة الإنجاز يجب أن تكون أقل من أو تساوي ${this.maxCompletionRate}%`,
       };
     }
 
@@ -545,9 +547,10 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
     const subscription = this.licenseProjectBusinessPaymentService
       .createLicenseProjectBusinessPayment(payload)
       .subscribe({
-        next: () => {
+        next: (res) => {
+          if(res)
           this.backClicked.emit();
-
+this._licenseRequestService.updatedCompletePercentage.emit();
           // Show success popup
           // const dialogData: SaveUpdateConfirmationData = {
           //   title: 'تم حفظ النموذج',
@@ -604,7 +607,8 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
     const subscription = this.licenseProjectBusinessPaymentService
       .updateLicenseProjectBusinessPayment(updateDto)
       .subscribe({
-        next: () => {
+        next: (res) => {
+          if(res){
           if (this.isUpdateVersion) {
             // Show success popup
             const dialogData: SaveUpdateConfirmationData = {
@@ -627,6 +631,7 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
           } else {
             this.backClicked.emit();
           }
+        }
         },
         error: (error) => {
           console.error('Error updating payment template:', error);
@@ -664,6 +669,7 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
         numberOfPayments: 0,
         refunds: data.refunds || 0,
         paymentType: data.paymentDistributionTypeId,
+        licenseProjectBuyerPaymentTypeId: data.licenseProjectBuyerPaymentTypeId,
       });
       this.paymentRows = [];
       this.showTable = false;
@@ -677,6 +683,7 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
       numberOfPayments: paymentInstallments.length,
       refunds: data.refunds || 0,
       paymentType: data.paymentDistributionTypeId,
+      licenseProjectBuyerPaymentTypeId: data.licenseProjectBuyerPaymentTypeId,
     });
 
     // Determine payment type based on installments
@@ -704,7 +711,6 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
         // Cash + installments
         this.paymentForm.patchValue({
           advancePaymentValue: firstInstallment.deductionPercentage,
-          completionRateForAdvancePayment: firstInstallment.rentPercentage,
         });
       // }
     }
@@ -752,30 +758,23 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
     const advancePayment = parseFloat(
       (this.advancePaymentValue?.value || 0).toFixed(2)
     );
-    const advanceInstallment = parseFloat(
-      (this.completionRateForAdvancePayment?.value || 0).toFixed(2)
-    );
     const remainingPercentage = parseFloat((100 - advancePayment).toFixed(2));
-    const completionRateForAdvancePaymentٌemainingPercentage = parseFloat(
-      (100 - advanceInstallment).toFixed(2)
-    );
     const installmentPercentages = this.distributePercentageEqually(
       remainingPercentage,
       numberOfPayments - 1
     );
-    const completionRateForAdvancePaymentPercentages =
-      this.distributePercentageEqually(
-        completionRateForAdvancePaymentٌemainingPercentage,
-        numberOfPayments - 1
-      );
+    const completionRatePercentages = this.distributePercentageEqually(
+      100,
+      numberOfPayments
+    );
 
-    // First payment - advance payment (non-editable)
+    // First payment - advance payment (editable in table)
     this.paymentRows.push({
       id: 1,
       installmentId: '00000000-0000-0000-0000-000000000000',
       description: 'الدفعة الأولى',
       deductionRate: advancePayment,
-      completionRate: advanceInstallment,
+      completionRate: completionRatePercentages[0],
     });
 
     // Remaining installments
@@ -783,9 +782,9 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
       this.paymentRows.push({
         id: i,
         installmentId: '00000000-0000-0000-0000-000000000000',
-        description: i === numberOfPayments ? 'الدفعة الاخيره' : '',
+        description: i === numberOfPayments ? 'الدفعة الاخيرة' : '',
         deductionRate: installmentPercentages[i - 2],
-        completionRate: completionRateForAdvancePaymentPercentages[i - 2],
+        completionRate: completionRatePercentages[i - 1],
       });
     }
   }
@@ -866,42 +865,26 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit {
       const advancePayment = parseFloat(
         (this.advancePaymentValue?.value || 0).toFixed(2)
       );
-      const completionRateForAdvancePayment = parseFloat(
-        (this.completionRateForAdvancePayment?.value || 0).toFixed(2)
-      );
       const numberOfPayments = this.numberOfPayments?.value;
 
       if (
         numberOfPayments >= this.minNumberOfPayments &&
         numberOfPayments <= this.maxNumberOfPayments
       ) {
-        const remainingPercentage = advancePayment;
         const installmentPercentages = this.distributePercentageEqually(
           parseFloat((100 - advancePayment).toFixed(2)),
           numberOfPayments - 1
         );
 
-        const completionRateForAdvancePaymentRemainingPercentage =
-          completionRateForAdvancePayment;
-        const completionRateForAdvancePaymentInstallmentPercentages =
-          this.distributePercentageEqually(
-            parseFloat((100 - completionRateForAdvancePayment).toFixed(2)),
-            numberOfPayments - 1
-          );
-
-        // Update first row
+        // Update first row deduction rate only
         if (this.paymentRows[0]) {
           this.paymentRows[0].deductionRate = advancePayment;
-          this.paymentRows[0].completionRate =
-            completionRateForAdvancePaymentRemainingPercentage;
         }
 
-        // Update remaining rows
+        // Update remaining rows deduction rates only
         for (let i = 1; i < this.paymentRows.length; i++) {
           if (this.paymentRows[i]) {
             this.paymentRows[i].deductionRate = installmentPercentages[i - 1];
-            this.paymentRows[i].completionRate =
-              completionRateForAdvancePaymentInstallmentPercentages[i - 1];
           }
         }
       }

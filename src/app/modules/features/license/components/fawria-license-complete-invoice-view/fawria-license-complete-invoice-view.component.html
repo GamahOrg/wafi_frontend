@@ -1,0 +1,30 @@
+<div class="row g-5">
+  <div class="col-12 col-lg-auto">
+    <div class="key">
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
+      رقم الفاتورة
+    </div>
+    <div class="value">
+      {{ invoiceData.invoiceRequestId }}
+    </div>
+  </div>
+  <div class="col-12 col-lg-auto">
+    <div class="key">
+      <i class="icon hgi hgi-stroke hgi-money-02"></i>
+      قيمة الفاتورة
+    </div>
+    <div class="value">
+      {{ invoiceData.price | number }}
+      <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+    </div>
+  </div>
+  <div class="col-12 col-lg-auto">
+    <div class="key">
+      <i class="icon hgi hgi-stroke hgi-calendar-03"></i>
+      تاريخ انتهاء الفاتورة
+    </div>
+    <div class="value">
+      {{invoiceData.invDueDate| date: 'dd-MM-yyyy' }}
+    </div>
+  </div>
+</div>

@@ -4,8 +4,11 @@
     <mat-tab [disabled]="component.disabled" *ngIf="component.isVisible">
 
       <ng-template mat-tab-label class="collapseTitle">
-        <span *ngIf="component.icon" class="icon">
+        <span class="icon" *ngIf="component.icon && !component.isCompleted">
           <i class="material-icons-outlined">{{component.icon}}</i>
+        </span>
+        <span class="icon completed-icon" *ngIf="component.isCompleted">
+          <i class="material-icons-outlined">check</i>
         </span>
         {{component.title}}
         <span class="count" *ngIf="component.errNum">{{ component.errNum }}</span>

@@ -10,6 +10,8 @@ import { ButtonType } from '../../models/enums/button-type.model';
 export class NoDataComponent implements AfterViewInit{
 
   @Input() title:string = "لا توجد بيانات مدخلة";
+  @Input() showTitle:boolean = true;
+  @Input() useTitleClass:boolean = false;
   @Input() showText:boolean = true;
   @Input() text:string = "يُمكنك ملء البيانات لمساعدتك في إرسال طلباتك الخاصة.";
   

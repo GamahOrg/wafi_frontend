@@ -13,14 +13,12 @@ const routes: Routes = [
   {
     path: Configuration.pages.userManagement.userProfile,
     component: UserProfileComponent,
-    data: {breadcrumb : 'إدارة المنشأة '},
-
+    data: { breadcrumb: 'الملف الشخصي' },
   },
   {
     path: Configuration.pages.userManagement.editProfile,
     component: EditProfileComponent,
-    
-
+    data: { breadcrumb: 'تعديل الملف الشخصي' },
   },
 ];
 

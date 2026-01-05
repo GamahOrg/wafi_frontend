@@ -21,6 +21,28 @@
     z-index: 10001 !important;
   }
 }
+.date-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.date-input {
+  padding-right: 40px !important; /* space for icon */
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.calendar-icon:hover {
+  color: #0d6efd; /* blue on hover */
+}
 
 .popup-container {
   background-color: #F1F2F2;
@@ -1839,4 +1861,109 @@ select.form-control {
   width: 16px;
   height: 16px;
   opacity: 0.7;
+}
+
+// File Preview Styling
+.file-preview-container {
+  margin-top: 12px;
+  width: 100%;
+  direction: rtl;
+}
+
+.file-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #F7F9F9;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #EDF2F2;
+    border-color: #D0D5DD;
+  }
+}
+
+.file-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #E8F4F5;
+  border-radius: 6px;
+
+  i {
+    font-size: 24px;
+    color: #005257;
+  }
+}
+
+.file-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  text-align: right;
+}
+
+.file-name {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #001F21;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-size {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #5D5D5D;
+}
+
+.btn-remove-file {
+  flex-shrink: 0;
+  min-width: auto;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: #FEE4E2;
+  border: 1px solid #FECDCA;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #B42318;
+  white-space: nowrap;
+
+  i {
+    font-size: 16px;
+    color: #B42318;
+  }
+
+  &:hover {
+    background-color: #FECDCA;
+    border-color: #FEB2B2;
+
+    i {
+      color: #D92D20;
+    }
+  }
+
+  &:active {
+    background-color: #FEA3A3;
+    border-color: #FE9191;
+  }
 }

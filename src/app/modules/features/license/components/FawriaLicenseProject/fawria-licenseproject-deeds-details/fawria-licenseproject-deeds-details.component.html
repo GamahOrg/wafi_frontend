@@ -147,7 +147,7 @@
                 <td>{{owner.ownerName}}</td>
                 <td>{{owner.idNumber}}</td>
                 <td>{{owner.owningArea}}</td>
-                <td>{{owner.owningAmount}}</td>
+                <td>{{owner.owningAmount | number:'1.2-2'}}</td>
                 <td>{{owner.bank?.name || '-'}}</td>
                 <td>{{owner.accountNumber || '-'}}</td>
               </tr>
@@ -158,8 +158,10 @@
 
       <br/>
 
-      <!-- رخص البناء -->
-      <div class="tab-data-section">
+<!-- رخص البناء -->
+<div class="tab-data-section" *ngIf="isUnit 
+&& !(fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseProjectConstructionLicenseTypeId === ConstructionLicenseTypeEnum.RiyadhAmanah 
+&& fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.integrationTypeId === DeedIntegrationTypeEnum.RER)">
         <i class="bi bi-card-text"></i>
         <h6 class="title">رخص البناء</h6>
 

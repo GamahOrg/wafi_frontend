@@ -1,9 +1,12 @@
+import { LicenseProjectBuyerPaymentTypeEnum } from "./real-state-developer-dto";
+
 export interface LicenseProjectBusinessPaymentModel {
   id: string;
   modelTitle?: string;
   licenseProjectId?: string;
   refunds: number;
   paymentDistributionTypeId: number;
+  licenseProjectBuyerPaymentTypeId:LicenseProjectBuyerPaymentTypeEnum;
   paymentInstallments: LicenseProjectBusinessPaymentInstallmentModel[];
 }
 

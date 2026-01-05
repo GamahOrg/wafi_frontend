@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: Configuration.pages.realEstateContributionsFacilities.facilityDashboard,
     component: FacilityDashboardComponent,
-    data: { breadcrumb: 'لوحة التحكم' },
+    data: { breadcrumb: 'لوحة التحكم', hideBreadcrumb: true },
   },
   {
     path: Configuration.pages.realEstateContributionsFacilities.facilityProfile,

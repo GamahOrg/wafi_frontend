@@ -400,7 +400,7 @@
                 />
               </div>
             </div>
-            <div class="form-group" *ngIf="unitDetails?.supportedPrice">
+            <!--<div class="form-group" *ngIf="unitDetails?.supportedPrice">
               <label class="form-label">السعر المدعوم</label>
               <div class="form-value price-value">
                 <span>{{
@@ -413,7 +413,7 @@
                   class="riyal-icon"
                 />
               </div>
-            </div>
+            </div>-->
           </div>
 
           <div class="form-row">
@@ -429,7 +429,7 @@
                 >السعر بعد إضافة ضريبة التصرفات العقارية</label
               >
               <div class="form-value price-value">
-                <span>{{ priceAfterTax | number : "1.0-0" }}</span>
+              <span>{{ priceAfterTax | number : "1.2-2" }}</span>
                 <img
                   src="assets/images/general/riyal-icon.svg"
                   alt="ريال"
@@ -441,7 +441,7 @@
           <div class="form-row" *ngIf="isOldContract">
             <div class="form-group">
               <label class="form-label">تاريخ أنشاء العقد</label>
-              <div class="date-input-wrapper">
+              <div class="input-group">
                 <input
                   bsDatepicker
                   type="text"
@@ -453,24 +453,24 @@
                     containerClass: 'theme-default'
                   }"
                 />
-                <span class="calendar-icon">
-                  <i class="bi bi-calendar3"></i>
+                <span class="input-group-text">
+                  <i class="material-icons-outlined">calendar_today</i>
                 </span>
-                <div
+              </div>
+              <div
                 class="error-message"
                 *ngIf="hasError('saleDate')"
               >
                 هذا الحقل مطلوب
               </div>
-              </div>
             </div>
             <div class="form-group">
               <label class="form-label">تاريخ التسليم</label>
-              <div class="date-input-wrapper">
+              <div class="input-group">
                 <input
                   bsDatepicker
                   type="text"
-                  class="form-control"
+                  class="form-control date-input"
                   formControlName="deliveryDate"
                   placeholder="تاريخ التسليم"
                   [bsConfig]="{
@@ -478,15 +478,15 @@
                     containerClass: 'theme-default'
                   }"
                 />
-                <span class="calendar-icon">
-                  <i class="bi bi-calendar3"></i>
+                <span class="input-group-text">
+                  <i class="material-icons-outlined">calendar_today</i>
                 </span>
-                <div
+              </div>
+              <div
                 class="error-message"
                 *ngIf="hasError('deliveryDate')"
               >
                 هذا الحقل مطلوب
-              </div>
               </div>
             </div>
           </div>
@@ -562,7 +562,27 @@
                 >
                 </app-file-uploader>
               </div>
-                <div
+
+              <!-- File Preview Section -->
+              <div class="file-preview-container" *ngIf="contractFile">
+                <div class="file-preview-item"  (click)="openFile(contractFile)" style="cursor: pointer;">
+                  <div class="file-icon">
+                    <i class="bi bi-file-earmark-pdf" *ngIf="contractFile.extension === '.pdf'"></i>
+                    <i class="bi bi-file-earmark-image" *ngIf="contractFile.extension === '.jpg' || contractFile.extension === '.jpeg' || contractFile.extension === '.png'"></i>
+                    <i class="bi bi-file-earmark" *ngIf="contractFile.extension !== '.pdf' && contractFile.extension !== '.jpg' && contractFile.extension !== '.jpeg' && contractFile.extension !== '.png'"></i>
+                  </div>
+                  <div class="file-details">
+                    <span class="file-name">{{ contractFile.fileName || contractFile.name }}</span>
+                    <span class="file-size" *ngIf="contractFile.size">{{ formatFileSize(contractFile.size) }}</span>
+                  </div>
+                  <button type="button" class="btn-remove-file" (click)="removeContractFile(); $event.stopPropagation()" title="إزالة الملف">
+                    <i class="bi bi-trash"></i>
+                    إزالة
+                  </button>
+                </div>
+              </div>
+
+              <div
                 class="error-message"
                 *ngIf="hasError('contractFileId')"
               >

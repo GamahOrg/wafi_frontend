@@ -1,0 +1,19 @@
+<div mat-dialog-title>
+  <div class="d-flex flex-column align-items-center gap-2">
+    <span class="icon text-warning">
+      <i class="hgi hgi-stroke hgi-alert-02"></i>
+    </span>
+    <h6 class="title">تنبيه</h6>
+  </div>
+</div>
+
+<div mat-dialog-content>
+  <div class="text-center mb-4">
+    هل أنت متأكد من الخروج؟ لديك تغييرات غير محفوظة
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center gap-3">
+    <button class="btn btn-link" (click)="onLeave()">الخروج بدون حفظ</button>
+    <button class="btn btn-warning" (click)="onStay()">متابعة التعديل</button>
+  </div>
+</div>

@@ -6,6 +6,37 @@
   overflow: visible !important;
 }
 
+.number,
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-inline-end: .5rem;
+
+  color: $white;
+  border-radius: 50%;
+  background-color: #B1B6B8;
+}
+
+.icon {
+  [class^="material-icons"] {
+    font-size: $body-font-size;
+  }
+}
+
+.completed-icon {
+   background-color: #9CA3AF;
+
+  [class^="material-icons"] {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+}
+
 ::ng-deep .mat-tab-body-content {
   overflow: visible !important;
 }

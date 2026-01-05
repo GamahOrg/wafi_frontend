@@ -23,11 +23,14 @@ import { TokenGuard } from './guards/token-guard/token.guard';
 import { MailConfirmationComponent } from './pages/mail-confirmation/mail-confirmation.component';
 import { MailConfirmationService } from './services/mail-confirmation/mail-confirmation.service';
 import { LoaderComponent } from './components/loader/loader.component';
+import { UnsavedChangesDialogComponent } from './guards/unsaved-changes-guard/unsaved-changes-dialog/unsaved-changes-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     LoaderComponent,
-    MailConfirmationComponent
+    MailConfirmationComponent,
+    UnsavedChangesDialogComponent
   ],
   providers: [
     LanguageService,
@@ -80,9 +83,11 @@ import { LoaderComponent } from './components/loader/loader.component';
     // import HttpClientModule after BrowserModule.
     HttpClientModule,
     // TranslateModule.forChild(),
+    MatDialogModule,
   ],
   exports:[
-    LoaderComponent
+    LoaderComponent,
+    UnsavedChangesDialogComponent
   ]
 })
 export class CoreModule {}

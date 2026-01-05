@@ -1,0 +1,60 @@
+<!-- <app-engineering-consultant-agreement-staff></app-engineering-consultant-agreement-staff> -->
+
+<!-- Executive Director Section -->
+<div class="tab-data-section">
+  <h6 class="title">تفعيل حساب الضمان</h6>
+  <div class="row">
+    <div class="col-12 col-lg-3">
+      <div class="key"> <i class="icon hgi hgi-stroke hgi-building-06"></i> اسم البنك </div>
+      <div class="value"> {{ entity.bankName }} </div>
+    </div>
+    <div class="col-12 col-lg-3">
+      <div class="key"> <i class="icon hgi hgi-stroke hgi-building-06"></i>رقم الآيبان</div>
+      <div class="value"> {{ entity.accountNumber }} </div>
+    </div>
+    <div class="col-12 col-lg-3">
+      <div class="key"> <i class="icon hgi hgi-stroke hgi-building-06"></i>تاريخ انشاء الحساب</div>
+      <div class="value"> {{ entity.escrowCreationDate | date: 'dd-MM-yyyy' }} </div>
+    </div>
+    <div class="col-12 col-lg-3">
+      <div class="key"> <i class="icon hgi hgi-stroke hgi-building-06"></i>حالة الحساب</div>
+      <div class="value"> 
+       
+       <span class="status-pill" [ngClass]="{'orange': entity.escrowAccountStatus != 'Active', 'green': entity.escrowAccountStatus == 'Active'}">
+          <i class="icon material-icons">fiber_manual_record</i>
+           {{ entity.escrowAccountStatus == 'Active' ? 'مفعل' : 'غير فعال' }} 
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="tab-data-section">
+  <h6 class="title">الحسابات الفرعية</h6>
+
+  <div class="table-responsive">
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th scope="col">اسم الحساب الفرعي</th>
+          <th scope="col">رقم الحساب</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>حساب التكاليف الانشائية</td>
+          <td>{{ entity.constructionCostsAccountNumber }}</td>
+        </tr>
+        <tr>
+          <td>حساب الاداري والتسويقي</td>
+          <td>{{ entity.administrativeAndMarketingAccountNumber }}</td>
+        </tr>
+        <tr>
+          <td>حساب الحفظ</td>
+          <td>{{ entity.custodyAccountNumber }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

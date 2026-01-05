@@ -13,6 +13,8 @@ import { FawriaLicenseProjectContactInfoService } from '../../../services/licens
 import { ToastrNotificatioService } from '../../../../../../core/services/toastr-notification/toastr-notificatio.service';
 import { ToastrService } from 'ngx-toastr';
 import { AddFawriaLicenseprojectContactInfoRequestDto } from '../../../models/FawriaLicenseProject/add-fawria-license-project-contact-info-request-dto';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { LicenseRequestService } from '../../../services/license-request.service';
 
 @Component({
   selector: 'app-fawria-licenseproject-contact-info-container',
@@ -20,8 +22,7 @@ import { AddFawriaLicenseprojectContactInfoRequestDto } from '../../../models/Fa
   styleUrls: ['./fawria-licenseproject-contact-info-container.component.scss'],
 })
 export class FawriaLicenseprojectContactInfoContainerComponent
-  implements OnInit, OnDestroy
-{
+  implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   subCustomerList: CustomerShortDto[] = [];
@@ -34,6 +35,8 @@ export class FawriaLicenseprojectContactInfoContainerComponent
   fawriaLicenseprojectContactInfoDto!: AddFawriaLicenseprojectContactInfoRequestDto;
   showDateOfBirthAlert: boolean = false;
 
+  private readonly EMPTY_GUID = '00000000-0000-0000-0000-000000000000';
+
   constructor(
     private _projectRealStateDeveloperService: ProjectRealStateDeveloperService,
     private _userDataService: UserDataService,
@@ -42,8 +45,10 @@ export class FawriaLicenseprojectContactInfoContainerComponent
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
     private _fawriaLicenseProjectContactInfoService: FawriaLicenseProjectContactInfoService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _toastrService: ToastrService
-  ) {}
+    private _toastrService: ToastrService,
+    private _licenseRequestService: LicenseRequestService,
+    private _tabsService: TabsService
+  ) { }
 
   ngOnInit() {
     this.getCustomerData();
@@ -58,6 +63,7 @@ export class FawriaLicenseprojectContactInfoContainerComponent
 
   private updateSaveAsDraftBtnIsvisible(): void {
     this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
+    this._nextAndPreviusButtonsService.nextBtnIsVisible.next(true);
   }
 
   private getLicenseProjectIdStorage(): void {
@@ -67,6 +73,9 @@ export class FawriaLicenseprojectContactInfoContainerComponent
   observeForm(): void {
     this.subscriptions.push(
       this.projectContactsDataForm.valueChanges.subscribe((changes) => {
+        if (this.projectContactsDataForm.dirty) {
+          this._tabsService.setUnsavedChanges(true);
+        }
         this.projectRealStateDeveloper = this.projectContactsDataForm
           .value as ProjectRealStateDeveloperDto;
       })
@@ -83,11 +92,13 @@ export class FawriaLicenseprojectContactInfoContainerComponent
       'لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة',
     savedSuccessfully: 'تم الحفظ بنجاح',
   };
+
   projectContactsDataForm = this._formBuilder.group({
-    id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
-    delegatorCustomerId: ['', [Validators.required]],
-    officerCustomerId: ['', [Validators.required]],
+    id: [this.EMPTY_GUID, [Validators.required]],
+    delegatorCustomerId: this._formBuilder.control<string | null>(null, [Validators.required]),
+    officerCustomerId: this._formBuilder.control<string | null>(null, [Validators.required]),
   });
+
   get controls() {
     return this.projectContactsDataForm.controls;
   }
@@ -103,10 +114,7 @@ export class FawriaLicenseprojectContactInfoContainerComponent
   }
 
   private loadExistingContactInfo(): void {
-    if (
-      !this.licenseProjectId ||
-      this.licenseProjectId === '00000000-0000-0000-0000-000000000000'
-    ) {
+    if (!this.licenseProjectId || this.licenseProjectId === this.EMPTY_GUID) {
       return;
     }
 
@@ -115,22 +123,22 @@ export class FawriaLicenseprojectContactInfoContainerComponent
       .subscribe({
         next: (res) => {
           if (res && (res.delegatorCustomerId || res.contactCustomerId)) {
+            // ✅ تحويل GUID الفارغ إلى null
+            const delegatorId = res.delegatorCustomerId === this.EMPTY_GUID
+              ? null
+              : res.delegatorCustomerId;
+            const officerId = res.contactCustomerId === this.EMPTY_GUID
+              ? null
+              : res.contactCustomerId;
+
             this.projectContactsDataForm.patchValue({
-              delegatorCustomerId: res.delegatorCustomerId,
-              officerCustomerId: res.contactCustomerId,
+              delegatorCustomerId: delegatorId,
+              officerCustomerId: officerId,
             });
 
-            // Check if delegator has dateOfBirth after loading
-            if (res.delegatorCustomerId) {
-              this.checkDelegatorDateOfBirth(res.delegatorCustomerId);
+            if (delegatorId) {
+              this.checkDelegatorDateOfBirth(delegatorId);
             }
-
-            //// Store for saving (if needed later)
-            //this.fawriaLicenseprojectContactInfoDto = {
-            //  licenseProjectId: this.licenseProjectId ?? '',
-            //  delegatorCustomerId: res.delegatorCustomerId,
-            //  contactCustomerId: res.contactCustomerId
-            //};
           } else {
             console.log('No existing contact info found, ready to add new');
           }
@@ -198,13 +206,22 @@ export class FawriaLicenseprojectContactInfoContainerComponent
     //if (!this.projectRealStateDeveloper.id) {
     //  this.projectRealStateDeveloper.id = '00000000-0000-0000-0000-000000000000';
     //}
-    
+    if (this.projectContactsDataForm.invalid || !this.projectContactsDataForm.controls.delegatorCustomerId.value || // ✅ تحقق من empty string
+      !this.projectContactsDataForm.controls.officerCustomerId.value) {
+      this.showValidation = true;
+      this._toastrNotificationService.showError(
+        this.localization.PleaseAddAllRequiredFields
+      );
+      this.projectContactsDataForm.markAllAsTouched();
+      return;
+    }
+
     if (
       this.projectContactsDataForm.invalid ||
       this.projectContactsDataForm.controls.delegatorCustomerId.value ===
-        '00000000-0000-0000-0000-000000000000' ||
+      '00000000-0000-0000-0000-000000000000' ||
       this.projectContactsDataForm.controls.officerCustomerId.value ===
-        '00000000-0000-0000-0000-000000000000'
+      '00000000-0000-0000-0000-000000000000'
     ) {
       this.showValidation = true;
       this.projectContactsDataForm.controls.delegatorCustomerId.setValue(null);
@@ -239,7 +256,9 @@ export class FawriaLicenseprojectContactInfoContainerComponent
         next: (res) => {
           if (res.isDone) {
             this._toastrService.success(this.localization.savedSuccessfully);
-
+            this.projectContactsDataForm.markAsPristine();
+            this._tabsService.setUnsavedChanges(false);
+            this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
             if (moveToNextTab) {
               this.moveToNextTab();
             }
@@ -292,6 +311,7 @@ export class FawriaLicenseprojectContactInfoContainerComponent
   }
 
   ngOnDestroy() {
+    this._tabsService.setUnsavedChanges(false);
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 }

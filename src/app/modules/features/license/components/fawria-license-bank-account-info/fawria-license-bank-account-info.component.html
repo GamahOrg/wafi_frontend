@@ -1,0 +1,49 @@
+<div class="tab-data-section">
+    <div class="row g-5">
+        <div class="col-12 col-lg-auto">
+            <div class="key">
+                <i class="icon hgi hgi-stroke hgi-bank"></i>
+                اسم البنك
+            </div>
+            <div class="value">
+                {{ banAccount?.bankName }}
+            </div>
+        </div>
+        <div class="col-12 col-lg-auto">
+            <div class="key">
+                <i class="icon hgi hgi-stroke hgi-profile"></i>
+                رقم الآيبان
+            </div>
+            <div class="value">
+                {{ banAccount?.accountNumber }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-12 col-lg-auto">
+            <div class="key">
+                <i class="icon hgi hgi-stroke hgi-profile"></i>
+                حالة الحساب
+            </div>
+            <div class="value">
+
+                <span class="status-pill" [ngClass]="{'orange':  banAccount?.accountStatus!='Active', 'green': banAccount?.accountStatus=='Active'}">
+                    <i class="icon material-icons">fiber_manual_record</i>
+                    {{ banAccount?.accountStatus=='Active'?'غير فعال':'فعال' }}
+                </span>
+
+
+            </div>
+        </div>
+        <div class="col-12 col-lg-auto">
+            <div class="key">
+                <i class="icon hgi hgi-stroke hgi-calendar-03"></i>
+                تاريخ إنشاء الحساب
+            </div>
+            <div class="value">
+                {{ banAccount?.escrowCreationDate| date: 'dd-MM-yyyy' }}
+            </div>
+        </div>
+    </div>
+</div>

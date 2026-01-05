@@ -1,48 +1,56 @@
 <div class="d-flex flex-column h-100">
-    <!-- Main View -->
-    <div *ngIf="!showItemsLog">
-      <div class="tab-data-header">
-        <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
-        <h6 class="title">{{localization.title}}</h6>
-        <div class="buttons-group">
+  <!-- Main View -->
+  <div *ngIf="!showItemsLog">
+    <div class="tab-data-header">
+      <span class="icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.5 20.75H7.5C6.75 20.75 6.2 20.72 5.73 20.65C2.41 20.29 1.75 18.3 1.75 15V9C1.75 5.7 2.41 3.71 5.76 3.34C6.2 3.28 6.75 3.25 7.5 3.25H16.5C17.25 3.25 17.8 3.28 18.27 3.35C21.59 3.71 22.25 5.7 22.25 9V15C22.25 18.3 21.59 20.29 18.24 20.66C17.8 20.72 17.25 20.75 16.5 20.75ZM7.5 4.75C6.82 4.75 6.34 4.78 5.95 4.83C3.92 5.06 3.25 5.69 3.25 9V15C3.25 18.31 3.92 18.94 5.92 19.17C6.34 19.23 6.82 19.25 7.5 19.25H16.5C17.18 19.25 17.66 19.22 18.05 19.17C20.08 18.95 20.75 18.31 20.75 15V9C20.75 5.69 20.08 5.06 18.08 4.83C17.66 4.77 17.18 4.75 16.5 4.75H7.5Z" fill="#001F21" />
+          <path d="M17 10.75H13.5C13.09 10.75 12.75 10.41 12.75 10C12.75 9.59 13.09 9.25 13.5 9.25H17C17.41 9.25 17.75 9.59 17.75 10C17.75 10.41 17.41 10.75 17 10.75Z" fill="#001F21" />
+          <path d="M10.0996 11C9.54961 11 9.09961 10.55 9.09961 10C9.09961 9.45 9.53961 9 10.0996 9H10.1096C10.6596 9 11.1096 9.45 11.1096 10C11.1096 10.55 10.6596 11 10.0996 11Z" fill="#001F21" />
+          <path d="M7.09961 11C6.54961 11 6.09961 10.55 6.09961 10C6.09961 9.45 6.53961 9 7.09961 9C7.64961 9 8.09961 9.45 8.09961 10C8.09961 10.55 7.65961 11 7.09961 11Z" fill="#61686B" />
+          <path d="M16.9998 16.25H7.01977C6.60977 16.25 6.25977 15.91 6.25977 15.5C6.25977 15.09 6.58977 14.75 6.99977 14.75H16.9998C17.4098 14.75 17.7498 15.09 17.7498 15.5C17.7498 15.91 17.4098 16.25 16.9998 16.25Z" fill="#61686B" />
+        </svg>
+      </span>
+      <h6 class="title">{{localization.title}}</h6>
 
-          <button *ngIf="!isNew" class="record-btn btn btn-outline-primary"
-                  (click)="openRecordDialog()">
-                  <i class="fa fa-refresh"></i>
-                  <span>سجل البنود</span>
-          </button>
-          <button class="edit-icon btn btn-primary"
-                  (click)="openDialog()">
-                  <span>إضافة بند</span>
-                  <i class="hgi hgi-stroke hgi-plus-sign"></i>
-          </button>
-        </div>
+      <div class="opposite-title" *ngIf="!hideActionButtons">
+        <button *ngIf="!isNew" class="record-btn btn btn-outline-primary" (click)="openRecordDialog()">
+          <i class="fa fa-refresh"></i>
+          <span>سجل البنود</span>
+        </button>
+        <button class="btn btn-outline-primary" (click)="openDialog()">
+          <span>إضافة بند</span>
+          <i class="hgi hgi-stroke hgi-plus-sign"></i>
+        </button>
       </div>
+    </div>
+
     <div class="tab-data-section">
       <!-- Empty State -->
       <!-- <div *ngIf="getParentItems().length === 0" class="empty-state-container">
+        <p class="empty-state-text">لا يوجد بنود اضافية</p>
         <div class="empty-state-icon">
           <img src="assets/images/general/no-data-found.SVG" alt="No data found" />
         </div>
-        <p class="empty-state-text">لا يوجد بنود اضافية</p>
       </div> -->
-  <ng-container *ngIf="getParentItems().length === 0">
-      <div class="mt-4">
-          <app-no-data [showCompleteBtn]="false"></app-no-data>
-      </div>
-  </ng-container>
+      <ng-container *ngIf="getParentItems().length === 0">
+        <div class="mt-4">
+          <app-no-data [title]="'لا يوجد بنود اضافية'" [text]="''" [showCompleteBtn]="false"></app-no-data>
+        </div>
+      </ng-container>
+
       <!-- Table with Data -->
       <div *ngIf="getParentItems().length > 0" class="table-responsive">
         <table class="table table-light">
           <thead>
             <tr>
               <!-- <th>{{localization.licenseBeneficiaryContractFormId}}</th> -->
-              <th>{{localization.itemNumber}}</th>
-              <th> {{localization.itemTitle}}</th>
-              <th> {{localization.itemText}}</th>
-              <th> {{localization.status}}</th>
-              <th> {{localization.date}}</th>
-              <th class="w-25"></th>
+              <th class="text-nowrap">{{localization.itemNumber}}</th>
+              <th class="text-nowrap">{{localization.itemTitle}}</th>
+              <th>{{localization.itemText}}</th>
+              <th>{{localization.status}}</th>
+              <th>{{localization.date}}</th>
+              <th class="w-10 text-end">{{localization.actions}}</th>
             </tr>
           </thead>
           <tbody>
@@ -50,27 +58,30 @@
               <!-- Parent Row -->
               <tr>
                 <td>
-                  <span>{{getItemNumberDisplay(parentBeneficiary)}}</span>
-                </td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <button *ngIf="hasChildren(parentBeneficiary.id)" mat-icon-button class="me-2" (click)="toggleExpand(parentBeneficiary.id)">
+                  <div class="d-flex justify-content-between align-items-center gap-3">
+                    <span class="tag">{{getItemNumberDisplay(parentBeneficiary)}}</span>
+                    <button *ngIf="hasChildren(parentBeneficiary.id)" mat-icon-button (click)="toggleExpand(parentBeneficiary.id)">
                       <mat-icon>{{isExpanded(parentBeneficiary.id) ? 'expand_less' : 'expand_more'}}</mat-icon>
                     </button>
-                    <span> {{parentBeneficiary?.itemTitle}}</span>
                   </div>
                 </td>
-                <td>{{parentBeneficiary?.itemText && parentBeneficiary.itemText.length > 100 ? (parentBeneficiary.itemText | slice:0:100) + '...' : parentBeneficiary.itemText}}</td>
+
+                <td class="text-break">{{parentBeneficiary?.itemTitle}}</td>
+
+                <td class="text-break">{{parentBeneficiary?.itemText && parentBeneficiary.itemText.length > 100 ? (parentBeneficiary.itemText | slice:0:100) + '...' : parentBeneficiary.itemText}}</td>
+
                 <td>
-                  <span class="status-badge" [ngClass]="parentBeneficiary?.isActive ? 'status-active' : 'status-inactive'">
+                  <span class="status-pill" [ngClass]="parentBeneficiary?.isActive ? 'green' : 'red'">
+                    <i class="icon material-icons">fiber_manual_record</i>
                     {{ parentBeneficiary?.isActive ? localization.activeStatus : localization.inActiveStatus }}
                   </span>
                 </td>
-                <td>{{parentBeneficiary?.createdOn | date:'dd-MM-yyyy'}}</td>
+
+                <td class="text-nowrap">{{parentBeneficiary?.createdOn | date:'dd-MM-yyyy'}}</td>
 
                 <td>
-                  <div class="d-flex align-items-center justify-content-end">
-                    <button mat-icon-button disableRipple="true" [matMenuTriggerFor]="parentMenu">
+                  <div class="d-flex align-items-center justify-content-end" *ngIf="!hideActionButtons">
+                    <button mat-icon-button [matMenuTriggerFor]="parentMenu">
                       <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #parentMenu="matMenu">
@@ -98,16 +109,10 @@
 
               <!-- Child Rows -->
               <ng-container *ngIf="isExpanded(parentBeneficiary.id)">
-                <tr *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index" class="child-row">
-                  <td class="ps-5">{{getItemNumberDisplay(childBeneficiary)}}</td>
+                <tr class="child-row" *ngFor="let childBeneficiary of getChildItems(parentBeneficiary.id); let childIndex = index">
+                  <td><span class="tag">{{getItemNumberDisplay(childBeneficiary)}}</span></td>
                   <td>{{childBeneficiary?.itemTitle}}</td>
-                  <td>{{childBeneficiary?.itemText && childBeneficiary.itemText.length > 100 ? (childBeneficiary.itemText | slice:0:100) + '...' : childBeneficiary?.itemText}}</td>
-                  <!-- <td>
-                    <div class="d-flex align-items-center justify-content-end column-gap-2">
-                       <button mat-icon-button color="primary"  (click)="edit(childBeneficiary, childIndex)"><mat-icon>edit</mat-icon></button>
-                       <button mat-icon-button color="warn" (click)="delete(childBeneficiary.id, childIndex)"><mat-icon>delete</mat-icon></button>
-                    </div>
-                  </td> -->
+                  <td colspan="4">{{childBeneficiary?.itemText && childBeneficiary.itemText.length > 100 ? (childBeneficiary.itemText | slice:0:100) + '...' : childBeneficiary?.itemText}}</td>
                 </tr>
               </ng-container>
             </ng-container>
@@ -115,7 +120,7 @@
         </table>
       </div>
     </div>
-    <!-- <app-next-and-previus-buttons *ngIf="isActive"></app-next-and-previus-buttons> -->
+    <app-next-and-previus-buttons *ngIf="!isOpenedWhenComplated"></app-next-and-previus-buttons>
   </div>
 
   <!-- Items Log View -->

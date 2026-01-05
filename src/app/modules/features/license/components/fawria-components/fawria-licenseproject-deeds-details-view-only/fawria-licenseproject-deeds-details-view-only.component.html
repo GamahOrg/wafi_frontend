@@ -159,7 +159,9 @@
       <br/>
 
       <!-- رخص البناء -->
-      <div class="tab-data-section">
+      <div class="tab-data-section" *ngIf="isUnit 
+        && !(fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseProjectConstructionLicenseTypeId === ConstructionLicenseTypeEnum.RiyadhAmanah 
+        && fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.integrationTypeId === DeedIntegrationTypeEnum.RER)">
         <i class="bi bi-card-text"></i>
         <h6 class="title">رخص البناء</h6>
 
@@ -188,7 +190,7 @@
         </div>
 
         <!-- Units Table -->
-        <div class="table-responsive" *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.unitInfoList?.length">
+        <div class="table-responsive" *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.buildingInfo!.componentList!.component!.length>0">
           <table class="table table-light">
             <thead>
               <tr>
@@ -197,9 +199,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let unit of fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.unitInfoList">
-                <td>{{unit.unitNumber}}</td>
-                <td>{{unit.unitType}}</td>
+              <tr *ngFor="let unit of fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.buildingInfo?.componentList?.component">
+                <td>{{unit.numberOfUnits}}</td>
+                <td>{{unit.componentName.description}}</td>
               </tr>
             </tbody>
           </table>

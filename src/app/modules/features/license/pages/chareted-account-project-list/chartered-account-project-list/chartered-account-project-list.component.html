@@ -101,7 +101,27 @@
               <!-- </span> -->
             </td>
             <td>
-              <div class="dropdown" [class.show]="isDropdownOpen(request.licenseProjectId)">
+              <div class="d-flex align-items-center justify-content-end">
+                <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #tableActionsMenu="matMenu">
+                  <button mat-menu-item (click)="showDetails(request.licenseProjectId); closeDropdown(request)" class="menu-edit-btn">
+                    <i class="hgi hgi-stroke hgi-profile-02"></i>
+                    <span>تفاصيل المشروع</span>
+                  </button>
+                  <button mat-menu-item (click)="showBuyerList(request.licenseProjectId); closeDropdown(request)" class="menu-edit-btn">
+                    <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                    <span>سجل المشتريين</span>
+                  </button>
+                  <button mat-menu-item (click)="showTotals(request.licenseProjectId); closeDropdown(request)" class="menu-edit-btn">
+                    <i class="hgi hgi-stroke hgi-delete-03"></i>
+                    <span>الاجماليات</span>
+                  </button>
+                </mat-menu>
+              </div>
+
+              <!-- <div class="dropdown" [class.show]="isDropdownOpen(request.licenseProjectId)">
                 <button
                   class="btn btn-outline-primary dropdown-toggle"
                   type="button"
@@ -118,7 +138,7 @@
                   <li><a class="dropdown-item" (click)="showBuyerList(request.licenseProjectId); closeDropdown(request)">سجل المشتريين</a></li>
                   <li><a class="dropdown-item" (click)="showTotals(request.licenseProjectId); closeDropdown(request)">الاجماليات</a></li>
                 </ul>
-              </div>
+              </div> -->
             </td>
           </tr>
         </tbody>

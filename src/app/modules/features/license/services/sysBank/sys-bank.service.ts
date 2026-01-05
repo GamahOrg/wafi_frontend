@@ -16,5 +16,7 @@ export class SysBankService {
     GetIntegrationBanks() {
       return this._httpClient.get<CoreResponseDTO<BankDto[]>>(`${Configuration.APIs.Bank.GetIntegrationBanks}`)
     }
-  
+    GetSysBankTermsCondition(bankId:string) {
+      return this._httpClient.get<CoreResponseDTO<any[]>>(`${Configuration.APIs.Bank.GetSysBankTermsCondition}/${bankId}`)
+    }
 }

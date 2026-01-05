@@ -36,7 +36,8 @@ export class ContractDocumentationListComponent implements OnInit, OnDestroy {
   };
   private searchSubject = new Subject<string>();
   searchTerm = '';
-  statusFilter: LicenseProjectBuyerStatusEnum = LicenseProjectBuyerStatusEnum.All;
+  //statusFilter: LicenseProjectBuyerStatusEnum = LicenseProjectBuyerStatusEnum.All;
+  statusFilter: any = '';
 
   private destroy$ = new Subject<void>();
 
@@ -114,6 +115,8 @@ export class ContractDocumentationListComponent implements OnInit, OnDestroy {
   getContractStatus(): void {
     this._realEstateService.getContractStatus().subscribe((res) => {
       this.contractStatus = res.data as ContractStatusDto[]
+      // Add "All" option at the beginning
+      this.contractStatus.unshift({ id: 0, name: 'الكل' } as ContractStatusDto);
     })
   }
   loadBuyers(): void {

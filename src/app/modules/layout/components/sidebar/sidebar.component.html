@@ -1,4 +1,4 @@
-<aside class="sidebar h-100" [ngClass]="{'closed': hideSideBar}">
+<aside class="sidebar" [ngClass]="{'closed': hideSideBar}">
 
   <div class="logo d-flex flex-column justify-content-between align-items-center py-4"
     [ngClass]="{'gap-md-1': hideSideBar, 'flex-md-row': !hideSideBar}">
@@ -6,7 +6,7 @@
       <i class="material-icons">{{ hideSideBar ? 'menu' : 'close'}}</i>
     </span>
 
-    <a [routerLink]="['/wafi/facilities/dashboard']" class="flex-grow-1 text-center">
+    <a href="javascript:void(0)" (click)="navigateWithCheck('/wafi/facilities/dashboard', $event)" class="flex-grow-1 text-center">
       <img [src]="baseImagePath + 'REGA_LOGO_2.svg'" alt="" class="img-fluid logo-img" />
     </a>
   </div>
@@ -54,8 +54,8 @@
         !this.userData?.isEmployee &&
         loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
       " class="link-group">
-      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}" [routerLink]="'/' + links.facilities"
-        [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl === '/' + links.facilities}"
+        href="javascript:void(0)" (click)="navigateWithCheck('/' + links.facilities, $event)">
         <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
         <span class="nav-link-text">الصفحة الرئيسية</span>
       </a>
@@ -70,8 +70,8 @@
         !this.userData?.isEmployee &&
         loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
       " class="link-group">
-      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}" [routerLink]="'/' + links.facilityProfile"
-        [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl === '/' + links.facilityProfile}"
+        href="javascript:void(0)" (click)="navigateWithCheck('/' + links.facilityProfile, $event)">
         <span class="icon"><i class="material-icons-outlined">business</i></span>
         <span class="nav-link-text">ملف المنشأة</span>
       </a>
@@ -95,30 +95,27 @@
               </div>
             </div>
 
-            <a class="nav-link" [routerLink]="'/' + links.qualifying + '/' + links.qualifyingReqs"
-              routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.qualifyingReqs)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.qualifying + '/' + links.qualifyingReqs, $event)">
               <span class="icon"><i class="material-icons-outlined">add_box</i></span>
               <span class="nav-link-text">
                 إنشاء طلب جديد
               </span>
             </a>
 
-            <a class="nav-link" [routerLink]="
-                '/' + links.qualifying + '/' + links.qualifyingReqList
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.qualifyingReqList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.qualifying + '/' + links.qualifyingReqList, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text">قائمة الطلبات</span>
             </a>
 
-            <a class="nav-link" [routerLink]="
-                '/' + links.qualifying + '/' + links.qualifyingCertificates
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.qualifyingCertificates)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.qualifying + '/' + links.qualifyingCertificates, $event)">
               <span class="icon"><i class="material-icons-outlined">local_police</i></span>
               <span class="nav-link-text">شهادات التأهيل</span>
             </a>
-            <a class="nav-link" [routerLink]="
-                '/' + links.qualifying + '/' + links.renewQualifyingList
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.renewQualifyingList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.qualifying + '/' + links.renewQualifyingList, $event)">
               <span class="icon"><i class="material-icons-outlined">new_releases</i></span>
               <span class="nav-link-text">تجديد التأهيل</span>
             </a>
@@ -145,38 +142,37 @@
               </div>
             </div>
 
-            <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.licenseTypes" routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.licenseTypes)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.licenseTypes, $event)">
               <span class="icon"><i class="material-icons-outlined">add_box</i></span>
               <span class="nav-link-text">إنشاء طلب جديد</span>
             </a>
 
-            <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.lincenseList" routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseList, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text">قائمة الطلبات</span>
             </a>
 
 
-            <a class="nav-link" [routerLink]="
-                '/' + links.license + '/' + links.lincenseCertificates
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseCertificates)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseCertificates, $event)">
               <span class="icon"><i class="material-icons-outlined">local_police</i></span>
               <span class="nav-link-text">شهادات الترخيص</span>
             </a>
-            <a class="nav-link" [routerLink]="'/' + links.license + '/' + links.renewLicensesList"
-               routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.renewLicensesList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.renewLicensesList, $event)">
               <span class="icon"><i class="material-icons-outlined">new_releases</i></span>
               <span class="nav-link-text">تجديد الرخص</span>
             </a>
-            <a class="nav-link" [routerLink]="
-                '/' + links.license + '/' + links.lincenseRequestApprovals
-              " routerLinkActive="active">
+            <!-- <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseRequestApprovals)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseRequestApprovals, $event)">
               <span class="icon"><i class="material-icons-outlined">approval</i></span>
               <span class="nav-link-text">الموافقات</span>
-            </a>
+            </a> -->
 
-            <a *ngIf="isDeveloper" class="nav-link" [routerLink]="
-                '/' + links.license + '/' + links.developerApprovalsList
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.developerApprovalsList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.developerApprovalsList, $event)">
               <span class="icon"><i class="material-icons-outlined">handshake</i></span>
               <span class="nav-link-text">اتفاقيات التطوير العقارى</span>
             </a>
@@ -184,23 +180,23 @@
 
             <a *ngIf="isDeveloper" class="nav-link"
                [ngClass]="{'justify-content-center': hideSideBar, 'active': isLicensedProjectsMenuActive()}"
-               [routerLink]="links.recommendationLogsList">
+               href="javascript:void(0)" (click)="navigateWithCheck(links.recommendationLogsList, $event)">
               <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
               <span class="nav-link-text"> المشاريع المرخصة</span>
             </a>
 
             <a *ngIf="isDeveloper" class="nav-link"
                [ngClass]="{'justify-content-center': hideSideBar, 'active': isContractRequestMenuActive()}"
-               [routerLink]="links.contractRequestList">
+               href="javascript:void(0)" (click)="navigateWithCheck(links.contractRequestList, $event)">
               <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
               <span class="nav-link-text">طلبات إلغاء العقود</span>
             </a>
-            
-            <a *ngIf="isDeveloper" class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}"
-               [routerLink]="links.developerProjects" routerLinkActive="active">
+
+            <a *ngIf="isDeveloper" class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.developerProjects)}"
+               href="javascript:void(0)" (click)="navigateWithCheck(links.developerProjects, $event)">
               <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
               <span class="nav-link-text"> سجل التوصيات والإشعارات</span>
-              
+
             </a>
             
 
@@ -230,8 +226,8 @@
   >
     قائمة المشاريع السابقة
   </a> -->
-            <a *ngIf="isAccountant" class="nav-link" [routerLink]="'/' + links.charteredaccountprojectlist"
-               [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+            <a *ngIf="isAccountant" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.charteredaccountprojectlist)}"
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.charteredaccountprojectlist, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text"> مشاريع المحاسب القانوني</span>
             </a>
@@ -260,22 +256,14 @@
               </div>
             </div>
 
-            <a class="nav-link" [routerLink]="
-                '/' +
-                links.lincenceProjectRequest +
-                '/' +
-                links.createLincenceProjectRequestList
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.createLincenceProjectRequestList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.lincenceProjectRequest + '/' + links.createLincenceProjectRequestList, $event)">
               <span class="icon"><i class="material-icons-outlined">add_box</i></span>
               <span class="nav-link-text">إنشاء طلب جديد</span>
             </a>
 
-            <a class="nav-link" [routerLink]="
-                '/' +
-                links.lincenceProjectRequest +
-                '/' +
-                links.lincenceProjectRequestList
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenceProjectRequestList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.lincenceProjectRequest + '/' + links.lincenceProjectRequestList, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text">قائمة الطلبات</span>
             </a>
@@ -302,16 +290,14 @@
               </div>
             </div>
 
-            <a class="nav-link" [routerLink]="
-                '/' + links.license + '/' + links.employeeCreateLicense
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.employeeCreateLicense)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.employeeCreateLicense, $event)">
               <span class="icon"><i class="material-icons-outlined">add_box</i></span>
               <span class="nav-link-text">إنشاء طلب جديد</span>
             </a>
 
-            <a class="nav-link" [routerLink]="
-                '/' + links.license + '/' + links.employeeLicenseList
-              " routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.employeeLicenseList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.employeeLicenseList, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text">قائمة الطلبات</span>
             </a>
@@ -341,8 +327,8 @@
               <span class="nav-link-text">قائمة المشاريع</span>
             </a> -->
 
-            <a class="nav-link" [routerLink]="'/'+links.engineeringManagement+'/'+links.projectList"
-              routerLinkActive="active">
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.projectList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.engineeringManagement + '/' + links.projectList, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
                <span class="nav-link-text">قائمة المشاريع</span>
             </a>
@@ -353,27 +339,34 @@
     </div>
 
     <div *ngIf="loginUserTypeEnum == LoginUserTypeEnum.finalBeneficiary" class="link-group">
-      <a [routerLink]="'/' + links.license + '/' + links.contractdocumentation" routerLinkActive="active"
+      <a [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.contractdocumentation)}"
+        href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.contractdocumentation, $event)"
         class="nav-link">
         <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
         <span class="nav-link-text"> عقود البيع</span>
 
       </a>
 
-       <a class="nav-link" [routerLink]="
-                '/' + links.license + '/' + links.lincenseRequestApprovals
-              " routerLinkActive="active">
+      
+      <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.developerApprovalsList)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.developerApprovalsList, $event)">
+              <span class="icon"><i class="material-icons-outlined">handshake</i></span>
+              <span class="nav-link-text">اتفاقيات التطوير العقارى</span>
+            </a>
+
+       <!-- <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.lincenseRequestApprovals)}"
+              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseRequestApprovals, $event)">
               <span class="icon"><i class="material-icons-outlined">approval</i></span>
               <span class="nav-link-text">الموافقات</span>
-            </a>
+            </a> -->
     </div>
 
     <div *ngIf="
         !this.userData?.isEmployee &&
         loginUserTypeEnum == LoginUserTypeEnum.wafiPartner
       " class="link-group">
-      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}"
-        [routerLink]="'/' + links.userManagement + '/' + links.userProfile" routerLinkActive="active">
+      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.userProfile)}"
+        href="javascript:void(0)" (click)="navigateWithCheck('/' + links.userManagement + '/' + links.userProfile, $event)">
         <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
         <span class="nav-link-text">إدارة المنشأة</span>
       </a>
@@ -383,9 +376,8 @@
         !this.userData?.isEmployee &&
         loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
       " class="link-group">
-      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar}" [routerLink]="
-          '/' + links.complaintsAndReport + '/' + links.complaintsReports
-        " routerLinkActive="active">
+      <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.complaintsReports)}"
+        href="javascript:void(0)" (click)="navigateWithCheck('/' + links.complaintsAndReport + '/' + links.complaintsReports, $event)">
         <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
         <span class="nav-link-text">الشكاوي والبلاغات</span>
       </a>

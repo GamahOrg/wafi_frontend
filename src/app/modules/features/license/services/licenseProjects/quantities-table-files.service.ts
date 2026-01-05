@@ -6,6 +6,7 @@ import { LicenseProjectQuantitiesTableFileCreateUpdateDto, LicenseProjectQuantit
 import { Observable, map } from 'rxjs';
 import { LicenseProjectQuantitiesTableFileAndRelativeWeightDto } from '../../dataModels/license-project-quantities-table-file-and-relative-weight-dto';
 import { LicenseProjectQuantitiesTableFileRelativeWeightsCreateUpdateDto } from '../../dataModels/license-project-quantities-table-file-relative-weights-create-update-dto';
+import { BaseResponse } from 'src/app/shared/models/base-response';
 
 @Injectable()
 export class QuantitiesTableFilesService {
@@ -27,5 +28,11 @@ export class QuantitiesTableFilesService {
         })
       )
   }
+  
+  DeleteFile(fileId: string): Observable<BaseResponse<any>> {
+    return this._httpClient.delete<BaseResponse<any>>
+      (`${Configuration.APIs.LicenseProjectQuantitiesTableFiles.DeleteFile}/${fileId}`)
+  }
+
 }
 

@@ -11,13 +11,15 @@ export interface LicenseProjectApproval {
     approvedOn: string | null;
     role: string;
     approvalRole: ApprovalRole;
+    delegateCustomerName:string
 }
 export interface SaveApproval {
     id: string;
     delegatorCustomerId:string;
     isApproved: boolean | null;
     approvalRole: ApprovalRole;
-    nationalAddress?:string
+    nationalAddress?:string;
+    rejectReason?:string;
 }
 export interface UpdateApproval {
     id: string;

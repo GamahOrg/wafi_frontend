@@ -33,7 +33,7 @@
       [class.active]="isTabActive(1)"
       role="tabpanel"
       *ngIf="isTabActive(1)">
-      <app-business-payment-templates [isActive]="true" [isNew]="false"></app-business-payment-templates>
+      <app-business-payment-templates [isActive]="true" [isNew]="false" [isOpenedWhenComplated]="isOpenedWhenComplated"></app-business-payment-templates>
     </div>
 
     <!-- Additional Terms Tab -->
@@ -43,7 +43,7 @@
       [class.active]="isTabActive(0)"
       role="tabpanel"
       *ngIf="isTabActive(0)">
-      <app-beneficiary-contract-form-additional-terms [isActive]="true" [isNew]="false"></app-beneficiary-contract-form-additional-terms>
+      <app-beneficiary-contract-form-additional-terms [isActive]="true" [isNew]="false" [isOpenedWhenComplated]="isOpenedWhenComplated"></app-beneficiary-contract-form-additional-terms>
     </div>
   </div>
 </div>

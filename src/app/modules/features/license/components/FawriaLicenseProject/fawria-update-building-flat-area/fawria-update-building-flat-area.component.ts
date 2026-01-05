@@ -105,4 +105,19 @@ export class FawriaUpdateBuildingFlatAreaComponent implements OnInit {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
+  preventNegativeValue(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.value && parseFloat(input.value) < 0) {
+      input.value = '0';
+      const controlName = input.id === 'totalBuildingFlatArea' ? 'totalBuildingFlatArea' : 'totalUnits';
+      this.buildingAreaForm.get(controlName)?.setValue(0);
+    }
+  }
+
+  preventNegativeInput(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'Minus') {
+      event.preventDefault();
+    }
+  }
+
 }

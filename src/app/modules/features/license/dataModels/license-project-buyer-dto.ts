@@ -67,6 +67,8 @@ export interface LicenseProjectBuyerDto {
   contractFile: SysFileManagerCreateUpdateDto;
   paymentType: LicenseProjectBuyerPaymentTypeDto;
   licenseProjectBuyerBusinessPayment?: LicenseProjectBusinessPaymentResponseDto;
+  projectName: string | null;
+  neighborhoodName: string | null;
   
 
 
@@ -147,4 +149,8 @@ export interface LicenseProjectAccountsDto {
     custodyAccountNumber: string
     //المبلغ المتوفر بحساب الحفظ
     custodyAvailableAmount: number
+}
+export interface BuyerBusinessPaymentInstallementsDto {
+  id: string;
+  installmentNumber: number;
 }

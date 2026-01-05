@@ -4,7 +4,7 @@
   }
 }
 
-  .form-title {
+.form-title {
   display: flex;
   align-items: center;
   column-gap: .5rem;
@@ -67,30 +67,31 @@
   cursor: pointer;
 }
 
-.form-note,
 .form-text {
   display: flex;
   align-items: center;
-  column-gap: .5rem;
-  color: $black;
+  gap: .5rem;
+  color: #384250;
 
   .text {
     font-size: $font-size-sm;
   }
 
-  .icon,
-  [class^="material-icons"] {
-    font-size: $body-font-size;
-    color: $theme-dark;
+  .icon {
+    display: flex;
+    align-items: center;
+    
+    i,
+    [class^="material-icons"] {
+      font-size: $body-font-size;
+      line-height: 1;
+      color: inherit;
+    }
   }
 }
 
 .form-note {
   font-size: $font-size-xxs;
-
-  [class^="material-icons"] {
-    color: inherit;
-  }
 }
 
 .form-images {

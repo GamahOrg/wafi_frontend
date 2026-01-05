@@ -1,0 +1,107 @@
+<!-- <div class="col-12"
+     *ngIf="availabilityToUpdate">
+    <div class="buttons-wrapper mb-3 d-flex justify-content-end">
+        <button type="button"
+                mat-flat-button
+                color="primary"
+                (click)="send()"
+                [disabled]="!disabledSend">{{localization.send}}</button>
+                <button
+                class="btn d-flex align-items-center justify-content-between btn-primary"
+                (click)="openCompilNotesDialog()"
+                type="button">
+               إعادة إرسال الطلب
+        </button>
+    </div>
+</div> -->
+
+<!-- <ng-container *ngIf="!availabilityToUpdate">
+  <div class="buttons-wrapper mb-3 d-flex justify-content-end">
+    <div>
+      <button type="button" mat-flat-button color="primary" (click)="send()" [disabled]="!disabledSend || requestSubmittedSuccessfully">
+        {{ localization.send }}
+      </button>
+      &nbsp;
+      <button type="button" [disabled]="requestSubmittedSuccessfully" class="btn btn-outline-primary" (click)="openApprovalDialog()">
+        {{ localization.approvalDecisions }}
+      </button>
+    </div>
+  </div>
+</ng-container> -->
+
+<ng-container>
+  <div class="buttons-wrapper mb-3 d-flex justify-content-end">
+    <div>
+      <button *ngIf="!isProfileCompleted" type="button" mat-flat-button color="primary" (click)="verify()">
+        {{ localization.verify }}
+      </button>
+      <button *ngIf="isProfileCompleted" class="btn d-flex align-items-center justify-content-between btn-primary"
+        (click)="openPaymentTermsModal()"
+        type="button">
+        {{ localization.editPaymentandAdditionalTermsTitle }}
+      </button>
+      <!-- &nbsp;
+      <button type="button" [disabled]="requestSubmittedSuccessfully" class="btn btn-outline-primary" (click)="openApprovalDialog()">
+        {{ localization.approvalDecisions }}
+      </button> -->
+    </div>
+  </div>
+</ng-container>
+
+<!-- Farz Rejection Alert Banner -->
+<div class="farz-alert-banner" *ngIf="isProjectHasUnitForFarzIntegration && farzStatusWhenNaturalTypeUnit.licenseProjectFarzRequestStatusId == farzRequestStatus.Rejected">
+  <div class="alert-content">
+    <div class="alert-message">
+      <i class="material-icons-outlined info-icon">info</i>
+      <span>{{ localization.farzRejectionMessage }}</span>
+    </div>
+    <button class="btn-handle-notes" (click)="handleFarzNotes()">
+      {{ localization.handleFarzNotes }}
+    </button>
+  </div>
+</div>
+
+<!-- Farz Approved Alert Banner -->
+<div class="farz-success-banner" *ngIf="isProjectHasUnitForFarzIntegration && farzStatusWhenNaturalTypeUnit.licenseProjectFarzRequestStatusId == farzRequestStatus.Approved && !hideFarzSuccessBanner">
+  <div class="alert-content">
+    <div class="alert-message">
+      <i class="material-icons-outlined success-icon">check_circle</i>
+      <span>{{ localization.farzApprovedMessage }}</span>
+    </div>
+    <button class="btn-close-banner" (click)="closeFarzSuccessBanner()">
+      <i class="material-icons-outlined">close</i>
+    </button>
+  </div>
+</div>
+
+<!-- Farz Warning Alert Banner -->
+<div class="farz-warning-banner" *ngIf="isProjectHasUnitForFarzIntegration && farzStatusWhenNaturalTypeUnit.licenseProjectFarzRequestStatusId == farzRequestStatus.UnderReview && !hideFarzWarningBanner">
+  <div class="alert-content">
+    <div class="alert-message">
+      <i class="material-icons-outlined warning-icon">warning</i>
+      <span>{{ localization.farzWarningMessage }}</span>
+    </div>
+    <button class="btn-close-banner" (click)="closeFarzWarningBanner()">
+      <i class="material-icons-outlined">close</i>
+    </button>
+  </div>
+</div>
+
+<!-- Farz Warning Alert Banner -->
+<div class="farz-warning-banner" *ngIf="isProjectHasUnitForFarzIntegration && farzStatusWhenNaturalTypeUnit.licenseProjectFarzRequestStatusId == farzRequestStatus.IntegrationFailed && !hideFarzWarningBanner">
+  <div class="alert-content">
+    <div class="alert-message">
+      <i class="material-icons-outlined warning-icon">warning</i>
+      <span>{{ localization.integrationFailedMessage }}</span>
+    </div>
+
+     <button  class="btn d-flex align-items-center justify-content-between btn-primary"
+        (click)="openConfirmtionSendTOFarzDialog()"
+        type="button">
+        {{ localization.ResendToFarz }}
+      </button>    
+
+  </div>
+</div>
+
+<app-tabs [ProgressPercentage]="completedProfilePercentage" [hasProgress]="true"></app-tabs>

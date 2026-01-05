@@ -12,6 +12,11 @@
   border-width: 1px 1px 0 1px;
   border-start-start-radius: $border-radius-lg;
   border-start-end-radius: $border-radius-lg;
+
+  &+.tab-data-section {
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+  }
 }
 
 .tab-data-top {
@@ -71,7 +76,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        
+
         width: 1.5rem;
         height: 1.5rem;
         padding: .25rem;
@@ -97,6 +102,11 @@
 
         .icon {
           background-color: rgba($white, .3);
+
+          svg,
+          path {
+            fill: $white;
+          }
         }
       }
     }
@@ -122,7 +132,10 @@
     color: $body-color;
   }
 
-  .edit-icon {
+  .opposite-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     flex-shrink: 0;
     margin-inline-start: auto;
   }
@@ -131,9 +144,20 @@
 .tab-data-section {
   padding-block: 2rem;
   border-width: 0 1px 1px 1px;
+  border-start-start-radius: $border-radius-lg;
+  border-start-end-radius: $border-radius-lg;
   overflow: visible !important;
 
-  &:not(:has(~ .tab-data-section)) {
+  &+.tab-data-header {
+    margin-top: 1rem;
+  }
+
+  &+.tab-data-section {
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+  }
+
+  &:not(:has(+ .tab-data-section)) {
     border-end-start-radius: $border-radius-lg;
     border-end-end-radius: $border-radius-lg;
   }
@@ -176,8 +200,13 @@
   }
 
   .key {
-    font-weight: 500;
-    color: #5D5D5D;
+
+    &,
+    &label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #5D5D5D;
+    }
 
     &+.value {
       margin-top: .5rem;

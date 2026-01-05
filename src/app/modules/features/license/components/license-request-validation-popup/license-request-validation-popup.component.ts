@@ -503,6 +503,116 @@ export class LicenseRequestValidationPopupComponent
       isVisible: true,
     },
 
+    {
+      icon: '',
+      title:'الزون و بلوكات وعمائر',
+      disabled: false,
+      id: 'fawriaLicenseProjectZone',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectZone,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+    {
+      icon: '',
+      title:'أنواع الوحدات بالبلوك / العمارة',
+      disabled: false,
+      id: 'fawriaLicenseProjectModel',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectModel,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+    {
+      icon: '',
+      title:'أكواد وحدات المشروع',
+      disabled: false,
+      id: 'fawriaLicenseProjectCodes',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectCodes,
+      tabErrors: [],
+      isVisible: true,
+    },
+    {
+      icon: '',
+      title:' التصاميم المعمارية والمخططات الهندسية',
+      disabled: false,
+      id: 'fawriaLicenseProjectDesign',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectDesign,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+     {
+      icon: '',
+      title:'جدول الكميات',
+      disabled: false,
+      id: 'fawriaProjectQuantitiesTable',
+      errNum: 0,
+      tabCode: TabCode.fawriaProjectQuantitiesTable,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+     {
+      icon: '',
+      title: 'كادر الإشراف الهندسي',
+      disabled: false,
+      id: 'fawriaEngineeringSupervisionStaff',
+      errNum: 0,
+      tabCode: TabCode.fawriaEngineeringSupervisionStaff,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+      {
+      icon: '',
+      title: 'البنود الإضافية',
+      disabled: false,
+      id: 'fawriaBeneficiaryContractFormAdditionalTerms',
+      errNum: 0,
+      tabCode: TabCode.fawriaBeneficiaryContractFormAdditionalTerms,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+      {
+      icon: '',
+      title: 'نماذج الدفعات المالية',
+      disabled: false,
+      id: 'fawriaLicenseProjectBusinessPayment',
+      errNum: 0,
+      tabCode: TabCode.fawriaLicenseProjectBusinessPayment,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+      {
+      icon: '',
+      title: 'بيانات التواصل للمستفيد النهائي',
+      disabled: false,
+      id: 'fawriaContactInfoEndBeneficiaryComponent',
+      errNum: 0,
+      tabCode: TabCode.fawriaContactInfoEndBeneficiaryComponent,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+     {
+      icon: '',
+      title: 'تفعيل حساب الضمان',
+      disabled: false,
+      id: 'fawriaEscrowAccount',
+      errNum: 0,
+      tabCode: TabCode.fawriaEscrowAccount,
+      tabErrors: [],
+      isVisible: true,
+    },
+
+
     // {
     //   icon: '',
     //   title: 'سند لأمر',
@@ -534,11 +644,26 @@ export class LicenseRequestValidationPopupComponent
     this.observeValidationError();
     this.observePopupEvents();
   }
-  private getDataVisibilityOfLicenseProject() {
+  private getTabCodesHasValidtionError() {
     this.tabsComponentList = [];
     this.subscriptions.push(
-      this._dataVisibilityOfLicenseProjectService
-        .getDataVisibilityOfLicenseProject()
+      this._dataVisibilityOfLicenseProjectService.getTabCodesHasValidtionError().subscribe((res: string[]) => {
+        if(res && res.length > 0){
+          this.mainTabsComponentList.forEach((tab) => {
+            if (res.includes(tab.tabCode as string)) {
+              this.tabsComponentList.push(tab);
+            }
+          })
+        }else{
+          this.getDataVisibilityOfLicenseProject();
+        }
+      }
+    ));
+  }
+
+  getDataVisibilityOfLicenseProject(){
+    this.subscriptions.push(
+      this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProject()
         .subscribe((res: string[]) => {
           this.mainTabsComponentList.forEach((tab) => {
             if (res.includes(tab.tabCode as string)) {
@@ -548,7 +673,6 @@ export class LicenseRequestValidationPopupComponent
         })
     );
   }
-
   // popup
   observePopupEvents(): void {
     // this.observecancelAction();
@@ -584,7 +708,7 @@ export class LicenseRequestValidationPopupComponent
           this.validationError = res;
           this.validateTabs();
           this.setTabErrorMsgArr();
-          this.getDataVisibilityOfLicenseProject();
+          this.getTabCodesHasValidtionError();
         })
     );
   }
@@ -648,5 +772,6 @@ export class LicenseRequestValidationPopupComponent
   ngOnDestroy(): void {
     // this.resetDataVisibilityOfLicenseProject();
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+    this._dataVisibilityOfLicenseProjectService.resetTabCodesHasValidtionError();
   }
 }

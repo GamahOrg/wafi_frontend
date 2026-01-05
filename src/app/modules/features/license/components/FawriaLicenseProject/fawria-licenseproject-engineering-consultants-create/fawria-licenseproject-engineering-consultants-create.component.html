@@ -1,6 +1,6 @@
 <ng-container *ngIf="form" [formGroup]="form">
   <div class="tab-data-header">
-    <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
     <h6 class="title">
       {{ localizations.NewEngineeringConsultantTitle }}
     </h6>
@@ -8,20 +8,20 @@
 
   <div class="tab-data-section">
     <div class="form-group">
+      <span class="text-danger">*</span>
       <label for="commercialRegister" class="form-label">
         {{ localizations.EngineeringConsultant }}
       </label>
       <div class="input-group">
-        <input id="commercialRegister" name="commercialRegister" type="number" class="form-control" [ngClass]="{'is-invalid': errorMessage}" formControlName="commercialRegister" placeholder="أدخل الرقم الموحد للمنشأه">
+        <input id="commercialRegister" name="commercialRegister" class="form-control" [ngClass]="{'is-invalid': errorMessage}" formControlName="commercialRegister" placeholder="أدخل الرقم الموحد للمنشأه" (input)="onCommercialRegisterChange()">
         <button class="btn btn-primary" type="button" (click)="validate()">
           {{ localizations.ValidateConsultant }}
         </button>
       </div>
 
-      <div class="invalid-feedback d-block" *ngIf="controls['commercialRegister']?.hasError('required') && controls['commercialRegister']?.touched">
-        {{ localizations.EngineeringConsultantRequired }}
-      </div>
-
+      <!-- <div class="invalid-feedback d-block" *ngIf="controls['commercialRegister']?.hasError('required') && controls['commercialRegister']?.touched">
+    {{ localizations.EngineeringConsultantRequired }}
+  </div> -->
       <div class="form-text">
         <span class="icon" [ngClass]="{'text-danger': errorMessage}">
           <i class="hgi hgi-stroke hgi-alert-circle"></i>
@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="entity">
+  <ng-container *ngIf="entity?.engineeringConsultant">
     <div class="tab-data-section">
       <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
@@ -57,14 +57,24 @@
             <span class="required-asterisk">*</span>
             مهلة المصادقة على التقرير المالي
           </label>
-          <input id="financialReportApprovalPeriodInDays" name="financialReportApprovalPeriodInDays" type="number" class="form-control" formControlName="financialReportApprovalPeriodInDays" max="30" placeholder="أدخل مهلة المصادقة على التقرير المالي">
+          <input id="financialReportApprovalPeriodInDays" name="financialReportApprovalPeriodInDays" type="number" class="form-control" formControlName="financialReportApprovalPeriodInDays" min="1" max="30" placeholder="أدخل مهلة المصادقة على التقرير المالي">
 
-          <div class="invalid-feedback d-block" *ngIf="controls['financialReportApprovalPeriodInDays']?.hasError('required') && controls['financialReportApprovalPeriodInDays']?.touched">
-            هذا الحقل مطلوب
+          <div class="form-text text-danger" *ngIf="controls['financialReportApprovalPeriodInDays']?.hasError('required') && controls['financialReportApprovalPeriodInDays']?.touched">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <p> الحقل مطلوب</p>
           </div>
 
-          <div class="form-text">
-            <span class="icon" [ngClass]="{'text-danger': errorMessage}">
+          <div class="form-text text-danger" *ngIf="controls['financialReportApprovalPeriodInDays']?.hasError('min') && controls['financialReportApprovalPeriodInDays']?.touched">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <p>يجب أن تكون القيمة أكبر من صفر</p>
+          </div>
+
+          <div class="form-text" [ngClass]="{'text-danger': controls['financialReportApprovalPeriodInDays']?.hasError('max')}" *ngIf="!controls['financialReportApprovalPeriodInDays']?.hasError('required') && !controls['financialReportApprovalPeriodInDays']?.hasError('min')">
+            <span class="icon">
               <i class="hgi hgi-stroke hgi-alert-circle"></i>
             </span>
             <p>مدة المصادقة لا يجب أن تتعدى 30 يوماً</p>
@@ -73,19 +83,20 @@
 
         <!-- Contract Value -->
         <div class="col-12 col-lg-6">
-          <label for="contractValue" class="form-label">
+          <label for="contarctValue" class="form-label">
             <span class="required-asterisk">*</span>
             قيمة العقد
           </label>
 
           <div class="input-group">
-            <input id="contractValue" name="contractValue" type="number" class="form-control" formControlName="contarctValue" placeholder="اختر قيمة العقد">
+            <input id="contarctValue" name="contarctValue" type="text" class="form-control" formControlName="contarctValue" placeholder="اختر قيمة العقد"
+              (input)="formatContractValue($event)" (blur)="formatContractValueOnBlur($event)" (focus)="removeContractValueFormatting($event)">
             <span class="input-group-text">
               <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
             </span>
           </div>
 
-          <div class="invalid-feedback d-block" *ngIf="controls['contractValue']?.hasError('required') && controls['contractValue']?.touched">
+          <div class="invalid-feedback d-block" *ngIf="controls['contarctValue']?.hasError('required') && controls['contarctValue']?.touched">
             هذا الحقل مطلوب
           </div>
         </div>
@@ -94,8 +105,7 @@
         <div class="col-12 col-lg-6">
           <label for="paymentDeadline" class="form-label d-flex align-items-center">
             <span class="required-asterisk">*</span>
-            مهلة السداد
-
+مهلة السداد بالأيام             
             <span class="ms-auto cursor-pointer" [popover]="popTemplate" triggers="mouseenter:mouseleave">
               <i class="hgi hgi-stroke hgi-alert-circle"></i>
             </span>
@@ -120,7 +130,7 @@
             المفوض بالتوقيع على وثائق الصرف
           </label>
           <select id="authorizedSignatories" class="form-select" formControlName="authorizedToSignDelegator" (change)="onDelegatorChange()">
-            <option value="" selected disabled>اختر المفوض على وثائق الصرف</option>
+            <option [ngValue]="null" disabled hidden>اختر المفوض على وثائق الصرف</option>
             <option *ngFor="let signatory of licenseProjectDelegators" [value]="signatory.id">
               {{ signatory.fullName}}
             </option>
@@ -161,8 +171,8 @@
             <tr>
               <th scope="col">البند</th>
               <th scope="col">الكمية</th>
-              <th scope="col" class="w-25">السعر للوحدة</th>
-              <th scope="col" class="w-40">الوصف</th>
+              <th scope="col">السعر للوحدة</th>
+              <th scope="col">الوصف</th>
               <th scope="col" class="text-center">
                 <button type="button" class="btn-icon btn btn-secondary" (click)="addPaymentRow()">
                   <i class="hgi hgi-stroke hgi-add-circle"></i>
@@ -193,7 +203,7 @@
                   <div class="input-group">
                     <input type="number" class="form-control table-input" [(ngModel)]="item.unitPrice" (ngModelChange)="clearPaymentError(i, 'unitPrice')" [ngModelOptions]="{standalone: true}" placeholder="السعر للوحدة" [class.is-invalid]="paymentTableErrors[i]?.unitPrice">
                     <span class="input-group-text">
-                      <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon opacity-100">
+                      <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
                     </span>
                   </div>
                   <div *ngIf="paymentTableErrors[i]?.unitPrice" class="text-danger" style="font-size: 12px; margin-top: 4px;">
@@ -224,7 +234,7 @@
   </ng-container>
 </ng-container>
 
-<div class="mt-3" *ngIf="entity">
+<div class="mt-3" *ngIf="entity?.engineeringConsultant">
   <app-license-project-parties-additional-terms [TermsPartType]='TermsPartType.EngineeringConsultant'></app-license-project-parties-additional-terms>
 </div>
 

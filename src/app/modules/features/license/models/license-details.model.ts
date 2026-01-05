@@ -66,6 +66,8 @@ export enum FarzRequestStatusEnum {
   Approved = 2,
   //تم رفض وثيقة التملك لوجود ملاحظات
   Rejected = 3,
+  //فشل التكامل مع نظام فرز
+  IntegrationFailed = 4
 }
 
 export interface LicenseRequestCustomerHeaderEventStatus {
@@ -182,4 +184,11 @@ export interface LicenseRequestLogsDto {
   description: string,
   createdOn: Date,
   hiddenForCustomer: boolean,
+}
+
+export interface GetRequestHeaderByIdDto  {
+  id: string;
+  requestCode: string | null;
+  licenseProjectId: string;
+  typeCode: string;
 }

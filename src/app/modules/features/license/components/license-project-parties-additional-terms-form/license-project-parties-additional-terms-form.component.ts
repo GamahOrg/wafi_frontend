@@ -14,6 +14,7 @@ import { SaveUpdateConfirmationComponent } from 'src/app/shared/components/save-
 import { LicenseProjectPartiesAdditionalTermsDto, TermsPartType } from '../../models/license-project-parties-additional-terms-model';
 import { LicenseProjectPartiesAdditionalTermsService } from '../../services/LicenseProjectPartiesAdditionalTerms.service';
 import { environment } from 'src/environments/environment';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 
 @Component({
   selector: 'app-license-project-parties-additional-terms-form',
@@ -29,7 +30,7 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
     this._termsPartType = value;
     // Update max item number when TermsPartType changes
     if (value != null && value !== undefined && this.licenseProjectId) {
-      this.getMaxItemNumber();
+      // this.getMaxItemNumber();
     }
   }
 
@@ -52,17 +53,19 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
     itemNumber: 'رقم البند التسلسلي',
     itemTitle: 'عنوان البند',
     itemTitlePlaceholder: 'برجاء إدخال عنوان البند',
-    itemText: 'نص الأساسي',
+    itemText: 'نص البند الأساسي',
     itemTextPlaceholder: 'برجاء إدخال نص البند الأساسي',
     additionalTermsAcknowledgment: 'إقرار البنود الاضافية',
     licenseBeneficiaryContractFormId: ' نوع البند',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
-    addAdditionalTerm: 'اضافة بند اضافي',
+    addAdditionalTerm: 'اضافة بند فرعي',
     additionalTermText: 'نص البند الاضافي',
     additionalTermTextPlaceholder: 'برجاء إدخال نص البند الإضافي',
     remove: 'حذف',
+    maxLengthErrorMsg150: 'يجب ألا يتجاوز عنوان البند 150 حرفًا.',
+    maxLengthErrorMsg2000: 'يجب ألا يتجاوز نص البند 2000 حرف',
   };
 
   constructor(
@@ -72,7 +75,8 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _popupService: PopupService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _tabsService: TabsService
   ) {}
 
   partiesAdditionalTermsForm = this._formBuilder.group({
@@ -82,8 +86,8 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
       [Validators.required],
     ],
     itemNumber: [0, [Validators.required]],
-    itemTitle: ['', [Validators.required]],
-    itemText: ['', [Validators.required]],
+    itemTitle: ['', [Validators.required, Validators.maxLength(150)]],
+    itemText: ['', [Validators.required, Validators.maxLength(2000)]],
     isMainTerm: [true, [Validators.required]],
     additionalTermsAcknowledgment: [false, [Validators.required]],
     additionalTerms: this._formBuilder.array([]),
@@ -113,15 +117,27 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
   ngOnInit() {
     this.getLicenseProjectIdStorage();
     this.observePopupEvents();
+    this.trackFormChanges();
+  }
+
+  private trackFormChanges(): void {
+    this.subscriptions.push(
+      this.partiesAdditionalTermsForm.valueChanges.subscribe(() => {
+        if (this.partiesAdditionalTermsForm.dirty) {
+          this._tabsService.setUnsavedChanges(true);
+        }
+      })
+    );
   }
 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    
     if(this.licenseProjectId){
       // Only get max item number if TermsPartType is already set
-      if(this.TermsPartType != null && this.TermsPartType !== undefined){
-        this.getMaxItemNumber();
-      }
+      // if(this.TermsPartType != null && this.TermsPartType !== undefined){
+      //   this.getMaxItemNumber();
+      // }
       this.subscriptions.push(
         this._popupService.popupData.subscribe((res: BeneficiaryPopupData) => {
 
@@ -129,6 +145,13 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
             if (typeof res.data === 'object' && 'actionType' in res.data) {
               // Setter will automatically call getMaxItemNumber() when value changes
               this.TermsPartType = (res.data as any).actionType;
+            }
+            if (typeof res.data === 'object' && 'pageNode' in res.data) {
+              // Setter will automatically call getMaxItemNumber() when value changes
+              const pageNode = (res.data as any).pageNode;
+              if(pageNode === 'add'){
+                this.getMaxItemNumber();
+              }
             }
             if (typeof res.data === 'object' && 'obj' in res.data) {
               // this.partiesAdditionalTermsForm.patchValue((res.data as any).obj);
@@ -142,6 +165,7 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
   }
 
   getMaxItemNumber() {
+    
     this._licenseProjectPartiesAdditionalTermsService
       .GetMaxItemNumberByLicenseProjectId(this.licenseProjectId as string, this.TermsPartType)
       .subscribe((res) => {
@@ -151,7 +175,7 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
 
   addAdditionalTerm(): void {
     const additionalTermGroup = this._formBuilder.group({
-      itemText: ['', [Validators.required]],
+      itemText: ['', [Validators.required, Validators.maxLength(2000)]],
     });
     this.additionalTermsArray.push(additionalTermGroup);
   }
@@ -218,7 +242,7 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
 
     additionalTerms.forEach((term) => {
       const additionalTermGroup = this._formBuilder.group({
-        itemText: [term.itemText || '', [Validators.required]],
+        itemText: [term.itemText || '', [Validators.required, Validators.maxLength(2000)]],
       });
       this.additionalTermsArray.push(additionalTermGroup);
     });
@@ -355,14 +379,18 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
         .subscribe((res) => {
           if (res.isDone) {
             this._toastrService.success(this.localization.savedSuccessfully);
+            this.partiesAdditionalTermsForm.markAsPristine();
+            this._tabsService.setUnsavedChanges(false);
             this._popupService.dismissDialog();
             this._popupService.confirmAction.emit();
-          } else this._toastrService.error(res.message);
+          } 
+          // else this._toastrService.error(res.message);
         })
     );
   }
 
   ngOnDestroy() {
+    this._tabsService.setUnsavedChanges(false);
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 }

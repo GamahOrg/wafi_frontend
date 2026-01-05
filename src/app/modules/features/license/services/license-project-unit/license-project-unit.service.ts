@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProjectUnit, SysLicenseProjectBuildingBlockTypeDto } from '../../models/project-units';
+import { LicenseProjectDeedLookupDto, LicenseProjectNatureTypeDto, ProjectUnit, SysLicenseProjectBuildingBlockTypeDto } from '../../models/project-units';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
@@ -55,6 +55,18 @@ export class LicenseProjectUnitService {
 
 
 
+
+  // GetLicenseProjectNatureType(projectId: string): Observable<LicenseProjectNatureTypeDto | null> {
+  //   return this._httpClient.get<CoreResponseDTO<LicenseProjectNatureTypeDto>>(`${Configuration.APIs.LicenseProjectUnit.GetLicenseProjectNatureType}/${projectId}`).pipe(
+  //     map((res: CoreResponseDTO<LicenseProjectNatureTypeDto>) => {
+  //       if (res.data) {
+  //         return res.data as LicenseProjectNatureTypeDto
+  //       } else {
+  //         return null
+  //       }
+  //     })
+  //   )
+  // }
 
   GetByZoneId(zoneId: string): Observable<ProjectUnit[] | null> {
     return this._httpClient.get<CoreResponseDTO<ProjectUnit[]>>(`${Configuration.APIs.LicenseProjectUnit.GetByZoneId}/${zoneId}`).pipe(
@@ -139,5 +151,30 @@ export class LicenseProjectUnitService {
           return res;
         })
       )
+  }
+
+
+  GetDeedsDDLByLicenseProjectId(projectId: string): Observable<LicenseProjectDeedLookupDto[] | null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectDeedLookupDto[]>>(`${Configuration.APIs.LicenseProjectUnit.GetDeedsDDLByLicenseProjectId}/${projectId}`).pipe(
+      map((res: CoreResponseDTO<any[]>) => {
+        if (res.data) {
+          return res.data as LicenseProjectDeedLookupDto[]
+        } else {
+          return null
+        }
+      })
+    )
+  }
+
+  GetLicenseProjectNatureType(projectId: string): Observable<LicenseProjectNatureTypeDto | null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectNatureTypeDto>>(`${Configuration.APIs.LicenseProjectUnit.GetLicenseProjectNatureType}/${projectId}`).pipe(
+      map((res: CoreResponseDTO<any>) => {
+        if (res.data) {
+          return res.data as LicenseProjectNatureTypeDto
+        } else {
+          return null
+        }
+      })
+    )
   }
 }

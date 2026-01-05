@@ -1,67 +1,70 @@
-<div class="tab-data-section">
-    <div class="tab-data-section-title-subtitle">
-        <h6 class="title">
-            {{localization.totalNumberOfUnitCodes}}
-            {{projectUnitCodes.length}}
+<div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+  <h6 class="title">{{localization.totalNumberOfUnitCodes}} {{projectUnitCodesPaginated?.totalCount }}</h6>
 
-            <button class="btn btn-link"
-                    (click)="openDialog(undefined)">
-                <span class="material-icons-outlined">add_circle_outline</span>
-                {{localization.addingNewCode}}
+  <button class="btn btn-link" (click)="openDialog(undefined)" *ngIf="!hideActionButtons">
+    <i class="hgi hgi-stroke hgi-add-circle"></i>
+    {{localization.addingNewCode}}
+  </button>
+</div>
+
+<div class="table-responsive" *ngIf="projectUnitCodesPaginated?.results?.length">
+  <table class="table table-light">
+    <thead>
+      <tr>
+        <th>{{ localization.code }}</th>
+        <th>{{ localization.deliveryOn }}</th>
+        <th>{{ localization.price }}</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let code of projectUnitCodesPaginated?.results">
+        <td>{{ code.code }}</td>
+        <td>{{ code.deliveryOn | date:'yyyy-MM-dd' }}</td>
+        <td>{{ formatNumber(code.price) }}</td>
+        <td>
+          <div class="d-flex align-items-center justify-content-end">
+            <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
+              <mat-icon>more_vert</mat-icon>
             </button>
-        </h6>
-    </div>
+            <mat-menu #tableActionsMenu="matMenu">
+              <button mat-menu-item (click)="openDialog(code)" class="menu-edit-btn">
+                <i class="hgi hgi-stroke hgi-pencil-edit-02 fa-lg"></i>
+                <span>تعديل البيانات</span>
+              </button>
+              <button mat-menu-item (click)="delete(code.id)" class="menu-delete-btn">
+                <i class="hgi hgi-stroke hgi-delete-03"></i>
+                <span>حذف الوحدة</span>
+              </button>
+            </mat-menu>
+          </div>
 
-    <div *ngIf="projectUnitCodes && projectUnitCodes.length"
-         class="table-responsive">
-        <table class="table table-light">
-            <thead>
-                <tr>
-                    <th>{{localization.code}}</th>
-                    <th>{{localization.deliveryOn}}</th>
-                    <th> {{localization.price}}</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let code of projectUnitCodes">
-                    <td> {{code.code}}</td>
+          <!-- <div class="table-actions" *ngIf="!hideActionButtons">
+            <div class="menu-trigger">
+              <button mat-mini-fab [matMenuTriggerFor]="tableActions">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
 
-                    <td>{{code.deliveryOn | date:'yyyy-MM-dd'}}</td>
-                    <td> {{code.price}}</td>
-                    <td>
-                        <div class="table-actions">
-                            <div class="menu-trigger">
-                                <button mat-mini-fab
-                                        [matMenuTriggerFor]="tableActions">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                            </div>
-                            <mat-menu #tableActions="matMenu">
-                                <button mat-menu-item
-                                        (click)="openDialog(code)">
-                                    <mat-icon color="primary">edit</mat-icon>
-                                    <span>تعديل البيانات</span>
-                                </button>
-                                <button mat-menu-item
-                                        (click)="delete(code.id)">
-                                    <mat-icon color="warn">delete</mat-icon>
-                                    <span>حذف نموذج</span>
-                                </button>
-                            </mat-menu>
-                        </div>
-                        <!-- <div class="d-flex align-items-center justify-content-end column-gap-2">
-                            <button mat-icon-button
-                                    color="primary"
-                                    (click)="openDialog(code)"><mat-icon>edit</mat-icon></button>
-                            <button mat-icon-button
-                                    color="warn"
-                                    (click)="delete(code.id)"><mat-icon>delete</mat-icon></button>
-                        </div> -->
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <mat-menu #tableActions="matMenu">
+              <button mat-menu-item (click)="openDialog(code)">
+                <mat-icon color="primary">edit</mat-icon>
+                <span>تعديل البيانات</span>
+              </button>
 
-</div> -
+              <button mat-menu-item (click)="delete(code.id)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>حذف الوحدة</span>
+              </button>
+            </mat-menu>
+          </div> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-4">
+  <app-pagination></app-pagination>
+</div>

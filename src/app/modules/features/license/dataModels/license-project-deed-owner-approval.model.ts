@@ -26,4 +26,9 @@ export interface LicenseProjectDeedOwnerApproval {
   city: SysCityCreateUpdateDto;
   rejectReason:string;
   isFacilityOwner:boolean;
+  deedNumber?:string;
+  licenseNumber?:string;
+  constructionLicenseFile?:SysFileManagerCreateUpdateDto | null;
+  identityTypeCode?:number;
+  typeCode?:number;
 }

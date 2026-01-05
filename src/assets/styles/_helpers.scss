@@ -47,22 +47,31 @@
   flex-direction: column;
   gap: .5rem;
 
+  &.horiz {
+    flex-direction: row;
+  }
+
   .key {
-    font-size: $font-size-xs;
-    font-weight: 500;
-    color: $lightgray;
+    font-weight: 600;
+    color: $headings-color;
   }
 
   .value {
-    font-size: $font-size-sm;
     font-weight: 500;
-    color: $headings-color;
+    color: #5D5D5D;
 
     img,
     .icon {
       display: inline-block;
       vertical-align: middle;
-      margin-inline-end: .25rem;
+
+      &:first-child {
+        margin-inline-end: .25rem;
+      }
+
+      &:last-child {
+        margin-inline-start: .25rem;
+      }
     }
 
     img {
@@ -89,8 +98,42 @@
   font-weight: 500;
   line-height: normal;
   color: #1F2A37;
-  
+
   border: 1px solid #e5e7eb;
   border-radius: $border-radius-xs;
   background-color: #F9FAFB;
+}
+
+.chip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+
+  padding: .25rem .5rem;
+  border-radius: $border-radius-sm;
+
+  font-size: $font-size-xs;
+  font-weight: 500;
+  color: $dark;
+  background-color: #F3F4F6;
+
+  .btn-icon {
+    --bs-btn-border-radius: 50%;
+
+    width: .875rem;
+    height: .875rem;
+    font-size: $font-size-xxs;
+
+    &.btn-dark {
+      --bs-btn-bg: #{$dark};
+    }
+  }
+}
+
+.buttons-wrapper {
+  padding: 1rem;
+  border: 1px solid $lightergray;
+  border-radius: $card-border-radius;
+  background-color: $card-bg;
 }

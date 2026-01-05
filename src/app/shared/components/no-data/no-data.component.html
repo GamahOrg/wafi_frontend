@@ -1,9 +1,9 @@
 <div class="no-data">
-  <h6 class="title">{{title}}</h6>
+  <h6 class="title" *ngIf="showTitle">{{title}}</h6>
 
   <img src="assets/images/general/no-data-found.SVG" class="img-fluid" alt="">
 
-  <p class="text" *ngIf="showText">{{text}}</p>
+  <p [ngClass]="useTitleClass ? 'title' : 'text'" *ngIf="showText">{{text}}</p>
 
   <div class="actions">
     <button *ngIf="showCompleteBtn" mat-flat-button color="primary" (click)="noDataButtonClicked()" class="mx-1">{{completeBtnTitle}}</button>

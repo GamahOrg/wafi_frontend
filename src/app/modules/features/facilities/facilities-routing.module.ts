@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: Configuration.pages.facilities.facilityDashboard,
     component: FacilityDashboardComponent,
-    data: { breadcrumb: 'لوحة التحكم' },
+    data: { breadcrumb: 'لوحة التحكم', hideBreadcrumb: true },
   },
   {
     path: Configuration.pages.facilities.facilityProfile,
@@ -29,7 +29,7 @@ const routes: Routes = [
   {
     path: Configuration.pages.facilities.Dashboard,
     component: DashboardComponent,
-    data: { breadcrumb: 'Dashboard' },
+    data: { breadcrumb: 'Dashboard', hideBreadcrumb: true },
   },
 ];
 

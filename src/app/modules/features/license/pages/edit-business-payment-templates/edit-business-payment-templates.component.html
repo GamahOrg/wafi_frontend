@@ -13,16 +13,17 @@
     <div class="form-row">
       <div class="form-group">
         <label for="modelTitle">عنوان النموذج *</label>
-        <input
-          type="text"
-          id="modelTitle"S
-          formControlName="modelTitle"
-          placeholder="عنوان النموذج"
-          class="form-control"
-          [class.invalid]="paymentForm.get('modelTitle')?.invalid && paymentForm.get('modelTitle')?.touched"
-        />
+        <input type="text"
+               id="modelTitle" S
+               formControlName="modelTitle"
+               placeholder="عنوان النموذج"
+               class="form-control"
+               [class.invalid]="paymentForm.get('modelTitle')?.invalid && paymentForm.get('modelTitle')?.touched" />
         <div class="error-message" *ngIf="paymentForm.get('modelTitle')?.invalid && paymentForm.get('modelTitle')?.touched">
           هذا الحقل مطلوب
+        </div>
+        <div class="error-message" *ngIf="paymentForm.get('modelTitle')?.errors?.['maxlength']">
+          عنوان النموذج يجب ألا يتجاوز 50 حرفًا.
         </div>
       </div>
 
@@ -124,22 +125,6 @@
         </div>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group full-width">
-        <label>ألية الدفع *</label>
-        <div class="radio-group">
-          <div class="radio-item" *ngFor="let type of licenseBuyerPaymentType">
-            <input
-              type="radio"
-              [id]="type.id"
-              [value]="type.id"
-              formControlName="licenseProjectBuyerPaymentTypeId"
-            />
-            <label [for]="type.id">{{ type.name }}</label>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- Advance Payment Value (Only for cash + installments) -->
     <div class="form-row" *ngIf="isCashPlusInstallment">
       <div class="form-group">
@@ -163,30 +148,6 @@
           <span *ngIf="advancePaymentValue?.errors?.['required']">هذا الحقل مطلوب</span>
           <span *ngIf="advancePaymentValue?.errors?.['min']">القيمة يجب أن تكون أكبر من  0</span>
           <span *ngIf="advancePaymentValue?.errors?.['max']">القيمة يجب أن تكون أقل من أو تساوي {{ maxWithholdingRate }}</span>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="completionRateForAdvancePayment">قيمة نسبة الانجاز للدفعة المقدمة *</label>
-        <div class="percentage-input-group">
-          <input
-            type="number"
-            id="completionRateForAdvancePayment"
-            formControlName="completionRateForAdvancePayment"
-            class="form-control"
-            min="0.01"
-            [max]="maxCompletionRate"
-            step="0.01"
-            placeholder="قيمة نسبة الانجاز للدفعة المقدمة"
-            (input)="onAdvancePaymentChange()"
-            [class.invalid]="completionRateForAdvancePayment?.invalid && completionRateForAdvancePayment?.touched"
-          />
-          <span class="percentage-symbol">%</span>
-        </div>
-        <div class="error-message" *ngIf="completionRateForAdvancePayment?.invalid && completionRateForAdvancePayment?.touched">
-          <span *ngIf="completionRateForAdvancePayment?.errors?.['required']">هذا الحقل مطلوب</span>
-          <span *ngIf="completionRateForAdvancePayment?.errors?.['min']">القيمة يجب أن تكون أكبر من  0</span>
-          <span *ngIf="completionRateForAdvancePayment?.errors?.['max']">القيمة يجب أن تكون أقل من أو تساوي {{ maxCompletionRate }}</span>
         </div>
       </div>
     </div>
@@ -274,14 +235,14 @@
             </ng-container>
           </td>
           <td>
-            <input 
-              type="text" 
+            <input
+              type="text"
               [(ngModel)]="row.description"
               [ngModelOptions]="{standalone: true}"
               class="form-control table-input"
               placeholder="وصف الدفعة"
-              [readonly]="isFirstRowInCashMode(row.id)"
-              [class.readonly]="isFirstRowInCashMode(row.id)"
+              [readonly]="isFirstRowInCashMode(row.id) || row.description === 'الدفعة الاخيرة'"
+              [class.readonly]="isFirstRowInCashMode(row.id) || row.description === 'الدفعة الاخيرة'"
             />
           </td>
         </tr>

@@ -20,6 +20,8 @@ export class FawriaLicenseprojectDeedsListViewOnlyComponent
 {
   @Output() changePage = new EventEmitter<Pagemode>();
 
+  isUnit: boolean | null = null;
+
   baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
 
@@ -74,7 +76,7 @@ export class FawriaLicenseprojectDeedsListViewOnlyComponent
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _projectInstantDeedService: ProjectInstantLicenseDeedService,
     private _toastrService: ToastrService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +87,17 @@ export class FawriaLicenseprojectDeedsListViewOnlyComponent
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
+  getNatureTypeIdByLicenseProjectId(): void {
+    this.subscriptions.push(
+      this._projectInstantDeedService
+        .GetNatureTypeIdByLicenseProjectId(this.licenseProjectId)
+        .subscribe((res:any) => {
+          if (res) {
+            this.isUnit = res;
+          }
+        })
+    );
+  }
   private getLicenseProjectIdStorage(): void {
     const licenseProjectId =
       this._sharedLicenseProjectService.getLicenseProjectIdStorage();
@@ -92,8 +105,10 @@ export class FawriaLicenseprojectDeedsListViewOnlyComponent
       this.licenseProjectId = licenseProjectId;
       this.loadData();
       this.GetDeedHeaderProjectData();
+      this.getNatureTypeIdByLicenseProjectId();
     }
   }
+
   loadData(): void {
     this.subscriptions.push(
       this._projectInstantDeedService
@@ -104,8 +119,6 @@ export class FawriaLicenseprojectDeedsListViewOnlyComponent
           }
         })
     );
-
-
   }
 
   GetDeedHeaderProjectData(): void {
@@ -122,7 +135,6 @@ export class FawriaLicenseprojectDeedsListViewOnlyComponent
 
   addDeeds(): void {
     this.changePage.emit(Pagemode.Create);
-
   }
 
   editDeed(deed: LicenseProjectInstantDeedResponseDto): void {

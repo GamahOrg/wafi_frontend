@@ -27,7 +27,7 @@
   </div>
 
   <ng-container *ngIf="reqList.totalCount > 0">
-    <div class="table-responsive mb-3">
+    <div class="table-responsive">
       <table class="table table-light">
         <thead>
           <tr>
@@ -36,6 +36,7 @@
             <th scope="col">درجة تأهيل المطوّر</th>
             <th scope="col">اسم الموظف الذي قام بالإضافة</th>
             <th scope="col">تاريخ الاضافة</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -61,9 +62,25 @@
               </div>
             </td>
             <td>
-              <span class="text-dark" dir="ltr">{{
+              <span class="text-dark" dir="ltr">
+                {{
                 request.createdOn | date :'yyyy-MM-dd'
-              }}</span>
+                }}
+              </span>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-end">
+                <button mat-icon-button [matMenuTriggerFor]="parentMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #parentMenu="matMenu">
+                  
+                  <button mat-menu-item (click)="confirmDeleteDeveloper(request)" class="menu-delete-btn">
+                    <i class="hgi hgi-stroke hgi-delete-03"></i>
+                    <span>حذف المطور</span>
+                  </button>
+                </mat-menu>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -101,7 +118,7 @@
         <form [formGroup]="searchForm" (ngSubmit)="searchFacility()">
           <div class="form-group">
             <label for="commercialRegisterNumber" class="form-label">
-              <span class="text-danger">*</span> الرقم الموحّد للمنشأة
+              <span class="required-star">*</span> الرقم الموحّد للمنشأة
             </label>
             <div class="search-input-wrapper">
               <input

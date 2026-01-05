@@ -1,9 +1,9 @@
 <div class="tab-data-header" *ngIf="withdrawSurplusBeforeProjectEndRequest && withdrawSurplusBeforeProjectEndRequest.licenseProjectRequest
     && (withdrawSurplusBeforeProjectEndRequest.licenseProjectRequest.externalRequestStatusId==LicenseProjectRequestStatusEnum.New || withdrawSurplusBeforeProjectEndRequest.licenseProjectRequest.externalRequestStatusId==LicenseProjectRequestStatusEnum.CustomerFeedback)">
-    <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
     <h6 class="title">تفاصيل الطلب</h6>
   
-    <button class="edit-icon btn btn-outline-primary" (click)="openDialog()">
+    <button class="opposite-title btn btn-outline-primary" (click)="openDialog()">
       <span class="material-icons">edit</span>
     </button>
   </div>
