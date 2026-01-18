@@ -1,0 +1,40 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/bootstrap-custom/tables";
+@import "/src/assets/styles/content/table-content";
+@import "/src/assets/styles/content/tab-content";
+@import "/src/assets/styles/content/form-conent";
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+
+.status-badge {
+  font-size: 12px;
+  // font-family: $font-family;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 16px;
+  display: inline-block;
+
+  &.rejected {
+    background-color: var(--Tag-tag-background-warning-light, #FFFAEB);
+    color: #93370D;
+  }
+
+  &.approved {
+    background-color: #D1FAE5;
+    color: #059669;
+  }
+
+  &.pending {
+    background-color: #FEF3C7;
+    color: #D97706;
+  }
+}
+
+.badge-dot {
+  font-size: 13px;
+  font-weight: bolder;
+}

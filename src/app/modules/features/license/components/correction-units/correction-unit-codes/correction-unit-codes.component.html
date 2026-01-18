@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+  <h6 class="title">{{localization.totalNumberOfUnitCodes}} {{projectUnitCodesPaginated?.totalCount }}</h6>
+
+  <button class="btn btn-link" (click)="openDialog(undefined)" *ngIf="!hideActionButtons">
+    <i class="hgi hgi-stroke hgi-add-circle"></i>
+    {{localization.addingNewCode}}
+  </button>
+</div>
+
+<div class="table-responsive" *ngIf="projectUnitCodesPaginated?.results?.length">
+  <table class="table table-light">
+    <thead>
+      <tr>
+        <th colspan="2">{{ localization.code }}</th>
+        <th>{{ localization.deliveryOn }}</th>
+        <th colspan="2">{{ localization.price }}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let code of projectUnitCodesPaginated?.results">
+        <td class="w-20">{{ code.code }}</td>
+        <td>
+        
+          <span class="tag tag-info">
+            {{ code.isPrevious ? 'سابقة' : 'جديدة' }}
+          </span>
+        </td>
+        <td>{{ code.deliveryOn | date:'yyyy-MM-dd' }}</td>
+        <td>{{ formatNumber(code.price) }}</td>
+        <td>
+          <div class="d-flex align-items-center justify-content-end" *ngIf="code.canEdit || code.canDelete">
+            <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #tableActionsMenu="matMenu">
+              <button mat-menu-item (click)="openDialog(code)" class="menu-edit-btn" *ngIf="code.canEdit">
+                <i class="hgi hgi-stroke hgi-pencil-edit-02 fa-lg"></i>
+                <span>تعديل البيانات</span>
+              </button>
+              <button mat-menu-item (click)="delete(code.id)" class="menu-delete-btn" *ngIf="code.canDelete">
+                <i class="hgi hgi-stroke hgi-delete-03"></i>
+                <span>حذف الوحدة</span>
+              </button>
+            </mat-menu>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-4">
+  <app-pagination></app-pagination>
+</div>

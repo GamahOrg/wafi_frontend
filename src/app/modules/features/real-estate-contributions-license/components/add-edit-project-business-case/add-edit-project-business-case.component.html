@@ -8,7 +8,7 @@ id="form-projectBusinessCaseReportForm">
       <div class="input-group">
         <input bsDatepicker type="text" id="control-projectExpectedWorkStartDate" class="form-control"
           formControlName="projectExpectedWorkStartDate" value="{{ controls.projectExpectedWorkStartDate.value | date:'yyyy-MM-dd' }}">
-        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error
         *ngIf="controls.projectExpectedWorkStartDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>

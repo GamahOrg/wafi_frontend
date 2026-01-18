@@ -1,0 +1,74 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/tab-content";
+@import "/src/assets/styles/content/form-conent";
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/cards";
+
+.items-list {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+
+  padding: .75rem;
+
+  border: {
+    width: 2px;
+    style: solid;
+    color: var(--bs-border-color);
+  }
+
+  border-radius: .25rem;
+
+  cursor: pointer;
+
+  .icon {
+    font-size: $font-size-sm;
+    color: $lightergray;
+  }
+
+  .item-part {
+    &.item-part {
+      padding-inline-start: 1.5rem;
+      border-inline-start: 1px solid var(--bs-border-color);
+    }
+  }
+
+  .item-actions {
+    margin-inline-start: auto;
+
+    .icon {
+      font-size: inherit;
+      color: $theme-main;
+    }
+  }
+
+  &.active {
+    border-color: $midgreen;
+
+    .icon {
+      color: $theme-main;
+    }
+  }
+}
+
+.side-card {
+  box-shadow: -41px 0px 11px 0px rgba($bluegray, .06);
+
+  .item {
+    &:not(.active) {
+      border-color: transparent;
+    }
+  }
+}

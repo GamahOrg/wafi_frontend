@@ -50,7 +50,7 @@
                                        class="form-control"
                                        formControlName="firstSubmissionDate"
                                        value="{{ controls.firstSubmissionDate.value | date:'yyyy-MM-dd' }}">
-                                <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                                <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                             </div>
                             <mat-error *ngIf="controls.firstSubmissionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         </div>
@@ -65,7 +65,7 @@
                                        class="form-control"
                                        formControlName="lastSubmissionDate"
                                        value="{{ controls.lastSubmissionDate.value | date:'yyyy-MM-dd' }}">
-                                <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                                <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                             </div>
                             <mat-error *ngIf="controls.lastSubmissionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         </div>
@@ -80,7 +80,7 @@
                                        class="form-control"
                                        formControlName="finalApprovalDate"
                                        value="{{ controls.finalApprovalDate.value | date:'yyyy-MM-dd' }}">
-                                <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                                <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                             </div>
                             <mat-error *ngIf="(controls.accreditationStatusId.value==accreditationStatus.Released || controls.accreditationStatusId.value==accreditationStatus.Certified)&& !controls.finalApprovalDate.value  && showValidation">حقل مطلوب</mat-error>
                         </div>

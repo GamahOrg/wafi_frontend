@@ -1,0 +1,8 @@
+<!-- <app-instant-license-deeds></app-instant-license-deeds> -->
+<app-correcting-licenseproject-deeds-list *ngIf="pageMode==PagemodeEnum.List" (changePage)="onChangePage($event)"
+  (isIntegrationFlag)="onIsIntegrationFlagChange($event)" (isUnitFlag)="onIsUnitFlagChange($event)">
+</app-correcting-licenseproject-deeds-list>
+<app-correcting-licenseproject-deeds-create *ngIf="pageMode==PagemodeEnum.Create" [isIntegration]="isIntegration"
+  [isUnit]="isUnit" (changePage)="onChangePage($event)">
+</app-correcting-licenseproject-deeds-create>
+<app-correcting-licenseproject-deeds-details *ngIf="pageMode==PagemodeEnum.View"></app-correcting-licenseproject-deeds-details>

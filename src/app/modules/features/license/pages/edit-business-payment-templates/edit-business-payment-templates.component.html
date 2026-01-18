@@ -46,6 +46,7 @@
             class="form-control number-input"
             [min]="minNumberOfPayments"
             [max]="maxNumberOfPayments"
+            inputmode="numeric"
             [class.invalid]="numberOfPayments?.invalid && numberOfPayments?.touched"
           />
           <button
@@ -66,6 +67,7 @@
           <span *ngIf="numberOfPayments?.errors?.['required']">هذا الحقل مطلوب</span>
           <span *ngIf="numberOfPayments?.errors?.['min']">القيمة يجب أن تكون أكبر من او تساوي  {{minNumberOfPayments}}</span>
           <span *ngIf="numberOfPayments?.errors?.['max']">القيمة يجب أن تكون أقل من أو تساوي {{ maxNumberOfPayments }}</span>
+          <span *ngIf="numberOfPayments?.errors?.['pattern']">القيمة يجب أن تكون رقم صحيح بدون كسور</span>
         </div>
 <!-- 
         <div class="error-message" *ngIf="numberOfPayments?.invalid && numberOfPayments?.touched">

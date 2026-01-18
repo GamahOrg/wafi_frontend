@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
 
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
@@ -41,12 +41,39 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
         Validators.required,
       ]),
       contractualStartDate: this._formBuilder.control<string | null>(null, [
-        Validators.required,
+        this.dateRequiredValidator(),
       ]),
       contractualFinishDate: this._formBuilder.control<string | null>(null, [
-        Validators.required,
+        this.dateRequiredValidator(),
       ]),
-    });
+    }, { validators: this.dateRangeValidator() });
+
+  dateRequiredValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value || value === '' || value === '0001-01-01T00:00:00') {
+        return { required: true };
+      }
+      return null;
+    };
+  }
+
+  dateRangeValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const startDate = control.get('contractualStartDate')?.value;
+      const finishDate = control.get('contractualFinishDate')?.value;
+
+      if (startDate && finishDate && startDate !== '0001-01-01T00:00:00' && finishDate !== '0001-01-01T00:00:00') {
+        const start = new Date(startDate);
+        const finish = new Date(finishDate);
+
+        if (finish <= start) {
+          return { dateRangeInvalid: true };
+        }
+      }
+      return null;
+    };
+  }
 
   get controls() {
     return this.licenseProjectEngineeringSupervisionPlannedReportForm.controls;
@@ -70,7 +97,7 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
     this.observePopupEvents();
-    this.licenseProjectEngineeringSupervisionPlannedReportForm.controls.contractualStartDate.setValue(this.getDateNow())
+    // this.licenseProjectEngineeringSupervisionPlannedReportForm.controls.contractualStartDate.setValue()
   }
 
   private getLicenseProjectIdStorage(): void {

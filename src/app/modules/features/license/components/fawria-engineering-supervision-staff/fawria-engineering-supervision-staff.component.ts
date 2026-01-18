@@ -6,7 +6,7 @@ import { LicenseProjectEngineeringConsultantDto } from '../../dataModels/license
 import { LicenseProjectEngineeringConsultantService } from '../../services/license-project-engineering-consultant.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { StaffTypes } from '../engineering-consultant/engineering-consultant-agreement-staff/staff-types';
-import { forkJoin, ReplaySubject, Subscription, takeUntil } from 'rxjs';
+import { config, forkJoin, ReplaySubject, Subscription, takeUntil } from 'rxjs';
 import { Guid } from 'src/app/core/configurations/guid';
 import { LicenseProjectEngineeringConsultantCreateUpdateDto } from '../../dataModels/license-project-engineering-consultant/license-project-engineering-consultant-create-update-dto';
 import { NextAndPreviusButtonsService } from '../../services/next-and-previous-buttons/next-and-previus-buttons.service';
@@ -461,7 +461,7 @@ export class FawriaEngineeringSupervisionStaffComponent implements OnInit, After
       ],
       executiveDirectorEmail: [
         this.getStringValue(this.entity.executiveDirectorEmail),
-        Validators.compose([Validators.required, Validators.email]),
+        Validators.compose([Validators.required, Validators.pattern(Configuration.validators.emailPattern)]),
       ],
     });
     this.trackFormChanges();

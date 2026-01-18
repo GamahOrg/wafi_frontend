@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <h4 class="page-title">تفاصيل الوحدة</h4>
       <span
-        class="unit-status-badge"
+        class="unit-status-pill"
         [ngClass]="
           unitDetails?.unitStatusId === 2 ? 'bg-success' : 'bg-warning'
         "
@@ -149,7 +149,7 @@
                     [class.has-tooltip]="contract.contractStatusId === 3 && contract.rejectionReason"
                   >
                     <span
-                      class="contract-status-badge"
+                      class="contract-status-pill"
                       [ngClass]="{
                         'badge bg-success': contract.contractStatusId === 2,
                         'badge bg-warning': contract.contractStatusId === 1,

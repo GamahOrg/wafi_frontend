@@ -1,0 +1,238 @@
+<ng-container>
+  <!-- <div class="tab-data-header">
+        <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+        <h6 class="title">{{localization.title}}</h6>
+    </div> -->
+  <!-- (ngModelChange)="ProjectModelChange($event)" -->
+  <form class="d-flex flex-column h-100" [formGroup]="codeForm" id="form-codeForm">
+    <div class="row mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label for="" class="form-label">{{localization.projectModelId}}</label>
+          <select class="form-select" id="control-projectModelId" formControlName="projectModelId">
+            <option [label]="localization.projectModelId"></option>
+            <option *ngFor="let type of models" [value]="type.id">
+              {{type.name}}
+            </option>
+          </select>
+          <mat-error *ngIf="controls.projectModelId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label for="" class="form-label">{{localization.code}}</label>
+          <input type="text" id="control-code" class="form-control" formControlName="code">
+          <mat-error *ngIf="controls.code?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+        </div>
+      </div>
+
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label for="" class="form-label">{{localization.price}}</label>
+          <input type="text" id="control-price" class="form-control" formControlName="price" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
+          <mat-error *ngIf="controls.price?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          <mat-error *ngIf="controls.price?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+        </div>
+      </div>
+
+      <!--<div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label for="" class="form-label">{{localization.supportedPrice}}</label>
+          <input type="text" id="control-supportedPrice" class="form-control" formControlName="supportedPrice" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
+          <mat-error *ngIf="controls.supportedPrice?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          <mat-error *ngIf="controls.supportedPrice?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+        </div>
+      </div>-->
+
+
+
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label for="" class="form-label">{{localization.deliveryOn}}</label>
+          <div class="input-group">
+            <input bsDatepicker type="text" id="control-deliveryOn" class="form-control" formControlName="deliveryOn" value="{{ controls.deliveryOn.value | date:'yyyy-MM-dd' }}">
+            <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          </div>
+          <mat-error *ngIf="controls.deliveryOn?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6" *ngIf="showfloorNumber">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label for="" class="form-label">{{localization.floorNumber}}</label>
+          <input type="number" id="control-floorNumber" class="form-control" formControlName="floorNumber">
+          <mat-error *ngIf="controls.floorNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          <mat-error *ngIf="controls.floorNumber?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="!hideUnitsProperties">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+          <label class="form-label">{{localization.buildingFlatSpace}}</label>
+          <input type="number" id="control-buildingFlatSpace" class="form-control" formControlName="buildingFlatSpace">
+          <div class="invalid-feedback d-block" *ngIf="(controls.buildingFlatSpace?.hasError('required') ||  controls.buildingFlatSpace?.value == 0) && showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+          <mat-error *ngIf="controls.buildingFlatSpace?.hasError('required') &&  controls.buildingFlatSpace?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          <mat-error *ngIf="controls.buildingFlatSpace?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label class="form-label">{{localization.space}}</label>
+          <input type="number" id="control-space" class="form-control" formControlName="space">
+          <span>المساحة الإجمالية للوحدة تشمل مساحة الوحدة ومساحة الأجزاء المشتركة والخاصة.</span>
+
+          <div class="invalid-feedback d-block" *ngIf="(controls.space?.hasError('required') || controls.space?.value == 0 )&& showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+          <mat-error *ngIf="controls.space?.hasError('required') &&  controls.space?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          <mat-error *ngIf="controls.space?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6" *ngIf="!hideUnitsProperties">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label class="form-label">{{localization.unitLandShare}}</label>
+          <input type="number" id="control-unitLandShare" class="form-control" formControlName="unitLandShare">
+
+          <div class="invalid-feedback d-block" *ngIf="(controls.unitLandShare?.hasError('required') ||  controls.unitLandShare?.value == 0) && showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+          <mat-error *ngIf="controls.unitLandShare?.hasError('required') &&  controls.unitLandShare?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          <mat-error *ngIf="controls.unitLandShare?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="!hideUnitsProperties">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label class="form-label">{{localization.unitShareOfCommonAreas}}</label>
+          <input type="number" id="control-unitShareOfCommonAreas" class="form-control" formControlName="unitShareOfCommonAreas">
+
+          <div class="invalid-feedback d-block" *ngIf="(controls.unitShareOfCommonAreas?.hasError('required') ||  controls.unitShareOfCommonAreas?.value == 0) && showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+          <mat-error *ngIf="controls.unitShareOfCommonAreas?.hasError('required') &&  controls.unitShareOfCommonAreas?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          <mat-error *ngIf="controls.unitShareOfCommonAreas?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+        </div>
+      </div>
+      <!--<div class="col-12 col-lg-6">
+    <div class="form-group mb-4">
+      <span class="required-star">*</span>
+
+      <label class="form-label">{{localization.unitFacilities}}</label>
+      <input type="text" id="control-unitFacilities" class="form-control"
+             formControlName="unitFacilities">
+      <mat-error *ngIf="controls.unitFacilities?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+
+    </div>
+  </div>-->
+        <!-- Multiselect facilities Dropdown -->
+        <div class="col-12 col-lg-6" *ngIf="!hideUnitsProperties">
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.unitFacilities }}</label>
+
+            <div class="dropdown multi-select">
+              <div class="form-select dropdown-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                {{ getSelectedFacilityText() }}
+              </div>
+              <ul class="dropdown-menu">
+                <li *ngFor="let facility of facilitiesListLookup">
+                  <div class="dropdown-item form-check form-check-normal" [class.disabled]="isFacilityDisabled(facility)">
+                    <input class="form-check-input" type="checkbox" [id]="'dId-'+facility.id" [checked]="facility.selected" [disabled]="isFacilityDisabled(facility)" (click)="$event.stopPropagation()" (change)="toggleFacilities(facility)">
+                    <label class="form-check-label" [for]="'dId-'+facility.id">{{ facility.name }}</label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="d-flex flex-wrap align-items-center gap-2 mt-2" *ngIf="getSelectedFacilities().length > 0">
+              <div class="chip" *ngFor="let facility of getSelectedFacilities()">
+                {{ facility.name }}
+                <button type="button" class="btn-icon btn btn-dark" (click)="removeFacility(facility, $event)" aria-label="Remove">
+                  <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                </button>
+              </div>
+            </div>
+
+
+
+
+         
+            <!--<div class="multiselect-container" #multiSelectRoot>
+              <div class="multiselect-wrapper">
+                <div class="multiselect-trigger" [class.open]="isFacilitiesDropdownOpen" (click)="toggleFacilitiesDropdown()">
+                  <span class="multiselect-text">{{ getSelectedFacilityText() }}</span>
+                  <i class="material-icons-outlined multiselect-icon">
+                    {{ isFacilitiesDropdownOpen ? 'expand_less' : 'expand_more' }}
+                  </i>
+                </div>
+
+                <div class="multiselect-dropdown" *ngIf="isFacilitiesDropdownOpen">
+                  <div class="multiselect-option" *ngFor="let facility of facilitiesListLookup" (click)="toggleFacilities(facility)">
+                    <div class="custom-checkbox">
+                      <input type="checkbox" [checked]="facility.selected" (click)="$event.stopPropagation()" (change)="toggleFacilities(facility)" />
+                      <span class="checkmark">
+                        <i class="material-icons-outlined" *ngIf="facility.selected">check</i>
+                      </span>
+                    </div>
+                    <span class="option-label">{{ facility.name }}</span>
+                  </div>
+                </div>
+              </div>-->
+
+              <!-- Selected Delegators Chips -->
+              <!--<div class="d-flex flex-wrap align-items-center gap-2" *ngIf="getSelectedFacilities().length > 0">
+                <div class="chip" *ngFor="let facility of getSelectedFacilities()">
+                  {{ facility.name }}
+                  <button type="button" class="btn-icon btn btn-dark" (click)="removeFacility(facility, $event)" aria-label="Remove">
+                    <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                  </button>
+                </div>
+              </div>
+            </div>-->
+
+            <mat-error *ngIf="controls['unitFacilitiesIds']?.hasError('required') && showValidation">
+              {{ localization.requiredErrorMsg }}
+            </mat-error>
+          </div>
+      </div>
+
+     
+      <div class="col-12 col-lg-6" *ngIf="showCourtyardArea && !hideUnitsProperties">
+        <div class="form-group mb-4">
+          <span class="required-star">*</span>
+
+          <label class="form-label">{{localization.courtyardArea}}</label>
+          <input type="number" id="control-courtyardArea" class="form-control" formControlName="courtyardArea">
+
+          <div class="invalid-feedback d-block" *ngIf="(controls.courtyardArea?.hasError('required') ||  controls.courtyardArea?.value == 0) && showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+          <mat-error *ngIf="controls.courtyardArea?.hasError('required') &&  controls.courtyardArea?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          <mat-error *ngIf="controls.courtyardArea?.hasError('min') && showValidation">{{localization.MinValueError}}</mat-error>
+        </div>
+      </div>
+
+
+    </div>
+  </form>
+</ng-container>

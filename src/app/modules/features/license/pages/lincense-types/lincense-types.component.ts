@@ -7,6 +7,9 @@ import { SysLicenseRequestTypeGroupingDto } from '../../models/sys-license-reque
 import { LicenseProjectFawriaDeveloperService } from '../../services/license-project-fawria-developer.service';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { customerResponse } from '../../models/employee-registration-dto';
+import { StorageService } from 'src/app/core/services/storage/storage.service';
+import { LoginUserTypeEnum } from 'src/app/modules/auth/models/login.model';
+
 @Component({
   selector: 'app-lincense-types',
   templateUrl: './lincense-types.component.html',
@@ -16,14 +19,17 @@ export class LincenseTypesComponent {
   requestSummeryLink: string = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.createLincense}`;
   subscriptions: Subscription[] = [];
   SysLicenseRequestTypes: any[] = [];
+  userType: any = ''
+  userTypeEnum = LoginUserTypeEnum
   SysLicenseRequestTypeGrouping: SysLicenseRequestTypeGroupingDto =
     new SysLicenseRequestTypeGroupingDto();
   constructor(
     private router: Router,
     private _licenseRequestTypeService: LicenseRequestTypeService,
+    private _sharedLocalStorage: StorageService,
     private _licenseProjectFawriaDeveloperService: LicenseProjectFawriaDeveloperService,
     private _userDataService: UserDataService
-  ) {}
+  ) { }
 
   currentLicense: number = 0;
   showLicensesByIndex(index: number) {
@@ -33,7 +39,7 @@ export class LincenseTypesComponent {
   navogateToCreateRequest(Code: string): void {
     this.router.navigate([this.requestSummeryLink, Code]);
   }
-  
+
   ngOnInit(): void {
     this.getCustomerData();
   }
@@ -41,20 +47,28 @@ export class LincenseTypesComponent {
   userData: customerResponse | null = null;
   isFawriaLicenseAllowFlag: boolean = false;
   getCustomerData() {
-    
-    this.subscriptions.push(
-      this._userDataService
-        .getCustomerData()
-        .subscribe((res: customerResponse | null) => {
-          this.userData = res;
-          if (
-            this.userData &&
-            this.userData.facilities &&
-            this.userData.facilities.length > 0
-          )
-            this.IsFawriaLicenseAllow(this.userData.facilities[0].id);
-        })
-    );
+    this.userType = this._sharedLocalStorage.getLoginUserType()
+    if (this.userType) {
+      this.subscriptions.push(
+        this._userDataService
+          .getCustomerData()
+          .subscribe((res: customerResponse | null) => {
+            this.userData = res;
+            if (
+              this.userData &&
+              this.userData.facilities &&
+              this.userData.facilities.length > 0
+            ) {
+              if (+this.userType != this.userTypeEnum.Employee && this.userData) {
+                this.IsFawriaLicenseAllow(this.userData.facilities[0].id);
+              }
+            }
+            else if (+this.userType === this.userTypeEnum.Employee && this.userData) {
+              this.getAllSysLicenseRequestTypes();
+            }
+          })
+      );
+    }
   }
 
   IsFawriaLicenseAllow(facilityId: string) {

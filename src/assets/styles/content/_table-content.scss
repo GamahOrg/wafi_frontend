@@ -33,6 +33,12 @@ td {
     color: $dark;
   }
 
+  .popover-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .table-actions {
     display: flex;
     justify-content: end;

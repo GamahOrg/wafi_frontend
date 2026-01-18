@@ -15,7 +15,7 @@
           <th>الحالة</th>
           <th>تاريخ آخر تحديث</th>
           <th>اسم مفوض</th>
-          <!-- <th>الإجراءات</th> -->
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -26,28 +26,25 @@
           <!-- <td>
             {{ approval.role }}
           </td> -->
-          <td>
+          <td class="text-nowrap">
             <div class="d-flex align-items-center">
               <span class="status-pill" [ngClass]="getApprovalClass(approval)">
-                <i class="icon material-icons">fiber_manual_record</i>
+                
                 {{
-                  approval.approvedOn != null
-                    ? approval.isApproved
-                      ? "معتمد"
-                      : "مرفوض"
-                    : "قيد الانتظار"
+                approval.approvedOn != null
+                ? approval.isApproved
+                ? "معتمد"
+                : "مرفوض"
+                : "قيد الانتظار"
                 }}
               </span>
             </div>
           </td>
           <td>{{ approval.approvedOn | date : "dd/MM/yyyy" }}</td>
           <td> {{approval.delegateCustomerName}}</td>
-          <td>
+          <td class="text-nowrap">
             <div class="table-actions">
-              <button
-                class="btn btn-outline-primary"
-                (click)="navigateToDetails(approval)"
-              >
+              <button class="btn btn-outline-primary" (click)="navigateToDetails(approval)">
                 عرض الاتفاقية
               </button>
             </div>
@@ -61,11 +58,7 @@
   <!-- Empty State -->
   <ng-container *ngIf="!isLoading && approvalList.length === 0">
     <div class="mt-4">
-      <app-no-data
-        [showCompleteBtn]="false"
-        [showText]="true"
-        [text]="'لا توجد اتفاقيات متاحة'"
-      ></app-no-data>
+      <app-no-data [showCompleteBtn]="false" [showText]="true" [text]="'لا توجد اتفاقيات متاحة'"></app-no-data>
     </div>
   </ng-container>
 </div>

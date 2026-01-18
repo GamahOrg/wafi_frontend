@@ -1,0 +1,61 @@
+<ng-container *ngIf="selectedSubUnit">
+  <div class="d-flex justify-content-between align-items-center gap-3 mb-4">
+    <h6 class="title">إجمالي عدد النماذج المضافة {{models.length}}</h6>
+
+    <button class="btn btn-link" (click)="openDialog(undefined)" *ngIf="!hideActionButtons">
+      <span class="material-icons-outlined">add_circle_outline</span>
+      إضافة نموذج جديد
+    </button>
+  </div>
+
+  <div class="table-responsive" *ngIf="models && models.length">
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th colspan="2">اسم النموذج</th>
+          <!--<th>المساحه الاجماليه</th>
+          <th> مساحة مسطح ابناء</th>-->
+          <th> عدد الوحدات</th>
+          <th colspan="2"> ملفات التصاميم</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let model of models">
+          <td class="w-20">{{model.name}}</td>
+          <td>
+            
+            <span class="tag tag-info">
+              {{ model.isPrevious ? 'سابقة' : 'جديدة' }}
+            </span>
+          </td>
+          <!--<td>{{model.space}}</td>
+          <td>{{model.buildingFlatSpace}}</td>-->
+          <td>{{model.unitsCount}}</td>
+          <td>
+            <div class="value" *ngFor="let file of model.licenseProjectModelDesignFiles">
+              <a *ngIf="file && file.designFile" id="link-file" [href]="baseUrl + file.designFile.filePath" target="_blank">
+                {{file.designFile.fileDescription}}</a>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center justify-content-end">
+              <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #tableActionsMenu="matMenu">
+                <button mat-menu-item (click)="openDialog(model)" class="menu-edit-btn">
+                  <i class="hgi hgi-stroke hgi-profile-02"></i>
+                  <span>تعديل البيانات</span>
+                </button>
+                <button *ngIf="model.canDelete" mat-menu-item (click)="delete(model.id)" class="menu-delete-btn">
+                  <i class="hgi hgi-stroke hgi-delete-03"></i>
+                  <span>حذف نموذج</span>
+                </button>
+              </mat-menu>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

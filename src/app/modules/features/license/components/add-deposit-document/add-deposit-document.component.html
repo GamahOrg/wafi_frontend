@@ -1,6 +1,6 @@
 <form [formGroup]="formGroup">
+  <h6 class="fw-semibold mb-3">1. بيانات الايداع</h6>
   <div class="row row-gap-4">
-
     <div class="col-12 col-lg-6">
       <div class="form-group">
         <label for="mainItemId" class="form-label"><span class="required-star">*</span> المصدر</label>
@@ -58,7 +58,7 @@
         <label for="depositDate" class="form-label"><span class="required-star">*</span> تاريخ الإيداع</label>
         <div class="input-group">
           <input bsDatepicker id="control-depositDate" type="text" class="form-control" formControlName="depositDate" value="{{ controls.depositDate.value | date : 'yyyy-MM-dd' }}" />
-          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
         </div>
         <div class="invalid-feedback d-block" *ngIf="controls.depositDate?.hasError('required') && showValidation">هذا الحقل مطلوب</div>
       </div>
@@ -67,7 +67,7 @@
     <div class="col-12 col-lg-6">
       <div class="form-group">
         <label class="form-label">رقم الحساب</label>
-        <input class="form-control" [value]="licenseProjectAccounts.accountNumber" disabled readonly />
+        <input class="form-control" [value]="licenseProjectAccounts.accountNumber" readonly />
       </div>
     </div>
 
@@ -81,8 +81,8 @@
 
     <div class="col-12 col-lg-6">
       <div class="form-group">
-        <label for="checkNumber" class="form-label"><span class="required-star">*</span> نوع الايداع</label>
-        <select class="form-select" formControlName="sysDepositTypeId">
+        <label for="sysDepositTypeId" class="form-label"><span class="required-star">*</span> نوع الايداع</label>
+        <select class="form-select" id="sysDepositTypeId" formControlName="sysDepositTypeId">
           <option label="اختر نوع الايداع" disabled></option>
           <option *ngFor="let type of sysDepositTypeList" [value]="type.id">
             {{ type.name }}
@@ -103,7 +103,7 @@
     <div class="col-12 col-lg-6">
       <div class="form-group">
         <label class="form-label">حساب التكاليف الانشائية</label>
-        <input class="form-control" [value]="licenseProjectAccounts.constructionCostsAccountNumber" disabled readonly />
+        <input class="form-control" [value]="licenseProjectAccounts.constructionCostsAccountNumber" readonly />
       </div>
     </div>
 
@@ -111,30 +111,14 @@
       <div class="form-group">
         <label class="form-label"><span class="required-star">*</span> مبلغ الايداع في حساب التكاليف الانشائية</label>
         <input id="constructionCostsAmount" formControlName="constructionCostsAmount" type="number" class="form-control" [readOnly]="controls.mainItemId.value === licenseProjectDepositDocumentMainItemEnum.collectionFromClients" />
-        <div class="invalid-feedback d-block" *ngIf="(controls.constructionCostsAmount?.hasError('required') || controls.constructionCostsAmount?.value === 0) && showValidation">
-          حقل مطلوب
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="amount" class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
-        <input class="form-control" [value]="licenseProjectAccounts.constructionCostsAvailableAmount" disabled readonly />
-      </div>
-    </div>
-
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="amount" class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
-        <input class="form-control" [value]="(licenseProjectAccounts.constructionCostsAvailableAmount) + (controls.constructionCostsAmount.value || 0) | number:'1.2-2'" disabled readonly />
+        <div class="invalid-feedback d-block" *ngIf="(controls.constructionCostsAmount?.hasError('required') || controls.constructionCostsAmount?.value === 0) && showValidation">حقل مطلوب</div>
       </div>
     </div>
 
     <div class="col-12 col-lg-6">
       <div class="form-group">
         <label class="form-label">حساب الادارى والتسويقى</label>
-        <input class="form-control" [value]="licenseProjectAccounts.administrativeAndMarketingAccountNumber" disabled readonly />
+        <input class="form-control" [value]="licenseProjectAccounts.administrativeAndMarketingAccountNumber" readonly />
       </div>
     </div>
 
@@ -149,14 +133,14 @@
     <div class="col-12 col-lg-6">
       <div class="form-group">
         <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
-        <input class="form-control" [value]="licenseProjectAccounts.administrativeAndMarketingAvailableAmount" disabled readonly />
+        <input class="form-control" [value]="licenseProjectAccounts.administrativeAndMarketingAvailableAmount" readonly />
       </div>
     </div>
 
     <div class="col-12 col-lg-6">
       <div class="form-group">
         <label for="amount" class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
-        <input class="form-control" [value]="(licenseProjectAccounts.administrativeAndMarketingAvailableAmount) + (controls.administrativeAndMarketingAmount.value || 0) | number:'1.2-2'" disabled readonly />
+        <input class="form-control" [value]="(licenseProjectAccounts.administrativeAndMarketingAvailableAmount) + (controls.administrativeAndMarketingAmount.value || 0) | number:'1.2-2'" readonly />
       </div>
     </div>
 
@@ -164,7 +148,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label">حساب الحفظ</label>
-          <input class="form-control" [value]="licenseProjectAccounts.custodyAccountNumber" disabled readonly />
+          <input class="form-control" [value]="licenseProjectAccounts.custodyAccountNumber" readonly />
         </div>
       </div>
 
@@ -181,18 +165,54 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
-          <input class="form-control" [value]="licenseProjectAccounts.custodyAvailableAmount" disabled readonly />
+          <input class="form-control" [value]="licenseProjectAccounts.custodyAvailableAmount" readonly />
         </div>
       </div>
 
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label for="amount" class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
-          <input class="form-control" [value]="(licenseProjectAccounts.custodyAvailableAmount) + (controls.escrowAccountAmount.value || 0) | number:'1.2-2'" disabled readonly />
+          <input class="form-control" [value]="(licenseProjectAccounts.custodyAvailableAmount) + (controls.escrowAccountAmount.value || 0) | number:'1.2-2'" readonly />
         </div>
       </div>
     </ng-container>
 
+    <div class="col-12 col-lg-6" *ngIf="showOtherField && showBuyerDetails && showBuyerType">
+      <div class="form-group">
+        <label for="installmentId" class="form-label">الدفعات</label>
+        <select id="installmentId" formControlName="installmentId" class="form-select">
+          <option label="اختر الدفعات" disabled></option>
+          <option *ngFor="let payment of buyerBusinessPaymentInstallementsList" [value]="payment.id">
+            {{payment.installmentNumber}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-12">
+      <div class="form-group">
+        <label for="statment" class="form-label"><span class="required-star">*</span> البيان</label>
+        <textarea rows="5" id="statment" formControlName="statment" class="form-control"></textarea>
+        <div class="invalid-feedback d-block" *ngIf="controls.statment?.hasError('required') && showValidation">حقل مطلوب</div>
+      </div>
+    </div>
+  </div>
+
+  <h6 class="fw-semibold mb-3 mt-5">2. بيانات</h6>
+  <div class="row row-gap-4">
+    <div class="col-12 col-lg-6">
+      <div class="form-group">
+        <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
+        <input class="form-control" [value]="licenseProjectAccounts.constructionCostsAvailableAmount" readonly />
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group">
+        <label class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
+        <input class="form-control" [value]="(licenseProjectAccounts.constructionCostsAvailableAmount) + (controls.constructionCostsAmount.value || 0) | number:'1.2-2'" readonly />
+      </div>
+    </div>
 
     <div class="col-12 col-lg-6" *ngIf="showOtherField">
       <div class="form-group">
@@ -224,53 +244,31 @@
 
     <div class="col-12 col-lg-6" *ngIf="showOtherField && showBuyerDetails && showBuyerType">
       <div class="form-group">
-        <label for="installmentId" class="form-label">الدفعات</label>
-        <select id="installmentId" formControlName="installmentId" class="form-select">
-          <option label="اختر الدفعات" disabled></option>
-          <option *ngFor="let payment of buyerBusinessPaymentInstallementsList" [value]="payment.id">
-            {{payment.installmentNumber}}
-          </option>
-        </select>
-
-
-      </div>
-    </div>
-
-    <div class="col-12 col-lg-6" *ngIf="showOtherField && showBuyerDetails && showBuyerType">
-      <div class="form-group">
         <label class="form-label">رقم الهوية</label>
-        <input class="form-control" [value]="selectedBuyerType?.nidNumber" disabled readonly />
+        <input class="form-control" [value]="selectedBuyerType?.nidNumber" readonly />
       </div>
     </div>
 
     <div class="col-12 col-lg-6" *ngIf="showOtherField && showBuyerDetails && showBuyerType">
       <div class="form-group">
         <label class="form-label">رقم البلوك او العمارة</label>
-        <input class="form-control" [value]="selectedBuyerType?.blockCode" disabled readonly />
+        <input class="form-control" [value]="selectedBuyerType?.blockCode" readonly />
       </div>
     </div>
 
     <div class="col-12 col-lg-6" *ngIf="showOtherField && showBuyerDetails && showBuyerType">
       <div class="form-group">
         <label class="form-label">رقم العقد</label>
-        <input class="form-control" [value]="selectedBuyerType?.contractNumber" disabled readonly />
+        <input class="form-control" [value]="selectedBuyerType?.contractNumber" readonly />
       </div>
     </div>
 
     <!-- <div class="col-12 col-lg-6" *ngIf="showOtherField && showBuyerDetails && showBuyerType">
-      <div class="form-group">
-        <label for="batchNumber" class="form-label"><span class="required-star">*</span> رقم الدفعة</label>
-        <input id="batchNumber" formControlName="batchNumber" type="text" class="form-control" />
-        <div class="invalid-feedback d-block" *ngIf="controls.batchNumber?.hasError('required') && showValidation">حقل مطلوب</div>
-      </div>
-    </div> -->
-
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="statment" class="form-label"><span class="required-star">*</span> البيان</label>
-        <textarea id="statment" formControlName="statment" class="form-control"></textarea>
-        <div class="invalid-feedback d-block" *ngIf="controls.statment?.hasError('required') && showValidation">حقل مطلوب</div>
-      </div>
-    </div>
+        <div class="form-group">
+          <label for="batchNumber" class="form-label"><span class="required-star">*</span> رقم الدفعة</label>
+          <input id="batchNumber" formControlName="batchNumber" type="text" class="form-control" />
+          <div class="invalid-feedback d-block" *ngIf="controls.batchNumber?.hasError('required') && showValidation">حقل مطلوب</div>
+        </div>
+      </div> -->
   </div>
 </form>

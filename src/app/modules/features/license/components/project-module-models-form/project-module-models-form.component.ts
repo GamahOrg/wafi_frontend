@@ -9,6 +9,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
+import { CorrectionProjectModelService } from '../../services/correct-units/correction-project-model-service.service';
 
 @Component({
   selector: 'app-project-module-models-form',
@@ -23,7 +24,7 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
   baseUrl = `${environment.baseURL}/`;
   showValidation: boolean = false;
 
-  constructor(private _projectModelService: ProjectModelService,
+  constructor(private _projectModelService: CorrectionProjectModelService,
     private _formBuilder: FormBuilder,
     private _toastrService: ToastrService,
     private _toastrNotificationService: ToastrNotificatioService,
@@ -129,7 +130,7 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
   save(): void {
     if (!this.projectModel.id) this.projectModel.id = '00000000-0000-0000-0000-000000000000';
     this.controls.id.setValue(this.projectModel.id);
-    if (!this.projectModelForm.valid) {
+    if (!this.projectModelForm.valid || !this.licenseProjectModelDesignFiles?.length) {
       this.showValidation = true;
       this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
       this.projectModelForm?.markAllAsTouched();

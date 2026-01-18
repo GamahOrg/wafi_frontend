@@ -4,7 +4,7 @@
       <div class="form-group">
         <label for="" class="form-label"><span class="required-star">*</span> {{localization.projectModelId}}</label>
         <select class="form-select" id="control-projectModelId" formControlName="projectModelId">
-          <option [label]="localization.projectModelId"></option>
+          <!--<option [label]="localization.projectModelId" disabled></option>-->
           <option *ngFor="let type of models" [value]="type.id">
             {{type.name}}
           </option>
@@ -35,7 +35,7 @@
         <label for="" class="form-label"><span class="required-star">*</span> {{localization.deliveryOn}}</label>
         <div class="input-group">
           <input bsDatepicker type="text" id="control-deliveryOn" class="form-control" formControlName="deliveryOn" value="{{ controls.deliveryOn.value | date:'yyyy-MM-dd' }}">
-          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
         </div>
         <div class="invalid-feedback d-block" *ngIf="controls.deliveryOn?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
       </div>

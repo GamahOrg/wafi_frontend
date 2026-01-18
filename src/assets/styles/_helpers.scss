@@ -102,6 +102,12 @@
   border: 1px solid #e5e7eb;
   border-radius: $border-radius-xs;
   background-color: #F9FAFB;
+
+  &.tag-info {
+    color: #1849A9;
+    border-color: #B2DDFF;
+    background-color: #EFF8FF;
+  }
 }
 
 .chip {

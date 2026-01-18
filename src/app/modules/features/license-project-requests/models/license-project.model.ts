@@ -34,4 +34,8 @@ export interface EscrowAccountDto {
   administrativeAndMarketingAccountNumber?: string;
   //حساب الحفظ
   custodyAccountNumber?: string;
+  //حساب الحوافز
+  incentivesSubIBAN?:string;
+  //حساب التمويل
+  financingSubIBAN?:string
 }

@@ -38,12 +38,12 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
           <input bsDatepicker
                  type="text" id="control-contractualStartDate"
                  class="form-control"
-                 placeholder="yyyy-mm-dd"
                  formControlName="contractualStartDate"
-                 [value]="controls.contractualStartDate.value == '0001-01-01T00:00:00' ? getDateNow() : controls.contractualStartDate.value | date: 'dd/MM/yyyy' ">
-          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                 [value]="controls.contractualStartDate.value == '0001-01-01T00:00:00' ?'' : controls.contractualStartDate.value | date: 'dd/MM/yyyy' ">
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error *ngIf="controls.contractualStartDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+
   </div>
 </div>
 <div class="col-12 col-lg-6">
@@ -54,10 +54,11 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
                  type="text" id="control-contractualFinishDate"
                  class="form-control"
                  formControlName="contractualFinishDate"
-                 [value]="controls.contractualFinishDate.value == '0001-01-01T00:00:00' ? getDateNow() : controls.contractualFinishDate.value | date: 'dd/MM/yyyy' ">
-          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                 [value]="controls.contractualFinishDate.value == '0001-01-01T00:00:00' ?'' : controls.contractualFinishDate.value | date: 'dd/MM/yyyy' ">
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error *ngIf="controls.contractualFinishDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+      <mat-error *ngIf="licenseProjectEngineeringSupervisionPlannedReportForm.hasError('dateRangeInvalid') && showValidation">تاريخ النهاية يجب أن يكون بعد تاريخ البداية</mat-error> 
   </div>
 </div> 
   </div>

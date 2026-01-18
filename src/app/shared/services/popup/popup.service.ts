@@ -34,9 +34,10 @@ export class PopupService {
     this.popupData.next(data);
     const dialogRef = this.dialog.open(PopupComponent, {
       disableClose: true,
-      // width: '80vw',
-      // height: '80vh',
       maxHeight: '80vh',
+      maxWidth: '80vw',
+      width: data.width,
+      height: data.height,
       panelClass: data.panelClass,
       hasBackdrop: true,
     });
@@ -120,10 +121,11 @@ export class PopupService {
   updateNotePopupData(noteData: notePopupData) {
     this.NotePopupData.next(noteData);
     const dialogRef = this.dialog.open(PopupNoteComponent, {
-      width: '300',
-      height: '600',
+      width: '660px',
+      height: '380px',
       panelClass: noteData.panelClass,
       data: {
+        popupType: noteData.popupType ?? 'primary',
         icon: noteData.icon,
         title: noteData.title,
         staticMessage: noteData.staticMessage,

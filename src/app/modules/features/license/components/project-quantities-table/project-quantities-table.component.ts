@@ -418,7 +418,7 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
       if (this.licenseProjectRelativeWeightForm.invalid) {
         this.showValidation = true;
         this.licenseProjectRelativeWeightForm.markAllAsTouched();
-        this._toastrNotificatioService.showError(this.localization.exeedTheLimit);
+        this._toastrNotificatioService.showError('ⓘ '+this.localization.exeedTheLimit);
         return;
       }
       if (this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList && this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList.length > 0 ) {

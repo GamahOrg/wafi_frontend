@@ -30,7 +30,7 @@
                                    class="form-control"
                                    formControlName="participationDate"
                                    value="{{ controls.participationDate.value | date:'yyyy-MM-dd' }}">
-                            <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                            <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                         </div>
                         <mat-error *ngIf="controls.participationDate?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
                     </div>

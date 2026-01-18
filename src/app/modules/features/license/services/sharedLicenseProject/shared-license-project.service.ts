@@ -48,6 +48,65 @@ export class SharedLicenseProjectService {
   removeAvailabilityToUpdateFarzfromLocalStorage(): void {
     localStorage.removeItem('availabilityToUpdateFarz');
   }
+
+  setCorrectionLicenseAvailabilityToUpdateFarzInLocalStorage(
+    availabilityToUpdate: boolean
+  ): void {
+    localStorage.setItem(
+      'availabilityCorrectionToUpdateFarz',
+      availabilityToUpdate ? 'true' : 'false'
+    );
+  }
+  getCorrectionAvailabilityToUpdateFarzFromLocalStorage(): boolean | null {
+    return localStorage.getItem('availabilityCorrectionToUpdateFarz') == 'true'
+      ? true
+      : false;
+  }
+  removeCorrectionAvailabilityToUpdateFarzfromLocalStorage(): void {
+    localStorage.removeItem('availabilityCorrectionToUpdateFarz');
+  }
+
+  setCorrectionAvailabilityToUpdateFarzInLocalStorage(
+    availabilityToUpdate: boolean
+  ): void {
+    localStorage.setItem(
+      'availabilityToUpdateCorrectionFarz',
+      availabilityToUpdate ? 'true' : 'false'
+    );
+  }
+  getAvailabilityToUpdateCorrectionFarzFromLocalStorage(): boolean | null {
+    return localStorage.getItem('availabilityToUpdateCorrectionFarz') == 'true'
+      ? true
+      : false;
+  }
+  removeAvailabilityToUpdateCorrectionFarzfromLocalStorage(): void {
+    localStorage.removeItem('availabilityToUpdateCorrectionFarz');
+  }
+
+
+  setCorrectionUnitRequestIdInLocalStorage(correctionUnitRequestId: string): void {
+    localStorage.setItem('correctionUnitRequestId', correctionUnitRequestId);
+  }
+  getCorrectionUnitRequestIdFromLocalStorage(): string | null {
+    return localStorage.getItem('correctionUnitRequestId');
+  }
+  removeCorrectionUnitRequestIdfromLocalStorage(): void {
+    localStorage.removeItem('correctionUnitRequestId');
+  }
+
+  setAllowCorrectionCompileInLocalStorage(allowCompile: boolean): void {
+    localStorage.setItem('allowCorrectionCompile', allowCompile? 'true' : 'false');
+  }
+  getAllowCorrectionCompileFromLocalStorage(): boolean {
+    return localStorage.getItem('allowCorrectionCompile')== 'true'
+      ? true
+      : false;;
+  }
+  removeAllowCorrectionCompilefromLocalStorage(): void {
+    localStorage.removeItem('allowCorrectionCompile');
+  }
+
+
   setLicenseProjectIdInLocalStorage(licenseProjectId: string): void {
     localStorage.setItem('licenseProjectId', licenseProjectId);
   }

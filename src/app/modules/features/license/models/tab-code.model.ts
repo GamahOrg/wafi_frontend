@@ -76,6 +76,24 @@ export enum TabCode {
   fawriaLicenseProjectEngineeringConsultants = 'FawriaLicenseProjectEngineeringConsultants',
   fawriaLicenseProjectCharteredAccountants = 'FawriaLicenseProjectCharteredAccountants',
   fawriaLicenseProjectEscrowAccount = 'FawriaLicenseProjectEscrowAccount',
+  UnitsAndArchitecturalDesigns = 'UnitsAndArchitecturalDesigns',  
+  DeedsAndBuildingPermits = 'DeedsAndBuildingPermits',
+
+  // Correction Flow Tab Codes
+  correctionDeedsAndLicenses = 'CorrectionDeedsAndLicenses',
+  correctionUnitsAndDesigns = 'CorrectionUnitsAndDesigns',
+  correctionLicenseProjectDeeds = 'CorrectionLicenseProjectDeeds',
+  correctionConstructionLicenses = 'CorrectionConstructionLicenses',
+  correctionZonesBlocksBuildings = 'CorrectionZonesBlocksBuildings',
+  correctionUnitTypes = 'CorrectionUnitTypes',
+  correctionProjectUnitCodes = 'CorrectionProjectUnitCodes',
+  correctionLicenseProjectCodes = 'CorrectionLicenseProjectCodes',
+  correctionArchitecturalDesigns = 'CorrectionArchitecturalUnitsAndDesigns',
+  correctionLicenseProjectZone = 'CorrectionLicenseProjectZone',
+  correctionLicenseProjectModel = 'CorrectionLicenseProjectModel',
+  correctionLicenseProjectDesign = 'CorrectionLicenseProjectDesign',
+  correctionLicenseProjectMainData = 'CorrectionLicenseProjectMainData',
+  correctionLicenseProjectContactInformation = 'CorrectionLicenseProjectContactInformation',
 }
 
 export enum LicenseRequestTabCode {

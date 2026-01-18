@@ -18,7 +18,7 @@
       <h2 class="header-title">تفاصيل الوحدة</h2>
       <!-- Header Actions -->
       <div class="header-actions">
-        <span class="status-badge" [ngClass]="{
+        <span class="status-pill" [ngClass]="{
           'status-approved': contractDetails.contractStatusId == 2,
           'status-pending': contractDetails.contractStatusId == 1 || contractDetails.contractStatusId == 4,
           'status-rejected': contractDetails.contractStatusId == 5 || contractDetails.contractStatusId == 3

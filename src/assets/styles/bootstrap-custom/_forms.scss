@@ -39,7 +39,7 @@
   }
 }
 
-.form-control,
+.form-control:not(:read-only),
 .form-select {
 
   &:focus,
@@ -54,15 +54,8 @@
 
 .form-control {
   &:read-only {
-    background-color: $lightergray;
-
-    &:focus {
-
-      &,
-      &+.input-group-text {
-        border: none !important;
-      }
-    }
+    color: $dark;
+    border-color: $lightgray;
   }
 
   &.form-control-plaintext {

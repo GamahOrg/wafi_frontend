@@ -4,7 +4,7 @@ import {
   accordionComponent,
   accordionContent,
 } from 'src/app/shared/models/accordion.model';
-import { PopupData, notePopupData } from 'src/app/shared/models/popup.model';
+import { PopupData,  } from 'src/app/shared/models/popup.model';
 import { AccordionService } from 'src/app/shared/services/accordion/accordion.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
@@ -12,14 +12,6 @@ import { LicenseProjectUnitService } from '../../services/license-project-unit/l
 import { UnitCodesComponent } from '../unit-codes/unit-codes.component';
 import { ProjectUnit } from '../../models/project-units';
 import { LicenseRequestService } from '../../services/license-request.service';
-import { Configuration } from 'src/app/core/configurations/shared.config';
-import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
-import {
-  RequestValidation,
-  RequestSuccessResponse,
-} from '../../dataModels/request-validation.model';
-import { LicenseRequestValidationPopupComponent } from '../license-request-validation-popup/license-request-validation-popup.component';
-import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { NextAndPreviusButtonsService } from '../../services/next-and-previous-buttons/next-and-previus-buttons.service';
 import { ZonesBlocksBuildingAndUnitsService } from '../../services/zones-blocks-building-units/zones-blocks-building-and-units.service';
 import { Zone } from '../../models/zone.model';
@@ -30,7 +22,6 @@ import { LicenseProjectCompletionData } from '../../dataModels/license-project-m
 import { ProjectModelService } from '../../services/project-model.service';
 import { DropDownSubUnitTypeDto } from '../../../engineering-management/models/drop-down-name.dto';
 import { ProjectSubUnitDto } from '../../dataModels/project-sub-unit.dto';
-import { SubUnitModelsComponent } from '../sub-unit-models/sub-unit-models.component';
 
 @Component({
   selector: 'app-project-unit-codes',

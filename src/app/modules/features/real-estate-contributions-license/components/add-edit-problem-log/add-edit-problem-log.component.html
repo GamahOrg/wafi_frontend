@@ -61,7 +61,7 @@ id="form-licenseProjectProblemLogForm">
       <div class="input-group">
         <input bsDatepicker type="text" id="control-issueDate" class="form-control"
           formControlName="issueDate" value="{{ controls.issueDate.value | date:'yyyy-MM-dd' }}">
-        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error
         *ngIf="controls.issueDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -132,7 +132,7 @@ id="form-licenseProjectProblemLogForm">
       <div class="input-group">
         <input bsDatepicker type="text" id="control-expectedClosureDate" class="form-control"
           formControlName="expectedClosureDate" value="{{ controls.expectedClosureDate.value | date:'yyyy-MM-dd' }}">
-        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error
         *ngIf="controls.expectedClosureDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -158,7 +158,7 @@ id="form-licenseProjectProblemLogForm">
       <div class="input-group">
         <input bsDatepicker type="text" id="control-actualClosureDate" class="form-control"
           formControlName="actualClosureDate" value="{{ controls.actualClosureDate.value | date:'yyyy-MM-dd' }}">
-        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error
         *ngIf="controls.actualClosureDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>

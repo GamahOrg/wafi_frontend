@@ -1,64 +1,67 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/form-conent";
+
 .hijri-datepicker {
   position: relative;
   width: 100%;
 }
 
-.datepicker-input {
-  position: relative;
-  cursor: pointer;
-  z-index: 1;
+// .datepicker-input {
+//   position: relative;
+//   cursor: pointer;
+//   z-index: 1;
 
-  input {
-    cursor: pointer;
-    padding-right: 40px;
-    background-color: white;
-    border: 1px solid #ced4da !important;
-    position: relative;
-    z-index: 1;
+//   input {
+//     cursor: pointer;
+//     padding-right: 40px;
+//     background-color: white;
+//     border: 1px solid #ced4da !important;
+//     position: relative;
+//     z-index: 1;
 
-    &:focus {
-      outline: none;
-      border-color: #005257 !important;
-      box-shadow: 0 0 0 0.2rem rgba(0, 82, 87, 0.25) !important;
-    }
-  }
+//     &:focus {
+//       outline: none;
+//       border-color: #005257 !important;
+//       box-shadow: 0 0 0 0.2rem rgba(0, 82, 87, 0.25) !important;
+//     }
+//   }
 
-  &.is-open {
-    z-index: 9998;
+//   &.is-open {
+//     z-index: 9998;
 
-    input {
-      border-color: #005257 !important;
-      box-shadow: 0 0 0 0.2rem rgba(0, 82, 87, 0.25) !important;
-      z-index: 9998;
-    }
-  }
+//     input {
+//       border-color: #005257 !important;
+//       box-shadow: 0 0 0 0.2rem rgba(0, 82, 87, 0.25) !important;
+//       z-index: 9998;
+//     }
+//   }
 
-  .calendar-icon {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #8a9393;
-    font-size: 20px;
-    pointer-events: none;
-    z-index: 2;
-  }
+//   .calendar-icon {
+//     position: absolute;
+//     right: 12px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     color: #8a9393;
+//     font-size: 20px;
+//     pointer-events: none;
+//     z-index: 2;
+//   }
 
-  &.is-open .calendar-icon {
-    z-index: 9999;
-  }
-}
-.datepicker-input.icon-left {
-  input {
-    padding-right: 8px;
+//   &.is-open .calendar-icon {
+//     z-index: 9999;
+//   }
+// }
+// .datepicker-input.icon-left {
+//   input {
+//     padding-right: 8px;
 
-    padding-left: 40px;
-  }
-  .calendar-icon {
-    left: 12px;
-    right: unset;
-  }
-}
+//     padding-left: 40px;
+//   }
+//   .calendar-icon {
+//     left: 12px;
+//     right: unset;
+//   }
+// }
 .calendar-dropdown {
   position: fixed !important;
   background: white;
@@ -180,8 +183,8 @@
     left: auto;
   }
 
-  .datepicker-input .calendar-icon {
-    right: 12px;
-    left: auto;
-  }
+  // .datepicker-input .calendar-icon {
+  //   right: 12px;
+  //   left: auto;
+  // }
 }

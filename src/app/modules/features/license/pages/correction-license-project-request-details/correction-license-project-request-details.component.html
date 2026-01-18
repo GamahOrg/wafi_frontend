@@ -1,0 +1,119 @@
+<div class="d-flex flex-column gap-3">
+  <div class="card req-details-header-card">
+    <div class="card-header with-separator">
+      <div class="row row-gap-4 w-100">
+      <div class="col-12 col-xl-3">
+          <h6 class="card-title">
+            {{ selectedRequest?.licenseProjectRequestType?.name }} - <span class="text-primary">{{ selectedRequest?.requestCode }}</span>
+          </h6>
+          <div class="key-value horiz">
+            <span class="key">تاريخ تقديم الطلب</span>
+            <span class="value">{{ selectedRequest?.createdOn | date : "dd MMMM yyyy" }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-6">
+          <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+            <span class="status-pill orange" *ngIf="selectedRequest.licenseProjectFarzRequestStatusName">
+              {{ selectedRequest.licenseProjectFarzRequestStatusName }}
+            </span>
+            <span class="status-pill green" *ngIf="selectedRequest.externalRequestStatus?.name">
+              {{ selectedRequest.externalRequestStatus?.name }}
+            </span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3">
+          <div
+            class="d-flex flex-wrap justify-content-end align-items-center gap-3"
+          >
+            <ng-container *ngFor="let button of clientActionsButtons">
+
+              <button
+                *ngIf="button.isVisable"
+                [disabled]="button.isDisables"
+                class="btn d-flex align-items-center justify-content-between"
+                (click)="button.onclick()"
+                type="button"
+                [ngClass]="button.classes"
+              >
+                {{ button.title }}
+              </button>
+            </ng-container>
+            <button
+              *ngIf="selectedRequest?.licenseProjectRequestEventStatus?.allowCompile"
+              class="btn d-flex align-items-center justify-content-between btn-primary"
+              (click)="editRequest()"
+              type="button"
+            >
+              {{ localization.editButtonTitle }}
+            </button>
+            <button
+              *ngIf="
+                selectedRequest &&
+                selectedRequest.licenseProjectFarzRequestStatusId ===
+                  farzRequestStatusEnum.Rejected
+              "
+              class="btn d-flex align-items-center justify-content-between btn-primary"
+              (click)="handleFarzNotes()"
+              type="button"
+            >
+              {{ localization.farzStatus }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row row-gap-4">
+        <div class="col-12">
+          <div class="key-value">
+            <span class="key">مقدم من</span>
+            <span class="value">{{
+              selectedRequest?.customer?.fullName ??
+                selectedRequest?.facility?.facilityName
+            }}</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">رقم الهوية </span>
+            <span class="value">{{
+              selectedRequest?.customer?.nidnumber ??
+                selectedRequest?.facility?.commercialRegisterNumber
+            }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">الجنسية </span>
+            <span class="value">{{
+              selectedRequest?.customer?.nationalityName
+            }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">رقم الجوال</span>
+            <span class="value">{{ selectedRequest?.customer?.mobile1 }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl" *ngIf="selectedRequest?.price">
+          <div class="key-value">
+            <span class="key">الرسوم</span>
+            <span class="value">{{ selectedRequest?.price }}</span>
+          </div>
+        </div>
+        <div class="col-12 col-xl-3 col-xxl">
+          <div class="key-value">
+            <span class="key">البريد اللالكترونى</span>
+            <span class="value">{{ selectedRequest?.customer?.email }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-wrapper flex-fill">
+    <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
+  </div>
+</div>

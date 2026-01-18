@@ -52,7 +52,7 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
       id: ['00000000-0000-0000-0000-000000000000', Validators.required],
       zoneId: ['', Validators.required],
       unitTypeId: ['', Validators.required],
-      buildingBlockTypeId: ['', Validators.required],
+      buildingBlockTypeId: [0, Validators.required],
       licenseProjectDeedId: ['', Validators.required],
       designFileId: ['', Validators.required],
       // unitTypeName: [''],
@@ -374,7 +374,7 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
       this.controls.licenseProjectsId.setValue(this.licenseProjectId as string);
     }
     this.selectedProjectUnit = this.addEditUnitForm.value as unknown as ProjectUnit;
-
+    this.selectedProjectUnit.buildingBlockTypeId = +this.selectedProjectUnit.buildingBlockTypeId
     if (this.addEditUnitForm?.invalid) {
       this.showValidation = true;
       this._toastrNotificationService.showError(

@@ -21,7 +21,7 @@
       <div class="value"> 
        
        <span class="status-pill" [ngClass]="{'orange': entity.escrowAccountStatus != 'Active', 'green': entity.escrowAccountStatus == 'Active'}">
-          <i class="icon material-icons">fiber_manual_record</i>
+          
            {{ entity.escrowAccountStatus == 'Active' ? 'مفعل' : 'غير فعال' }} 
         </span>
       </div>
@@ -53,6 +53,14 @@
         <tr>
           <td>حساب الحفظ</td>
           <td>{{ entity.custodyAccountNumber }}</td>
+        </tr>
+        <tr>
+          <td>حساب الحوافز</td>
+          <td>{{ entity.incentivesSubIBAN }}</td>
+        </tr>
+        <tr>
+          <td>حساب التمويل</td>
+          <td>{{ entity.financingSubIBAN }}</td>
         </tr>
       </tbody>
     </table>

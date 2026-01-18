@@ -23,6 +23,7 @@ export class HijriDatepickerComponent implements ControlValueAccessor, OnInit {
   @Input() iconDirection: 'left' | 'right' = 'right';
   @ViewChild('dateInput', { static: false }) dateInput!: ElementRef;
 
+  disabled: boolean = false;
   isOpen: boolean = false;
   selectedDate: Date | null = null;
   displayValue: string = '';
@@ -199,6 +200,7 @@ export class HijriDatepickerComponent implements ControlValueAccessor, OnInit {
   }
 
   toggleCalendar(): void {
+    if (this.disabled) return;
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
       // Calculate dropdown position
@@ -266,7 +268,10 @@ export class HijriDatepickerComponent implements ControlValueAccessor, OnInit {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    // Handle disabled state if needed
+    this.disabled = isDisabled;
+    if (isDisabled) {
+      this.isOpen = false;
+    }
   }
 
   onDocumentClick(event: MouseEvent): void {

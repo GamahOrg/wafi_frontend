@@ -208,9 +208,10 @@ export class UnitCodesComponent implements OnInit, OnDestroy {
 
           this._projectUnitCodeService.triggerRefreshPaginatedList();
 
-        } else {
-          this._toastrNotificationService.showError(res.message);
-        }
+        } 
+        // else {
+          // this._toastrNotificationService.showError(res.message);
+        // }
       })
     );
   }

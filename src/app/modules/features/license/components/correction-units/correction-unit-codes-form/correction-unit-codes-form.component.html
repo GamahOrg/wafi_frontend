@@ -1,0 +1,167 @@
+<form [formGroup]="codeForm" id="form-codeForm">
+  <div class="row row-gap-4">
+    <div class="col-12 col-xl-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.projectModelId}}</label>
+        <select class="form-select" id="control-projectModelId" formControlName="projectModelId">
+          <option [label]="localization.projectModelId"></option>
+          <option *ngFor="let type of models" [value]="type.id">
+            {{type.name}}
+          </option>
+        </select>
+        <div class="invalid-feedback d-block" *ngIf="controls.projectModelId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.code}}</label>
+        <input type="text" id="control-code" class="form-control" formControlName="code">
+        <div class="invalid-feedback d-block" *ngIf="controls.code?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.price}}</label>
+        <input type="text" id="control-price" class="form-control" formControlName="price" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
+        <div class="invalid-feedback d-block" *ngIf="controls.price?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+        <div class="invalid-feedback d-block" *ngIf="controls.price?.hasError('min') && showValidation">{{localization.MinValueError}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.deliveryOn}}</label>
+        <div class="input-group">
+          <input bsDatepicker type="text" id="control-deliveryOn" class="form-control" formControlName="deliveryOn" value="{{ controls.deliveryOn.value | date:'yyyy-MM-dd' }}">
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls.deliveryOn?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6" *ngIf="showfloorNumber">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.floorNumber}}</label>
+        <input type="number" id="control-floorNumber" class="form-control" formControlName="floorNumber">
+        <div class="invalid-feedback d-block" *ngIf="controls.floorNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+        <div class="invalid-feedback d-block" *ngIf="controls.floorNumber?.hasError('min') && showValidation">{{localization.MinValueError}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6" *ngIf="!hideUnitsProperties">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.buildingFlatSpace}}</label>
+        <input type="number" id="control-buildingFlatSpace" class="form-control" formControlName="buildingFlatSpace">
+        <div class="invalid-feedback d-block" *ngIf="(controls.buildingFlatSpace?.hasError('required') ||  controls.buildingFlatSpace?.value == 0) && showValidation">
+          {{localization.requiredErrorMsg}}
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls.buildingFlatSpace?.hasError('required') &&  controls.buildingFlatSpace?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</div>
+        <div class="invalid-feedback d-block" *ngIf="controls.buildingFlatSpace?.hasError('min') && showValidation">{{localization.MinValueError}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.space}}</label>
+        <input type="number" id="control-space" class="form-control" formControlName="space">
+        <span>المساحة الإجمالية للوحدة تشمل مساحة الوحدة ومساحة الأجزاء المشتركة والخاصة.</span>
+
+        <div class="invalid-feedback d-block" *ngIf="(controls.space?.hasError('required') || controls.space?.value == 0 )&& showValidation">
+          {{localization.requiredErrorMsg}}
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls.space?.hasError('required') &&  controls.space?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</div>
+        <div class="invalid-feedback d-block" *ngIf="controls.space?.hasError('min') && showValidation">{{localization.MinValueError}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6" *ngIf="!hideUnitsProperties">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.unitLandShare}}</label>
+        <input type="number" id="control-unitLandShare" class="form-control" formControlName="unitLandShare">
+        <div class="invalid-feedback d-block" *ngIf="(controls.unitLandShare?.hasError('required') ||  controls.unitLandShare?.value == 0) && showValidation">
+          {{localization.requiredErrorMsg}}
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls.unitLandShare?.hasError('required') &&  controls.unitLandShare?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</div>
+        <div class="invalid-feedback d-block" *ngIf="controls.unitLandShare?.hasError('min') && showValidation">{{localization.MinValueError}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6" *ngIf="!hideUnitsProperties">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.unitShareOfCommonAreas}}</label>
+        <input type="number" id="control-unitShareOfCommonAreas" class="form-control" formControlName="unitShareOfCommonAreas">
+
+        <div class="invalid-feedback d-block" *ngIf="(controls.unitShareOfCommonAreas?.hasError('required') ||  controls.unitShareOfCommonAreas?.value == 0) && showValidation">
+          {{localization.requiredErrorMsg}}
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls.unitShareOfCommonAreas?.hasError('required') &&  controls.unitShareOfCommonAreas?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</div>
+        <div class="invalid-feedback d-block" *ngIf="controls.unitShareOfCommonAreas?.hasError('min') && showValidation">{{localization.MinValueError}}</div>
+      </div>
+    </div>
+
+    <!-- Multiselect facilities Dropdown -->
+    <div class="col-12 col-xl-6" *ngIf="!hideUnitsProperties">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.unitFacilities }}</label>
+        <div class="dropdown multi-select">
+          <div class="form-select dropdown-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            {{ getSelectedFacilityText() }}
+          </div>
+          <ul class="dropdown-menu">
+            <li *ngFor="let facility of facilitiesListLookup">
+              <div class="dropdown-item form-check form-check-normal" [class.disabled]="isFacilityDisabled(facility)">
+                <input class="form-check-input" type="checkbox" [id]="'dId-'+facility.id" [checked]="facility.selected" [disabled]="isFacilityDisabled(facility)" (click)="$event.stopPropagation()" (change)="toggleFacilities(facility)">
+                <label class="form-check-label" [for]="'dId-'+facility.id">{{ facility.name }}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex flex-wrap align-items-center gap-2 mt-2" *ngIf="getSelectedFacilities().length > 0">
+          <div class="chip" *ngFor="let facility of getSelectedFacilities()">
+            {{ facility.name }}
+            <button type="button" class="btn-icon btn btn-dark" (click)="removeFacility(facility, $event)" aria-label="Remove">
+              <i class="hgi hgi-stroke hgi-cancel-01"></i>
+            </button>
+          </div>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls['unitFacilitiesIds']?.hasError('required') && showValidation">{{ localization.requiredErrorMsg }}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6" *ngIf="showCourtyardArea && !hideUnitsProperties">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{localization.courtyardArea}}</label>
+        <input type="number" id="control-courtyardArea" class="form-control" formControlName="courtyardArea">
+        <div class="invalid-feedback d-block" *ngIf="(controls.courtyardArea?.hasError('required') ||  controls.courtyardArea?.value == 0) && showValidation">
+          {{localization.requiredErrorMsg}}
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls.courtyardArea?.hasError('required') &&  controls.courtyardArea?.value == 0 && showValidation">{{localization.requiredErrorMsg}}</div>
+        <div class="invalid-feedback d-block" *ngIf="controls.courtyardArea?.hasError('min') && showValidation">{{localization.MinValueError}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> {{ localization.unitStatus }}</label>
+        <div class="row g-2">
+          <div class="col-12 col-lg-6" *ngFor="let type of UnitStatusOptions">
+            <label class="form-check" [for]="type.id">
+              <input class="form-check-input" type="radio" id="control-unitStatusId" [id]="type.id" [value]="type.id"
+                     formControlName="unitStatusId"/>
+              <label class="form-check-label" [for]="type.id">
+                {{
+          type.name
+                }}
+              </label>
+            </label>
+          </div>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls.unitStatusId.errors?.['required'] && showValidation">
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

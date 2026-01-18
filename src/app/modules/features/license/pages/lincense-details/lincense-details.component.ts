@@ -78,6 +78,8 @@ import { ProjectListService } from '../../services/project-list.service';
 import { ProjectLandDeedDto } from '../../dataModels/project-land-deed.dto';
 import { CertifiedLicenseDataDto } from '../../models/certified-license-data-dto';
 import { LicenseProjectBusinessPaymentModel } from '../../models/business-payment.model';
+import { UnitCorrectionService } from '../../services/unit-correction/unit-correction.service';
+import { correctionUnitsModel } from '../../models/unit-correction.model';
 
 @Component({
   selector: 'app-lincense-details',
@@ -216,6 +218,7 @@ export class LincenseDetailsComponent {
     editButtonTitle: 'معالجة الملاحظات',
     farzStatus: 'معالجة ملاحظات فرز',
     editPaymentandAdditionalTermsTitle: 'تعديل الدفعات و البنود الإضافية',
+    unitsCorrection: 'تصحيح الوحدات',
     editButtonForRenewTitle: 'تعديل الطلب قبل التجديد',
     day: 'يوم',
   };
@@ -229,7 +232,8 @@ export class LincenseDetailsComponent {
     private _requestNotesService: RequestNotesService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
     private _router: Router,
-    private _projectListService: ProjectListService
+    private _projectListService: ProjectListService,
+    private _unitCorrectionService: UnitCorrectionService,
   ) { }
 
   ngOnInit(): void {
@@ -299,8 +303,8 @@ export class LincenseDetailsComponent {
       .subscribe(([requestDetails, requestProcessing]) => {
         let requestData = requestDetails as LicenseDetails;
         if (requestData && requestProcessing) {
-          requestData.workflowDetailRequestStatus = requestProcessing.workflowDetailRequestStatus;   
-          requestData.licenseRequestCustomerHeaderEventStatus = requestProcessing.licenseRequestCustomerHeaderEventStatus;  
+          requestData.workflowDetailRequestStatus = requestProcessing.workflowDetailRequestStatus;
+          requestData.licenseRequestCustomerHeaderEventStatus = requestProcessing.licenseRequestCustomerHeaderEventStatus;
           this._licenseDetailsService.selectRequest$.next(requestData);
         }
       })
@@ -408,7 +412,7 @@ export class LincenseDetailsComponent {
   }
 
   private updateAllBehaviorSubject(requestDetails: LicenseDetails): void {
-    
+
 
     this.updateLicenseCertificateData(requestDetails)
 
@@ -823,6 +827,7 @@ export class LincenseDetailsComponent {
     let Data = {
       id: ButtonType.allowCompile,
       title: 'تسجيل نتيجة دراسة الطلب',
+      width: '50vw',
       component: EditorRequestNotesOnlyComponent,
     } as PopupData;
     this.updateAndOpenData(Data);
@@ -832,6 +837,7 @@ export class LincenseDetailsComponent {
     let Data = {
       id: ButtonType.allowCompileConditionalApproval,
       title: 'تسجيل نتيجة دراسة الطلب',
+      width: '50vw',
       component: EditorRequestNotesComponent,
     } as PopupData;
     this.updateAndOpenData(Data);
@@ -1086,7 +1092,7 @@ export class LincenseDetailsComponent {
       this._sharedLicenseProjectService.setfacilityIdInLocalStorage(
         this.selectedRequest.facilityId
       );
-      
+
       this._router.navigate([this.requestDetailsRoute]);
     }
   }
@@ -1114,12 +1120,12 @@ export class LincenseDetailsComponent {
   public openPaymentTermsModal(): void {
     if (this.selectedRequest) {
 
-        this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-              this.selectedRequest!.licenseProjectId
-            );
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+        this.selectedRequest!.licenseProjectId
+      );
 
-            const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.paymentTermsTabs}`;
-            this._router.navigate([navigationPath]);
+      const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.paymentTermsTabs}`;
+      this._router.navigate([navigationPath]);
 
       // // Call GenerateDraftVersionForProject API
       // this._projectListService.GenerateDraftVersionForProject(
@@ -1149,6 +1155,38 @@ export class LincenseDetailsComponent {
       // });
     }
   }
+
+  openUnitsCorrection() {
+    if (this.selectedRequest) {
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.selectedRequest!.licenseProjectId);
+      const requestId = this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage();
+      this._unitCorrectionService.CheckCorrectingUnitAvailability(requestId as string).subscribe((res) => {
+        debugger
+        if (res) {
+          if (res.isDone) {
+          this._sharedLicenseProjectService.setCorrectionUnitRequestIdInLocalStorage(res.data);
+          this.navigateToCorrctionLicenseSummary();
+          // this.GetCorrectedUnitDataByLicenseProjectId();
+        }
+      }
+      })
+    }
+  }
+
+  GetCorrectedUnitDataByLicenseProjectId() {
+    this._unitCorrectionService.GetCorrectedUnitDataByLicenseProjectId(this.selectedRequest!.licenseProjectId).subscribe((res: correctionUnitsModel) => {
+      if (res) {
+        const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.unitsCorrection}`;
+        this._router.navigate([navigationPath]);
+      }
+    })
+  }
+
+  navigateToCorrctionLicenseSummary() {
+    const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.correctionLicenseSummary}`;
+    this._router.navigate([navigationPath]);
+  }
+
 
   ngOnDestroy(): void {
     this.resetSelectRequest();

@@ -96,7 +96,7 @@
             <label class="form-label"><span class="required-star">*</span> {{ localization.startOn }}</label>
             <div class="input-group">
               <input bsDatepicker id="control-startOn" type="text" class="form-control" formControlName="startOn" value="{{ controls.startOn.value | date : 'yyyy-MM-dd' }}" autocomplete="off" />
-              <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+              <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
             </div>
 
             <div class="invalid-feedback d-block" *ngIf="controls.startOn?.hasError('required') && showValidation">
@@ -117,7 +117,7 @@
             <label class="form-label"><span class="required-star">*</span> {{ localization.endOn }}</label>
             <div class="input-group">
               <input bsDatepicker id="control-endOn" type="text" class="form-control" formControlName="endOn" value="{{ controls.endOn.value | date : 'yyyy-MM-dd' }}" autocomplete="off" />
-              <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+              <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
             </div>
             <mat-error *ngIf="controls.endOn?.hasError('required') && showValidation">{{ localization.requiredErrorMsg }}</mat-error>
           </div>

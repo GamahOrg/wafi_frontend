@@ -1,0 +1,35 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/tab-content";
+@import "/src/assets/styles/content/form-conent";
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.facility-owner-table th {
+  padding: 10px 15px;
+}
+
+.facility-owner-body {
+  padding: 10px 15px;
+}
+
+.facility-owner-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.facility-owner-table th,
+.facility-owner-table td {
+  border: 1px solid #000;
+  padding: 10px;
+  text-align: center;
+}
+.custom-alert {
+  background-color: #fffaf3; /* light orange background */
+  border: 1px solid #ffe4b3;
+  color: #a85500;
+  font-weight: 500;
+  direction: rtl; /* since your text is Arabic */
+}

@@ -26,7 +26,7 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
   baseUrl = `${environment.baseURL}/`;
   banks: BankDto[] = [];
   showValidation: boolean = false;
-  isExistingValidation:boolean=false;
+  isExistingValidation: boolean = false;
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
   userData: customerResponse | null = null;
   constructor(
@@ -43,19 +43,22 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
   singleFileUploaderData: FileUploader = {
     multiple: false,
   } as FileUploader;
+  // Saudi IBAN: SA + 22 alphanumeric characters = 24 total
+  //ibanPattern = '^SA[0-9]{2}[0-9A-Za-z]{18}$';
+  ibanPattern = '^SA[0-9]{2}[0-9A-Za-z]{20}$';
+
   accountKeeperForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
-    accountNumber: ['', [Validators.required]],
+    accountNumber: ['', [Validators.required, Validators.pattern(this.ibanPattern)]],
     bankId: ['', [Validators.required]],
     // accountKeeperName: ['', [Validators.required]],
     accountKeeperMobile: ['', [Validators.required, Validators.pattern(Configuration.validators.PhoneNumber)]],
-    accountKeeperTelephone: ['', []],
+    accountKeeperTelephone: ['', [Validators.pattern(Configuration.validators.PhoneNumber)]],
     accountKeeperEmail: ['', [Validators.required, Validators.email]],
-    accountKeeperExtentionNumber: ['', [Validators.required]],
+    accountKeeperExtentionNumber: ['', [Validators.required, Validators.pattern(Configuration.validators.numberOnly)]],
     accountKeeperAgreementFileId: ['', [Validators.required]],
     accountKeeperJobTitle: ['', [Validators.required]],
-    accountKeeperFax: ['', [Validators.required]],
-
+    accountKeeperFax: ['', [Validators.required, Validators.pattern(Configuration.validators.numberOnly)]],
   })
   get controls() {
     return this.accountKeeperForm.controls;
@@ -71,8 +74,8 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
   getCustomerData() {
 
     this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-      this.userData = res;    
-      this.isExistingValidation=this.userData?.isEmployee as boolean;
+      this.userData = res;
+      this.isExistingValidation = this.userData?.isEmployee as boolean;
     })
   }
   private getLicenseProjectIdStorage(): void {
@@ -97,6 +100,9 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
     phoneNumberPattern: 'من فضلك ادخل رقم جوال صحيح',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     emailPattern: 'من فضلك ادخل البريد الإلكتروني صحيح',
+    ibanPattern: 'من فضلك ادخل رقم ايبان صحيح (يبدأ بـ SA متبوعاً بـ 22 رقم)',
+    numberOnlyPattern: 'من فضلك ادخل أرقام فقط',
+    telephonePattern: 'من فضلك ادخل رقم هاتف صحيح',
   };
   private loadComponentData() {
     const requests = [
@@ -132,15 +138,14 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
   }
   save(moveToNextTab: boolean = false): void {
     if (!this.accountKeeper.id) this.accountKeeper.id = '00000000-0000-0000-0000-000000000000';
-    if(!this.isExistingValidation)
-      {
-    if (!this.accountKeeperForm.valid) {
-      this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
-      this.accountKeeperForm?.markAllAsTouched();
-      return;
+    if (!this.isExistingValidation) {
+      if (!this.accountKeeperForm.valid) {
+        this.showValidation = true;
+        this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+        this.accountKeeperForm?.markAllAsTouched();
+        return;
+      }
     }
-  }
 
     this.subscriptions.push(
       this._accountKeeperService.SaveAccountKeeperDetails(this.accountKeeper).subscribe(res => {

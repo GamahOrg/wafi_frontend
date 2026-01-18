@@ -27,6 +27,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   notificationList: Notification[] | null = null;
   qualifyingRequestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requestDetails}`;
   licenseRequestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
+  correctionRequestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
   licenseRequestTypeDeatilsRoute = `/${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestDetails}`;
   notViewedCount: number = 0;
   Configuration = Configuration;
@@ -114,6 +115,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                 break;
               case this.RequestType.BuyerContractsList:
                 this.navigateToBuyerContractsList(notification)
+                break;
+                case this.RequestType.CorrectionUnitRequest:
+                this.navigateToCorrectionDetails(notification)
                 break;
             }
           }
@@ -239,6 +243,14 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     console.log('navigateToLicenseDetails');
     this.setLicenseRequestIdInLocalStorage(notification.requestId);
     this.routeTolicenseRequestDetailsRoute();
+  }
+
+    private navigateToCorrectionDetails(notification: Notification) {
+    // set request id in local storage
+    // navigate to license details page
+    console.log('navigateToCorrectionDetails');
+      this._sharedLicenseProjectService.setCorrectionUnitRequestIdInLocalStorage(notification.requestId);
+    this._router.navigate(['/wafi/license/correction-license-project-request-details']);
   }
 
   private setSelectedRequestIdInLocalStorage(id: string): void {

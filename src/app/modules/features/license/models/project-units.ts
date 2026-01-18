@@ -12,15 +12,19 @@ export interface ProjectUnit {
   code: string;
   stageNumberId: string;
   stageNumber: string;
-  constructionStartOn: Date,
-  constructionEndOn: Date,
-  licenseProjectsId: string;
+  constructionStartOn: Date|string,
+  constructionEndOn: Date|string,
+  licenseProjectsId: string| null;
   buildingBlockTypeId: number;
   licenseProjectSubUnits: ProjectSubUnitDto[];
   licenseProjectSubUnitsListCodes: ProjectUnitCodeDto[]
   designFileId: string;
-  designFile: FileManagerBE;
-  licenseProjectDeedId: string ;
+  designFile: FileManagerBE|null;
+  licenseProjectDeedId: string;
+  canDelete?: boolean;
+  isPrevious?: boolean;
+
+
 }
 
 export interface licenseProjectSubUnits {
@@ -35,6 +39,7 @@ export interface licenseProjectModels {
   properties: string,
   unitsCount: string,
   licenseProjectModelDesignFiles: licenseProjectModelDesignFiles[],
+  isPrevious: boolean;
 }
 
 export interface licenseProjectModelDesignFiles {
@@ -50,7 +55,7 @@ export interface licenseProjectUnits {
   unitTypeName: string,
   licenseProjectSubUnits: licenseProjectSubUnits[]
   licenseProjectSubUnitsListCodes: licenseProjectSubUnitsListCodes[],
-  buildingBlockType: SysLicenseProjectBuildingBlockTypeDto,
+  buildingBlockType: SysLicenseProjectBuildingBlockTypeDto  | null,
   designFile: FileManagerBE;
 }
 

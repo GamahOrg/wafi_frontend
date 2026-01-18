@@ -5,6 +5,8 @@ import { BeneficiaryContractFormAdditionalTermsDto } from 'src/app/modules/featu
 export interface PopupData {
   iconClass?: string;
   panelClass?: string[];
+  width?: string;
+  height?: string;
   id?: string;
   title: string;
   component: Type<any> | null;
@@ -18,7 +20,7 @@ export interface BeneficiaryPopupData extends PopupData {
   data?: BeneficiaryContractFormAdditionalTermsDto[] | BeneficiaryContractFormAdditionalTermsDto;
 }
 
-type confirmationPopupType = 'primary' | 'warning' | 'danger';
+type confirmationPopupType = 'primary' | 'warning' | 'danger' | 'success';
 export interface confirmationPopupData {
   popupType?: confirmationPopupType;
   id?: string;
@@ -31,6 +33,7 @@ export interface confirmationPopupData {
   closeButtonText?: string;
 }
 export interface notePopupData {
+  popupType?: confirmationPopupType;
   panelClass?: string[];
   id?: string;
   icon?: string;

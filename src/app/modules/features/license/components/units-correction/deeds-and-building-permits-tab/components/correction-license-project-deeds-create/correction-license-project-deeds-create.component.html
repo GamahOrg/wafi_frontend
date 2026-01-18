@@ -1,0 +1,1449 @@
+<!-- Simplified Form for isUnit = false -->
+
+<form [formGroup]="verifyForm" *ngIf="!isUnit">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-file-01"></i>
+    <h6 class="title">
+      {{ "صكوك أرض المشروع" }}
+    </h6>
+  </div>
+
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <!-- Row 1: Deed Source Selection -->
+      <div class="col-12 col-lg-12">
+        <div class="form-group">
+          <label class="form-label"
+            ><span class="required-star">*</span> نوع الصك</label
+          >
+          <div class="row g-2">
+            <div class="col-12 col-lg-6">
+              <label class="form-check" for="justiceMinistrySimple">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  formControlName="deedSource"
+                  [value]="DeedIntegrationTypeEnum.JusticeMinistry"
+                  id="justiceMinistrySimple"
+                />
+                <label class="form-check-label" for="justiceMinistrySimple">
+                  وزارة العدل
+                </label>
+              </label>
+            </div>
+            <div class="col-12 col-lg-6">
+              <label class="form-check" for="realEstateRegistrySimple">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  formControlName="deedSource"
+                  [value]="DeedIntegrationTypeEnum.RER"
+                  id="realEstateRegistrySimple"
+                />
+                <label class="form-check-label" for="realEstateRegistrySimple">
+                  السجل العقاري
+                </label>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Deed Number and Date -->
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          verifyForm.get('deedSource')?.value ===
+          DeedIntegrationTypeEnum.JusticeMinistry
+        "
+      >
+        <label class="form-label"
+          ><span class="required-star">*</span> رقم صك وزارة العدل</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          formControlName="deedNumber"
+          placeholder="رقم صك وزارة العدل"
+          [class.is-invalid]="
+            verifyForm.get('deedNumber')?.invalid &&
+            verifyForm.get('deedNumber')?.touched
+          "
+        />
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            verifyForm.get('deedNumber')?.invalid &&
+            verifyForm.get('deedNumber')?.touched
+          "
+        >
+          <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']"
+            >رقم صك وزارة العدل مطلوب</span
+          >
+        </div>
+      </div>
+
+      <div
+        class="col-12 col-lg-6"
+        *ngIf="
+          verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER
+        "
+      >
+        <label class="form-label"
+          ><span class="required-star">*</span> رقم صك السجل العقاري</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          formControlName="fawriaRERNumber"
+          placeholder="رقم صك السجل العقاري"
+          [class.is-invalid]="
+            verifyForm.get('fawriaRERNumber')?.invalid &&
+            verifyForm.get('fawriaRERNumber')?.touched
+          "
+        />
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            verifyForm.get('fawriaRERNumber')?.invalid &&
+            verifyForm.get('fawriaRERNumber')?.touched
+          "
+        >
+          <span *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']"
+            >رقم صك السجل العقاري مطلوب</span
+          >
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <label class="form-label required">تاريخ الصك</label>
+        <app-hijri-datepicker
+          [iconDirection]="'left'"
+          [formControlName]="'deedDate'"
+          [parentForm]="verifyForm"
+          [placeholder]="'اختر تاريخ الصك'"
+          [showGregorian]="false"
+          [isInvalid]="
+            verifyForm.get('deedDate')?.invalid &&
+            verifyForm.get('deedDate')?.touched
+          "
+        >
+        </app-hijri-datepicker>
+        <div class="form-text">
+          <span class="icon">
+            <i class="hgi hgi-stroke hgi-alert-circle"></i>
+          </span>
+          <span class="text">التاريخ المُدخل سيكون وفق التقويم الهجري</span>
+        </div>
+
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            verifyForm.get('deedDate')?.invalid &&
+            verifyForm.get('deedDate')?.touched
+          "
+        >
+          <span *ngIf="verifyForm.get('deedDate')?.errors?.['required']"
+            >تاريخ الصك مطلوب</span
+          >
+        </div>
+      </div>
+
+      <!-- Row 3: Multi-file uploader for approved land plans -->
+      <div class="col-12 col-lg-6">
+        <label class="form-label"
+          ><span class="required-star">*</span> رفع المخططات المعتمدة
+          للأرض</label
+        >
+        <app-file-uploader
+          [data]="multiFileUploaderData"
+          (fileUploaded)="onApprovedPlansUploaded($event)"
+        ></app-file-uploader>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            verifyForm.get('approvedPlansFileIds')?.invalid &&
+            verifyForm.get('approvedPlansFileIds')?.touched
+          "
+        >
+          <span
+            *ngIf="verifyForm.get('approvedPlansFileIds')?.errors?.['required']"
+            >رفع المخططات المعتمدة للأرض مطلوب</span
+          >
+        </div>
+      </div>
+
+      <!-- Error Messages -->
+      <div class="col-12" *ngIf="deedIntegrationError">
+        <div class="alert alert-danger" role="alert">
+          {{ deedIntegrationError }}
+        </div>
+      </div>
+      <div class="col-12" *ngIf="constractionIntegrationError">
+        <div class="alert alert-danger" role="alert">
+          {{ constractionIntegrationError }}
+        </div>
+      </div>
+      <div class="col-12" *ngIf="generalIntegrationError">
+        <div class="alert alert-danger" role="alert">
+          {{ generalIntegrationError }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- actions for simplified form -->
+
+  <!-- <div class="form-actions justify-content-start">
+    <button type="button" class="btn btn-primary" (click)="saveDeed()">إضافة الصك</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="openCancelModal()">إلغاء الصك</button>
+  </div> -->
+</form>
+
+<!-- Full Form for isUnit = true or null -->
+<form [formGroup]="verifyForm" *ngIf="isUnit">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-file-01"></i>
+    <h6 class="title">
+      {{ "صكوك أرض المشروع" }}
+    </h6>
+  </div>
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <ng-container *ngIf="!isUnit">
+        <div class="tab-data-header">
+          <i class="icon hgi hgi-stroke hgi-file-01"></i>
+          <h6 class="title">
+            {{ "صكوك أرض المشروع" }}
+          </h6>
+        </div>
+        <div class="tab-data-section">
+          <div class="row row-gap-4">
+            <!-- Row 1: Deed Source Selection -->
+            <div class="col-12 col-lg-12">
+              <div class="form-group">
+                <label class="form-label"
+                  ><span class="required-star">*</span> نوع الصك</label
+                >
+                <div class="row g-2">
+                  <div class="col-12 col-lg-6">
+                    <label class="form-check" for="justiceMinistrySimple">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        formControlName="deedSource"
+                        [value]="DeedIntegrationTypeEnum.JusticeMinistry"
+                        id="justiceMinistrySimple"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="justiceMinistrySimple"
+                      >
+                        وزارة العدل
+                      </label>
+                    </label>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <label class="form-check" for="realEstateRegistrySimple">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        formControlName="deedSource"
+                        [value]="DeedIntegrationTypeEnum.RER"
+                        id="realEstateRegistrySimple"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="realEstateRegistrySimple"
+                      >
+                        السجل العقاري
+                      </label>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Deed Number and Date -->
+            <div
+              class="col-12 col-lg-6"
+              *ngIf="
+                verifyForm.get('deedSource')?.value ===
+                DeedIntegrationTypeEnum.JusticeMinistry
+              "
+            >
+              <label class="form-label"
+                ><span class="required-star">*</span> رقم صك وزارة العدل</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="deedNumber"
+                placeholder="رقم صك وزارة العدل"
+                [class.is-invalid]="
+                  verifyForm.get('deedNumber')?.invalid &&
+                  verifyForm.get('deedNumber')?.touched
+                "
+              />
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  verifyForm.get('deedNumber')?.invalid &&
+                  verifyForm.get('deedNumber')?.touched
+                "
+              >
+                <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']"
+                  >رقم صك وزارة العدل مطلوب</span
+                >
+              </div>
+            </div>
+
+            <div
+              class="col-12 col-lg-6"
+              *ngIf="
+                verifyForm.get('deedSource')?.value ===
+                DeedIntegrationTypeEnum.RER
+              "
+            >
+              <label class="form-label"
+                ><span class="required-star">*</span> رقم صك السجل
+                العقاري</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fawriaRERNumber"
+                placeholder="رقم صك السجل العقاري"
+                [class.is-invalid]="
+                  verifyForm.get('fawriaRERNumber')?.invalid &&
+                  verifyForm.get('fawriaRERNumber')?.touched
+                "
+              />
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  verifyForm.get('fawriaRERNumber')?.invalid &&
+                  verifyForm.get('fawriaRERNumber')?.touched
+                "
+              >
+                <span
+                  *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']"
+                  >رقم صك السجل العقاري مطلوب</span
+                >
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <label class="form-label required">تاريخ الصك</label>
+              <app-hijri-datepicker
+                [iconDirection]="'left'"
+                [formControlName]="'deedDate'"
+                [parentForm]="verifyForm"
+                [placeholder]="'اختر تاريخ الصك'"
+                [showGregorian]="false"
+                [isInvalid]="
+                  verifyForm.get('deedDate')?.invalid &&
+                  verifyForm.get('deedDate')?.touched
+                "
+              >
+              </app-hijri-datepicker>
+              <div class="form-text">
+                <span class="icon">
+                  <i class="hgi hgi-stroke hgi-alert-circle"></i>
+                </span>
+                <span class="text"
+                  >التاريخ المُدخل سيكون وفق التقويم الهجري</span
+                >
+              </div>
+
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  verifyForm.get('deedDate')?.invalid &&
+                  verifyForm.get('deedDate')?.touched
+                "
+              >
+                <span *ngIf="verifyForm.get('deedDate')?.errors?.['required']"
+                  >تاريخ الصك مطلوب</span
+                >
+              </div>
+            </div>
+
+            <!-- Row 3: Multi-file uploader for approved land plans -->
+            <div class="col-12 col-lg-12">
+              <label class="form-label"
+                ><span class="required-star">*</span> رفع المخططات المعتمدة
+                للأرض</label
+              >
+              <app-file-uploader
+                [data]="multiFileUploaderData"
+                (fileUploaded)="onApprovedPlansUploaded($event)"
+              ></app-file-uploader>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="
+                  verifyForm.get('approvedPlansFileIds')?.invalid &&
+                  verifyForm.get('approvedPlansFileIds')?.touched
+                "
+              >
+                <span
+                  *ngIf="verifyForm.get('approvedPlansFileIds')?.errors?.['required']"
+                  >رفع المخططات المعتمدة للأرض مطلوب</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- actions for simplified form -->
+        <div class="form-actions justify-content-start">
+          <button type="button" class="btn btn-primary" (click)="saveDeed()">
+            إضافة الصك
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="openCancelModal()"
+          >
+            إلغاء الصك
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Line 1: Deed Source Selection -->
+      <div class="col-12 col-lg-12">
+        <div class="form-group">
+          <span class="text-danger">*</span>
+
+          <label class="form-label"
+            ><span class="required-star">*</span> نوع الصك</label
+          >
+          <div class="row g-2">
+            <div class="col-12 col-lg-6">
+              <label class="form-check" for="control-yes">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  formControlName="deedSource"
+                  [value]="DeedIntegrationTypeEnum.JusticeMinistry"
+                  id="justiceMinistry"
+                />
+                <label class="form-check-label" for="justiceMinistry">
+                  وزارة العدل
+                </label>
+              </label>
+            </div>
+            <div class="col-12 col-lg-6">
+              <label class="form-check" for="control-no">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  formControlName="deedSource"
+                  [value]="DeedIntegrationTypeEnum.RER"
+                  id="realEstateRegistry"
+                />
+                <label class="form-check-label" for="realEstateRegistry">
+                  السجل العقاري
+                </label>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Line 2: Deed Details (Justice Ministry) -->
+      <ng-container
+        *ngIf="
+          verifyForm.get('deedSource')?.value ===
+          DeedIntegrationTypeEnum.JusticeMinistry
+        "
+      >
+        <div class="col-12 col-lg-6">
+          <span class="text-danger">*</span>
+
+          <label class="form-label"
+            ><span class="required-star">*</span> رقم صك وزارة العدل</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="deedNumber"
+            placeholder="رقم صك وزارة العدل"
+            [class.is-invalid]="
+              verifyForm.get('deedNumber')?.invalid &&
+              verifyForm.get('deedNumber')?.touched
+            "
+          />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              verifyForm.get('deedNumber')?.invalid &&
+              verifyForm.get('deedNumber')?.touched
+            "
+          >
+            <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']"
+              >رقم صك وزارة العدل مطلوب</span
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <span class="text-danger">*</span>
+
+          <label class="form-label required">تاريخ الصك</label>
+          <app-hijri-datepicker
+            [iconDirection]="'left'"
+            [formControlName]="'deedDate'"
+            [parentForm]="verifyForm"
+            [placeholder]="'اختر تاريخ الصك'"
+            [showGregorian]="false"
+            [isInvalid]="
+              verifyForm.get('deedDate')?.invalid &&
+              verifyForm.get('deedDate')?.touched
+            "
+          >
+          </app-hijri-datepicker>
+          <div class="form-text">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <span class="text">التاريخ المُدخل سيكون وفق التقويم الهجري</span>
+          </div>
+
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              verifyForm.get('deedDate')?.invalid &&
+              verifyForm.get('deedDate')?.touched
+            "
+          >
+            <span *ngIf="verifyForm.get('deedDate')?.errors?.['required']"
+              >تاريخ الصك مطلوب</span
+            >
+          </div>
+        </div>
+        <div class="col-12 col-lg-12">
+          <div class="form-group">
+            <label class="form-label"
+              ><span class="required-star">*</span> طريقة اضافة بيانات رخصة
+              البناء</label
+            >
+            <div class="row g-2">
+              <div class="col-12 col-lg-6">
+                <label class="form-check" for="PreviousLincense">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    [value]="1"
+                    formControlName="licenseType"
+                    id="PreviousLincense"
+                    (change)="onLicenseTypeChange()"
+                  />
+                  <label class="form-check-label" for="PreviousLincense">
+                    اختيار رخصة سابقة
+                  </label>
+                </label>
+              </div>
+              <div class="col-12 col-lg-6">
+                <label class="form-check" for="NewLincense">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    [value]="2"
+                    id="NewLincense"
+                    formControlName="licenseType"
+                    (change)="onLicenseTypeChange()"
+
+                  />
+                  <label class="form-check-label" for="NewLincense">
+                    اضافة رخصة جديدة
+                  </label>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 col-lg-6"
+          *ngIf="verifyForm.get('licenseType')?.value == 1"
+        >
+          <span class="text-danger">*</span>
+
+          <label class="form-label required">رخص البناء السابق ادخالها</label>
+          <select
+            class="form-select"
+            formControlName="previousLicenseNumber"
+            [class.is-invalid]="
+              verifyForm.get('previousLicenseNumber')?.invalid &&
+              verifyForm.get('previousLicenseNumber')?.touched
+            "
+          >
+            <option value="">اختر رخصة البناء</option>
+            <option
+              *ngFor="let license of constructionLicenses"
+              [value]="license.id"
+            >
+              {{ license.licenseNumber }}
+              <span
+                *ngIf="license?.constructionLicenseType == 2 && license.before7"
+                >{{ localization.before7 }}</span
+              >
+              <span
+                *ngIf="
+                  license?.constructionLicenseType == 2 && !license.before7
+                "
+                >{{ localization.after7 }}</span
+              >
+              <span *ngIf="license?.constructionLicenseType == 1">{{
+                localization.letterType
+              }}</span>
+            </option>
+          </select>
+        </div>
+      </ng-container>
+
+      <!-- Line 2: Deed Details (Real Estate Registry) -->
+      <ng-container
+        *ngIf="
+          verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER
+        "
+      >
+        <div class="col-12 col-lg-6">
+          <label class="form-label"
+            ><span class="required-star">*</span> رقم صك السجل العقاري</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="fawriaRERNumber"
+            placeholder="رقم صك السجل العقاري"
+            [class.is-invalid]="
+              verifyForm.get('fawriaRERNumber')?.invalid &&
+              verifyForm.get('fawriaRERNumber')?.touched
+            "
+          />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              verifyForm.get('fawriaRERNumber')?.invalid &&
+              verifyForm.get('fawriaRERNumber')?.touched
+            "
+          >
+            <span
+              *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']"
+              >رقم صك السجل العقاري مطلوب</span
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <label class="form-label required">تاريخ الصك</label>
+          <app-hijri-datepicker
+            [iconDirection]="'left'"
+            [formControlName]="'deedDate'"
+            [parentForm]="verifyForm"
+            [placeholder]="'اختر تاريخ الصك'"
+            [showGregorian]="false"
+            [isInvalid]="
+              verifyForm.get('deedDate')?.invalid &&
+              verifyForm.get('deedDate')?.touched
+            "
+          >
+          </app-hijri-datepicker>
+          <div class="form-text">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <span class="text">التاريخ المُدخل سيكون وفق التقويم الهجري</span>
+          </div>
+
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              verifyForm.get('deedDate')?.invalid &&
+              verifyForm.get('deedDate')?.touched
+            "
+          >
+            <span *ngIf="verifyForm.get('deedDate')?.errors?.['required']"
+              >حقل مطلوب</span
+            >
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Line 3: Construction License Type Selection (Justice Ministry - 2 options) -->
+      <ng-container
+        *ngIf="
+          verifyForm.get('deedSource')?.value ===
+            DeedIntegrationTypeEnum.JusticeMinistry &&
+          verifyForm.get('licenseType')?.value == 2
+        "
+      >
+        <div class="col-12 col-lg-12">
+          <div class="form-group">
+            <label class="form-label"
+              ><span class="required-star">*</span> نوع الرخصة</label
+            >
+            <div class="row g-2">
+              <div class="col-12 col-lg-6">
+                <label class="form-check" for="control-yes">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="constructionLicenseType"
+                    [value]="ConstructionLicenseTypeEnum.Balady"
+                    [attr.disabled]="
+                      isConstructionLicenseTypeDisabled(
+                        ConstructionLicenseTypeEnum.Balady
+                      )
+                        ? true
+                        : null
+                    "
+                    id="baladyJustice"
+                  />
+                  <label class="form-check-label" for="baladyJustice">
+                    رخصة بناء صادرة من بلدي
+                  </label>
+                </label>
+              </div>
+              <div class="col-12 col-lg-6">
+                <label class="form-check" for="control-no">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="constructionLicenseType"
+                    [value]="ConstructionLicenseTypeEnum.Itmam"
+                    [attr.disabled]="
+                      isConstructionLicenseTypeDisabled(
+                        ConstructionLicenseTypeEnum.Itmam
+                      )
+                        ? true
+                        : null
+                    "
+                    id="itmamJustice"
+                  />
+                  <label class="form-check-label" for="itmamJustice">
+                    إتمام
+                  </label>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Line 3: Construction License Type Selection (RER - 3 options) -->
+      <ng-container
+        *ngIf="
+          verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER
+        "
+      >
+        <div class="col-12 col-lg-12">
+          <div class="form-group">
+            <label class="form-label"
+              ><span class="required-star">*</span> نوع الرخصة</label
+            >
+            <div class="row g-2">
+              <div class="col-12 col-lg-4">
+                <label class="form-check" for="control-yes">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="constructionLicenseType"
+                    [value]="ConstructionLicenseTypeEnum.Balady"
+                    [attr.disabled]="
+                      isConstructionLicenseTypeDisabled(
+                        ConstructionLicenseTypeEnum.Balady
+                      )
+                        ? true
+                        : null
+                    "
+                    id="baladyRER"
+                  />
+                  <label class="form-check-label" for="baladyRER">
+                    رخصة بناء صادرة من بلدي
+                  </label>
+                </label>
+              </div>
+              <div class="col-12 col-lg-4">
+                <label class="form-check" for="control-no">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="constructionLicenseType"
+                    [value]="ConstructionLicenseTypeEnum.RiyadhAmanah"
+                    [attr.disabled]="
+                      isConstructionLicenseTypeDisabled(
+                        ConstructionLicenseTypeEnum.RiyadhAmanah
+                      )
+                        ? true
+                        : null
+                    "
+                    id="riyadhAmanah"
+                  />
+                  <label class="form-check-label" for="riyadhAmanah">
+                    رخصة بناء صادرة من أمانة الرياض
+                  </label>
+                </label>
+              </div>
+              <div class="col-12 col-lg-4">
+                <label class="form-check" for="control-no">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="constructionLicenseType"
+                    [value]="ConstructionLicenseTypeEnum.Itmam"
+                    [attr.disabled]="
+                      isConstructionLicenseTypeDisabled(
+                        ConstructionLicenseTypeEnum.Itmam
+                      )
+                        ? true
+                        : null
+                    "
+                    id="itmamRER"
+                  />
+                  <label class="form-check-label" for="itmamRER"> إتمام </label>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Line 4: License Number (Balady) -->
+      <ng-container
+        *ngIf="
+          verifyForm.get('constructionLicenseType')?.value ===
+          ConstructionLicenseTypeEnum.Balady
+        "
+      >
+        <div class="col-12 col-lg-6">
+          <span class="text-danger">*</span>
+          <label class="form-label"
+            ><span class="required-star">*</span> رقم رخصة البناء لبلدي</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="licenseNumber"
+            placeholder="رقم رخصة البناء لبلدي"
+            [class.is-invalid]="
+              verifyForm.get('licenseNumber')?.invalid &&
+              verifyForm.get('licenseNumber')?.touched
+            "
+          />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              verifyForm.get('licenseNumber')?.invalid &&
+              verifyForm.get('licenseNumber')?.touched
+            "
+          >
+            <span *ngIf="verifyForm.get('licenseNumber')?.errors?.['required']"
+              >رقم رخصة البناء لبلدي مطلوب</span
+            >
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Line 4: Riyadh Amanah License (Number + File) -->
+      <ng-container
+        *ngIf="
+          verifyForm.get('constructionLicenseType')?.value ===
+            ConstructionLicenseTypeEnum.RiyadhAmanah &&
+          verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER
+        "
+      >
+        <div class="col-12 col-lg-6">
+          <label class="form-label"
+            ><span class="required-star">*</span> رقم رخصة بناء صادرة من أمانة
+            الرياض</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="riyadhAmanahLicenseNumber"
+            placeholder="رقم رخصة بناء صادرة من أمانة الرياض"
+            [class.is-invalid]="
+              verifyForm.get('riyadhAmanahLicenseNumber')?.invalid &&
+              verifyForm.get('riyadhAmanahLicenseNumber')?.touched
+            "
+          />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              verifyForm.get('riyadhAmanahLicenseNumber')?.invalid &&
+              verifyForm.get('riyadhAmanahLicenseNumber')?.touched
+            "
+          >
+            <span
+              *ngIf="verifyForm.get('riyadhAmanahLicenseNumber')?.errors?.['required']"
+              >رقم رخصة بناء صادرة من أمانة الرياض مطلوب</span
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <label class="form-label"
+            ><span class="required-star">*</span> رفع رخصة البناء</label
+          >
+          <app-file-uploader
+            [data]="licenseConstractionFileUploaderData"
+            (fileUploaded)="onConstructionLicenseFileUploaded($event)"
+          ></app-file-uploader>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              verifyForm.get('constructionLicenseFileId')?.invalid &&
+              verifyForm.get('constructionLicenseFileId')?.touched
+            "
+          >
+            <span
+              *ngIf="verifyForm.get('constructionLicenseFileId')?.errors?.['required']"
+              >رفع رخصة البناء مطلوب</span
+            >
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Line 4: Itmam File Upload -->
+      <ng-container
+        *ngIf="
+          (verifyForm.get('deedSource')?.value ===
+            DeedIntegrationTypeEnum.RER ||
+            verifyForm.get('licenseType')?.value != 1) &&
+          verifyForm.get('constructionLicenseType')?.value ===
+            ConstructionLicenseTypeEnum.Itmam
+        "
+      >
+        <div class="col-12 col-lg-6">
+          <label class="form-label"
+            ><span class="required-star">*</span> رفع شهادة إتمام</label
+          >
+          <app-file-uploader
+            [data]="licenseConstractionFileUploaderData"
+            (fileUploaded)="onConstructionLicenseFileUploaded($event)"
+          ></app-file-uploader>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              verifyForm.get('constructionLicenseFileId')?.invalid &&
+              verifyForm.get('constructionLicenseFileId')?.touched
+            "
+          >
+            <span
+              *ngIf="verifyForm.get('constructionLicenseFileId')?.errors?.['required']"
+              >رفع شهادة إتمام مطلوب</span
+            >
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Error Messages -->
+      <div class="col-12" *ngIf="deedIntegrationError">
+        <div class="alert alert-danger" role="alert">
+          {{ deedIntegrationError }}
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="constractionIntegrationError">
+        <div class="alert alert-danger" role="alert">
+          {{ constractionIntegrationError }}
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="generalIntegrationError">
+        <div class="alert alert-danger" role="alert">
+          {{ generalIntegrationError }}
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form [formGroup]="deedForm" class="mt-3">
+  <ng-container
+    *ngIf="
+      fawriaLicenseDeedAndConstructionLicenseResponse?.deedData != null &&
+      fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList !=
+        null &&
+      fawriaLicenseDeedAndConstructionLicenseResponse?.errorCodes?.length == 0
+    "
+  >
+    <!-- بيانات الصك -->
+    <div class="tab-data-section">
+      <h6 class="title">بيانات الصك</h6>
+
+      <!-- Total Area Field -->
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6 col-xl-2">
+          <div class="key">
+            <i class="icon hgi hgi-stroke hgi-align-selection"></i>
+            المساحة الإجمالية للصك
+          </div>
+          <div class="value">
+            {{
+              fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+                ?.deedAreaText
+            }}
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-4">
+          <label for="totalArea" class="form-label"
+            ><span class="required-star">*</span> القيمة الكلية للأرض</label
+          >
+          <div class="input-group">
+            <input
+              (input)="formatNumberWithCommas($event)"
+              (focus)="onNumberInputFocus($event)"
+              (blur)="onNumberInputBlur($event)"
+              type="text"
+              class="form-control"
+              (change)="updateLandValue()"
+              formControlName="totalArea"
+              id="totalArea"
+              placeholder="أدخل القيمة الكلية للأرض"
+              [class.is-invalid]="
+                deedForm.get('totalArea')?.invalid &&
+                deedForm.get('totalArea')?.touched
+              "
+            />
+            <span class="input-group-text">
+              <img
+                src="assets/images/general/riyal-icon.svg"
+                alt="ريال"
+                class="riyal-icon opacity-100"
+              />
+            </span>
+          </div>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              deedForm.get('totalArea')?.invalid &&
+              deedForm.get('totalArea')?.touched
+            "
+          >
+            <span *ngIf="deedForm.get('totalArea')?.errors?.['required']"
+              >حقل مطلوب</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- بيانات الراهن -->
+    <div
+      class="tab-data-section"
+      *ngIf="
+        fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+          ?.isRealEstateMortgaged
+      "
+    >
+      <div class="d-flex justify-content-between align-items-center gap-3">
+        <h6 class="title">بيانات الراهن</h6>
+        <span class="status-pill" [ngClass]="{ orange: true, green: false }">
+          <i class="icon material-icons">fiber_manual_record</i>
+          {{ "مرهون" }}
+        </span>
+      </div>
+
+      <div class="row row-gap-4">
+        <!-- Mortgagor Name -->
+        <div class="col-12 col-lg-3 col-xl-2">
+          <!-- <label class="form-label">اسم الراهن</label>
+          <div class="input-group">
+            <input type="text" class="form-control" [value]="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeName" placeholder="قيمة الأرض للمالك" readonly="readonly">
+            <span class="input-group-text">
+              <i class="hgi hgi-stroke hgi-user"></i>
+            </span>
+          </div> -->
+          <div class="key">
+            <i class="icon hgi hgi-stroke hgi-user"></i>
+            اسم الراهن
+          </div>
+          <div class="value">
+            {{
+              fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+                ?.mortgageeName
+            }}
+          </div>
+        </div>
+
+        <!-- Mortgagor ID -->
+        <div class="col-12 col-lg-3 col-xl-2">
+          <!-- <label class="form-label">هوية الراهن</label>
+          <div class="input-group">
+            <input type="text" class="form-control" [value]="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeId" placeholder="قيمة الأرض للمالك" readonly="readonly">
+            <span class="input-group-text">
+              <i class="hgi hgi-stroke hgi-credit-card"></i>
+            </span>
+          </div> -->
+          <div class="key">
+            <i class="icon hgi hgi-stroke hgi-student-card"></i>
+            هوية الراهن
+          </div>
+          <div class="value">
+            {{
+              fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+                ?.mortgageeId
+            }}
+          </div>
+        </div>
+
+        <!-- Mortgage Agreement -->
+        <div class="col-12 col-lg-4 col-xl-3">
+          <label
+            class="form-label fs-6"
+            [class.required]="
+              fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+                ?.isRealEstateMortgaged
+            "
+            >اتفاقية الرهن</label
+          >
+          <app-file-uploader
+            [data]="singleFileUploaderData"
+            (fileUploaded)="onFileUploaded($event)"
+          ></app-file-uploader>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              deedForm.get('mortgageAgreement')?.invalid &&
+              deedForm.get('mortgageAgreement')?.touched
+            "
+          >
+            <span
+              *ngIf="deedForm.get('mortgageAgreement')?.errors?.['required']"
+              >حقل مطلوب</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الملاك -->
+    <div class="mt-4">
+      <div class="tab-data-header">
+        <i class="icon hgi hgi-stroke hgi-user-multiple"></i>
+        <h6 class="title">
+          {{ "ملاك الصك" }}
+        </h6>
+      </div>
+      <div class="tab-data-section">
+        <!-- Owners Table -->
+        <div class="table-responsive">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th scope="col">اسم المالك</th>
+                <th scope="col">الهوية</th>
+                <th scope="col">إجمالي المساحة المملوكة</th>
+                <th scope="col">قيمة الأرض للمالك</th>
+                <th scope="col" *ngIf="isUnit">اسم البنك للمالك</th>
+                <th scope="col" *ngIf="isUnit">رقم الآيبان للمالك</th>
+                <th scope="col" *ngIf="isUnit">الاتفاقية</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let owner of fawriaLicenseDeedAndConstructionLicenseResponse
+                    ?.deedData?.deedOwners;
+                  let i = index
+                "
+                [class.table-danger]="
+                  hasOwnerRowError(i) &&
+                  (ownerBanks.at(i).touched ||
+                    ownerAccountNumber.at(i).touched ||
+                    ownerAgreementFiles.at(i).touched)
+                "
+              >
+                <td>{{ owner.ownerName }}</td>
+                <td>
+                  <span class="tag">{{ owner.idNumber }}</span>
+                </td>
+                <td>
+                  <span class="tag">{{ owner.owningArea }}</span>
+                </td>
+                <td>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      [value]="
+                        ((landValue ?? 0) * (owner?.owningArea ?? 0)).toFixed(2)
+                      "
+                      placeholder="قيمة الأرض للمالك"
+                      readonly="readonly"
+                    />
+                    <span class="input-group-text">
+                      <img
+                        src="assets/images/general/riyal-icon.svg"
+                        alt="ريال"
+                        class="riyal-icon opacity-100"
+                      />
+                    </span>
+                  </div>
+                </td>
+                <td formArrayName="ownerBanks" *ngIf="isUnit">
+                  <select
+                    class="form-select"
+                    [formControlName]="i"
+                    [class.is-invalid]="
+                      ownerBanks.at(i)?.invalid && ownerBanks.at(i)?.touched
+                    "
+                  >
+                    <option value="">اختر البنك</option>
+                    <option *ngFor="let bank of bankDtoList" [value]="bank.id">
+                      {{ bank.name }}
+                    </option>
+                  </select>
+                  <div
+                    class="invalid-feedback d-block"
+                    *ngIf="
+                      ownerBanks.at(i)?.invalid && ownerBanks.at(i)?.touched
+                    "
+                  >
+                    <span>حقل مطلوب</span>
+                  </div>
+                </td>
+                <td formArrayName="ownerAccountNumber" *ngIf="isUnit">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [formControlName]="i"
+                    placeholder="رقم الآيبان للمالك"
+                    maxlength="24"
+                    [class.is-invalid]="
+                      ownerAccountNumber.at(i)?.invalid &&
+                      ownerAccountNumber.at(i)?.touched
+                    "
+                  />
+                  <div
+                    class="invalid-feedback d-block"
+                    *ngIf="
+                      ownerAccountNumber.at(i)?.invalid &&
+                      ownerAccountNumber.at(i)?.touched
+                    "
+                  >
+                    <span *ngIf="ownerAccountNumber.at(i)?.errors?.['required']"
+                      >حقل مطلوب</span
+                    >
+                    <span *ngIf="ownerAccountNumber.at(i)?.errors?.['pattern']"
+                      >رقم الآيبان يجب أن يبدأ بـ SA ويتكون من 24 حرف</span
+                    >
+                  </div>
+                </td>
+                <td formArrayName="ownerAgreementFiles" *ngIf="isUnit">
+                  <app-file-uploader
+                    *ngIf="!owner.isCustomer"
+                    [data]="singleFileUploaderData"
+                    (fileUploaded)="onOwnerFileUploaded($event, i)"
+                  ></app-file-uploader>
+                  <div
+                    class="invalid-feedback d-block"
+                    *ngIf="
+                      !owner.isCustomer &&
+                      ownerAgreementFiles.at(i)?.invalid &&
+                      ownerAgreementFiles.at(i)?.touched
+                    "
+                  >
+                    <span>حقل مطلوب</span>
+                  </div>
+                  <span *ngIf="owner.isCustomer">-</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- رخصة البناء -->
+    <div
+      class="mt-3"
+      *ngIf="
+        isUnit &&
+        !(
+          verifyForm.get('constructionLicenseType')?.value ===
+            ConstructionLicenseTypeEnum.RiyadhAmanah &&
+          verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER
+        )
+      "
+    >
+      <div class="tab-data-header">
+        <i class="icon hgi hgi-stroke hgi-profile-02"></i>
+        <h6 class="title">
+          {{ "رخصة البناء" }}
+        </h6>
+      </div>
+      <div class="tab-data-section">
+        <div class="row row-gap-4">
+          <div class="col-12 col-lg-3">
+            <div class="key">
+              <i class="icon hgi hgi-stroke hgi-profile-02"></i>
+              نوع الرخصة
+            </div>
+            <div class="value">
+              {{fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseType?.description || ''}}
+            </div>
+          </div>
+          <div class="col-12 col-lg-3">
+            <div class="key">
+              <i class="icon hgi hgi-stroke hgi-align-selection"></i>
+              إجمالي مساحة مسطح البناء
+            </div>
+            <div class="value">{{ totalLand }} م²</div>
+          </div>
+        </div>
+        <!-- Units Table -->
+        <div class="mt-3">
+          <div class="table-responsive">
+            <table class="table table-light">
+              <thead>
+                <tr>
+                  <th scope="col">عدد الوحدات</th>
+                  <th scope="col">أنواع الوحدات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let unit of fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.buildingInfo?.componentList?.component || []; let i = index"
+                >
+                  <td>{{ unit.numberOfUnits }}</td>
+                  <td>{{ unit.componentName?.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container>
+    <div class="col-12 col-lg-12 tab-data-section">
+      <label class="form-label"
+        ><span class="required-star">*</span> خطاب التهميش</label
+      >
+      <app-file-uploader
+        [data]="marginalizationSpeechFileUploaderData"
+        (fileUploaded)="onMarginalizationSpeechFileUploaded($event)"
+      ></app-file-uploader>
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          verifyForm.get('marginalizationSpeechFileId')?.invalid &&
+          verifyForm.get('marginalizationSpeechFileId')?.touched
+        "
+      >
+        <span
+          *ngIf="verifyForm.get('marginalizationSpeechFileId')?.errors?.['required']"
+          >رفع خطاب التهميش مطلوب</span
+        >
+      </div>
+    </div>
+  </ng-container>
+  <!-- actions -->
+  <div class="form-actions justify-content-start">
+    <button
+      type="button"
+      class="btn btn-outline-secondary me-auto"
+      (click)="openCancelModal()"
+    >
+      إلغاء الصك
+    </button>
+
+    <button
+      *ngIf="
+        !(
+          fawriaLicenseDeedAndConstructionLicenseResponse?.deedData != null &&
+          fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList !=
+            null &&
+          fawriaLicenseDeedAndConstructionLicenseResponse?.errorCodes?.length ==
+            0
+        )
+      "
+      type="button"
+      class="btn btn-primary"
+      (click)="onVerify()"
+    >
+      تحقق من الصك
+    </button>
+    <button
+      *ngIf="
+        fawriaLicenseDeedAndConstructionLicenseResponse?.deedData != null &&
+        fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList !=
+          null &&
+        fawriaLicenseDeedAndConstructionLicenseResponse?.errorCodes?.length == 0
+      "
+      type="button"
+      class="btn btn-primary"
+      (click)="saveDeed()"
+    >
+      إضافة الصك
+    </button>
+  </div>
+</form>
+
+<!-- Cancel Deed Modal -->
+<div class="modal-overlay" *ngIf="showCancelModal" (click)="closeCancelModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-icon">
+      <i class="bi bi-question-circle"></i>
+    </div>
+    <h3 class="modal-title">إلغاء الصك!</h3>
+    <p class="modal-message">هل أنت متأكد أنك تريد إلغاء الصك؟</p>
+    <div class="modal-actions">
+      <button
+        type="button"
+        class="btn-modal-cancel"
+        (click)="closeCancelModal()"
+      >
+        متابعة إدخال الصك
+      </button>
+      <button
+        type="button"
+        class="btn-modal-continue"
+        (click)="confirmCancelDeed()"
+      >
+        إلغاء الصك
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--  -->
+<!-- Aini Deed Warning Modal -->
+<div
+  class="modal-overlay"
+  *ngIf="showAiniDeedModal"
+  (click)="closeAiniDeedModal()"
+>
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-icon modal-icon-warning">
+      <i class="bi bi-question-circle"></i>
+    </div>
+    <h3 class="modal-title">
+      غير مسموح بإضافة الصكوك الصادرة من السجل العقاري في رخصة البيع الفورية
+    </h3>
+    <p class="modal-message">
+      يجب أن تكون جميع صكوك المشروع تم إصدارها من وزارة العدل،<br />وجميع الرخص
+      الإنشائية من رخص البناء ببلدي
+    </p>
+    <div class="modal-actions">
+      <button
+        type="button"
+        class="btn-modal-primary"
+        (click)="changeLicenseType()"
+      >
+        تغيير نوع الرخصة
+      </button>
+      <button
+        type="button"
+        class="btn-modal-secondary"
+        (click)="closeAiniDeedModal()"
+      >
+        إلغاء
+      </button>
+    </div>
+  </div>
+</div>

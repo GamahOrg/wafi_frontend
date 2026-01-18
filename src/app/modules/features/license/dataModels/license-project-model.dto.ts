@@ -12,6 +12,8 @@ export class LicenseProjectModelDto {
   subUnitTypeId: number = 0;
   licenseProjectSubUnit: ProjectSubUnitDto | null = null;
   licenseProjectModelDesignFiles: LicenseProjectModelDesignFileDto[] = [];
+  canDelete?: boolean;
+  isPrevious?: boolean;
 }
 export class LicenseProjectModelCreateUpdateDto {
   id: string = '';

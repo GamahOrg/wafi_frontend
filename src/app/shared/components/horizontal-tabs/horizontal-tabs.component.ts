@@ -36,6 +36,7 @@ export class HorizontalTabsComponent{
       this._tabsService
         .getVerticalTabContent()
         .subscribe((tabContent: Tabs) => {
+          debugger
           // console.log("observeVerticalTabsContent tabContent", tabContent)
           this.tabContent = tabContent;
         })

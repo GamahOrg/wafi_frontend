@@ -1,0 +1,363 @@
+<div class="row row-gap-4">
+  <div class="col-xl-4 col-xxl-3">
+    <div class="card side-card h-100">
+      <div class="card-header">
+        <h4>الزون</h4>
+        <button
+          *ngIf="!hideActionButtons"
+          class="btn btn-link"
+          (click)="openDialog()"
+        >
+          <i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة زون جديد
+        </button>
+      </div>
+
+      <div class="card-body">
+        <div class="d-flex flex-column gap-2">
+          <ng-container *ngFor="let zone of zones; let idx = index">
+            <div class="item" [ngClass]="{'active': idx === selectedZoneIndex}">
+              <mat-icon class="icon align-self-start mt-1">circle</mat-icon>
+
+              <div
+                class="d-flex flex-column gap-2 flex-shrink-0 cursor-pointer"
+                (click)="onZoneSelected(zone, idx)"
+              >
+                <h6>{{ zone.code }}</h6>
+                <p>
+                  تحتوي على {{ zone.numberOfBlocks }} بلوك -
+                  {{ zone?.numberOfBuilings }} عمارة
+                </p>
+              </div>
+
+              <div class="item-actions" *ngIf="!hideActionButtons">
+                <button mat-icon-button [matMenuTriggerFor]="itemActions">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #itemActions="matMenu">
+                  <button mat-menu-item (click)="deleteZone(zone)" class="menu-delete-btn">
+                    <i class="hgi hgi-stroke hgi-delete-03"></i>
+                    <span>حذف</span>
+                  </button>
+                </mat-menu>
+
+                <!-- <div class="menu-trigger">
+                  <span [matMenuTriggerFor]="itemActions">
+                    <i class="icon material-icons">more_vert</i>
+                  </span>
+                </div>
+                <mat-menu #itemActions="matMenu">
+                  <button mat-menu-item (click)="deleteZone(zone)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span>حذف</span>
+                  </button>
+                </mat-menu> -->
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="zones.length == 0">
+            <div class="row justify-content-center">
+              <div class="col-xl-12">
+                <div class="d-flex flex-column align-items-center gap-4 py-5">
+                  <p class="text-center">
+                    لا توجد زون مضافة حاليا. يمكنك إضافة زون أو أكثر وبعد ذلك ستتمكن من إضافة العمائر والبلوكات داخل هذه الزون
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="d-flex flex-column gap-3">
+
+      <div class="card h-100">
+        <div class="card-header with-separator">
+          <div class="d-flex flex-column gap-2">
+            <h4>العمائر والبلوكات</h4>
+            <p>
+              تحتوي كل عمارة او بلوك على تفاصيل ( الوحدات ، النماذج , الأكواد )
+            </p>
+          </div>
+          <div class="d-flex align-self-center gap-3">
+            <div class="stats-square">
+              <span class="fs-5 fw-semibold text-primary">{{selectedZone?.numberOfBuilings??0}}</span> عمارة
+            </div>
+            <div class="stats-square">
+              <span class="fs-5 fw-semibold text-primary">{{selectedZone?.numberOfBlocks??0}}</span> بلوك
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center gap-3">
+            <div class="d-flex gap-3 align-self-center">
+              <span class="tab-square" [ngClass]="{'active': true}">العمائر</span>
+              <span class="tab-square">البلوكات</span>
+            </div>
+
+            <button *ngIf="selectedZoneIndex!=-1 && !hideActionButtons" class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك او عمارة</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <ng-container
+            *ngIf="
+              selectedbuildingOrBlock &&
+              selectedbuildingOrBlock.licenseProjectSubUnits != null
+            "
+          >
+            <div class="row row-gap-4">
+              <div class="col-xxl-6">
+                <div class="d-flex flex-column gap-3 h-100">
+                  <div class="d-flex flex-column gap-2">
+                    <h4>قائمة العمائر</h4>
+                    <p>قم بتحديد العمارة لعرض انواع الوحدات الخاصة بها</p>
+                  </div>
+
+                  <div class="items-list flex-grow-1 p-3 border rounded-1">
+                    <div class="d-flex flex-column gap-2">
+                      <ng-container
+                        *ngFor="let unit of projectUnits; let idx = index"
+                      >
+                        <div
+                          class="item"
+                          [ngClass]="{
+                            active: idx === selectedbuildingOrBlockIndex
+                          }"
+                        >
+                          <span class="icon material-icons">circle</span>
+
+                          <div
+                            class="d-flex flex-column gap-2 cursor-pointer"
+                            (click)="onSelectedbuildingOrBlock(unit, idx)"
+                          >
+                            <h6>
+                              {{ getUnitTypeName(unit.unitTypeId)  }} رقم {{ unit.code }} -
+                              المرحلة {{ getStageNumberName(unit.stageNumberId) }}
+                            </h6>
+                            <p class="small">
+                              تاريخ البداية:
+                              {{
+                                unit.constructionStartOn | date : "dd/MM/yyyy"
+                              }}
+                              تاريخ النهاية:
+                              {{ unit.constructionEndOn | date : "dd/MM/yyyy" }}
+                            </p>
+                          </div>
+
+                          <div class="item-actions" *ngIf="!hideActionButtons">
+                            <button mat-icon-button [matMenuTriggerFor]="itemActions">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #itemActions="matMenu">
+                              <button mat-menu-item (click)="onSelectedbuildingOrBlock(unit,idx);addSubUnit()" class="menu-edit-btn">
+                                <i class="hgi hgi-stroke hgi-add-square"></i>
+                                <span>إضافة نوع وحدة</span>
+                              </button>
+                              <button mat-menu-item (click)="openEditDialog(unit)" class="menu-edit-btn">
+                                <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                                <span>تعديل البيانات</span>
+                              </button>
+                              <button mat-menu-item (click)="deleteBuildingOrBlock(unit)" class="menu-delete-btn">
+                                <i class="hgi hgi-stroke hgi-delete-03"></i>
+                                <span>حذف</span>
+                              </button>
+                            </mat-menu>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xxl-6">
+                <div class="d-flex flex-column gap-3 h-100">
+                  <div class="d-flex flex-column gap-2">
+                    <h4>انواع الوحدات</h4>
+                    <p>
+                      يجب إختيار نوع الوحدة لإظهار الأكواد بالجدول أسفل الصفحة
+                    </p>
+                  </div>
+
+                  <div class="items-list flex-grow-1 p-3 border rounded-1">
+                    <div class="d-flex flex-column gap-2">
+                      <ng-container
+                        *ngIf="
+                          selectedbuildingOrBlock &&
+                          selectedbuildingOrBlock.licenseProjectSubUnits &&
+                          selectedbuildingOrBlock.licenseProjectSubUnits
+                            .length > 0
+                        "
+                      >
+                        <ng-container
+                          *ngFor="
+                            let licenseProjectSubUnit of selectedbuildingOrBlock.licenseProjectSubUnits;
+                            let idx = index
+                          "
+                        >
+                          <div
+                            class="item gap-4"
+                            [ngClass]="{
+                              active: idx === selectedLicenseProjectSubUnitIndex
+                            }"
+                          >
+                            <span class="icon material-icons">circle</span>
+
+                            <div
+                              class="d-flex align-items-center gap-3 cursor-pointer"
+                              (click)="
+                                onSelectedLicenseProjectSubUnit(
+                                  licenseProjectSubUnit,
+                                  idx
+                                )
+                              "
+                            >
+                              <div
+                                class="item-part d-flex align-items-center gap-2"
+                              >
+                                <h6>نوع الوحدة</h6>
+                                <span class="p-2 small bg-info-subtle">
+                                  {{ getSubUnitTypeName(licenseProjectSubUnit.subUnitTypeId)}}
+                                 
+                                </span>
+                              </div>
+
+                              <div
+                                class="item-part d-flex align-items-center gap-2"
+                              >
+                                <h6>عدد الوحدات</h6>
+                                <span class="p-2 small bg-info-subtle"
+                                  >{{
+                                    licenseProjectSubUnit.subUnitCount
+                                  }}
+                                  وحدة</span
+                                >
+                              </div>
+
+                              <div class="item-part">
+                                <button
+                                  class="btn btn-outline-primary fw-bold"
+                                  (click)="
+                                    onSelectedLicenseProjectSubUnit(
+                                      licenseProjectSubUnit,
+                                      idx
+                                    );
+                                    openModelDialog()
+                                  "
+                                >
+                                  النماذج
+                                </button>
+                              </div>
+                            </div>
+                            <div class="item-actions" *ngIf="!hideActionButtons">
+                              <button class="btn-icon btn btn-primary" (click)="updateSubUnit(licenseProjectSubUnit)">
+                                <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                              </button>
+                              <button class="btn-icon btn btn-danger" (click)="deleteSubUnit(licenseProjectSubUnit)">
+                                <i class="hgi hgi-stroke hgi-delete-03"></i>
+                              </button>
+                            </div>
+
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+
+                    <!-- <div class="mt-3">
+                    <app-pagination></app-pagination>
+                  </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="d-flex flex-column gap-4 mt-4"
+              *ngIf="
+                selectedZoneIndex != -1 &&
+                projectUnits &&
+                projectUnits.length > 0 &&
+                !hideActionButtons
+              "
+            >
+              <div class="d-flex flex-column gap-2">
+                <h4>الأكواد الخاصة بأنواع الوحدات</h4>
+                <p>
+                  قم بتحديد نوع الوحدة أولاً، حتي يمكنك تحميل القالب الخاص بها
+                  ثم يمكنك رفع ملف الأكواد
+                </p>
+              </div>
+
+              <div class="row row-gap-4">
+                <div class="col-xxl-6">
+                  <div
+                    class="dashed-block d-flex flex-column justify-content-center align-items-center gap-4 h-100"
+                  >
+                    <mat-icon fontIcon="upload_file"></mat-icon>
+                    <div class="d-flex flex-column align-items-center gap-2">
+                      <h6>قم بتحميل القالب الخاص بنوع الوحدة المحددة</h6>
+                    </div>
+                    <button class="btn btn-light" (click)="generateExcel()">
+                      تحميل القالب
+                    </button>
+                  </div>
+                </div>
+
+                <div class="col-xxl-6">
+                  <div class="d-flex flex-column gap-4 h-100">
+                    <h6>
+                      قم بتحميل ملف اكواد الوحدات الخاص بنوع الوحدة المحددة
+                    </h6>
+                    <app-file-uploader
+                      [data]="singleFileUploaderData"
+                      (fileUploaded)="onExcelFileUploaded($event)"
+                    ></app-file-uploader>
+                    <button class="btn btn-light" (click)="saveFileCode()">
+                      تحميل ملف الأكواد
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="d-flex justify-content-center gap-4 mt-4">
+              <button class="btn btn-outline-secondary"><span class="icon material-icons">east</span> السابق</button>
+              <button class="btn btn-outline-primary" (click)="moveToNextTab()">التالي <span class="icon material-icons">west</span></button>
+            </div> -->
+          </ng-container>
+
+          <ng-container
+            *ngIf="
+              selectedZoneIndex == -1 ||
+              (projectUnits && projectUnits.length == 0)
+            "
+          >
+            <div class="row justify-content-center">
+              <div class="col-xl-6">
+                <div class="d-flex flex-column align-items-center gap-4 py-5">
+                  <p class="text-center">
+                    لا توجد أى عمائر أو بلوكات فى هذا النطاق حاليا.لعرض أنواع
+                    الوحدات المتاحة يرجى إضافة عمارة أو بلوك أولا. بعد ذلك يمكنك
+                    إضافة النماذج وتحميل الأكواد الخاصة بكل نوع من الوحدات
+                    بسهولة
+                  </p>
+
+                  <button *ngIf="selectedZoneIndex!=-1 && !hideActionButtons" class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك او عمارة</button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-next-and-previus-buttons></app-next-and-previus-buttons>

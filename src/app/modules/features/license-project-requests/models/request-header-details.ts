@@ -23,7 +23,10 @@ export interface LicenseProjectRequestDto {
     licenseProjectRequestType: LicenseProjectRequestTypeDto;
     licenseProjectRequestEventStatus: LicenseProjectRequestEventStatusDto;
     workflowDetailRequestStatus: RequestPhase[];
-    price: number;
+    licenseProjectFarzRequestStatusId?:number;
+    licenseProjectFarzRequestStatusName?:string;
+  price: number;
+  createdOn?: string;
 }
 
 export interface FacilityShortDto  {
@@ -54,7 +57,8 @@ export interface CustomerShortDto  {
     nationalityId: string;
     isActive: boolean;
     facility: FacilityShortDto;
-    nationality?:SysNationalityCreateUpdateDto;
+  nationality?: SysNationalityCreateUpdateDto;
+  nationalityName?: string;
 }
 
 export interface LicenseProjectRequestStatusDto  {

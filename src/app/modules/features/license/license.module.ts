@@ -1,7 +1,5 @@
 import { ProjectAddressService } from './services/licenseProjects/project-address.service';
-import {
-  TechnicalCapabilitiesRequirementsService
-} from '../facilities/services/technicalCapabilitiesRequirements/technical-capabilities-requirements.service';
+import { TechnicalCapabilitiesRequirementsService } from '../facilities/services/technicalCapabilitiesRequirements/technical-capabilities-requirements.service';
 import { ProjectBasicDataService } from './services/licenseProjects/project-basic-data.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -39,78 +37,36 @@ import { EngineeringConsultantComponent } from './components/engineering-consult
 import { CharteredAccountantComponent } from './components/chartered-accountant/chartered-accountant.component';
 import { SubDeveloperComponent } from './components/sub-developer/sub-developer.component';
 import { MarketerComponent } from './components/marketer/marketer.component';
-import {
-  FinalBeneficiaryContractComponent
-} from './components/final-beneficiary-contract/final-beneficiary-contract.component';
-import {
-  LicenseProjectExpectedIncomeFormComponentComponent
-} from './components/license-project-expected-income-form-component/license-project-expected-income-form-component.component';
-import {
-  NationalAddressService
-} from '../facilities/services/facilityProfile/national-address-service/national-address.service';
+import { FinalBeneficiaryContractComponent } from './components/final-beneficiary-contract/final-beneficiary-contract.component';
+import { LicenseProjectExpectedIncomeFormComponentComponent } from './components/license-project-expected-income-form-component/license-project-expected-income-form-component.component';
+import { NationalAddressService } from '../facilities/services/facilityProfile/national-address-service/national-address.service';
 import { ProjectRealStateDeveloperService } from './services/licenseProjects/project-real-state-developer.service';
-import {
-  EngineeringConsultantAgreementComponent
-} from './components/engineering-consultant/engineering-consultant-agreement/engineering-consultant-agreement.component';
-import {
-  EngineeringConsultantAgreementStaffComponent
-} from './components/engineering-consultant/engineering-consultant-agreement-staff/engineering-consultant-agreement-staff.component';
-import {
-  EngineeringConsultantUploadComponent
-} from './components/engineering-consultant/engineering-consultant-upload/engineering-consultant-upload.component';
-import {
-  CreateUpdateSubDeveloperComponent
-} from './components/sub-developer/create-update-sub-developer/create-update-sub-developer.component';
+import { EngineeringConsultantAgreementComponent } from './components/engineering-consultant/engineering-consultant-agreement/engineering-consultant-agreement.component';
+import { EngineeringConsultantAgreementStaffComponent } from './components/engineering-consultant/engineering-consultant-agreement-staff/engineering-consultant-agreement-staff.component';
+import { EngineeringConsultantUploadComponent } from './components/engineering-consultant/engineering-consultant-upload/engineering-consultant-upload.component';
+import { CreateUpdateSubDeveloperComponent } from './components/sub-developer/create-update-sub-developer/create-update-sub-developer.component';
 import { SubDeveloperListComponent } from './components/sub-developer/sub-developer-list/sub-developer-list.component';
 import { LicenseProjectCharteredAccountantService } from './services/license-project-chartered-accountant.service';
 import { LicenseProjectSubDeveloperService } from './services/license-project-sub-developer.service';
 import { LicenseProjectEngineeringConsultantService } from './services/license-project-engineering-consultant.service';
-import {
-  ExpectedAnnualBalanceSheetFormComponent
-} from './components/expected-annual-balance-sheet-form/expected-annual-balance-sheet-form.component';
-import {
-  StatementOfExpectedAnnualCashFlowsFormComponent
-} from './components/statement-of-expected-annual-cash-flows-form/statement-of-expected-annual-cash-flows-form.component';
-import {
-  LicenseProjectFinancialIndicatorComponent
-} from './components/license-project-financial-indicator/license-project-financial-indicator.component';
-import {
-  LicenseProjectFinancialIndicatorFormComponent
-} from './components/license-project-financial-indicator-form/license-project-financial-indicator-form.component';
-import {
-  LicenseProjectExpectedFundingSourceComponent
-} from './components/license-project-expected-funding-source/license-project-expected-funding-source.component';
-import {
-  LicenseProjectExpectedFundingSourceFormComponent
-} from './components/license-project-expected-funding-source-form/license-project-expected-funding-source-form.component';
-import {
-  ExpectedAnnualBalanceSheetService
-} from './services/feasibilityStudyServices/expected-annual-balance-sheet.service';
-import {
-  LicenseProjectAnnualCashFlowService
-} from './services/feasibilityStudyServices/license-project-annual-cash-flow.service';
-import {
-  LicenseProjectExpectedIncomeService
-} from './services/feasibilityStudyServices/license-project-expected-income.service';
-import {
-  LicenseProjectFeasibilityStudyService
-} from './services/feasibilityStudyServices/license-project-feasibility-study.service';
-import {
-  LicenseProjectFinancialIndicatorService
-} from './services/feasibilityStudyServices/license-project-financial-indicator.service';
+import { ExpectedAnnualBalanceSheetFormComponent } from './components/expected-annual-balance-sheet-form/expected-annual-balance-sheet-form.component';
+import { StatementOfExpectedAnnualCashFlowsFormComponent } from './components/statement-of-expected-annual-cash-flows-form/statement-of-expected-annual-cash-flows-form.component';
+import { LicenseProjectFinancialIndicatorComponent } from './components/license-project-financial-indicator/license-project-financial-indicator.component';
+import { LicenseProjectFinancialIndicatorFormComponent } from './components/license-project-financial-indicator-form/license-project-financial-indicator-form.component';
+import { LicenseProjectExpectedFundingSourceComponent } from './components/license-project-expected-funding-source/license-project-expected-funding-source.component';
+import { LicenseProjectExpectedFundingSourceFormComponent } from './components/license-project-expected-funding-source-form/license-project-expected-funding-source-form.component';
+import { ExpectedAnnualBalanceSheetService } from './services/feasibilityStudyServices/expected-annual-balance-sheet.service';
+import { LicenseProjectAnnualCashFlowService } from './services/feasibilityStudyServices/license-project-annual-cash-flow.service';
+import { LicenseProjectExpectedIncomeService } from './services/feasibilityStudyServices/license-project-expected-income.service';
+import { LicenseProjectFeasibilityStudyService } from './services/feasibilityStudyServices/license-project-feasibility-study.service';
+import { LicenseProjectFinancialIndicatorService } from './services/feasibilityStudyServices/license-project-financial-indicator.service';
 import { ProjectLandComponent } from './components/project-land/project-land.component';
 import { ProjectLandTitleDeedsComponent } from './components/project-land-title-deeds/project-land-title-deeds.component';
 import { ProjectModuleModelsComponent } from './components/project-module-models/project-module-models.component';
 import { ProjectUnitCodesComponent } from './components/project-unit-codes/project-unit-codes.component';
-import {
-  RealEstateMarketerListComponent
-} from "./components/marketer/real-estate-marketer-list/real-estate-marketer-list.component";
-import {
-  CreateUpdateMarketerComponent
-} from "./components/marketer/create-update-marketer/create-update-marketer.component";
-import {
-  LicenseProjectRealStateMarketerService
-} from "./dataModels/license-project-real-state-marketer/license-project-real-state-marketer-service";
+import { RealEstateMarketerListComponent } from './components/marketer/real-estate-marketer-list/real-estate-marketer-list.component';
+import { CreateUpdateMarketerComponent } from './components/marketer/create-update-marketer/create-update-marketer.component';
+import { LicenseProjectRealStateMarketerService } from './dataModels/license-project-real-state-marketer/license-project-real-state-marketer-service';
 import { LicenseProjectAdditionalServicesService } from './services/licenseProjects/license-project-additional-services.service';
 import { AdditionalServiceFormComponent } from './components/additional-service-form/additional-service-form.component';
 import { ConstructionLicenseService } from './services/licenseProjects/construction-license.service';
@@ -134,8 +90,7 @@ import { ProjectModuleModelsFormComponent } from './components/project-module-mo
 import { SysYearService } from './services/feasibilityStudyServices/sys-year.service';
 import { SysFundingTypeService } from './services/feasibilityStudyServices/sys-funding-type.service';
 import { LicenseRequestHeaderService } from './services/license-request-header.service';
-import { SharedLicenseProjectService } from './services/sharedLicenseProject/shared-license-project.service';
-import { EngineeringConsultantCustomerInfoComponent } from "./components/engineering-consultant/engineering-consultant-customer-info/engineering-consultant-customer-info.component";
+import { EngineeringConsultantCustomerInfoComponent } from './components/engineering-consultant/engineering-consultant-customer-info/engineering-consultant-customer-info.component';
 import { LicenseRequestService } from './services/license-request.service';
 import { LicenseProjectUnitService } from './services/license-project-unit/license-project-unit.service';
 import { AddEditProjectBlockComponent } from './components/add-edit-project-block/add-edit-project-block.component';
@@ -420,6 +375,7 @@ import { ContractReadonlyViewComponent } from './pages/contract-readonly-view/co
 import { ViewContractComponent } from './components/view-contract/view-contract.component';
 import { CharteredAccountProjectTotalComponent } from './pages/chartered-account-project-total/chartered-account-project-total.component';
 import { EditFarzNoteComponent } from './pages/edit-farz-note/edit-farz-note.component';
+import { EditCorrectionFarzNoteComponent } from './pages/edit-correction-farz-note/edit-correction-farz-note.component';
 import { ContractUnitDetailsComponent } from './pages/contracts/contract-unit-details/contract-unit-details.component';
 import { AddContractPopupComponent } from './pages/contracts/add-contract-popup/add-contract-popup.component';
 import { BuyerContractViewDetailsComponent } from './pages/contracts/buyer-contract-view-details/buyer-contract-view-details.component';
@@ -499,12 +455,107 @@ import { FawriaFinalBeneficiaryAgreementComponent } from './pages/fawria-final-b
 import { BankTermsConditionsPopupComponent } from './components/FawriaLicenseProject/bank-terms-conditions-popup/bank-terms-conditions-popup.component';
 import { FawriaLicenseCompleteInvoiceViewComponent } from './components/fawria-license-complete-invoice-view/fawria-license-complete-invoice-view.component';
 import { FawriaLicenseBankAccountInfoComponent } from './components/fawria-license-bank-account-info/fawria-license-bank-account-info.component';
+import { UnitsCorrectionsTabsComponent } from './components/units-correction/units-corrections-tabs/units-corrections-tabs.component';
+import { DeedsAndBuildingPermitsTabComponent } from './components/units-correction/deeds-and-building-permits-tab/deeds-and-building-permits-tab.component';
+import { UnitsAndArchitecturalDesignsTabComponent } from './components/units-correction/Units-and-architectural-designs-tab/Units-and-architectural-designs-tab.component';
+import { CorrectionAddEditProjectBlockComponent as CorrectionAddEditProjectBlockComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/Zones/correction-add-edit-project-block/correction-add-edit-project-block.component';
+import { CorrectionLincenseProjectZonesComponent as CorrectionLincenseProjectZonesComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/Zones/correction-lincense-project-zones/correction-lincense-project-zones.component';
+import { CorrectionProjectUnitsComponent as CorrectionProjectUnitsComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/Zones/correction-project-units/correction-project-units.component';
+import { CorrectionProjectModuleModelsFormComponent as CorrectionProjectModuleModelsFormComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/correction-project-module-models-form/correction-project-module-models-form.component';
+import { CorrectionProjectModuleModelsComponent as CorrectionProjectModuleModelsComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/correction-project-module-models/correction-project-module-models.component';
+import { CorrectionUnitCodesFormComponent as CorrectionUnitCodesFormComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/correction-unit-codes-form/correction-unit-codes-form.component';
+import { CorrectionArchitecturalDesignFilesComponent as CorrectionArchitecturalDesignFilesComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/correction-architectural-design-files/correction-architectural-design-files.component';
+import { CorrectionUnitCodesComponent as CorrectionUnitCodesComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/correction-unit-codes/correction-unit-codes.component';
+import { CorrectionSubUnitModelsComponent as CorrectionSubUnitModelsComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/correction-sub-unit-models/correction-sub-unit-models.component';
+import { CorrectionProjectUnitCodesComponent as CorrectionProjectUnitCodesComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/correction-project-unit-codes/correction-project-unit-codes.component';
+import { CorrectionLicenseRequestValidationPopupComponent as CorrectionLicenseRequestValidationPopupComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/correction-license-request-validation-popup/correction-license-request-validation-popup.component';
+import { CorrectionAddZoneComponent as CorrectionAddZoneComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/Zones/correction-add-zone/correction-add-zone.component';
+import { CorrectionLicenseProjectZoneUnitComponent as CorrectionLicenseProjectZoneUnitComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/Zones/correction-license-project-zone-unit/correction-license-project-zone-unit.component';
+import { CorrectionLicenseProjectZoneUnitSubunitComponent as CorrectionLicenseProjectZoneUnitSubunitComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/Zones/correction-license-project-zone-unit-subunit/correction-license-project-zone-unit-subunit.component';
+import { CorrectionLicenseProjectZoneSubunitModelComponent as CorrectionLicenseProjectZoneSubunitModelComponentFromUnits } from './components/units-correction/Units-and-architectural-designs-tab/Zones/correction-license-project-zone-subunit-model/correction-license-project-zone-subunit-model.component';
+import { SharedLicenseProjectService } from './services/sharedLicenseProject/shared-license-project.service';
+import { CorrectionLicenseProjectDeedsListComponent as CorrectionLicenseProjectDeedsListComponentFromUnits } from './components/units-correction/deeds-and-building-permits-tab/components/correction-license-project-deeds-list/correction-license-project-deeds-list.component';
+import { CorrectionLicenseProjectDeedsCreateComponent as CorrectionLicenseProjectDeedsCreateComponentFromUnits } from './components/units-correction/deeds-and-building-permits-tab/components/correction-license-project-deeds-create/correction-license-project-deeds-create.component';
+import { CorrectionLicenseProjectDeedsDetailsComponent as CorrectionLicenseProjectDeedsDetailsComponentFromUnits } from './components/units-correction/deeds-and-building-permits-tab/components/correction-license-project-deeds-details/correction-license-project-deeds-details.component';
+import { CorrectionLicenseProjectDeedsContainerComponent as CorrectionLicenseProjectDeedsContainerComponentFromUnits } from './components/units-correction/deeds-and-building-permits-tab/components/correction-license-project-deeds-container/correction-license-project-deeds-container.component';
+import { CorrectionUpdateBuildingFlatAreaComponent as CorrectionUpdateBuildingFlatAreaComponentFromUnits } from './components/units-correction/deeds-and-building-permits-tab/components/correction-update-building-flat-area/correction-update-building-flat-area.component';
+import { CorrectionConstructionLicenseFormComponent as CorrectionConstructionLicenseFormComponentFromUnits } from './components/units-correction/deeds-and-building-permits-tab/components/correction-construction-license-form/correction-construction-license-form.component';
+import { CorrectionConstructionLicensesComponent as CorrectionConstructionLicensesComponentFromUnits } from './components/units-correction/deeds-and-building-permits-tab/components/correction-construction-licenses/correction-construction-licenses.component';
 import { CorrectingUnitsListComponent } from './pages/correcting-units-list/correcting-units-list.component';
+import { CorrectingUnitsDetailsComponent } from './pages/correcting-units-details/correcting-units-details.component';
 import { LicenseTabsComponent } from './pages/license-tabs/license-tabs.component';
 import { CorrectingUnitsService } from './services/correct-units/correcting-units.service';
+import { CorrectingProjectDataComponent } from './components/correcting-components/correcting-project-data/correcting-project-data.component';
+import { CorrectingProjectPartiesComponent } from './components/correcting-components/correcting-project-parties/correcting-project-parties.component';
+import { CorrectingLicenseprojectMainDataViewOnlyComponent } from './components/correcting-components/correcting-licenseproject-maindata-view-only/correcting-licenseproject-maindata-view-only.component';
+import { CorrectingLicenseprojectContactInfoViewOnlyComponent } from './components/correcting-components/correcting-licenseproject-contact-info-view-only/correcting-licenseproject-contact-info-view-only.component';
+import { CorrectingLicenseprojectDeedsViewOnlyComponent } from './components/correcting-components/correcting-licenseproject-deeds-view-only/correcting-licenseproject-deeds-view-only.component';
+import { CorrectingLicenseprojectConstructionLicensesViewOnlyComponent } from './components/correcting-components/correcting-licenseproject-construction-licenses-view-only/correcting-licenseproject-construction-licenses-view-only.component';
+import { CorrectingLicenseProjectZonesComponent } from './components/correcting-components/correcting-license-project-zones/correcting-license-project-zones.component';
+import { CorrectingProjectModuleModelsComponent } from './components/correcting-components/correcting-project-module-models/correcting-project-module-models.component';
+import { CorrectingProjectUnitCodesComponent } from './components/correcting-components/correcting-project-unit-codes/correcting-project-unit-codes.component';
+import { CorrectingArchitecturalDesignFilesComponent } from './components/correcting-components/correcting-architectural-design-files/correcting-architectural-design-files.component';
+import { CorrectingLicenseprojectMaindataComponent } from './components/correcting-components/correcting-licenseproject-maindata/correcting-licenseproject-maindata.component';
+import { CorrectingLicenseprojectContactInfoComponent } from './components/correcting-components/correcting-licenseproject-contact-info/correcting-licenseproject-contact-info.component';
+import { CorrectingLicenseprojectDeedsComponent } from './components/correcting-components/correcting-licenseproject-deeds/correcting-licenseproject-deeds.component';
+import { CorrectingLicenseprojectDeedsListViewOnlyComponent } from './components/correcting-components/correcting-licenseproject-deeds-list-view-only/correcting-licenseproject-deeds-list-view-only.component';
+import { CorrectingLicenseprojectDeedsListComponent } from './components/correcting-components/correcting-licenseproject-deeds-list/correcting-licenseproject-deeds-list.component';
+import { CorrectingLicenseprojectDeedsCreateComponent } from './components/correcting-components/correcting-licenseproject-deeds-create/correcting-licenseproject-deeds-create.component';
+import { CorrectingLicenseprojectDeedsDetailsComponent } from './components/correcting-components/correcting-licenseproject-deeds-details/correcting-licenseproject-deeds-details.component';
+import { CorrectingLicenseprojectDeedsDetailsViewOnlyComponent } from './components/correcting-components/correcting-licenseproject-deeds-details-view-only/correcting-licenseproject-deeds-details-view-only.component';
+import { CorrectingSubUnitModelsComponent } from './components/correcting-components/correcting-sub-unit-models/correcting-sub-unit-models.component';
+import { CorrectingLicenseProjectZoneSubunitModelComponent } from './components/correcting-components/correcting-license-project-zone-subunit-model/correcting-license-project-zone-subunit-model.component';
+import { CorrectingUnitCodesComponent } from './components/correcting-components/correcting-unit-codes/correcting-unit-codes.component';
+
+// Correction Units Components
+import { CorrectionLicenseSummaryComponent } from './pages/correction-license-summary/correction-license-summary.component';
+import { CorrectionLicenseProjectDeedsContainerComponent } from './components/correction-units/correction-license-project-deeds-container/correction-license-project-deeds-container.component';
+import { CorrectionLicenseProjectDeedsComponent } from './components/correction-units/correction-license-project-deeds/correction-license-project-deeds.component';
+import { CorrectionConstructionLicensesComponent } from './components/correction-units/correction-construction-licenses/correction-construction-licenses.component';
+import { CorrectionUnitsAndDesignsContainerComponent } from './components/correction-units/correction-units-and-designs-container/correction-units-and-designs-container.component';
+import { CorrectionZonesBlocksBuildingsComponent } from './components/correction-units/correction-zones-blocks-buildings/correction-zones-blocks-buildings.component';
+import { CorrectionUnitTypesComponent } from './components/correction-units/correction-unit-types/correction-unit-types.component';
+import { CorrectionProjectUnitCodesComponent } from './components/correction-units/correction-project-unit-codes/correction-project-unit-codes.component';
+import { CorrectionArchitecturalDesignsComponent } from './components/correction-units/correction-architectural-designs/correction-architectural-designs.component';
+import { CorrectionUnitCodesComponent } from './components/correction-units/correction-unit-codes/correction-unit-codes.component';
+import { CorrectionAddZoneComponent } from './components/correction-units/correction-add-zone/correction-add-zone.component';
+import { CorrectionLicenseProjectZoneUnitComponent } from './components/correction-units/correction-license-project-zone-unit/correction-license-project-zone-unit.component';
+import { CorrectionLicenseProjectZoneUnitSubunitComponent } from './components/correction-units/correction-license-project-zone-unit-subunit/correction-license-project-zone-unit-subunit.component';
+import { CorrectionLicenseProjectZoneSubunitModelComponent } from './components/correction-units/correction-license-project-zone-subunit-model/correction-license-project-zone-subunit-model.component';
+import { CorrectionSubUnitModelsComponent } from './components/correction-units/correction-sub-unit-models/correction-sub-unit-models.component';
+import { CorrectionConstructionLicenseFormComponent } from './components/correction-units/correction-construction-license-form/correction-construction-license-form.component';
+import { CorrectionUpdateBuildingFlatAreaComponent } from './components/correction-units/correction-update-building-flat-area/correction-update-building-flat-area.component';
+import { CorrectionLicenseRequestValidationPopupComponent } from './components/correction-units/correction-license-request-validation-popup/correction-license-request-validation-popup.component';
+import { CorrectionLicenseprojectDeedsListComponent } from './components/correction-units/correction-licenseproject-deeds-list/correction-licenseproject-deeds-list.component';
+import { CorrectionLicenseprojectDeedsCreateComponent } from './components/correction-units/correction-licenseproject-deeds-create/correction-licenseproject-deeds-create.component';
+import { CorrectionLicenseprojectDeedsUpdateComponent } from './components/correction-units/correction-licenseproject-deeds-update/correction-licenseproject-deeds-update.component';
+import { CorrectionLicenseprojectDeedsDetailsComponent } from './components/correction-units/correction-licenseproject-deeds-details/correction-licenseproject-deeds-details.component';
+import { CorrectionZonesBlocksBuildingAndUnitsService } from './services/correction-zones-blocks-building-and-units.service';
+import { CorrectionProjectSubUnitService } from './services/correction-project-sub-unit.service';
+import { CorrectionProjectInstantLicenseDeedService } from '../real-estate-contributions-license/services/correction-project-instant-license-deed.service';
+import { CorrectionConstructionLicenseService } from './services/licenseProjects/correction-construction-license.service';
+import { CorrectionLicenseProjectUnitService } from './services/correction-license-project-unit.service';
+import { CorrectionArchitecturalDesignFilesService } from './services/licenseProjects/correction-architectural-design-files.service';
+import { CorrectionProjectModelService } from './services/correct-units/correction-project-model-service.service';
+import { CorrectionProjectUnitCodeService } from './services/correction-project-unit-code.service';
+import { CorrectionUnitCodesFormComponent } from './components/correction-units/correction-unit-codes-form/correction-unit-codes-form.component';
+import { CorrectionCodesFileComponent } from './components/correction-units/correction-codes-file/correction-codes-file.component';
+import { CorrectionProjectLicenseRequestTimeLineComponent } from './components/correction-units/correction-project-license-request-time-line/correction-project-license-request-time-line.component';
+import { CorrectionProjectLicenseRequestNotesComponent } from './components/correction-units/correction-project-license-request-notes/correction-project-license-request-notes.component';
+import { CorrectionProjectLicenseRequestDataComponent } from './components/correction-units/correction-project-license-request-data/correction-project-license-request-data.component';
+import { ProjectLicenseServiceDetailsService } from '../license-project-requests/services/project-license-service-details.service';
+import { ProjectRequestLocalStorageService } from '../license-project-requests/services/project-request-local-storage.service';
+import { LicenseProjectRequestProcessingLogService } from '../license-project-requests/services/license-project-request-processing-log.service';
+import { LicenseProjectRequestLogService } from '../license-project-requests/services/license-project-request-log.service';
+import { CorrectionProjectLicenseServiceDetailsService } from '../license-project-requests/services/correction-project-license-details.service';
+import { CorrectionProjectLandDeedService } from './services/correction-project-land-deed.service';
+import { CorrectionLicenseProjectRequestDetailsComponent } from './pages/correction-license-project-request-details/correction-license-project-request-details.component';
+import { CorrectionLicenseProjectRequestProcessingLogService } from '../license-project-requests/services/Correction-license-project-request-processing-log.service';
+import { CorrectionLicenseProjectRequestLogService } from '../license-project-requests/services/correction-license-project-request-log.service';
+import { CorrectionLicenseProjectPlanAccordingApprovedStandardsFileService } from './services/licenseProjects/correction-license-project-plan-according-approved-standards-file.service';
 
 @NgModule({
-  declarations:[
+  declarations: [
     CreateLincenseComponent,
     LincenseSummaryComponent,
     LincenseTypesComponent,
@@ -790,6 +841,7 @@ import { CorrectingUnitsService } from './services/correct-units/correcting-unit
     RejectionReasonModalComponent,
     ContractReadonlyViewComponent,
     EditFarzNoteComponent,
+    EditCorrectionFarzNoteComponent,
     CharteredAccountProjectTotalComponent,
     ContractUnitDetailsComponent,
     AddContractPopupComponent,
@@ -861,10 +913,87 @@ import { CorrectingUnitsService } from './services/correct-units/correcting-unit
     FawriaFinalBeneficiaryAgreementComponent,
     FawriaLicenseCompleteInvoiceViewComponent,
     FawriaLicenseBankAccountInfoComponent,
+    UnitsCorrectionsTabsComponent,
+    DeedsAndBuildingPermitsTabComponent,
+    UnitsAndArchitecturalDesignsTabComponent,
+    CorrectionLincenseProjectZonesComponentFromUnits,
+    CorrectionLicenseProjectZoneUnitComponentFromUnits,
+    CorrectionLicenseProjectZoneSubunitModelComponentFromUnits,
+    CorrectionLicenseProjectZoneUnitSubunitComponentFromUnits,
+    CorrectionAddZoneComponentFromUnits,
+    CorrectionAddEditProjectBlockComponentFromUnits,
+    CorrectionProjectUnitsComponentFromUnits,
+    CorrectionProjectModuleModelsComponentFromUnits,
+    CorrectionSubUnitModelsComponentFromUnits,
+    CorrectionProjectModuleModelsFormComponentFromUnits,
+    CorrectionProjectUnitCodesComponentFromUnits,
+    CorrectionUnitCodesComponentFromUnits,
+    CorrectionUnitCodesFormComponentFromUnits,
+    CorrectionLicenseRequestValidationPopupComponentFromUnits,
+    CorrectionArchitecturalDesignFilesComponentFromUnits,
+    CorrectionUpdateBuildingFlatAreaComponentFromUnits,
+    CorrectionLicenseProjectDeedsListComponentFromUnits,
+    CorrectionLicenseProjectDeedsContainerComponentFromUnits,
+    CorrectionLicenseProjectDeedsCreateComponentFromUnits,
+    CorrectionLicenseProjectDeedsDetailsComponentFromUnits,
+    CorrectionConstructionLicenseFormComponentFromUnits,
+    CorrectionConstructionLicensesComponentFromUnits,
     CorrectingUnitsListComponent,
+    CorrectingUnitsDetailsComponent,
     LicenseTabsComponent,
+    CorrectingProjectDataComponent,
+    CorrectingProjectPartiesComponent,
+    CorrectingLicenseprojectMainDataViewOnlyComponent,
+    CorrectingLicenseprojectContactInfoViewOnlyComponent,
+    CorrectingLicenseprojectDeedsViewOnlyComponent,
+    CorrectingLicenseprojectConstructionLicensesViewOnlyComponent,
+    CorrectingLicenseProjectZonesComponent,
+    CorrectingProjectModuleModelsComponent,
+    CorrectingProjectUnitCodesComponent,
+    CorrectingArchitecturalDesignFilesComponent,
+    CorrectingLicenseprojectMaindataComponent,
+    CorrectingLicenseprojectContactInfoComponent,
+    CorrectingLicenseprojectDeedsComponent,
+    CorrectingLicenseprojectDeedsListViewOnlyComponent,
+    CorrectingLicenseprojectDeedsListComponent,
+    CorrectingLicenseprojectDeedsCreateComponent,
+    CorrectingLicenseprojectDeedsDetailsComponent,
+    CorrectingLicenseprojectDeedsDetailsViewOnlyComponent,
+    CorrectingSubUnitModelsComponent,
+    CorrectingLicenseProjectZoneSubunitModelComponent,
+    CorrectingUnitCodesComponent,
+    // Correction Units Components
+    CorrectionLicenseSummaryComponent,
+    CorrectionLicenseProjectDeedsContainerComponent,
+    CorrectionLicenseProjectDeedsComponent,
+    CorrectionConstructionLicensesComponent,
+    CorrectionUnitsAndDesignsContainerComponent,
+    CorrectionZonesBlocksBuildingsComponent,
+    CorrectionUnitTypesComponent,
+    CorrectionProjectUnitCodesComponent,
+    CorrectionArchitecturalDesignsComponent,
+    CorrectionUnitCodesComponent,
+    CorrectionAddZoneComponent,
+    CorrectionLicenseProjectZoneUnitComponent,
+    CorrectionLicenseProjectZoneUnitSubunitComponent,
+    CorrectionLicenseProjectZoneSubunitModelComponent,
+    CorrectionSubUnitModelsComponent,
+    CorrectionConstructionLicenseFormComponent,
+    CorrectionUpdateBuildingFlatAreaComponent,
+    CorrectionLicenseRequestValidationPopupComponent,
+    CorrectionLicenseprojectDeedsListComponent,
+    CorrectionLicenseprojectDeedsCreateComponent,
+    CorrectionLicenseprojectDeedsUpdateComponent,
+    CorrectionLicenseprojectDeedsDetailsComponent,
+    CorrectionUnitCodesFormComponent,
+    CorrectionCodesFileComponent,
+    CorrectionProjectLicenseRequestTimeLineComponent,
+    CorrectionProjectLicenseRequestNotesComponent,
+    CorrectionProjectLicenseRequestDataComponent,
+    CorrectionLicenseProjectRequestDetailsComponent,
   ],
   providers: [
+    SharedLicenseProjectService,
     LicenseProjectService,
     LicenseRequestHeaderProcessingStepService,
     LicenseRequestHeaderProcessingStepService,
@@ -915,7 +1044,6 @@ import { CorrectingUnitsService } from './services/correct-units/correcting-unit
     SysLicenseBeneficiaryContractFormService,
     LicenseRequestService,
     LicenseRequestHeaderService,
-    SharedLicenseProjectService,
     ProjectModelService,
     ProjectSubUnitService,
     LicenseProjectUnitService,
@@ -976,7 +1104,24 @@ import { CorrectingUnitsService } from './services/correct-units/correcting-unit
     FawriaLicenseProjectBankInfoService,
     LicenseRequestHeaderProcessingStepService,
     FawriaLicenseEndBeneficiaryContactsInfoService,
-    CorrectingUnitsService
+    CorrectingUnitsService,
+    CorrectionZonesBlocksBuildingAndUnitsService,
+    CorrectionProjectSubUnitService,
+    CorrectionProjectInstantLicenseDeedService,
+    CorrectionConstructionLicenseService,
+    CorrectionLicenseProjectUnitService,
+    CorrectionArchitecturalDesignFilesService,
+    CorrectionProjectModelService,
+    CorrectionProjectUnitCodeService,
+    CorrectionProjectLandDeedService,
+    ProjectLicenseServiceDetailsService,
+    ProjectRequestLocalStorageService,
+    LicenseProjectRequestProcessingLogService,
+    LicenseProjectRequestLogService,
+    CorrectionProjectLicenseServiceDetailsService,
+    CorrectionLicenseProjectRequestProcessingLogService,
+    CorrectionLicenseProjectRequestLogService,
+    CorrectionLicenseProjectPlanAccordingApprovedStandardsFileService,
   ],
   imports: [
     CommonModule,
@@ -985,10 +1130,8 @@ import { CorrectingUnitsService } from './services/correct-units/correcting-unit
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    PdfViewerModule
+    PdfViewerModule,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-
 export class LicenseModule {}

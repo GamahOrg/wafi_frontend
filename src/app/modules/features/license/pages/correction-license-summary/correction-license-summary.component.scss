@@ -1,0 +1,183 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/cards";
+
+:host {
+  display: block;
+  height: 100%;
+  overflow-y: auto;
+}
+// Farz Rejection Alert Banner
+.farz-alert-banner {
+  background-color: #FEF3F2;
+  border: 1px solid #FECDCA;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 16px;
+  direction: rtl;
+
+  .alert-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .alert-message {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+
+      .info-icon {
+        color: #D92D20;
+        font-size: 20px;
+      }
+
+      span {
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        color: #B42318;
+      }
+    }
+
+    .btn-handle-notes {
+      background-color: #006A6C;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: #005456;
+      }
+
+      &:active {
+        background-color: #004044;
+      }
+    }
+  }
+}
+
+// Farz Success Alert Banner
+.farz-success-banner {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-top: 3px solid #12B76A;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 16px;
+  direction: rtl;
+
+  .alert-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .alert-message {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+
+      .success-icon {
+        color: #12B76A;
+        font-size: 20px;
+      }
+
+      span {
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        color: #344054;
+      }
+    }
+
+    .btn-close-banner {
+      background-color: transparent;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      i {
+        color: #667085;
+        font-size: 20px;
+      }
+
+      &:hover {
+        i {
+          color: #344054;
+        }
+      }
+    }
+  }
+}
+
+// Farz Warning Alert Banner
+.farz-warning-banner {
+  background-color: #FFFCF5;
+  border: 1px solid #FEC84B;
+  border-top: 3px solid #F79009;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 16px;
+  direction: rtl;
+
+  .alert-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .alert-message {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+
+      .warning-icon {
+        color: #F79009;
+        font-size: 20px;
+      }
+
+      span {
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        color: #93370D;
+      }
+    }
+
+    .btn-close-banner {
+      background-color: transparent;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      i {
+        color: #667085;
+        font-size: 20px;
+      }
+
+      &:hover {
+        i {
+          color: #344054;
+        }
+      }
+    }
+  }
+}

@@ -54,7 +54,7 @@
                                        class="form-control"
                                        formControlName="electricityTieConnectionDate"
                                        value="{{ controls.electricityTieConnectionDate.value | date:'yyyy-MM-dd' }}">
-                                <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                                <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                             </div>
                             <mat-error *ngIf="controls.electricityTieConnectionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         </div>
@@ -133,7 +133,7 @@
                                    class="form-control"
                                    formControlName="waterTieConnectionDate"
                                    value="{{ controls.waterTieConnectionDate.value | date:'yyyy-MM-dd' }}">
-                            <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                            <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                         </div>
                         <mat-error *ngIf="controls.waterTieConnectionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     </div>
@@ -212,7 +212,7 @@ controls.sewageServiceTypeStatusId?.hasError('required') && showValidation
                                class="form-control"
                                formControlName="sewageTieConnectionDate"
                                value="{{ controls.sewageTieConnectionDate.value | date:'yyyy-MM-dd' }}">
-                        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                     </div>
                     <mat-error *ngIf="controls.sewageTieConnectionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                 </div>
