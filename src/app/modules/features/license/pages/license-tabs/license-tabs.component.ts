@@ -27,16 +27,16 @@ export class LicenseTabsComponent implements OnInit, OnDestroy {
         isVisible: true,
         isCompleted: false,
       },
-      // {
-      //   title: 'قائمة طلبات تصحيح الوحدات',
-      //   Component: CorrectingUnitsListComponent,
-      //   disabled: false,
-      //   id: 'CorrectingUnitList',
-      //   errNum: 0,
-      //   tabErrors: [],
-      //   isVisible: true,
-      //   isCompleted: false,
-      // },
+      {
+        title: 'قائمة طلبات تصحيح الوحدات',
+        Component: CorrectingUnitsListComponent,
+        disabled: false,
+        id: 'CorrectingUnitList',
+        errNum: 0,
+        tabErrors: [],
+        isVisible: true,
+        isCompleted: false,
+      },
     ],
   };
 

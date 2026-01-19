@@ -1,0 +1,101 @@
+    <div class="alert alert-info alert-dismissible fade show mt-4" role="alert" >
+    <span class="icon">
+      <i class="hgi hgi-stroke hgi-help-circle"></i>
+    </span>
+    <span>رخصة البناء لابد ان ترتبط بصك واحد على الاقل</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div><div class="d-flex flex-column h-100">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+    <h6 class="title">{{ localization.title }}</h6>
+    <button
+      class="opposite-title btn btn-outline-primary"
+      (click)="openDialog(undefined)"
+    >
+      <span class="material-icons">add</span>
+    </button>
+  </div>
+
+  <div class="tab-data-section">
+    <div class="table-responsive">
+      <table class="table table-light mb-3">
+        <thead>
+          <tr>
+            <th>{{ localization.constructionLicensetype }}</th>
+            <th>{{ localization.licenseNumber }}</th>
+            <th>{{ localization.issueOn }}</th>
+            <th>{{ localization.licenseFile }}</th>
+            <th>{{ localization.landTotalSpace }}</th>
+            <th class="w-25"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let license of constructionLicenses">
+            <td>
+
+              <span
+                *ngIf="license?.constructionLicenseType == 2 && license.before7"
+                >{{ localization.before7 }}</span
+              >
+              <span
+                *ngIf="
+                  license?.constructionLicenseType == 2 && !license.before7
+                "
+                >{{ localization.after7 }}</span
+              >
+              <span *ngIf="license?.constructionLicenseType == 1">{{
+                localization.letterType
+              }}</span>
+            </td>
+
+            <td>{{ license?.licenseNumber }}</td>
+
+            <td>
+              <span *ngIf="license?.constructionLicenseType == 1"></span>
+              <span *ngIf="license?.constructionLicenseType == 2">
+                {{ license?.issueOn | date : "yyyy-MM-dd" }}
+              </span>
+            </td>
+
+            <td>
+              <a
+                *ngIf="license && license.licenseFile"
+                target="_blank"
+                [href]="baseUrl + license.licenseFile.filePath"
+              >
+                {{ license.licenseFile.fileDescription }}</a
+              >
+            </td>
+            <td>{{ license?.landTotalSpace }}</td>
+            <td>
+              <div
+                class="d-flex align-items-center justify-content-end column-gap-2"
+              >
+                <!--                             <button mat-icon-button color="primary" (click)="openDialog(eng.id)"><mat-icon>edit</mat-icon></button>
+     -->
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="delete(license.id)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">اجمالي مسطح البناء للمشروع</td>
+            <td>{{ totalLandTotalSpace }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-next-and-previus-buttons></app-next-and-previus-buttons>
+  <!-- <div class="form-actions mt-auto">
+    <button class="btn btn-outline-primary"
+            (click)="back()">{{localization.previous}}</button>
+    <button class="btn btn-outline-primary"
+            (click)="next()">{{localization.next}}</button>
+  </div> -->
+</div>

@@ -144,6 +144,7 @@ export class DataVisibilityOfLicenseProjectService {
     service: null | any,
     secondTap: boolean = false
   ): void {
+    debugger
     if (service) {
       if (updateVirticalTab) {
         service.updateVerticalTabContent(tabContent);

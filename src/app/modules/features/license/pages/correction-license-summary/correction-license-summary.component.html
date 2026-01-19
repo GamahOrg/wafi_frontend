@@ -1,0 +1,24 @@
+<ng-container *ngIf="!allowCompile">
+  <div class="buttons-wrapper mb-3 d-flex justify-content-end">
+    <div>
+      <button type="button" mat-flat-button color="primary" (click)="send()" [disabled]="requestSubmittedSuccessfully">
+        {{ localization.send }}
+      </button>
+      &nbsp;
+    </div>
+
+  </div>
+
+<!-- <div class="farz-alert-banner">
+  <div class="alert-content">
+    <div class="alert-message">
+      <i class="material-icons-outlined info-icon">info</i>
+      <span>{{ localization.farzRejectionMessage }}</span>
+    </div>
+    <button class="btn-handle-notes" (click)="handleFarzNotes()">
+      {{ localization.handleFarzNotes }}
+    </button>
+  </div>
+  </div> -->
+</ng-container>
+<app-tabs></app-tabs>

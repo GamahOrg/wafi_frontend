@@ -1,0 +1,39 @@
+<form [formGroup]="buildingAreaForm">
+  <div class="form-group">
+    <label for="totalBuildingFlatArea" class="form-label required" *ngIf="!isUnit">إجمالي مساحة مسطح البناء</label>
+
+    <div class="input-group" *ngIf="!isUnit">
+      <input type="number" class="form-control" id="totalBuildingFlatArea" formControlName="totalBuildingFlatArea" min="0"
+        placeholder="أدخل إجمالي مساحة مسطح البناء"
+        (input)="preventNegativeValue($event)"
+        (keydown)="preventNegativeInput($event)"
+        [class.is-invalid]="buildingAreaForm.get('totalBuildingFlatArea')?.invalid && buildingAreaForm.get('totalBuildingFlatArea')?.touched" />
+      <span class="input-group-text">م²</span>
+    </div>
+    <div  class="invalid-feedback d-block"
+      *ngIf="buildingAreaForm.get('totalBuildingFlatArea')?.invalid && buildingAreaForm.get('totalBuildingFlatArea')?.touched">
+      <span *ngIf="buildingAreaForm.get('totalBuildingFlatArea')?.errors?.['required']"> حقل
+        مطلوب</span>
+      <span *ngIf="buildingAreaForm.get('totalBuildingFlatArea')?.errors?.['min']">المساحة يجب أن تكون أكبر من أو تساوي
+        صفر</span>
+    </div>
+
+    <label for="totalBuildingFlatArea" class="form-label required" *ngIf="isUnit">إجمالي عدد الوحدات</label>
+    <div class="input-group" *ngIf="isUnit">
+      <input type="number" class="form-control" id="totalUnits" formControlName="totalUnits" min="0"
+        placeholder=" إجمالي عدد الوحدات"
+        (input)="preventNegativeValue($event)"
+        (keydown)="preventNegativeInput($event)"
+        [class.is-invalid]="buildingAreaForm.get('totalUnits')?.invalid && buildingAreaForm.get('totalUnits')?.touched" />
+    </div>
+    <div class="invalid-feedback d-block"
+      *ngIf="buildingAreaForm.get('totalUnits')?.invalid && buildingAreaForm.get('totalUnits')?.touched">
+      <span *ngIf="buildingAreaForm.get('totalUnits')?.errors?.['required']"> حقل
+        مطلوب</span>
+      <span *ngIf="buildingAreaForm.get('totalUnits')?.errors?.['min']">عدد الوحدات يجب أن تكون أكبر من أو تساوي
+        صفر</span>
+    </div>
+
+
+  </div>
+</form>

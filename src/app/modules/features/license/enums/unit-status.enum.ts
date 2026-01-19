@@ -2,6 +2,8 @@ export enum LicenseProjectUnitCodeStatus {
   NotSold = 1,
   Sold = 2,
   PendingBuyerApproval = 3,
+  SoldOutsidePlatform = 4,
+
 }
 
 export enum BuyerTypeEnum {
@@ -29,3 +31,4 @@ export enum LicenseProjectUnitTypeEnum {
   Building = 1,
   Block = 2
 }
+

@@ -1,0 +1,16 @@
+// @import "/src/assets/styles/custom-variables";
+// @import "/src/assets/styles/content/timeline";
+
+// :host {
+//     display: block;
+//     height: 100%;
+// }
+
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/content/page";
+@import "/src/assets/styles/content/requ-results-notes";
+
+:host {
+  display: block;
+  height: 100%;
+}

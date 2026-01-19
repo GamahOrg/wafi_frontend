@@ -11,9 +11,11 @@
           <div class="form-group mb-4">
             <label class="form-label">{{localization.accountNumber}}</label>
             <input type="text" id="control-accountNumber" placeholder="{{localization.accountNumber}}"
-              class="form-control" formControlName="accountNumber">
-            <mat-error
-              *ngIf="controls.accountNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                   class="form-control" formControlName="accountNumber">
+            <mat-error *ngIf="controls.accountNumber?.hasError('required') &&
+         (controls.accountNumber?.touched || controls.accountNumber?.dirty)">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error *ngIf="controls.accountNumber?.hasError('pattern') && !controls.accountNumber?.hasError('required') &&
+         (controls.accountNumber?.touched || controls.accountNumber?.dirty)">{{localization.ibanPattern}}</mat-error>
           </div>
         </div>
         <!-- <div class="col-12 col-lg-6">
@@ -31,39 +33,36 @@
           <div class="form-group mb-4">
             <label class="form-label">{{localization.accountKeeperMobile}}</label>
             <input type="text" id="control-accountKeeperMobile" placeholder="{{localization.accountKeeperMobile}}"
-              class="form-control" formControlName="accountKeeperMobile">
-            <mat-error
-              *ngIf="controls.accountKeeperMobile?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-            <mat-error
-              *ngIf="controls.accountKeeperMobile?.hasError('pattern') && showValidation">{{localization.phoneNumberPattern}}</mat-error>
+                   class="form-control" formControlName="accountKeeperMobile">
+            <mat-error *ngIf="controls.accountKeeperMobile?.hasError('required') && (controls.accountKeeperMobile?.touched || controls.accountKeeperMobile?.dirty)">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error *ngIf="controls.accountKeeperMobile?.hasError('pattern') && (controls.accountKeeperMobile?.touched || controls.accountKeeperMobile?.dirty)">{{localization.phoneNumberPattern}}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{localization.accountKeeperTelephone}}</label>
             <input type="text" id="control-accountKeeperTelephone" placeholder="{{localization.accountKeeperTelephone}}"
-              class="form-control" formControlName="accountKeeperTelephone">
+                   class="form-control" formControlName="accountKeeperTelephone">
+            <mat-error *ngIf="controls.accountKeeperTelephone?.hasError('pattern') && (controls.accountKeeperTelephone?.touched || controls.accountKeeperTelephone?.dirty)">{{localization.telephonePattern}}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{localization.accountKeeperExtentionNumber}}</label>
             <input type="text" id="control-accountKeeperExtentionNumber"
-              placeholder="{{localization.accountKeeperExtentionNumber}}" class="form-control"
-              formControlName="accountKeeperExtentionNumber">
-            <mat-error
-              *ngIf="controls.accountKeeperExtentionNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                   placeholder="{{localization.accountKeeperExtentionNumber}}" class="form-control"
+                   formControlName="accountKeeperExtentionNumber">
+            <mat-error *ngIf="controls.accountKeeperExtentionNumber?.hasError('required') && (controls.accountKeeperExtentionNumber?.touched || controls.accountKeeperExtentionNumber?.dirty)">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error *ngIf="controls.accountKeeperExtentionNumber?.hasError('pattern') && !controls.accountKeeperExtentionNumber?.hasError('required') && (controls.accountKeeperExtentionNumber?.touched || controls.accountKeeperExtentionNumber?.dirty)">{{localization.numberOnlyPattern}}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{localization.accountKeeperEmail}}</label>
             <input type="text" id="control-accountKeeperEmail" placeholder="{{localization.accountKeeperEmail}}"
-              class="form-control" formControlName="accountKeeperEmail">
-            <mat-error
-              *ngIf="controls.accountKeeperEmail?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-            <mat-error
-              *ngIf="controls.accountKeeperEmail?.hasError('pattern') && showValidation">{{localization.emailPattern}}</mat-error>
+                   class="form-control" formControlName="accountKeeperEmail">
+            <mat-error *ngIf="controls.accountKeeperEmail?.hasError('required') && (controls.accountKeeperEmail?.touched || controls.accountKeeperEmail?.dirty)">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error *ngIf="controls.accountKeeperEmail?.hasError('email') && !controls.accountKeeperEmail?.hasError('required') && (controls.accountKeeperEmail?.touched || controls.accountKeeperEmail?.dirty)">{{localization.emailPattern}}</mat-error>
 
           </div>
         </div>
@@ -72,9 +71,8 @@
           <div class="form-group mb-4">
             <label class="form-label">{{localization.accountKeeperJobTitle}}</label>
             <input type="text" id="control-accountKeeperJobTitle" placeholder="{{localization.accountKeeperJobTitle}}"
-              class="form-control" formControlName="accountKeeperJobTitle">
-            <mat-error
-              *ngIf="controls.accountKeeperJobTitle?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                   class="form-control" formControlName="accountKeeperJobTitle">
+            <mat-error *ngIf="controls.accountKeeperJobTitle?.hasError('required') && (controls.accountKeeperJobTitle?.touched || controls.accountKeeperJobTitle?.dirty)">{{localization.requiredErrorMsg}}</mat-error>
           </div>
         </div>
 
@@ -85,8 +83,7 @@
               <option [label]="localization.selectBankName"></option>
               <option *ngFor="let bank of banks" [value]="bank.id">{{bank.name}}</option>
             </select>
-            <mat-error
-              *ngIf="controls.bankId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error *ngIf="controls.bankId?.hasError('required') && (controls.bankId?.touched || controls.bankId?.dirty)">{{localization.requiredErrorMsg}}</mat-error>
 
           </div>
         </div>
@@ -94,12 +91,10 @@
           <div class="form-group mb-4">
             <label class="form-label">{{localization.accountKeeperFax}}</label>
             <input type="text" id="control-accountKeeperFax" placeholder="{{localization.accountKeeperFax}}"
-              class="form-control" formControlName="accountKeeperFax">
+                   class="form-control" formControlName="accountKeeperFax">
+            <mat-error *ngIf="controls.accountKeeperFax?.hasError('required') && (controls.accountKeeperFax?.touched || controls.accountKeeperFax?.dirty)">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error *ngIf="controls.accountKeeperFax?.hasError('pattern') && !controls.accountKeeperFax?.hasError('required') && (controls.accountKeeperFax?.touched || controls.accountKeeperFax?.dirty)">{{localization.numberOnlyPattern}}</mat-error>
           </div>
-          <div class="invalid-feedback d-block"
-            *ngIf="controls.accountKeeperFax?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}
-          </div>
-
         </div>
 
         <div class="col-12">
@@ -108,14 +103,14 @@
 
             <div class="col-12 col-lg-6" *ngIf="accountKeeper && accountKeeper.accountKeeperAgreementFile">
               <a [href]="baseUrl + accountKeeper.accountKeeperAgreementFile.filePath" target="_blank"
-                id="link-accountKeeperAgreementFile">
-                {{accountKeeper.accountKeeperAgreementFile.fileDescription}}</a>
+                 id="link-accountKeeperAgreementFile">
+                {{accountKeeper.accountKeeperAgreementFile.fileDescription}}
+              </a>
             </div>
 
             <app-file-uploader [data]="singleFileUploaderData"
-              (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
-            <mat-error
-              *ngIf="controls.accountKeeperAgreementFileId?.hasError('required')&& showValidation">{{localization.requiredErrorMsg}}</mat-error>
+                               (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+            <mat-error *ngIf="controls.accountKeeperAgreementFileId?.hasError('required')&& (controls.accountKeeperAgreementFileId?.touched || controls.accountKeeperAgreementFileId?.dirty)">{{localization.requiredErrorMsg}}</mat-error>
           </div>
         </div>
       </div>

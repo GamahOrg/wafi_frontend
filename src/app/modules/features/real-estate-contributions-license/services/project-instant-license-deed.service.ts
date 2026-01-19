@@ -40,6 +40,15 @@ export class ProjectInstantLicenseDeedService {
       )
   }
 
+  GetNatureTypeIdByCorrectionRequestId(id: string) {
+    return this._httpClient.get<CoreResponseDTO<boolean>>
+      (`${Configuration.APIs.LicenseProjectDeed.GetNatureTypeIdByCorrectionRequestId}/${id}`).pipe(
+        map((res: CoreResponseDTO<boolean>) => {
+          return res;
+        })
+      )
+  }
+
   DeleteInstantDeed(id: string): Observable<any> {
     return this._httpClient.delete<any>
       (`${Configuration.APIs.LicenseProjectDeed.DeleteInstantDeeds}/${id}`)

@@ -41,7 +41,7 @@
                 'orange': contractDetails.contractStatusId === 1 || contractDetails.contractStatusId === 4,
                 'red': contractDetails.contractStatusId === 3 ||contractDetails.contractStatusId === 5
               }">
-              <i class="icon material-icons">fiber_manual_record</i>
+              
               {{ contractDetails.contractStatus }}
 
               
@@ -238,7 +238,7 @@
                       <td>{{ installment.rentPercentage }}%</td>
                       <td>{{ installment.description || '-' }}</td>
                       <td>
-                        <span class="status-badge" [ngClass]="installment.isPaid!=null && installment.isPaid ?  'green':'red'">
+                        <span class="status-pill" [ngClass]="installment.isPaid!=null && installment.isPaid ?  'green':'red'">
                           {{ installment.isPaid ? 'مدفوع' : 'غير مدفوع'}}
 
                         </span>
@@ -252,7 +252,7 @@
         </ng-container>
 
         <div class="d-flex justify-content-end align-items-center gap-3 mt-4">
-          <button class="btn btn-primary px-xl-4" (click)="true">التالي</button>
+          <button class="btn btn-primary px-xl-4" (click)="switchTab('contract')">التالي</button>
         </div>
       </div>
 
@@ -279,67 +279,11 @@
           <app-pdf-viewer [fileId]="contractFileId" [retryCallback]="retryLoadContract" [noContentMessage]="'لا يوجد عقد متاح'" [noContentDescription]="'لم يتم العثور على العقد'" [loadingMessage]="'جاري تحميل العقد'" [loadingDescription]="'يرجى الانتظار بينما يتم تحميل العقد'" [errorMessage]="'حدث خطأ في تحميل العقد'"></app-pdf-viewer>
         </div>
 
-        <!-- <div class="d-flex justify-content-end align-items-center gap-3 mt-4">
-          <button class="btn btn-outline-primary" (click)="openCancelModal()" *ngIf="canShowCancelButton">رفض العقد</button>
-          <button class="btn btn-primary" (click)="true" [disabled]="true">قبول العقد</button>
-        </div> -->
+        <div class="d-flex justify-content-start align-items-center gap-3 mt-4">
+          <button class="btn btn-outline-primary px-xl-4" (click)="switchTab('unit')">السابق</button>
+        </div>
       </div>
 
-    </div>
-  </div>
-</div>
-
-<!-- Cancel Confirmation Modal -->
-<div class="modal-overlay" *ngIf="showCancelModal" (click)="closeCancelModal()">
-  <div class="modal-container" (click)="$event.stopPropagation()">
-    <div class="modal-content">
-      <!-- Icon -->
-      <div class="modal-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="3 6 5 6 21 6"></polyline>
-          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-          <line x1="10" y1="11" x2="10" y2="17"></line>
-          <line x1="14" y1="11" x2="14" y2="17"></line>
-        </svg>
-      </div>
-
-      <!-- Message -->
-      <h3 class="modal-title">هل أنت متأكد من إلغاء العقد؟</h3>
-
-      <!-- Buttons -->
-      <div class="modal-buttons">
-        <button class="btn-modal-cancel" (click)="closeCancelModal()">
-          إلغاء
-        </button>
-        <button class="btn-modal-confirm" (click)="confirmCancelContract()">
-          إلغاء العقد
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Cancel Reason Modal -->
-<div class="modal-overlay" *ngIf="showCancelReasonModal" (click)="closeCancelReasonModal()">
-  <div class="modal-container modal-reason" (click)="$event.stopPropagation()">
-    <div class="modal-content">
-      <!-- Title -->
-      <h3 class="modal-reason-title">ما هو سبب إلغاء العقد؟</h3>
-
-      <!-- Textarea -->
-      <div class="form-group">
-        <textarea class="form-textarea" [(ngModel)]="cancelReason" placeholder="سبب الإلغاء" rows="4"></textarea>
-      </div>
-
-      <!-- Buttons -->
-      <div class="modal-buttons">
-        <button class="btn-modal-cancel" (click)="closeCancelReasonModal()">
-          إلغاء
-        </button>
-        <button class="btn-modal-submit" (click)="submitCancelReason()" [disabled]="!cancelReason || cancelReason.trim() === '' || isLoading">
-          إرسال
-        </button>
-      </div>
     </div>
   </div>
 </div>

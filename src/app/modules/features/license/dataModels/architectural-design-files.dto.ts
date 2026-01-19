@@ -1,20 +1,26 @@
-import { SysFileManagerCreateUpdateDto } from "src/app/shared/models/sys-file-manager-create-update-dto";
+import { SysFileManagerCreateUpdateDto } from 'src/app/shared/models/sys-file-manager-create-update-dto';
 
 export class ArchitecturalDesignFilesDto {
-    id: string = "";
-    licenseProjectId : string = "";
-    licenseProjectPlanAccordingApprovedStandardsFiles : LicenseProjectPlanAccordingApprovedStandardsFileCreateUpdateDto[] =[];
-    licenseProjectDesignFiles : LicenseProjectDesignFileCreateUpdateDto[]=[]; 
+  id: string = '';
+  licenseProjectId: string = '';
+  requestId?: string | null = null;
+  licenseProjectPlanAccordingApprovedStandardsFiles: LicenseProjectPlanAccordingApprovedStandardsFileCreateUpdateDto[] =
+    [];
+  licenseProjectDesignFiles: LicenseProjectDesignFileCreateUpdateDto[] = [];
 }
 export class LicenseProjectPlanAccordingApprovedStandardsFileCreateUpdateDto {
-    id: string = "";
-    licenseProjectsId: string = "";
-    planFileId: string = "";
-    planFile: SysFileManagerCreateUpdateDto|null = null;
+  id: string = '';
+  licenseProjectsId: string = '';
+  requestId?: string | null = null;
+  planFileId: string = '';
+  isPrevious: boolean = false;
+  planFile: SysFileManagerCreateUpdateDto | null = null;
 }
 export class LicenseProjectDesignFileCreateUpdateDto {
-    id: string = "";
-    licenseProjectId : string = "";
-    designFileId : string = "";
-    designFile: SysFileManagerCreateUpdateDto|null = null;
+  id: string = '';
+  licenseProjectId: string = '';
+  requestId?: string | null = null;
+  designFileId: string = '';
+  isPrevious: boolean = false;
+  designFile: SysFileManagerCreateUpdateDto | null = null;
 }

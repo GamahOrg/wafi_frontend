@@ -1,0 +1,43 @@
+<div class="tab-data-header">
+  <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+  <h6 class="title">{{ localization.title }}</h6>
+</div>
+
+<div class="tab-data-section">
+  <ng-container *ngIf="constructionLicenses && constructionLicenses.length > 0">
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>{{localization.constructionLicensetype}}</th>
+            <th>{{localization.licenseNumber}}</th>
+            <th>{{localization.issueOn}}</th>
+            <th>{{localization.landTotalSpace}}</th>
+            <th>{{localization.licenseFile}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let license of constructionLicenses">
+            <td>
+              <span *ngIf="license.before7">{{localization.before7}}</span>
+              <span *ngIf="!license.before7">{{localization.after7}}</span>
+            </td>
+            <td>{{license?.licenseNumber}}</td>
+            <td>{{license?.issueOn | date:'yyyy-MM-dd'}}</td>
+            <td>{{license?.landTotalSpace}} م²</td>
+            <td>
+              <a *ngIf="license && license.licenseFile" [href]="baseUrl + license.licenseFile.filePath" target="_blank">
+                {{license.licenseFile.fileDescription}}
+              </a>
+              <span *ngIf="!license || !license.licenseFile" class="text-muted">-</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!constructionLicenses || constructionLicenses.length === 0">
+    <app-no-data [showText]="false" [showButton]="false"></app-no-data>
+  </ng-container>
+</div>

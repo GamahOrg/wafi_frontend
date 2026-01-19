@@ -37,6 +37,7 @@ import {
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { PopupNoteComponent } from './components/popup-note/popup-note.component';
 import { OTPInputComponent } from './components/otp-input/otp-input.component';
@@ -125,7 +126,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     HijriDatepickerComponent,
     HijriDatepickerDirective,
     RejectionConfirmationPopupComponent,
-    ArabicToEnglishNumbersDirective
+    ArabicToEnglishNumbersDirective,
   ],
   imports: [
     CommonModule,
@@ -143,6 +144,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
     PopoverModule.forRoot(),
+    TooltipModule.forRoot(),
 
     NgOtpInputModule,
     AccordionModule,
@@ -186,6 +188,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     BsDropdownModule,
     CarouselModule,
     PopoverModule,
+    TooltipModule,
     RealEstateContributionFooterComponent,
     PilotLaunchHintComponent,
     TabsComponent,
@@ -210,7 +213,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     PdfViewerComponent,
     HijriDatepickerComponent,
     HijriDatepickerDirective,
-    ArabicToEnglishNumbersDirective
+    ArabicToEnglishNumbersDirective,
   ],
 })
 export class SharedModule {}

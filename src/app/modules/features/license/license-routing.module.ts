@@ -47,7 +47,12 @@ import { LicenseProjectFawriaDeveloperListComponent } from './pages/license-proj
 import { FawriaProjectPartiesStatusComponent } from './components/fawria-components/fawria-project-parties-status/fawria-project-parties-status.component';
 import { DeveloperApprovalsListComponent } from './pages/developer-approvals-list/developer-approvals-list.component';
 import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-details/developer-approval-details.component';
+import { UnitsCorrectionsTabsComponent } from './components/units-correction/units-corrections-tabs/units-corrections-tabs.component';
 import { LicenseTabsComponent } from './pages/license-tabs/license-tabs.component';
+import { CorrectingUnitsDetailsComponent } from './pages/correcting-units-details/correcting-units-details.component';
+import { CorrectionLicenseSummaryComponent } from './pages/correction-license-summary/correction-license-summary.component';
+import { CorrectionLicenseProjectRequestDetailsComponent } from './pages/correction-license-project-request-details/correction-license-project-request-details.component';
+import { EditCorrectionFarzNoteComponent } from './pages/edit-correction-farz-note/edit-correction-farz-note.component';
 
 const routes: Routes = [
   {
@@ -58,7 +63,7 @@ const routes: Routes = [
   {
     path: Configuration.pages.license.lincenseTypes,
     component: LincenseTypesComponent,
-    data: { breadcrumb: 'التراخيص' },
+    data: { breadcrumb: 'قائمة الطلبات' },
   },
   {
     path: Configuration.pages.license.lincenseList,
@@ -96,13 +101,18 @@ const routes: Routes = [
     data: { breadcrumb: 'تفاصيل الطلب الفوري' },
   },
   {
-    path: 'fawria-license-complate',
+    path: Configuration.pages.license.fawriaLicenseComplate,
     component: FawriaLicenseComplateComponent,
-    data: { breadcrumb: 'استكمال الرخصة الفورية' },
+    data: { breadcrumb: 'ملف المشروع' },
   },
   {
     path: Configuration.pages.license.farzNote,
     component: EditFarzNoteComponent,
+    data: { breadcrumb: 'معالجة ملاحظات فرز' },
+  },
+  {
+    path: Configuration.pages.license.correctionFarzNote,
+    component: EditCorrectionFarzNoteComponent,
     data: { breadcrumb: 'معالجة ملاحظات فرز' },
   },
   {
@@ -161,12 +171,12 @@ const routes: Routes = [
     data: { breadcrumb: 'عقود التوثيق' },
   }, 
   {
-    path: 'contract-details/:id',
+    path: Configuration.pages.license.contractDetailsWithParam,
     component: BuyerContractUpdateComponent,
     data: { breadcrumb: 'تفاصيل العقد' },
   },
   {
-    path: 'contract-readonly/:id',
+    path: Configuration.pages.license.contractReadonlyWithParam,
     component: BuyerContractViewDetailsComponent,
     // component: ContractReadonlyViewComponent,
     data: { breadcrumb: 'تفاصيل العقد' },
@@ -258,7 +268,7 @@ const routes: Routes = [
     data: { breadcrumb: 'نماذج الدفعات المالية' },
   },
   {
-    path: 'contract-viewer',
+    path: Configuration.pages.license.contractViewer,
     component: ContractViewerComponent,
     data: { breadcrumb: 'عقد البيع' },
   },
@@ -266,6 +276,16 @@ const routes: Routes = [
     path: Configuration.pages.license.paymentTermsTabs,
     component: PaymentTermsTabsComponent,
     data: { breadcrumb: 'الدفعات والشروط الإضافية' },
+  },
+    {
+    path: Configuration.pages.license.unitsCorrection,
+    component: UnitsCorrectionsTabsComponent,
+    data: { breadcrumb: 'تصحيح الوحدات' },
+  },
+  {
+    path: Configuration.pages.license.correctionLicenseSummary,
+    component: CorrectionLicenseSummaryComponent,
+    data: { breadcrumb: 'ملخص تصحيح الرخصة' },
   },
   {
     path: Configuration.pages.license.itemsLog,
@@ -283,14 +303,24 @@ const routes: Routes = [
     data: { breadcrumb: 'تفقد حالة المحاسب والإستشاري' },
   },
   {
-    path: 'developer-approvals-list',
+    path: Configuration.pages.license.developerApprovalsList,
     component: DeveloperApprovalsListComponent,
     data: { breadcrumb: 'اتفاقيات التطوير العقارى' },
   },
   {
-    path: 'developer-approval-details/:id',
+    path: Configuration.pages.license.developerApprovalDetailsWithParam,
     component: DeveloperApprovalDetailsComponent,
     data: { breadcrumb: 'تفاصيل اتفاقية التطوير العقارى' },
+  },
+  {
+    path: Configuration.pages.license.correctingUnitsDetailsWithParam,
+    component: CorrectingUnitsDetailsComponent,
+    data: { breadcrumb: 'تفاصيل طلب تصحيح الوحدات' },
+  },
+  {
+    path: Configuration.pages.license.correctionLicenseProjectRequestDetails,
+    component: CorrectionLicenseProjectRequestDetailsComponent,
+    data: { breadcrumb: 'تفاصيل طلب تصحيح الوحدات' },
   },
 ];
 //

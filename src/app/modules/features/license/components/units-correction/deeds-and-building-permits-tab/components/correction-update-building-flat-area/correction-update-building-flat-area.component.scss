@@ -1,0 +1,124 @@
+.update-building-area-dialog {
+  background-color: #F1F2F2;
+  width: 500px;
+  max-width: 90vw;
+  padding: 16px;
+  border-radius: 12px 0 0 12px;
+  opacity: 1;
+
+  .dialog-content {
+    background-color: #FFFFFF;
+    padding: 24px 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .dialog-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #001F21;
+      margin: 0;
+      text-align: center;
+    }
+
+    .form-group {
+      text-align: right;
+      direction: rtl;
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #001F21;
+
+        &.required::after {
+          content: " *";
+          color: #E53E3E;
+        }
+      }
+
+      .input-group {
+        display: flex;
+        direction: rtl;
+
+        .form-control {
+          flex: 1;
+          padding: 0.75rem;
+          font-size: 1rem;
+          border: 1px solid #E5E5E5;
+          border-radius: 0.5rem;
+          direction: rtl;
+          text-align: right;
+
+          &:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+          }
+
+          &.is-invalid {
+            border-color: #E53E3E;
+
+            &:focus {
+              box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+            }
+          }
+        }
+
+        .input-group-text {
+          padding: 0.75rem;
+          background-color: #F9FAFB;
+          border: 1px solid #E5E5E5;
+          border-right: none;
+          border-radius: 0 0.5rem 0.5rem 0;
+          color: #5D5D5D;
+          font-size: 0.875rem;
+        }
+      }
+
+      .invalid-feedback {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #E53E3E;
+        text-align: right;
+      }
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      direction: rtl;
+
+      .cancel-button {
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #5D5D5D;
+        background-color: transparent;
+        border: 1px solid #E5E5E5;
+        border-radius: 0.5rem;
+
+        &:hover {
+          background-color: #F5F5F5;
+        }
+      }
+
+      .save-button {
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #FFFFFF;
+        background-color: #3B82F6;
+        border: none;
+        border-radius: 0.5rem;
+
+        &:hover {
+          background-color: #2563EB;
+        }
+      }
+    }
+  }
+}

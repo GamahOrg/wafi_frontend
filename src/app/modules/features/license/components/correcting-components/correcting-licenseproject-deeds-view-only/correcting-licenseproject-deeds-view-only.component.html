@@ -1,0 +1,12 @@
+<!-- <app-instant-license-deeds></app-instant-license-deeds> -->
+<app-correcting-licenseproject-deeds-list-view-only
+  *ngIf="pageMode == PagemodeEnum.List"
+  (changePage)="onChangePage($event)"
+>
+</app-correcting-licenseproject-deeds-list-view-only>
+
+<!-- <app-correcting-licenseproject-deeds-details-view-only  *ngIf="pageMode==PagemodeEnum.View"></app-correcting-licenseproject-deeds-details-view-only> -->
+<app-correction-licenseproject-deeds-details
+  *ngIf="pageMode == PagemodeEnum.View"
+>
+</app-correction-licenseproject-deeds-details>

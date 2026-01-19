@@ -1,0 +1,89 @@
+<ng-container *ngIf="architecturalDesign && architecturalDesign.id">
+  <div class="d-flex flex-column h-100">
+    <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+      <h6 class="title">{{localization.title}}</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.licenseProjectPlanAccordingApprovedStandardsFiles}}</label>
+            <div class="value d-flex align-items-center gap-2"
+                 *ngFor="let approvedStandardsFile of architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles">
+              <!--               <span class="icon material-icons-outlined">content_copy</span> -->
+              <a *ngIf="approvedStandardsFile && approvedStandardsFile.planFile"
+                 [href]="baseUrl + approvedStandardsFile.planFile.filePath" target="_blank">
+                {{approvedStandardsFile.planFile.fileDescription}}
+              </a>
+              <!-- View-only mode: Delete button hidden
+              <button *ngIf="!isTabCompleted && approvedStandardsFile && approvedStandardsFile.planFile" type="button" class="btn btn-sm"
+                      (click)="DeleteFile(approvedStandardsFile.planFileId, false)">
+                <i class="hgi hgi-stroke hgi-delete-02"></i>
+              </button>
+              -->
+            </div>
+            <!-- View-only mode: File uploader hidden
+            <app-file-uploader *ngIf="!isTabCompleted" [data]="multipleFileUploaderData"
+                               (fileUploaded)="onApprovedStandardsFilesUploaded($event)"></app-file-uploader>
+            -->
+            <!-- <mat-error *ngIf="controls.licenseProjectPlanAccordingApprovedStandardsFiles?.hasError('required')">{{localization.requiredErrorMsg}}</mat-error> -->
+          </div>
+          <div class="invalid-feedback d-block"
+               *ngIf="(!this.architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles ||
+ !this.architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles.length) && showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.licenseProjectDesignFiles}}</label>
+            <div class="value d-flex align-items-center gap-2" *ngFor="let designFile of architecturalDesign.licenseProjectDesignFiles">
+              <!--          <span class="icon material-icons-outlined">content_copy</span> -->
+              <a *ngIf="designFile && designFile.designFile" [href]="baseUrl + designFile.designFile.filePath"
+                target="_blank">
+                {{designFile.designFile.fileDescription}}</a>
+              <!-- View-only mode: Delete button hidden
+              <button *ngIf="!isTabCompleted && designFile && designFile.designFile" type="button" class="btn btn-sm"
+                      (click)="DeleteFile(designFile.designFileId, true)">
+                <i class="hgi hgi-stroke hgi-delete-02"></i>
+              </button>
+              -->
+            </div>
+            <!-- View-only mode: File uploader hidden
+            <app-file-uploader *ngIf="!isTabCompleted" [data]="multipleFileUploaderData"
+              (fileUploaded)="onDesignFilesUploaded($event)"></app-file-uploader>
+            -->
+          </div>
+          <div class="invalid-feedback d-block"
+          *ngIf="(!this.architecturalDesign.licenseProjectDesignFiles ||
+          !this.architecturalDesign.licenseProjectDesignFiles.length) && showValidation">
+            {{localization.requiredErrorMsg}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View-only mode: Checkbox section hidden
+    <div class="tab-data-section" *ngIf="isFawriaValidation() && !isTabCompleted">
+      <div class="form-group">
+        <mat-checkbox [(ngModel)]="dataConfirmationChecked" class="data-confirmation-checkbox">
+          اقرار صحة البيانات المدخلة
+        </mat-checkbox>
+        <div class="invalid-feedback d-block" *ngIf="!dataConfirmationChecked && showValidation">
+          {{localization.requiredErrorMsg}}
+        </div>
+      </div>
+    </div>
+    -->
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
+      <button class="btn btn-outline-primary"
+              (click)="back()">{{localization.previous}}</button>
+
+      <button class="btn btn-outline-primary"
+              (click)="save(true)">{{localization.next}}</button>
+
+    </div> -->
+  </div>
+</ng-container>

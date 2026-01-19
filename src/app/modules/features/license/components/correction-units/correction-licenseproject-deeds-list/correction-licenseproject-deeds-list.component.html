@@ -1,0 +1,175 @@
+<div class="tab-data-top">
+  <div class="row g-3">
+    <div class="col-12 col-lg-4 col-xxl-3">
+      <div class="card active h-100">
+        <div class="card-body">
+          <span class="icon"><i class="hgi hgi-stroke hgi-star"></i></span>
+          <div class="d-flex flex-column">
+            <h4 class="card-title">{{deedHeaderProjectDataDto?.qualificationDegree}}</h4>
+            <p class="card-text">{{localization.appearanceQualification}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 col-xxl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <span class="icon"><i class="hgi hgi-stroke hgi-align-selection"></i></span>
+          <div class="d-flex flex-column">
+            <h4 class="card-title">{{deedHeaderProjectDataDto?.projectAreaDeedAmount}} م²</h4>
+            <p class="card-text">{{localization.projectConstructionArea}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 col-xxl-3" *ngIf="isUnit">
+      <div class="card h-100">
+        <div class="card-body">
+          <span class="icon"><i class="hgi hgi-stroke hgi-align-selection"></i></span>
+          <div class="d-flex flex-column">
+            <h4 class="card-title">{{deedHeaderProjectDataDto?.constructionAreaAmount}} م²</h4>
+            <p class="card-text">{{localization.projectAreaAccordingToPermit}}</p>
+          </div>
+          <!-- <button class="btn btn-sm btn-outline-primary ms-auto" *ngIf="hasNonType1Deeds()" (click)="openUpdateBuildingAreaDialog(false)">
+            <i class="icon hgi hgi-stroke hgi-add-square"></i>
+            إضافة
+          </button> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 col-xxl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <span class="icon"><i class="hgi hgi-stroke hgi-motion-01"></i></span>
+          <div class="d-flex flex-column">
+            <h4 class="card-title">{{deedHeaderProjectDataDto?.totalUnit || '0'}}</h4>
+            <p class="card-text">{{ isUnit ? 'عدد الوحدات' : 'عدد الأراضي' }}</p>
+          </div>
+          <!-- <button class="btn btn-sm btn-outline-primary ms-auto" *ngIf="hasNonType1Deeds() || !isUnit" (click)="openUpdateBuildingAreaDialog(true)">
+            <i class="icon hgi hgi-stroke hgi-add-square"></i>
+            إضافة
+          </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- error message -->
+  <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert" *ngIf="deedHeaderProjectDataDto?.isQualifaictionDegreeValid">
+    <span class="icon">
+      <i class="hgi hgi-stroke hgi-help-circle"></i>
+    </span>
+    <span>لا يمكن استكمال الطلب، درجة التأهيل الحالية أقل من الحد المسموح لإجمالي مساحة مسطح البناء للمشروع</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <!-- Project Details Section -->
+  <div class="tab-data-section" *ngIf="deedsList && deedsList.length > 0">
+    <h6 class="title mb-2">{{localization.projectDetails}}</h6>
+
+    <div class="row g-5">
+      <div class="col-12 col-lg-auto">
+        <div class="key">
+          <i class="icon hgi hgi-stroke hgi-building-06"></i>
+          {{localization.cityNameLabel}}
+        </div>
+        <div class="value">
+          {{ deedHeaderProjectDataDto?.cityName }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-auto">
+        <div class="key">
+          <i class="icon hgi hgi-stroke hgi-building-06"></i>
+          {{localization.deedNameLabel}}
+        </div>
+        <div class="value">
+          {{ deedHeaderProjectDataDto?.neighborhoodName }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Deeds List Section -->
+<div class="tab-data-header">
+  <span class="icon">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.46899 5.75012C8.46899 5.33591 8.80478 5.00012 9.21899 5.00012H16.219C16.6332 5.00012 16.969 5.33591 16.969 5.75012C16.969 6.16434 16.6332 6.50012 16.219 6.50012H9.21899C8.80478 6.50012 8.46899 6.16434 8.46899 5.75012Z" fill="#161616" />
+      <path d="M9.21899 9.00012C8.80478 9.00012 8.46899 9.33591 8.46899 9.75012C8.46899 10.1643 8.80478 10.5001 9.21899 10.5001H12.719C13.1332 10.5001 13.469 10.1643 13.469 9.75012C13.469 9.33591 13.1332 9.00012 12.719 9.00012H9.21899Z" fill="#161616" />
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.97517 14.9868V5.28191C3.97517 4.60983 3.98789 3.81347 4.14577 3.05956C4.3048 2.30017 4.6248 1.51407 5.29232 0.921945C6.33457 -0.00257576 7.76031 -0.00103261 8.78689 7.85357e-05L16.2011 0.000153936C17.2045 0.000153936 18.4428 0.00718206 19.5432 0.547338C19.6331 0.591481 19.7205 0.638322 19.8054 0.688245C20.7446 1.24034 21.1523 2.15727 21.3347 3.04102C21.5021 3.85194 21.5011 4.74376 21.5002 5.48087L21.5001 16.1671C21.5001 17.2096 21.4586 18.4272 20.9522 19.5374C20.7081 20.0727 20.3926 20.5161 19.9402 20.8503C19.4933 21.1805 18.9701 21.3615 18.3822 21.4699C18.3581 21.4743 18.3339 21.4776 18.3096 21.4797C18.0171 21.5045 17.7363 21.5084 17.4661 21.4823H4.21704C3.68573 21.4771 3.20296 21.438 2.73974 21.2868C1.43202 20.8599 0.740873 19.6024 0.385895 18.5998C0.172215 17.9963 0.0580459 17.4303 0.00584161 16.7952C-0.0792613 15.7599 0.778671 14.9868 1.71901 14.9868H3.97517ZM8.89014 1.50015C7.71036 1.50014 6.86246 1.53426 6.28771 2.04409C5.94791 2.34551 5.73549 2.78651 5.61392 3.36701C5.49121 3.953 5.47517 4.60932 5.47517 5.28191V14.9868H13.5547C14.2739 14.9868 14.9298 15.4275 15.187 16.1116C15.3156 16.4536 15.423 16.7525 15.5184 17.035C15.5527 17.1364 15.5858 17.2358 15.6183 17.3332C15.9152 18.2234 16.1555 18.9438 16.6504 19.4878C16.9365 19.8023 17.1936 19.9369 17.5483 19.9823H18.1751C18.5936 19.8991 18.8581 19.7848 19.0489 19.6439C19.2439 19.4998 19.4181 19.2864 19.5875 18.915C19.9458 18.1292 20.0001 17.2075 20.0001 16.1671L20.0001 5.52316C20.0004 4.74533 20.0007 3.99832 19.8657 3.34429C19.7274 2.67452 19.4728 2.2327 19.0452 1.98134C18.9948 1.95166 18.9406 1.92251 18.8822 1.89386C18.1407 1.52988 17.2506 1.50015 16.2011 1.50015H8.89014ZM15.1421 19.9823C14.6799 19.2843 14.4182 18.4883 14.1972 17.8164C14.1631 17.7127 14.13 17.6119 14.0972 17.5149C14.0085 17.2521 13.9071 16.9697 13.783 16.6396C13.75 16.552 13.6617 16.4868 13.5547 16.4868H1.71901C1.64621 16.4868 1.58511 16.5163 1.54615 16.5558C1.51001 16.5924 1.49741 16.6312 1.5008 16.6723C1.54336 17.1901 1.63306 17.628 1.79988 18.0991C2.11766 18.9966 2.59312 19.661 3.20524 19.8608C3.45008 19.9408 3.75108 19.9775 4.22829 19.9823H15.1421Z" fill="#161616" />
+    </svg>
+  </span>
+  <h6 class="title">
+    {{ localization.projectLandDeeds }}
+  </h6>
+  <button class="btn btn-outline-primary ms-auto" (click)="addDeeds()" *ngIf="deedsList && deedsList.length > 0 && enableAddDeedButton">
+    <i class="icon hgi hgi-stroke hgi-add-square me-2"></i> {{ localization.addDeeds }}
+  </button>
+</div>
+
+<div class="tab-data-section">
+  <!-- Deeds Table -->
+  <ng-container *ngIf="deedsList.length > 0">
+    <div class="table-responsive">
+      <table class="table table-light" *ngIf="deedsList && deedsList.length > 0">
+        <thead>
+          <tr>
+            <th scope="col">{{localization.deedType}}</th>
+            <th scope="col">{{localization.deedNumber}}</th>
+            <th scope="col">{{localization.deedDate}}</th>
+            <th scope="col">{{localization.unitsCount}}</th>
+            <th scope="col">{{localization.licenseType}}</th>
+            <th scope="col" *ngIf="hasAnyConstructionLicenseNumber()">{{localization.buildingPermitNumber}}</th>
+            <th scope="col">{{localization.actions}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let deed of deedsList">
+            <td> {{deed.integrationTypeId == 1 ? 'السجل العقاري' : 'وزارة العدل' }} </td>
+            <td>
+              <span class="tag">{{deed.deedNumber}}</span>
+            </td>
+            <td>{{deed.deedDate}}</td>
+            <td>
+              <span class="tag">{{deed.ownersCount}}</span>
+            </td>
+            <td> {{deed.licenseProjectConstructionLicenseType}} </td>
+            <td *ngIf="hasAnyConstructionLicenseNumber()">
+              <span class="tag" *ngIf="deed.constructionLicenseNumber != null">{{deed.constructionLicenseNumber}}</span>
+              <span *ngIf="deed.constructionLicenseNumber == null">-</span>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-end">
+                <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #tableActionsMenu="matMenu">
+                  <button mat-menu-item (click)="viewDeedDetails(deed)" class="menu-edit-btn">
+                    <i class="hgi hgi-stroke hgi-profile-02"></i>
+                    <span>تفاصيل الصك</span>
+                  </button>
+                  <button mat-menu-item (click)="updateDeed(deed)" class="menu-edit-btn">
+                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                    <span>تعديل الصك</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteDeed(deed.id)" class="menu-delete-btn">
+                    <i class="hgi hgi-stroke hgi-delete-03"></i>
+                    <span>حذف الصك</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <!-- No Data Message -->
+  <ng-container *ngIf="!deedsList || deedsList.length === 0">
+    <app-no-data (onNoDataButtonClicked)="addDeeds()" [showCompleteBtn]="enableAddDeedButton" [text]="'لا يوجد صكوك لأرض المشروع بعد!'" [showText]="true" [showTitle]="false" [useTitleClass]="true" [completeBtnTitle]="'إضافة صكوك'"></app-no-data>
+  </ng-container>
+</div>
+
+<!-- Next/Previous Buttons -->
+<app-next-and-previus-buttons></app-next-and-previus-buttons>

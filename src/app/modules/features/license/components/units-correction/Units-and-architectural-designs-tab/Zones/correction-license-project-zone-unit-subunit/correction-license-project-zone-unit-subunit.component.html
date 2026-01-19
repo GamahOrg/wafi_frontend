@@ -1,0 +1,74 @@
+<form class="d-flex flex-column" [formGroup]="licenseProjectSubUnitsForm">
+    <h6 class="form-title">
+      {{ localization.chooseUnitTitle }}
+      <small>{{ localization.chooseUnitTitleHint }}</small>
+    </h6>
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label for="" class="form-label">{{ localization.subUnitsType }}</label>
+          <select
+            class="form-select"
+            id="control-subUnitTypeId"
+            aria-label="Default select example"
+            formControlName="subUnitTypeId"
+          >
+            <option selected [value]="0" disabled>
+              {{ localization.subUnitsType }}
+            </option>
+            <option *ngFor="let type of subUnitType" [value]="type.id">
+              {{ type.name }}
+            </option>
+          </select>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              SubUnitsFormControls.subUnitTypeId.value == 0 &&
+              showValidationSubUnitsForm
+            "
+          >
+            حقل مطلوب
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-6">
+        <div class="form-group mb-4">
+          <label for="" class="form-label">{{ localization.subUnitCount }}</label>
+          <input
+            type="number"
+            min="1"
+            id="control-subUnitCount"
+            class="form-control"
+            [placeholder]="localization.subUnitCount"
+            formControlName="subUnitCount"
+          />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="SubUnitsFormControls.subUnitCount.errors?.['required'] && showValidationSubUnitsForm"
+          >
+            حقل مطلوب
+          </div>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="SubUnitsFormControls.subUnitCount.errors?.['min'] && showValidationSubUnitsForm"
+          >
+            يجب اضافة وحدة على الأقل
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- <div class="row justify-content-end">
+      <div class="col-12 col-lg-auto">
+        <button
+          class="btn btn-link"
+          id="btn-addNewFormGroup"
+          (click)="onSubmit()"
+        >
+          <span class="material-icons-outlined">add_circle_outline</span>
+          {{ localization.addingNewUnit }}
+        </button>
+      </div>
+    </div> -->
+  </form>

@@ -52,6 +52,7 @@ export interface LicenseDetails {
  
 }
 
+
 export interface LicenseProjectFarzRequestStatusDto {
   id: FarzRequestStatusEnum;
   name: string;

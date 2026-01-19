@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+  <h6 class="title">{{localization.totalNumberOfUnitCodes}} {{projectUnitCodesPaginated?.totalCount }}</h6>
+</div>
+
+<div class="table-responsive" *ngIf="projectUnitCodesPaginated?.results?.length">
+  <table class="table table-light">
+    <thead>
+      <tr>
+        <th colspan="2">{{ localization.code }}</th>
+        <th>{{ localization.deliveryOn }}</th>
+        <th>{{ localization.price }}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let code of projectUnitCodesPaginated?.results">
+        <td>{{ code.code }}</td>
+        <td>
+          <span class="tag tag-info">
+            {{ code.isPrevious ? 'سابقة' : 'جديدة' }}
+          </span>
+        </td>
+        <td>{{ code.deliveryOn | date:'yyyy-MM-dd' }}</td>
+        <td>{{ formatNumber(code.price) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-4">
+  <app-pagination></app-pagination>
+</div>

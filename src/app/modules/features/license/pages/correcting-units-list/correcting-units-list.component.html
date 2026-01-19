@@ -13,16 +13,17 @@
           <th scope="col">اسم المشروع</th>
           <th scope="col">نوع الطلب</th>
           <th scope="col">حالة الطلب</th>
-          <th scope="col">العمليات</th>
+          <!-- <th scope="col">العمليات</th> -->
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let request of reqList.results">
-          <td>
-            <span class="text-dark">
-              {{ request.requestCode }}
-            </span>
-          </td>
+             <td class="text-nowrap" (click)="navigateToCorrectionRequestDetails(request)">
+              <a class="underline fw-bold text-primary">
+                {{ request.requestCode }}
+              </a>
+            </td>
+       
           <td>
             <div class="text-dark">
               {{ request.certificateNumber }}
@@ -46,25 +47,25 @@
           <td class="text-nowrap">{{ request.licenseTypeName }}</td>
           <td class="text-nowrap">
             <div class="d-flex align-items-center">
-              <span class="status-pill" [ngClass]="getStatusClass(request.requestTypeId)" *ngIf="request.requestTypeId">
-                <i class="icon material-icons">fiber_manual_record</i>
-                {{ request.requestTypeName }}
+              <span class="status-pill" [ngClass]="getStatusClass(request.externalRequestStatusId)" *ngIf="request.externalRequestStatusId">
+                
+                {{ request.externalRequestStatusName }}
               </span>
             </div>
           </td>
-          <td>
+          <!-- <td>
             <div class="d-flex align-items-center justify-content-end">
               <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #tableActionsMenu="matMenu">
-                <button mat-menu-item class="menu-edit-btn">
+                <button mat-menu-item class="menu-edit-btn" (click)="navigateToCorrectionRequestDetails(request)">
                   <i class="hgi hgi-stroke hgi-file-02"></i>
-                  <span>تفاصيل الطلب</span> 
+                  <span>تفاصيل الطلب</span>
                 </button>
               </mat-menu>
             </div>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>

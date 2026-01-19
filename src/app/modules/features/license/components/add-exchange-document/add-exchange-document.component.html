@@ -40,7 +40,7 @@
         <div class="input-group">
           <input bsDatepicker id="control-exchangeDate" type="text" class="form-control" formControlName="exchangeDate"
             value="{{ controls.exchangeDate.value | date : 'yyyy-MM-dd' }}" />
-          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
         </div>
         <mat-error *ngIf="controls.exchangeDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
       </div>
@@ -50,7 +50,7 @@
         <div class="input-group">
           <input  bsDatepicker id="control-approvalDate" type="text" class="form-control" formControlName="approvalDate"
             value="{{ controls.approvalDate.value | date : 'yyyy-MM-dd' }}"/>
-          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
         </div>
         <mat-error *ngIf="controls.approvalDate?.hasError('required') && showValidation" >حقل مطلوب</mat-error>
       </div>

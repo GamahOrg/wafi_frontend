@@ -1,0 +1,24 @@
+<div class="tab-data-header flex-wrap">
+  <div class="alert alert-info alert-dismissible fade show w-100 mb-2" role="alert">
+    <span class="icon">
+      <i class="hgi hgi-stroke hgi-help-circle"></i>
+    </span>
+    <span>لابد من تعديل اسماء النماذج السابق اضافتها</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <i class="icon hgi hgi-stroke hgi-profile"></i>
+  <h6 class="title">{{localization.BlocksAndbuildingsAndunitsComponent}}</h6>
+</div>
+<div class="tab-data-section">
+  <div class="tab-data-section-title-subtitle">
+    <h6 class="title">إجمالي عدد انواع الوحدات المضافه {{accordionContent.accordionComponentList.length}} </h6>
+  </div>
+  <div class="row row-gap-4">
+    <div class="col-12 ">
+      <app-accordion> </app-accordion>
+    </div>
+  </div>
+</div>
+
+<app-next-and-previus-buttons></app-next-and-previus-buttons>

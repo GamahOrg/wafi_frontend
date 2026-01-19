@@ -54,6 +54,10 @@
                      *ngIf="form.controls['executiveDirectorEmail'].hasError('required') && form.controls['executiveDirectorEmail'].touched">
                   {{ localizations.NumberRequired }}
                 </div>
+                  <div class="invalid-feedback d-block"
+                     *ngIf="form.controls['executiveDirectorEmail'].hasError('pattern') && form.controls['executiveDirectorEmail'].touched">
+                    يرجى إدخال بريد إلكتروني صحيح 
+                </div>
               </div>
             </div>
         </div>
@@ -144,7 +148,7 @@
                               (keydown)="$event.preventDefault()"
                               (paste)="$event.preventDefault()"
                               />
-                        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                       </div>
 
                       <div class="invalid-feedback d-block"
@@ -269,7 +273,7 @@
                                [formControlName]="propertyName.id + 'StartDate'"
                                [bsConfig]="datePickerConfig"
                                 />
-                        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                       </div>
 
                       <div class="invalid-feedback d-block"
@@ -392,7 +396,7 @@
                                [formControlName]="propertyName.id + 'StartDate'"
                                [bsConfig]="datePickerConfig"
                                 />
-                        <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+                        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                       </div>
 
                       <div class="invalid-feedback d-block"

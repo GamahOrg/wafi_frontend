@@ -6,6 +6,10 @@ export const Configuration = {
       GetLicenseProjectRequestLogs:
         '/api/LicenseProjectRequestLog/GetLicenseProjectRequestLogs',
     },
+    CorrectionLicenseProjectRequestLog: {
+      GetLicenseProjectRequestLogs:
+        '/api/CorrectionUnitRequestLog/GetByRequestId',
+    },
     LicenseProjectRecommendation: {
       GetLicenseProjectRecommendationsByLicenseProjectId:
         '/api/LicenseProjectRecommendation/GetLicenseProjectRecommendationsByLicenseProjectId',
@@ -50,7 +54,20 @@ export const Configuration = {
       GetPagedList: '/api/LicenseProjectBuyerCancellationRequest/GetPagedList',
     },
     CorrectedUnitRequest: {
-      GetCorrectedUnitRequest: '/api/CorrectedUnitRequestHeader/GetCorrectedUnitRequest',
+      GetCorrectedUnitRequest:
+        '/api/CorrectionUnitRequestHeader/GetCorrectedUnitRequest',
+      GetCorrectedUnitDataByLicenseProjectId:
+        '/api/CorrectionUnitRequestHeader/GetCorrectedUnitDataByLicenseProjectId',
+      CheckCorrectingUnitAvailability:
+        '/api/CorrectionUnitRequestHeader/CheckCorrectingUnitAvailability',
+      CorrectionSendAsync:
+        '/api/CorrectionUnitRequestHeader/CorrectionSendAsync',
+      GetRequestHeaderDetails:
+        '/api/CorrectionUnitRequestHeader/GetRequestHeaderDetails',
+      GetFarzRejectionReason:
+        '/api/CorrectionUnitRequestHeader/GetFarzRejectionReason',
+      UpdateFarzStatus: '/api/CorrectionUnitRequestHeader/UpdateFarzStatus',
+      Create: '/api/CorrectionLicenseServiceRequest/Create',
     },
     LicenseProjectFawria: {
       GetAll: '/api/LicenseProjectFawria/GetAll',
@@ -59,10 +76,14 @@ export const Configuration = {
       AddLicenseProjectFawria:
         '/api/LicenseProjectFawria/AddLicenseProjectFawria',
       IsFawriaLicenseAllow: '/api/LicenseProjectFawria/IsFawriaLicenseAllow',
-      DeleteLicenseProjectFawriaDeveloper: '/api/LicenseProjectFawria/DeleteLicenseProjectFawriaDeveloper',
+      DeleteLicenseProjectFawriaDeveloper:
+        '/api/LicenseProjectFawria/DeleteLicenseProjectFawriaDeveloper',
     },
     LicenseProjectRequestProcessingLog: {
       GetByRequestId: '/api/LicenseProjectRequestProcessingLog/GetByRequestId',
+    },
+    CorrectionLicenseProjectRequestProcessingLog: {
+      GetByRequestId: '/api/CorrectionUnitRequestProcessingLog/GetByRequestId',
     },
     ComplaintRequest: {
       Create: '/api/ComplaintRequest/CreateAsync',
@@ -622,7 +643,7 @@ export const Configuration = {
     },
     LicenseProjectPartiesAdditionalTerms: {
       GetAllAdditionalAsync:
-        '/api/LicenseProjectPartiesAdditionalTerms/GetAllAdditionalAsync',      
+        '/api/LicenseProjectPartiesAdditionalTerms/GetAllAdditionalAsync',
       GetMaxItemNumberByLicenseProjectId:
         '/api/LicenseProjectPartiesAdditionalTerms/GetMaxItemNumberByLicenseProjectId',
       Save: '/api/LicenseProjectPartiesAdditionalTerms/Save',
@@ -647,7 +668,8 @@ export const Configuration = {
       Save: '/api/LicenseProjectExhibition/Save',
     },
     LicenseProject: {
-      GetLicenseProjectCompletionData: '/api/LicenseProject/GetLicenseProjectCompletionData',
+      GetLicenseProjectCompletionData:
+        '/api/LicenseProject/GetLicenseProjectCompletionData',
       GetLicenseProjectById: '/api/LicenseProject/GetLicenseProjectById',
       GetLicenseProjectByFacilityId:
         '/api/LicenseProjectService/GetLicenseProjectByFacilityId/',
@@ -712,8 +734,13 @@ export const Configuration = {
       GetFawriaLicenseprojectBankInfoById:
         '/api/LicenseProject/GetFawriaLicenseprojectBankInfoById',
       GetDeedHeaderProjectData: '/api/LicenseProject/GetDeedHeaderProjectData',
-      GetFawriaEndBeneficiaryContactsInfoById: '/api/LicenseProject/GetFawriaEndBeneficiaryContactsInfoById',
-      SaveFawriaEndBeneficiaryContactsInfoAsync: '/api/LicenseProject/SaveFawriaEndBeneficiaryContactsInfoAsync',
+      GetCorrectionDeedHeaderProjectData:
+        '/api/LicenseProject/GetCorrectionDeedHeaderProjectData',
+      GetFawriaEndBeneficiaryContactsInfoById:
+        '/api/LicenseProject/GetFawriaEndBeneficiaryContactsInfoById',
+      SaveFawriaEndBeneficiaryContactsInfoAsync:
+        '/api/LicenseProject/SaveFawriaEndBeneficiaryContactsInfoAsync',
+      ValidateProjectForContractCreation: '/api/LicenseProject/ValidateProjectForContractCreationAsync',
     },
     LicenseProjectExchangeDocument: {
       GetExchangeDocumentOnProject:
@@ -809,8 +836,21 @@ export const Configuration = {
       GetDesignFilesByLicenseProjectId:
         '/api/LicenseProjectDesignFile/GetDesignFilesByLicenseProjectId',
       SaveDesignFilesForProjectLicenseAsync:
-        '/api/LicenseProjectDesignFile/SaveDesignFilesForProjectLicenseAsync', 
+        '/api/LicenseProjectDesignFile/SaveDesignFilesForProjectLicenseAsync',
       DleteFile: '/api/LicenseProjectDesignFile/DleteFile',
+    },
+    CorrectionLicenseProjectDesignFile: {
+      GetDesignFilesByLicenseProjectId:
+        '/api/CorrectionLicenseProjectDesignFile/GetDesignFilesByLicenseProjectId',
+      SaveDesignFilesForProjectLicenseAsync:
+        '/api/CorrectionLicenseProjectDesignFile/SaveDesignFilesForProjectLicenseAsync',
+      DeleteFile: '/api/CorrectionLicenseProjectDesignFile/DeleteFile',
+      DeleteDesignFile:
+        '/api/CorrectionLicenseProjectDesignFile/DeleteDesignFile',
+    },
+    CorrectionLicenseProjectPlanAccordingApprovedStandardsFile: {
+      DeleteFile:
+        '/api/CorrectionLicenseProjectPlanAccordingApprovedStandardsFile/DeleteFile',
     },
     LicenseProjectAnnualBalanceSheet: {
       Save: '/api/LicenseProjectAnnualBalanceSheet/Save',
@@ -870,10 +910,22 @@ export const Configuration = {
     LicenseProjectConstructionLicense: {
       GetByLicenseProjectId:
         '/api/LicenseProjectConstructionLicense/GetByLicenseProjectId',
+      GetCorrectionLicenseConstructionNotTiedToDeed:
+        '/api/CorrectionLicenseProjectConstructionLicense/GetLicenseConstructionNotTiedToDeed',
       Save: '/api/LicenseProjectConstructionLicense/Save',
       ValidateLicenseNumberFromBaladyIntegration:
         '/api/LicenseProjectConstructionLicense/ValidateLicenseNumberFromBaladyIntegration',
       Delete: '/api/LicenseProjectConstructionLicense/Remove',
+      CorrectionDelete:
+        '/api/CorrectionLicenseProjectConstructionLicense/Remove',
+    },
+    CorrectionLicenseProjectConstructionLicense: {
+      GetByLicenseProjectId:
+        '/api/CorrectionLicenseProjectConstructionLicense/GetByLicenseProjectId',
+      Save: '/api/CorrectionLicenseProjectConstructionLicense/Save',
+      ValidateLicenseNumberFromBaladyIntegration:
+        '/api/CorrectionLicenseProjectConstructionLicense/ValidateLicenseNumberFromBaladyIntegration',
+      Delete: '/api/CorrectionLicenseProjectConstructionLicense/Remove',
     },
     PeriodCharteredAccountantReport: {
       GetExchangeDocumentOnProject:
@@ -886,7 +938,8 @@ export const Configuration = {
     },
     LicenseProjectDeed: {
       GetByLicenseProjectId: '/api/LicenseProjectDeed/GetByLicenseProjectId',
-      GetDeedConstructionApprovalList: '/api/LicenseProjectDeed/GetDeedConstructionApprovalList',
+      GetDeedConstructionApprovalList:
+        '/api/LicenseProjectDeed/GetDeedConstructionApprovalList',
       Save: '/api/LicenseProjectDeed/SaveData',
       UpdateTotalAreaForProject:
         '/api/LicenseProjectDeed/UpdateTotalAreaForProject',
@@ -897,17 +950,53 @@ export const Configuration = {
       Delete: '/api/LicenseProjectDeed/Remove',
       GetInstantDeedsByLicenseProjectId:
         '/api/LicenseProjectDeed/GetInstantDeedsByLicenseProjectId',
+      GetNatureTypeIdByCorrectionRequestId:
+        '/api/CorrectionLicenseProjectDeed/GetNatureTypeIdByCorrectionRequestId',
       GetNatureTypeIdByLicenseProjectId:
         '/api/LicenseProjectDeed/GetNatureTypeIdByLicenseProjectId',
       DeleteInstantDeeds: '/api/LicenseProjectDeed/DeleteInstantDeedsAsync',
-      DeleteDeepLandOwner:'/api/LicenseProjectDeed/DeleteDeepLandOwner',
+      DeleteDeepLandOwner: '/api/LicenseProjectDeed/DeleteDeepLandOwner',
       FawriaLicenseDeedAndConstructionLicense:
         '/api/LicenseProjectDeed/FawriaLicenseDeedAndConstructionLicense',
       SaveFawriaLicenseDeedAndConstructionLicense:
         '/api/LicenseProjectDeed/SaveFawriaLicenseDeedAndConstructionLicense',
       GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId:
         '/api/LicenseProjectDeed/GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId',
-        GetDeedOwnersListAsync:'/api/LicenseProjectDeed/GetDeedOwnersListAsync',
+      GetDeedOwnersListAsync: '/api/LicenseProjectDeed/GetDeedOwnersListAsync',
+    },
+
+    CorrectionLicenseProjectDeed: {
+      DeleteDeed: '/api/CorrectionLicenseProjectDeed/DeleteDeed',
+      GetByLicenseProjectId:
+        '/api/CorrectionLicenseProjectDeed/GetByLicenseProjectId',
+      GetDeedConstructionApprovalList:
+        '/api/CorrectionLicenseProjectDeed/GetDeedConstructionApprovalList',
+      Save: '/api/CorrectionLicenseProjectDeed/Save',
+      UpdateTotalAreaForProject:
+        '/api/CorrectionLicenseProjectDeed/UpdateTotalAreaForProject',
+      SaveDeedData: '/api/CorrectionLicenseProjectDeed/SaveDeedData',
+      UpdateDeedOwners: '/api/CorrectionLicenseProjectDeed/UpdateDeedOwners',
+      ValidateDeedInfoByNumber:
+        '/api/CorrectionLicenseProjectDeed/ValidateDeedInfoByNumber',
+      Delete: '/api/CorrectionLicenseProjectDeed/Remove',
+      GetInstantDeedsByLicenseProjectId:
+        '/api/CorrectionLicenseProjectDeed/GetInstantDeedsByLicenseProjectId',
+      GetNatureTypeIdByCorrectionRequestId:
+        '/api/CorrectionLicenseProjectDeed/GetNatureTypeIdByCorrectionRequestId',
+      DeleteInstantDeeds:
+        '/api/CorrectionLicenseProjectDeed/DeleteInstantDeedsAsync',
+      DeleteDeepLandOwner:
+        '/api/CorrectionLicenseProjectDeed/DeleteDeepLandOwner',
+      FawriaLicenseDeedAndConstructionLicense:
+        '/api/CorrectionLicenseProjectDeed/FawriaLicenseDeedAndConstructionLicense',
+      SaveFawriaLicenseDeedAndConstructionLicense:
+        '/api/CorrectionLicenseProjectDeed/SaveFawriaLicenseDeedAndConstructionLicense',
+      GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId:
+        '/api/CorrectionLicenseProjectDeed/GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId',
+      GetDeedDetailsById:
+        '/api/CorrectionLicenseProjectDeed/GetDeedDetailsById',
+      GetDeedOwnersListAsync:
+        '/api/CorrectionLicenseProjectDeed/GetDeedOwnersListAsync',
     },
     LicenseProjectQuantitiesTableFiles: {
       GetByLicenseProjectId:
@@ -946,7 +1035,21 @@ export const Configuration = {
       GetDropDown: '/api/LicenseProjectModel/Get',
       Save: '/api/LicenseProjectModel/Save',
       Delete: '/api/LicenseProjectModel/Remove',
-      GetLicenseRequestUnitFacilitiesList: '/api/LicenseProjectModel/GetLicenseRequestUnitFacilitiesList',
+      GetLicenseRequestUnitFacilitiesList:
+        '/api/LicenseProjectModel/GetLicenseRequestUnitFacilitiesList',
+    },
+    CorrectionLicenseProjectModel: {
+      GetByProjectUnitId:
+        '/api/CorrectionLicenseProjectModel/GetByProjectUnitId',
+      GetByLicenseProjectId:
+        '/api/CorrectionLicenseProjectModel/GetByLicenseProjectId',
+      GetByProjectSubUnitId:
+        '/api/CorrectionLicenseProjectModel/GetByProjectSubUnitId',
+      GetDropDown: '/api/CorrectionLicenseProjectModel/Get',
+      Save: '/api/CorrectionLicenseProjectModel/Save',
+      Delete: '/api/CorrectionLicenseProjectModel/Remove',
+      GetLicenseRequestUnitFacilitiesList:
+        '/api/CorrectionLicenseProjectModel/GetLicenseRequestUnitFacilitiesList',
     },
     LicenseProjectSubUnit: {
       GetByLicenseProjectId: '/api/LicenseProjectSubUnit/GetByLicenseProjectId',
@@ -959,6 +1062,19 @@ export const Configuration = {
       Create: '/api/LicenseProjectSubUnit/Create',
       Update: '/api/LicenseProjectSubUnit/Update',
       Remove: '/api/LicenseProjectSubUnit/Remove',
+    },
+    CorrectionLicenseProjectSubUnit: {
+      GetByRequestHeaderId:
+        '/api/CorrectionLicenseProjectSubUnit/GetByRequestHeaderId',
+      SaveLicenseProjectSubUnitsAsync:
+        '/api/CorrectionLicenseProjectSubUnit/SaveLicenseProjectSubUnitsAsync',
+      DeleteLicenseProjectSubUnitsAsync:
+        '/api/CorrectionLicenseProjectSubUnit/DeleteLicenseProjectSubUnitsAsync',
+      GetLicenseProjectSubUnitsByLicenseProjectId:
+        '/api/CorrectionLicenseProjectSubUnit/GetLicenseProjectSubUnitsByLicenseProjectId',
+      Create: '/api/CorrectionLicenseProjectSubUnit/Create',
+      Update: '/api/CorrectionLicenseProjectSubUnit/Update',
+      Remove: '/api/CorrectionLicenseProjectSubUnit/Remove',
     },
     LicenseProjectService: {
       GenerateDraftVersionForProject:
@@ -1052,13 +1168,21 @@ export const Configuration = {
       GetByLicenseProjectId: '/api/LicenseProjectZone/GetByLicenseProjectId',
       Delete: '/api/LicenseProjectZone/Remove',
     },
+    correctionLicenseProjectZone: {
+      Save: '/api/CorrectionLicenseProjectZone/Save',
+      GetByRequestHeaderId:
+        '/api/CorrectionLicenseProjectZone/GetByRequestHeaderId',
+      Delete: '/api/CorrectionLicenseProjectZone/Remove',
+    },
     LicenseRequestService: {
       Create: '/api/LicenseRequestService/Create',
       renew: '/api/LicenseRequestService/Renew',
-      GetFarzStatusWhenNaturalTypeUnit: '/api/LicenseRequestHeader/GetFarzStatusWhenNaturalTypeUnit',
+      GetFarzStatusWhenNaturalTypeUnit:
+        '/api/LicenseRequestHeader/GetFarzStatusWhenNaturalTypeUnit',
       Send: '/api/LicenseRequestService/Send',
       SendByProjectId: '/api/LicenseRequestService/SendByProjectId',
-      SendFawriaLicenseByProjectId: '/api/LicenseRequestService/SendFawriaLicenseByProjectId',
+      SendFawriaLicenseByProjectId:
+        '/api/LicenseRequestService/SendFawriaLicenseByProjectId',
       Compile: '/api/LicenseRequestService/Compile',
       CompileConditionalApproval:
         '/api/LicenseRequestService/CompileConditionalApproval',
@@ -1100,19 +1224,22 @@ export const Configuration = {
         '/api/LicenseRequestHeader/GetLicenseRequestsByEmployeeId',
       GetLicenseRequestHeadersByLicenseProjectId:
         '/api/LicenseRequestHeader/GetLicenseRequestHeadersByLicenseProjectId',
-        GetLicenseProjectProfileCompleteTap:
+      GetLicenseProjectProfileCompleteTap:
         '/api/LicenseRequestHeader/GetLicenseProjectProfileCompleteTap',
-        GetCompletedLicenseProjectProfileTaps:
+      GetCompletedLicenseProjectProfileTaps:
         '/api/LicenseRequestHeader/GetCompletedLicenseProjectProfileTaps',
       GetLicenseRequestHeaderTimeLine:
         '/api/LicenseRequestHeader/GetLicenseRequestHeaderTimeLine',
       Delete: '/api/LicenseRequestHeader/Remove',
-      GetLicenseRequestHeaderCode: '/api/LicenseRequestHeader/GetLicenseRequestHeaderCode',
-      GetLicenseRequestHeaderById: '/api/LicenseRequestHeader/GetLicenseRequestHeaderById',
+      GetLicenseRequestHeaderCode:
+        '/api/LicenseRequestHeader/GetLicenseRequestHeaderCode',
+      GetLicenseRequestHeaderById:
+        '/api/LicenseRequestHeader/GetLicenseRequestHeaderById',
     },
     LicenseProjectUnit: {
       Save: '/api/LicenseProjectUnit/Save',
-      GetLicenseProjectNatureType: '/api/LicenseProjectUnit/GetLicenseProjectNatureType',
+      GetLicenseProjectNatureType:
+        '/api/LicenseProjectUnit/GetLicenseProjectNatureType',
       GetByLicenseProjectId: '/api/LicenseProjectUnit/GetByLicenseProjectId',
       GetByZoneId: '/api/LicenseProjectUnit/GetByZoneId',
       Delete: '/api/LicenseProjectUnit/Remove',
@@ -1120,6 +1247,19 @@ export const Configuration = {
         '/api/LicenseProjectUnit/GetLicenseProjectBuildingBlockType',
       GetDeedsDDLByLicenseProjectId:
         '/api/LicenseProjectUnit/GetDeedsDDLByLicenseProjectId',
+    },
+    CorrectionLicenseProjectUnit: {
+      Save: '/api/CorrectionLicenseProjectUnit/Save',
+      GetLicenseProjectNatureType:
+        '/api/CorrectionLicenseProjectUnit/GetLicenseProjectNatureType',
+      GetByUnitCorrectionRequestHeaderId:
+        '/api/CorrectionLicenseProjectUnit/GetByUnitCorrectionRequestHeaderId',
+      GetByZoneId: '/api/CorrectionLicenseProjectUnit/GetByZoneId',
+      Delete: '/api/CorrectionLicenseProjectUnit/Delete',
+      GetLicenseProjectBuildingBlockType:
+        '/api/CorrectionLicenseProjectUnit/GetLicenseProjectBuildingBlockType',
+      GetDeedsDDLByCorrectionRequestHeaderId:
+        '/api/CorrectionLicenseProjectUnit/GetDeedsDDLByCorrectionRequestHeaderId',
     },
     LincenseProjectRequest: {
       GetLincenseRequestProject:
@@ -1145,6 +1285,10 @@ export const Configuration = {
     LicenseServiceRequest: {
       Compile: '/api/LicenseServiceRequest/Compile',
       Create: '/api/LicenseServiceRequest/Create',
+    },
+    CorrectionLicenseServiceRequest: {
+      Compile: '/api/CorrectionLicenseServiceRequest/Compile',
+      Create: '/api/CorrectionLicenseServiceRequest/Create',
     },
     LicenseProjectCancellationRequest: {
       GetLicenseProjectDetails:
@@ -1217,6 +1361,21 @@ export const Configuration = {
         '/api/LicenseProjectSubUnitsListCode/GetUnitsCodesListByProjectUnitId',
       GetUnitsCodesListByProjectUnitIdPaginated:
         '/api/LicenseProjectSubUnitsListCode/GetUnitsCodesListByProjectUnitIdPaginated',
+    },
+    CorrectionLicenseProjectSubUnitsListCode: {
+      createExcel: '/api/CorrectionLicenseProjectSubUnitsListCode/CreateExcel',
+      SaveFileData:
+        '/api/CorrectionLicenseProjectSubUnitsListCode/saveFileData',
+      Save: '/api/CorrectionLicenseProjectSubUnitsListCode/Save',
+      GetByProjectSubUnitId:
+        '/api/CorrectionLicenseProjectSubUnitsListCode/GetByProjectSubUnitId',
+      GetByProjectUnitId:
+        '/api/CorrectionLicenseProjectSubUnitsListCode/GetByProjectUnitId',
+      Delete: '/api/CorrectionLicenseProjectSubUnitsListCode/Remove',
+      GetUnitsCodesListByProjectUnitId:
+        '/api/CorrectionLicenseProjectSubUnitsListCode/GetUnitsCodesListByProjectUnitId',
+      GetUnitsCodesListByProjectUnitIdPaginated:
+        '/api/CorrectionLicenseProjectSubUnitsListCode/GetUnitsCodesListByProjectUnitIdPaginated',
     },
     ChangeLicenseProjectDelegatorRequest: {
       GetChangeLicenseProjectDelegatorRequestDetail:
@@ -1332,7 +1491,8 @@ export const Configuration = {
     },
     LicenseProjectCertificate: {
       GetCertificates: '/api/LicenseProjectCertificate/GetCertificates',
-      GetCertificatesByHeaderId: '/api/LicenseProjectCertificate/GetCertificatesByHeaderId',
+      GetCertificatesByHeaderId:
+        '/api/LicenseProjectCertificate/GetCertificatesByHeaderId',
     },
     // ------ End of License Endpoints  ------
     Integration: {
@@ -1460,6 +1620,7 @@ export const Configuration = {
       renewLincense: 'renew-lincense',
       lincenseSummary: 'lincense-summary',
       farzNote: 'farz-note',
+      correctionFarzNote: 'correction-farz-note',
       licenseUnderStudy: 'license-under-study',
       lincenseList: 'lincense-list',
       lincenseDetails: 'lincense-details',
@@ -1502,9 +1663,20 @@ export const Configuration = {
       businessPaymentTemplates: 'business-payment-templates',
       itemsLog: 'items-log',
       paymentTermsTabs: 'payment-terms-tabs',
+      unitsCorrection: 'units-correction',
+      correctionLicenseSummary: 'correction-license-summary',
       licenseProjectFawriaDeveloperList:
         'license-project-fawria-developer-list',
       projectPartiesStatus: 'fawria-project-parties-status',
+      fawriaLicenseComplate: 'fawria-license-complate',
+      contractDetailsWithParam: 'contract-details/:id',
+      contractReadonlyWithParam: 'contract-readonly/:id',
+      contractViewer: 'contract-viewer',
+      developerApprovalsList: 'developer-approvals-list',
+      developerApprovalDetailsWithParam: 'developer-approval-details/:id',
+      correctingUnitsDetailsWithParam: 'correcting-units-details/:id',
+      correctionLicenseProjectRequestDetails:
+        'correction-license-project-request-details',
     },
     licenseProjectRequests: {
       createLicenseProjectRequestList: 'create-license-project-request',

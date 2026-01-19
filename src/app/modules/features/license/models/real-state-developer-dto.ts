@@ -59,7 +59,8 @@ export enum LicenseProjectUnitCodeStatus
 {   All = 0 ,
     NotSold = 1,
   Sold = 2,
-  PendingBuyerApproval = 3
+  PendingBuyerApproval = 3,
+  SoldOutsidePlatform = 4
 }
 export enum LicenseProjectUnitType
 {   All = 0,

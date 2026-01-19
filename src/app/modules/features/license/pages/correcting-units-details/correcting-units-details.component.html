@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="row row-gap-4">
+    <!-- Main Content -->
+    <div class="col-12">
+      <ng-container *ngIf="isLoading">
+        <div class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!isLoading">
+        <app-tabs [hasProgress]="false"></app-tabs>
+      </ng-container>
+    </div>
+  </div>
+</div>

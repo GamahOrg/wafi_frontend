@@ -174,7 +174,8 @@ export class ArchitecturalDesignFilesComponent implements OnInit, OnDestroy {
         planFileId: data.id,
         licenseProjectsId: this.licenseProjectId ? this.licenseProjectId : '00000000-0000-0000-0000-000000000000',
         id: '00000000-0000-0000-0000-000000000000',
-        planFile: null
+        planFile: null,
+        isPrevious: false
       });
     });
   }
@@ -186,7 +187,8 @@ export class ArchitecturalDesignFilesComponent implements OnInit, OnDestroy {
         designFileId: data.id,
         licenseProjectId: this.licenseProjectId ? this.licenseProjectId : '00000000-0000-0000-0000-000000000000',
         id: '00000000-0000-0000-0000-000000000000',
-        designFile: null
+        designFile: null,
+        isPrevious: false
       });
     });
   }

@@ -1,0 +1,72 @@
+<ng-container>
+  <form class="d-flex flex-column h-100" id="form-projectContactsDataForm" [formGroup]="projectContactsDataForm">
+    <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-filter-mail-square"></i>
+      <h6 class="title">{{ localization.title }}</h6>
+    </div>
+    <div class="tab-data-section">
+      <h6 class="title">{{ localization.delegatorData }}</h6>
+
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <span class="required-star">*</span>
+            <label class="form-label">
+              {{ localization.delegatorName }}
+            </label>
+            <select
+              class="form-select"
+              id="control-delegatorCustomerId"
+              aria-label="Default select example"
+              formControlName="delegatorCustomerId"
+              [class.is-invalid]="controls.delegatorCustomerId?.invalid && (controls.delegatorCustomerId?.touched || showValidation)">
+              <option [ngValue]="null" disabled hidden>{{ localization.delegatorName }}</option>
+              <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
+                {{ customer.fullName }}
+              </option>
+            </select>
+            <div class="invalid-feedback d-block" *ngIf="controls.delegatorCustomerId?.invalid && (controls.delegatorCustomerId?.touched || showValidation)">
+              <span *ngIf="controls.delegatorCustomerId?.hasError('required')">{{ localization.requiredErrorMsg }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showDateOfBirthAlert" class="alert alert-warning alert-dismissible fade show custom-alert" role="alert">
+      <span class="material-icons align-middle me-2">warning</span>
+      <span>الرجاء إعلام المفوض بإعادة تسجيل الدخول من جديد لأنّ تاريخ الميلاد من منصة نفاذ!</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="showDateOfBirthAlert = false"></button>
+    </div>
+
+    <div class="tab-data-section">
+      <h6 class="title">{{ localization.officerData }}</h6>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">
+              <span class="required-star">*</span>
+              {{ localization.officerName }}
+            </label>
+            <select
+              class="form-select"
+              id="control-officerCustomerId"
+              aria-label="Default select example"
+              formControlName="officerCustomerId"
+              [class.is-invalid]="controls.officerCustomerId?.invalid && (controls.officerCustomerId?.touched || showValidation)">
+              <option [ngValue]="null" disabled hidden>{{ localization.officerName }}</option>
+              <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
+                {{ customer.fullName }}
+              </option>
+            </select>
+            <div class="invalid-feedback d-block" *ngIf="controls.officerCustomerId?.invalid && (controls.officerCustomerId?.touched || showValidation)">
+              <span *ngIf="controls.officerCustomerId?.hasError('required')">{{ localization.requiredErrorMsg }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+
+  </form>
+</ng-container>

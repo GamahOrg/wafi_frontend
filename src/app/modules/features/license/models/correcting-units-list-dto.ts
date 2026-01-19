@@ -11,6 +11,6 @@ export interface CorrectingUnitsListDto {
   projectName: string | null;
   licenseTypeName: string | null;
   licenseRequestTypeId: string | null;
-  requestTypeId: number | null;
-  requestTypeName: string | null;
+  externalRequestStatusId: number | null;
+  externalRequestStatusName: string | null;
 }

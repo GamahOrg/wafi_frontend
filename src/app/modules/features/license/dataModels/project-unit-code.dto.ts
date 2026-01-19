@@ -1,3 +1,5 @@
+
+
 export class ProjectUnitCodeDto {
   id: string = '';
   projectModelId: string = '';
@@ -19,6 +21,14 @@ export class ProjectUnitCodeDto {
   unitFacilitiesCount!: number;
   supportedPrice: number = 0;
   subUnitId: string | null = null;
+ 
+  correctionUnitRequestHeaderId?: string;
+  canEdit?: boolean ;
+  canDelete?: boolean ;
+  isPrevious?: boolean;
+
+  unitStatusId?: number;
+
 }
 
 export class ProjectUnitDto {

@@ -84,6 +84,12 @@ export class CorrectingUnitsListComponent implements OnInit, OnDestroy {
     }
   }
   public navigateToDetails(request: CorrectingUnitsListDto) {
+    this._router.navigate(['/wafi/license/correcting-units-details']);
+  }
+  public navigateToCorrectionRequestDetails(request: CorrectingUnitsListDto) {
+    this._sharedLicenseProjectService.setCorrectionUnitRequestIdInLocalStorage(request.id);
+    this._router.navigate([
+      '/wafi/license/correction-license-project-request-details']);
   }
   watchPaginationActions(): void {
     this.watchPagechanged();

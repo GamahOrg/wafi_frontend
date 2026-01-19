@@ -9,7 +9,7 @@
       <div class="row mb-3">
         <div class="col-12 col-lg-12">
           <div class="form-group mb-4">
-            <label class="form-label">{{localization.quantitiesTableFileId}}</label>
+            <label class="form-label"><span class="required-star">*</span>{{localization.quantitiesTableFileId}}</label>
             <div class="col-12 col-lg-12">
               <div class="value" *ngFor="let quantityTableFile of licenseProjectQuantitiesTableFileAndRelativeWeight?.licenseProjectQuantitiesTableFileList">
                 <ng-container *ngIf="quantityTableFile && quantityTableFile.quantitiesTableFile &&

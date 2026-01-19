@@ -6,8 +6,9 @@ export interface LicenseProjectInstantDeedResponseDto {
   constructionLicenseNumber: string | null;
   integrationTypeId: number;
   licenseProjectConstructionLicenseType: string | null;
-  licenseProjectConstructionLicenseTypeId: number;
-  licenseProjectNatureTypeId: number | null
+  licenseProjectConstructionLicenseTypeId: number| null;
+  licenseProjectNatureTypeId: number | null;
+  isVerifiedByIntegration: boolean;
 }
 
 export interface DeedHeaderProjectDataDto {

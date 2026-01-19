@@ -74,7 +74,7 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
                  class="form-control"
                  formControlName="contractualStartDate"
                  value="{{ controls.contractualStartDate.value | date:'yyyy-MM-dd' }}">
-          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error *ngIf="controls.contractualStartDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
   </div>
@@ -88,7 +88,7 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
                  class="form-control"
                  formControlName="contractualFinishDate"
                  value="{{ controls.contractualFinishDate.value | date:'yyyy-MM-dd' }}">
-          <span class="input-group-text"><i class="material-icons-outlined">calendar_today</i></span>
+          <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error *ngIf="controls.contractualFinishDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
   </div>

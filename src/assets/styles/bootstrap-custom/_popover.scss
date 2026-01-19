@@ -18,4 +18,14 @@
       font-size: $font-size-xs;
     }
   }
+
+  &.table-popover {
+    --bs-heading-color: #{$white};
+    --bs-popover-font-size: #{$font-size-xs};
+    --bs-popover-bg: #{$theme-main};
+
+    .title {
+      font-size: $font-size-xs;
+    }
+  }
 }

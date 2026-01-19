@@ -1,338 +1,226 @@
-<!-- Main Content Container -->
-<div class="unit-details-wrapper">
-  <!-- Header Section with Title and Warning Badge -->
-  <div class="content-header">
-    <h1 class="page-title">تفاصيل الوحدة</h1>
-    <div
-      [ngClass]="
-        unitDetails?.unitStatusId === unitStatus.Sold
-          ? 'sold-badge'
-          : 'not-sold-badge'
-      "
-    >
-      <span>{{ unitDetails?.unitStatus }}</span>
-    </div>
-  </div>
-
-  <!-- Form Content Section -->
-  <div class="form-content">
-    <div class="form-grid">
-      <!-- Row 1 -->
-      <div class="form-group">
-        <label class="form-label">اسم المشروع</label>
-        <div class="form-value">{{ unitDetails?.projectName }}</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">المدينة</label>
-        <div class="form-value">{{ unitDetails?.city }}</div>
-      </div>
-
-      <!-- Row 2 -->
-      <div class="form-group">
-        <label class="form-label">كود الوحدة</label>
-        <div class="form-value">{{ unitDetails?.unitCode }}</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">نوع الوحدة</label>
-        <div class="form-value">{{ unitDetails?.unitType }}</div>
-      </div>
-
-      <!-- Row 3 -->
-      <div class="form-group">
-        <label class="form-label">اسم النموذج</label>
-        <div class="form-value">{{ unitDetails?.modelName }}</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">رقم المبنى</label>
-        <div class="form-value">{{ unitDetails?.blockBuildCode }}</div>
-      </div>
-
-      <!-- Row 4 -->
-      <div class="form-group">
-        <label class="form-label">رقم الطابق</label>
-        <div class="form-value">{{ unitDetails?.floor }}</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">المساحة الإجمالية للوحدة</label>
-        <div class="form-value">{{ unitDetails?.unitSpace }}</div>
-      </div>
-
-      <ng-container *ngIf="unitDetails && unitDetails.contracts && unitDetails.contracts.length>0 as hasContracts">
-        <div class="form-group">
-          <label class="form-label">رقم العقد</label>
-          <div class="form-value">{{ hasContracts ? unitDetails?.contracts?.[0]?.contractNumber : '-' }}</div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">تاريخ العقد</label>
-          <div class="form-value">{{ hasContracts ? (unitDetails?.contracts?.[0]?.creationDate | date:'dd/MM/yyyy') : '-' }}</div>
-        </div>
-      </ng-container>
-
-      <!-- Row 5 -->
-      <div class="form-group">
-        <label class="form-label">السعر</label>
-        <div class="form-value">
-          <span>{{ unitDetails?.price | number }}</span>
-          <img
-            *ngIf="unitDetails?.price"
-            src="assets/images/general/riyal-icon.svg"
-            alt="ريال"
-            class="riyal-icon"
-          />
-          <!-- <span *ngIf="unitDetails?.price" class="price-icon">﷼</span> -->
+<div class="page">
+  <div class="page-content">
+    <div class="page-section">
+      <div class="page-title">
+        <div class="d-flex justify-content-between align-items-center gap-3">
+          <h2 class="title">تفاصيل الوحدة</h2>
+          <span class="status-pill" [ngClass]="unitDetails?.unitStatusId === unitStatus.Sold? 'green': 'black'">
+            <span>{{ unitDetails?.unitStatus }}</span>
+          </span>
         </div>
       </div>
 
-      <!--<div *ngIf="unitDetails?.supportedPrice" class="form-group">
-        <label class="form-label">السعر المدعوم</label>
-        <div class="form-value">
-          <span>{{ unitDetails?.supportedPrice | number }}</span>
-          <img *ngIf="unitDetails?.supportedPrice" src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">-->
-          <!-- <span *ngIf="unitDetails?.supportedPrice" class="price-icon">﷼</span> -->
-        <!--</div>
-      </div>-->
-
-      <div class="form-group">
-        <label class="form-label">تاريخ تسليم الوحدة</label>
-        <div class="form-value">
-          {{ unitDetails?.deliveryOn | date : "dd/MM/yyyy" }}
-        </div>
-      </div>
-    </div>
-
-    <!-- Payment Plans Error Message -->
-    <div
-      *ngIf="!hasPaymentPlans && paymentPlansError"
-      class="alert alert-danger d-flex align-items-start mt-3"
-      role="alert"
-    >
-      <i class="bi bi-info-circle-fill ms-2" style="font-size: 1.2rem"></i>
-      <div>
-        <span>{{ paymentPlansError }}</span>
-        <br/>
-        <a style="color: black;" (click)="navigateToPaymentTab()">أنشاء خطط دفع ></a>
-        <br/>
-        <!-- <a href="javascript:void(0)" class="alert-link me-1" style="text-decoration: underline;">إنشاء خطط الدفع</a> -->
-      </div>
-    </div>
-
-    <!-- Action Button Section -->
-    <div class="action-section" *ngIf="hasPaymentPlans && !paymentPlansError">
-      <button *ngIf="unitDetails?.unitStatusId === unitStatus.NotSold" class="btn-add-contract" (click)="openAddContractPopup()" [disabled]="!hasPaymentPlans" [class.disabled]="!hasPaymentPlans">انشاء عقد بيع</button>
-    </div> 
-  </div>
-
-  <!-- Add Contract Popup -->
-  <app-add-contract-popup
-    *ngIf="showPopup"
-    [unitDetails]="unitDetails"
-    (onClose)="closePopup()"
-    (onContractSaved)="onContractSaved()"
-  ></app-add-contract-popup>
-
-  <!-- Records Table Section -->
-  <div
-    class="records-section"
-    *ngIf="
-      unitDetails && unitDetails.contracts && unitDetails.contracts.length > 0
-    "
-  >
-    <div class="records-header">
-      <h2 class="records-title">السجل</h2>
-    </div>
-
-    <div class="records-table">
-      <table>
-        <thead>
-          <tr>
-            <th>سجل الحدث</th>
-            <th>نوع المشتري</th>
-            <th>اسم المشتري</th>
-            <th>رقم الهوية</th>
-            <th>رقم الجوال</th>
-            <th>رقم العقد</th>
-            <th>سعر البيع</th>
-            <th>حالة العقد</th>
-            <th>الإجراءات</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let contract of unitDetails?.contracts">
-            <td>
-              <div class="event-record">
-                <div class="event-date">
-                  {{ contract.creationDate | date : "dd/MM/yyyy" }}
+      <div class="content">
+        <div class="d-flex flex-column gap-4">
+          <div class="row row-gap-4">
+            <div class="col-xl-8">
+              <div class="row row-gap-4">
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">اسم المشروع</div>
+                    <div class="value">{{ unitDetails?.projectName }}</div>
+                  </div>
                 </div>
-                <div class="event-type">
-                  {{ contract.contractType || "بيع" }}
+
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">المدينة</div>
+                    <div class="value">{{ unitDetails?.city }}</div>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              <div
-                class="buyer-type-info"
-                *ngIf="contract.buyerTypeId === buyerType.Facility"
-              >
-                <div class="buyer-type">{{ contract.buyerType }}</div>
-                <div class="event-name">{{ contract.nationalNumber }}</div>
-              </div>
-              <div *ngIf="contract.buyerTypeId === buyerType.Individual">
-                {{ contract.buyerType }}
-              </div>
-            </td>
-            <td>{{ contract.buyerName }}</td>
-            <td>{{ contract.nidNumber }}</td>
-            <td>{{ contract.mobile }}</td>
-            <td>{{ contract.contractNumber }}</td>
-            <td>{{ contract.price | number : "1.0-0" }}</td>
-            <td>
-              <div class="contract-status">
-                <div
-                  class="status-with-tooltip"
-                  *ngIf="
-                    contract.contractStatusId === contractStatus.Refused &&
-                    contract.rejectionReason
-                  "
-                >
-                  <span class="status-badge status-rejected">
-                    {{ contract.contractStatus }}
-                    <span class="reject-icon">!</span>
-                  </span>
-                  <div class="tooltip">
-                    <div class="tooltip-header">سبب الرفض</div>
-                    <div class="tooltip-content">
-                      {{ contract.rejectionReason }}
+
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">كود الوحدة</div>
+                    <div class="value">{{ unitDetails?.unitCode }}</div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">نوع الوحدة</div>
+                    <div class="value">{{ unitDetails?.unitType }}</div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">اسم النموذج</div>
+                    <div class="value">{{ unitDetails?.modelName }}</div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">رقم المبنى</div>
+                    <div class="value">{{ unitDetails?.blockBuildCode }}</div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">رقم الطابق</div>
+                    <div class="value">{{ unitDetails?.floor }}</div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">المساحة الإجمالية للوحدة</div>
+                    <div class="value">{{ unitDetails?.unitSpace }}</div>
+                  </div>
+                </div>
+
+                <ng-container *ngIf="unitDetails && unitDetails.contracts && unitDetails.contracts.length>0 as hasContracts">
+                  <div class="col-12 col-lg-6">
+                    <div class="key-value horiz">
+                      <div class="key">رقم العقد</div>
+                      <div class="value">{{ hasContracts ? unitDetails?.contracts?.[0]?.contractNumber : '-' }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="key-value horiz">
+                      <div class="key">تاريخ العقد</div>
+                      <div class="value">{{ hasContracts ? (unitDetails?.contracts?.[0]?.creationDate | date:'dd/MM/yyyy') : '-' }}</div>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">السعر</div>
+                    <div class="value">
+                      <span>{{ unitDetails?.price | number }}</span>
+                      <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
                     </div>
                   </div>
                 </div>
-                <span
-                  class="status-badge"
-                  *ngIf="
-                    contract.contractStatusId !== contractStatus.Refused ||
-                    !contract.rejectionReason
-                  "
-                  [ngClass]="{
-                    'status-approved':
-                      contract.contractStatusId === contractStatus.Cerified,
-                    'status-pending':
-                      contract.contractStatusId === contractStatus.New ||
-                      contract.contractStatusId ===
-                        contractStatus.PendingCancellation,
-                    'status-rejected':
-                      contract.contractStatusId === contractStatus.Refused ||
-                      contract.contractStatusId === contractStatus.Cancelled
-                  }"
-                >
-                  {{ contract.contractStatus }}
-                </span>
+
+                <div class="col-12 col-lg-6">
+                  <div class="key-value horiz">
+                    <div class="key">تاريخ تسليم الوحدة</div>
+                    <div class="value">{{ unitDetails?.deliveryOn | date : "dd/MM/yyyy" }}</div>
+                  </div>
+                </div>
+
+                <!-- Action Button Section -->
+                <ng-container *ngIf="hasPaymentPlans && !paymentPlansError">
+                  <div class="col-12 col-lg-12">
+                    <button class="btn btn-primary" *ngIf="unitDetails?.unitStatusId === unitStatus.NotSold" (click)="openAddContractPopup()" [disabled]="!hasPaymentPlans">انشاء عقد بيع</button>
+                  </div>
+                </ng-container>
               </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <button
-                  class="btn-view-contract"
-                  (click)="viewContractDetails(contract)"
-                >
-                  عرض العقد
-                </button>
+            </div>
+          </div>
 
-                <button
-                  class="btn-cancel-top mx-4"
-                  (click)="openCancelModal(contract)"
-                  *ngIf="
-                    contract.contractStatusId === contractStatus.New 
-                  "
-                >
-                  إلغاء العقد
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-<!-- Cancel Confirmation Modal -->
-<div class="modal-overlay" *ngIf="showCancelModal" (click)="closeCancelModal()">
-  <div class="modal-container" (click)="$event.stopPropagation()">
-    <div class="modal-content">
-      <!-- Icon -->
-      <div class="modal-icon">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="64"
-          height="64"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#DC2626"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="3 6 5 6 21 6"></polyline>
-          <path
-            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-          ></path>
-          <line x1="10" y1="11" x2="10" y2="17"></line>
-          <line x1="14" y1="11" x2="14" y2="17"></line>
-        </svg>
-      </div>
-
-      <!-- Message -->
-      <h3 class="modal-title">هل أنت متأكد من إلغاء العقد؟</h3>
-
-      <!-- Buttons -->
-      <div class="modal-buttons">
-        <button class="btn-modal-cancel" (click)="closeCancelModal()">
-          إلغاء
-        </button>
-        <button class="btn-modal-confirm" (click)="confirmCancelContract()">
-          إلغاء العقد
-        </button>
+          <!-- Payment Plans Error Message -->
+          <div *ngIf="!hasPaymentPlans && paymentPlansError" class="alert alert-danger d-flex align-items-start mt-3" role="alert">
+            <i class="bi bi-info-circle-fill ms-2" style="font-size: 1.2rem"></i>
+            <div>
+              <span>{{ paymentPlansError }}</span>
+              <br />
+              <a style="color: black;" (click)="navigateToPaymentTab()">أنشاء خطط دفع ></a>
+              <br />
+              <!-- <a href="javascript:void(0)" class="alert-link me-1" style="text-decoration: underline;">إنشاء خطط الدفع</a> -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <hr class="my-4">
+
+    <!-- Records Table Section -->
+    <ng-container *ngIf="unitDetails && unitDetails.contracts && unitDetails.contracts.length > 0">
+      <div class="page-section">
+        <div class="page-title">
+          <h2 class="title">السجل</h2>
+        </div>
+
+        <div class="content">
+          <div class="table-responsive">
+            <table class="table table-light">
+              <thead>
+                <tr>
+                  <th>سجل الحدث</th>
+                  <th>نوع المشتري</th>
+                  <th>اسم المشتري</th>
+                  <th>رقم الهوية</th>
+                  <th>رقم الجوال</th>
+                  <th>رقم العقد</th>
+                  <th>سعر البيع</th>
+                  <th>حالة العقد</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contract of unitDetails?.contracts">
+                  <td>
+                    <div class="key-value">
+                      <div class="value fw-normal">{{ contract.creationDate | date : "dd/MM/yyyy" }}</div>
+                      <div class="key fw-semibold">{{ contract.contractType || "بيع" }}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="key-value">
+                      <ng-container *ngIf="contract.buyerTypeId === buyerType.Facility">
+                        <div class="value fw-normal">{{ contract.buyerType }}</div>
+                        <div class="key fw-semibold">{{ contract.nationalNumber }}</div>
+                      </ng-container>
+                      <ng-container *ngIf="contract.buyerTypeId === buyerType.Individual">
+                        <div class="value fw-normal">{{ contract.buyerType }}</div>
+                      </ng-container>
+                    </div>
+                  </td>
+                  <td>{{ contract.buyerName }}</td>
+                  <td>{{ contract.nidNumber }}</td>
+                  <td>{{ contract.mobile }}</td>
+                  <td>{{ contract.contractNumber }}</td>
+                  <td>{{ contract.price | number : "1.0-0" }}</td>
+                  <td>
+                    <ng-container *ngIf="contract.contractStatusId !== contractStatus.Refused || !contract.rejectionReason">
+                      <span class="status-pill" [ngClass]="{
+                          'green':
+                            contract.contractStatusId === contractStatus.Cerified,
+                          'black':
+                            contract.contractStatusId === contractStatus.New ||
+                            contract.contractStatusId ===
+                              contractStatus.PendingCancellation,
+                          'red':
+                            contract.contractStatusId === contractStatus.Refused ||
+                            contract.contractStatusId === contractStatus.Cancelled
+                        }">
+                        {{ contract.contractStatus }}
+
+                        <ng-container *ngIf="contract.contractStatusId === contractStatus.Refused && contract.rejectionReason">
+                          <span class="popover-icon cursor-pointer" [popover]="popTemplate" [adaptivePosition]="true" container="body" boundariesElement="viewport" placement="top" containerClass="table-popover" triggers="mouseenter:mouseleave">
+                            <i class="hgi hgi-stroke hgi-alert-circle"></i>
+                          </span>
+                          <ng-template #popTemplate>
+                            <div class="d-flex flex-column gap-2">
+                              <h6 class="title">سبب الرفض</h6>
+                              <span>{{contract.rejectionReason}}</span>
+                            </div>
+                          </ng-template>
+                        </ng-container>
+                      </span>
+                    </ng-container>
+                  </td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="btn btn-primary" (click)="viewContractDetails(contract)">عرض العقد</button>
+                      <button class="btn btn-outline-danger" (click)="openCancelModal(contract)" *ngIf="contract.contractStatusId === contractStatus.New">إلغاء العقد</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>
-<!-- Cancel Reason Modal -->
-<div
-  class="modal-overlay"
-  *ngIf="showCancelReasonModal"
-  (click)="closeCancelReasonModal()"
->
-  <div class="modal-container modal-reason" (click)="$event.stopPropagation()">
-    <div class="modal-content">
-      <!-- Title -->
-      <h3 class="modal-reason-title">ما هو سبب إلغاء العقد؟</h3>
 
-      <!-- Textarea -->
-      <div class="form-group">
-        <textarea
-          class="form-textarea"
-          [(ngModel)]="cancelReason"
-          placeholder="سبب الإلغاء"
-          rows="4"
-        ></textarea>
-      </div>
-
-      <!-- Buttons -->
-      <div class="modal-buttons">
-        <button class="btn-modal-cancel" (click)="closeCancelReasonModal()">
-          إلغاء
-        </button>
-        <button
-          class="btn-modal-submit"
-          (click)="submitCancelReason()"
-          [disabled]="!cancelReason || cancelReason.trim() === '' || isLoading"
-        >
-          إرسال
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Add Contract Popup -->
+<app-add-contract-popup *ngIf="showPopup" [unitDetails]="unitDetails" (onClose)="closePopup()" (onContractSaved)="onContractSaved()"></app-add-contract-popup>

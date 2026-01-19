@@ -10,6 +10,9 @@ export class ConstructionLicenseDto {
   licenseNumber: string = "";
   licenseFile: FileManagerBE | null = null;
   constructionLicenseType?: number;
+  isPrevious: boolean = false;
+  licenseProjectConstructionLicenseType?: string;
+
 }
 
 export class BaladyDto {

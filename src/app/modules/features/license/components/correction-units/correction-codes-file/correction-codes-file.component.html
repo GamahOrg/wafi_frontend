@@ -1,0 +1,20 @@
+<ng-container>
+
+  <div class="row mb-3">
+    <div class="col-12 col-lg-6">
+
+      <button class="btn btn-primary" (click)="generateExcel()">تحميل نموذج ملف الوحدات</button>
+
+    </div>
+    <div class="col-12 col-lg-6">
+      <label for="" class="form-label">ملف اكواد الوحدات</label>
+      <app-file-uploader [data]="singleFileUploaderData"
+                         (fileUploaded)="onExcelFileUploaded($event)"></app-file-uploader>
+    </div>
+
+  </div>
+
+
+
+</ng-container>
+

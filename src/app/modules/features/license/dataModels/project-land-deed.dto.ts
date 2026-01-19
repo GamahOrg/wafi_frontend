@@ -83,10 +83,14 @@ export interface ProjectLandDeedCreateUpdateDto {
 export interface FawriaLicenseDeedAndConstructionLicenseDto {
   fawriaLicenseDeed: FawriaLicenseDeedDto;
   constructionLicenseNumber: string | null;
+  constructionLicenseId?: string | null;
+  correctionUnitRequestHeaderId?: string | null;
   constructionLicenseFileId: string | null;
   approvedPlansFileIds?: string[] | null;
   licenseProjectConstructionLicenseTypeId: number | null;
+  deedId?: string | null;
   isUnit: boolean;
+  isAddedFromPreviousLicenses?: boolean;
 }
 
 export interface FawriaLicenseDeedDto {
@@ -97,10 +101,17 @@ export interface FawriaLicenseDeedDto {
 }
 
 export interface FawriaLicenseDeedAndConstructionLicenseResponseDto {
+  isUpdate?: boolean;
+  deedId?: string | null;
   isRiyadCity: boolean;
   deedData: DeedData;
   licenseInfoList?: LicenseInfoList[];
   licenseProjectId: string | null;
+  correctionUnitRequestHeaderId?: string | null;
+  constructionLicenseId?: string | null;
+  totalUnits?: number | null;
+  buildingFlatArea?: number | null;
+  isAddedFromPreviousLicenses?: boolean;
   errorCodes: ErrorCodeModel[];
 }
 
@@ -120,6 +131,7 @@ export class ConstructionLicenseIntegrationDto {
 
 export interface LicenseInfoList {
   licenseProjectConstructionLicenseTypeId: ConstructionLicenseTypeEnum
+  correctionLicenseProjectConstructionLicenseId?: string | null;
   licenseFileId: string | null;
   landTotalSpace: number | null;
   amanahName: string;
@@ -147,6 +159,8 @@ export interface LicenseInfoList {
   buildingInfo: BuildingInfo | null;
   engineeringOfficeDetails: EngineeringOfficeDetails | null;
   thermalConductivityDetails: ThermalConductivityDetails | null;
+  licenseFile: SysFileManagerCreateUpdateDto | null;
+  licenseProjectConstructionLicenseType: LicenseProjectConstructionLicenseType | null;
 }
 
 export interface BoundaryDetail {
@@ -245,6 +259,11 @@ export interface LicenseType {
   description: string;
 }
 
+export interface LicenseProjectConstructionLicenseType {
+  id: string;
+  name: string;
+}
+
 export interface LicenseStatus {
   code: string;
   description: string;
@@ -299,9 +318,11 @@ export class DeedInfoByNumberDto {
 export class DeedData {
   integrationTypeId: number | null = null;
   certifiedPlansFilesIds: string[] | null = null;
+  certifiedPlansFiles: FileManagerBE[] | null = [];
   totalLandValue: number | null = 0;
   encryptedSerial: string = "";
   deedSerial: number | null = 0;
+  numberOfLands?: number | null = 0;
   deedNo: number | null = 0;
   ownerId: number | null = 0;
   ownerIdNumber: number | null = 0;
@@ -356,6 +377,23 @@ export class DeedData {
   canMergeDeeds: boolean = false;
   deedUsedBy: string | null = '';
   deedDateGregorian: string | null = '';
+  deedMortgageeList: DeedMortgageeDto[] | null = [];
+}
+
+export class DeedMortgageeDto {
+  mortgageeSerial: number | null = null;
+  mortgageeName: string | null = null;
+  mortgageeId: string | null = null;
+  mortgageeIdType: number | null = null;
+  mortgageAmount: number | null = null;
+  lastInstalmentDate: string | null = null;
+  birthDate: string | null = null;
+  mobile: string | null = null;
+  isApprovedForEPU: boolean | null = null;
+  mortgageeFileId: string | null = null;
+  mortgageeFile: SysFileManagerCreateUpdateDto | null = null;
+  marginalizationLetterFileId: string | null = null;
+  marginalizationLetterFile: SysFileManagerCreateUpdateDto | null = null;
 }
 
 export class DeedRealStateDto {
@@ -490,4 +528,5 @@ export enum ConstructionLicenseTypeEnum {
   Balady = 1,
   RiyadhAmanah = 3,
   Itmam = 2,
+  
 }

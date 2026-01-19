@@ -274,7 +274,7 @@
                               <td>{{ installment.rentPercentage }}%</td>
                               <td>{{ installment.description || "-" }}</td>
                               <td>
-                                <span class="status-badge" [ngClass]="installment.isPaid ? 'green' : 'red'">
+                                <span class="status-pill" [ngClass]="installment.isPaid ? 'green' : 'red'">
                                   {{ installment.isPaid ? 'مدفوع' : 'غير مدفوع'}}
                                 </span>
                               </td>

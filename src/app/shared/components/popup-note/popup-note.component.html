@@ -1,45 +1,52 @@
 <h6 mat-dialog-title>
-    <!-- Will be changed to another close button -->
-    <button class="btn btn-link p-0" mat-dialog-close tabindex="-1">
-      <i class="material-icons h6">close</i>
-    </button>
+  <button class="btn btn-link p-0" mat-dialog-close tabindex="-1">
+    <i class="material-icons h6">close</i>
+  </button>
 </h6>
 
 <div mat-dialog-content>
-    <div class="symbol">
-        <span *ngIf="_notePopupData.icon"
-              class="symbol-text">{{
-            _notePopupData.icon
-            }}</span>
-        <img *ngIf="_notePopupData.imagePath"
-             class="symbol-image"
-             src="{{ _notePopupData.imagePath }}" />
-        <!-- <span class="symbol-icon"><i class="material-icons">{{symbolIcon}}</i></span> -->
+  <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+    <span class="icon" *ngIf="_notePopupData.popupType">
+      <ng-container *ngIf=" _notePopupData.popupType === 'success'">
+        <svg width="80" height="81" viewBox="0 0 80 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="80" height="81" rx="40" fill="#005257" fill-opacity="0.3" />
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M40.1356 16.5859C45.248 16.5859 49.2636 16.586 52.3973 17.0083C55.6103 17.44 58.1582 18.343 60.1602 20.345C62.1622 22.347 63.0653 24.8949 63.4969 28.1079C63.9193 31.2416 63.9193 35.2573 63.9193 40.3696V40.6356C63.9193 45.748 63.9193 49.7636 63.4969 52.8973C63.0653 56.1103 62.1622 58.6582 60.1602 60.6602C58.1582 62.6622 55.6103 63.5653 52.3973 63.9969C49.2636 64.4193 45.248 64.4193 40.1356 64.4193H39.8696C34.7573 64.4193 30.7416 64.4193 27.6079 63.9969C24.3949 63.5653 21.847 62.6622 19.845 60.6602C17.843 58.6582 16.94 56.1103 16.5083 52.8973C16.086 49.7636 16.0859 45.748 16.0859 40.6356V40.3696C16.0859 35.2573 16.086 31.2416 16.5083 28.1079C16.94 24.8949 17.843 22.347 19.845 20.345C21.847 18.343 24.3949 17.44 27.6079 17.0083C30.7416 16.586 34.7573 16.5859 39.8696 16.5859H40.1356ZM50.9133 31.7829C51.8629 32.6532 51.926 34.1303 51.0556 35.0799L38.2223 49.0799C37.793 49.5489 37.1886 49.8219 36.5539 49.8359C35.9169 49.8499 35.3033 49.6026 34.8529 49.1523L29.0196 43.319C28.1073 42.409 28.1073 40.9296 29.0196 40.0196C29.9296 39.1073 31.409 39.1073 32.319 40.0196L36.4303 44.1286L47.6162 31.9253C48.4866 30.9756 49.9636 30.9126 50.9133 31.7829Z" fill="#005257" />
+        </svg>
+      </ng-container>
+    </span>
+
+    <h6 class="title" *ngIf="_notePopupData.title">{{_notePopupData.title}}</h6>
+
+    <div class="symbol" *ngIf="_notePopupData.icon || _notePopupData.imagePath">
+      <span class="symbol-text">{{_notePopupData.icon}}</span>
+      <img class="symbol-image" src="{{ _notePopupData.imagePath }}" />
     </div>
 
-    <!-- <ng-content select=".note-content"></ng-content> -->
-    <div class="note-content">
-        <h6 class="title">{{ _notePopupData.title }}</h6>
-        <p class="text">
-            {{ _notePopupData.staticMessage }} - {{ _notePopupData.dynamicMessage }} -
-            {{ _notePopupData.secondeStaticMessage }}
-        </p>
-    </div>
+    <ng-container *ngIf=" _notePopupData.staticMessage">
+      <p class="text">
+        {{ _notePopupData.staticMessage }}
+      </p>
+    </ng-container>
+    <ng-container *ngIf=" _notePopupData.dynamicMessage">
+      <p class="text">
+        {{ _notePopupData.dynamicMessage }}
+      </p>
+    </ng-container>
+    <ng-container *ngIf=" _notePopupData.secondeStaticMessage">
+      <p class="text">
+        {{ _notePopupData.secondeStaticMessage }}
+      </p>
+    </ng-container>
 
-     <div *ngIf=" _notePopupData.surveyTitle" class="note-content">
-        <h6 class="title">{{ _notePopupData.surveyTitle }}</h6>
-        <a class="title fs-5 fw-bold"  [href]="_notePopupData.surveyLink">تقييم</a>       
-    </div>
+    <ng-container *ngIf=" _notePopupData.surveyTitle">
+      <h6 class="title">{{ _notePopupData.surveyTitle }}</h6>
+      <a class="title fs-5 fw-bold" [href]="_notePopupData.surveyLink">تقييم</a>
+    </ng-container>
 
-</div>
-
-<div mat-dialog-actions
-     *ngIf="_notePopupData.buttonText">
-    <!-- <ng-content select=".note-actions"></ng-content> -->
-    <div class="note-actions">
-        <a (click)="navigatAndClose(_notePopupData.buttonLink!)"
-           class="btn btn-primary">
-            {{ _notePopupData.buttonText }}
-        </a>
+    <div class="d-flex justify-content-center align-items-center gap-3" *ngIf="_notePopupData.buttonText">
+      <a (click)="navigatAndClose(_notePopupData.buttonLink!)" class="btn btn-primary">
+        {{ _notePopupData.buttonText }}
+      </a>
     </div>
+  </div>
 </div>

@@ -8,7 +8,7 @@
 <div class="tab-data-section">
   <ng-container *ngIf="deebOwners.length > 0">
     <div *ngIf="deebOwners.length > 0" class="table-responsive">
-      <table class="table table-light" style="width: 85vw">
+      <table class="table table-light">
         <thead>
           <tr>
             <th>رقم الصك</th>
@@ -22,30 +22,61 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let deebOwner of deebOwners; let parentIndex = index">
+          <ng-container
+            *ngFor="let deebOwner of deebOwners; let parentIndex = index"
+          >
             <!-- Parent Row -->
             <tr>
-              <td>{{deebOwner?.deepNumber}}</td>
-              <td>{{deebOwner?.ownerName}}</td>
-              <td>{{deebOwner?.idNumber}}</td>
-              <td>{{deebOwner?.owningArea}}م2</td>
+              <td>{{ deebOwner?.deepNumber }}</td>
+              <td>{{ deebOwner?.ownerName }}</td>
+              <td>{{ deebOwner?.idNumber }}</td>
+              <td>{{ deebOwner?.owningArea }}م2</td>
               <td>
                 <span class="d-inline-flex align-items-center gap-1">
-                  <span class="price-text">{{ deebOwner?.owningAmount | number:'1.0-0' }}</span>
-                  <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+                  <span class="price-text">{{
+                    deebOwner?.owningAmount | number : "1.0-0"
+                  }}</span>
+                  <img
+                    src="assets/images/general/riyal-icon.svg"
+                    alt="ريال"
+                    class="riyal-icon"
+                  />
                 </span>
               </td>
-              <td><input type="text" class="form-control" [value]="deebOwner?.bankName" disabled readonly /></td>
-              <td><input type="text" class="form-control" [value]="deebOwner?.accountNumber" disabled readonly /></td>
               <td>
-                <div class="d-flex justify-content-between align-items-center gap-3">
-                  <a *ngIf="deebOwner?.agreementFileUrl" [href]="baseUrl + deebOwner?.agreementFileUrl" target="_blank" rel="noopener noreferrer">
+                <input
+                  type="text"
+                  class="form-control"
+                  [value]="deebOwner?.bankName"
+                  disabled
+                  readonly
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  [value]="deebOwner?.accountNumber"
+                  disabled
+                  readonly
+                />
+              </td>
+              <td>
+                <div
+                  class="d-flex justify-content-between align-items-center gap-3"
+                >
+                  <a
+                    *ngIf="deebOwner?.agreementFileUrl"
+                    [href]="baseUrl + deebOwner?.agreementFileUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     أتفاقية المالك
                   </a>
 
-                  <button type="button" class="btn-icon btn btn-danger" (click)="false">
+                  <!-- <button type="button" class="btn-icon btn btn-danger" (click)="false">
                     <i class="hgi hgi-stroke hgi-delete-03"></i>
-                  </button>
+                  </button> -->
                 </div>
               </td>
             </tr>
@@ -56,4 +87,6 @@
   </ng-container>
 </div>
 
-<app-license-project-parties-additional-terms-view-only [TermsPartType]='TermsPartType.Owners'></app-license-project-parties-additional-terms-view-only>
+<app-license-project-parties-additional-terms-view-only
+  [TermsPartType]="TermsPartType.Owners"
+></app-license-project-parties-additional-terms-view-only>

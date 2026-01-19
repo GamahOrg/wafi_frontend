@@ -1,0 +1,359 @@
+<form
+  class="d-flex flex-column"
+  [formGroup]="addEditUnitForm"
+  id="form-addEditUnitForm"
+>
+  <h6 class="form-title">{{ localization.UnitType }}</h6>
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <div class="form-check form-check-inline" *ngFor="let type of UnitType">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="control-unitTypeId"
+            [id]="type.id"
+            [value]="type.id"
+            formControlName="unitTypeId"
+          />
+          <label class="form-check-label" [for]="type.id">{{
+            type.name
+          }}</label>
+        </div>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="controls.unitTypeId.errors?.['required'] && showValidation"
+        >
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label for="" class="form-label">{{ localization.unitCode }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-code"
+          [placeholder]="localization.unitCode"
+          formControlName="code"
+        />
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="controls.code.errors?.['required'] && showValidation"
+        >
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label for="" class="form-label">{{ localization.stageNo }}</label>
+        <select
+          class="form-select"
+          id="control-stageNumberId"
+          aria-label="Default select example"
+          formControlName="stageNumberId"
+        >
+          <option selected disabled>{{ localization.stageNo }}</option>
+          <option *ngFor="let stage of stageNumber" [value]="stage.id">
+            {{ stage.name }}
+          </option>
+        </select>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="controls.stageNumberId.errors?.['required'] && showValidation"
+        >
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label for="" class="form-label">{{
+          localization.constructionStartOn
+        }}</label>
+        <div class="input-group">
+          <input
+            bsDatepicker
+            id="control-constructionStartOn"
+            type="text"
+            class="form-control"
+            formControlName="constructionStartOn"
+            [placeholder]="localization.constructionStartOn"
+            value="{{
+              controls.constructionStartOn.value
+                ? (controls.constructionStartOn.value | date : 'yyyy-MM-dd')
+                : null
+            }}"
+          />
+          <span class="input-group-text"
+            ><i class="material-icons-outlined">calendar_today</i></span
+          >
+        </div>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="controls.constructionStartOn.errors?.['required'] && showValidation"
+        >
+          حقل مطلوب
+        </div>
+        <mat-error
+          class="mt-2"
+          *ngIf="
+            addEditUnitForm.errors &&
+            addEditUnitForm.errors!['dateInvalid'] &&
+            showValidation
+          "
+          >{{ localization.dateValidator }}</mat-error
+        >
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label for="" class="form-label">{{
+          localization.constructionEndOn
+        }}</label>
+        <div class="input-group">
+          <input
+            bsDatepicker
+            id="control-constructionEndOn"
+            type="text"
+            class="form-control"
+            formControlName="constructionEndOn"
+            [placeholder]="localization.constructionEndOn"
+            value="{{
+              controls.constructionEndOn.value
+                ? (controls.constructionEndOn.value | date : 'yyyy-MM-dd')
+                : null
+            }}"
+          />
+          <span class="input-group-text"
+            ><i class="material-icons-outlined">calendar_today</i></span
+          >
+        </div>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="controls.constructionEndOn.errors?.['required'] && showValidation"
+        >
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="form-separator mb-4"></div>
+
+<form class="d-flex flex-column" [formGroup]="licenseProjectSubUnitsForm">
+  <h6 class="form-title">
+    {{ localization.chooseUnitTitle }}
+    <small>{{ localization.chooseUnitTitleHint }}</small>
+  </h6>
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label for="" class="form-label">{{ localization.subUnitsType }}</label>
+        <select
+          class="form-select"
+          id="control-subUnitTypeId"
+          aria-label="Default select example"
+          formControlName="subUnitTypeId"
+        >
+          <option selected [value]="0" disabled>
+            {{ localization.subUnitsType }}
+          </option>
+          <option *ngFor="let type of subUnitType" [value]="type.id">
+            {{ type.name }}
+          </option>
+        </select>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            SubUnitsFormControls.subUnitTypeId.value == 0 &&
+            showValidationSubUnitsForm
+          "
+        >
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="form-group mb-4">
+        <label for="" class="form-label">{{ localization.subUnitCount }}</label>
+        <input
+          type="number"
+          id="control-subUnitCount"
+          class="form-control"
+          [placeholder]="localization.subUnitCount"
+          formControlName="subUnitCount"
+        />
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="SubUnitsFormControls.subUnitCount.errors?.['required'] && showValidationSubUnitsForm"
+        >
+          حقل مطلوب
+        </div>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="SubUnitsFormControls.subUnitCount.errors?.['min'] && showValidationSubUnitsForm"
+        >
+          قيمة الحقل يجب الا تقل عن صفر
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-12 col-lg-auto">
+      <button
+        class="btn btn-link"
+        id="btn-addNewFormGroup"
+        (click)="addNewFormGroup()"
+      >
+        <span class="material-icons-outlined">add_circle_outline</span>
+        {{ localization.addingNewUnit }}
+      </button>
+    </div>
+  </div>
+</form>
+
+<div
+  class="row row-gap-4"
+  *ngIf="licenseProjectSubUnitsArray.length > 0"
+>
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>{{ localization.subUnitsType }}</th>
+            <th>{{ localization.subUnitCount }}</th>
+            <th>{{ localization.actions }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let subUnit of licenseProjectSubUnitsArray; let i = index"
+          >
+            <td>{{ getSubUnitName(subUnit) }}</td>
+            <td>{{ subUnit.subUnitCount }}</td>
+            <td>
+              <div
+                class="d-flex align-items-center justify-content-end column-gap-2"
+              >
+                <button mat-icon-button color="warn" (click)="deleteSubUnit(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row">
+    <div class="col-12">
+        <label for="prevExpert"
+               class="form-label">هل لديك خبرات سابقة </label>
+    </div>
+    <div class="col-12">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input"
+                   type="radio"
+                   name="prevExpert"
+                   id="yes"
+                   value="1">
+            <label class="form-check-label"
+                   for="yes">نعم</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input"
+                   type="radio"
+                   name="prevExpert"
+                   id="no"
+                   value="0">
+            <label class="form-check-label"
+                   for="no">لا</label>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <label for=""
+               class="form-label">رقم رخصة المحاسب القانوني المعتمد</label>
+        <input type="text"
+               class="form-control"
+               id=""
+               value="">
+    </div>
+    <div class="col-12 col-lg-4">
+        <div id="Help"
+             class="form-text">
+            <span class="icon">
+                <i class="material-icons">fiber_manual_record</i>
+            </span>
+            <p class="text">
+                يتم التكامل مع الهيئة السعودية للمراجعين والمحاسبين لاستخراج معلومات رخصة المحاسب القانوني للتحقق من
+                اعتماد من قبل الهيئة
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="form-block mb-3">
+    <h6 class="title">بيانات المشروع</h6>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <label for=""
+                   class="form-label">تصنيف المشروع</label>
+            <select class="form-select"
+                    aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for=""
+                   class="form-label">نوع المشروع</label>
+            <input type="text"
+                   class="form-control"
+                   id=""
+                   value="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <label for=""
+                   class="form-label">اسم المشروع</label>
+            <input type="text"
+                   class="form-control"
+                   id=""
+                   value="">
+        </div>
+        <div class="col-12 col-lg-6">
+            <label for=""
+                   class="form-label">مالك المشروع</label>
+            <input type="text"
+                   class="form-control"
+                   id=""
+                   value="">
+        </div>
+    </div>
+</div>
+
+<button type="button"
+        class="add-array">+ اضافة مشروع جديد</button> -->

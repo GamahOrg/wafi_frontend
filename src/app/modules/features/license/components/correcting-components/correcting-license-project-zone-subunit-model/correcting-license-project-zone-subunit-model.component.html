@@ -1,0 +1,35 @@
+<ng-container>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row row-gap-4">
+
+        <div class="col-12">
+          <div class="d-flex flex-column gap-3 h-100">
+            <div class="d-flex flex-column gap-2">
+              النماذج المضافة
+              <div class="items-list flex-grow-1 p-3 border rounded-1">
+                <div class="d-flex flex-column gap-2">
+                  <ng-container *ngFor="let subUnitModel of models; let idx = index">
+                    <div (click)="onSelectedModel(subUnitModel,idx)" class="item"
+                      [ngClass]="{'active': idx === selectedModelIndex}">
+                      <span class="icon material-icons">circle</span>
+
+                      <div class="d-flex flex-column gap-2">
+                        <h6>نموذج: {{subUnitModel.name}} - عدد الوحدات:{{subUnitModel.unitsCount}}</h6>
+                      </div>
+
+                    </div>
+                  </ng-container>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</ng-container>

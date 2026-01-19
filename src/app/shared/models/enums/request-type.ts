@@ -24,4 +24,5 @@ export enum RequestType {
   EngineeringProjectList = 23,
   CharteredAccountProjectList = 24,
   BuyerContractsList = 25,
+  CorrectionUnitRequest = 26
 }

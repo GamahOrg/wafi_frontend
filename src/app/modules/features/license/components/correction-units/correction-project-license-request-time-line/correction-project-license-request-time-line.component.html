@@ -1,0 +1,43 @@
+<div class="card h-100">
+  <div class="card-body">
+
+    <div class="timeline"
+         *ngIf="requestLogs">
+      <div class="timeline-header">
+        <div class="row row-gap-2">
+
+          <div class="col-12 col-md-4 col-xl">
+            <span class="title">الحدث</span>
+          </div>
+          <div class="col-12 col-md-4 col-xl-2">
+            <span class="title">التاريخ</span>
+          </div>
+          <div class="col-12 col-md-4 col-xl-2">
+            <span class="title">الوقت</span>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let log of requestLogs">
+        <div class="timeline-item" *ngIf="!log.hiddenForCustomer">
+          <div class="row row-gap-2">
+
+            <div class="col-12 col-md-4 col-xl">
+              <span class="label">الحدث</span>
+              <span class="status">{{log.description}}</span>
+            </div>
+            <div class="col-12 col-md-4 col-xl-2">
+              <span class="label">التاريخ</span>
+              <span class="date">{{log.createdOn | date:'yyyy-MM-dd'}}</span>
+            </div>
+            <div class="col-12 col-md-4 col-xl-2">
+              <span class="label">الوقت</span>
+              <span class="time">{{log.createdOn | date:'shortTime'}}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+</div>

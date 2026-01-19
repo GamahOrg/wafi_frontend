@@ -81,8 +81,8 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit, OnChanges 
       refunds: [0, Validators.required],
       numberOfPayments: [
         '',
-        [Validators.required, Validators.min(2), Validators.max(60)],
-      ],
+        [Validators.required, Validators.min(2), Validators.max(60),Validators.pattern('^[0-9]+$')],
+      ],  
       advancePaymentValue: [
         { value: '', disabled: true },
         [Validators.required, Validators.min(0.01), Validators.max(5)],

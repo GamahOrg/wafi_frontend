@@ -179,3 +179,7 @@
     }
   }
 }
+
+.input-group-text:has([class*="calendar"]) {
+  background-color: #F3F4F6;
+}

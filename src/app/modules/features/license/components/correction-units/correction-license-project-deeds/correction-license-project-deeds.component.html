@@ -1,0 +1,16 @@
+<app-correction-licenseproject-deeds-list *ngIf="pageMode==PagemodeEnum.List" (changePage)="onChangePage($event)"
+  (isIntegrationFlag)="onIsIntegrationFlagChange($event)" (isUnitFlag)="onIsUnitFlagChange($event)"
+  (selectedDeedData)="onSelectedDeedDataChange($event)">
+</app-correction-licenseproject-deeds-list>
+<app-correction-licenseproject-deeds-create *ngIf="pageMode==PagemodeEnum.Create" [isIntegration]="isIntegration"
+  [isUnit]="isUnit" (changePage)="onChangePage($event)">
+</app-correction-licenseproject-deeds-create>
+<app-correction-licenseproject-deeds-update *ngIf="pageMode==PagemodeEnum.Update" [isIntegration]="isIntegration"
+  [isUnit]="isUnit" [deedId]="selectedDeedData?.deedId || null" [deedNumber]="selectedDeedData?.deedNumber || null"
+  [deedDate]="selectedDeedData?.deedDate || null" [integrationTypeId]="selectedDeedData?.integrationTypeId ?? null"
+  [constructionLicenseNumber]="selectedDeedData?.constructionLicenseNumber || null"
+  [licenseProjectConstructionLicenseTypeId]="selectedDeedData?.licenseProjectConstructionLicenseTypeId ?? null"
+  [isVerifiedByIntegration]="selectedDeedData?.isVerifiedByIntegration ?? false"
+  (changePage)="onChangePage($event)">
+</app-correction-licenseproject-deeds-update>
+<app-correction-licenseproject-deeds-details *ngIf="pageMode==PagemodeEnum.View"></app-correction-licenseproject-deeds-details>

@@ -1,0 +1,26 @@
+<div class="alert alert-info alert-dismissible fade show w-100 mb-3" role="alert">
+  <span class="icon">
+    <i class="hgi hgi-stroke hgi-help-circle"></i>
+  </span>
+  <span>لا يمكن حذف او تعديل وحدة سابقة مباعة</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="tab-data-header">
+  <i class="icon hgi hgi-stroke hgi-profile"></i>
+  <h6 class="title">{{localization.ProjectUnitCodesComponent}}</h6>
+  <button type="button" class="opposite-title btn btn-primary" (click)="openCodesFileDialog()">إضافة ملف اكواد الوحدات</button>
+</div>
+<div class="tab-data-section" *ngIf="accordionContent?.accordionComponentList">
+  <div class="tab-data-section-title-subtitle" *ngIf="!hideActionButtons">
+    <h6 class="subtitle">يمكنك إضافة اكواد داخل الوحدة</h6>
+  </div>
+
+  <div class="row row-gap-4">
+    <div class="col-12 ">
+      <app-accordion></app-accordion>
+    </div>
+  </div>
+</div>
+
+<app-next-and-previus-buttons></app-next-and-previus-buttons>

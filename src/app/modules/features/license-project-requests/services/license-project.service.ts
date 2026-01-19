@@ -10,6 +10,11 @@ export class LicenseProjectService {
 
   constructor(private _httpClient: HttpClient) { }
 
+  validateProjectForContractCreation(licenseProjectId: string): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.get<CoreResponseDTO<any>>(
+      `${Configuration.APIs.LicenseProject.ValidateProjectForContractCreation}/${licenseProjectId}`
+    );
+  }
   getLicenseProjectDetails(licenseProjectId: string | null): Observable<any> {
 
     return this._httpClient.get<CoreResponseDTO<LicenseProjectDetailsDto>>(`${Configuration.APIs.LicenseProject.GetLicenseProjectDetails}/${licenseProjectId}`,)

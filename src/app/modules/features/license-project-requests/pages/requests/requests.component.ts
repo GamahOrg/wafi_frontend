@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectLicenseServiceDetailsService } from '../../services/project-license-service-details.service';
 import { LicenseRequestTypes } from '../../../license/models/lincense-request-project-dto';
 import { Router } from '@angular/router';
-import type { Subscription } from 'rxjs';
+import { finalize, takeUntil, type Subscription } from 'rxjs';
 import { LicenseProjectRequestTypeEnum } from '../../enums/license-project-request-type.enum';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { ProjectRequestLocalStorageService } from '../../services/project-request-local-storage.service';
+import { SharedLicenseProjectService } from '../../../license/services/sharedLicenseProject/shared-license-project.service';
+import { LicenseProjectService } from '../../services/license-project.service';
 
 @Component({
   selector: 'app-requests',
@@ -14,15 +16,44 @@ import { ProjectRequestLocalStorageService } from '../../services/project-reques
 })
 export class RequestsComponent implements OnInit {
   subscriptions: Subscription[] = [];
+  licenseProjectId: string = '';
   requestTypes: LicenseRequestTypes[] = [];
+  isValid: boolean = false;
   constructor(
     private router: Router,
     private projectLicenseServiceDetailsService: ProjectLicenseServiceDetailsService,
-    private projectRequestLocalStorageService: ProjectRequestLocalStorageService
+    private projectRequestLocalStorageService: ProjectRequestLocalStorageService,
+    private sharedLocalStorage: SharedLicenseProjectService,
+    private licenseProjectService: LicenseProjectService
   ) {}
 
   ngOnInit() {
+    this.getLicenseIdFromLocalStorage();
     this.getRequestTypes();
+  }
+  getLicenseIdFromLocalStorage(): void {
+    this.licenseProjectId =
+      this.sharedLocalStorage.getLicenseProjectIdStorage() as string;
+
+      if(this.licenseProjectId)
+      {
+        this.validateLicenseProject()
+      } 
+  }
+
+  validateLicenseProject() {
+    this.licenseProjectService
+      .validateProjectForContractCreation(this.licenseProjectId)
+      .pipe()
+      .subscribe({
+        next: (response) => {
+          if (response.isDone) {
+            this.isValid = true;
+          } else {
+            this.isValid = false;
+          }
+        },
+      });
   }
 
   getRequestTypes() {
@@ -38,8 +69,8 @@ export class RequestsComponent implements OnInit {
   }
 
   public navigateToCreateRequest(requestType: number): void {
-    
     let requestSummaryRoute = '';
+    if (this.isValid) {
     switch (requestType) {
       case LicenseProjectRequestTypeEnum.CancelLicense:
         requestSummaryRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.createcancelLicense}`;
@@ -72,7 +103,6 @@ export class RequestsComponent implements OnInit {
         requestSummaryRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.createchangeoraddunitmodel}`;
         break;
       case LicenseProjectRequestTypeEnum.WithdrawSurplusBeforeProjectEnd:
-        
         requestSummaryRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.createwithdrawsurplusbeforeprojectend}`;
         break;
 
@@ -102,6 +132,7 @@ export class RequestsComponent implements OnInit {
         break;
     }
     this.router.navigate([requestSummaryRoute]);
+  }
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

@@ -11,6 +11,9 @@ import {
   LicenseBuyerRecordDto,
   CreateCancellationRequestDto
 } from '../../../models/real-state-developer-dto';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { confirmationPopupData } from 'src/app/shared/models/popup.model';
+import { RequestNotesService } from 'src/app/shared/services/requestNotes/request-notes.service';
 
 @Component({
   selector: 'app-buyer-contract-view-details',
@@ -31,9 +34,6 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
   // UI state properties
   isLoading: boolean = false;
   errorMessage: string = '';
-  showCancelModal: boolean = false;
-  showCancelReasonModal: boolean = false;
-  cancelReason: string = '';
   showWarningBanner: boolean = false;
 
   // PDF viewer properties
@@ -45,23 +45,42 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
   // Subscription management
   private destroy$ = new Subject<void>();
   private subscription: Subscription = new Subscription();
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private location: Location,
     private realEstateService: RealStateDeveloperService,
     private sharedService: SharedLicenseProjectService,
     private cancellationRequestService: LicenseProjectBuyerCancellationRequestService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private popupService: PopupService,
+    private requestNotesService: RequestNotesService
   ) { }
 
   ngOnInit(): void {
     this.initializeComponent();
+    this.observePopupEvents();
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
     this.subscription.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  private observePopupEvents(): void {
+    // Listen for confirmation action
+    this.subscriptions.push(
+      this.popupService.confirmAction.subscribe((data: any) => {
+        if (data?.id === 'buyer-cancel-contract-confirm') {
+          this.popupService.dismissDialog();
+          this.openCancelReasonPopup();
+        } else if (data?.id === 'buyer-cancel-contract-reason') {
+          this.submitCancelReason();
+        }
+      })
+    );
   }
 
   /**
@@ -150,6 +169,11 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
    */
   switchTab(tab: string): void {
     this.activeTab = tab;
+    const tabId = tab === 'contract' ? 'tab-contract' : 'tab-unit';
+    const tabElement = document.getElementById(tabId);
+    if (tabElement) {
+      tabElement.click();
+    }
     this.scrollToTop();
   }
 
@@ -168,40 +192,40 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Open cancel confirmation modal
+   * Open cancel confirmation popup
    */
   openCancelModal(): void {
-    this.showCancelModal = true;
+    const confirmationData: confirmationPopupData = {
+      id: 'buyer-cancel-contract-confirm',
+      popupType: 'danger',
+      staticMessage: 'هل أنت متأكد من إلغاء العقد؟',
+      dynamicMessage: '',
+      acceptButtonText: 'إلغاء العقد'
+    };
+    this.popupService.updateConfirmationPopupData(confirmationData);
   }
 
   /**
-   * Close cancel confirmation modal
+   * Open cancel reason popup
    */
-  closeCancelModal(): void {
-    this.showCancelModal = false;
-  }
-
-  /**
-   * Confirm cancel contract - Open reason modal
-   */
-  confirmCancelContract(): void {
-    this.closeCancelModal();
-    this.showCancelReasonModal = true;
-  }
-
-  /**
-   * Close cancel reason modal
-   */
-  closeCancelReasonModal(): void {
-    this.showCancelReasonModal = false;
-    this.cancelReason = '';
+  private openCancelReasonPopup(): void {
+    const confirmationData: confirmationPopupData = {
+      id: 'buyer-cancel-contract-reason',
+      popupType: 'danger',
+      title: 'ما هو سبب إلغاء العقد؟',
+      staticMessage: '',
+      dynamicMessage: '',
+      acceptButtonText: 'إرسال سبب الرفض'
+    };
+    this.popupService.updateRejectionConfirmationPopupData(confirmationData);
   }
 
   /**
    * Submit cancel contract with reason
    */
-  submitCancelReason(): void {
-    if (!this.cancelReason || this.cancelReason.trim() === '') {
+  private submitCancelReason(): void {
+    const notes = this.requestNotesService.RequestNotes$.getValue();
+    if (!notes?.notes || notes.notes.trim() === '') {
       this.toastr.error('يرجى إدخال سبب الإلغاء', 'خطأ');
       return;
     }
@@ -213,7 +237,7 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
 
     const request: CreateCancellationRequestDto = {
       licenseProjectBuyerId: this.contractDetails.contractId,
-      cancelRequestReason: this.cancelReason
+      cancelRequestReason: notes.notes
     };
 
     this.isLoading = true;
@@ -228,14 +252,14 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response.isDone) {
             this.toastr.success('تم إرسال طلب إلغاء العقد بنجاح', 'نجاح');
-            this.closeCancelReasonModal();
+            this.popupService.dismissDialog();
             this.showWarningBanner = false;
             // Reload contract details to update the UI
             this.loadContractDetails();
           } else {
             // Show warning banner when cancellation request fails
             this.showWarningBanner = true;
-            this.closeCancelReasonModal();
+            this.popupService.dismissDialog();
             this.toastr.error(response.message || 'لا يمكن إلغاء العقد في الوقت الحالي', 'خطأ');
           }
         },

@@ -1,0 +1,96 @@
+<ng-container>
+  <form class="d-flex flex-column h-100" [formGroup]="constructionLicenseForm" id="form-constructionLicenseForm">
+    <!-- <div class="tab-data-header">
+            <i class="icon hgi hgi-stroke hgi-profile"></i>
+            <h6 class="title">{{localization.title}}</h6>
+        </div> -->
+
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <!-- <div class="col-12">
+                <label for="prevExpert"
+                       class="form-label">{{localization.constructionLicensetype}}</label>
+            </div> -->
+        <!-- <div class="col-12">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="beforAfter" id="before7"  value="1"
+                           [checked]="before7" (change)="setBefor7(true)" >
+                           <label class="form-check-label" for="before7">{{localization.before7}}</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="beforAfter" id="after7" value="0"
+                           [checked]="!before7" (change)="setBefor7(false)">
+                           <label class="form-check-label" for="after7">{{localization.after7}}</label>
+                </div>
+            </div> -->
+            <div class="col-12 col-lg-6">
+              <div class="form-group mb-4">
+                  <label class="form-label">{{localization.licenseType}}</label>
+                  <select class="form-select" id="control-constructionLicenseType"
+                          formControlName="constructionLicenseType">
+                      <option [label]="localization.letterType" value="1"></option>
+                      <option [label]="localization.licenseNumberType" value="2"></option>
+                  </select>
+              </div>
+          </div>
+
+        <div *ngIf="controls.constructionLicenseType.value==2" class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.issueOn}} </label>
+            <div class="input-group">
+              <input bsDatepicker type="text" id="control-issueOn" class="form-control" formControlName="issueOn"
+                value="{{ controls.issueOn.value | date:'yyyy-MM-dd' }}">
+              <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
+            </div>
+            <mat-error
+              *ngIf="controls.issueOn?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+            <mat-error
+              *ngIf="constructionLicenseForm.errors && constructionLicenseForm.errors!['dateValid']">{{localization.dateValidator}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6"*ngIf="controls.constructionLicenseType.value==2">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.licenseNumber}}</label>
+            <input type="text" id="control-licenseNumber" placeholder="{{localization.licenseNumber}}"
+              class="form-control" formControlName="licenseNumber">
+            <mat-error
+              *ngIf="controls.licenseNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3" *ngIf="controls.constructionLicenseType.value==2">
+          <button class="btn btn-outline-primary mt-4"
+            (click)="validateConstructionLicenseInfo()">{{localization.verify}} </button>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6" *ngIf="showLandArea">
+          <div class="form-group mb-4">
+            <label class="form-label">{{localization.landTotalSpace}}</label>
+            <input type="number" id="control-landTotalSpace" placeholder="{{localization.landTotalSpace}}"
+              class="form-control" formControlName="landTotalSpace">
+            <!-- <mat-error *ngIf="controls.licenseNumber?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error> -->
+          </div>
+        </div>
+
+        <!-- <div class="col-12 col-lg-6" *ngIf="showBefor"> -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label *ngIf="controls.constructionLicenseType.value==1" class="form-label">{{localization.letterTypeFile}}</label>
+            <label *ngIf="controls.constructionLicenseType.value==2" class="form-label">{{localization.licenseFile}}</label>
+
+            <div class="col-12 col-lg-6" *ngIf="constructionLicense && constructionLicense.licenseFile">
+              <a [href]="baseUrl + constructionLicense.licenseFile.filePath" target="_blank" id="link-licenseFile">
+                {{constructionLicense.licenseFile.fileDescription}}</a>
+            </div>
+            <app-file-uploader [data]="singleFileUploaderData"
+              (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+            <mat-error
+              *ngIf="controls.licenseFileId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

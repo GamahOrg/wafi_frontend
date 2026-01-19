@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GetProjectUnitDetailsResponseDto, LicenseProjectBusinessPaymentResponseDto } from '../../../models/real-state-developer-dto';
 import { CancelContractRequestDto, CreateCancellationRequestDto} from '../../../models/real-state-developer-dto';
@@ -9,7 +9,11 @@ import { environment } from 'src/environments/environment';
 import { BuyerTypeEnum, LicenseProjectUnitCodeStatus, LicenseProjectBuyerStatusEnum } from '../../../enums/unit-status.enum';
 import { ToastrService } from 'ngx-toastr';
 import { LicenseProjectBuyerCancellationRequestService } from '../../../services/license-project-buyer-cancellation-request.service';
-import { Subject, finalize, takeUntil } from 'rxjs';
+import { Subject, Subscription, finalize, takeUntil } from 'rxjs';
+import { LicenseProjectService } from 'src/app/modules/features/license-project-requests/services/license-project.service';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { confirmationPopupData } from 'src/app/shared/models/popup.model';
+import { RequestNotesService } from 'src/app/shared/services/requestNotes/request-notes.service';
 
 
 @Component({
@@ -17,7 +21,7 @@ import { Subject, finalize, takeUntil } from 'rxjs';
   templateUrl: './contract-unit-details.component.html',
   styleUrls: ['./contract-unit-details.component.scss']
 })
-export class ContractUnitDetailsComponent implements OnInit {
+export class ContractUnitDetailsComponent implements OnInit, OnDestroy {
   showPopup: boolean = false;
   @Input() unitCode: string = '';
   @Input() showAsModal: boolean = false;
@@ -34,24 +38,22 @@ export class ContractUnitDetailsComponent implements OnInit {
   buyerType = BuyerTypeEnum;
   contractStatus = LicenseProjectBuyerStatusEnum;
 
-  showCancelModal: boolean = false;
-  showCancelReasonModal: boolean = false;
-  cancelReason: string = '';
-  contractId: string = '';
   isLoading: boolean = false;
   showWarningBanner: boolean = false;
   selectedContract: any;
   private destroy$ = new Subject<void>();
+  private subscriptions: Subscription[] = [];
 
-
-  constructor(private realStateDeveloperService: RealStateDeveloperService,
+  constructor(
+    private realStateDeveloperService: RealStateDeveloperService,
     private router: Router,
     private route: ActivatedRoute,
     private contractNavigationService: ContractNavigationService,
     private toastr: ToastrService,
+    private licenseProjectService: LicenseProjectService,
     private cancellationRequestService: LicenseProjectBuyerCancellationRequestService,
-   
-
+    private popupService: PopupService,
+    private requestNotesService: RequestNotesService
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +63,28 @@ export class ContractUnitDetailsComponent implements OnInit {
     if (this.unitCode) {
       this.loadUnitDetails();
     }
+    this.observePopupEvents();
+  }
+
+  private observePopupEvents(): void {
+    // Listen for confirmation action (from first popup - confirm cancel)
+    this.subscriptions.push(
+      this.popupService.confirmAction.subscribe((data: any) => {
+        if (data?.id === 'cancel-contract-confirm') {
+          this.popupService.dismissDialog();
+          this.openCancelReasonPopup();
+        } else if (data?.id === 'cancel-contract-reason') {
+          this.submitCancelReason();
+        }
+      })
+    );
+
+    // Listen for cancel action
+    this.subscriptions.push(
+      this.popupService.cancelAction.subscribe(() => {
+        this.selectedContract = null;
+      })
+    );
   }
 
   loadUnitDetails(): void {
@@ -144,7 +168,31 @@ export class ContractUnitDetailsComponent implements OnInit {
     if (!this.hasPaymentPlans) {
       return;
     }
-    this.showPopup = true;
+
+    if (!this.unitDetails?.licenseProjectId) {
+      this.toastr.error('لم يتم العثور على معرف المشروع', 'خطأ');
+      return;
+    }
+
+    this.isLoading = true;
+    this.licenseProjectService
+      .validateProjectForContractCreation(this.unitDetails.licenseProjectId)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.isDone) {
+            this.showPopup = true;
+          } else {
+            // this.toastr.error(response.message);
+          }
+        },
+        error: (error) => {
+          this.toastr.error('حدث خطأ أثناء التحقق من إمكانية إنشاء العقد', 'خطأ');
+        }
+      });
   }
 
   closePopup(): void {
@@ -158,29 +206,41 @@ export class ContractUnitDetailsComponent implements OnInit {
     this.loadUnitDetails();
   }
   /**
- * Open cancel confirmation modal
- */
+   * Open cancel confirmation popup
+   */
   openCancelModal(contract: any): void {
     this.selectedContract = contract;
-    this.showCancelModal = true;
+    const confirmationData: confirmationPopupData = {
+      id: 'cancel-contract-confirm',
+      popupType: 'danger',
+      staticMessage: 'هل أنت متأكد من إلغاء العقد؟',
+      dynamicMessage: '',
+      acceptButtonText: 'إلغاء العقد'
+    };
+    this.popupService.updateConfirmationPopupData(confirmationData);
   }
 
   /**
-   * Close cancel confirmation modal
+   * Open cancel reason popup
    */
-  closeCancelModal(): void {
-    this.showCancelModal = false;
+  private openCancelReasonPopup(): void {
+    const confirmationData: confirmationPopupData = {
+      id: 'cancel-contract-reason',
+      popupType: 'danger',
+      title: 'ما هو سبب إلغاء العقد؟',
+      staticMessage: '',
+      dynamicMessage: '',
+      acceptButtonText: 'إرسال سبب الرفض '
+    };
+    this.popupService.updateRejectionConfirmationPopupData(confirmationData);
   }
-  confirmCancelContract(): void {
-    this.closeCancelModal();
-    this.showCancelReasonModal = true;
-  }
-  closeCancelReasonModal(): void {
-    this.showCancelReasonModal = false;
-    this.cancelReason = '';
-  }
-  submitCancelReason(): void {
-    if (!this.cancelReason || this.cancelReason.trim() === '') {
+
+  /**
+   * Submit cancel reason
+   */
+  private submitCancelReason(): void {
+    const notes = this.requestNotesService.RequestNotes$.getValue();
+    if (!notes?.notes || notes.notes.trim() === '') {
       this.toastr.error('يرجى إدخال سبب الإلغاء', 'خطأ');
       return;
     }
@@ -188,11 +248,10 @@ export class ContractUnitDetailsComponent implements OnInit {
       this.toastr.error('لم يتم العثور على العقد', 'خطأ');
       return;
     }
-    
 
     const request: CancelContractRequestDto = {
       contractId: this.selectedContract?.contractId,
-      rejectionReason: this.cancelReason
+      rejectionReason: notes.notes
     };
 
     this.isLoading = true;
@@ -207,14 +266,15 @@ export class ContractUnitDetailsComponent implements OnInit {
         next: (response) => {
           if (response.isDone) {
             this.toastr.success('تم إلغاء العقد بنجاح', 'نجاح');
-            this.closeCancelReasonModal();
+            this.popupService.dismissDialog();
             this.showWarningBanner = false;
+            this.selectedContract = null;
             // Reload contract details to update the UI
             this.loadUnitDetails();
           } else {
             // Show warning banner when cancellation request fails
             this.showWarningBanner = true;
-            this.closeCancelReasonModal();
+            this.popupService.dismissDialog();
             this.toastr.error(response.message || 'لا يمكن إلغاء العقد في الوقت الحالي', 'خطأ');
           }
         },
@@ -224,5 +284,11 @@ export class ContractUnitDetailsComponent implements OnInit {
           this.showWarningBanner = true;
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }
