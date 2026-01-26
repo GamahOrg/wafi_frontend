@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LicenseProjectModelDto, LicenseProjectModelDesignFileDto, LicenseProjectCompletionData } from '../../../dataModels/license-project-model.dto';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { forkJoin, Subscription } from 'rxjs';
@@ -14,6 +14,7 @@ import { DataVisibilityOfLicenseProjectService } from '../../../services/data-vi
 import { TabCode } from '../../../models/tab-code.model';
 import { LicenseRequestService } from '../../../services/license-request.service';
 import { CorrectionProjectModelService } from '../../../services/correct-units/correction-project-model-service.service';
+import { FileUploaderComponent } from 'src/app/shared/components/file-uploader/file-uploader.component';
 
 @Component({
   selector: 'app-correction-license-project-zone-subunit-model',
@@ -21,6 +22,8 @@ import { CorrectionProjectModelService } from '../../../services/correct-units/c
   styleUrls: ['./correction-license-project-zone-subunit-model.component.scss']
 })
 export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit, OnDestroy {
+  @ViewChild(FileUploaderComponent) fileUploader!: FileUploaderComponent;
+
   subscriptions: Subscription[] = [];
   projectModel: LicenseProjectModelDto = new LicenseProjectModelDto();
   licenseProjectModelDesignFiles: LicenseProjectModelDesignFileDto[] = [];
@@ -237,8 +240,12 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
           this.models = res.data as LicenseProjectModelDto[];
           this.projectModelForm.reset();
           this.projectModel.licenseProjectModelDesignFiles = []
-          this.licenseProjectModelDesignFiles=[]
           // this._popupService.dismissDialog();
+          this.licenseProjectModelDesignFiles = [];
+          // Reset file uploader
+          if (this.fileUploader) {
+            this.fileUploader.clearSelectedFiles();
+          }
           this.getSelectedProjectSubUnit();
         }
         // else

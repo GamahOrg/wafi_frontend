@@ -12,21 +12,21 @@ import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-
 @Component({
   selector: 'app-license-certificates',
   templateUrl: './license-certificates.component.html',
-  styleUrls: ['./license-certificates.component.scss']
+  styleUrls: ['./license-certificates.component.scss'],
 })
 export class LicenseCertificatesComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   userData: customerResponse | null = null;
-  licenseRequestTypeTypeCode = LicenseRequestTypeTypeCodeEnum
+  licenseRequestTypeTypeCode = LicenseRequestTypeTypeCodeEnum;
   licenseCertificates: LicenseCertificateDto[] = [];
-  
-  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
-  constructor(private _licenseCertificateService: LicenseCertificateService,
-    private _router: Router,
-    private _sharedLicenseProjectService:SharedLicenseProjectService,
-    private _userDataService: UserDataService,) {
 
-  }
+  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
+  constructor(
+    private _licenseCertificateService: LicenseCertificateService,
+    private _router: Router,
+    private _sharedLicenseProjectService: SharedLicenseProjectService,
+    private _userDataService: UserDataService,
+  ) {}
   ngOnInit(): void {
     this.obseveCustomerData();
   }
@@ -36,42 +36,42 @@ export class LicenseCertificatesComponent implements OnInit, OnDestroy {
         .getCustomerData()
         .subscribe((res: customerResponse | null) => {
           console.log(res);
-          
+
           this.userData = res;
-          console.log("this.userData", this.userData)
           if (this.userData) {
             this.GetCertificatesByCustomerId();
           }
-        })
+        }),
     );
   }
 
-
-  private GetCertificatesByCustomerId() {  
+  private GetCertificatesByCustomerId() {
     this.subscriptions.push(
-      this._licenseCertificateService.GetLicenseCertificates(this.userData?.facilities[0].id as string).subscribe((res: LicenseCertificateDto[] | null) => {
-        console.log("getCertificatesByCustomerId", res);
-        if (res && res.length > 0) {
-          this.licenseCertificates = res;
-        }
-      })
-    )
+      this._licenseCertificateService
+        .GetLicenseCertificates(this.userData?.facilities[0].id as string)
+        .subscribe((res: LicenseCertificateDto[] | null) => {
+          console.log('getCertificatesByCustomerId', res);
+          if (res && res.length > 0) {
+            this.licenseCertificates = res;
+          }
+        }),
+    );
   }
-
 
   public navigateToRequestDetails(licenseRequestId: string): void {
     this.setSelectedRequestIdInLocalStorage(licenseRequestId);
-    this.routeToRequestDetails()
+    this.routeToRequestDetails();
   }
   private routeToRequestDetails(): void {
     this._router.navigate([this.requestDetailsRoute]);
   }
   private setSelectedRequestIdInLocalStorage(licenseRequestId: string): void {
-    this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(licenseRequestId);
-    }
+    this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
+      licenseRequestId,
+    );
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
-
 }

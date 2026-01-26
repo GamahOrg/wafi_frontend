@@ -39,7 +39,9 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
           if (!req.url.includes('i18n')&&!req.url.includes('CreateExcel') && !skipErrorToast) {
             let responseBody = event.body as BaseResponse<any>;
             if (responseBody && !responseBody.isDone) {
-              this._toastrNotificatioService.showError(responseBody.message);
+               if (responseBody?.message?.trim()) {
+                this._toastrNotificatioService.showError(responseBody.message);
+              }
               this._loaderService.showLoader.next(false);
             }
           }
@@ -76,7 +78,9 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
                 this._loaderService.showLoader.next(false);
               }
             } else {
-              this._toastrNotificatioService.showError(error.statusText);
+              if (error?.statusText?.trim()) {
+                this._toastrNotificatioService.showError(error.statusText);
+              }
               return throwError(() => error.statusText);
             }
           }

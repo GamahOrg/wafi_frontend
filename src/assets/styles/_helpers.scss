@@ -143,3 +143,24 @@
   border-radius: $card-border-radius;
   background-color: $card-bg;
 }
+
+.file-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+
+  .link {
+    color: $dark;
+
+    &:hover {
+      color: $theme-dark;
+    }
+  }
+
+  .btn-link {
+    --bs-btn-padding-x: 0;
+    --bs-btn-padding-y: 0;
+    --bs-btn-font-size: 1.25rem;
+  }
+}

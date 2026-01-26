@@ -135,7 +135,7 @@ export class FawriaLicenseprojectDeedsListComponent
         .subscribe((res: any) => {
           debugger
           if (res.isDone) {
-            this.isUnit = res;
+             this.isUnit = res.data;
           }
           else{
             this.enableAddDeedButton = false;

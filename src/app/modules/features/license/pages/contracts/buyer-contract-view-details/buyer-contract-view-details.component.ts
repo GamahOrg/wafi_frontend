@@ -211,7 +211,7 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
   private openCancelReasonPopup(): void {
     const confirmationData: confirmationPopupData = {
       id: 'buyer-cancel-contract-reason',
-      popupType: 'danger',
+      popupType: 'primary',
       title: 'ما هو سبب إلغاء العقد؟',
       staticMessage: '',
       dynamicMessage: '',

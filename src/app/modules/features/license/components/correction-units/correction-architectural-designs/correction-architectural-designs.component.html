@@ -5,119 +5,59 @@
       <h6 class="title">{{ localization.title }}</h6>
     </div>
     <div class="tab-data-section">
-      <div class="row mb-3">
-        <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{
-              localization.licenseProjectPlanAccordingApprovedStandardsFiles
-            }}</label>
-            <div
-              class="value d-flex align-items-center gap-2"
-              *ngFor="
-                let approvedStandardsFile of architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles
-              "
-            >
-              <a
-                *ngIf="approvedStandardsFile && approvedStandardsFile.planFile"
-                [href]="baseUrl + approvedStandardsFile.planFile.filePath"
-                target="_blank"
-              >
-                {{ approvedStandardsFile.planFile.fileDescription }}
-              </a>
-              <button
-                *ngIf="
+      <div class="row row-gap-4">
+        <div class="col-12 col-xl-3">
+          <h6 class="fw-normal mb-3">{{ localization.licenseProjectPlanAccordingApprovedStandardsFiles }}</h6>
+          <div class="file-link w-75 mb-3" *ngFor="let approvedStandardsFile of architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles">
+            <a class="link" *ngIf="approvedStandardsFile && approvedStandardsFile.planFile" [href]="baseUrl + approvedStandardsFile.planFile.filePath" target="_blank">
+              {{ approvedStandardsFile.planFile.fileDescription }}
+            </a>
+            <button *ngIf="
                   !isTabCompleted &&
                   approvedStandardsFile &&
                   approvedStandardsFile.planFile
-                "
-                type="button"
-                class="btn btn-sm"
-                (click)="DeletePlanFile(approvedStandardsFile.planFileId)"
-              >
-                <i class="hgi hgi-stroke hgi-delete-02"></i>
-              </button>
-            </div>
-            <app-file-uploader
-              *ngIf="!isTabCompleted"
-              [data]="multipleFileUploaderData"
-              (fileUploaded)="onApprovedStandardsFilesUploaded($event)"
-            ></app-file-uploader>
+                " type="button" class="btn btn-link text-danger" (click)="DeletePlanFile(approvedStandardsFile.planFileId)">
+              <i class="hgi hgi-stroke hgi-delete-03"></i>
+            </button>
           </div>
-          <div
-            class="invalid-feedback d-block"
-            *ngIf="
+          <app-file-uploader *ngIf="!isTabCompleted" [data]="multipleFileUploaderData" (fileUploaded)="onApprovedStandardsFilesUploaded($event)"></app-file-uploader>
+          <div class="invalid-feedback d-block" *ngIf="
               (!this.architecturalDesign
                 .licenseProjectPlanAccordingApprovedStandardsFiles ||
                 !this.architecturalDesign
                   .licenseProjectPlanAccordingApprovedStandardsFiles.length) &&
               showValidation
-            "
-          >
+            ">
             {{ localization.requiredErrorMsg }}
           </div>
         </div>
 
-        <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{
-              localization.licenseProjectDesignFiles
-            }}</label>
-            <div
-              class="value d-flex align-items-center gap-2"
-              *ngFor="
-                let designFile of architecturalDesign.licenseProjectDesignFiles
-              "
-            >
-              <a
-                *ngIf="designFile && designFile.designFile"
-                [href]="baseUrl + designFile.designFile.filePath"
-                target="_blank"
-              >
-                {{ designFile.designFile.fileDescription }}</a
-              >
-              <button
-                *ngIf="!isTabCompleted && designFile && designFile.designFile"
-                type="button"
-                class="btn btn-sm"
-                (click)="DeleteDesignFile(designFile.designFileId)"
-              >
-                <i class="hgi hgi-stroke hgi-delete-02"></i>
-              </button>
-            </div>
-            <app-file-uploader
-              *ngIf="!isTabCompleted"
-              [data]="multipleFileUploaderData"
-              (fileUploaded)="onDesignFilesUploaded($event)"
-            ></app-file-uploader>
+        <div class="col-12 col-xl-3">
+          <h6 class="fw-normal mb-3">{{ localization.licenseProjectDesignFiles }}</h6>
+          <div class="file-link w-75 mb-3" *ngFor="let designFile of architecturalDesign.licenseProjectDesignFiles">
+            <a class="link" *ngIf="designFile && designFile.designFile" [href]="baseUrl + designFile.designFile.filePath" target="_blank">
+              {{ designFile.designFile.fileDescription }}</a>
+            <button *ngIf="!isTabCompleted && designFile && designFile.designFile" type="button" class="btn btn-link text-danger" (click)="DeleteDesignFile(designFile.designFileId)">
+              <i class="hgi hgi-stroke hgi-delete-03"></i>
+            </button>
           </div>
-          <div
-            class="invalid-feedback d-block"
-            *ngIf="
+          <app-file-uploader *ngIf="!isTabCompleted" [data]="multipleFileUploaderData" (fileUploaded)="onDesignFilesUploaded($event)"></app-file-uploader>
+          <div class="invalid-feedback d-block" *ngIf="
               (!this.architecturalDesign.licenseProjectDesignFiles ||
                 !this.architecturalDesign.licenseProjectDesignFiles.length) &&
               showValidation
-            "
-          >
+            ">
             {{ localization.requiredErrorMsg }}
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="tab-data-section"
-      *ngIf="isFawriaValidation() && !isTabCompleted"
-    >
+    <div class="tab-data-section" *ngIf="isFawriaValidation() && !isTabCompleted">
       <div class="form-group">
-        <mat-checkbox
-          [(ngModel)]="dataConfirmationChecked"
-          class="data-confirmation-checkbox"
-        >
+        <mat-checkbox [(ngModel)]="dataConfirmationChecked" class="data-confirmation-checkbox">
           اقرار صحة البيانات المدخلة
         </mat-checkbox>
-        <div
-          class="invalid-feedback d-block"
-          *ngIf="!dataConfirmationChecked && showValidation"
-        >
+        <div class="invalid-feedback d-block" *ngIf="!dataConfirmationChecked && showValidation">
           {{ localization.requiredErrorMsg }}
         </div>
       </div>

@@ -394,6 +394,8 @@ export const Configuration = {
         '/api/QualificationRequestHeader/GetQualificationRequestByRequestCode',
       GetQualificationDegree:
         '/api/QualificationRequestHeader/GetQualificationDegree',
+      GetQualificationDegreeByLicenseProjectId:
+        '/api/QualificationRequestHeader/GetQualificationDegreeByLicenseProjectId',
     },
     QualificationRequestProcessingLog: {
       GetByRequestId: '/api/QualificationRequestProcessingLog/GetByRequestId',

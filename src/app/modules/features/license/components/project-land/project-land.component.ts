@@ -64,7 +64,6 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
     this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
       this.userData = res;
       this.facilityId = res?.facilities[0].id as string;
-      this.getQualificationDegree()
       this.isExistingValidation = this.userData?.isEmployee as boolean;
     })
   }
@@ -96,15 +95,38 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
     qualificationDegree: 'درجة التأهيل',
   };
 
+  // private loadComponentData() {
+  //   const requests = [
+  //     this._projectLandService.GetLandDataByLicenseProjectId(this.licenseProjectId as string),
+  //   ];
+  //   const subscriptions = forkJoin(requests).subscribe((results) => {
+  //     this.setResponseToForm(results[0].data as ProjectLandDto);
+  //   });
+  //   this.subscriptions.push(subscriptions);
+  // }
+
   private loadComponentData() {
+    this.typeCode = this._sharedLicenseProjectService.getQualificationTypeCodeStorage() as string;
+    
     const requests = [
       this._projectLandService.GetLandDataByLicenseProjectId(this.licenseProjectId as string),
+      this._projectLandService.GetQualificationDegreeByLicenseProjectId(this.licenseProjectId as string)
     ];
-    const subscriptions = forkJoin(requests).subscribe((results) => {
-      this.setResponseToForm(results[0].data as ProjectLandDto);
+    
+    const subscriptions = forkJoin(requests).subscribe({
+      next: (results : any[]) => {
+        this.setResponseToForm(results[0].data as ProjectLandDto);
+        if (results[1] !== undefined) {
+          this.qualificationDegree = results[1] as number;
+        }
+      },
+      error: (err) => {
+        console.error('Error loading component data:', err);
+      }
     });
     this.subscriptions.push(subscriptions);
   }
+
 
   setResponseToForm(res: ProjectLandDto): void {
     this.projectLandForm.patchValue({ ...res });

@@ -114,6 +114,8 @@
   }
 
   &:not(.closed) {
+    min-width: 15rem;
+    
     @media screen and (max-width: 1200px) {
       position: fixed;
       z-index: 1000;

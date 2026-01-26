@@ -8,7 +8,11 @@
         <h2 class="title-en" dir="ltr">OFF-PLAN SALE LICENSE</h2>
       </div>
 
-      <img src="/assets/images/licenses/certs/off-plan-sale/logo.svg" class="cert-logo" alt="logo">
+      <img
+        src="/assets/images/licenses/certs/off-plan-sale/logo.svg"
+        class="cert-logo"
+        alt="logo"
+      />
     </div>
 
     <div class="intro-text">
@@ -26,17 +30,17 @@
       <table class="info-table">
         <tr>
           <th>رقم الترخيص</th>
-          <td>{{certificateData.licenseNumber}}</td>
+          <td>{{ certificateData.licenseNumber }}</td>
           <th dir="ltr">License No.</th>
         </tr>
         <tr>
           <th>نوع الرخصة</th>
-          <td>{{certificateData.licenseRequestTypeName}}</td>
+          <td>{{ certificateData.licenseRequestTypeName }}</td>
           <th dir="ltr">License Type</th>
         </tr>
         <tr>
           <th>تاريخ إصدار الترخيص</th>
-          <td>{{certificateData.startOn|date:'yyyy-MM-dd'}}</td>
+          <td>{{ certificateData.startOn | date: "yyyy-MM-dd" }}</td>
           <th dir="ltr">License Issue Date</th>
         </tr>
       </table>
@@ -50,42 +54,46 @@
       <table class="info-table">
         <tr>
           <th>اسم المشروع</th>
-          <td>{{certificateData.projectName}}</td>
+          <td>{{ certificateData.projectName }}</td>
           <th dir="ltr">Project Name</th>
         </tr>
         <tr>
           <th>تاريخ بدء المشروع</th>
-          <td>{{certificateData.projectStartOn|date:'yyyy-MM-dd'}}</td>
+          <td>{{ certificateData.projectStartOn | date: "yyyy-MM-dd" }}</td>
           <th dir="ltr">Project Start Date</th>
         </tr>
         <tr>
           <th>تاريخ انتهاء المشروع</th>
-          <td>{{certificateData.projectEndOn|date:'yyyy-MM-dd'}}</td>
+          <td>{{ certificateData.projectEndOn | date: "yyyy-MM-dd" }}</td>
           <th dir="ltr">Project End Date</th>
         </tr>
         <tr>
           <th>عدد الوحدات</th>
-          <td>{{certificateData.numberOfUnits}}</td>
+          <td>{{ certificateData.numberOfUnits }}</td>
           <th dir="ltr">Number of Units</th>
         </tr>
         <tr>
           <th>أنواع الوحدات</th>
-          <td>{{certificateData.unitsType}}</td>
+          <td>{{ certificateData.unitsType }}</td>
           <th dir="ltr">Unit Type</th>
         </tr>
         <tr>
           <th>حساب الضمان</th>
-          <td>{{certificateData.projectBankAccountNo}}</td>
+          <td>{{ certificateData.projectBankAccountNo }}</td>
           <th dir="ltr">Escrow Account No.</th>
         </tr>
         <tr>
           <th>المساحة</th>
-          <td>{{certificateData.landTotalSpace}}</td>
+          <td>{{ certificateData.landTotalSpace }}</td>
           <th dir="ltr">Project Area</th>
         </tr>
         <tr>
           <th>المنطقة/المدينة</th>
-          <td>{{certificateData.projectAreaName}}/{{certificateData.projectCityName}}</td>
+          <td>
+            {{ certificateData.projectAreaName }}/{{
+              certificateData.projectCityName
+            }}
+          </td>
           <th dir="ltr">Region/City</th>
         </tr>
       </table>
@@ -99,40 +107,50 @@
       <table class="info-table">
         <tr>
           <th>المطور العقاري</th>
-          <td>{{certificateData.facilityName}}</td>
+          <td>{{ certificateData.facilityName }}</td>
           <th dir="ltr">Developer</th>
         </tr>
         <tr>
           <th>الرقم الموحد للمطور العقاري</th>
-          <td>{{certificateData.entity700Number}}</td>
+          <td>{{ certificateData.entity700Number }}</td>
           <th dir="ltr">Developer Unified No.</th>
         </tr>
-        <tr>
+        <tr *ngIf="!isMarketingLicense()">
           <th>المحاسب القانوني</th>
-          <td>{{certificateData.charteredAccountantName}}</td>
+          <td>{{ certificateData.charteredAccountantName }}</td>
           <th dir="ltr">Account And Financial Auditor</th>
         </tr>
-        <tr>
+
+        <tr *ngIf="!isMarketingLicense()">
           <th>المكتب الاستشاري</th>
-          <td>{{certificateData.engineeringConsultantName}}</td>
+          <td>{{ certificateData.engineeringConsultantName }}</td>
           <th dir="ltr">Consultancy Office</th>
         </tr>
       </table>
     </div>
 
     <div class="qr-section">
-      <img src="/assets/images/licenses/certs/off-plan-sale/qr.svg" class="cert-qr" alt="qr">
+      <img
+        src="/assets/images/licenses/certs/off-plan-sale/qr.svg"
+        class="cert-qr"
+        alt="qr"
+      />
     </div>
 
     <div class="footer-text">
       <p>
         هذه الوثيقة صادرة من النظام الإلكتروني ولا تحتاج إلى توقيع<br />
-        وتعتبر هذه الرخصة سارية حتى تاريخ انتهاء المشروع {{certificateData.projectEndOn|date:'dd-MM-yyyy'}}
+        وتعتبر هذه الرخصة سارية حتى تاريخ 
+        {{ certificateData.endOn | date: "dd-MM-yyyy" }}
       </p>
     </div>
 
     <div class="footer-abstract">
-      <img src="/assets/images/licenses/certs/off-plan-sale/footer-abstract.svg" class="cert-footer-abstract" alt="abstract">
+      <img
+        src="/assets/images/licenses/certs/off-plan-sale/footer-abstract.svg"
+        class="cert-footer-abstract"
+        alt="abstract"
+      />
     </div>
   </div>
 </article>

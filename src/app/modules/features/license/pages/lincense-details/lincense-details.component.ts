@@ -80,6 +80,7 @@ import { CertifiedLicenseDataDto } from '../../models/certified-license-data-dto
 import { LicenseProjectBusinessPaymentModel } from '../../models/business-payment.model';
 import { UnitCorrectionService } from '../../services/unit-correction/unit-correction.service';
 import { correctionUnitsModel } from '../../models/unit-correction.model';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-lincense-details',
@@ -93,7 +94,6 @@ export class LincenseDetailsComponent {
   compileWithLogFilesDto: CompileWithLogFilesDto = new CompileWithLogFilesDto();
   requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseSummary}`;
   editFarzNoteRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.farzNote}`;
-
 
   get externalStatusId() {
     return ExternalStatus;
@@ -222,6 +222,11 @@ export class LincenseDetailsComponent {
     editButtonForRenewTitle: 'تعديل الطلب قبل التجديد',
     day: 'يوم',
   };
+
+  realEstateUnitsLicenseCodes = [
+    LicenseRequestTypeTypeCodeEnum.SellRealEstateUnits,
+    LicenseRequestTypeTypeCodeEnum.PRESellRealEstateUnits,
+  ];
   constructor(
     private _requestService: LicenseRequestHeaderService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
@@ -234,7 +239,7 @@ export class LincenseDetailsComponent {
     private _router: Router,
     private _projectListService: ProjectListService,
     private _unitCorrectionService: UnitCorrectionService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.updateTabContent();
@@ -246,20 +251,26 @@ export class LincenseDetailsComponent {
     this.observeQWTableCompiledSuccessfullyEvent();
   }
 
+  isRealEstateUnitsLicense(): boolean {
+    return this.realEstateUnitsLicenseCodes.includes(
+      this.selectedRequest?.licenseRequestType
+        ?.typeCode as LicenseRequestTypeTypeCodeEnum,
+    );
+  }
   private GetLicenseRequestHeadersByLicenseProjectId() {
     this.subscriptions.push(
       this._dataVisibilityOfLicenseProjectService
         .GetLicenseRequestHeadersByLicenseProjectId(
-          this.licenseProjectId as string
+          this.licenseProjectId as string,
         )
         .subscribe((res: string[]) => {
           this.updateDataVisibilityOfLicenseProject(res);
-        })
+        }),
     );
   }
   private updateDataVisibilityOfLicenseProject(data: string[]) {
     this._dataVisibilityOfLicenseProjectService.updateDataVisibilityOfLicenseProject(
-      data
+      data,
     );
     // this.observeQWTableCompiledSuccessfullyEvent();
   }
@@ -268,8 +279,8 @@ export class LincenseDetailsComponent {
       this._licenseDetailsService.QWTableCompiledSuccessfully.subscribe(
         (res) => {
           this.compileQWTable();
-        }
-      )
+        },
+      ),
     );
   }
   private updateTabContent() {
@@ -283,6 +294,10 @@ export class LincenseDetailsComponent {
     if (this.selectedRequestID) {
       this.getLicenseRequestHeaderByRequestId();
       this.compileWithLogFilesDto.requestId = this.selectedRequestID;
+    } else {
+      this._router.navigate([
+        `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseList}`,
+      ]);
     }
   }
   private getLicenseRequestHeaderByRequestId() {
@@ -294,23 +309,29 @@ export class LincenseDetailsComponent {
     //     })
     // );
 
-    const licenseRequest$ = this._licenseDetailsService.GetLicenseRequestHeaderByRequestId(this.selectedRequestID as string);
-    const licenseRequestProcessingData$ = this._licenseDetailsService.GetFacilityByProcessingRequestData(this.selectedRequestID as string);
+    const licenseRequest$ =
+      this._licenseDetailsService.GetLicenseRequestHeaderByRequestId(
+        this.selectedRequestID as string,
+      );
+    const licenseRequestProcessingData$ =
+      this._licenseDetailsService.GetFacilityByProcessingRequestData(
+        this.selectedRequestID as string,
+      );
 
-    const subscriptions = licenseRequest$.pipe(
-      combineLatestWith(licenseRequestProcessingData$)
-    )
+    const subscriptions = licenseRequest$
+      .pipe(combineLatestWith(licenseRequestProcessingData$))
       .subscribe(([requestDetails, requestProcessing]) => {
         let requestData = requestDetails as LicenseDetails;
         if (requestData && requestProcessing) {
-          requestData.workflowDetailRequestStatus = requestProcessing.workflowDetailRequestStatus;
-          requestData.licenseRequestCustomerHeaderEventStatus = requestProcessing.licenseRequestCustomerHeaderEventStatus;
+          requestData.workflowDetailRequestStatus =
+            requestProcessing.workflowDetailRequestStatus;
+          requestData.licenseRequestCustomerHeaderEventStatus =
+            requestProcessing.licenseRequestCustomerHeaderEventStatus;
           this._licenseDetailsService.selectRequest$.next(requestData);
         }
-      })
+      });
 
     this.subscriptions.push(subscriptions);
-
   }
   private observeSelectedRequest() {
     this.subscriptions.push(
@@ -325,8 +346,8 @@ export class LincenseDetailsComponent {
             this.updateAllBehaviorSubject(res);
             this.updateDayProgressSettings();
           }
-        }
-      )
+        },
+      ),
     );
   }
   private updateDayProgressSettings(): void {
@@ -412,41 +433,39 @@ export class LincenseDetailsComponent {
   }
 
   private updateAllBehaviorSubject(requestDetails: LicenseDetails): void {
-
-
-    this.updateLicenseCertificateData(requestDetails)
+    this.updateLicenseCertificateData(requestDetails);
 
     if (requestDetails.licenseProject.licenseProjectExternalAddresses)
       this.updateLicenseProjectExternalAddresses(
-        requestDetails.licenseProject.licenseProjectExternalAddresses
+        requestDetails.licenseProject.licenseProjectExternalAddresses,
       );
     if (requestDetails.licenseProject.licenseProjectAddresses)
       this.updateLicenseProjectAddresses(
-        requestDetails.licenseProject.licenseProjectAddresses
+        requestDetails.licenseProject.licenseProjectAddresses,
       );
     if (requestDetails.licenseProject.licenseProjectCharteredAccountants)
       this.updateLicenseProjectCharteredAccountants(
-        requestDetails.licenseProject.licenseProjectCharteredAccountants
+        requestDetails.licenseProject.licenseProjectCharteredAccountants,
       );
     if (requestDetails.licenseProject.licenseProjectConstructionLicenses)
       this.updateLicenseProjectConstructionLicenses(
-        requestDetails.licenseProject.licenseProjectConstructionLicenses
+        requestDetails.licenseProject.licenseProjectConstructionLicenses,
       );
     if (requestDetails.licenseProject.licenseProjectDeeds)
       this.updateLicenseProjectDeeds(
-        requestDetails.licenseProject.licenseProjectDeeds
+        requestDetails.licenseProject.licenseProjectDeeds,
       );
     if (requestDetails.licenseProject.licenseProjectDesignFiles)
       this.updateLicenseProjectDesignFiles(
-        requestDetails.licenseProject.licenseProjectDesignFiles
+        requestDetails.licenseProject.licenseProjectDesignFiles,
       );
     if (requestDetails.licenseProject.licenseProjectEngineeringConsultants)
       this.updateLicenseProjectEngineeringConsultants(
-        requestDetails.licenseProject.licenseProjectEngineeringConsultants
+        requestDetails.licenseProject.licenseProjectEngineeringConsultants,
       );
     if (requestDetails.licenseProject.licenseProjectFeasibilityStudies)
       this.updateLicenseProjectFeasibilityStudies(
-        requestDetails.licenseProject.licenseProjectFeasibilityStudies
+        requestDetails.licenseProject.licenseProjectFeasibilityStudies,
       );
     if (
       requestDetails.licenseProject
@@ -454,35 +473,35 @@ export class LincenseDetailsComponent {
     )
       this.updateLicenseProjectPlanAccordingApprovedStandardsFiles(
         requestDetails.licenseProject
-          .licenseProjectPlanAccordingApprovedStandardsFiles
+          .licenseProjectPlanAccordingApprovedStandardsFiles,
       );
     if (requestDetails.licenseProject.licenseProjectQuantitiesTableFiles)
       this.updateLicenseProjectQuantitiesTableFiles(
-        requestDetails.licenseProject.licenseProjectQuantitiesTableFiles
+        requestDetails.licenseProject.licenseProjectQuantitiesTableFiles,
       );
     if (requestDetails.licenseProject.licenseProjectRealStateMarketers)
       this.updateLicenseProjectRealStateMarketers(
-        requestDetails.licenseProject.licenseProjectRealStateMarketers
+        requestDetails.licenseProject.licenseProjectRealStateMarketers,
       );
     if (requestDetails.licenseProject.licenseProjectServices)
       this.updateLicenseProjectServices(
-        requestDetails.licenseProject.licenseProjectServices
+        requestDetails.licenseProject.licenseProjectServices,
       );
     if (requestDetails.licenseProject.licenseProjectSubDevelopers)
       this.updateLicenseProjectSubDevelopers(
-        requestDetails.licenseProject.licenseProjectSubDevelopers
+        requestDetails.licenseProject.licenseProjectSubDevelopers,
       );
     if (requestDetails.licenseProject.licenseProjectZones)
       this.updateLicenseProjectZones(
-        requestDetails.licenseProject.licenseProjectZones
+        requestDetails.licenseProject.licenseProjectZones,
       );
     if (requestDetails.licenseProject.projectAccountKeeper)
       this.updateProjectAccountKeeper(
-        requestDetails.licenseProject.projectAccountKeeper
+        requestDetails.licenseProject.projectAccountKeeper,
       );
     if (requestDetails.licenseProject.projectRealStateDeveloper)
       this.updateProjectRealStateDeveloper(
-        requestDetails.licenseProject.projectRealStateDeveloper
+        requestDetails.licenseProject.projectRealStateDeveloper,
       );
     if (requestDetails.licenseProject.projectMainData)
       this.updateProjectMainData(requestDetails.licenseProject.projectMainData);
@@ -490,11 +509,11 @@ export class LincenseDetailsComponent {
       this.updateProjectLandData(requestDetails.licenseProject.projectLandData);
     if (requestDetails.licenseProject.sysLicenseBeneficiary)
       this.updateSysLicenseBeneficiary(
-        requestDetails.licenseProject.sysLicenseBeneficiary
+        requestDetails.licenseProject.sysLicenseBeneficiary,
       );
     if (requestDetails.licenseProject.externalProjectData)
       this.updateExternalProjectData(
-        requestDetails.licenseProject.externalProjectData
+        requestDetails.licenseProject.externalProjectData,
       );
     if (requestDetails.licenseProject.quantitiesTableAcknowledgment)
       this.updateLicenseProjectData(requestDetails.licenseProject);
@@ -505,40 +524,40 @@ export class LincenseDetailsComponent {
       this.updateRequestPhases(requestDetails.workflowDetailRequestStatus);
     if (requestDetails.licenseProject.licenseProjectDelegators)
       this.updateDelegatorData(
-        requestDetails.licenseProject.licenseProjectDelegators
+        requestDetails.licenseProject.licenseProjectDelegators,
       );
     if (requestDetails.licenseProject.licenseProjectZoneCaculations)
       this.updateLicenseProjectZoneCaculationsDto(
-        requestDetails.licenseProject.licenseProjectZoneCaculations
+        requestDetails.licenseProject.licenseProjectZoneCaculations,
       );
     if (requestDetails.licenseProject.licenseProjectMainRealStateDevelopers)
       this.updatelicenseProjectMainRealStateDevelopers(
-        requestDetails.licenseProject.licenseProjectMainRealStateDevelopers
+        requestDetails.licenseProject.licenseProjectMainRealStateDevelopers,
       );
     if (requestDetails.licenseProject.licenseProjectRelativeWeights)
       this.updateLicenseProjectRelativeWeightData(
-        requestDetails.licenseProject.licenseProjectRelativeWeights
+        requestDetails.licenseProject.licenseProjectRelativeWeights,
       );
     if (requestDetails.licenseProject.financialGuaranteeOfProjectOwnershipFile)
       this.updateFinancialGuaranteeOfProjectOwnershipFile(
-        requestDetails.licenseProject.financialGuaranteeOfProjectOwnershipFile
+        requestDetails.licenseProject.financialGuaranteeOfProjectOwnershipFile,
       );
     if (requestDetails.licenseProject.projectDocumentData)
       this.updateprojectDocumentDatae(
-        requestDetails.licenseProject.projectDocumentData
+        requestDetails.licenseProject.projectDocumentData,
       );
     if (requestDetails.licenseProject.bankingAccount)
       this.updateBankingAccount(requestDetails.licenseProject.bankingAccount);
     if (requestDetails.licenseProject.licenseProjectExhibitions)
       this.updatelicenseProjectExhibitions(
-        requestDetails.licenseProject.licenseProjectExhibitions
+        requestDetails.licenseProject.licenseProjectExhibitions,
       );
     if (
       requestDetails.licenseProject.licenseProjectVisitorEngineeringConsultants
     )
       this.updatelicenseProjectVisitorEngineeringConsultants(
         requestDetails.licenseProject
-          .licenseProjectVisitorEngineeringConsultants
+          .licenseProjectVisitorEngineeringConsultants,
       );
     if (
       requestDetails.licenseProject
@@ -546,91 +565,93 @@ export class LincenseDetailsComponent {
     )
       this.updateBeneficiaryContractFormAdditionalTermsList(
         requestDetails.licenseProject
-          .licenseProjectBeneficiaryContractFormAdditionalTerms
+          .licenseProjectBeneficiaryContractFormAdditionalTerms,
       );
     if (requestDetails.licenseProject.licenseProjectBusinessPayments)
       this.updateLicenseProjectBusinessPaymentsList(
-        requestDetails.licenseProject.licenseProjectBusinessPayments
+        requestDetails.licenseProject.licenseProjectBusinessPayments,
       );
     if (requestDetails.licenseProject.LicenseProjectRequestAttachments)
       this.updateLicenseProjectRequestAttachments(
-        requestDetails.licenseProject.LicenseProjectRequestAttachments
+        requestDetails.licenseProject.LicenseProjectRequestAttachments,
       );
     if (requestDetails.licenseProject.licenseProjectSubUnits)
       this.updateLicenseProjectDetachedUnit(
-        requestDetails.licenseProject.licenseProjectSubUnits
+        requestDetails.licenseProject.licenseProjectSubUnits,
       );
     if (requestDetails.licenseProject.licenseProjectFinancialStatements)
       this.updateLicenseProjectFinancialStatements(
-        requestDetails.licenseProject.licenseProjectFinancialStatements
+        requestDetails.licenseProject.licenseProjectFinancialStatements,
       );
     if (requestDetails.licenseProject.licenseProjectPromissoryNotes)
       this.updateLicenseProjectPromissoryNotes(
-        requestDetails.licenseProject.licenseProjectPromissoryNotes
+        requestDetails.licenseProject.licenseProjectPromissoryNotes,
       );
   }
   updateLicenseProjectPromissoryNotes(
-    licenseProjectPromissoryNotes: LicenseProjectPromissoryNoteDto[]
+    licenseProjectPromissoryNotes: LicenseProjectPromissoryNoteDto[],
   ) {
     this._licenseDetailsService.licenseProjectPromissoryNotes$.next(
-      licenseProjectPromissoryNotes
+      licenseProjectPromissoryNotes,
     );
   }
   updateLicenseProjectRequestAttachments(
-    licenseProjectRequestAttachments: LicenseProjectRequestAttachmentDto[]
+    licenseProjectRequestAttachments: LicenseProjectRequestAttachmentDto[],
   ) {
     this._licenseDetailsService.licenseProjectRequestAttachment$.next(
-      licenseProjectRequestAttachments
+      licenseProjectRequestAttachments,
     );
   }
 
   updateLicenseProjectFinancialStatements(
-    licenseProjectFinancialStatements: LicenseProjectFinancialStatementDto[]
+    licenseProjectFinancialStatements: LicenseProjectFinancialStatementDto[],
   ) {
     this._licenseDetailsService.financialStatement$.next(
-      licenseProjectFinancialStatements
+      licenseProjectFinancialStatements,
     );
   }
 
   updatelicenseProjectSubDevelopers(
-    licenseProjectDevelopers: LicenseProjectDeveloperDto[]
+    licenseProjectDevelopers: LicenseProjectDeveloperDto[],
   ) {
     this._licenseDetailsService.licenseProjectDeveloper$.next(
-      licenseProjectDevelopers
+      licenseProjectDevelopers,
     );
   }
   updateBeneficiaryContractFormAdditionalTermsList(
-    beneficiaryContractFormAdditionalTermsList: BeneficiaryContractFormAdditionalTermsDto[]
+    beneficiaryContractFormAdditionalTermsList: BeneficiaryContractFormAdditionalTermsDto[],
   ) {
     this._licenseDetailsService.beneficiaryContractFormAdditionalTerms$.next(
-      beneficiaryContractFormAdditionalTermsList
+      beneficiaryContractFormAdditionalTermsList,
     );
   }
-  updateLicenseProjectBusinessPaymentsList(licenseProjectBusinessPayments: LicenseProjectBusinessPaymentModel[]) {
+  updateLicenseProjectBusinessPaymentsList(
+    licenseProjectBusinessPayments: LicenseProjectBusinessPaymentModel[],
+  ) {
     this._licenseDetailsService.licenseProjectBusinessPaymentDto$.next(
-      licenseProjectBusinessPayments
+      licenseProjectBusinessPayments,
     );
   }
 
   updateLicenseProjectDetachedUnit(
-    licenseProjectDetachedUnit: LicenseProjectDetachedUnitRequestDetails[]
+    licenseProjectDetachedUnit: LicenseProjectDetachedUnitRequestDetails[],
   ) {
     this._licenseDetailsService.licenseProjectDetachedUnit$.next(
-      licenseProjectDetachedUnit
+      licenseProjectDetachedUnit,
     );
   }
   updatelicenseProjectVisitorEngineeringConsultants(
-    licenseProjectVisitorEngineeringConsultants: VisitorEngineeringConsultantDto[]
+    licenseProjectVisitorEngineeringConsultants: VisitorEngineeringConsultantDto[],
   ) {
     this._licenseDetailsService.visitorEngineeringConsultant$.next(
-      licenseProjectVisitorEngineeringConsultants
+      licenseProjectVisitorEngineeringConsultants,
     );
   }
   updatelicenseProjectExhibitions(
-    licenseProjectExhibitions: LicenseProjectExhibitionDto[]
+    licenseProjectExhibitions: LicenseProjectExhibitionDto[],
   ) {
     this._licenseDetailsService.licenseProjectExhibitions$.next(
-      licenseProjectExhibitions
+      licenseProjectExhibitions,
     );
   }
   updateBankingAccount(bankingAccount: BankingAccountDto) {
@@ -640,31 +661,31 @@ export class LincenseDetailsComponent {
     this._licenseDetailsService.projectDocumentData$.next(projectDocumentData);
   }
   updatelicenseProjectMainRealStateDevelopers(
-    licenseProjectMainRealStateDeveloper: LicenseProjectMainRealStateDeveloperDto[]
+    licenseProjectMainRealStateDeveloper: LicenseProjectMainRealStateDeveloperDto[],
   ) {
     this._licenseDetailsService.licenseProjectMainRealStateDeveloper$.next(
-      licenseProjectMainRealStateDeveloper
+      licenseProjectMainRealStateDeveloper,
     );
   }
   updateLicenseProjectZoneCaculationsDto(
-    LicenseProjectZoneCaculations: licenseProjectZoneCaculations
+    LicenseProjectZoneCaculations: licenseProjectZoneCaculations,
   ) {
     this._licenseDetailsService.licenseProjectZoneCaculations$.next(
-      LicenseProjectZoneCaculations
+      LicenseProjectZoneCaculations,
     );
   }
   updateFinancialGuaranteeOfProjectOwnershipFile(
-    financialGuaranteeOfProjectOwnershipFile: SysFileManagerCreateUpdateDto
+    financialGuaranteeOfProjectOwnershipFile: SysFileManagerCreateUpdateDto,
   ) {
     this._licenseDetailsService.financialGuaranteeOfProjectOwnershipFile$.next(
-      financialGuaranteeOfProjectOwnershipFile
+      financialGuaranteeOfProjectOwnershipFile,
     );
   }
   updateLicenseProjectRelativeWeightData(
-    licenseProjectRelativeWeights: LicenseProjectRelativeWeightDto[]
+    licenseProjectRelativeWeights: LicenseProjectRelativeWeightDto[],
   ) {
     this._licenseDetailsService.licenseProjectRelativeWeights$.next(
-      licenseProjectRelativeWeights
+      licenseProjectRelativeWeights,
     );
   }
   private updateRequestPhases(requestPhases: requestPhase[]): void {
@@ -683,10 +704,10 @@ export class LincenseDetailsComponent {
   }
 
   updateSysLicenseBeneficiary(
-    sysLicenseBeneficiary: SysLicenseBeneficiaryContractFormListDto
+    sysLicenseBeneficiary: SysLicenseBeneficiaryContractFormListDto,
   ) {
     this._licenseDetailsService.sysLicenseBeneficiary$.next(
-      sysLicenseBeneficiary
+      sysLicenseBeneficiary,
     );
   }
   updateProjectLandData(projectLandData: LicenseProjectLandDataDto) {
@@ -696,106 +717,106 @@ export class LincenseDetailsComponent {
     this._licenseDetailsService.projectMainData$.next(projectMainData);
   }
   updateProjectRealStateDeveloper(
-    projectRealStateDeveloper: ProjectRealStateDeveloperDto
+    projectRealStateDeveloper: ProjectRealStateDeveloperDto,
   ) {
     this._licenseDetailsService.projectRealStateDeveloper$.next(
-      projectRealStateDeveloper
+      projectRealStateDeveloper,
     );
   }
   updateProjectAccountKeeper(projectAccountKeeper: AccountKeeperDto) {
     this._licenseDetailsService.projectAccountKeeper$.next(
-      projectAccountKeeper
+      projectAccountKeeper,
     );
   }
   updateLicenseProjectZones(licenseProjectZones: licenseProjectZones[]) {
     this._licenseDetailsService.licenseProjectZones$.next(licenseProjectZones);
   }
   updateLicenseProjectSubDevelopers(
-    licenseProjectSubDevelopers: LicenseProjectSubDeveloperDto[]
+    licenseProjectSubDevelopers: LicenseProjectSubDeveloperDto[],
   ) {
     this._licenseDetailsService.licenseProjectSubDevelopers$.next(
-      licenseProjectSubDevelopers
+      licenseProjectSubDevelopers,
     );
   }
   updateLicenseProjectServices(
-    licenseProjectServices: licenseProjectServices[]
+    licenseProjectServices: licenseProjectServices[],
   ) {
     this._licenseDetailsService.licenseProjectServices$.next(
-      licenseProjectServices
+      licenseProjectServices,
     );
   }
   updateLicenseProjectRealStateMarketers(
-    licenseProjectRealStateMarketers: LicenseProjectRealStateMarketerFullDto[]
+    licenseProjectRealStateMarketers: LicenseProjectRealStateMarketerFullDto[],
   ) {
     this._licenseDetailsService.licenseProjectRealStateMarketers$.next(
-      licenseProjectRealStateMarketers
+      licenseProjectRealStateMarketers,
     );
   }
   updateLicenseProjectQuantitiesTableFiles(
-    licenseProjectQuantitiesTableFiles: any
+    licenseProjectQuantitiesTableFiles: any,
   ) {
     this._licenseDetailsService.licenseProjectQuantitiesTableFiles$.next(
-      licenseProjectQuantitiesTableFiles
+      licenseProjectQuantitiesTableFiles,
     );
   }
   updateLicenseProjectPlanAccordingApprovedStandardsFiles(
-    licenseProjectPlanAccordingApprovedStandardsFiles: licenseProjectPlanAccordingApprovedStandardsFiles[]
+    licenseProjectPlanAccordingApprovedStandardsFiles: licenseProjectPlanAccordingApprovedStandardsFiles[],
   ) {
     this._licenseDetailsService.licenseProjectPlanAccordingApprovedStandardsFiles$.next(
-      licenseProjectPlanAccordingApprovedStandardsFiles
+      licenseProjectPlanAccordingApprovedStandardsFiles,
     );
   }
   updateLicenseProjectFeasibilityStudies(
-    licenseProjectFeasibilityStudies: LicenseProjectFeasibilityStudyFullDto[]
+    licenseProjectFeasibilityStudies: LicenseProjectFeasibilityStudyFullDto[],
   ) {
     this._licenseDetailsService.licenseProjectFeasibilityStudies$.next(
-      licenseProjectFeasibilityStudies
+      licenseProjectFeasibilityStudies,
     );
   }
   updateLicenseProjectEngineeringConsultants(
-    licenseProjectEngineeringConsultants: LicenseProjectEngineeringConsultantFullDto[]
+    licenseProjectEngineeringConsultants: LicenseProjectEngineeringConsultantFullDto[],
   ) {
     this._licenseDetailsService.licenseProjectEngineeringConsultants$.next(
-      licenseProjectEngineeringConsultants
+      licenseProjectEngineeringConsultants,
     );
   }
   updateLicenseProjectDesignFiles(
-    licenseProjectDesignFiles: licenseProjectDesignFiles[]
+    licenseProjectDesignFiles: licenseProjectDesignFiles[],
   ) {
     this._licenseDetailsService.licenseProjectDesignFiles$.next(
-      licenseProjectDesignFiles
+      licenseProjectDesignFiles,
     );
   }
   updateLicenseProjectDeeds(licenseProjectDeeds: ProjectLandDeedDto[]) {
     this._licenseDetailsService.licenseProjectDeeds$.next(licenseProjectDeeds);
   }
   updateLicenseProjectConstructionLicenses(
-    licenseProjectConstructionLicenses: licenseProjectConstructionLicenses[]
+    licenseProjectConstructionLicenses: licenseProjectConstructionLicenses[],
   ) {
     this._licenseDetailsService.licenseProjectConstructionLicenses$.next(
-      licenseProjectConstructionLicenses
+      licenseProjectConstructionLicenses,
     );
   }
   updateLicenseProjectCharteredAccountants(
-    licenseProjectCharteredAccountants: LicenseProjectCharteredAccountantFullDto[]
+    licenseProjectCharteredAccountants: LicenseProjectCharteredAccountantFullDto[],
   ) {
     this._licenseDetailsService.licenseProjectCharteredAccountants$.next(
-      licenseProjectCharteredAccountants
+      licenseProjectCharteredAccountants,
     );
   }
   updateLicenseProjectAddresses(
-    licenseProjectAddresses: licenseProjectAddresses[]
+    licenseProjectAddresses: licenseProjectAddresses[],
   ) {
     this._licenseDetailsService.licenseProjectAddresses$.next(
-      licenseProjectAddresses
+      licenseProjectAddresses,
     );
   }
 
   updateLicenseProjectExternalAddresses(
-    licenseProjectExternalAddresses: LicenseProjectExternalAddressDto[]
+    licenseProjectExternalAddresses: LicenseProjectExternalAddressDto[],
   ) {
     this._licenseDetailsService.licenseProjectExternalAddresses$.next(
-      licenseProjectExternalAddresses
+      licenseProjectExternalAddresses,
     );
   }
 
@@ -804,10 +825,10 @@ export class LincenseDetailsComponent {
       certificateNumber: LicenseCerificate.certificateNumber,
       startOn: LicenseCerificate.startOn,
       endOn: LicenseCerificate.endOn,
-    } as CertifiedLicenseDataDto
+    } as CertifiedLicenseDataDto;
 
     this._licenseDetailsService.certifiedLicenseData$.next(
-      linceseCertificateData
+      linceseCertificateData,
     );
   }
 
@@ -870,7 +891,7 @@ export class LincenseDetailsComponent {
   public openCompileQWTableNotesDialog() {
     this._licenseDetailsService.showTabsButton$.next(false);
     this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-      this.selectedRequest?.licenseProjectId as string
+      this.selectedRequest?.licenseProjectId as string,
     );
     let Data = {
       id: ButtonType.allowCompileQWTable,
@@ -894,7 +915,7 @@ export class LincenseDetailsComponent {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         console.log(res);
-      })
+      }),
     );
   }
 
@@ -922,7 +943,7 @@ export class LincenseDetailsComponent {
             this.emitSaveQWTable();
             break;
         }
-      })
+      }),
     );
   }
   private compile() {
@@ -932,7 +953,7 @@ export class LincenseDetailsComponent {
           this.selectedRequestID as string,
           this.RequestNotes?.notes as string,
           this.selectedRequest?.licenseRequestCustomerHeaderEventStatus
-            .allowCompileId as number
+            .allowCompileId as number,
         )
         .subscribe((res: boolean) => {
           if (res) {
@@ -941,7 +962,7 @@ export class LincenseDetailsComponent {
             this.getLicenseRequestHeaderByRequestId();
             this.showNotificationOFsentNotes();
           }
-        })
+        }),
     );
   }
   private compileConditionalApproval() {
@@ -950,7 +971,7 @@ export class LincenseDetailsComponent {
         .compileConditionalApproval(
           this.compileWithLogFilesDto,
           this.selectedRequest?.licenseRequestCustomerHeaderEventStatus
-            .allowCompileConditionalApprovalId as number
+            .allowCompileConditionalApprovalId as number,
         )
         .subscribe((res: boolean) => {
           if (res) {
@@ -959,7 +980,7 @@ export class LincenseDetailsComponent {
             this.getLicenseRequestHeaderByRequestId();
             this.showNotificationOFsentNotes();
           }
-        })
+        }),
     );
   }
 
@@ -970,7 +991,7 @@ export class LincenseDetailsComponent {
           this.selectedRequestID as string,
           this.RequestNotes?.notes as string,
           this.selectedRequest?.licenseRequestCustomerHeaderEventStatus
-            .allowCompileQWTableId as number
+            .allowCompileQWTableId as number,
         )
         .subscribe((res: boolean) => {
           if (res) {
@@ -979,7 +1000,7 @@ export class LincenseDetailsComponent {
             this.getLicenseRequestHeaderByRequestId();
             this.showNotificationOFsentNotes();
           }
-        })
+        }),
     );
   }
   private compileGuaranteeLetterActivation() {
@@ -988,7 +1009,7 @@ export class LincenseDetailsComponent {
         .compileGuaranteeLetterActivation(
           this.compileWithLogFilesDto,
           this.selectedRequest?.licenseRequestCustomerHeaderEventStatus
-            .allowCompileGuaranteeLetterActivationId as number
+            .allowCompileGuaranteeLetterActivationId as number,
         )
         .subscribe((res: boolean) => {
           if (res) {
@@ -997,7 +1018,7 @@ export class LincenseDetailsComponent {
             this.getLicenseRequestHeaderByRequestId();
             this.showNotificationOFsentNotes();
           }
-        })
+        }),
     );
   }
   private compileDeedMarginalization() {
@@ -1006,7 +1027,7 @@ export class LincenseDetailsComponent {
         .compileDeedMarginalization(
           this.compileWithLogFilesDto,
           this.selectedRequest?.licenseRequestCustomerHeaderEventStatus
-            .allowCompileDeedMarginalizationId as number
+            .allowCompileDeedMarginalizationId as number,
         )
         .subscribe((res: boolean) => {
           if (res) {
@@ -1015,7 +1036,7 @@ export class LincenseDetailsComponent {
             this.getLicenseRequestHeaderByRequestId();
             this.showNotificationOFsentNotes();
           }
-        })
+        }),
     );
   }
   private compileOpenBankAccount() {
@@ -1024,7 +1045,7 @@ export class LincenseDetailsComponent {
         .compileOpenBankAccount(
           this.compileWithLogFilesDto,
           this.selectedRequest?.licenseRequestCustomerHeaderEventStatus
-            .allowCompileDeedMarginalizationId as number
+            .allowCompileDeedMarginalizationId as number,
         )
         .subscribe((res: boolean) => {
           if (res) {
@@ -1033,7 +1054,7 @@ export class LincenseDetailsComponent {
             this.getLicenseRequestHeaderByRequestId();
             this.showNotificationOFsentNotes();
           }
-        })
+        }),
     );
   }
   private emitDataIsUpdate() {
@@ -1053,8 +1074,8 @@ export class LincenseDetailsComponent {
           if (res) this.RequestNotes = res;
           this.compileWithLogFilesDto.notes = this.RequestNotes
             ?.notes as string;
-        }
-      )
+        },
+      ),
     );
   }
   private observeFilesIds(): void {
@@ -1069,7 +1090,7 @@ export class LincenseDetailsComponent {
             });
           });
         }
-      })
+      }),
     );
   }
   resetDataVisibilityOfLicenseProject() {
@@ -1084,13 +1105,13 @@ export class LincenseDetailsComponent {
   public editRequest(): void {
     if (this.selectedRequest) {
       this._sharedLicenseProjectService.setLicenseAvailabilityToUpdateInLocalStorage(
-        this.selectedRequest.licenseProject.availabilityToUpdate
+        this.selectedRequest.licenseProject.availabilityToUpdate,
       );
       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-        this.selectedRequest.licenseProjectId
+        this.selectedRequest.licenseProjectId,
       );
       this._sharedLicenseProjectService.setfacilityIdInLocalStorage(
-        this.selectedRequest.facilityId
+        this.selectedRequest.facilityId,
       );
 
       this._router.navigate([this.requestDetailsRoute]);
@@ -1100,13 +1121,13 @@ export class LincenseDetailsComponent {
   public editFarz() {
     if (this.selectedRequest) {
       this._sharedLicenseProjectService.setLicenseAvailabilityToUpdateInLocalStorage(
-        this.selectedRequest.licenseProject.availabilityToUpdate
+        this.selectedRequest.licenseProject.availabilityToUpdate,
       );
       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-        this.selectedRequest.licenseProjectId
+        this.selectedRequest.licenseProjectId,
       );
       this._sharedLicenseProjectService.setfacilityIdInLocalStorage(
-        this.selectedRequest.facilityId
+        this.selectedRequest.facilityId,
       );
 
       this._router.navigate([this.editFarzNoteRoute]);
@@ -1119,9 +1140,8 @@ export class LincenseDetailsComponent {
    */
   public openPaymentTermsModal(): void {
     if (this.selectedRequest) {
-
       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-        this.selectedRequest!.licenseProjectId
+        this.selectedRequest!.licenseProjectId,
       );
 
       const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.paymentTermsTabs}`;
@@ -1158,28 +1178,39 @@ export class LincenseDetailsComponent {
 
   openUnitsCorrection() {
     if (this.selectedRequest) {
-      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.selectedRequest!.licenseProjectId);
-      const requestId = this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage();
-      this._unitCorrectionService.CheckCorrectingUnitAvailability(requestId as string).subscribe((res) => {
-        debugger
-        if (res) {
-          if (res.isDone) {
-          this._sharedLicenseProjectService.setCorrectionUnitRequestIdInLocalStorage(res.data);
-          this.navigateToCorrctionLicenseSummary();
-          // this.GetCorrectedUnitDataByLicenseProjectId();
-        }
-      }
-      })
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+        this.selectedRequest!.licenseProjectId,
+      );
+      const requestId =
+        this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage();
+      this._unitCorrectionService
+        .CheckCorrectingUnitAvailability(requestId as string)
+        .subscribe((res) => {
+          debugger;
+          if (res) {
+            if (res.isDone) {
+              this._sharedLicenseProjectService.setCorrectionUnitRequestIdInLocalStorage(
+                res.data,
+              );
+              this.navigateToCorrctionLicenseSummary();
+              // this.GetCorrectedUnitDataByLicenseProjectId();
+            }
+          }
+        });
     }
   }
 
   GetCorrectedUnitDataByLicenseProjectId() {
-    this._unitCorrectionService.GetCorrectedUnitDataByLicenseProjectId(this.selectedRequest!.licenseProjectId).subscribe((res: correctionUnitsModel) => {
-      if (res) {
-        const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.unitsCorrection}`;
-        this._router.navigate([navigationPath]);
-      }
-    })
+    this._unitCorrectionService
+      .GetCorrectedUnitDataByLicenseProjectId(
+        this.selectedRequest!.licenseProjectId,
+      )
+      .subscribe((res: correctionUnitsModel) => {
+        if (res) {
+          const navigationPath = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.unitsCorrection}`;
+          this._router.navigate([navigationPath]);
+        }
+      });
   }
 
   navigateToCorrctionLicenseSummary() {
@@ -1187,12 +1218,10 @@ export class LincenseDetailsComponent {
     this._router.navigate([navigationPath]);
   }
 
-
   ngOnDestroy(): void {
     this.resetSelectRequest();
     this.resetDataVisibilityOfLicenseProject();
     this._sharedLicenseProjectService.removeLicenseRequestfromLocalStorage();
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
-
 }
