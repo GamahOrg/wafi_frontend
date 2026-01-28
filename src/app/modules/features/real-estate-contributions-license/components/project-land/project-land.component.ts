@@ -54,7 +54,7 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
   getCustomerData() {
     this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
       this.facilityId = res?.facilities[0].id as string;
-      this.getQualificationDegree()
+      
     })
   }
   private getLicenseProjectIdStorage(): void {
@@ -93,9 +93,14 @@ export class ProjectLandComponent implements OnInit, OnDestroy {
   private loadComponentData() {
     const requests = [
       this._projectLandService.GetLandDataByLicenseProjectId(this.licenseProjectId as string),
+      this._projectLandService.GetQualificationDegreeByLicenseProjectId(this.licenseProjectId as string)
+
     ];
-    const subscriptions = forkJoin(requests).subscribe((results) => {
+    const subscriptions = forkJoin(requests).subscribe((results : any[]) => {
       this.setResponseToForm(results[0].data as ProjectLandDto);
+      if (results[1] !== undefined) {
+          this.qualificationDegree = results[1] as number;
+        }
     });
     this.subscriptions.push(subscriptions);
   }

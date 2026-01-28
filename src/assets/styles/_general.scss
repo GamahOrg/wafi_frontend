@@ -7,7 +7,7 @@ body {
 }
 
 hr {
-  border-color: #E5E5E5;
+  border-color: #e5e5e5;
   opacity: 1;
 }
 
@@ -28,16 +28,6 @@ a {
 
   &:hover {
     cursor: pointer;
-  }
-}
-
-input {
-
-  &::placeholder,
-  &::-webkit-input-placeholder {
-    height: 1.125rem;
-    font-size: $font-size-xs;
-    color: #4B5E56;
   }
 }
 
@@ -97,7 +87,7 @@ input {
     }
 
     &.arrow {
-      top: -.5rem;
+      top: -0.5rem;
     }
 
     &.arrow-hover {

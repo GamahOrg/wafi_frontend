@@ -1,7 +1,7 @@
 import { Component ,Output, EventEmitter } from '@angular/core';
 import { forkJoin, Subscription } from 'rxjs';
 import { FilterDto, FinancialCenterFileCreateUpdateDto, FinancialTransactionsDuringPeriodOutEscrowAccountDto, PeriodicCharteredAccountantReportCreateUpdateDto, PeriodicCharteredAccountantReportDto, PeriodicCharteredAccountantReportQuarterTypeDto, PeriodicCharteredAccountantReportTypeDto, PeriodicCharteredAccountantReportTypeEnum } from '../../dataModels/periodic-chartered-accountant-report-dto';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { PeriodicCharteredAccountantReportService } from '../../services/periodic-chartered-accountant-report.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
@@ -163,6 +163,7 @@ export class AddPeriodicCharteredAccountantReportComponent {
   }
 
   save(): void {
+    debugger
     if (!this.PeriodicCharteredAccountantReportForm.valid) {
       this.showValidation = true;
       return;
@@ -243,7 +244,7 @@ export class AddPeriodicCharteredAccountantReportComponent {
       return;
     }
 
-    if(!this.periodicCharteredAccountantReport?.periodOpeningBalance && !this.periodicCharteredAccountantReportCreateUpdate.periodOpeningBalance){
+    if(!this.periodicCharteredAccountantReport?.periodOpeningBalance && !this.periodicCharteredAccountantReportCreateUpdate.periodOpeningBalance && this.periodicCharteredAccountantReportCreateUpdate.periodOpeningBalance !== 0 ){
       this.showValidation = true;
       return;
     }

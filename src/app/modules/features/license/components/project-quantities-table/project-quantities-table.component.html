@@ -84,7 +84,10 @@
 
                   </td>
                   <td>
-                    <input (change)="onProposedRelativeWeightsChange(i)" type="number" class="form-control" formControlName="modifiedRelativeWeight" [class.is-invalid]="itemrow.get('modifiedRelativeWeight')?.invalid && itemrow.get('modifiedRelativeWeight')?.touched" min="0" />
+                    <input (change)="onProposedRelativeWeightsChange(i)" type="number" class="form-control" formControlName="modifiedRelativeWeight"
+                      [class.is-invalid]="itemrow.get('modifiedRelativeWeight')?.invalid && itemrow.get('modifiedRelativeWeight')?.touched"
+                      [readonly]="isReadOnly || (isUnit === false && (itemrow.get('order')?.value === 2 || itemrow.get('order')?.value === 3))"
+                      min="0" />
                     <div class="invalid-feedback d-block" *ngIf="itemrow.get('modifiedRelativeWeight')?.invalid && itemrow.get('modifiedRelativeWeight')?.touched">
                       <div *ngIf="itemrow.get('modifiedRelativeWeight')?.errors?.['required']">{{ localization.requiredErrorMsg }}
                       </div>

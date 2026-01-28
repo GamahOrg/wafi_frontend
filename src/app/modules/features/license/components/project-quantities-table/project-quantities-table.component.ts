@@ -25,6 +25,8 @@ import { LicenseRequestValidationPopupComponent } from '../license-request-valid
 import { DataVisibilityOfLicenseProjectService } from '../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { FileUploaderComponent } from 'src/app/shared/components/file-uploader/file-uploader.component';
 import { LicenseProjectCompletionData } from '../../dataModels/license-project-model.dto';
+import { LicenseProjectDeedService } from '../../../license-project-requests/services/LiftingDeeds/lifting-Deeds.service';
+import { ProjectInstantLicenseDeedService } from '../../../real-estate-contributions-license/services/project-instant-license-deed.service';
 
 
 @Component({
@@ -36,6 +38,7 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
   @ViewChild(FileUploaderComponent) fileUploader!: FileUploaderComponent;
 
   public licenseProjectRelativeWeightForm!: FormGroup;
+  isUnit: boolean | null = null;
   subscriptions: Subscription[] = [];
   baseUrl = `${environment.baseURL}/`;
   licenseProjectId: string | null = null;
@@ -89,7 +92,6 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _tabsService: TabsService,
     private _fb: FormBuilder,
-    private _filemangementService: FileManagementService,
     private _toastrNotificatioService: ToastrNotificatioService,
     private _toastrService: ToastrService,
     private _licenseDetailsService: LicenseDetailsService,
@@ -98,6 +100,7 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
     private _userDataService: UserDataService,
     private _licenseRequestService: LicenseRequestService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
+    private _projectInstantDeedService: ProjectInstantLicenseDeedService,
   ) { }
 
 
@@ -114,6 +117,8 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
   }
 
   isChecked: boolean = false;
+
+  
 
   getCustomerData() {
     this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
@@ -173,9 +178,23 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
     values.forEach(relativeWeight => {
       let row: FormGroup;
 
-      const validators = this.enableValidation ? [
+      const order = relativeWeight.sysLicenseRelativeWeight?.order;
+      const isOrder2Or3 = order === 2 || order === 3;
+
+      // When isUnit = false and order is 2 or 3, set value to 0 and make readonly (no validators needed)
+      // When isUnit = true and order is 2 or 3, force user to enter value > 0
+      // When order is not 2/3, apply normal validators
+      const isDisabledForUnit = this.isUnit === false && isOrder2Or3;
+      const shouldApplyValidators = this.enableValidation && !isDisabledForUnit;
+
+      // For order 2,3 when isUnit is true, minimum must be > 0 (use 0.01 to enforce greater than zero)
+      const minValue = (this.isUnit === true && isOrder2Or3)
+        ? Math.max(0.01, relativeWeight.sysLicenseRelativeWeight?.minimumValue || 0)
+        : relativeWeight.sysLicenseRelativeWeight?.minimumValue;
+
+      const validators = shouldApplyValidators ? [
         Validators.required,
-        Validators.min(relativeWeight.sysLicenseRelativeWeight?.minimumValue),
+        Validators.min(minValue),
         Validators.max(relativeWeight.sysLicenseRelativeWeight?.maximumValue)
       ] : [];
 
@@ -183,11 +202,14 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
         Validators.max(relativeWeight.sysLicenseRelativeWeight?.maximumAllowedVariancePercentage)
       ] : [];
 
+      // When isUnit = false and order is 2 or 3, set value to 0; otherwise use backend value
+      const modifiedRelativeWeightValue = isDisabledForUnit ? 0 : relativeWeight.modifiedRelativeWeight;
+
       row = this._fb.group({
         elementName: [relativeWeight.sysLicenseRelativeWeight?.elementName],
         adjustedReferenceWeights: [{ value: 0, disabled: true }],
         modifiedRelativeWeight: [
-          relativeWeight.modifiedRelativeWeight,
+          { value: modifiedRelativeWeightValue, disabled: isDisabledForUnit },
           validators
         ],
         variancePercentage: [
@@ -198,6 +220,7 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
         licenseProjectId: [this.licenseProjectId],
         maxVariance: [relativeWeight.sysLicenseRelativeWeight?.maximumAllowedVariancePercentage],
         id: [relativeWeight.id ? relativeWeight.id : "00000000-0000-0000-0000-000000000000"],
+        order: [order],
       });
       this.formArr.push(row);
     });
@@ -238,13 +261,13 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
     }
     const hasConcreteWork = this.hasElementWithValue(data.Rows, this.CONCRETE_WORK_ELEMENT);
     const hasBuildingWork = this.hasElementWithValue(data.Rows, this.BUILDING_WORK_ELEMENT);
-    // إذا كان أحد البندين مدخل، المجموع يجب أن يكون 100%
-    // إذا لم يتم إدخال أي من البندين، المجموع يجب أن يكون 95%
-    if (hasConcreteWork || hasBuildingWork) {
-      this.targetTotalPercentage = 100;
-    } else {
-      this.targetTotalPercentage = 95.5;
-    }
+    // // إذا كان أحد البندين مدخل، المجموع يجب أن يكون 100%
+    // // إذا لم يتم إدخال أي من البندين، المجموع يجب أن يكون 95%
+    // if (hasConcreteWork || hasBuildingWork) {
+    //   this.targetTotalPercentage = 100;
+    // } else {
+    //   this.targetTotalPercentage = 95.5;
+    // }
   }
 
   private hasElementWithValue(rows: any[], elementName: string): boolean {
@@ -358,10 +381,21 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
               res.quantitiesTableAcknowledgment;
             // Check read-only state after form is initialized
             this.getCompletedTabs();
+            this.getNatureTypeIdByLicenseProjectId(this.licenseProjectId as string);
           }
         })
       )
     }
+  }
+
+  getNatureTypeIdByLicenseProjectId(licenseProjectId: string): void {
+    this._projectInstantDeedService.GetNatureTypeIdByLicenseProjectId(licenseProjectId as string).subscribe((res:any) => {
+      this.isUnit = res.data;
+      // Reinitialize rows after isUnit is set to apply the correct validators and disabled state
+      if (this.licenseProjectQuantitiesTableFileAndRelativeWeight?.licenseProjectRelativeWeightList) {
+        this.initRows(this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList);
+      }
+    })
   }
 
   onQuantitiesTableFileUploaded(filesData: any) {
@@ -406,31 +440,36 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
 
     this.updateTargetPercentage(this.licenseProjectRelativeWeightForm.value);
 
-    if (!this.dataConfirmationChecked && this.isFawriaValidation()) {
-      this.showValidation = true;
-      this._toastrNotificatioService.showError(this.localization.dataConfirmationRequired);
-      return;
-    }
-
     // Only apply validation if enableValidation is true and user is not an existing validation user
     if (this.enableValidation && !this.isExistingValidation) {
-      // Check form validity (min/max validators)
+      // Check form validity (min/max validators) first
       if (this.licenseProjectRelativeWeightForm.invalid) {
         this.showValidation = true;
         this.licenseProjectRelativeWeightForm.markAllAsTouched();
         this._toastrNotificatioService.showError('ⓘ '+this.localization.exeedTheLimit);
         return;
       }
-      if (this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList && this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList.length > 0 ) {
-        if (this.total > this.targetTotalPercentage) {
-          this._toastrNotificatioService.showError(`الإجمالي أكبر من ${this.targetTotalPercentage}%`);
-          return;
-        }
-        if (this.total < this.targetTotalPercentage) {
-          this._toastrNotificatioService.showError(`الإجمالي أقل من ${this.targetTotalPercentage}%`);
-          return;
-        }
-      }   
+    }
+
+    // After form is valid, check if user has checked the الاقرار
+    if (!this.dataConfirmationChecked && this.isFawriaValidation()) {
+      this.showValidation = true;
+      this._toastrNotificatioService.showError(this.localization.dataConfirmationRequired);
+      return;
+    }
+
+    // Continue with remaining validation if enableValidation is true
+    if (this.enableValidation && !this.isExistingValidation) {
+      // if (this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList && this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList.length > 0 ) {
+      //   if (this.total > this.targetTotalPercentage) {
+      //     this._toastrNotificatioService.showError(`الإجمالي أكبر من ${this.targetTotalPercentage}%`);
+      //     return;
+      //   }
+      //   if (this.total < this.targetTotalPercentage) {
+      //     this._toastrNotificatioService.showError(`الإجمالي أقل من ${this.targetTotalPercentage}%`);
+      //     return;
+      //   }
+      // }   
      
     }
 
@@ -438,7 +477,8 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
    // this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList = []
     this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectRelativeWeightList = [];
 
-    this.licenseProjectRelativeWeightForm.value.Rows.forEach((element: any) => {
+    // Use getRawValue() to include disabled controls (order 2,3 when isUnit = false)
+    this.licenseProjectRelativeWeightForm.getRawValue().Rows.forEach((element: any) => {
       this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectRelativeWeightList.push(element);
     })
 

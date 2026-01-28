@@ -255,7 +255,7 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     // Exclude totalLandArea and totalUnit as they are filled after verification
     const fieldsToWatch = [
       'deedSource', 'deedNumber', 'deedDate', 'fawriaRERNumber',
-      'licenseType', 'previousLicenseNumber', 'constructionLicenseType',
+      'licenseType', 'previousLicenseNumber',
       'licenseNumber', 'riyadhAmanahLicenseNumber', 'constructionLicenseFileId',
       'approvedPlansFileIds'
     ];
@@ -349,6 +349,10 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   }
 
   onOwnerFileUploaded(fileData: any, ownerIndex: number): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.ownerAgreementFiles.at(ownerIndex).setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -365,6 +369,10 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   }
   
   onOwnerUploaddeedMarginalizationFiles(fileData: any, ownerIndex: number): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.deedMarginalizationFiles.at(ownerIndex).setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -404,6 +412,10 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   }
 
   onMortgageeFileUploaded(fileData: any, mortgageeIndex: number): void {
+    if(fileData.eventRes.data.length === 0) {
+      this.mortgageeFiles.at(mortgageeIndex).setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -468,6 +480,7 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   }
 
   onVerify(): void {
+    debugger
     const formData = this.verifyForm.value;
     let isValid = true;
 
@@ -583,7 +596,7 @@ export class CorrectionLicenseprojectDeedsCreateComponent
 
     // Check if رخصة سابقة (previous license) is selected
     const isAddedFromPreviousLicense = formData.licenseType == 1;
-
+debugger;
     if (formData.deedSource === DeedIntegrationTypeEnum.RER) {
       this.requestDto = {
         fawriaLicenseDeed: {
@@ -658,17 +671,18 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   }
 
   private processResponseData(): void {
-    this.totalLand =
-      this.fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.reduce(
-        (sum, info) => {
-          let total = 0;
-          info.buildingInfo?.componentList.component.filter(x=>!(x.componentUsage.code=='10' ||x.componentUsage.code=='16')).forEach((element) => {
-            total += +element.componentArea;
-          });
-          return sum + total;
-        },
-        0
-      ) || 0;
+    debugger
+    // this.totalLand =
+    //   this.fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.reduce(
+    //     (sum, info) => {
+    //       let total = 0;
+    //       info.buildingInfo?.componentList.component.filter(x=>!(x.componentUsage.code=='10' ||x.componentUsage.code=='16')).forEach((element) => {
+    //         total += +element.componentArea;
+    //       });
+    //       return sum + total;
+    //     },
+    //     0
+    //   ) || 0;
 
     // Populate totalLandArea and totalUnit from licenseInfoList
     const licenseInfo = this.fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0];
@@ -678,6 +692,9 @@ export class CorrectionLicenseprojectDeedsCreateComponent
       }
       if (licenseInfo.numberOfUnits) {
         this.verifyForm.get('totalUnit')?.setValue(licenseInfo.numberOfUnits);
+      }
+      if (licenseInfo.licenseProjectConstructionLicenseTypeId) {
+        this.verifyForm.get('constructionLicenseType')?.setValue(licenseInfo.licenseProjectConstructionLicenseTypeId);
       }
     }
 
@@ -850,6 +867,10 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   }
 
   onConstructionLicenseFileUploaded(fileData: any): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.verifyForm.get('constructionLicenseFileId')?.setValue(null);
+    return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -896,6 +917,9 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   }
 
   onApprovedPlansUploaded(fileData: any): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.verifyForm.get('approvedPlansFileIds')?.setValue([]);
+    }
     if (
       fileData &&
       fileData.eventRes &&

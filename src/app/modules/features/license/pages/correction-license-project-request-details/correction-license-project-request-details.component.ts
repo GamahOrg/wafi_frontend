@@ -45,7 +45,7 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
     private _requestNotesService: RequestNotesService,
     private projectRequestLocalStorageService: ProjectRequestLocalStorageService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   subscriptions: Subscription[] = [];
@@ -131,7 +131,7 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
 
   handleFarzNotes(): void {
     this._sharedLicenseProjectService.setCorrectionLicenseAvailabilityToUpdateFarzInLocalStorage(
-      true
+      true,
     );
     // Navigate to edit farz notes page
     this._router.navigate([this.editFarzNoteRoute]);
@@ -155,7 +155,7 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
   private updateDataVisibilityOfLicenseProject() {
     let data: string[] = [];
     this._dataVisibilityOfLicenseProjectService.updateDataVisibilityOfLicenseProject(
-      data
+      data,
     );
     // this.observeQWTableCompiledSuccessfullyEvent();
   }
@@ -167,7 +167,8 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
         //   ?.licenseRequestCustomerHeaderEventStatus[
         //   item.actionType as keyof LicenseRequestCustomerHeaderEventStatus
         // ] as boolean;
-        item.isVisable = this.selectedRequest.licenseProjectRequestEventStatus.allowCompile;
+        item.isVisable =
+          this.selectedRequest.licenseProjectRequestEventStatus.allowCompile;
         item.isDisables = false;
       });
     }
@@ -178,24 +179,23 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
       this._requestNotesService.RequestNotes$.subscribe(
         (res: RequestNotesData | null) => {
           if (res) this.RequestNotes = res;
-        }
-      )
+        },
+      ),
     );
   }
-  
+
   editRequest() {
     this._sharedLicenseProjectService.setCorrectionUnitRequestIdInLocalStorage(
-      this.selectedRequest.id
+      this.selectedRequest.id,
     );
 
-      this._sharedLicenseProjectService.setAllowCorrectionCompileInLocalStorage(
-      true
+    this._sharedLicenseProjectService.setAllowCorrectionCompileInLocalStorage(
+      true,
     );
     this._router.navigate([
       `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.correctionLicenseSummary}`,
     ]);
   }
-
 
   private openCompilNotesDialog() {
     let Data = {
@@ -221,7 +221,7 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
           if (response) {
             this.selectedRequest = response;
             this._projectLicenseServiceDetailsService.selectRequest$.next(
-              response
+              response,
             );
             this.updateDayProgressSettings();
             this.updateClientActionsButtons();
@@ -255,7 +255,7 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         console.log(res);
-      })
+      }),
     );
   }
 
@@ -268,7 +268,7 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
             this.compile();
             break;
         }
-      })
+      }),
     );
   }
 
@@ -277,7 +277,7 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
       this._projectLicenseServiceDetailsService
         .compile(
           this.selectedRequest.licenseProjectRequestEventStatus.requestId,
-          this.RequestNotes?.notes as string
+          this.RequestNotes?.notes as string,
         )
         .subscribe((res: boolean) => {
           if (res) {
@@ -286,7 +286,7 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
             this.getRequestHeaderDetails();
             this.showNotificationOFsentNotes();
           }
-        })
+        }),
     );
   }
 
@@ -296,6 +296,24 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
 
   private showNotificationOFsentNotes() {
     this._toastrService.success('تم إرسال الملاحظات بنجاح!');
+  }
+
+  getFarzStatusClass(statusId: any): string {
+    switch (statusId) {
+      case FarzRequestStatusEnum.None:
+      case FarzRequestStatusEnum.UnderReview:
+        return 'orange';
+
+      case FarzRequestStatusEnum.Approved:
+        return 'green';
+
+      case FarzRequestStatusEnum.Rejected:
+      case FarzRequestStatusEnum.IntegrationFailed:
+        return 'red';
+
+      default:
+        return 'gray';
+    }
   }
 
   ngOnDestroy(): void {

@@ -100,10 +100,7 @@ export class PopupService {
       panelClass: 'confirmation-dialog',
       data: {
         popupType: confirmationData.popupType ?? 'primary',
-        id: confirmationData.id,
-        staticMessage: confirmationData.staticMessage,
-        dynamicMessage: confirmationData.dynamicMessage,
-        secondeStaticMessage: confirmationData.secondeStaticMessage,
+        id: confirmationData.id
       },
       disableClose: true,
       hasBackdrop: true,

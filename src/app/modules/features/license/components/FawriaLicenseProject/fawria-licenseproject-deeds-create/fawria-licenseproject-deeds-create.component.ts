@@ -133,7 +133,7 @@ export class FawriaLicenseprojectDeedsCreateComponent
       .GetNatureTypeIdByLicenseProjectId(this.licenseProjectId)
       .subscribe((res: any) => {
         if (res) {
-          this.isUnit = res;
+           this.isUnit = res.data;
         }
       });
   }

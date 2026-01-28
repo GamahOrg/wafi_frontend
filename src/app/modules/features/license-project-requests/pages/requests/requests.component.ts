@@ -32,13 +32,13 @@ export class RequestsComponent implements OnInit {
     this.getRequestTypes();
   }
   getLicenseIdFromLocalStorage(): void {
-    this.licenseProjectId =
-      this.sharedLocalStorage.getLicenseProjectIdStorage() as string;
+    // this.licenseProjectId =
+    //   this.sharedLocalStorage.getLicenseProjectIdStorage() as string;
 
-      if(this.licenseProjectId)
-      {
-        this.validateLicenseProject()
-      } 
+    //   if(this.licenseProjectId)
+    //   {
+    //     this.validateLicenseProject()
+    //   } 
   }
 
   validateLicenseProject() {
@@ -70,7 +70,7 @@ export class RequestsComponent implements OnInit {
 
   public navigateToCreateRequest(requestType: number): void {
     let requestSummaryRoute = '';
-    if (this.isValid) {
+
     switch (requestType) {
       case LicenseProjectRequestTypeEnum.CancelLicense:
         requestSummaryRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.createcancelLicense}`;
@@ -130,9 +130,9 @@ export class RequestsComponent implements OnInit {
         );
         requestSummaryRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.createRequestTemplate}`;
         break;
-    }
+  
+      }
     this.router.navigate([requestSummaryRoute]);
-  }
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

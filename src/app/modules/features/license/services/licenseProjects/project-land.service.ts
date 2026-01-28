@@ -31,4 +31,13 @@ export class ProjectLandService {
         })
       )
     }
+
+    GetQualificationDegreeByLicenseProjectId(licenceProjectId: string){      
+      return this._httpClient.get<CoreResponseDTO<number|null>>
+      (`${Configuration.APIs.QualificationRequestHeader.GetQualificationDegreeByLicenseProjectId}/${licenceProjectId}`).pipe(
+        map((res: CoreResponseDTO<number|null>) => {
+          return res.data;
+        })
+      )
+    }
 }

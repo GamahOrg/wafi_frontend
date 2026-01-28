@@ -2,21 +2,47 @@
   <div class="card req-details-header-card">
     <div class="card-header with-separator">
       <div class="row row-gap-4 w-100">
-      <div class="col-12 col-xl-3">
+        <div class="col-12 col-xl-3">
           <h6 class="card-title">
-            {{ selectedRequest?.licenseProjectRequestType?.name }} - <span class="text-primary">{{ selectedRequest?.requestCode }}</span>
+            {{ selectedRequest?.licenseProjectRequestType?.name }} -
+            <span class="text-primary">{{ selectedRequest?.requestCode }}</span>
           </h6>
           <div class="key-value horiz">
             <span class="key">تاريخ تقديم الطلب</span>
-            <span class="value">{{ selectedRequest?.createdOn | date : "dd MMMM yyyy" }}</span>
+            <span class="value">{{
+              selectedRequest?.createdOn | date: "dd MMMM yyyy"
+            }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-6">
-          <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
-            <span class="status-pill orange" *ngIf="selectedRequest.licenseProjectFarzRequestStatusName">
+          <div
+            class="d-flex flex-wrap justify-content-center align-items-center gap-3"
+          >
+            <!-- <span
+              class="status-pill orange"
+              *ngIf="selectedRequest.licenseProjectFarzRequestStatusId"
+            >
+              {{ selectedRequest.licenseProjectFarzRequestStatusName }}
+            </span> -->
+
+            <span
+              class="status-pill"
+              [ngClass]="
+                getFarzStatusClass(
+                  selectedRequest.licenseProjectFarzRequestStatusId
+                )
+              "
+              *ngIf="
+                selectedRequest?.licenseProjectFarzRequestStatusId !== null
+              "
+            >
               {{ selectedRequest.licenseProjectFarzRequestStatusName }}
             </span>
-            <span class="status-pill green" *ngIf="selectedRequest.externalRequestStatus?.name">
+
+            <span
+              class="status-pill green"
+              *ngIf="selectedRequest.externalRequestStatus?.name"
+            >
               {{ selectedRequest.externalRequestStatus?.name }}
             </span>
           </div>
@@ -26,7 +52,6 @@
             class="d-flex flex-wrap justify-content-end align-items-center gap-3"
           >
             <ng-container *ngFor="let button of clientActionsButtons">
-
               <button
                 *ngIf="button.isVisable"
                 [disabled]="button.isDisables"
@@ -39,7 +64,9 @@
               </button>
             </ng-container>
             <button
-              *ngIf="selectedRequest?.licenseProjectRequestEventStatus?.allowCompile"
+              *ngIf="
+                selectedRequest?.licenseProjectRequestEventStatus?.allowCompile
+              "
               class="btn d-flex align-items-center justify-content-between btn-primary"
               (click)="editRequest()"
               type="button"
