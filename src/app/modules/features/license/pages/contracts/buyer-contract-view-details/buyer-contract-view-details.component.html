@@ -226,16 +226,18 @@
                       <th>رقم الدفعة</th>
                       <th>نسبة الاستقطاع</th>
                       <th>نسبة الإنجاز</th>
+                      <th>نسبة الإنجاز التراكمية</th>
                       <th>وصف الدفعة</th>
                       <th>حالة الدفعة</th>
 
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let installment of contractDetails.licenseProjectBuyerBusinessPayment.paymentInstallments">
+                    <tr *ngFor="let installment of contractDetails.licenseProjectBuyerBusinessPayment.paymentInstallments; let  i = index">
                       <td>{{ installment.installmentNumber }}</td>
                       <td>{{ installment.deductionPercentage }}%</td>
                       <td>{{ installment.rentPercentage }}%</td>
+                      <td>{{ getCumulativeRentPercentage(i) | number:'1.0-2' }}%</td>
                       <td>{{ installment.description || '-' }}</td>
                       <td>
                         <span class="status-pill" [ngClass]="installment.isPaid!=null && installment.isPaid ?  'green':'red'">

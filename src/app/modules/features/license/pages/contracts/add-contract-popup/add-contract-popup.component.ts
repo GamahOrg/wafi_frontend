@@ -1,18 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
-import {
-  GetProjectUnitDetailsResponseDto,
-  LicenseProjectBuyerPaymentTypeDto,
-  LicenseProjectBusinessPaymentResponseDto,
-} from '../../../models/real-state-developer-dto';
+import { GetProjectUnitDetailsResponseDto, LicenseProjectBuyerPaymentTypeDto, LicenseProjectBusinessPaymentResponseDto } from '../../../models/real-state-developer-dto';
 import { BuyerTypeEnum } from '../../../enums/unit-status.enum';
 import { RealStateDeveloperService } from '../../../services/real-state-developer.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
@@ -28,7 +17,7 @@ import { FileUploaderComponent } from '../../../../../../shared/components/file-
 @Component({
   selector: 'app-add-contract-popup',
   templateUrl: './add-contract-popup.component.html',
-  styleUrls: ['./add-contract-popup.component.scss'],
+  styleUrls: ['./add-contract-popup.component.scss']
 })
 export class AddContractPopupComponent implements OnInit {
   @Input() unitDetails: GetProjectUnitDetailsResponseDto | null = null;
@@ -36,7 +25,7 @@ export class AddContractPopupComponent implements OnInit {
   @Output() onContractSaved = new EventEmitter<void>();
   @ViewChild(FileUploaderComponent) fileUploader!: FileUploaderComponent;
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
-  baseUrl: string = environment.baseURL;
+  baseUrl: string = environment.baseURL
   contractForm!: FormGroup;
   buyerTypeEnum = BuyerTypeEnum;
   authorizationFileId: string = '';
@@ -82,8 +71,7 @@ export class AddContractPopupComponent implements OnInit {
     allowedExtensionsText: 'jpg, jpeg, png, pdf',
     allowedExtensions: ['.jpg', '.jpeg', '.png', '.pdf'],
     buttonText: 'تصفح الملفات',
-    attachmentsAreaText:
-      'الحد الأقصى لحجم الملف يجب أن لا يتجاوز 5 ميجابايت، وصيغ الملفات المدعومة تشمل .jpg، .jpeg، .png، و.pdf.',
+    attachmentsAreaText: 'الحد الأقصى لحجم الملف يجب أن لا يتجاوز 5 ميجابايت، وصيغ الملفات المدعومة تشمل .jpg، .jpeg، .png، و.pdf.'
   } as FileUploader;
 
   constructor(
@@ -94,7 +82,7 @@ export class AddContractPopupComponent implements OnInit {
     private projectLandDeedService: ProjectLandDeedService,
     private _fileManagment: FileManagementService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
@@ -105,19 +93,19 @@ export class AddContractPopupComponent implements OnInit {
   }
 
   checkOldAndNewVersion() {
-    this.licenseBuyerService
-      .checkPaymentsVersion(this.licenseProjectId as string)
-      .subscribe((res) => {
-        if (res.message == 'new contract') {
-          this.isOldContract = false;
-          this.contractForm.get('isOldContract')?.setValue(false);
-          this.onOldContractChange(false);
-        } else {
-          this.isOldContract = true;
-          this.contractForm.get('isOldContract')?.setValue(true);
-          this.onOldContractChange(true);
-        }
-      });
+    this.licenseBuyerService.checkPaymentsVersion(this.licenseProjectId as string).subscribe((res) => {
+      if(res.message == 'new contract') {
+        this.isOldContract = false
+        this.contractForm.get('isOldContract')?.setValue(false)
+        this.onOldContractChange(false)
+      }
+      else {
+        this.isOldContract = true
+        this.contractForm.get('isOldContract')?.setValue(true)
+        this.onOldContractChange(true)
+      }
+      
+    }) 
   }
   // Custom validator for birth date
   birthDateValidator(control: any) {
@@ -135,11 +123,10 @@ export class AddContractPopupComponent implements OnInit {
   }
 
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId =
-      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (this.licenseProjectId) {
-      this.getLicenseBuyerPaymentType();
-      this.checkOldAndNewVersion();
+    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    if(this.licenseProjectId) { 
+    this.getLicenseBuyerPaymentType();
+    this.checkOldAndNewVersion();
     }
   }
 
@@ -151,10 +138,7 @@ export class AddContractPopupComponent implements OnInit {
       nidNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       nationalNumber: ['', [Validators.pattern(/^700\d{7}$/)]],
       facilityName: [''],
-      mobileNumber: [
-        '',
-        [Validators.required, Validators.pattern(/^05\d{8}$/)],
-      ],
+      mobileNumber: ['', [Validators.required, Validators.pattern(/^05\d{8}$/)]],
       email: ['', [Validators.email]],
       buyerTypeId: [BuyerTypeEnum.Individual, Validators.required],
       isSupported: [false],
@@ -165,11 +149,11 @@ export class AddContractPopupComponent implements OnInit {
       delegatorFileId: [''],
       licenseProjectDeedId: ['', Validators.required],
       isOldContract: [false],
-      contractFileId: ['', Validators.required],
-      deliveryDate: ['', Validators.required],
-      paymentTypeId: ['', Validators.required],
-      paymentPlanId: ['', Validators.required],
-      saleDate: ['', Validators.required],
+      contractFileId: ['',Validators.required],
+      deliveryDate:['',Validators.required],
+      paymentTypeId:['', Validators.required],
+      paymentPlanId:['' ,Validators.required],
+      saleDate: ['',Validators.required]
     });
 
     // Subscribe to price changes
@@ -183,7 +167,7 @@ export class AddContractPopupComponent implements OnInit {
       this.contractForm.patchValue({
         name: '',
         email: '',
-        mobileNumber: '',
+        mobileNumber: ''
       });
     });
 
@@ -191,22 +175,20 @@ export class AddContractPopupComponent implements OnInit {
     this.contractForm.get('nationalNumber')?.valueChanges.subscribe(() => {
       this.isNationalNumberVerified = false;
       this.contractForm.patchValue({
-        facilityName: '',
+        facilityName: ''
       });
     });
 
     // Subscribe to paymentTypeId changes to filter payment plans
-    this.contractForm
-      .get('paymentTypeId')
-      ?.valueChanges.subscribe((paymentTypeId) => {
-        if (paymentTypeId) {
-          this.filterPaymentPlansByType(paymentTypeId);
-        } else {
-          this.filteredPaymentPlansList = [];
-        }
-        // Reset payment plan selection when payment type changes
-        this.contractForm.patchValue({ paymentPlanId: '' });
-      });
+    this.contractForm.get('paymentTypeId')?.valueChanges.subscribe((paymentTypeId) => {
+      if (paymentTypeId) {
+        this.filterPaymentPlansByType(paymentTypeId);
+      } else {
+        this.filteredPaymentPlansList = [];
+      }
+      // Reset payment plan selection when payment type changes
+      this.contractForm.patchValue({ paymentPlanId: '' });
+    });
   }
 
   initializeFormWithUnitDetails(): void {
@@ -218,7 +200,7 @@ export class AddContractPopupComponent implements OnInit {
       this.contractForm.patchValue({
         unitId: this.unitDetails.unitId || '',
         price: this.unitDetails.price || 0,
-        contractDate: new Date().toISOString(),
+        contractDate: new Date().toISOString()
       });
 
       this.calculatePriceAfterTax();
@@ -231,21 +213,21 @@ export class AddContractPopupComponent implements OnInit {
   }
 
   get buyerType(): number {
-    return (
-      this.contractForm.get('buyerTypeId')?.value || BuyerTypeEnum.Individual
-    );
+    return this.contractForm.get('buyerTypeId')?.value || BuyerTypeEnum.Individual;
   }
 
   get isSupported(): boolean {
     return this.contractForm.get('isSupported')?.value || false;
   }
 
+
+
   onBuyerTypeChange(type: BuyerTypeEnum): void {
     this.contractForm.patchValue({ buyerTypeId: type });
 
     // Reset delegator file when changing buyer type
     this.contractForm.patchValue({
-      delegatorFileId: null,
+      delegatorFileId: null
     });
     this.authorizationFileId = '';
     this.authorizationFile = null;
@@ -261,21 +243,12 @@ export class AddContractPopupComponent implements OnInit {
       birthDate: '',
       name: '',
       email: '',
-      mobileNumber: '',
+      mobileNumber: ''
     });
 
     // Mark cleared fields as untouched and pristine to hide validation errors
-    const fieldsToReset = [
-      'nationalNumber',
-      'facilityName',
-      'nidNumber',
-      'birthDate',
-      'name',
-      'email',
-      'mobileNumber',
-      'delegatorFileId',
-    ];
-    fieldsToReset.forEach((fieldName) => {
+    const fieldsToReset = ['nationalNumber', 'facilityName', 'nidNumber', 'birthDate', 'name', 'email', 'mobileNumber', 'delegatorFileId'];
+    fieldsToReset.forEach(fieldName => {
       const control = this.contractForm.get(fieldName);
       if (control) {
         control.markAsUntouched();
@@ -294,19 +267,11 @@ export class AddContractPopupComponent implements OnInit {
 
     if (isOld) {
       // Add required validators when نعم is selected
-      this.contractForm
-        .get('contractFileId')
-        ?.setValidators([Validators.required]);
+      this.contractForm.get('contractFileId')?.setValidators([Validators.required]);
       this.contractForm.get('saleDate')?.setValidators([Validators.required]);
-      this.contractForm
-        .get('deliveryDate')
-        ?.setValidators([Validators.required]);
-      this.contractForm
-        .get('paymentPlanId')
-        ?.setValidators([Validators.required]);
-      this.contractForm
-        .get('paymentTypeId')
-        ?.setValidators([Validators.required]);
+      this.contractForm.get('deliveryDate')?.setValidators([Validators.required]);
+      this.contractForm.get('paymentPlanId')?.setValidators([Validators.required]);
+      this.contractForm.get('paymentTypeId')?.setValidators([Validators.required]);
     } else {
       // Remove validators and reset fields when لا is selected
       this.contractForm.get('contractFileId')?.clearValidators();
@@ -319,7 +284,7 @@ export class AddContractPopupComponent implements OnInit {
       this.contractFile = null;
       this.contractForm.patchValue({
         contractFileId: '',
-        saleDate: '',
+        saleDate: ''
       });
     }
 
@@ -331,25 +296,21 @@ export class AddContractPopupComponent implements OnInit {
     this.contractForm.get('paymentPlanId')?.updateValueAndValidity();
   }
   openFile(file: any): void {
-    if (file?.path) {
-      window.open(this.baseUrl + '/' + file.path, '_blank');
-    }
+  if (file?.path) {
+    window.open(this.baseUrl +'/'+ file.path, "_blank");
   }
+}
   deletFile(id: string) {
-    this._fileManagment.DeletFile(id).subscribe((res) => {
-      if (res.isDone) {
-        this.toasterService.showSuccess(res.message);
+    this._fileManagment.DeletFile(id).subscribe(res => {
+      if(res.isDone)
+      {
+        this.toasterService.showSuccess(res.message)
       }
-    });
+    })
   }
   onContractFileUploaded(fileData: any): void {
     // Handle the uploaded contract file
-    if (
-      fileData &&
-      fileData.eventRes &&
-      fileData.eventRes.data &&
-      fileData.eventRes.data.length > 0
-    ) {
+    if (fileData && fileData.eventRes && fileData.eventRes.data && fileData.eventRes.data.length > 0) {
       this.contractFileId = fileData.eventRes.data[0].id;
       this.contractFile = fileData.eventRes.data[0];
       this.contractForm.patchValue({ contractFileId: this.contractFileId });
@@ -357,7 +318,7 @@ export class AddContractPopupComponent implements OnInit {
   }
 
   removeContractFile(): void {
-    this.deletFile(this.contractFileId);
+    this.deletFile(this.contractFileId)
     this.contractFileId = '';
     this.contractFile = null;
     this.contractForm.patchValue({ contractFileId: '' });
@@ -369,40 +330,28 @@ export class AddContractPopupComponent implements OnInit {
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
   }
 
   onFileUploaded(fileData: any): void {
     // Handle the uploaded file
-    if (
-      fileData &&
-      fileData.eventRes &&
-      fileData.eventRes.data &&
-      fileData.eventRes.data.length > 0
-    ) {
+    if (fileData && fileData.eventRes && fileData.eventRes.data && fileData.eventRes.data.length > 0) {
       this.authorizationFileId = fileData.eventRes.data[0].id;
       this.authorizationFile = fileData.eventRes.data[0];
-      this.contractForm.patchValue({
-        delegatorFileId: this.authorizationFileId,
-      });
+      this.contractForm.patchValue({ delegatorFileId: this.authorizationFileId });
       this.showDelegatorFileError = false; // Clear error when file is uploaded
       console.log('File uploaded:', this.authorizationFile);
     }
   }
-  private getLicenseBuyerPaymentType(): void {
-    this.licenseBuyerService
-      .getLicenseProjectBuyerPaymentTypes()
-      .subscribe((res) => {
-        this.licenseBuyerPaymentType =
-          res as LicenseProjectBuyerPaymentTypeDto[];
-      });
+  private getLicenseBuyerPaymentType (): void {
+    this.licenseBuyerService.getLicenseProjectBuyerPaymentTypes().subscribe((res) => {
+      this.licenseBuyerPaymentType = res as LicenseProjectBuyerPaymentTypeDto[]
+    })
   }
   onSubmit(): void {
+    
     // Check verification flags first
-    if (
-      this.buyerType === BuyerTypeEnum.Facility &&
-      !this.isNationalNumberVerified
-    ) {
+    if (this.buyerType === BuyerTypeEnum.Facility && !this.isNationalNumberVerified) {
       this.toasterService.showError('يرجى التحقق من الرقم الموحد للمنشأة');
       return;
     }
@@ -413,10 +362,7 @@ export class AddContractPopupComponent implements OnInit {
     }
 
     // Check delegator file for Facility buyer type
-    if (
-      this.buyerType === BuyerTypeEnum.Facility &&
-      !this.authorizationFileId
-    ) {
+    if (this.buyerType === BuyerTypeEnum.Facility && !this.authorizationFileId) {
       this.showDelegatorFileError = true;
       this.toasterService.showError('يرجى رفع ملف التفويض');
       return;
@@ -431,7 +377,7 @@ export class AddContractPopupComponent implements OnInit {
       // Show toaster error message
       this.toasterService.showError('يرجى إكمال البيانات المطلوبة');
       // Mark all fields as touched to show validation errors
-      Object.keys(this.contractForm.controls).forEach((key) => {
+      Object.keys(this.contractForm.controls).forEach(key => {
         this.contractForm.get(key)?.markAsTouched();
       });
     }
@@ -444,7 +390,7 @@ export class AddContractPopupComponent implements OnInit {
       ...this.contractForm.value,
       // Map to DTO property names with capital letters
       ContractFileId: this.contractForm.value.contractFileId || null,
-      SaleDate: this.contractForm.value.saleDate || null,
+      SaleDate: this.contractForm.value.saleDate || null
     };
 
     // Set delegatorFileId to null if empty
@@ -462,7 +408,7 @@ export class AddContractPopupComponent implements OnInit {
     // Show loader
     this.isSubmitting = true;
 
-    if (!this.isOldContract) {
+    if(!this.isOldContract){
       formData.paymentPlanId = null;
       formData.paymentTypeId = null;
     }
@@ -476,16 +422,14 @@ export class AddContractPopupComponent implements OnInit {
           // Emit event to parent to close popup and reload data
           this.onContractSaved.emit();
         } else {
-          this.toasterService.showError(
-            response.message || 'حدث خطأ أثناء إرسال العقد',
-          );
+          this.toasterService.showError(response.message || 'حدث خطأ أثناء إرسال العقد');
         }
       },
       error: (error) => {
         this.isSubmitting = false;
         this.toasterService.showError('حدث خطأ أثناء إرسال العقد');
         console.error('Error saving contract:', error);
-      },
+      }
     });
   }
 
@@ -536,16 +480,10 @@ export class AddContractPopupComponent implements OnInit {
       if (fieldName === 'mobileNumber') {
         return 'رقم الجوال غير صحيح، يجب أن يتكون من 10 أرقام ويبدأ بـ 05';
       }
-      if (
-        this.buyerType === this.buyerTypeEnum.Facility &&
-        fieldName === 'nationalNumber'
-      ) {
+      if (this.buyerType === this.buyerTypeEnum.Facility && fieldName === 'nationalNumber') {
         return 'الرقم الموحد للمنشأة غير صحيح، يجب أن يتكون من 10 أرقام ويبدأ بـ 700';
       }
-      if (
-        this.buyerType === this.buyerTypeEnum.Individual &&
-        fieldName === 'nidNumber'
-      ) {
+      if (this.buyerType === this.buyerTypeEnum.Individual && fieldName === 'nidNumber') {
         return 'رقم الهوية غير صحيح (10 أرقام)';
       }
       return 'الصيغة غير صحيحة';
@@ -573,16 +511,15 @@ export class AddContractPopupComponent implements OnInit {
         if (response.isDone && response.data) {
           // Success - populate facility name
           this.contractForm.patchValue({
-            facilityName: response.data,
+            facilityName: response.data
           });
           this.isNationalNumberVerified = true;
+
         } else {
           // Failed verification
-          this.toasterService.showError(
-            response.message || 'فشل التحقق من المنشأة',
-          );
+          this.toasterService.showError(response.message || 'فشل التحقق من المنشأة');
           this.contractForm.patchValue({
-            facilityName: '',
+            facilityName: ''
           });
           this.isNationalNumberVerified = false;
         }
@@ -593,7 +530,7 @@ export class AddContractPopupComponent implements OnInit {
         this.isNationalNumberVerified = false;
         this.toasterService.showError('حدث خطأ أثناء التحقق من المنشأة');
         console.error('Error verifying facility:', error);
-      },
+      }
     });
   }
 
@@ -627,56 +564,53 @@ export class AddContractPopupComponent implements OnInit {
     }
 
     this.verifyingCustomer = true;
-    this.realStateDeveloperService
-      .VerifyCustomer(nidNumber, birthDateHijri)
-      .subscribe({
-        next: (response) => {
-          if (response.isDone && response.data) {
-            // Success - populate customer data
-            const customer = response.data;
-            this.contractForm.patchValue({
-              name: customer.fullName,
-              email: customer.email || '',
-              mobileNumber: customer.mobile1 || customer.mobile2 || '',
-            });
-            this.isNidVerified = true;
-          } else {
-            // Failed verification
-            // this.toasterService.showError(response.message || 'فشل التحقق من البيانات');
-            this.contractForm.patchValue({
-              name: '',
-              email: '',
-              mobileNumber: '',
-            });
-            this.isNidVerified = false;
-          }
-          this.verifyingCustomer = false;
-        },
-        error: (error) => {
-          this.verifyingCustomer = false;
+    this.realStateDeveloperService.VerifyCustomer(nidNumber, birthDateHijri).subscribe({
+      next: (response) => {
+        if (response.isDone && response.data) {
+          // Success - populate customer data
+          const customer = response.data;
+          this.contractForm.patchValue({
+            name: customer.fullName,
+            email: customer.email || '',
+            mobileNumber: customer.mobile1 || customer.mobile2 || ''
+          });
+          this.isNidVerified = true;
+
+        } else {
+          // Failed verification
+          // this.toasterService.showError(response.message || 'فشل التحقق من البيانات');
+          this.contractForm.patchValue({
+            name: '',
+            email: '',
+            mobileNumber: ''
+          });
           this.isNidVerified = false;
-          this.toasterService.showError('حدث خطأ أثناء التحقق من البيانات');
-          console.error('Error verifying customer:', error);
-        },
-      });
+        }
+        this.verifyingCustomer = false;
+      },
+      error: (error) => {
+        this.verifyingCustomer = false;
+        this.isNidVerified = false;
+        this.toasterService.showError('حدث خطأ أثناء التحقق من البيانات');
+        console.error('Error verifying customer:', error);
+      }
+    });
   }
 
   // Load deeds list
   loadDeeds(): void {
     this.loadingDeeds = true;
-    this.projectLandDeedService
-      .GetByLicenseProjectId(this.licenseProjectId as string)
-      .subscribe({
-        next: (deeds) => {
-          this.deedsList = deeds || [];
-          this.loadingDeeds = false;
-        },
-        error: (error) => {
-          this.loadingDeeds = false;
-          this.toasterService.showError('حدث خطأ أثناء تحميل قائمة الصكوك');
-          console.error('Error loading deeds:', error);
-        },
-      });
+    this.projectLandDeedService.GetByLicenseProjectId(this.licenseProjectId as string).subscribe({
+      next: (deeds) => {
+        this.deedsList = deeds || [];
+        this.loadingDeeds = false;
+      },
+      error: (error) => {
+        this.loadingDeeds = false;
+        this.toasterService.showError('حدث خطأ أثناء تحميل قائمة الصكوك');
+        console.error('Error loading deeds:', error);
+      }
+    });
   }
 
   // Load payment plans list
@@ -686,32 +620,29 @@ export class AddContractPopupComponent implements OnInit {
     }
 
     this.loadingPaymentPlans = true;
-    this.licenseBuyerService
-      .getProjectPaymentPlans(this.licenseProjectId as string)
-      .subscribe({
-        next: (plans) => {
-          this.paymentPlansList = plans || [];
-          this.loadingPaymentPlans = false;
+    this.licenseBuyerService.getProjectPaymentPlans(this.licenseProjectId as string).subscribe({
+      next: (plans) => {
+        this.paymentPlansList = plans || [];
+        this.loadingPaymentPlans = false;
 
-          // Filter payment plans based on current payment type if already selected
-          const currentPaymentTypeId =
-            this.contractForm.get('paymentTypeId')?.value;
-          if (currentPaymentTypeId) {
-            this.filterPaymentPlansByType(currentPaymentTypeId);
-          }
-        },
-        error: (error) => {
-          this.loadingPaymentPlans = false;
-          this.toasterService.showError('حدث خطأ أثناء تحميل خطط الدفع');
-          console.error('Error loading payment plans:', error);
-        },
-      });
+        // Filter payment plans based on current payment type if already selected
+        const currentPaymentTypeId = this.contractForm.get('paymentTypeId')?.value;
+        if (currentPaymentTypeId) {
+          this.filterPaymentPlansByType(currentPaymentTypeId);
+        }
+      },
+      error: (error) => {
+        this.loadingPaymentPlans = false;
+        this.toasterService.showError('حدث خطأ أثناء تحميل خطط الدفع');
+        console.error('Error loading payment plans:', error);
+      }
+    });
   }
 
   // Filter payment plans based on payment type
   filterPaymentPlansByType(paymentTypeId: number): void {
     this.filteredPaymentPlansList = this.paymentPlansList.filter(
-      (plan) => plan.licenseProjectBuyerPaymentTypeId === paymentTypeId,
+      (plan) => plan.licenseProjectBuyerPaymentTypeId === paymentTypeId
     );
   }
 }

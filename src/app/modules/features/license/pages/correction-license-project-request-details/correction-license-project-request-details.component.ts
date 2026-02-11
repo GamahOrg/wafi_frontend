@@ -121,7 +121,9 @@ export class CorrectionLicenseProjectRequestDetailsComponent implements OnInit {
     editButtonTitle: 'معالجة الملاحظات',
     editButtonForRenewTitle: 'تعديل الطلب قبل التجديد',
     farzStatus: 'معالجة ملاحظات فرز',
+    day: 'يوم',
   };
+
   ngOnInit() {
     this.updateTabContent();
     this.getSelectedRequestIdFromLocalStorage();

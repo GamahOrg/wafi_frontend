@@ -223,7 +223,7 @@ export class LicenseProjectZoneSubunitModelComponent implements OnInit, OnDestro
   save(): void {
     if (!this.projectModel.id) this.projectModel.id = '00000000-0000-0000-0000-000000000000';
     this.controls.id.setValue(this.projectModel.id);
-    if (!this.projectModelForm.valid) {
+    if (!this.projectModelForm.valid || !this.licenseProjectModelDesignFiles?.length) {
       this.showValidation = true;
       this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
       this.projectModelForm?.markAllAsTouched();

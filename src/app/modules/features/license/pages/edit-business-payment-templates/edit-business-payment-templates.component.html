@@ -183,11 +183,12 @@
           <th>رقم الدفعة</th>
           <th>نسبة الاستقطاع</th>
           <th>نسبة الانجاز</th>
+          <th>نسبة الإنجاز التراكمية</th>
           <th>وصف الدفعة</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of paginatedRows">
+        <tr *ngFor="let row of paginatedRows; let i = index">
           <td>{{ row.id }}</td>
           <td>
             <ng-container *ngIf="!isCustomDistribution && !isFirstRowInCashMode(row.id)">
@@ -236,6 +237,7 @@
               </div>
             </ng-container>
           </td>
+           <td>{{ getCumulativeRentPercentage(i) | number:'1.0-2' }}%</td>
           <td>
             <input
               type="text"

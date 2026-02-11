@@ -18,7 +18,7 @@
     margin-right: 0.25rem;
   }
 
-  > span {
+  >span {
     color: $body-color;
   }
 }
@@ -26,33 +26,49 @@
 .form-control,
 .form-select,
 .form-check-input {
+
   &:focus,
   &:focus-visible {
     outline: 0;
     box-shadow: none;
 
     &,
-    & + .input-group-text {
+    &+.input-group-text {
       border-color: $input-border-color !important;
     }
   }
 }
 
 .form-control:not(:read-only),
-.form-select {
+.form-select:not(:disabled) {
+
   &:focus,
   &:focus-visible {
+
     &,
-    & + .input-group-text {
+    &+.input-group-text {
       border-bottom: 2px solid $black !important;
     }
   }
 }
 
+
+.form-select,
 .form-control {
+
+  &:disabled,
   &:read-only {
     color: $dark;
-    border-color: $lightgray;
+
+    &,
+    &+.input-group-text {
+      color: #9DA4AE;
+      border-color: $lightgray;
+    }
+
+    &+.input-group-text {
+      background-color: #E5E7EB;
+    }
   }
 
   &.form-control-plaintext {
@@ -74,6 +90,10 @@
   background-size: 36px 38px;
   background-position: right center;
 
+  &:disabled {
+    --bs-form-select-bg-img: url("/assets/images/icons/select-arrow-dimmed.svg");
+  }
+
   &[multiple] {
     background-image: none;
   }
@@ -88,8 +108,27 @@
   background-image: none;
   padding-right: $input-padding-x;
 
-  & + .input-group-text {
+  &+.input-group-text {
     border-color: var(--bs-danger);
+  }
+}
+
+.was-validated .form-select:invalid,
+.form-select.is-invalid {
+
+  &:not([multiple]):not([size]),
+  &:not([multiple])[size="1"] {
+    --bs-form-select-bg-icon: none;
+    padding-right: unset;
+    padding-inline-start: $form-select-padding-x;
+    padding-inline-end: $form-select-indicator-padding;
+    background-color: $input-bg;
+    background-size: 36px 38px;
+    background-position: right center;
+
+    html:lang(ar) & {
+      background-position: left center;
+    }
   }
 }
 
@@ -118,6 +157,8 @@
 
   &:not(.form-check-normal) {
     justify-content: center;
+    align-items: center;
+
     padding: $input-padding-y $input-padding-x;
     border: $input-border-width solid $input-border-color;
     border-radius: $input-border-radius;
@@ -157,7 +198,7 @@
     border: 3px solid $white;
     outline: 1px solid $theme-main;
 
-    & ~ .form-check-label {
+    &~.form-check-label {
       color: $theme-main;
     }
   }

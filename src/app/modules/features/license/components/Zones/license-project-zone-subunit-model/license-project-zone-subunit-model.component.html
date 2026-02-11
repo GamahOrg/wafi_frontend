@@ -12,7 +12,7 @@
                   <div class="row mb-3">
                     <div class="col-12 col-lg-6">
                       <div class="form-group mb-4">
-                        <label class="form-label">{{localization.name}}</label>
+                        <label class="form-label"><span class="required-star">*</span> {{localization.name}}</label>
                         <!--<input type="text" id="control-name" placeholder="{{localization.name}}" class="form-control"
                                formControlName="name">-->
                         <select id="control-name"
@@ -29,6 +29,27 @@
                           <option value="C">C</option>
                           <option value="D">D</option>
                           <option value="E">E</option>
+                          <option value="F">F</option>
+                          <option value="G">G</option>
+                          <option value="H">H</option>
+                          <option value="I">I</option>
+                          <option value="J">J</option>
+                          <option value="K">K</option>
+                          <option value="L">L</option>
+                          <option value="M">M</option>
+                          <option value="N">N</option>
+                          <option value="O">O</option>
+                          <option value="P">P</option>
+                          <option value="Q">Q</option>
+                          <option value="R">R</option>
+                          <option value="S">S</option>
+                          <option value="T">T</option>
+                          <option value="U">U</option>
+                          <option value="V">V</option>
+                          <option value="W">W</option>
+                          <option value="X">X</option>
+                          <option value="Y">Y</option>
+                          <option value="Z">Z</option>
                         </select>
                         <mat-error *ngIf="controls.name?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
                       </div>
@@ -69,7 +90,7 @@
 
                     <div class="col-12 col-lg-6">
                       <div class="form-group mb-4">
-                        <label class="form-label">{{localization.unitsCount}}</label>
+                        <label class="form-label"><span class="required-star">*</span> {{localization.unitsCount}}</label>
                         <input type="number" id="control-unitsCount" class="form-control" formControlName="unitsCount">
 
                         <div class="invalid-feedback d-block"
@@ -85,7 +106,7 @@
 
                     <div class="col-12 col-lg-12">
                       <div class="form-group mb-4">
-                        <label class="form-label">{{localization.properties}}</label>
+                        <label class="form-label"><span class="required-star">*</span> {{localization.properties}}</label>
                         <textarea class="form-control" id="control-properties" formControlName="properties"> </textarea>
                         <mat-error
                           *ngIf="controls.properties?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
@@ -94,7 +115,7 @@
 
                     <div class="col-12 col-lg-12">
                       <div class="form-group mb-4">
-                        <label class="form-label">{{localization.licenseProjectModelDesignFiles}}</label>
+                        <label class="form-label"><span class="required-star">*</span> {{localization.licenseProjectModelDesignFiles}}</label>
                         <div class="value" *ngFor="let file of licenseProjectModelDesignFiles">
                           <span class="icon material-icons-outlined">content_copy</span>
                           <a *ngIf="file && file.designFile" id="link-licenseProjectModelDesignFiles"
@@ -103,11 +124,12 @@
                         </div>
                         <app-file-uploader [data]="multipleFileUploaderData"
                           (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+                        <mat-error *ngIf="!licenseProjectModelDesignFiles?.length && showValidation">{{localization.requiredErrorMsg}}</mat-error>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row" *ngIf="!hideActionButtons">
+                <div class="row mt-3" *ngIf="!hideActionButtons">
                   <div class="d-flex gap-2 col-12 col-lg-12">
                     <button type="button" class="btn btn-outline-primary mx-3" (click)="save()">حفظ واضافة نموذج جديد</button>
                     <!-- <button type="button" class="btn btn-outline-primary">حفظ النموذج</button> -->

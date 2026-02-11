@@ -191,6 +191,14 @@ export class BusinessPaymentTemplatesComponent implements OnInit, OnDestroy {
     }
   }
 
+    getCumulativeRentPercentage(index: number): number {
+    let sum = 0;
+    for (let i = 0; i <= index; i++) {
+      sum += this.paymentInstallments[i]?.rentPercentage || 0;
+    }
+    return sum;
+  }
+
   deactivateTemplateObj!: LicenseProjectBusinessPaymentTemplateModel;
   confirmDeactivateTemplate(
     template: LicenseProjectBusinessPaymentTemplateModel

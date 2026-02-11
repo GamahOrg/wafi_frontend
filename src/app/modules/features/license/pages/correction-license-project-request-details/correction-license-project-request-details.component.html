@@ -25,6 +25,20 @@
               {{ selectedRequest.licenseProjectFarzRequestStatusName }}
             </span> -->
 
+            <div
+              class="status-pill orange"
+              *ngIf="
+                selectedRequest &&
+                selectedRequest.licenseProjectRequestEventStatus
+                  ?.allowCompile &&
+                selectedRequest.licenseProjectRequestEventStatus
+                  ?.allowCompilePeriod != -1
+              "
+            >
+              {{ localization.remainingDaysToStudy }}
+              {{ StudyDaysProgressSetting.title }} {{ localization.day }}
+            </div>
+
             <span
               class="status-pill"
               [ngClass]="

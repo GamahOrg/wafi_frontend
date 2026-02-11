@@ -1,0 +1,138 @@
+<ng-container>
+  <form
+    class="d-flex flex-column h-100"
+    [formGroup]="projectModelForm"
+    id="form-projectModelForm"
+  >
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+
+            <label class="form-label"><span class="required-star">* </span> {{ localization.name }}</label>
+            <!--<input type="text" id="control-name" placeholder="{{localization.name}}" class="form-control"
+                   formControlName="name">-->
+            <select
+              id="control-name"
+              class="form-select"
+              formControlName="name"
+            >
+              <!-- optional placeholder -->
+              <option value="" disabled selected>
+                {{ localization.name }}
+              </option>
+
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="G">G</option>
+              <option value="H">H</option>
+              <option value="I">I</option>
+              <option value="J">J</option>
+              <option value="K">K</option>
+              <option value="L">L</option>
+              <option value="M">M</option>
+              <option value="N">N</option>
+              <option value="O">O</option>
+              <option value="P">P</option>
+              <option value="Q">Q</option>
+              <option value="R">R</option>
+              <option value="S">S</option>
+              <option value="T">T</option>
+              <option value="U">U</option>
+              <option value="V">V</option>
+              <option value="W">W</option>
+              <option value="X">X</option>
+              <option value="Y">Y</option>
+              <option value="Z">Z</option>
+            </select>
+            <mat-error
+              *ngIf="controls.name?.hasError('required') && showValidation"
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+
+            <label class="form-label"><span class="required-star">* </span> {{ localization.unitsCount }}</label>
+            <input
+              type="number"
+              id="control-unitsCount"
+              class="form-control"
+              formControlName="unitsCount"
+            />
+
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                (controls.unitsCount?.hasError('required') ||
+                  controls.unitsCount?.value == 0) &&
+                showValidation
+              "
+            >
+              {{ localization.requiredErrorMsg }}
+            </div>
+            <mat-error
+              *ngIf="controls.unitsCount?.hasError('min') && showValidation"
+              >{{ localization.MinValueError }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+
+            <label class="form-label"><span class="required-star">* </span> {{ localization.properties }}</label>
+            <textarea
+              class="form-control"
+              id="control-properties"
+              formControlName="properties"
+            >
+            </textarea>
+            <mat-error
+              *ngIf="
+                controls.properties?.hasError('required') && showValidation
+              "
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-12">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">* </span> {{
+              localization.licenseProjectModelDesignFiles
+            }}</label>
+            <div
+              class="value"
+              *ngFor="let file of licenseProjectModelDesignFiles"
+            >
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a
+                *ngIf="file && file.designFile"
+                id="link-licenseProjectModelDesignFiles"
+                [href]="baseUrl + file.designFile.filePath"
+                target="_blank"
+              >
+                {{ file.designFile.fileDescription }}</a
+              >
+            </div>
+            <app-file-uploader
+              [data]="multipleFileUploaderData"
+              (fileUploaded)="onFileUploaded($event)"
+            ></app-file-uploader>
+            <mat-error
+              *ngIf="!licenseProjectModelDesignFiles?.length && showValidation"
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

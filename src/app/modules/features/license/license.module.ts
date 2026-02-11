@@ -523,6 +523,7 @@ import { CorrectionLicenseProjectZoneUnitComponent } from './components/correcti
 import { CorrectionLicenseProjectZoneUnitSubunitComponent } from './components/correction-units/correction-license-project-zone-unit-subunit/correction-license-project-zone-unit-subunit.component';
 import { CorrectionLicenseProjectZoneSubunitModelComponent } from './components/correction-units/correction-license-project-zone-subunit-model/correction-license-project-zone-subunit-model.component';
 import { CorrectionSubUnitModelsComponent } from './components/correction-units/correction-sub-unit-models/correction-sub-unit-models.component';
+import { CorrectionProjectModuleModelsFormComponent } from './components/correction-units/correction-project-module-models-form/correction-project-module-models-form.component';
 import { CorrectionConstructionLicenseFormComponent } from './components/correction-units/correction-construction-license-form/correction-construction-license-form.component';
 import { CorrectionUpdateBuildingFlatAreaComponent } from './components/correction-units/correction-update-building-flat-area/correction-update-building-flat-area.component';
 import { CorrectionLicenseRequestValidationPopupComponent } from './components/correction-units/correction-license-request-validation-popup/correction-license-request-validation-popup.component';
@@ -978,6 +979,7 @@ import { CorrectionLicenseProjectPlanAccordingApprovedStandardsFileService } fro
     CorrectionLicenseProjectZoneUnitSubunitComponent,
     CorrectionLicenseProjectZoneSubunitModelComponent,
     CorrectionSubUnitModelsComponent,
+    CorrectionProjectModuleModelsFormComponent,
     CorrectionConstructionLicenseFormComponent,
     CorrectionUpdateBuildingFlatAreaComponent,
     CorrectionLicenseRequestValidationPopupComponent,

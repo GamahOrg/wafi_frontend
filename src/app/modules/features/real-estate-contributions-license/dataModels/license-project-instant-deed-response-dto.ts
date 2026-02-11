@@ -9,6 +9,8 @@ export interface LicenseProjectInstantDeedResponseDto {
   licenseProjectConstructionLicenseTypeId: number| null;
   licenseProjectNatureTypeId: number | null;
   isVerifiedByIntegration: boolean;
+  canEdit?: boolean;
+  canDelete?: boolean;
 }
 
 export interface DeedHeaderProjectDataDto {

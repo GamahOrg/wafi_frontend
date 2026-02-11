@@ -98,6 +98,7 @@
                     <th>رقم الدفعة</th>
                     <th>نسبة الاستقطاع</th>
                     <th>نسبة الإنجاز</th>
+                    <th>نسبة الإنجاز التراكمية</th>
                     <th>وصف الدفعة</th>
                   </tr>
                 </thead>
@@ -106,6 +107,7 @@
                     <td class="payment-number">{{ i + 1 }}</td>
                     <td>{{ payment.deductionPercentage }}%</td>
                     <td>{{ payment.rentPercentage }}%</td>
+                     <td>{{ getCumulativeRentPercentage(i) | number:'1.0-2' }}%</td>
                     <td>{{payment.description && payment.description.length > 70 ? (payment.description | slice:0:100) + '...' : payment.description}}</td>
                   </tr>
                 </tbody>
