@@ -79,6 +79,7 @@ export interface LicenseProject {
   licenseProjectFinancialStatements: LicenseProjectFinancialStatementDto[];
   licenseProjectPromissoryNotes: LicenseProjectPromissoryNoteDto[];
   licenseProjectBusinessPayments: LicenseProjectBusinessPaymentModel[];
+  isCorrectionPrevented: boolean;
 }
 export interface SysBank {
   name: string;

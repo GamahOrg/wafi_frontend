@@ -153,7 +153,8 @@
               *ngIf="
                 selectedRequest &&
                 selectedRequest.externalStatusId === 18 &&
-                isRealEstateUnitsLicense()
+                isRealEstateUnitsLicense() &&
+                selectedRequest?.licenseProject?.isCorrectionPrevented === false
               "
               class="btn d-flex align-items-center justify-content-between btn-primary"
               (click)="openUnitsCorrection()"
