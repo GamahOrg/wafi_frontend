@@ -1,17 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, forkJoin } from 'rxjs';
-import { LicenseProjectCompletionData, LicenseProjectModelDto } from '../../../dataModels/license-project-model.dto';
+import { LicenseProjectModelDto } from '../../../dataModels/license-project-model.dto';
 import { DropDownNameDto } from '../../../dataModels/drop-down-name.dto';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ToastrService } from 'ngx-toastr';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
-import { ProjectModuleModelsFormComponent } from '../../project-module-models-form/project-module-models-form.component';
+import { CorrectionProjectModuleModelsFormComponent } from '../correction-project-module-models-form/correction-project-module-models-form.component';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { environment } from 'src/environments/environment';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import { DataVisibilityOfLicenseProjectService } from '../../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
-import { TabCode } from '../../../models/tab-code.model';
-import { LicenseRequestService } from '../../../services/license-request.service';
 import { CorrectionProjectSubUnitService } from '../../../services/correction-project-sub-unit.service';
 import { CorrectionProjectModelService } from '../../../services/correct-units/correction-project-model-service.service';
 
@@ -132,8 +130,8 @@ export class CorrectionSubUnitModelsComponent implements OnInit, OnDestroy {
     this._projectModelService.SetSubjectObj(license as LicenseProjectModelDto);
     let Data = {
       title: this.localization.title + " - " + this._sharedLicenseProjectService.stripHtml(this.selectedSubUnitTitle ?? ''),
-      component: ProjectModuleModelsFormComponent,
-      id: "ProjectModuleModelsFormComponent"
+      component: CorrectionProjectModuleModelsFormComponent,
+      id: "CorrectionProjectModuleModelsFormComponent"
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }

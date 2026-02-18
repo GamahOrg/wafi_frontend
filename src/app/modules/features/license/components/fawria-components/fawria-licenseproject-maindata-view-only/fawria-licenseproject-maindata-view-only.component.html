@@ -10,14 +10,14 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.name }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.name }}</label>
             <input type="text" id="control-name" placeholder="{{ localization.name }}" class="form-control" formControlName="name" [disabled]="true" [readonly]="true" />
           </div>
         </div>
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.typeId }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.typeId }}</label>
             <select class="form-select" id="control-typeId" formControlName="typeId" [disabled]="true">
               <option [label]="localization.typeId"></option>
               <option *ngFor="let type of types" [ngValue]="type.id">
@@ -29,7 +29,7 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.categoryId }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.categoryId }}</label>
             <select class="form-select" id="control-categoryId" formControlName="categoryId" [disabled]="true">
               <option [label]="localization.categoryId"></option>
               <option *ngFor="let category of categories" [value]="category.id">
@@ -41,7 +41,7 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.subCategoryId }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.subCategoryId }}</label>
             <select class="form-select" id="control-subCategoryId" formControlName="subCategoryId" [disabled]="true">
               <option [label]="localization.subCategoryId"></option>
               <option *ngFor="let subCategory of tempSubCategories" [value]="subCategory.id">
@@ -53,7 +53,7 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.licenseNatureType }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.licenseNatureType }}</label>
             <select class="form-select" id="control-licenseNatureType" formControlName="licenseProjectNatureTypeId" [disabled]="true">
               <option *ngFor="let licenseNatureType of licenseNatureType" [value]="licenseNatureType.id" [selected]="licenseNatureType.id === licenseNatureTypeEnum.Units">
                 {{ licenseNatureType.name }}
@@ -65,7 +65,7 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{
+            <label class="form-label"><span class="required-star">*</span> {{
               localization.licenseProjectScopeId
               }}</label>
             <select class="form-select" id="control-licenseProjectScopeId" formControlName="licenseProjectScopeId" [disabled]="true">
@@ -79,7 +79,7 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.startOn }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.startOn }}</label>
             <div class="input-group">
               <input bsDatepicker id="control-startOn" type="text" class="form-control" formControlName="startOn" value="{{ controls.startOn.value | date : 'yyyy-MM-dd' }}" [disabled]="true" [readonly]="true" />
               <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
@@ -89,7 +89,7 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.endOn }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.endOn }}</label>
             <div class="input-group">
               <input bsDatepicker id="control-endOn" type="text" class="form-control" formControlName="endOn" value="{{ controls.endOn.value | date : 'yyyy-MM-dd' }}" [disabled]="true" [readonly]="true" />
               <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
@@ -99,7 +99,7 @@
 
         <!-- <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.ProjectSize }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.ProjectSize }}</label>
             <div class="d-flex justify-content-between w-100">
               <div class="form-check form-check-inline flex-nowrap">
                 <input
@@ -158,7 +158,7 @@
         </div> -->
         <!-- <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{
+            <label class="form-label"><span class="required-star">*</span> {{
               localization.projectDescription
             }}</label>
             <textarea
@@ -177,7 +177,7 @@
         </div> -->
         <!-- <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.projectServices }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.projectServices }}</label>
             <textarea
               class="form-control"
               id="control-projectServices"
@@ -194,7 +194,7 @@
 
         <div class="col-12 col-lg-6">
           <div class="form-group">
-            <label class="form-label">{{ localization.HasStarted }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.HasStarted }}</label>
             <div class="row g-2">
               <div class="col-12 col-lg-6">
                 <label class="form-check" for="control-yes">
@@ -214,7 +214,7 @@
 
         <div class="col-12 col-lg-6" *ngIf="isProjectStarted()">
           <div class="form-group">
-            <label class="form-label">{{ localization.achievementRate }}</label>
+            <label class="form-label"><span class="required-star">*</span> {{ localization.achievementRate }}</label>
             <div class="input-group">
               <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate" [disabled]="true" [readonly]="true" />
               <span class="input-group-text"><i class="material-icons-outlined">percent</i></span>
@@ -224,7 +224,7 @@
 
         <div class="col-12 col-lg-12" *ngIf="isProjectStarted()">
           <div class="form-group">
-            <label class="form-label">{{
+            <label class="form-label"><span class="required-star">*</span> {{
               localization.engineeringConsultantReportFileId
               }}</label>
             <div class="col-12 col-lg-12" *ngIf="

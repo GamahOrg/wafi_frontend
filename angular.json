@@ -20,17 +20,22 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "styles": [
               "./node_modules/font-awesome/css/font-awesome.css",
+              "./src/assets/fonts/HGI/hgi-stroke-rounded.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
@@ -69,6 +74,34 @@
                 }
               ]
             },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            },
+            "local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
+            },
             "testing": {
               "budgets": [
                 {
@@ -89,20 +122,6 @@
                   "with": "src/environments/environment.testing.ts"
                 }
               ]
-            },
-            "local": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.local.ts"
-                }
-              ]
             }
           },
           "defaultConfiguration": "production"
@@ -114,17 +133,21 @@
               "browserTarget": "Wafi:build:production",
               "port": 4200
             },
+            "development": {
+              "browserTarget": "Wafi:build:development",
+              "port": 4500
+            },
             "stage": {
               "browserTarget": "Wafi:build:stage",
               "port": 4500
             },
-            "testing": {
-              "browserTarget": "Wafi:build:testing",
-              "port": 4300
-            },
             "local": {
               "browserTarget": "Wafi:build:local",
               "port": 4400
+            },
+            "testing": {
+              "browserTarget": "Wafi:build:testing",
+              "port": 4300
             }
           },
           "defaultConfiguration": "development"
@@ -138,11 +161,19 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/assets"],
-            "styles": ["src/assets/styles/styles.scss"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/assets/styles/styles.scss"
+            ],
             "scripts": []
           }
         }
@@ -151,7 +182,7 @@
   },
   "cli": {
     "analytics": "8321444c-f43f-4db6-af2b-e356a1f31f0d",
-    "cache": {
+     "cache": {
       "environment": "all"
     }
   }

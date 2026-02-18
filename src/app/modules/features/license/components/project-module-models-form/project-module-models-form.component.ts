@@ -9,7 +9,6 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
-import { CorrectionProjectModelService } from '../../services/correct-units/correction-project-model-service.service';
 
 @Component({
   selector: 'app-project-module-models-form',
@@ -24,7 +23,7 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
   baseUrl = `${environment.baseURL}/`;
   showValidation: boolean = false;
 
-  constructor(private _projectModelService: CorrectionProjectModelService,
+  constructor(private _projectModelService: ProjectModelService,
     private _formBuilder: FormBuilder,
     private _toastrService: ToastrService,
     private _toastrNotificationService: ToastrNotificatioService,

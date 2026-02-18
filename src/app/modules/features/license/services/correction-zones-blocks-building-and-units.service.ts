@@ -40,14 +40,9 @@ export class CorrectionZonesBlocksBuildingAndUnitsService {
 
   // save
   Save(zone: Zone): Observable<Zone[] | null> {
-    return this._httpClient
-      .post<CoreResponseDTO<Zone[]>>(
-        `${Configuration.APIs.correctionLicenseProjectZone.Save}`,
-        zone
-      )
-      .pipe(
-        map((res: CoreResponseDTO<Zone[]>) => {
-          
+    return this._httpClient.post<CoreResponseDTO<Zone[]>>(
+        `${Configuration.APIs.correctionLicenseProjectZone.Save}`, zone)
+      .pipe(map((res: CoreResponseDTO<Zone[]>) => {
           if (res.data) {
             return res.data as Zone[];
           } else {

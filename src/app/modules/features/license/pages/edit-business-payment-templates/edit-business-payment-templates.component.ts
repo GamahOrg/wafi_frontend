@@ -108,6 +108,14 @@ export class EditBusinessPaymentTemplatesComponent implements OnInit, OnChanges 
     }
   }
 
+  getCumulativeRentPercentage(index: number): number {
+    let sum = 0;  
+    for (let i = 0; i <= index; i++) {
+      sum += this.paginatedRows[i]?.completionRate || 0;
+    }
+    return sum;
+  }
+  
   ngOnChanges(changes: SimpleChanges): void {
     // Update payment type when selectedPaymentType input changes
     if (changes['selectedPaymentType'] && !changes['selectedPaymentType'].firstChange) {

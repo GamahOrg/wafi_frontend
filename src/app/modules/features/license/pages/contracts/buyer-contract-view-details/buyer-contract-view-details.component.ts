@@ -69,6 +69,14 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+    getCumulativeRentPercentage(index: number): number {
+    let sum = 0;
+    for (let i = 0; i <= index; i++) {
+      sum += this.contractDetails?.licenseProjectBuyerBusinessPayment?.paymentInstallments[i]?.rentPercentage || 0;
+    }
+    return sum;
+  }
+
   private observePopupEvents(): void {
     // Listen for confirmation action
     this.subscriptions.push(

@@ -148,11 +148,11 @@
                     <i class="hgi hgi-stroke hgi-profile-02"></i>
                     <span>تفاصيل الصك</span>
                   </button>
-                  <button mat-menu-item (click)="updateDeed(deed)" class="menu-edit-btn">
+                  <button mat-menu-item (click)="updateDeed(deed)" class="menu-edit-btn" *ngIf="deed?.canEdit === true">
                     <i class="hgi hgi-stroke hgi-edit-02"></i>
                     <span>تعديل الصك</span>
                   </button>
-                  <button mat-menu-item (click)="deleteDeed(deed.id)" class="menu-delete-btn">
+                  <button mat-menu-item (click)="deleteDeed(deed.id)" class="menu-delete-btn" *ngIf="deed?.canDelete === true">
                     <i class="hgi hgi-stroke hgi-delete-03"></i>
                     <span>حذف الصك</span>
                   </button>

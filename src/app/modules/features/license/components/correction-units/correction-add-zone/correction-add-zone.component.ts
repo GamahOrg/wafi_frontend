@@ -86,14 +86,9 @@ export class CorrectionAddZoneComponent implements OnInit, OnDestroy {
   }
 
   private observeconfirmAction() {
-    console.log('add zone observeconfirmAction');
-    //
-    this.subscriptions.push(
-      this._popupService.confirmAction.subscribe((res: PopupData) => {
-        console.log('observeconfirmAction', res);
-        this.submitAddingZoneForm();
-      })
-    );
+    this._popupService.confirmAction.subscribe((res: PopupData) => {
+      this.submitAddingZoneForm();
+    })
   }
 
   private closeDialog(): void {
@@ -110,7 +105,6 @@ export class CorrectionAddZoneComponent implements OnInit, OnDestroy {
       return;
     }
     this.addingZoneForm.value.licenseProjectsId = this.licenseProjectId;
-    this.subscriptions.push(
       this._zonesBlocksBuildingAndUnitsService
         .Save({ ...this.addingZoneForm.value, correctedUnitRequestHeaderId: this.requestCorrectionId,} as Zone)
         .subscribe({
@@ -141,17 +135,14 @@ export class CorrectionAddZoneComponent implements OnInit, OnDestroy {
               this._accordionService.updateAccordionContent(accordionContent);
             }
           },
-          error: (err) => {
-            console.log(err);
-          },
           complete: () => {
             if (this.popupData.id == 'CorrectionAddZoneComponent') {
               this.closeDialog();
             }
           },
         })
-    );
   }
+
   private updateProjectZones(zones: Zone[]) {
     this._zonesBlocksBuildingAndUnitsService.updateProjectZones(zones);
   }
