@@ -411,6 +411,8 @@ export const Configuration = {
       Save: '/api/LicenseProjectFeasibilityStudy/Save',
       SaveFawriaFeasibilityStudy:
         '/api/LicenseProjectFeasibilityStudy/SaveFawriaFeasibilityStudy',
+      Delete: (licenseProjectId: string, fileId: string) =>
+        `/api/LicenseProjectFeasibilityStudy/${licenseProjectId}/files/${fileId}`,
     },
     LicenseProjectRequestAttachment: {
       GetByLicenseProjectId:
@@ -742,7 +744,8 @@ export const Configuration = {
         '/api/LicenseProject/GetFawriaEndBeneficiaryContactsInfoById',
       SaveFawriaEndBeneficiaryContactsInfoAsync:
         '/api/LicenseProject/SaveFawriaEndBeneficiaryContactsInfoAsync',
-      ValidateProjectForContractCreation: '/api/LicenseProject/ValidateProjectForContractCreationAsync',
+      ValidateProjectForContractCreation:
+        '/api/LicenseProject/ValidateProjectForContractCreationAsync',
     },
     LicenseProjectExchangeDocument: {
       GetExchangeDocumentOnProject:

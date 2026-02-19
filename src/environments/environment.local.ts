@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseURL: 'http://localhost:5282',
+  baseURL: 'https://localhost:7253',
   securityURl: 'http://localhost:7444',
 };

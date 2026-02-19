@@ -300,10 +300,8 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     if (!this.projectLandDeedCreateUpdate.approvedOn)
       this.projectLandDeedCreateUpdate.approvedOn = null;
 
-    console.log(
-      'validateDeedInfo this.projectLandDeedCreateUpdate',
-      this.projectLandDeedCreateUpdate
-    );
+    this.deedFromIntegration = new DeedData();
+    
     this.subscriptions.push(
       this._projectLandDeedService
         .ValidateDeedInfo(this.projectLandDeedCreateUpdate)

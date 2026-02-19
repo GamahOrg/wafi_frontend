@@ -269,6 +269,7 @@
       </div>
       <hr />
       <h6 class="title">{{ "المرفقات" }}</h6>
+
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <div class="key">الجدول الزمني المقترح</div>
@@ -287,6 +288,14 @@
             >
               {{ proposedFile.proposedScheduleFile.fileDescription }}</a
             >
+            <button
+              *ngIf="proposedFile?.proposedScheduleFile"
+              type="button"
+              class="btn btn-sm"
+              (click)="DeleteFile(proposedFile.proposedScheduleFileId)"
+            >
+              <i class="hgi hgi-stroke hgi-delete-02"></i>
+            </button>
           </div>
           <app-file-uploader
             [data]="mueltiFilesUploaderData"
@@ -323,6 +332,14 @@
             >
               {{ marketingFile.marketingPlanFile.fileDescription }}</a
             >
+            <button
+              *ngIf="marketingFile?.marketingPlanFile"
+              type="button"
+              class="btn btn-sm"
+              (click)="DeleteFile(marketingFile.marketingPlanFileId)"
+            >
+              <i class="hgi hgi-stroke hgi-delete-02"></i>
+            </button>
           </div>
           <app-file-uploader
             [data]="mueltiFilesUploaderData"
@@ -340,6 +357,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <div class="key">ملفات دراسة الجدوى</div>
@@ -358,6 +376,14 @@
             >
               {{ file.feasibilityStudyFile.fileDescription }}</a
             >
+            <button
+              *ngIf="file?.feasibilityStudyFile"
+              type="button"
+              class="btn btn-sm"
+              (click)="DeleteFile(file.feasibilityStudyFileId)"
+            >
+              <i class="hgi hgi-stroke hgi-delete-02"></i>
+            </button>
           </div>
           <app-file-uploader
             [data]="mueltiFilesUploaderData"
@@ -377,6 +403,7 @@
           </div>
         </div>
       </div>
+
       <hr />
       <h6 class="title">{{ "الافتراضات التي تستند إلى الدراسة" }}</h6>
       <div class="col-12 col-lg-6">
