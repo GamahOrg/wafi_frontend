@@ -137,6 +137,10 @@ export class UpdateClearanceEngineeringComponent implements OnInit, OnDestroy {
 
 
   clearanceEngineeringConsultantFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.form.get('lastEngineeringReportId')?.setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) {
       this.form.get('lastEngineeringReportId')?.setValue(null);
       return;

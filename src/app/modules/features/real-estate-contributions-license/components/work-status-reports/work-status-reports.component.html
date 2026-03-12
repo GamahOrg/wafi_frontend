@@ -156,7 +156,7 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
   <div class="row mb-3">
     <div class="col-12 col-lg-6">
     <select class="form-select" [(ngModel)]="currenrYear" (change)="onChangeYear($event)">
-      <option label="اختار سنه"></option>
+      <option label="يرجى الاختيار" [ngValue]="null" disabled hidden></option>
       <option *ngFor="let item of years" [value]="item">
         {{ item }}
       </option>

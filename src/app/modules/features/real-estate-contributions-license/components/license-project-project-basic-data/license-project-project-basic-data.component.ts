@@ -42,7 +42,7 @@ export class LicenseProjectProjectBasicDataComponent   implements OnInit {
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
 
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',

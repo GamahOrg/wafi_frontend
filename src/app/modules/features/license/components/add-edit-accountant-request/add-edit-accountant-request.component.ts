@@ -58,7 +58,7 @@ export class AddEditAccountantRequestComponent implements OnInit, OnDestroy {
       isClearanceAccountantDone: [this.isClearanceAccountantDone, Validators.required],
       reasonsForNotFinalizingAccountantClearance: [this.reasonsForNotFinalizingAccountantClearance, Validators.required],
       justificationsAndReasons: [this.justificationsAndReasons , Validators.required],
-      licenseProjectId:['', [Validators.required]],
+      licenseProjectId:[null, [Validators.required]],
       commercialRegister: this._formBuilder.control<string | null>(null, [Validators.required, Validators.pattern(Configuration.validators.numberOnly)]),
     });
   }
@@ -105,6 +105,9 @@ export class AddEditAccountantRequestComponent implements OnInit, OnDestroy {
     this.form.get('clearanceAccountantFileId')?.updateValueAndValidity();
   }
   onNonClearanceDocumentAccountConsultantFilesUpload(filesData: any): void {
+    if (filesData.eventRes.data.length == 0){
+      this.nonClearanceDocumentAccountantFiles = [];
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     
     if (!this.nonClearanceDocumentAccountantFiles) {
@@ -117,10 +120,18 @@ export class AddEditAccountantRequestComponent implements OnInit, OnDestroy {
     });
   }
   clearanceAccountantFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length == 0){
+      this.clearanceAccountantFileId = '';
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.clearanceAccountantFileId = filesData.eventRes.data[0].id
   }
   agreementDocumentFileIdFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length == 0){
+      this.agreementDocumentFileId = '';
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.agreementDocumentFileId = filesData.eventRes.data[0].id
   }

@@ -205,7 +205,7 @@ export class AddLicenseCertificateTemplateComponent implements OnInit, OnDestroy
 
   addDeedTemplatestItem(): void {
     const itemGroup = this._formBuilder.group({
-      deedType: [''],
+      deedType: [null],
       deedNumber: [''],
       day: [0],
       month: [0],

@@ -7,21 +7,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { ApproveDeedOwnerDto } from '../../models/approve-deed-owner';
-import {Title} from "@angular/platform-browser";
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-deed-approval',
   templateUrl: './deed-approval.component.html',
-  styleUrls: ['./deed-approval.component.scss']
+  styleUrls: ['./deed-approval.component.scss'],
 })
 export class DeedApprovalComponent implements OnInit {
-
-  licenseProjectLandOwnerInfoDto: LicenseProjectLandOwnerInfoDto | null = null;;
+  licenseProjectLandOwnerInfoDto: LicenseProjectLandOwnerInfoDto | null = null;
   approveDeedOwnerDto: ApproveDeedOwnerDto = new ApproveDeedOwnerDto();
   showValidation: boolean = false;
   approve: boolean = false;
   localization = {
     facilityData: 'بيانات المطور عقاري',
-    yes: "نعم",
+    yes: 'نعم',
     no: 'لا',
     title: 'الموافقة على الاتفاقية مع المطور عقاري',
     deedData: 'بيانات الصك',
@@ -38,15 +37,15 @@ export class DeedApprovalComponent implements OnInit {
     requiredErrorMsg: 'حقل مطلوب',
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
-    or: "او",
-    enter: "دخول",
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    or: 'او',
+    enter: 'دخول',
     accept: 'موافق',
-    realEstateContributions: "المساهمات عقارية",
-    wafi: "الهيئة العامة للعقار",
+    realEstateContributions: 'المساهمات عقارية',
+    wafi: 'الهيئة العامة للعقار',
     agreement: 'الموافقة على الاتفاقية',
-    appTitle: "تهميش الصكوك"
-  }
+    appTitle: 'تهميش الصكوك',
+  };
   singleFileUploaderData: FileUploader = {
     multiple: true,
   } as FileUploader;
@@ -54,19 +53,18 @@ export class DeedApprovalComponent implements OnInit {
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
     agreementFileId: [],
     isApproved: [1],
-  })
+  });
   get controls() {
     return this.projectLandOwnerForm.controls;
   }
-  constructor(private _router: Router,
+  constructor(
+    private _router: Router,
     private _activeRoute: ActivatedRoute,
     private _licenseProjectLandOwnerService: LicenseProjectLandOwnerService,
     private _formBuilder: FormBuilder,
     private _toastrNotificationService: ToastrNotificatioService,
-    private titleService:Title
-  ) {
-  
-  }
+    private titleService: Title
+  ) {}
 
   private setAppTitle() {
     this.titleService.setTitle(this.localization.appTitle);
@@ -81,8 +79,9 @@ export class DeedApprovalComponent implements OnInit {
    * navigateToRealEstateContributionsLogin
    */
   public navigateToRealEstateContributionsLogin() {
-    this._router.navigateByUrl(`${Configuration.modules.realEstateContributionsAuth}/${Configuration.pages.realEstateContributionsAuth.login}`);
-
+    this._router.navigateByUrl(
+      `${Configuration.modules.realEstateContributionsAuth}/${Configuration.pages.realEstateContributionsAuth.login}`
+    );
   }
 
   ngOnInit() {
@@ -90,38 +89,49 @@ export class DeedApprovalComponent implements OnInit {
     let id = this._activeRoute.snapshot.params['Id'];
     this.approveDeedOwnerDto.id = id;
     if (id) {
-      this._licenseProjectLandOwnerService.getLicenseProjectLandOwnerInfo(id).subscribe((data: LicenseProjectLandOwnerInfoDto | null) => {
-        this.licenseProjectLandOwnerInfoDto = data;
-        console.log(data);
-
-      });
+      this._licenseProjectLandOwnerService
+        .getLicenseProjectLandOwnerInfo(id)
+        .subscribe((data: LicenseProjectLandOwnerInfoDto | null) => {
+          this.licenseProjectLandOwnerInfoDto = data;
+          console.log(data);
+        });
     }
   }
 
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.approveDeedOwnerDto.agreementFileId = null;
+      this.controls.agreementFileId.setValue(null);
+      return;
+    }
+    if (!fileData.eventRes.data || !fileData.eventRes.data.length) return;
+
     this.approveDeedOwnerDto.agreementFileId = fileData.eventRes.data[0].id;
     this.controls.agreementFileId.setValue(fileData.eventRes.data[0].id);
   }
 
-
   save() {
-
     console.log('this.controls.isApproved.value');
     console.log(this.controls.isApproved.value);
     console.log(this.controls.agreementFileId.value);
 
     if (this.approveDeedOwnerDto.agreementFileId == null) {
       this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+      this._toastrNotificationService.showError(
+        this.localization.PleaseAddAllRequiredFields
+      );
       return;
     }
 
     this.approveDeedOwnerDto.isApproved = this.controls.isApproved.value == 1;
-    this._licenseProjectLandOwnerService.approveOwner(this.approveDeedOwnerDto).subscribe(data => {
-      console.log(data);
-      this.approve = true;
-      this._toastrNotificationService.showSuccess(this.localization.savedSuccessfully)
-    });
+    this._licenseProjectLandOwnerService
+      .approveOwner(this.approveDeedOwnerDto)
+      .subscribe((data) => {
+        console.log(data);
+        this.approve = true;
+        this._toastrNotificationService.showSuccess(
+          this.localization.savedSuccessfully
+        );
+      });
   }
-
 }

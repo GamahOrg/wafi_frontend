@@ -5,10 +5,15 @@ import {
   NavigationEnd,
   Router,
 } from '@angular/router';
-import { BehaviorSubject, filter } from 'rxjs';
-import { Breadcrumb } from 'src/app/shared/models/breadcrumb.model';
+import { BehaviorSubject, Subject, filter } from 'rxjs';
+import { Breadcrumb, BreadcrumbOption } from 'src/app/shared/models/breadcrumb.model';
 
-@Injectable()
+export interface SelectableBreadcrumb {
+  options: BreadcrumbOption[];
+  activeOptionIndex: number;
+}
+
+@Injectable({ providedIn: 'root' })
 export class BreadcrumbService {
   // Subject emitting the breadcrumb hierarchy
   private readonly _breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([]);
@@ -22,6 +27,17 @@ export class BreadcrumbService {
   // Observable exposing breadcrumb visibility
   readonly showBreadcrumb$ = this._showBreadcrumb$.asObservable();
 
+  // When true, the first breadcrumb item (e.g. "الرئيسية") is removed
+  private _skipFirstBreadcrumb = false;
+
+  // Selectable breadcrumb item (separate from route breadcrumbs)
+  private readonly _selectableItem$ = new BehaviorSubject<SelectableBreadcrumb | null>(null);
+  readonly selectableItem$ = this._selectableItem$.asObservable();
+
+  // Subject emitting when user selects a different option from the dropdown
+  private readonly _selectableItemChanged$ = new Subject<number>();
+  readonly selectableItemChanged$ = this._selectableItemChanged$.asObservable();
+
   constructor(private router: Router) {
     this.router.events
       .pipe(
@@ -33,6 +49,11 @@ export class BreadcrumbService {
         const root = this.router.routerState.snapshot.root;
         const breadcrumbs: Breadcrumb[] = [];
         const shouldHide = this.addBreadcrumb(root, [], breadcrumbs);
+
+        // Remove first breadcrumb if skip flag is set
+        if (this._skipFirstBreadcrumb && breadcrumbs.length > 0) {
+          breadcrumbs.shift();
+        }
 
         // Emit the new hierarchy
         this._breadcrumbs$.next(breadcrumbs);
@@ -82,5 +103,35 @@ export class BreadcrumbService {
     return typeof data['breadcrumb'] === 'function'
       ? data['breadcrumb'](data)
       : data['breadcrumb'];
+  }
+
+  setSkipFirstBreadcrumb(skip: boolean): void {
+    this._skipFirstBreadcrumb = skip;
+    if (skip) {
+      const current = this._breadcrumbs$.value;
+      if (current.length > 0) {
+        this._breadcrumbs$.next(current.slice(1));
+      }
+    }
+  }
+
+  setSelectableItems(options: BreadcrumbOption[], activeIndex: number): void {
+    this._selectableItem$.next({ options, activeOptionIndex: activeIndex });
+  }
+
+  clearSelectableItems(): void {
+    this._selectableItem$.next(null);
+  }
+
+  updateActiveOption(index: number): void {
+    const current = this._selectableItem$.value;
+    if (current) {
+      this._selectableItem$.next({ ...current, activeOptionIndex: index });
+    }
+  }
+
+  onSelectableItemChanged(index: number): void {
+    this.updateActiveOption(index);
+    this._selectableItemChanged$.next(index);
   }
 }

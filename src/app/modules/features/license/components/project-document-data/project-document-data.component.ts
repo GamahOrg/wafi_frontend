@@ -33,7 +33,7 @@ export class ProjectDocumentDataComponent implements OnInit, OnDestroy {
     LicenseProjectLicenseDocument: "صورة لترخيص المشروع من بلد المشروع",
     RightOfSaudisToOwnRealEstateFile: "ملف بأحقية السعوديين بتملك العقارات في بلد المشروع",
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     yes: 'نعم',
     no: 'لا',
     savedSuccessfully: 'تم الحفظ',
@@ -67,6 +67,10 @@ export class ProjectDocumentDataComponent implements OnInit, OnDestroy {
   }
 
   onOwnershipApprovedDocumentFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.ProjectDocumentDataCreateUpdateDto.licenseProjectOwnershipApprovedDocuments = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.ProjectDocumentDataCreateUpdateDto.licenseProjectOwnershipApprovedDocuments.push({
@@ -78,6 +82,10 @@ export class ProjectDocumentDataComponent implements OnInit, OnDestroy {
   }
 
   onLicenseDocumentFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.ProjectDocumentDataCreateUpdateDto.licenseProjectLicenseDocuments = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.ProjectDocumentDataCreateUpdateDto.licenseProjectLicenseDocuments.push({
@@ -89,6 +97,10 @@ export class ProjectDocumentDataComponent implements OnInit, OnDestroy {
   }
 
   onRightOfSaudisToOwnRealEstateFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.ProjectDocumentDataCreateUpdateDto.licenseProjectRightOfSaudisToOwnRealEstateFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.ProjectDocumentDataCreateUpdateDto.licenseProjectRightOfSaudisToOwnRealEstateFiles.push({

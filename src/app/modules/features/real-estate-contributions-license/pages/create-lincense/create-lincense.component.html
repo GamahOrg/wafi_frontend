@@ -106,7 +106,7 @@
               <div class="form-group">
                 <label class="form-label">مدة الترخيص</label>
                 <select class="form-select form-select-sm" (change)="changePriod($event)" id="control-priod" formControlName="priod">
-                  <option value=null selected disabled>اختر المدة</option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                   <option *ngFor="let item of licenseRequestType.licenseRequestPeriods" [value]="item.period">
                     <p>
                       {{item.period>2?item.period:''}} {{item.sysPeriodType?.name}}

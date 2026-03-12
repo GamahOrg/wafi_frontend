@@ -234,6 +234,10 @@ export class PriceFinancialAnalysisComponent implements OnInit, OnDestroy {
   }
 
   onExistProjectProposedScheduleFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.licenseProjectProposedScheduleFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectProposedScheduleFiles)
       this.licenseProjectProposedScheduleFiles = [];
@@ -249,6 +253,10 @@ export class PriceFinancialAnalysisComponent implements OnInit, OnDestroy {
     });
   }
   onExistLicenseProjectFeasibilityStudyFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.licenseProjectFeasibilityStudyFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectFeasibilityStudyFiles)
       this.licenseProjectFeasibilityStudyFiles = [];
@@ -264,6 +272,10 @@ export class PriceFinancialAnalysisComponent implements OnInit, OnDestroy {
     });
   }
   onExistProjectMarketingPlanFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.licenseProjectMarketingPlanFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectMarketingPlanFiles)
       this.licenseProjectMarketingPlanFiles = [];

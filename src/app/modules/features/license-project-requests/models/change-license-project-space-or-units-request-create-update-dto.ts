@@ -22,7 +22,7 @@ export interface ChangeLicenseProjectSpaceOrUnitsRequestCreateUpdateDto {
      agreementBetweenDevelperAndAccountantId :string;
     //ملحق الاتفاقية المبرم بين المطور المكتب الاستشارى 
      agreementBetweenDevelperAndEngineeringId :string;
-    //ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض او مالك منفعتها  
+    //ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض أو مالك منفعتها  
      agreementBetweenDeveloperAndLandOwnerId :string;
     //تقرير البنك عن حساب الضمان 
      bankReportOnEscrowAccountId :string;
@@ -30,7 +30,7 @@ export interface ChangeLicenseProjectSpaceOrUnitsRequestCreateUpdateDto {
      updatedFeasibilityStudyId :string;
     //التصاميم المعمارية والمخططات الهندسية المعتمدة من الجهات المختصة
      architecturalDesignsAndEngineeringPlansId :string;
-    //تحديث رخصة البناء او الخطاب المقدم من مركز اتمام
+    //تحديث رخصة البناء أو الخطاب المقدم من مركز اتمام
      updatedBuildingLicenseOrLetterId :string;
     //خطاب من المحاسب القانونى يفيد بعدم وجود مبيعات على الوحدات الملغاة مرفقا به تقرير عن حالة المشروع
      accountantLetterForCancelledUnitsId :string;

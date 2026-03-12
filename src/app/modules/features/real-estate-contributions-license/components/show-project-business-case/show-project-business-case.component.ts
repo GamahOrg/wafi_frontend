@@ -47,7 +47,7 @@ licenseProjectEngineeringRequestStatus=LicenseProjectEngineeringRequestStatus
   }
   openAddProjectBusinessCaseNotesDialog(): void {
     let Data = {
-      title: "إضافة  ملاحظة او استيفاء الطلب ",
+      title: "إضافة  ملاحظة أو استيفاء الطلب ",
       component: AddProjectBusinessCaseNotesComponent,
       id: "AddProjectBusinessCaseNotesComponent",
       buttons:[  {

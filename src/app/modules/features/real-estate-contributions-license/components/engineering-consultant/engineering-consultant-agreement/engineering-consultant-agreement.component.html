@@ -10,8 +10,7 @@
                         name="cityId"
                         class="form-select"
                         formControlName="cityId">
-                    <option selected
-                            disabled>{{localizations.SelectCity}}</option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let city of (cities$ | async)?.data"
                             [ngValue]="city.id">
                         {{ city.cityName }}
@@ -55,8 +54,7 @@
 
                 <app-rich-text-editor [form]="form"
                                       id="optionalTerms"
-                                      [placeholder]="localizations.SelectOptionalTerms"
-                                      controlName="optionalTerms">
+                                                                            controlName="optionalTerms">
                 </app-rich-text-editor>
 
                 <div class="invalid-feedback d-block"

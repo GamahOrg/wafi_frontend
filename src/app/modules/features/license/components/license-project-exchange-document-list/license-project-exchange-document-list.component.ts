@@ -18,6 +18,7 @@ import { ShowDetailExchangeDocumentComponent } from '../show-detail-exchange-doc
 export class LicenseProjectExchangeDocumentListComponent {
   subscriptions: Subscription[] = [];
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
+  licenseProjectName: string | null = "";
   exchangeDocument?: LicenseProjectExchangeDocumentPagingDto;
   newPageNo: number = 1;
   pagintationData: pagination = {
@@ -32,7 +33,10 @@ export class LicenseProjectExchangeDocumentListComponent {
     private _popupService: PopupService,
     private _paginationService: PaginationService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-  ) { this.getLicenseProjectIdStorage() }
+  ) {
+    this.getLicenseProjectIdStorage()
+    
+  }
   ngOnInit(): void {
     this.watchPaginationActions();
     this.observesubmitSuccessfullyEventEmitter();
@@ -41,6 +45,7 @@ export class LicenseProjectExchangeDocumentListComponent {
   private getLicenseProjectIdStorage(): void {
     
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseProjectName = this._sharedLicenseProjectService.getLicenseProjectNameStorage();
     if (this.licenseProjectId)
       this.getExchangeDocumentOnProject();
   }

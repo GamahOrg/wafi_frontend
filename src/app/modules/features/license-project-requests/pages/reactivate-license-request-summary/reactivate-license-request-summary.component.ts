@@ -28,7 +28,7 @@ export class ReactivateLicenseRequestSummaryComponent implements OnInit, OnDestr
   availabilityToUpdate = false
   localization = {
     send: "إرسال الطلب",
-    approvalDecisions: "الموافقه على الاقرارات",
+    approvalDecisions: "الموافقة على الإقرارات",
   };
   subscriptions: Subscription[] = [];
   mainTabsComponentList: tabsComponent[] = [
@@ -163,7 +163,7 @@ export class ReactivateLicenseRequestSummaryComponent implements OnInit, OnDestr
       //   this.requestValidationData = res;
       //   this.checkGeneralErrorTabsIsExist();
       // }
-      // this._toastrNotificatioService.showSuccess('تم ارسال الطلب')
+      // this._toastrNotificatioService.showSuccess('تم إرسال الطلب')
       this._router.navigate([ `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`]);
       console.log(res);
 

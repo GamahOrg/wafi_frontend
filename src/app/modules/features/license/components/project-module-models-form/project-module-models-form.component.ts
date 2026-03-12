@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { LicenseProjectModelDesignFileDto, LicenseProjectModelDto } from '../../dataModels/license-project-model.dto';
+import {
+  LicenseProjectModelDesignFileDto,
+  LicenseProjectModelDto,
+} from '../../dataModels/license-project-model.dto';
 import { environment } from 'src/environments/environment';
 import { ProjectModelService } from '../../services/project-model.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -13,9 +16,8 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 @Component({
   selector: 'app-project-module-models-form',
   templateUrl: './project-module-models-form.component.html',
-  styleUrls: ['./project-module-models-form.component.scss']
+  styleUrls: ['./project-module-models-form.component.scss'],
 })
-
 export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   projectModel: LicenseProjectModelDto = new LicenseProjectModelDto();
@@ -23,11 +25,13 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
   baseUrl = `${environment.baseURL}/`;
   showValidation: boolean = false;
 
-  constructor(private _projectModelService: ProjectModelService,
+  constructor(
+    private _projectModelService: ProjectModelService,
     private _formBuilder: FormBuilder,
     private _toastrService: ToastrService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _popupService: PopupService) { }
+    private _popupService: PopupService,
+  ) {}
 
   multipleFileUploaderData: FileUploader = {
     multiple: true,
@@ -39,8 +43,8 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
     //space: [0, [Validators.required, Validators.min(0)]],
     //buildingFlatSpace: [0, [Validators.required, Validators.min(0)]],
     properties: ['', [Validators.required]],
-    unitsCount: [0, [Validators.required, Validators.min(0)]],
-  })
+    unitsCount: [0, [Validators.required, Validators.min(1)]],
+  });
 
   get controls() {
     return this.projectModelForm.controls;
@@ -50,11 +54,13 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._projectModelService.getSubjectObj().subscribe((subjectObj) => {
         this.projectModel = subjectObj;
-        if (!this.projectModel.id) this.projectModel.id = '00000000-0000-0000-0000-000000000000';
-        this.licenseProjectModelDesignFiles = this.projectModel.licenseProjectModelDesignFiles;
+        if (!this.projectModel.id)
+          this.projectModel.id = '00000000-0000-0000-0000-000000000000';
+        this.licenseProjectModelDesignFiles =
+          this.projectModel.licenseProjectModelDesignFiles;
         this.setResponseToForm(this.projectModel);
-      })
-    )
+      }),
+    );
     this.observeForm();
     this.observePopupEvents();
   }
@@ -71,9 +77,10 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
     requiredErrorMsg: 'حقل مطلوب',
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     MinValueError: 'قيمة الحقل يجب الا تقل عن واحد',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
+    FilesRequired: 'الرجاء اضافة ملف واحد على الاقل',
   };
 
   setResponseToForm(res: LicenseProjectModelDto): void {
@@ -83,10 +90,11 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
 
   observeForm(): void {
     this.subscriptions.push(
-      this.projectModelForm.valueChanges.subscribe(changes => {
-        this.projectModel = this.projectModelForm.value as LicenseProjectModelDto;
-      })
-    )
+      this.projectModelForm.valueChanges.subscribe((changes) => {
+        this.projectModel = this.projectModelForm
+          .value as LicenseProjectModelDto;
+      }),
+    );
   }
 
   ngOnDestroy() {
@@ -94,59 +102,95 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
   }
 
   observePopupEvents(): void {
-    this.observecancelAction()
-    this.observeconfirmAction()
+    this.observecancelAction();
+    this.observeconfirmAction();
   }
 
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         this._popupService.dismissDialog();
-      })
-    )
+      }),
+    );
   }
 
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.save();
-      })
-    )
+      }),
+    );
   }
 
   onFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.licenseProjectModelDesignFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.licenseProjectModelDesignFiles.push({
         designFileId: data.id,
         modelId: this.projectModel.id,
         id: '00000000-0000-0000-0000-000000000000',
-        designFile: null
+        designFile: null,
       });
     });
   }
 
+  DeleteDesignFile(id: string) {
+    this.subscriptions.push(
+      this._projectModelService.Delete(id).subscribe((res) => {
+        console.log('res:DeleteDesignFile', res);
+
+        if (res.isDone) {
+          this.licenseProjectModelDesignFiles =
+            this.licenseProjectModelDesignFiles.filter(
+              (x) => x.designFileId != id,
+            );
+        }
+      }),
+    );
+  }
+
   save(): void {
-    if (!this.projectModel.id) this.projectModel.id = '00000000-0000-0000-0000-000000000000';
+    debugger;
+    if (!this.projectModel.id)
+      this.projectModel.id = '00000000-0000-0000-0000-000000000000';
     this.controls.id.setValue(this.projectModel.id);
-    if (!this.projectModelForm.valid || !this.licenseProjectModelDesignFiles?.length) {
+    if (
+      !this.projectModelForm.valid ||
+      !this.licenseProjectModelDesignFiles?.length
+    ) {
       this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+      this._toastrNotificationService.showError(
+        this.localization.PleaseAddAllRequiredFields,
+      );
       this.projectModelForm?.markAllAsTouched();
       return;
     }
-    this.projectModel.licenseProjectModelDesignFiles = this.licenseProjectModelDesignFiles;
+    if (this.licenseProjectModelDesignFiles.length === 0) {
+      this.showValidation = true;
+      this._toastrNotificationService.showError(
+        this.localization.FilesRequired,
+      );
+      this.projectModelForm?.markAllAsTouched();
+      return;
+    }
+    this.projectModel.licenseProjectModelDesignFiles =
+      this.licenseProjectModelDesignFiles;
     this.subscriptions.push(
-      this._projectModelService.Save(this.projectModel).subscribe(res => {
+      this._projectModelService.Save(this.projectModel).subscribe((res) => {
         if (res.isDone) {
           this._toastrService.success(this.localization.savedSuccessfully);
-          this._projectModelService.SetSubjectListObjs(res.data as LicenseProjectModelDto[]);
+          this._projectModelService.SetSubjectListObjs(
+            res.data as LicenseProjectModelDto[],
+          );
           this._popupService.dismissDialog();
         }
         // else
         //   this._toastrNotificationService.showError(res.message);
-      })
-    )
+      }),
+    );
   }
-
 }

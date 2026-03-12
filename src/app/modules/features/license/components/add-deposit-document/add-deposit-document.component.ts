@@ -71,15 +71,15 @@ export class AddDepositDocumentComponent implements OnInit {
     amount: [0, [Validators.required, Validators.min(0.01)]],
     referenceNumber: ['', Validators.required],
     depositDate: ['', Validators.required],
-    mainItemId: [0, Validators.required],
-    sysDepositTypeId: [0, Validators.required],
+    mainItemId: [null as number | null, Validators.required],
+    sysDepositTypeId: [null as number | null, Validators.required],
     checkNumber: [null, Validators.required],
     escrowAccountAmount: [0],
     administrativeAndMarketingAmount: [0, Validators.required],
     constructionCostsAmount: [0, Validators.required],
     licenseProjectBuyerId:[null],
     bankId:[null],
-    paymentTypeId: [0],
+    paymentTypeId: [null as number | null],
     installmentId: [null]
   });
 
@@ -113,7 +113,7 @@ export class AddDepositDocumentComponent implements OnInit {
   calcAccounts(){
     debugger
     const amount = this.controls.amount.value || 0;
-    if (LicenseProjectDepositDocumentMainItemEnum.collectionFromClients === this.formGroup.value.mainItemId) {
+    if (this.formGroup.value.mainItemId !== null && this.formGroup.value.mainItemId !== undefined && LicenseProjectDepositDocumentMainItemEnum.collectionFromClients === this.formGroup.value.mainItemId) {
       let constructionCostsAmount = (amount * this.constructionCostsRatio)
       this.formGroup.patchValue({
         escrowAccountAmount: constructionCostsAmount * this.accountRatioForSavingsAccountRatio,
@@ -244,7 +244,7 @@ export class AddDepositDocumentComponent implements OnInit {
     }
 
     if(((this.controls.escrowAccountAmount.value || 0) + (this.controls.administrativeAndMarketingAmount.value || 0) + (this.controls.constructionCostsAmount.value || 0)) !== this.controls.amount.value){
-      this._toastrNotificationService.showError('اجمالي ايداع المبالغ بالحسابات يجب ان تساوي مبلغ الايداع');
+      this._toastrNotificationService.showError('اجمالي ايداع المبالغ بالحسابات يجب أن تساوي مبلغ الايداع');
       this.showValidation = true;
       return;
     }

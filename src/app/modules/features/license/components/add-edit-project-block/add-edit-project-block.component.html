@@ -38,7 +38,6 @@
           type="text"
           class="form-control"
           id="control-code"
-          [placeholder]="localization.unitCode"
           formControlName="code"
         />
         <div
@@ -59,7 +58,7 @@
           aria-label="Default select example"
           formControlName="stageNumberId"
         >
-          <option selected disabled>{{ localization.stageNo }}</option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let stage of stageNumber" [value]="stage.id">
             {{ stage.name }}
           </option>
@@ -85,7 +84,6 @@
             type="text"
             class="form-control"
             formControlName="constructionStartOn"
-            [placeholder]="localization.constructionStartOn"
             value="{{
               controls.constructionStartOn.value
                 ? (controls.constructionStartOn.value | date : 'yyyy-MM-dd')
@@ -126,7 +124,6 @@
             type="text"
             class="form-control"
             formControlName="constructionEndOn"
-            [placeholder]="localization.constructionEndOn"
             value="{{
               controls.constructionEndOn.value
                 ? (controls.constructionEndOn.value | date : 'yyyy-MM-dd')
@@ -165,9 +162,7 @@
           aria-label="Default select example"
           formControlName="subUnitTypeId"
         >
-          <option selected [value]="0" disabled>
-            {{ localization.subUnitsType }}
-          </option>
+          <option [ngValue]="0" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let type of subUnitType" [value]="type.id">
             {{ type.name }}
           </option>
@@ -191,7 +186,6 @@
           type="number"
           id="control-subUnitCount"
           class="form-control"
-          [placeholder]="localization.subUnitCount"
           formControlName="subUnitCount"
         />
         <div

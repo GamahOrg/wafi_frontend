@@ -19,9 +19,7 @@
               aria-label="Default select example"
               formControlName="delegatorCustomerId"
               [disabled]="true">
-              <option selected disabled value="">
-                {{ localization.delegatorName }}
-              </option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>
@@ -52,9 +50,7 @@
               aria-label="Default select example"
               formControlName="officerCustomerId"
               [disabled]="true">
-              <option selected disabled value="">
-                {{ localization.officerName }}
-              </option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>

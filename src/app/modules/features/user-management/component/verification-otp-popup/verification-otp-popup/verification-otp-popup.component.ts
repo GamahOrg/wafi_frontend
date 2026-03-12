@@ -15,7 +15,7 @@ export class VerificationOtpPopupComponent implements OnInit {
   customerMobile: string | null = null;
   OTPInputValue: string | null = null;
   localization = {
-    sendNewOtp: "ارسال الكود مرة اخري",
+    sendNewOtp: "إرسال الكود مرة اخري",
     newOtpSentSuccessfully: " تم إرسال رمز تحقق جديد"
   };
   min = 60;

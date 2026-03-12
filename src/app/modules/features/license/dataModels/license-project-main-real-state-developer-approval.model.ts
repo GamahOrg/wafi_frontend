@@ -8,6 +8,7 @@ export interface LicenseProjectMainRealStateDeveloperApproval {
     licenseProjectId: string;
     isApproved: boolean;
     approvedOn: string | null;
+    owningAmount: number | null;
     delegatorCustomerId: string | null;
     delegatorCustomer: CustomerApproval | null;
     facility: FacilityApproval;

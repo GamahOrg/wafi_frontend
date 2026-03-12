@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit,  ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
@@ -8,7 +8,7 @@ import { LicenseRequestService } from '../../services/license-request.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { LicenseProjectQuantitiesTableFileAndRelativeWeightDto, LicenseProjectRelativeWeightDto } from '../../dataModels/license-project-quantities-table-file-and-relative-weight-dto';
-import { LicenseProjectQuantitiesTableFileRelativeWeightsCreateUpdateDto, LicenseProjectRelativeWeightCreateUpdateDto } from '../../dataModels/license-project-quantities-table-file-relative-weights-create-update-dto';
+import { LicenseProjectQuantitiesTableFileRelativeWeightsCreateUpdateDto, } from '../../dataModels/license-project-quantities-table-file-relative-weights-create-update-dto';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { LicenseDetailsService } from '../../services/license-details/license-details.service';
@@ -17,7 +17,6 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { confirmationPopupData, notePopupData, PopupData } from 'src/app/shared/models/popup.model';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
-import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 import { RequestValidation, RequestSuccessResponse } from '../../dataModels/request-validation.model';
 import { TabCode } from '../../models/tab-code.model';
@@ -25,9 +24,8 @@ import { LicenseRequestValidationPopupComponent } from '../license-request-valid
 import { DataVisibilityOfLicenseProjectService } from '../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { FileUploaderComponent } from 'src/app/shared/components/file-uploader/file-uploader.component';
 import { LicenseProjectCompletionData } from '../../dataModels/license-project-model.dto';
-import { LicenseProjectDeedService } from '../../../license-project-requests/services/LiftingDeeds/lifting-Deeds.service';
 import { ProjectInstantLicenseDeedService } from '../../../real-estate-contributions-license/services/project-instant-license-deed.service';
-
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-project-quantities-table',
@@ -399,6 +397,10 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
   }
 
   onQuantitiesTableFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) {
       this._toastrNotificatioService.showError(this.localization.PleaseAddAllRequiredFields);
       return;
@@ -449,27 +451,16 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
         this._toastrNotificatioService.showError('ⓘ '+this.localization.exeedTheLimit);
         return;
       }
-    }
-
-    // After form is valid, check if user has checked the الاقرار
-    if (!this.dataConfirmationChecked && this.isFawriaValidation()) {
-      this.showValidation = true;
-      this._toastrNotificatioService.showError(this.localization.dataConfirmationRequired);
-      return;
-    }
-
-    // Continue with remaining validation if enableValidation is true
-    if (this.enableValidation && !this.isExistingValidation) {
       // if (this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList && this.licenseProjectQuantitiesTableFileAndRelativeWeight.licenseProjectRelativeWeightList.length > 0 ) {
-      //   if (this.total > this.targetTotalPercentage) {
-      //     this._toastrNotificatioService.showError(`الإجمالي أكبر من ${this.targetTotalPercentage}%`);
-      //     return;
-      //   }
-      //   if (this.total < this.targetTotalPercentage) {
-      //     this._toastrNotificatioService.showError(`الإجمالي أقل من ${this.targetTotalPercentage}%`);
-      //     return;
-      //   }
-      // }   
+        // if (this.total > this.targetTotalPercentage) {
+        //   this._toastrNotificatioService.showError(`الإجمالي أكبر من ${this.targetTotalPercentage}%`);
+        //   return;
+        // }
+        // if (this.total < this.targetTotalPercentage) {
+        //   this._toastrNotificatioService.showError(`الإجمالي أقل من ${this.targetTotalPercentage}%`);
+        //   return;
+        // }
+      // } 
      
     }
 
@@ -539,7 +530,7 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
     if (!this.licenseProjectId) return;
 
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(this.licenseProjectId),
         this._licenseRequestService.GetLicenseProjectCompletionData(this.licenseProjectId)
@@ -681,7 +672,7 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
 
   openConfirmaDialog(res: string): void {
     // Check if it's a fawria license type
-    if (this.typeCode === 'FSRSU') {
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
       // Show regular success popup
       let Data = {
         imagePath: 'assets/images/auth/ForgotPass.svg',
@@ -747,7 +738,7 @@ export class ProjectQuantitiesTableComponent implements OnInit, OnDestroy {
 
   isFawriaValidation(): boolean {
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU')
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria)
       return true;
     else
       return false;

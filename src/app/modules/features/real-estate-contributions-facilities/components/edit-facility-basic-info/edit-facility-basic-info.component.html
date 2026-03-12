@@ -42,7 +42,7 @@
                     class="invalid-feedback d-block">
                     <div
                         *ngIf="controls.previouslyQualifiedFacilityCommercialRegistrationNumber.errors?.['maxlength'] || controls.previouslyQualifiedFacilityCommercialRegistrationNumber.errors?.['minlength']">
-                        يجب ان يكون رقم السجل التجاري 10 ارقام</div>
+                        يجب أن يكون رقم السجل التجاري 10 ارقام</div>
                 </div>
             </div> -->
             <div class="col-12 col-lg-6">
@@ -101,7 +101,7 @@
                 <div class="form-group">
                   <label for="" class="form-label">مدينة إصدار عضوية الغرفة التجارية</label>
                   <select class="form-select" formControlName="cityId">
-                    <option [disabled]="true" [value]="null" label="اختار مدينة"></option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let item of cities" [value]="item.id">{{item.cityName}}
                     </option>
                   </select>

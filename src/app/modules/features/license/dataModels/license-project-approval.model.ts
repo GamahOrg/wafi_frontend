@@ -1,3 +1,4 @@
+import { LicenseProjectAgreementStatusEnum } from "../enums/license-project-agreement-status.enum";
 import { ApprovalRole } from "./approval-role.model";
 
 export interface LicenseProjectApproval {
@@ -11,7 +12,8 @@ export interface LicenseProjectApproval {
     approvedOn: string | null;
     role: string;
     approvalRole: ApprovalRole;
-    delegateCustomerName:string
+    delegateCustomerName:string;
+    agreementStatusEnum: LicenseProjectAgreementStatusEnum;
 }
 export interface SaveApproval {
     id: string;

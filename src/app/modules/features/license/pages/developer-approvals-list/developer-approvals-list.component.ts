@@ -7,6 +7,8 @@ import { customerResponse } from '../../models/employee-registration-dto';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { LicenseRequestApprovalsService } from '../../services/license-request-approvals/license-request-approvals.service';
 import { ApprovalRole } from '../../dataModels/approval-role.model';
+import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
+import { LicenseProjectAgreementStatusEnum } from '../../enums/license-project-agreement-status.enum';
 
 @Component({
   selector: 'app-developer-approvals-list',
@@ -25,6 +27,7 @@ export class DeveloperApprovalsListComponent implements OnInit, OnDestroy {
   constructor(
     private _licenseRequestApprovalsService: LicenseRequestApprovalsService,
     private _userDataService: UserDataService,
+    private _sharedLocalStorage: SharedLicenseProjectService,
     private router: Router
   ) {}
 
@@ -58,15 +61,17 @@ export class DeveloperApprovalsListComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
+  agreementStatusEnum = LicenseProjectAgreementStatusEnum;
+
   getApprovalClass(approval: LicenseProjectApproval) {
-    if (approval.approvedOn == null) {
-      return 'orange';
-    } else {
-      if (approval.isApproved) {
+    switch (approval.agreementStatusEnum) {
+      case LicenseProjectAgreementStatusEnum.Certified:
         return 'green';
-      } else {
+      case LicenseProjectAgreementStatusEnum.Rejected:
         return 'red';
-      }
+      case LicenseProjectAgreementStatusEnum.Pending:
+      default:
+        return 'orange';
     }
   }
 
@@ -86,10 +91,32 @@ export class DeveloperApprovalsListComponent implements OnInit, OnDestroy {
   }
 
   viewDetails(approval: any): void {
+     this._sharedLocalStorage.setLicenseProjectIdInLocalStorage(approval?.projectId)
+    if (+approval.approvalRole == this.approveEnum.EngineeringConsultant)
+    {
+       this.router.navigate(['/wafi/license/engineer-approval-details', approval.id],
+        {
+          queryParams: { approvalRole: approval.approvalRole }
+        });
+    }
+    else if (+approval.approvalRole == this.approveEnum.DeedOwner)
+    {
+      this.router.navigate(['/wafi/license/deed-owner-list'])  
+    }
+    else if (+approval.approvalRole == this.approveEnum.CharteredAccountant)
+    {
+      this.router.navigate(['/wafi/license/chartered-account-approval-details', approval.id],
+      {
+        queryParams: { approvalRole: approval.approvalRole }
+      });
+    }
+    else {
     this.router.navigate(['/wafi/license/developer-approval-details', approval.id],
       {
         queryParams: { approvalRole: approval.approvalRole }
       });
+    }
+    
   }
 
   ngOnDestroy(): void {

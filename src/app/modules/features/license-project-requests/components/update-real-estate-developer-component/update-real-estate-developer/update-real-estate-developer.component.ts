@@ -240,6 +240,10 @@ export class UpdateRealEstateDeveloperComponent implements OnInit, OnDestroy {
   }
 
   onNonClearanceDocumentEngineeringConsultantFilesUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.nonClearanceDocumentEngineeringConsultantFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     if (!this.nonClearanceDocumentEngineeringConsultantFiles) {
@@ -289,15 +293,27 @@ export class UpdateRealEstateDeveloperComponent implements OnInit, OnDestroy {
     this.form.get('reasonsForNotFinalizingAccountantClearance')?.updateValueAndValidity();
   }
   clearanceEngineeringConsultantFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.clearanceEngineeringConsultantFileId = '00000000-0000-0000-0000-000000000000';
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     this.clearanceEngineeringConsultantFileId = filesData.eventRes.data[0].id
   }
   clearanceAccountantFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.clearanceAccountantFileId = '00000000-0000-0000-0000-000000000000';
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.clearanceAccountantFileId = filesData.eventRes.data[0].id
   }
   onClearanceDocumentAccountantFilesUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.nonClearanceDocumentAccountantFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     if (!this.nonClearanceDocumentAccountantFiles) {
@@ -311,6 +327,10 @@ export class UpdateRealEstateDeveloperComponent implements OnInit, OnDestroy {
     });
   }
   onDocumentSupportingJustificationFilesUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.documentSupportingJustificationFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     if (!this.documentSupportingJustificationFiles) {

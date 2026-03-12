@@ -271,6 +271,10 @@ export class AddEditActualValueWorkStatuesReportComponent {
   }
 
   onExistImageFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0){
+      this.licenseProjectEngineeringSupervisionPlannedReportDetailImages = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectEngineeringSupervisionPlannedReportDetailImages)
       this.licenseProjectEngineeringSupervisionPlannedReportDetailImages = [];
@@ -284,6 +288,10 @@ export class AddEditActualValueWorkStatuesReportComponent {
   }
 
   onExistVideoFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0){
+      this.licenseProjectEngineeringSupervisionPlannedReportDetailVideos = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectEngineeringSupervisionPlannedReportDetailVideos)
       this.licenseProjectEngineeringSupervisionPlannedReportDetailVideos = [];
@@ -297,6 +305,10 @@ export class AddEditActualValueWorkStatuesReportComponent {
   }
 
   onExistMapFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0){
+      this.licenseProjectEngineeringSupervisionPlannedReportDetailMaps = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectEngineeringSupervisionPlannedReportDetailMaps)
       this.licenseProjectEngineeringSupervisionPlannedReportDetailMaps = [];

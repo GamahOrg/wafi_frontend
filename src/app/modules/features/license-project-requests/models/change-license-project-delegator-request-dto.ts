@@ -9,7 +9,7 @@ export interface ChangeLicenseProjectDelegatorRequestDto {
    licenseProjectRequest:LicenseProjectRequestDto;
    projectName:string
 
-//فلاج لتحديد نوع المفوضين سيتم حذفهم من المشروع او اضافتهم
+//فلاج لتحديد نوع المفوضين سيتم حذفهم من المشروع أو اضافتهم
   isRemovableRequest:boolean;
 
 //نموذج الطلب
@@ -32,7 +32,7 @@ export interface ChangeLicenseProjectDelegatorRequestCreatUpdateDto
     licenseProjectId :string;
     acknowledgement:string;
    facilityId :string;
-    //فلاج لتحديد نوع المفوضين سيتم حذفهم من المشروع او اضافتهم
+    //فلاج لتحديد نوع المفوضين سيتم حذفهم من المشروع أو اضافتهم
     isRemovableRequest :boolean;
    
     //نموذج الطلب

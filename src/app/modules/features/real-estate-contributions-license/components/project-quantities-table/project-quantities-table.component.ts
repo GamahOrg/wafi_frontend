@@ -187,6 +187,10 @@ getTotal(data: any) {
 
 
   onQuantitiesTableFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.licenseProjectQuantitiesTableFileRelativeWeightsCreateUpdate.licenseProjectQuantitiesTableFileCreateUpdateList = [];
+      return;
+    }
     const allowedExtensions = [".xls", ".xlsx", ".pdf"];
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {

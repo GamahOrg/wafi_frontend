@@ -5,18 +5,20 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 1.5rem;
+  padding: 0.5rem;
   font-size: $font-size-xs;
-  color: $theme-dark;
+  color: $headings-color;
 
-  background: $white;
-  box-shadow: 0px -3px 20px rgba($black, .05);
+  background: #fcfdfe;
 
-  :host-context(.rega) & {
-    color: $theme-dark;
-  }
+  box-shadow:
+    0px 2px 5px 0px #d0d4d71a,
+    0px 10px 10px 0px #d0d4d717,
+    0px 22px 13px 0px #d0d4d70d,
+    0px 38px 15px 0px #d0d4d703,
+    0px 60px 17px 0px #d0d4d700;
 
-  .re-edited-box-icon img{
+  .re-edited-box-icon img {
     height: 3rem;
   }
 }

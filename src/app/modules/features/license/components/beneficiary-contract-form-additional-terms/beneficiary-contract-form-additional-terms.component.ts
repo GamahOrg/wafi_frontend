@@ -17,6 +17,7 @@ import { TabCode } from '../../models/tab-code.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LicenseProjectCompletionData } from '../../dataModels/license-project-model.dto';
 import { LicenseRequestService } from '../../services/license-request.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-beneficiary-contract-form-additional-terms',
@@ -62,7 +63,7 @@ export class BeneficiaryContractFormAdditionalTermsComponent {
   private checkIfShouldHideActionButtons(): void {
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
     const licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (typeCode === 'FSRSU' && licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(licenseProjectId),
@@ -310,7 +311,7 @@ export class BeneficiaryContractFormAdditionalTermsComponent {
 
   isFawriaValidation(): boolean {
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU')
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria)
       return true;
     else
       return false;

@@ -12,7 +12,7 @@
                             <label class="form-label">نوع الخدمة جهة الاعتماد</label>
                             <select class="form-select" formControlName="serviceTypeId"
                             [ngClass]="{'is-invalid': showValidation && controls.serviceTypeId.errors}">
-                            <option label="نوع الخدمة جهة الاعتماد"></option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let service of licenseProjectEngineeringServiceTypeList" [value]="service.id">
                                 {{service.name}}</option>
                         </select>
@@ -29,7 +29,7 @@
                             <label class="form-label">حالة الاعتماد /الموافقة</label>
                             <select class="form-select" formControlName="accreditationStatusId"
                             [ngClass]="{'is-invalid': showValidation && controls.accreditationStatusId.errors}">
-                            <option label="حالة الاعتماد /الموافقة"></option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let status of licenseProjectEngineeringAccreditationStatusList" [value]="status.id">
                                 {{status.name}}</option>
                         </select>
@@ -92,7 +92,7 @@
                         <label class="form-label">ملاحظات</label>
                         <textarea type="text" id="control-notes" class="form-control"
                             formControlName="notes"
-                            placeholder="ملاحظات" ></textarea>
+                            ></textarea>
                         <div class="invalid-feedback d-block" *ngIf="
   controls.notes?.hasError('required') && showValidation
 ">

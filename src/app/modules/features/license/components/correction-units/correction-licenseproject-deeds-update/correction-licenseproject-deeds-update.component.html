@@ -63,7 +63,6 @@
           type="text"
           class="form-control"
           formControlName="deedNumber"
-          placeholder="رقم صك وزارة العدل"
           [class.is-invalid]="
             verifyForm.get('deedNumber')?.invalid &&
             verifyForm.get('deedNumber')?.touched
@@ -95,7 +94,6 @@
           type="text"
           class="form-control"
           formControlName="fawriaRERNumber"
-          placeholder="رقم صك السجل العقاري"
           [class.is-invalid]="
             verifyForm.get('fawriaRERNumber')?.invalid &&
             verifyForm.get('fawriaRERNumber')?.touched
@@ -120,8 +118,7 @@
           [iconDirection]="'left'"
           [formControlName]="'deedDate'"
           [parentForm]="verifyForm"
-          [placeholder]="'اختر تاريخ الصك'"
-          [showGregorian]="false"
+                    [showGregorian]="false"
           [isInvalid]="
             verifyForm.get('deedDate')?.invalid &&
             verifyForm.get('deedDate')?.touched
@@ -273,7 +270,6 @@
             type="text"
             class="form-control"
             formControlName="deedNumber"
-            placeholder="رقم صك وزارة العدل"
             [class.is-invalid]="
               verifyForm.get('deedNumber')?.invalid &&
               verifyForm.get('deedNumber')?.touched
@@ -298,8 +294,7 @@
             [iconDirection]="'left'"
             [formControlName]="'deedDate'"
             [parentForm]="verifyForm"
-            [placeholder]="'اختر تاريخ الصك'"
-            [showGregorian]="false"
+                        [showGregorian]="false"
             [isInvalid]="
               verifyForm.get('deedDate')?.invalid &&
               verifyForm.get('deedDate')?.touched
@@ -341,7 +336,6 @@
             type="text"
             class="form-control"
             formControlName="fawriaRERNumber"
-            placeholder="رقم صك السجل العقاري"
             [class.is-invalid]="
               verifyForm.get('fawriaRERNumber')?.invalid &&
               verifyForm.get('fawriaRERNumber')?.touched
@@ -367,8 +361,7 @@
             [iconDirection]="'left'"
             [formControlName]="'deedDate'"
             [parentForm]="verifyForm"
-            [placeholder]="'اختر تاريخ الصك'"
-            [showGregorian]="false"
+                        [showGregorian]="false"
             [isInvalid]="
               verifyForm.get('deedDate')?.invalid &&
               verifyForm.get('deedDate')?.touched
@@ -455,7 +448,7 @@
             "
             (change)="onPreviousLicenseChange()"
           >
-            <option value="">اختر رخصة البناء</option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let license of constructionLicenses" [value]="license.id" >
                 {{ license.licenseNumber }}
               <!-- <span *ngIf="license?.constructionLicenseType == 2 && license.before7">
@@ -632,7 +625,6 @@
             type="text"
             class="form-control"
             formControlName="licenseNumber"
-            placeholder="رقم رخصة البناء لبلدي"
             [class.is-invalid]="
               verifyForm.get('licenseNumber')?.invalid &&
               verifyForm.get('licenseNumber')?.touched
@@ -669,7 +661,6 @@
             type="text"
             class="form-control"
             formControlName="riyadhAmanahLicenseNumber"
-            placeholder="رقم رخصة بناء صادرة من أمانة الرياض"
             [class.is-invalid]="
               verifyForm.get('riyadhAmanahLicenseNumber')?.invalid &&
               verifyForm.get('riyadhAmanahLicenseNumber')?.touched
@@ -839,7 +830,6 @@
               (change)="updateLandValue()"
               formControlName="totalArea"
               id="totalArea"
-              placeholder="أدخل القيمة الكلية للأرض"
               [class.is-invalid]="
                 deedForm.get('totalArea')?.invalid &&
                 deedForm.get('totalArea')?.touched
@@ -877,7 +867,6 @@
               class="form-control"
               formControlName="totalUnitsLand"
               id="totalUnitsLand"
-              placeholder="أدخل عدد الاراضي"
               [class.is-invalid]="
                 deedForm.get('totalUnitsLand')?.invalid &&
                 deedForm.get('totalUnitsLand')?.touched
@@ -949,7 +938,6 @@
                       type="text"
                       class="form-control"
                       [formControlName]="i"
-                      placeholder="رقم الجوال"
                       maxlength="10"
                       [class.is-invalid]="
                         ownerMobileNumbers.at(i)?.invalid &&
@@ -1081,7 +1069,6 @@
                       type="text"
                       class="form-control"
                       [formControlName]="i"
-                      placeholder="رقم الجوال"
                       maxlength="10"
                       [class.is-invalid]="
                         mortgageeMobileNumbers.at(i)?.invalid &&
@@ -1205,7 +1192,6 @@
           <div class="input-group">
             <input type="text" class="form-control"
               [formControl]="$any(verifyForm.get('totalLandArea'))" id="totalLandArea"
-              placeholder="اجمالي مساحة مسطح البناء"
               [class.is-invalid]="verifyForm.get('totalLandArea')?.invalid && verifyForm.get('totalLandArea')?.touched"/>
           </div>
           <div class="invalid-feedback d-block"
@@ -1220,7 +1206,6 @@
           <div class="input-group">
             <input type="text" class="form-control"
               [formControl]="$any(verifyForm.get('totalUnit'))" id="totalUnit"
-              placeholder="اجمالي عدد الوحدات"
               [class.is-invalid]="verifyForm.get('totalUnit')?.invalid && verifyForm.get('totalUnit')?.touched"/>
           </div>
           <div class="invalid-feedback d-block"

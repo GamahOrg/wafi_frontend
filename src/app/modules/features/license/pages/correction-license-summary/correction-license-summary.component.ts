@@ -175,7 +175,7 @@ this.allowCompile= this._sharedLicenseProjectService.getAllowCorrectionCompileFr
     let Data = {
       popupType:'success',
       // imagePath: 'assets/images/auth/ForgotPass.svg',
-      title: 'تم ارسال الطلب بنجاح',
+      title: 'تم إرسال الطلب بنجاح',
       staticMessage: '',
       dynamicMessage: '',
       buttonText: 'متابعة الطلب',

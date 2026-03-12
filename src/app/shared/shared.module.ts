@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -11,6 +11,7 @@ import { StepperService } from './services/stepper/stepper.service';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PopupComponent } from './components/popup/popup.component';
+import { PopupPropmtComponent } from './components/popup-propmt/popup-propmt.component';
 import { PopupService } from './services/popup/popup.service';
 import { NoDataComponent } from './components/no-data/no-data.component';
 import { FileManagementService } from './services/fileManagement/file-management.service';
@@ -38,6 +39,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
 import { PopupNoteComponent } from './components/popup-note/popup-note.component';
 import { OTPInputComponent } from './components/otp-input/otp-input.component';
@@ -76,6 +78,9 @@ import { HijriDatepickerComponent } from './components/hijri-datepicker/hijri-da
 import { HijriDatepickerDirective } from './directives/hijri-datepicker.directive';
 import { RejectionConfirmationPopupComponent } from './components/rejection-confirmation-popup/rejection-confirmation-popup.component';
 import { ArabicToEnglishNumbersDirective } from './directives/arabic-to-english-numbers.directive';
+import { RatingComponent } from './components/rating/rating.component';
+import { RatingService } from './services/rating/rating.service';
+import { ViewPublicExchangeRequestDetailsComponent } from '../public-pages/view-exchange-request-details/view-public-exchange-request-details.component';
 
 export function getDatepickerConfig(): BsDatepickerConfig {
   return Object.assign(new BsDatepickerConfig(), {
@@ -89,6 +94,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
 
 @NgModule({
   declarations: [
+    ViewPublicExchangeRequestDetailsComponent,
     LanguageComponent,
     FileUploaderComponent,
     ToastrNotificationComponent,
@@ -127,6 +133,8 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     HijriDatepickerDirective,
     RejectionConfirmationPopupComponent,
     ArabicToEnglishNumbersDirective,
+    PopupPropmtComponent,
+    RatingComponent,
   ],
   imports: [
     CommonModule,
@@ -138,13 +146,14 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     ReactiveFormsModule,
     HttpClientModule,
     AngularEditorModule,
-
+    DatePipe,
     // Bootstrap Modules
     BsDatepickerModule,
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
+    RatingModule.forRoot(),
 
     NgOtpInputModule,
     AccordionModule,
@@ -161,7 +170,6 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     FileManagementService,
     PaginationService,
     AccordionService,
-    BreadcrumbService,
     RequestNotesService,
     ProjectApprovalsService,
     { provide: BsDatepickerConfig, useFactory: getDatepickerConfig },
@@ -169,6 +177,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     NotificationsService,
     RequestTimelineService,
     NationalAddressService,
+    RatingService,
   ],
   exports: [
     LanguageComponent,
@@ -183,12 +192,15 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     AccordionModule,
     AngularEditorModule,
     RichTextEditorComponent,
+
     // Bootstrap Modules
     BsDatepickerModule,
     BsDropdownModule,
     CarouselModule,
     PopoverModule,
     TooltipModule,
+    RatingModule,
+
     RealEstateContributionFooterComponent,
     PilotLaunchHintComponent,
     TabsComponent,
@@ -214,6 +226,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     HijriDatepickerComponent,
     HijriDatepickerDirective,
     ArabicToEnglishNumbersDirective,
+    RatingComponent,
   ],
 })
 export class SharedModule {}

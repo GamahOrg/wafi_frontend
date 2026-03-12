@@ -21,9 +21,7 @@
                   aria-label="Default select example"
                   formControlName="liftingDeedReasonId"
                 >
-                  <option value="" disabled [selected]="!liftingTheMarkOnThePropertyTitleDeedForm.controls.liftingDeedReasonId.value">
-                    اختر سبب رفع التأشير
-                  </option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             
                   <option *ngFor="let liftingDeedReason of liftingDeedReasons" [value]="liftingDeedReason.id">
                     {{ liftingDeedReason.name }}
@@ -66,7 +64,7 @@
                   <div class="value">
                     <span class="icon material-icons-outlined">content_copy</span>
                     <div class="key">
-                      نماذج الفرز او الدمج 
+                      نماذج الفرز أو الدمج 
                     </div>
                   </div>
                   <a

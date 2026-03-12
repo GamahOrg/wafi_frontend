@@ -32,6 +32,7 @@ import {
   PopupData,
   confirmationPopupData,
 } from 'src/app/shared/models/popup.model';
+import { Subscription } from 'rxjs';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { LicenseRequestService } from '../../../services/license-request.service';
 import { CorrectionProjectLandDeedService } from '../../../services/correction-project-land-deed.service';
@@ -46,6 +47,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CorrectionLicenseprojectDeedsUpdateComponent
   implements OnInit, OnChanges, OnDestroy {
+  private subscriptions: Subscription[] = [];
   @Input() isIntegration: boolean | null = null;
   @Input() isUnit: boolean | null = null;
   @Input() deedId: string | null = null;
@@ -100,7 +102,7 @@ export class CorrectionLicenseprojectDeedsUpdateComponent
     after7: 'بعد 1-7',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     letterType: 'خطاب تعهد إتمام',
   };
 
@@ -411,6 +413,7 @@ export class CorrectionLicenseprojectDeedsUpdateComponent
 
   ngOnDestroy(): void {
     this._tabsService.setUnsavedChanges(false);
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   private loadComponentData() {
@@ -666,6 +669,10 @@ export class CorrectionLicenseprojectDeedsUpdateComponent
   }
 
   onMortgageeFileUploaded(fileData: any, mortgageeIndex: number): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.mortgageeFiles.at(mortgageeIndex).setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -710,6 +717,10 @@ export class CorrectionLicenseprojectDeedsUpdateComponent
   }
 
   onOwnerFileUploaded(fileData: any, ownerIndex: number): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.ownerAgreementFiles.at(ownerIndex).setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -729,6 +740,10 @@ export class CorrectionLicenseprojectDeedsUpdateComponent
     fileData: any,
     ownerIndex: number
   ): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.deedMarginalizationFiles.at(ownerIndex).setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -1104,10 +1119,12 @@ export class CorrectionLicenseprojectDeedsUpdateComponent
   }
 
   private observeconfirmAction() {
-    this._popupService.confirmAction.subscribe((res: PopupData) => {
-      this.changePage.emit(Pagemode.List);
-      this.closeDialog();
-    });
+    this.subscriptions.push(
+      this._popupService.confirmAction.subscribe((res: PopupData) => {
+        this.changePage.emit(Pagemode.List);
+        this.closeDialog();
+      })
+    );
   }
 
   closeCancelModal(): void {
@@ -1239,6 +1256,11 @@ export class CorrectionLicenseprojectDeedsUpdateComponent
   }
 
   onConstructionLicenseFileUploaded(fileData: any): void {
+
+    if (fileData.eventRes.data.length === 0) {
+      this.verifyForm.get('constructionLicenseFileId')?.setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&

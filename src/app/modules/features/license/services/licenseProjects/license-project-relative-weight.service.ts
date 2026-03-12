@@ -75,4 +75,13 @@ export class LicenseProjectRelativeWeightService {
       );
   }
 
+  GetScopeItemsListAsync(): Observable<SysLicenseInfrastructureElementDto[] | null> {
+    return this._httpClient.get<CoreResponseDTO<SysLicenseInfrastructureElementDto[]>>(
+      `${Configuration.APIs.SysLicenseRelativeWeight.GetScopeItemsListAsync}`)
+      .pipe(map((res: CoreResponseDTO<SysLicenseInfrastructureElementDto[]>) => {
+        return res.isDone ? (res.data as SysLicenseInfrastructureElementDto[]) : null;
+      })
+      );
+  }
+
 }

@@ -31,6 +31,12 @@ export class EngineeringConsultantUploadComponent implements OnInit {
   }
 
   onUpload($event: any, removed: boolean = false) {
+    if ($event.eventRes.data.length === 0) {
+      let controls = this.form?.controls;
+      let control = controls[this.propertyName];
+      control.setValue(undefined);
+      return;
+    }
     let result = $event ?
       $event.eventRes as CoreResponseDTO<SysFileManagerCreateUpdateDto[]> : <any>{};
     let controls = this.form?.controls;

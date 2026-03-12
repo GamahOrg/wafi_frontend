@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import {
   LoginParams,
@@ -34,6 +34,14 @@ import {
 } from 'src/app/shared/models/customer.model';
 import { UserTypeStatus } from '../../models/identity-status.model';
 import { environment } from 'src/environments/environment';
+import { RatingService } from 'src/app/shared/services/rating/rating.service';
+import { RatingTypeEnum } from 'src/app/shared/models/enums/rating.enum';
+import { RatingComponent } from 'src/app/shared/components/rating/rating.component';
+import {
+  RatingStatusDto,
+  UserRatingUpdateDto,
+} from 'src/app/shared/models/rating-request.model';
+import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 
 @Component({
   selector: 'app-login',
@@ -94,8 +102,10 @@ export class LoginComponent {
     private _loginService: LoginService,
     private _storageService: StorageService,
     private _popupService: PopupService,
-    private _OTPService: OTPService
-  ) { }
+    private _OTPService: OTPService,
+    private _ratingService: RatingService,
+    private _toastrNotificationService: ToastrNotificatioService,
+  ) {}
   ngOnInit(): void {
     this.observecancelAction();
     this.observeconfirmAction();
@@ -116,11 +126,11 @@ export class LoginComponent {
     if (this.isProduction) {
       this.loginService.LoginWithIAM(loginParams).subscribe((res) => {
         if (res.data) {
-          
+          this._storageService.setIsFirstLoading(true);
           if (res.data.token) {
             this._storageService.saveTokens(res.data.token);
 
-            switch (res.data.token.loginUserType) {
+            switch (res.data?.token.loginUserType) {
               case LoginUserTypeEnum.wafiPartner:
               case LoginUserTypeEnum.delegateWafiPartner:
                 this.navigateToDashboard();
@@ -131,9 +141,8 @@ export class LoginComponent {
                 break;
 
               case LoginUserTypeEnum.finalBeneficiary:
-                this.navigateToContractdocumentation()
+                this.navigateToContractdocumentation();
                 break;
-
             }
           } else {
             this.openPopupOfValidationNumber(+res.data.nafathLoginData.random);
@@ -151,7 +160,6 @@ export class LoginComponent {
           if (res) {
             if (res.data) {
               if (res.data) {
-
                 this.tokenResponse = res.data;
                 this._storageService.saveTokens(this.tokenResponse);
 
@@ -166,9 +174,8 @@ export class LoginComponent {
                     break;
 
                   case LoginUserTypeEnum.finalBeneficiary:
-                    this.navigateToContractdocumentation()
+                    this.navigateToContractdocumentation();
                     break;
-
                 }
               }
 
@@ -181,9 +188,7 @@ export class LoginComponent {
         });
     }
   }
-  //   private updateRegistrationObjBs() {
-  //     this._registrationService.registrationObj.next(this.registrationForm.value as registration)
-  // }
+
   private openPopupOfValidationNumber(nafathValidationNumber: number) {
     this.showToastr = true;
     let Data = {
@@ -213,7 +218,6 @@ export class LoginComponent {
 
     // this._popupService.updatePopupData(Data);
   }
-
   private setTimeOutToDismissDialog(): void {
     // for test
     // setTimeout(() => {
@@ -272,7 +276,7 @@ export class LoginComponent {
     this.subscriptions.push(
       this._OTPService.getOTPInputValue().subscribe((res: string | null) => {
         this.OTPInputValue = res;
-      })
+      }),
     );
   }
   private openOTPDialog(): void {
@@ -303,7 +307,7 @@ export class LoginComponent {
 
   private observecancelAction() {
     this.subscriptions.push(
-      this._popupService.cancelAction.subscribe((res: PopupData) => { })
+      this._popupService.cancelAction.subscribe((res: PopupData) => {}),
     );
   }
 
@@ -323,13 +327,13 @@ export class LoginComponent {
               this.navigateToDashboard();
             }
           });
-      })
+      }),
     );
   }
 
   private observeRegisterBS() {
     this.registerSubscription = this._signalRService.register$.subscribe(
-      (res: string) => { }
+      (res: string) => {},
     );
   }
   private invokeTransactionIdToRegister() {
@@ -347,7 +351,9 @@ export class LoginComponent {
       });
   }
   private navigateToContractdocumentation(): void {
-    this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.contractdocumentation}`]);
+    this._router.navigate([
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.contractdocumentation}`,
+    ]);
   }
   private observeReceivedIdentityStatusBS() {
     this.receivedIdentityStatusSubscription =
@@ -357,7 +363,6 @@ export class LoginComponent {
 
         if (res) {
           if (res.isValid && res.transactionId == this.transactionId) {
-            
             if (res.token != null) {
               this._storageService.saveTokens(res.token);
 
@@ -372,9 +377,8 @@ export class LoginComponent {
                   break;
 
                 case LoginUserTypeEnum.finalBeneficiary:
-                  this.navigateToContractdocumentation()
+                  this.navigateToContractdocumentation();
                   break;
-
               }
             }
 
@@ -393,11 +397,13 @@ export class LoginComponent {
                   break;
                 case UserTypeStatus.CustomerWithoutFacility:
                   this.updateRegistrationStatus(
-                    RegistrationStatus.existIdWithoutFacility
+                    RegistrationStatus.existIdWithoutFacility,
                   );
                   break;
                 case UserTypeStatus.FinalBeneficiary:
-                  this.updateRegistrationStatus(RegistrationStatus.finalBeneficiary);
+                  this.updateRegistrationStatus(
+                    RegistrationStatus.finalBeneficiary,
+                  );
                   break;
               }
 
@@ -442,7 +448,7 @@ export class LoginComponent {
 
   private navigateToRegister(): void {
     this._router.navigateByUrl(
-      `${Configuration.modules.auth}/${Configuration.pages.auth.registration}`
+      `${Configuration.modules.auth}/${Configuration.pages.auth.registration}`,
     );
   }
   private updateCustomerData(userData: customerResponse): void {

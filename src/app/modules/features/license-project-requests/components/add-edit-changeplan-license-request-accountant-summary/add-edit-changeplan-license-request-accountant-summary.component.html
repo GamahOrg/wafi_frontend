@@ -6,8 +6,7 @@ id="form-licenseProjectProblemLogForm">
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
       <label class="form-label">التكاليف الإجمالية للمشروع (غير شاملة ثمن الأرض) مُحدثة لتاريخ الطلب</label>
-      <input type="number" id="control-totalProjectCosts" class="form-control" formControlName="totalProjectCosts"
-        placeholder="التكاليف الإجمالية للمشروع (غير شاملة ثمن الأرض) مُحدثة لتاريخ الطلب">
+      <input type="number" id="control-totalProjectCosts" class="form-control" formControlName="totalProjectCosts">
       <div class="invalid-feedback d-block" *ngIf="controls.totalProjectCosts?.hasError('required') && showValidation">
         حقل مطلوب
       </div>
@@ -18,8 +17,7 @@ id="form-licenseProjectProblemLogForm">
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
       <label class="form-label">رصيد حساب الضمان</label>
-      <input type="number" id="control-escrowAccountBalance" class="form-control" formControlName="escrowAccountBalance"
-        placeholder="رصيد حساب الضمان">
+      <input type="number" id="control-escrowAccountBalance" class="form-control" formControlName="escrowAccountBalance">
       <div class="invalid-feedback d-block" *ngIf="controls.escrowAccountBalance?.hasError('required') && showValidation">
         حقل مطلوب
       </div>

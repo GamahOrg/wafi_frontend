@@ -5,6 +5,7 @@
       <div class="form-group">
         <label for="mainItemId" class="form-label"><span class="required-star">*</span> المصدر</label>
         <select id="mainItemId" formControlName="mainItemId" class="form-select" (change)="onMainItemChange($event)">
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of mainItemsDto" [value]="item.id">
             {{ item.name }}
           </option>
@@ -18,6 +19,7 @@
       <div class="form-group">
         <label for="paymentTypeId" class="form-label"><span class="required-star">*</span> ألية الدفع</label>
         <select id="paymentTypeId" formControlName="paymentTypeId" class="form-select" (change)="onLicenseProjectBuyerTypeIdChange($event)">
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of licenseBaymentType" [value]="item.id">
             {{ item.name }}
           </option>
@@ -30,6 +32,7 @@
       <div class="form-group">
         <label for="bankId" class="form-label"><span class="required-star">*</span> البنوك المرخصة</label>
         <select id="bankId" formControlName="bankId" class="form-select">
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of banksDto" [value]="item.id">
             {{ item.name }}
           </option>
@@ -83,7 +86,7 @@
       <div class="form-group">
         <label for="sysDepositTypeId" class="form-label"><span class="required-star">*</span> نوع الايداع</label>
         <select class="form-select" id="sysDepositTypeId" formControlName="sysDepositTypeId">
-          <option label="اختر نوع الايداع" disabled></option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let type of sysDepositTypeList" [value]="type.id">
             {{ type.name }}
           </option>
@@ -181,7 +184,7 @@
       <div class="form-group">
         <label for="installmentId" class="form-label">الدفعات</label>
         <select id="installmentId" formControlName="installmentId" class="form-select">
-          <option label="اختر الدفعات" disabled></option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let payment of buyerBusinessPaymentInstallementsList" [value]="payment.id">
             {{payment.installmentNumber}}
           </option>
@@ -218,6 +221,7 @@
       <div class="form-group">
         <label for="licenseProjectBuyerId" class="form-label"><span class="required-star">*</span> اسم المشتري</label>
         <select id="licenseProjectBuyer" formControlName="licenseProjectBuyer" class="form-select" [(ngModel)]="selectedBuyer" (change)="onBuyerSelect()">
+          <option [ngValue]="''" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let buyer of buyerDto" [ngValue]="buyer">
             {{ buyer.name }}
           </option>
@@ -230,7 +234,7 @@
       <div class="form-group">
         <label for="buyerType" class="form-label">سجل المشترين</label>
         <select id="licenseProjectBuyerId" formControlName="licenseProjectBuyerId" class="form-select" (change)="onBuyerTypeSelect($event)">
-          <option label="اختر سجل المشترين" disabled></option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let buyerType of buyerDetailsDto" [value]="buyerType.id">
             {{
             buyerType.licenseProjectBuyerType.id === licenseBuyerTypeEnum.Lands
@@ -251,7 +255,7 @@
 
     <div class="col-12 col-lg-6" *ngIf="showOtherField && showBuyerDetails && showBuyerType">
       <div class="form-group">
-        <label class="form-label">رقم البلوك او العمارة</label>
+        <label class="form-label">رقم البلوك أو العمارة</label>
         <input class="form-control" [value]="selectedBuyerType?.blockCode" readonly />
       </div>
     </div>

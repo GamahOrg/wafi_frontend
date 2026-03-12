@@ -120,7 +120,7 @@ export class ProjectBusinessCaseReportListComponent {
     
     this._projectBusinessCaseReportService.setProjectBusinessCaseReportId(projectBusinessCaseReportId);
     let Data = {
-      title: "إضافة او تعديل حالة الأعمال",
+      title: "إضافة أو تعديل حالة الأعمال",
       component: AddEditProjectBusinessCaseComponent,
       id: "AddEditProjectBusinessCaseComponent",
     } as PopupData;

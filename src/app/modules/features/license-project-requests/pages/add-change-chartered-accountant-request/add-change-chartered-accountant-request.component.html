@@ -9,7 +9,7 @@
           <div class="form-group">
             <label class="form-label">المشروع</label>
             <select (change)="getLicenseDetails()" class="form-select" id="control-licenseProjectId" aria-label="Default select example" formControlName="licenseProjectId">
-              <option selected disabled>المشروع</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
 
               <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
                 {{ licenseProject.name }}

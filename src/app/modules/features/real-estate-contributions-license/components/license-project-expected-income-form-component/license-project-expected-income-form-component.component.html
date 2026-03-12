@@ -6,7 +6,7 @@
                     <label class="form-label">السنوات</label>
                     <select class="form-select"
                             formControlName="yearId">
-                        <option value="">اختر السنة</option>
+                        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                         <option *ngFor="let year of sysYears"
                                 [ngValue]="year.id">
                             {{ year.name }}
@@ -19,8 +19,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">إجمالي الإيرادات</label>
-                    <input placeholder="إجمالي الإيرادات"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="totalRevenue">
                     <mat-error *ngIf="controls.totalRevenue?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -33,8 +32,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">تكلفة الأراضي</label>
-                    <input placeholder="تكلفة الأراضي"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="landCost">
                     <mat-error *ngIf="controls.landCost?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -47,8 +45,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">التكاليف</label>
-                    <input placeholder="التكاليف"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="costs">
                     <mat-error *ngIf="controls.costs?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -61,8 +58,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> دفعات مقدمة</label>
-                    <input placeholder="دفعات مقدمة"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="advancePayments">
                     <mat-error *ngIf="controls.advancePayments?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -75,8 +71,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">أعمال البنية التحتية</label>
-                    <input placeholder="أعمال البنية التحتية"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="infrastructureWorks">
                     <mat-error *ngIf="controls.infrastructureWorks?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -89,8 +84,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> أعمال الهيكل الخارجي</label>
-                    <input placeholder="أعمال الهيكل الخارجي"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="externalStructureWorks">
                     <mat-error *ngIf="controls.externalStructureWorks?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -103,8 +97,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">التشطيبات</label>
-                    <input placeholder="التشطيبات"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="finishes">
                     <mat-error *ngIf="controls.finishes?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -117,8 +110,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> تركيبات الأساس والمعدات</label>
-                    <input placeholder="تركيبات الأساس والمعدات"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="foundationFixturesAndEquipment">
                     <mat-error *ngIf="controls.foundationFixturesAndEquipment?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -131,8 +123,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف الارتباط وإزالة العيوب وربط الخدمات</label>
-                    <input placeholder="مصاريف الارتباط وإزالة العيوب وربط الخدمات"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="connectionFeesDefectRemovalAndLinkingServices">
                     <mat-error *ngIf="controls.connectionFeesDefectRemovalAndLinkingServices?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -145,8 +136,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف التسليم</label>
-                    <input placeholder="{{'مصاريف التسليم'}}"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="deliveryCharges">
                     <mat-error *ngIf="controls.deliveryCharges?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -159,8 +149,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">البند الجديد</label>
-                    <input placeholder="البند الجديد"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="newOtherClause">
                     <mat-error *ngIf="controls.newOtherClause?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -176,7 +165,7 @@
                     <textarea type="text"
                               class="form-control"
                               formControlName="descriptionOfNewClause"
-                              placeholder="وصف البند الجديد">
+                              >
                             </textarea>
                             <mat-error *ngIf="controls.descriptionOfNewClause?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                 </div>
@@ -185,8 +174,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف عن العيوب التي قد تقع بعد الإنشاء</label>
-                    <input placeholder="مصاريف عن العيوب التي قد تقع بعد الإنشاء"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="feesForDefectsInConstruction">
                     <mat-error *ngIf="controls.feesForDefectsInConstruction?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -199,8 +187,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف التصاميم</label>
-                    <input placeholder="مصاريف التصاميم"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="designFees">
                     <mat-error *ngIf="controls.designFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -213,8 +200,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> مصاريف الإشراف</label>
-                    <input placeholder="مصاريف الإشراف"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="supervisionFees">
                     <mat-error *ngIf="controls.supervisionFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -227,8 +213,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">المصاريف الاداريه والعمومية</label>
-                    <input placeholder="المصاريف الاداريه والعمومية"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="administrativeAndGeneralFees">
                     <mat-error *ngIf="controls.administrativeAndGeneralFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -241,8 +226,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف الإيجار</label>
-                    <input placeholder="مصاريف الإيجار"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="rentalFees">
                     <mat-error *ngIf="controls.rentalFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -255,8 +239,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف الطاقه</label>
-                    <input placeholder="{{'مصاريف الطاقه'}}"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="energyFees">
                     <mat-error *ngIf="controls.energyFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -269,8 +252,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف الاتصالات</label>
-                    <input placeholder="مصاريف الطاقه"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="communicationFees">
                     <mat-error *ngIf="controls.communicationFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -283,8 +265,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">اتعاب التدقيق</label>
-                    <input placeholder="اتعاب التدقيق"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="auditFees">
                     <mat-error *ngIf="controls.auditFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -297,8 +278,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">عمولات بنكية</label>
-                    <input placeholder="عمولات بنكية"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="bankCommission">
                     <mat-error *ngIf="controls.bankCommission?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -311,8 +291,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">رسوم حكومية</label>
-                    <input placeholder="رسوم حكومية"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="governmentalFees">
                     <mat-error *ngIf="controls.governmentalFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -325,8 +304,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> برامج تقنيه</label>
-                    <input placeholder="برامج تقنيه"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="technicalPrograms">
                     <mat-error *ngIf="controls.technicalPrograms?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -339,8 +317,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف التأمين</label>
-                    <input placeholder="مصاريف التأمين"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="insuranceFees">
                     <mat-error *ngIf="controls.insuranceFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -353,8 +330,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف متنوعة</label>
-                    <input placeholder="مصاريف متنوعة"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="variousFees">
                     <mat-error *ngIf="controls.variousFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -367,8 +343,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> مصاريف التوظيف</label>
-                    <input placeholder="مصاريف التوظيف"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="employmentFees">
                     <mat-error *ngIf="controls.employmentFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -381,8 +356,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">قرطاسية ومطبوعات</label>
-                    <input placeholder="قرطاسية ومطبوعات"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="stationeryAndPublications">
                     <mat-error *ngIf="controls.travelAndTransportationFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -395,8 +369,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف نقل و سفر</label>
-                    <input placeholder="مصاريف نقل و سفر"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="travelAndTransportationFees">
                     <mat-error *ngIf="controls.travelAndTransportationFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -409,8 +382,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">استهلاك الأجهزة</label>
-                    <input placeholder="استهلاك الأجهزة"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="deviceConsumption">
                     <mat-error *ngIf="controls.deviceConsumption?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -423,8 +395,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">إطفاء مصاريف ماقبل التشغيل</label>
-                    <input placeholder="إطفاء مصاريف ماقبل التشغيل"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="amortizationOfPreOperatingFees">
                     <mat-error *ngIf="controls.amortizationOfPreOperatingFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -437,8 +408,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">الرواتب والاجور</label>
-                    <input placeholder="الرواتب والاجور"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="salariesAndWages">
                     <mat-error *ngIf="controls.salariesAndWages?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -451,8 +421,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف التسويق والتغطيه والاعلان</label>
-                    <input placeholder="مصاريف التسويق والتغطيه والاعلان"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="marketingAndCoverageAndAdvertisingFees">
                     <mat-error *ngIf="controls.marketingAndCoverageAndAdvertisingFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -465,8 +434,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصاريف اخري</label>
-                    <input placeholder="مصاريف اخري"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="otherFees">
                     <mat-error *ngIf="controls.otherFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -479,8 +447,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مخصص الطواريء</label>
-                    <input placeholder="مخصص الطواريء"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="emergencyAllowance">
                     <mat-error *ngIf="controls.emergencyAllowance?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -493,8 +460,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصروف الزكاة</label>
-                    <input placeholder="مصروف الزكاة"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="zakatFees">
                     <mat-error *ngIf="controls.zakatFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -507,8 +473,7 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مصروف الضريبة</label>
-                    <input placeholder="مصروف الضريبة"
-                           type="number"
+                    <input type="number"
                            class="form-control"
                            formControlName="taxFees">
                     <mat-error *ngIf="controls.taxFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>

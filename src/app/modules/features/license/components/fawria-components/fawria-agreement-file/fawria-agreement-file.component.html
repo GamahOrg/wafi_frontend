@@ -1,0 +1,110 @@
+<form [formGroup]="Form" id="form-Form">
+  <div class="details-page">
+    <div class="page-header">
+      <div class="page-title">
+        <h1 class="title sm">{{ pageTitle }}</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-7">
+        <div class="page-section">
+          <div class="row row-gap-4">
+            <div class="col-xl-2">
+              <div class="key-value">
+                <span class="key">الاسم</span>
+                <span class="value" *ngIf="approvalRole == aprovalRole.DeedOwner">{{ approvalDetails?.ownerName }}</span>
+                <span class="value" *ngIf="approvalRole !== aprovalRole.DeedOwner">{{ approvalDetails?.name }}</span>
+              </div>
+            </div>
+            <div class="col-xl-2">
+              <div class="key-value">
+                <span class="key">{{ approvalRole === aprovalRole.CharteredAccountant ? 'حالة اتفاقية المحاسب' : approvalRole === aprovalRole.EngineeringConsultant ? 'حالة اتفاقية الاستشاري' : approvalRole === aprovalRole.DeedOwner ? 'حالة اتفاقية المالك' : 'حالة الاتفاقية' }}</span>
+                <div class="value">
+                  <span class="status-pill" [ngClass]="{
+                    'green': approvalDetails?.agreementStatusEnum == LicenseProjectAgreementStatusEnum.Certified,
+                    'red' : approvalDetails?.agreementStatusEnum == LicenseProjectAgreementStatusEnum.Rejected,
+                    'blue' : approvalDetails?.agreementStatusEnum !== LicenseProjectAgreementStatusEnum.Certified && approvalDetails?.agreementStatusEnum !== LicenseProjectAgreementStatusEnum.Rejected
+                    }">
+                    {{ approvalDetails?.agreementStatusEnum == LicenseProjectAgreementStatusEnum.Certified ? 'مُعتمدة' : approvalDetails?.agreementStatusEnum == LicenseProjectAgreementStatusEnum.Rejected ? 'مرفوضة' : 'قيد الاعتماد' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-2" *ngIf="approvalRole !== aprovalRole.DeedOwner">
+              <div class="key-value">
+                <span class="key">قيمة العقد</span>
+                <div class="value">
+                  <span class="tag d-inline-flex align-items-center gap-1">
+                    {{ formatContractValue(approvalDetails?.contarctValue) }}
+                    <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 9.13086C9.93393 9.66521 9.90485 9.89724 9.6582 10.418L5.86816 11.2012C5.95528 10.6381 6.072 10.2039 6.26074 9.94336L10 9.13086ZM4.72168 5.44434L5.85352 5.19922V1.62109C6.27547 1.14742 6.5356 0.934876 7.04492 0.666016V4.94141L10 4.2998C9.93391 4.83428 9.90502 5.06592 9.6582 5.58691L7.04492 6.13867V7.34082L10 6.71582C9.93392 7.25025 9.90502 7.48194 9.6582 8.00293L7.04492 8.54199V8.55371L5.85352 8.7998V6.39062L4.72168 6.62988V8.14844L4.70117 8.15234C4.44075 8.60894 4.07398 9.15783 3.71973 9.5957L0 10.3037C0.0333482 9.82539 0.103098 9.55597 0.319336 9.07422L3.53125 8.37695V6.88184L0.554688 7.51172C0.58804 7.03313 0.657611 6.76333 0.874023 6.28125L3.53125 5.70312V0.956055C3.9532 0.482378 4.21236 0.268861 4.72168 0V5.44434Z" fill="#161616" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-2" *ngIf="approvalRole == aprovalRole.DeedOwner">
+              <div class="key-value">
+                <span class="key">قيمة الأرض للمالك</span>
+                <div class="value">
+                  <span class="tag d-inline-flex align-items-center gap-1">
+                    {{ formatContractValue(approvalDetails?.owningAmount) }}
+                    <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 9.13086C9.93393 9.66521 9.90485 9.89724 9.6582 10.418L5.86816 11.2012C5.95528 10.6381 6.072 10.2039 6.26074 9.94336L10 9.13086ZM4.72168 5.44434L5.85352 5.19922V1.62109C6.27547 1.14742 6.5356 0.934876 7.04492 0.666016V4.94141L10 4.2998C9.93391 4.83428 9.90502 5.06592 9.6582 5.58691L7.04492 6.13867V7.34082L10 6.71582C9.93392 7.25025 9.90502 7.48194 9.6582 8.00293L7.04492 8.54199V8.55371L5.85352 8.7998V6.39062L4.72168 6.62988V8.14844L4.70117 8.15234C4.44075 8.60894 4.07398 9.15783 3.71973 9.5957L0 10.3037C0.0333482 9.82539 0.103098 9.55597 0.319336 9.07422L3.53125 8.37695V6.88184L0.554688 7.51172C0.58804 7.03313 0.657611 6.76333 0.874023 6.28125L3.53125 5.70312V0.956055C3.9532 0.482378 4.21236 0.268861 4.72168 0V5.44434Z" fill="#161616" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-2" *ngIf="approvalRole == aprovalRole.DeedOwner">
+              <div class="key-value">
+                <span class="key">رقم الصك</span>
+                <span class="value">{{ approvalDetails?.deedNumber }}</span>
+              </div>
+            </div>
+            <div class="col-xl-2" *ngIf="approvalRole !== aprovalRole.DeedOwner">
+              <div class="key-value">
+                <span class="key">الرقم الموحد</span>
+                <div class="value">
+                  <span class="tag">{{ approvalDetails?.entity700Number }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-2">
+              <div class="key-value">
+                <span class="key">تاريخ الإرسال</span>
+                <span class="value">{{ approvalDetails?.agreementDate | date: "dd/MM/yyyy" }}</span>
+              </div>
+            </div>
+            <div class="col-xl-2">
+              <div class="key-value">
+                <span class="key">تاريخ آخر تحديث</span>
+                <span class="value">{{ approvalDetails?.approvedOn | date: "dd/MM/yyyy" }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <div class="pdf-viewer-section" style="min-height: 600px;">
+      <app-pdf-viewer [fileId]="approvalDetails?.agreementFile?.id" [retryCallback]="retryLoadContract" [noContentMessage]="'لا يوجد ملف الاتفاقية متاح'" [noContentDescription]="'لم يتم العثور على ملف الاتفاقية'" [loadingMessage]="'جاري تحميل ملف الاتفاقية'" [loadingDescription]="'يرجى الانتظار بينما يتم تحميل ملف الاتفاقية'" [errorMessage]="'حدث خطأ في تحميل ملف الاتفاقية'"></app-pdf-viewer>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <ng-container *ngIf="!isLoading && !approvalDetails">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false" [showText]="true" [text]="'لا توجد اتفاقيات متاحة'"></app-no-data>
+    </div>
+  </ng-container>
+
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>جاري التحميل...</p>
+  </div>
+</form>

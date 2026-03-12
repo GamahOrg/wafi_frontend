@@ -1,7 +1,7 @@
 <form [formGroup]="addingZoneForm" id="form-addingZoneForm">
   <div class="form-group">
     <label class="form-label"><span class="required-star">*</span> {{localization.addingNewZone}}</label>
-    <input type="text" id="control-code" placeholder="{{localization.addingNewZone}}" class="form-control" formControlName="code" [placeholder]="localization.addingNewZonePlaceholder" />
+    <input type="text" id="control-code"  class="form-control" formControlName="code"  />
     <div class="invalid-feedback d-block" *ngIf="controls.code?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
     <!-- <div class="form-note">{{localization.addingNewZoneHint}}</div> -->
   </div>

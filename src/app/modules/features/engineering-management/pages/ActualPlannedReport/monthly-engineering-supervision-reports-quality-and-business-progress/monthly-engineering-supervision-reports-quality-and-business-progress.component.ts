@@ -244,7 +244,7 @@ export class MonthlyEngineeringSupervisionReportsQualityAndBusinessProgressCompo
     this._monthlyEngineeringReportExternalExpensesService.setLicenseProjectEngineeringSupervisionPlannedReportDetailId(this.actualValueReport?.id as string);
     this._monthlyEngineeringReportExternalExpensesService.setMonthlyEngineeringReportExternalExpensesId(id ?? null);
       let Data = {
-        title: "إضاقة او تعديل بيانات المصروفات الخارجية",
+        title: "إضاقة أو تعديل بيانات المصروفات الخارجية",
         component: AddEditMonthlyEngineeringReportExternalExpensesComponent,
         id: "AddEditMonthlyEngineeringReportExternalExpensesComponent"
       } as PopupData;
@@ -276,7 +276,7 @@ export class MonthlyEngineeringSupervisionReportsQualityAndBusinessProgressCompo
       setLicenseProjectEngineeringWorksExamination(licenseProjectEngineeringWorksExamination);
     }
     let Data = {
-      title: "إضاقة او تعديل بيانات  مراقبة الجودة",
+      title: "إضاقة أو تعديل بيانات  مراقبة الجودة",
       component: AddEditActualQualityControlComponent,
       id: "AddEditActualQualityControlComponent"
     } as PopupData;
@@ -321,7 +321,7 @@ export class MonthlyEngineeringSupervisionReportsQualityAndBusinessProgressCompo
     this._engineeringSupervisionReportActualQualityAndBusinessService.
     setLicenseProjectEngineeringActualRelativeWeightObj(weight as LicenseProjectEngineeringActualRelativeWeightDto);
     let Data = {
-      title: "إضاقة او تعديل بيانات موقف أعمال الإنشاءات",
+      title: "إضاقة أو تعديل بيانات موقف أعمال الإنشاءات",
       component: AddEditActualRelativeWeightComponent,
       id: "AddEditActualRelativeWeightComponent"
       } as PopupData;

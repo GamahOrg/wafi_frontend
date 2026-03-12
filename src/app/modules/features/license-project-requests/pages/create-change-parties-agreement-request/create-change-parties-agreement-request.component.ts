@@ -113,12 +113,24 @@ export class CreateChangePartiesAgreementRequestComponent {
       });
   }
   applicationFormFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changePartiesAgreementForm.controls[
+        'applicationFormFileId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changePartiesAgreementForm.controls['applicationFormFileId'].setValue(
       filesData.eventRes.data[0].id
     );
   }
   newAgreementCopyUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changePartiesAgreementForm.controls[
+        'newAgreementCopyId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changePartiesAgreementForm.controls[
       'newAgreementCopyId'

@@ -10,6 +10,7 @@ export interface ProjectPartiesStatusDto {
   owningArea?: number | null;
   totalLandValue?: number | null;
   rejectReason?: string | null;
+  licenseProjectLandOwnerId?: string | null;
 }
 
 export enum ProjectPartiesType {

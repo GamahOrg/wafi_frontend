@@ -12,8 +12,11 @@
           <label class="form-label">{{ localization.bank }}</label>
           <div class="select-group">
             <ng-container *ngFor="let bank of banks">
-              <div class="select-item" [ngClass]="{'selected': controls['bankId']?.value === bank.id}">
-                <img [src]="bank.iconPath" alt="Bank Logo">
+              <div
+                class="select-item"
+                [ngClass]="{ selected: controls['bankId']?.value === bank.id }"
+              >
+                <img [src]="bank.iconPath" alt="Bank Logo" />
                 {{ bank.name }}
               </div>
             </ng-container>
@@ -23,8 +26,13 @@
         <div hidden class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label">{{ localization.bank }}</label>
-            <select class="form-select" id="control-bankId" formControlName="bankId" [disabled]="true">
-              <option value="" disabled selected>{{ localization.selectBank }}</option>
+            <select
+              class="form-select"
+              id="control-bankId"
+              formControlName="bankId"
+              [disabled]="true"
+            >
+       <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let bank of banks" [ngValue]="bank.id">
                 {{ bank.name }}
               </option>
@@ -37,17 +45,21 @@
           <div class="form-group">
             <label class="form-label">{{ localization.delegators }}</label>
             <!-- Selected Delegators Chips (Read-only - no remove button) -->
-            <div class="d-flex flex-wrap align-items-center gap-2" *ngIf="getSelectedDelegators().length > 0">
-              <div class="chip" *ngFor="let delegator of getSelectedDelegators()">
+            <div
+              class="d-flex flex-wrap align-items-center gap-2"
+              *ngIf="getSelectedDelegators().length > 0"
+            >
+              <div
+                class="chip"
+                *ngFor="let delegator of getSelectedDelegators()"
+              >
                 {{ delegator.name }}
                 <!-- <button type="button" class="btn-icon btn btn-dark" (click)="true">
                       <i class="hgi hgi-stroke hgi-cancel-01"></i>
                     </button> -->
               </div>
             </div>
-            <div *ngIf="getSelectedDelegators().length === 0" class="text-muted">
-              {{ localization.selectDelegators }}
-            </div>
+         
           </div>
         </div>
 
@@ -55,7 +67,14 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label">الرقم الضريبى السعودى</label>
-            <input type="text" class="form-control" id="control-saudiTaxNumber" formControlName="saudiTaxNumber" placeholder="الرقم الضريبى السعودى" [disabled]="true" />
+            <input
+              type="text"
+              class="form-control"
+              id="control-saudiTaxNumber"
+              formControlName="saudiTaxNumber"
+   
+              [disabled]="true"
+            />
           </div>
         </div>
 
@@ -63,7 +82,14 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label">الرقم الضريبى FATCA</label>
-            <input type="text" class="form-control" id="control-fatcaTaxNumber" formControlName="fatcaTaxNumber" placeholder="الرقم الضريبى FATCA" [disabled]="true" />
+            <input
+              type="text"
+              class="form-control"
+              id="control-fatcaTaxNumber"
+              formControlName="fatcaTaxNumber"
+
+              [disabled]="true"
+            />
           </div>
         </div>
 
@@ -71,15 +97,31 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label">الرقم الضريبى CRS</label>
-            <input type="text" class="form-control" id="control-crsTaxNumber" formControlName="crsTaxNumber" placeholder="الرقم الضريبى CRS" [disabled]="true" />
+            <input
+              type="text"
+              class="form-control"
+              id="control-crsTaxNumber"
+              formControlName="crsTaxNumber"
+         
+              [disabled]="true"
+            />
           </div>
         </div>
 
         <div class="col-12">
           <div class="form-group">
             <div class="form-check form-check-normal">
-              <input type="checkbox" class="form-check-input" id="control-approvedBankTermsConditions" formControlName="approvedBankTermsConditions" [disabled]="true" />
-              <label class="form-check-label" for="control-approvedBankTermsConditions">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="control-approvedBankTermsConditions"
+                formControlName="approvedBankTermsConditions"
+                [disabled]="true"
+              />
+              <label
+                class="form-check-label"
+                for="control-approvedBankTermsConditions"
+              >
                 <span [innerHTML]="approvedBankTermsConditions()"></span>
               </label>
             </div>

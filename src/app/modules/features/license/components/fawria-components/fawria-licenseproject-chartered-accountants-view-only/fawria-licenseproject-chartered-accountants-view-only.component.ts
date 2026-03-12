@@ -62,7 +62,7 @@ export class FawriaLicenseprojectCharteredAccountantsViewOnlyComponent {
       CreatedSuccessfully: 'تم الحفظ بنجاح',
       emailPattern: 'من فضلك ادخل البريد الإلكتروني صحيح',
       // requestSentToCharteredAccountant:
-      //   'تم ارسال طلب للمحاسب القانوني للموافقة على الاتفاقية',
+      //   'تم إرسال طلب للمحاسب القانوني للموافقة على الاتفاقية',
       CharteredAccountantLicenseNumberRequired:
         'رقم رخصة المحاسب القانوني مطلوب فى منشاة المحاسب القانوني',
       PaymentData: 'بيانات السداد بالاتفاقية',

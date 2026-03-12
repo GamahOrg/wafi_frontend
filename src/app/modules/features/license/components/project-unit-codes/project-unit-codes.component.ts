@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
-import { Subscription, forkJoin, take, takeLast } from 'rxjs';
+import { Subscription, forkJoin} from 'rxjs';
 import {
   accordionComponent,
   accordionContent,
@@ -22,6 +22,7 @@ import { LicenseProjectCompletionData } from '../../dataModels/license-project-m
 import { ProjectModelService } from '../../services/project-model.service';
 import { DropDownSubUnitTypeDto } from '../../../engineering-management/models/drop-down-name.dto';
 import { ProjectSubUnitDto } from '../../dataModels/project-sub-unit.dto';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-project-unit-codes',
@@ -72,7 +73,7 @@ export class ProjectUnitCodesComponent implements OnInit, OnDestroy{
 private checkIfShouldHideActionButtons(): void {
   let availabilityToUpdate= this._sharedLicenseProjectService.getAvailabilityToUpdateFarzFromLocalStorage()
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(this.licenseProjectId),
@@ -252,7 +253,7 @@ private checkIfShouldHideActionButtons(): void {
 
   isFawriaValidation(): boolean{
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if(typecode == 'FSRSU')
+    if(typecode == LicenseRequestTypeTypeCodeEnum.Fawria)
       return true;
     else
       return false;

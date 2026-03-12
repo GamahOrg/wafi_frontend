@@ -124,6 +124,10 @@ export class AddEditChangeEngineerSummaryComponent {
     );
   }
   onExistAlternativeConsultingOfficeAgreementFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.alternativeConsultingOfficeAgreementId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.alternativeConsultingOfficeAgreementId = data.id;
@@ -131,12 +135,20 @@ export class AddEditChangeEngineerSummaryComponent {
   }
 
   onExistclearanceEngineeringConsultantFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.clearanceEngineeringConsultantFileId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.clearanceEngineeringConsultantFileId = data.id;
     });
   }
   onExistPreviousConsultingOfficeReportFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.previousConsultingOfficeReportId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.previousConsultingOfficeReportId = data.id;

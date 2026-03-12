@@ -10,6 +10,7 @@ import { SharedLicenseProjectService } from '../../../license/services/sharedLic
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
 import { environment } from 'src/environments/environment';
 import { LicenseInternalStatus } from '../../../license/enums/license-internal-status';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../license/enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-license-list',
@@ -23,7 +24,7 @@ export class LicenseListComponent implements OnInit, OnDestroy{
   currentSortColumn: string = '';
   subscriptions: Subscription[] = [];
   showFilter: boolean = false;
-  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseSummary}`;
+  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}/${Configuration.pages.license.lincenseSummary}`;
   @HostListener('document:click', ['$event']) onDocumentClick() {
     this.showFilter = false;
   }
@@ -125,7 +126,7 @@ export class LicenseListComponent implements OnInit, OnDestroy{
   routeToRequestDetails(request :licenseRequest): void {
     this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(request.licenseRequestType.typeCode)
     if(request.requestCode)
-      if(request.licenseRequestType?.typeCode === 'FSRSU'){
+      if(request.licenseRequestType?.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria){
         this._router.navigateByUrl(`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`);
       }
       else
@@ -139,7 +140,7 @@ export class LicenseListComponent implements OnInit, OnDestroy{
 
   setSelectedRequestIdInLocalStorage() {
     if(this.selectedRequest.requestCode)
-      if(this.selectedRequest.licenseRequestType?.typeCode === 'FSRSU'){
+      if(this.selectedRequest.licenseRequestType?.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria){
         this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(this.selectedRequest.id)
         this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.selectedRequest?.licenseProjectId);
       }

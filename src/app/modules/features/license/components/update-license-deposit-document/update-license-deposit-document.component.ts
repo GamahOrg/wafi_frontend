@@ -60,18 +60,18 @@ export class UpdateLicenseDepositDocumentComponent implements OnInit {
   formGroup = this.fb.group({
     batchNumber: [''],
     licenseProjectBuyerTypeId: [0],
-    licenseProjectBuyer: [''],
-    licenseProjectBuyerId: [''],
+    licenseProjectBuyer: [null],
+    licenseProjectBuyerId: [null as string | null],
     statment: ['', Validators.required],
     mianItemDescription: [''],
     amount: [0, [Validators.required, Validators.min(0.01)]],
     referenceNumber: ['', Validators.required],
     depositDate: ['', Validators.required],
-    mainItemId: [0, Validators.required],
+    mainItemId: [null as number | null, Validators.required],
     escrowAccountAmount: [0],
     administrativeAndMarketingAmount: [0, Validators.required],
     constructionCostsAmount: [0, Validators.required],
-    bankId:['']
+    bankId:[null as string | null]
   });
 
   constructor(

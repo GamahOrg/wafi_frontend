@@ -10,6 +10,7 @@
   gap: 1rem;
   margin: 0;
   padding: 1rem;
+  border-radius: 1rem 1rem 0 0;
 
   &::before {
     display: none;
@@ -19,6 +20,7 @@
     color: $dark;
     line-height: 1;
     font-size: 1.25rem;
+    font-weight: 400;
   }
 
   button {
@@ -26,24 +28,33 @@
   }
 }
 
-.mdc-dialog__title {
-  border-radius: 1rem 1rem 0 0;
-}
-
-.mdc-dialog__content {
-  border-radius: 0 0 1rem 1rem;
-}
-
-.mdc-dialog__actions {
-  border-radius: 1rem;
-}
-
 .mdc-dialog__content {
   max-height: 50vh;
   padding: 1rem;
+  border-radius: 0 0 1rem 1rem;
+
+  .text {
+    &.info {
+      color: #175CD3;
+    }
+
+    &:has(.icon) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .5rem;
+
+      font-weight: 600;
+
+      .icon {
+        font-size: 1.25rem;
+      }
+    }
+  }
 }
 
 .mdc-dialog__actions {
   margin-top: 1rem;
   padding: 1rem;
+  border-radius: 1rem;
 }

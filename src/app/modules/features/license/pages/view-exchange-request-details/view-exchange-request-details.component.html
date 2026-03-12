@@ -1,0 +1,204 @@
+<div *ngIf="showSuccessAlert" class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
+  <span class="material-icons align-middle me-2">success</span>
+  <span>{{ showSuccessAlertMsg }}</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="showSuccessAlert = false"></button>
+</div>
+
+<div class="details-page">
+  <div class="page-header">
+    <div class="page-title">
+      <h1 class="title">طلب وثيقة صرف</h1>
+      <span class="status-pill" *ngIf="customerType === CustomerTypeEnum.DeveloperDelegator" [ngClass]="getStatusClass(requestDetails?.status?.id)">{{ requestDetails?.status?.name }}</span>
+      <span class="status-pill" *ngIf="customerType === CustomerTypeEnum.AccountantDelegator" [ngClass]="getStatusClass(requestDetails?.accountantStatus?.id)">{{ requestDetails?.accountantStatus?.name }}</span>
+      <span class="status-pill" *ngIf="customerType === CustomerTypeEnum.ConsultantDelegator" [ngClass]="getStatusClass(requestDetails?.consultantStatus?.id)">{{ requestDetails?.consultantStatus?.name }}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="page-section">
+        <h3 class="title">البيانات الرئيسية</h3>
+        <div class="row row-gap-4">
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">اسم المشروع</span>
+              <span class="value">{{requestDetails?.licenseProjectName ?? "--"}}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">رقم الوثيقة</span>
+              <span class="value">{{ requestDetails?.documnetNumber ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">تاريخ الصرف</span>
+              <span class="value">{{requestDetails?.exchangeDate | date: "dd-MM-yyyy"}}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">تاريخ الاعتماد</span>
+              <span class="value" *ngIf="requestDetails?.status?.id == 4">{{requestDetails?.approvalDate | date: "dd-MM-yyyy"}}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">البيان</span>
+              <span class="value">{{ requestDetails?.statment ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="value">
+                <i class="icon hgi hgi-stroke hgi-file-attachment"></i>
+                <a [href]="baseUrl + requestDetails?.licenseProjectExchangeDocumentFiles?.[0]?.file?.filePath" target="_blank">{{requestDetails?.licenseProjectExchangeDocumentFiles?.[0]?.file?.fileDescription}}</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-section">
+        <h3 class="title">بيانات الصرف والحسابات</h3>
+        <div class="row row-gap-4">
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">البند الرئيسي</span>
+              <span class="value">{{ requestDetails?.mainItem?.name ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">البند الفرعي</span>
+              <span class="value">{{ requestDetails?.subItem?.name ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key"> غرض الصرف</span>
+              <span class="value">{{ requestDetails?.exchangePurpose ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">بند الصرف من جدول الكميات </span>
+              <span class="value">{{
+                requestDetails?.sysLicenseRelativeWeight?.elementName ?? "--"
+                }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">رقم الحساب الرئيسي</span>
+              <span class="value">{{
+                requestDetails?.mainAccountNumber ?? "--"
+                }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">رقم الحساب الفرعي</span>
+              <span class="value">{{
+                requestDetails?.subAccountNumber ?? "--"
+                }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-section">
+        <h3 class="title">بيانات المستفيد</h3>
+        <div class="row row-gap-4">
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key"> المستفيد</span>
+              <span class="value">
+                {{ requestDetails?.liceneProjectBeneficiaryType?.name ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">وصف المستفيد</span>
+              <span class="value">{{
+                requestDetails?.beneficiaryDescription ?? "--"
+                }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-section">
+        <h3 class="title">بيانات الأرصدة المالية</h3>
+        <div class="row row-gap-4">
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">المبلغ</span>
+              <span class="value">{{ requestDetails?.amount ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">المبلغ المتبقي في الحساب بعد الصرف</span>
+              <span class="value">{{
+                requestDetails?.remainingAmountAfterExchange ?? "--"
+                }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">المبلغ المتوفر في الحساب قبل الصرف</span>
+              <span class="value">{{
+                requestDetails?.availableAmountBeforeExchange ?? "--"
+                }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-actions" *ngIf="requestDetails?.canTakeAction">
+    <button class="btn btn-outline-primary" (click)="rejectRequest()">
+      رفض الوثيقة
+    </button>
+    <button class="btn btn-primary" (click)="approveRequest()">
+      اعتماد الوثيقة
+    </button>
+  </div>
+
+  <ng-container *ngIf="requestDetails?.rejectionReason">
+    <div class="page-header">
+      <div class="page-title">
+        <h2 class="title">سبب الرفض</h2>
+        <span class="tag">{{getRejectionOwner(requestDetails?.licenseProjectExchangeDocumentRejectionBy)}}</span>
+      </div>
+    </div>
+
+    <div class="page-section">
+      <p>{{ requestDetails?.rejectionReason }}</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="requestDetails?.status?.id == licenseProjectExchangeDocumentStatus.IssuedDocument">
+    <div class="page-header pt-4 border-top-0">
+      <div class="page-title">
+        <span class="icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.5 20.75H7.5C6.75 20.75 6.2 20.72 5.73 20.65C2.41 20.29 1.75 18.3 1.75 15V9C1.75 5.7 2.41 3.71 5.76 3.34C6.2 3.28 6.75 3.25 7.5 3.25H16.5C17.25 3.25 17.8 3.28 18.27 3.35C21.59 3.71 22.25 5.7 22.25 9V15C22.25 18.3 21.59 20.29 18.24 20.66C17.8 20.72 17.25 20.75 16.5 20.75ZM7.5 4.75C6.82 4.75 6.34 4.78 5.95 4.83C3.92 5.06 3.25 5.69 3.25 9V15C3.25 18.31 3.92 18.94 5.92 19.17C6.34 19.23 6.82 19.25 7.5 19.25H16.5C17.18 19.25 17.66 19.22 18.05 19.17C20.08 18.95 20.75 18.31 20.75 15V9C20.75 5.69 20.08 5.06 18.08 4.83C17.66 4.77 17.18 4.75 16.5 4.75H7.5Z" fill="#001F21" />
+            <path d="M17 10.75H13.5C13.09 10.75 12.75 10.41 12.75 10C12.75 9.59 13.09 9.25 13.5 9.25H17C17.41 9.25 17.75 9.59 17.75 10C17.75 10.41 17.41 10.75 17 10.75Z" fill="#001F21" />
+            <path d="M10.0996 11C9.54961 11 9.09961 10.55 9.09961 10C9.09961 9.45 9.53961 9 10.0996 9H10.1096C10.6596 9 11.1096 9.45 11.1096 10C11.1096 10.55 10.6596 11 10.0996 11Z" fill="#001F21" />
+            <path d="M7.09961 11C6.54961 11 6.09961 10.55 6.09961 10C6.09961 9.45 6.53961 9 7.09961 9C7.64961 9 8.09961 9.45 8.09961 10C8.09961 10.55 7.65961 11 7.09961 11Z" fill="#61686B" />
+            <path d="M16.9998 16.25H7.01977C6.60977 16.25 6.25977 15.91 6.25977 15.5C6.25977 15.09 6.58977 14.75 6.99977 14.75H16.9998C17.4098 14.75 17.7498 15.09 17.7498 15.5C17.7498 15.91 17.4098 16.25 16.9998 16.25Z" fill="#61686B" />
+          </svg>
+        </span>
+        <h6 class="title fs-6">وثيقة صرف {{ requestDetails?.documnetNumber }}</h6>
+      </div>
+    </div>
+
+    <div class="page-section">
+      <app-pdf-viewer [fileId]="requestDetails?.documentFileId ?? ''" [noContentMessage]="'لا يوجد وثيقة الصرف متاح'" [noContentDescription]="'لم يتم العثور على وثيقة الصرف'" [loadingMessage]="'جاري تحميل وثيقة الصرف'" [loadingDescription]="'يرجى الانتظار بينما يتم تحميل وثيقة الصرف'" [errorMessage]="'حدث خطأ في تحميل وثيقة الصرف'"></app-pdf-viewer>
+    </div>
+  </ng-container>
+</div>

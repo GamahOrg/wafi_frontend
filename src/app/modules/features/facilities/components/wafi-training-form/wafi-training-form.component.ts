@@ -113,10 +113,20 @@ export class WafiTrainingFormComponent implements OnInit, OnDestroy {
   }
 
   onMarketerFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.wafiTraining.marketerTrainingCertificateFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length) return;
     this.wafiTraining.marketerTrainingCertificateFileId = fileRemovedData.eventRes.data[0].id;
   }
 
   onRealEstateDevelopmentFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.wafiTraining.realEstateDevelopmentTrainingCertificateFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length) return;
     this.wafiTraining.realEstateDevelopmentTrainingCertificateFileId = fileRemovedData.eventRes.data[0].id;
   }
 

@@ -254,7 +254,7 @@ if(this.licenseProjectDeedOwnerApproval && this.licenseProjectDeedOwnerApproval.
     // {
 
 
-    //   this.toastr.error("نأمل الموافقه على المشروع");
+    //   this.toastr.error("نأمل الموافقة على المشروع");
     //  return;
     // }
     this.saveApprovalDto.id=this.selectedApproval?.id as string;
@@ -279,7 +279,7 @@ if(this.licenseProjectDeedOwnerApproval && this.licenseProjectDeedOwnerApproval.
           }
 
           if(res.isApproved)
-            this.toastr.success("تم الموافقه على الاتفاقية");
+            this.toastr.success("تم الموافقة على الاتفاقية");
           else
             this.toastr.success("تم الرفض الاتفاقية");
         })

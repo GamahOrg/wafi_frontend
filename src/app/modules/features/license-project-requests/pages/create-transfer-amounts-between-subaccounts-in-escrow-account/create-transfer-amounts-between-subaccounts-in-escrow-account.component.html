@@ -18,7 +18,7 @@
                 aria-label="Default select example"
                 formControlName="licenseProjectId"
               >
-                <option selected disabled>المشروع</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let licenseProject of licenseProjects"
                   [ngValue]="licenseProject.id"

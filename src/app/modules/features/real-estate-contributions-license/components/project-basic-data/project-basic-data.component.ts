@@ -111,7 +111,7 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
     projectStarted: 'تم البدء في تنفيذ المشروع؟',
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',
@@ -217,6 +217,12 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
   }
 
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length === 0) {
+      this.projectBasicData.engineeringConsultantReportFileId = "";
+      this.controls.engineeringConsultantReportFileId.setValue("");
+      this.projectBasicData.engineeringConsultantReportFile = null;
+      return;
+    }
     this.projectBasicData.engineeringConsultantReportFileId = fileData.eventRes.data[0].id;
     this.controls.engineeringConsultantReportFileId.setValue(fileData.eventRes.data[0].id);
     this.projectBasicData.engineeringConsultantReportFile = fileData.eventRes.data[0];

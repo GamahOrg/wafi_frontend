@@ -3,27 +3,54 @@
     <!-- Search -->
     <div class="col-lg-4">
       <div class="input-group search-input-group">
-        <span class="input-group-text" id="basic-addon1">
-          <i class="material-icons-outlined">search</i>
+        <span class="input-group-text">
+          <i class="hgi hgi-stroke hgi-search-01"></i>
         </span>
-        <input type="text" id="control-search" class="form-control" placeholder="البحث بإسم المشروع أو رقم الترخيص" [(ngModel)]="searchText" (input)="onSearchChange()" />
+        <input
+          type="text"
+          id="control-search"
+          class="form-control"
+          [(ngModel)]="searchText"
+          (input)="onSearchChange()"
+          placeholder="البحث بإسم المشروع أو رقم الترخيص"
+        />
       </div>
     </div>
 
     <!-- Project Start Date Filter -->
     <div class="col-lg-2">
-      <input type="text" class="form-control" placeholder="تاريخ بداية المشروع" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" [(ngModel)]="projectStartOn" (bsValueChange)="onFilterChange()" />
+      <input
+        type="text"
+        class="form-control"
+        bsDatepicker
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        [(ngModel)]="projectStartOn"
+        placeholder="تاريخ بداية المشروع"
+        (bsValueChange)="onFilterChange()"
+      />
     </div>
 
     <!-- Project End Date Filter -->
     <div class="col-lg-2">
-      <input type="text" class="form-control" placeholder="تاريخ نهاية المشروع" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="projectEndOn" (bsValueChange)="onFilterChange()" />
+      <input
+        type="text"
+        class="form-control"
+        bsDatepicker
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        [(ngModel)]="projectEndOn"
+        (bsValueChange)="onFilterChange()"
+        placeholder="تاريخ نهاية المشروع"
+      />
     </div>
 
     <!-- Area Filter -->
     <div class="col-lg-2">
-      <select class="form-select" [(ngModel)]="selectedAreaId" (change)="onFilterChange()">
-        <option value="">المنطقة</option>
+      <select
+        class="form-select"
+        [(ngModel)]="selectedAreaId"
+        (change)="onFilterChange()"
+      >
+        <option [ngValue]="null" disabled hidden selected>المنطقة</option>
         <option *ngFor="let area of areasDropDownList" [value]="area.id">
           {{ area.areaName }}
         </option>
@@ -32,8 +59,12 @@
 
     <!-- City Filter -->
     <div class="col-lg-2">
-      <select class="form-select" [(ngModel)]="selectedCityId" (change)="onFilterChange()">
-        <option value="">المدينة</option>
+      <select
+        class="form-select"
+        [(ngModel)]="selectedCityId"
+        (change)="onFilterChange()"
+      >
+        <option [ngValue]="null" disabled hidden>المدينة</option>
         <option *ngFor="let city of citiesDropDownList" [value]="city.id">
           {{ city.cityName }}
         </option>
@@ -63,13 +94,40 @@
         <td>{{ project.unitsCount }}</td>
         <td>{{ project.areaName }}</td>
         <td>{{ project.cityName }}</td>
-        <td class="text-nowrap">{{ project.projectStartOn | date:'dd-MM-yyyy' }}</td>
-        <td class="text-nowrap">{{ project.projectEndOn | date:'dd-MM-yyyy' }}</td>
         <td class="text-nowrap">
-          <div class="table-actions">
-            <button type="button" class="btn btn-primary" (click)="showUnitList(project.licenseProjectId)">
-              وحدات المشروع
+          {{ project.projectStartOn | date: "dd-MM-yyyy" }}
+        </td>
+        <td class="text-nowrap">
+          {{ project.projectEndOn | date: "dd-MM-yyyy" }}
+        </td>
+        <td class="text-nowrap">
+          <div class="d-flex align-items-center justify-content-end">
+            <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #tableActionsMenu="matMenu">
+              <button
+                class="menu-edit-btn"
+                mat-menu-item
+                (click)="showUnitList(project.licenseProjectId)"
+              >
+                وحدات المشروع
+              </button>
+              <button
+                class="menu-edit-btn"
+                mat-menu-item
+                (click)="showExchangeDocumentsList(project)"
+              >
+                قائمة وثائق الصرف
+              </button>
+              <button
+                class="menu-edit-btn"
+                mat-menu-item
+                (click)="openDelegatorsSelectionPopup(project)"
+              >
+               تعيين مفوضين وثائق الصرف
+              </button>
+            </mat-menu>
           </div>
         </td>
       </tr>

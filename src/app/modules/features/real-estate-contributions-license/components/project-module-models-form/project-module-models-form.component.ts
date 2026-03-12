@@ -71,7 +71,7 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
     requiredErrorMsg: 'حقل مطلوب',
     save:'حفظ البيانات',
     savedSuccessfully:'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     MinValueError: 'قيمة الحقل يجب الا تقل عن صفر',
   };
 
@@ -112,6 +112,10 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
 
 
   onFileUploaded(filesData: any){
+    if (filesData.eventRes.data.length == 0) {
+      this.licenseProjectModelDesignFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     filesData.eventRes.data.forEach((data: any) => {

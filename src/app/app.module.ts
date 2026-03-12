@@ -9,6 +9,8 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 // import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 // import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ToastContainerModule, ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
+import { ViewPublicExchangeRequestDetailsComponent } from './public-pages/view-exchange-request-details/view-public-exchange-request-details.component';
+import { DatePipe } from '@angular/common';
 // AoT requires an exported function for factories
 // export function HttpLoaderFactory(httpClient: HttpClient) {
 //   return new TranslateHttpLoader(httpClient);
@@ -16,6 +18,7 @@ import { ToastContainerModule, ToastNoAnimationModule, ToastrModule } from 'ngx-
 @NgModule({
   declarations: [
     AppComponent
+ 
 
   ],
   imports: [
@@ -24,6 +27,7 @@ import { ToastContainerModule, ToastNoAnimationModule, ToastrModule } from 'ngx-
     BrowserAnimationsModule,
     CoreModule,
     HttpClientModule,
+    DatePipe,
     // TranslateModule.forRoot({
     //   loader: {
     //     provide: TranslateLoader,

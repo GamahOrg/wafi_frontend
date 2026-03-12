@@ -61,7 +61,7 @@ changeOrAddLicenseProjectUnitModelRequest?: ChangeOrAddLicenseProjectUnitModelRe
     
   openDialog(): void {
     let Data = {
-      title: "تعديل بيانات طلب تغيير او إضافة نماذج وحدات بالمشروع عقاري ",
+      title: "تعديل بيانات طلب تغيير أو إضافة نماذج وحدات بالمشروع عقاري ",
       component: AddEditChangeOrAddLicenseProjectUnitModelRequestComponent,
       id: "AddEditChangeOrAddLicenseProjectUnitModelRequestComponent",
     } as PopupData;

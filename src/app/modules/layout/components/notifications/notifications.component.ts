@@ -29,6 +29,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   licenseRequestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
   correctionRequestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
   licenseRequestTypeDeatilsRoute = `/${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestDetails}`;
+  developerExchangeDocumentDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.developerExchangeDocumentsDetails}`;
+  accountantExchangeDocumentDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.accountantExchangeDocumentsDetails}`;
+  engineeringExchangeDocumentDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.engineeringExchangeDocumentsDetails}`;
+  
   notViewedCount: number = 0;
   Configuration = Configuration;
   userData: customerResponse | null = null;
@@ -119,11 +123,25 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                 case this.RequestType.CorrectionUnitRequest:
                 this.navigateToCorrectionDetails(notification)
                 break;
+                case this.RequestType.DeveloperExchangeDocument:
+                this.navigateToExchangeDocumentDetails(notification, this.developerExchangeDocumentDetailsRoute);
+                break;
+                case this.RequestType.EngineeringExchangeDocument:
+                this.navigateToExchangeDocumentDetails(notification, this.engineeringExchangeDocumentDetailsRoute);
+                break;
+                case this.RequestType.AccountantExchangeDocument:
+                this.navigateToExchangeDocumentDetails(notification, this.accountantExchangeDocumentDetailsRoute);
+                break;
             }
           }
         })
     );
   }
+
+  private navigateToExchangeDocumentDetails(notification: Notification, route: string) {
+    const url = route + `/${notification.requestId}`;
+    this._router.navigate([url]);
+  } 
 
   navigateToBuyerContractsList(notification: Notification) {
     let route = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.contractdocumentation}`;
@@ -162,7 +180,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   navigateToCharteredAccountApproval(notification: Notification) {
-    let route = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.developerProjectList}`;
+    let route = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.developerApprovalsList}`;
     if (this._router.url == route) {
       location.reload();
     } else {
@@ -171,7 +189,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   navigateToEngineerApproval(notification: Notification) {
-    let route = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.developerProjectList}`;
+    let route = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.developerApprovalsList}`;
     if (this._router.url == route) {
       location.reload();
     } else {
@@ -180,7 +198,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   navigateToOwnerApproval(notification: Notification) {
-    let route = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.developerProjectList}`;
+    let route = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.developerApprovalsList}`;
     if (this._router.url == route) {
       location.reload();
     } else {

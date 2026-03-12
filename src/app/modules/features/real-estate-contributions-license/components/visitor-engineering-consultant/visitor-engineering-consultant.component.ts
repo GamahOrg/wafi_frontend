@@ -99,6 +99,10 @@ export class VisitorEngineeringConsultantComponent {
   }
 
   onExistAgreementtFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.licenseProjectVisitorEngineeringConsultantForm.controls.agreementFileId.setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       this.licenseProjectVisitorEngineeringConsultantForm.controls.agreementFileId.setValue(filesData.eventRes.data[0].id);
   }

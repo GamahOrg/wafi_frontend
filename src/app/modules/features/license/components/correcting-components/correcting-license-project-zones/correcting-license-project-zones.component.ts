@@ -28,6 +28,7 @@ import { saveAs } from 'file-saver';
 import { LicenseProjectSubUnitsListCodeFile } from '../../../dataModels/license-project-sub-units-list-code-file';
 import { DataVisibilityOfLicenseProjectService } from '../../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { LicenseRequestService } from '../../../services/license-request.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-correcting-license-project-zones',
@@ -376,7 +377,7 @@ export class CorrectingLicenseProjectZonesComponent implements OnInit {
   isFawriaValidation(): boolean {
     const typecode =
       this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU') return true;
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria) return true;
     else return false;
   }
 

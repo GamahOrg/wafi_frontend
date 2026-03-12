@@ -99,6 +99,10 @@ export class ExhibitionDataComponent {
   }
 
   onExistLeaseContractFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.licenseProjectExhibitionDataForm.controls.leaseContractFileId.setValue("");
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       this.licenseProjectExhibitionDataForm.controls.leaseContractFileId.setValue(filesData.eventRes.data[0].id);
   }

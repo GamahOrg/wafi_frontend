@@ -43,7 +43,7 @@ export class ProjectDeedsOwnerFormComponent implements OnInit, OnDestroy {
   } as FileUploader;
   projectLandOwnerForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
-    typeId: ['', [Validators.required]],
+    typeId: [null as string | null, [Validators.required]],
     licenseProjectsId: ['', [Validators.required]],
     landDeedId: ['', [Validators.required]],
     nationalIdOrCRA: ['', [Validators.pattern(Configuration.validators.numberOnly)]],
@@ -93,7 +93,7 @@ export class ProjectDeedsOwnerFormComponent implements OnInit, OnDestroy {
     requiredErrorMsg: 'حقل مطلوب',
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
   };
 
   setResponseToForm(res: ProjectLandOwnerDto): void {

@@ -52,12 +52,12 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
       id: ['00000000-0000-0000-0000-000000000000', Validators.required],
       zoneId: ['', Validators.required],
       unitTypeId: ['', Validators.required],
-      buildingBlockTypeId: [0, Validators.required],
-      licenseProjectDeedId: ['', Validators.required],
+      buildingBlockTypeId: [null, Validators.required],
+      licenseProjectDeedId: [null, Validators.required],
       designFileId: ['', Validators.required],
       // unitTypeName: [''],
       code: ['', Validators.required],
-      stageNumberId: ['', Validators.required],
+      stageNumberId: [null, Validators.required],
       // stageNumber: ['', Validators.required],
       constructionStartOn: ['', Validators.required],
       constructionEndOn: ['', Validators.required],
@@ -89,7 +89,7 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
   }
 
   localization = {
-    errorMsg: 'لا يمكن اضافة او تعديل بلوكات او عماير الآن',
+    errorMsg: 'لا يمكن اضافة أو تعديل بلوكات أو عماير الآن',
     UnitType: 'إضافة بلوك / عمارة ',
     unitCode: 'رقم البلوك / رقم العمارة',
     stageNo: 'رقم المرحلة',
@@ -98,9 +98,9 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
     chooseUnitTitle: 'تحديد نوع الوحدات داخل البلوك',
     addingNewUnit: 'حفظ و إضافة نوع وحدة جديد ',
     chooseUnitTitleHint: '( يمكنك اختيار أكثر من نوع من الوحدات داخل البلوك )',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب أن يكون تاريخ البدايه اقل من تاريخ النهايه',
     subUnitsType: 'اضاقة أنواع الوحدات بالبلوك / العمارة ',
-    subUnitCount: 'عدد وحدات الخاص بالبلوك او العمارة  ',
+    subUnitCount: 'عدد وحدات الخاص بالبلوك أو العمارة  ',
     actions: 'إجراءات',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     projectBuildingBlockType: 'نوع البلوك / العمارة',
@@ -144,6 +144,10 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
   }
 
   onDesignFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.addEditUnitForm.patchValue({ designFileId: null })
+      return;
+    }
     this.addEditUnitForm.patchValue({ designFileId: $event.eventRes.data[0].id })
   }
 

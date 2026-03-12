@@ -181,6 +181,11 @@ export class ProjectDeveloperComponent implements OnInit, OnDestroy {
   }
 
   onExistDeveloperFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.developerForm.controls.developerAgreementFileId.setValue("");
+      this.showValidation = true;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.developerForm.controls.developerAgreementFileId.setValue(data.id as string);

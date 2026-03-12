@@ -41,7 +41,7 @@ export class LicenseProjectMainContributionDataComponent {
     projectStarted: 'تم البدء في تنفيذ المساهمه ؟',
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',
@@ -59,8 +59,8 @@ export class LicenseProjectMainContributionDataComponent {
     contributionDeveloperShare:"حصه المطور بالمساهمه",
     contributionLandOwnerShare:"حصه مالك الأرض بالمساهمه",
     contributionDuration:"مدة المساهمه",
-    contributionCapitalValueFromEvaluatorValidation:"يجب ان يكون عدد ملفات مساهمة قيمة رأس المال من المقيمين اكثر من 3 ملفات",
-    contributionRealEstateEvaluationFromEvaluatorValidation:"يجب ان يكون عدد ملفات  مساهمة التقييم عقاري من المقيمين اكثر من 3 ملفات",
+    contributionCapitalValueFromEvaluatorValidation:"يجب أن يكون عدد ملفات مساهمة قيمة رأس المال من المقيمين اكثر من 3 ملفات",
+    contributionRealEstateEvaluationFromEvaluatorValidation:"يجب أن يكون عدد ملفات  مساهمة التقييم عقاري من المقيمين اكثر من 3 ملفات",
     PleaseAddAllRequiredFields:'نأمل ادخال كل الحقول اللازمه واعاده المحاوله',
   };
   ngOnInit(): void {

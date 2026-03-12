@@ -169,15 +169,16 @@
 }
 
 .form-check {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
   gap: 0.75rem;
-
+  
   padding: 0;
   cursor: pointer;
-
+  
   &:not(.form-check-normal) {
+    display: flex;
     justify-content: center;
-    align-items: center;
 
     padding: $input-padding-y $input-padding-x;
     border: $input-border-width solid $input-border-color;
@@ -191,6 +192,7 @@
 
   .form-check-input {
     float: none;
+    margin-top: 0;
   }
 
   .multi-select & {

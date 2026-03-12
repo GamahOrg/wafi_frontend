@@ -89,18 +89,35 @@ export class CreateTransferAmountsBetweenSubaccountsInEscrowAccountComponent {
     );
   }
   applicationFormFileUpload(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.transferAmountsForm.controls['applicationFormFileId'].setValue(null);
+      return;
+    }
     this.transferAmountsForm.controls['applicationFormFileId'].setValue(filesData.eventRes.data[0].id);
   }
 
   consultingEngineeringUpload(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.transferAmountsForm.controls['consultingEngineeringId'].setValue(null);
+      return;
+    }
     this.transferAmountsForm.controls['consultingEngineeringId'].setValue(filesData.eventRes.data[0].id);
   }
 
   charteredAccountantReportUpload(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.transferAmountsForm.controls['charteredAccountantReportId'].setValue(null);
+      return;
+      
+    }
     this.transferAmountsForm.controls['charteredAccountantReportId'].setValue(filesData.eventRes.data[0].id);
   }
 
   bankReportUpload(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.transferAmountsForm.controls['bankReportId'].setValue(null);
+      return;
+    }
     this.transferAmountsForm.controls['bankReportId'].setValue(filesData.eventRes.data[0].id);
   }
   save() {

@@ -110,6 +110,11 @@ subscriptions: Subscription[] = [];
     this.selectednidnumber = selectedCustomer ? selectedCustomer.nidnumber : null;
   }
   onExistApplicationFormFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0){
+      this.applicationFormFileId = ''; 
+      return 
+
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.applicationFormFileId = data.id;

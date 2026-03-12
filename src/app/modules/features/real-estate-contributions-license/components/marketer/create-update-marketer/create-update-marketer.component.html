@@ -2,21 +2,15 @@
   <h6 mat-dialog-title>
     {{localizations.AddNewMarketer}}
     <button class="btn btn-link p-0" mat-dialog-close tabindex="-1">
-      <i class="material-icons h6">close</i>
+      <i class="material-icons">close</i>
     </button>
   </h6>
 
-  <div mat-dialog-content
-       *ngIf="form && form.controls">
+  <div mat-dialog-content *ngIf="form && form.controls">
     <ng-container [formGroup]="form">
       <div class="row mb-3">
 
-        <app-engineering-consultant-customer-info [form]="form"
-                                                  [buttonName]="localizations.ValidateConsultant"
-                                                  [code]="code.Marketer"
-                                                  (onChange)="setFacility($event)"
-                                                  [label]="localizations.DeveloperLabel"
-                                                  [requiredMessage]="localizations.DeveloperRequired">
+        <app-engineering-consultant-customer-info [form]="form" [buttonName]="localizations.ValidateConsultant" [code]="code.Marketer" (onChange)="setFacility($event)" [label]="localizations.DeveloperLabel" [requiredMessage]="localizations.DeveloperRequired">
         </app-engineering-consultant-customer-info>
 
         <ng-container *ngIf="facility$ | async">
@@ -57,20 +51,13 @@
           </div> -->
 
           <div class="col-12 col-lg-6">
-            <label for="licenseNumber"
-                   class="form-label">{{localizations.LicenseNumber}}</label>
-            <input id="licenseNumber"
-                   name="licenseNumber"
-                   type="text"
-                   class="form-control"
-                   formControlName="licenseNumber">
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['licenseNumber'].hasError('required')
+            <label for="licenseNumber" class="form-label">{{localizations.LicenseNumber}}</label>
+            <input id="licenseNumber" name="licenseNumber" type="text" class="form-control" formControlName="licenseNumber">
+            <div class="invalid-feedback d-block" *ngIf="controls['licenseNumber'].hasError('required')
             && controls['licenseNumber'].touched">
               {{localizations.LicenseNumberRequired}}
             </div>
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['licenseNumber'].hasError('min')
+            <div class="invalid-feedback d-block" *ngIf="controls['licenseNumber'].hasError('min')
             && controls['licenseNumber'].touched">
               {{localizations.MinValueError}}
             </div>
@@ -107,19 +94,15 @@
 
           <div class="col-12 col-lg-6">
             <label class="form-label">{{localizations.AgreementFile}}</label>
-            <app-file-uploader [data]="mueltiFilesUploaderData"
-                               (fileUploaded)="onUpload($event)"></app-file-uploader>
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['realStateMarketerAgreementFiles'].hasError('required') &&
+            <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onUpload($event)"></app-file-uploader>
+            <div class="invalid-feedback d-block" *ngIf="controls['realStateMarketerAgreementFiles'].hasError('required') &&
                  controls['realStateMarketerAgreementFiles'].touched">
               {{localizations.AgreementFileRequired}}
             </div>
           </div>
 
           <div class="form-actions mt-auto">
-            <button mat-flat-button
-                    color="primary"
-                    (click)="save()">
+            <button mat-flat-button color="primary" (click)="save()">
               {{localizations.Save}}
             </button>
           </div>

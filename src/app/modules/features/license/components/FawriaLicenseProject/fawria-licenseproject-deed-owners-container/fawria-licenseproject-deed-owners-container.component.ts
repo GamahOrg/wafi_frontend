@@ -21,6 +21,8 @@ export class FawriaLicenseprojectDeedOwnersContainerComponent
   TermsPartType: typeof TermsPartType = TermsPartType;
   subscriptions: Subscription[] = [];
   deebOwners: DeebOwnerList[] = [];
+  IsAllDeedOwnersResponse: boolean = false;
+
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   baseUrl = `${environment.baseURL}/`;
 
@@ -29,7 +31,7 @@ export class FawriaLicenseprojectDeedOwnersContainerComponent
     private _toastrService: ToastrNotificatioService,
     private _licenseProjectPartiesAdditionalTermsService: LicenseProjectPartiesAdditionalTermsService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
   ) {}
 
   localization = {
@@ -45,6 +47,7 @@ export class FawriaLicenseprojectDeedOwnersContainerComponent
     this.getLicenseProjectIdStorage();
     this.observeTabsButtons();
     this.updateSaveAsDraftBtnIsvisible();
+    this.IsAllDeedOwners();
   }
 
   private getLicenseProjectIdStorage(): void {
@@ -53,6 +56,7 @@ export class FawriaLicenseprojectDeedOwnersContainerComponent
     this.loadDeebOwners();
   }
 
+  isOwnerByDeveloper: boolean = false;
   private loadDeebOwners() {
     this.subscriptions.push(
       this._licenseProjectPartiesAdditionalTermsService
@@ -60,20 +64,38 @@ export class FawriaLicenseprojectDeedOwnersContainerComponent
         .subscribe((result) => {
           if (result) {
             this.deebOwners = result.data as DeebOwnerList[];
+            // Check if all owners have isOwnerByDeveloper = true
+            this.isOwnerByDeveloper = this.deebOwners.length > 0 &&
+              this.deebOwners.every(owner => owner.isOwnerByDeveloper === true);
           }
-        })
+        }),
+    );
+  }
+  private IsAllDeedOwners() {
+    this.subscriptions.push(
+      this._licenseProjectPartiesAdditionalTermsService
+        .IsAllDeedOwners(this.licenseProjectId as string)
+        .subscribe((result) => {
+          if (result) {
+            this.IsAllDeedOwnersResponse = result.data as boolean;
+          }
+        }),
     );
   }
 
-  delete(id: string,index:number) {
+  delete(id: string, index: number) {
     this.subscriptions.push(
-      this._licenseProjectPartiesAdditionalTermsService.DeleteOwner(id).subscribe(res => {
-        if (res.isDone) {
-          this._toastrService.showSuccess(this.localization.deleteSuccessfully)
-          this.loadDeebOwners();
-        }
-      })
-    )
+      this._licenseProjectPartiesAdditionalTermsService
+        .DeleteOwner(id)
+        .subscribe((res) => {
+          if (res.isDone) {
+            this._toastrService.showSuccess(
+              this.localization.deleteSuccessfully,
+            );
+            this.loadDeebOwners();
+          }
+        }),
+    );
   }
   showDeleteConfirmation(id: string, index: number): void {
     const dialogRef = this._dialog.open(DeleteDeedConfirmationDialogComponent, {
@@ -81,10 +103,10 @@ export class FawriaLicenseprojectDeedOwnersContainerComponent
       maxWidth: '90vw',
       disableClose: true,
       panelClass: 'delete-deed-dialog',
-      autoFocus: false
+      autoFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         this.delete(id, index);
       }
@@ -98,8 +120,8 @@ export class FawriaLicenseprojectDeedOwnersContainerComponent
         (res: null) => {
           // this.save(true)
           this.moveToNextTab();
-        }
-      )
+        },
+      ),
     );
   }
   private observeSaveAsDraftIsClicked() {
@@ -107,8 +129,8 @@ export class FawriaLicenseprojectDeedOwnersContainerComponent
       this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(
         (res: null) => {
           // this.save()
-        }
-      )
+        },
+      ),
     );
   }
   private observeTabsButtons(): void {

@@ -1,25 +1,17 @@
-<div class="tab-data-section">
-  <div class="table-responsive">
-    <table class="table table-light">
-      <thead>
+<div class="table-responsive" *ngIf=" list && list.length > 0">
+  <table class="table table-light">
+    <thead>
       <tr>
-        <!-- <th>{{localization.delegatorIdentityNumber}}</th>
-        <th>{{localization.DeveloperName}}</th> -->
-        <!-- <th>{{localization.DeveloperEmail}}</th> -->
-         <th>{{localization.licenseNumber}}</th> 
+        <th>{{localization.licenseNumber}}</th>
         <th>{{localization.projectName}}</th>
         <th>{{localization.AgreementFile}}</th>
         <th></th>
-
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       <ng-container *ngIf="list && list.length !== 0">
         <tr *ngFor="let iterate of list">
-          <!-- <td>{{ iterate.delegatorIdentityNumber }}</td>
-          <td>{{ iterate.delegatorName }}</td> -->
-          <!-- <td>{{ iterate.delegatorEmail }}</td> -->
-           <td>{{ iterate.licenseNumber }}</td> 
+          <td>{{ iterate.licenseNumber }}</td>
           <td>{{ iterate.projectName }}</td>
           <td>
             <span class="icon material-icons-outlined">content_copy</span>
@@ -35,10 +27,10 @@
           </td>
         </tr>
       </ng-container>
-      </tbody>
-    </table>
-    <ng-container *ngIf=" !list || list.length === 0">
-      <p class="text-danger text-center p-3">{{localization.NoData}}</p>
-    </ng-container>
-  </div>
+    </tbody>
+  </table>
 </div>
+
+<ng-container *ngIf=" !list || list.length === 0">
+  <app-no-data [title]="localization.NoData" [showCompleteBtn]="false" [showText]="false"></app-no-data>
+</ng-container>

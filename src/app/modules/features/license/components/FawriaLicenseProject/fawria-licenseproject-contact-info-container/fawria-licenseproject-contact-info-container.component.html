@@ -34,7 +34,7 @@
             </div>
 
             <select class="form-select" id="control-delegatorCustomerId" aria-label="Default select example" formControlName="delegatorCustomerId" [class.is-invalid]="controls.delegatorCustomerId?.invalid && (controls.delegatorCustomerId?.touched || showValidation)">
-              <option [ngValue]="null" disabled hidden>{{ localization.delegatorName }}</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>
@@ -58,10 +58,18 @@
       <h6 class="title">{{ localization.officerData }}</h6>
       <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
-          <div class="form-group">
-            <label class="form-label"><span class="required-star">*</span> {{ localization.officerName }}</label>
-            <select class="form-select" id="control-officerCustomerId" aria-label="Default select example" formControlName="officerCustomerId" [class.is-invalid]="controls.officerCustomerId?.invalid && (controls.officerCustomerId?.touched || showValidation)">
-              <option [ngValue]="null" disabled hidden>{{ localization.officerName }}</option>
+          <div class="form-group mb-4">
+            <label class="form-label">
+              <span class="required-star">*</span>
+              {{ localization.officerName }}
+            </label>
+            <select
+              class="form-select"
+              id="control-officerCustomerId"
+              aria-label="Default select example"
+              formControlName="officerCustomerId"
+              [class.is-invalid]="controls.officerCustomerId?.invalid && (controls.officerCustomerId?.touched || showValidation)">
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>

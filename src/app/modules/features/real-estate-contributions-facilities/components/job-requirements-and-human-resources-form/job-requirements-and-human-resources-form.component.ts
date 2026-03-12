@@ -130,6 +130,11 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.institutionalCapacityAndHrRequirements.organizationalStructureFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length) return;
     this.institutionalCapacityAndHrRequirements.organizationalStructureFileId = fileRemovedData.eventRes.data[0].id;
 
   }
@@ -143,6 +148,11 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.institutionalCapacityAndHrRequirements.laborRegulationCertificateFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length) return;
     this.institutionalCapacityAndHrRequirements.laborRegulationCertificateFileId = fileRemovedData.eventRes.data[0].id;
 
   }
@@ -156,6 +166,11 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length) return;
     this.institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFileId = fileRemovedData.eventRes.data[0].id;
 
   }
@@ -180,6 +195,10 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
+    if (filesData.eventRes.data.length === 0) {
+      this.institutionalCapacityAndHrRequirements.addedSocialResponsibilityProgramsFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     filesData.eventRes.data.forEach((data: any) => {

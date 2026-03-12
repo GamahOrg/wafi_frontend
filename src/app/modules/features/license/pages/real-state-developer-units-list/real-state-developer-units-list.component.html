@@ -9,17 +9,17 @@
         <!-- Search -->
         <div class="col-lg-4">
           <div class="input-group search-input-group">
-            <span class="input-group-text" id="basic-addon1">
-              <i class="material-icons-outlined">search</i>
+            <span class="input-group-text">
+              <i class="hgi hgi-stroke hgi-search-01"></i>
             </span>
-            <input type="text" id="control-search" class="form-control" placeholder="البحث بكود الوحدة أو نموذج الوحدة" [value]="searchTerm" (input)="onSearchChange($any($event.target).value)" />
+            <input type="text" id="control-search" class="form-control" [value]="searchTerm" (input)="onSearchChange($any($event.target).value)"  placeholder="البحث كود أو نموذج الوحدة" />
           </div>
         </div>
 
         <!-- Status Filter -->
         <div class="col-lg-2">
           <select class="form-select" [(ngModel)]="statusFilter" (change)="onStatusFilterChange()">
-            <option [value]="0">حالة الوحدة</option>
+            <option [ngValue]="LicenseProjectUnitCodeStatus.All" disabled hidden>حالة الوحدة</option>
             <option *ngFor="let status of unitCodeStatuses" [value]="status.id">
               {{ status.name }}
             </option>
@@ -29,7 +29,7 @@
         <!-- Unit Type Filter -->
         <div class="col-lg-2">
           <select class="form-select" [(ngModel)]="unitType" (change)="onStatusFilterChange()">
-            <option [value]="0">نوع الوحدة</option>
+            <option [ngValue]=" LicenseProjectUnitType.All" disabled hidden>نوع الوحدة</option>
             <option *ngFor="let type of subUnitTypes" [value]="type.id">
               {{ type.name }}
             </option>

@@ -24,6 +24,6 @@ export interface LicenseProjectBuyerCreateUpdateDto {
     price :number
     //نسبة الضريبة الحالية
     currentTax :number
-    //نسبة الإشراف او نسبة الرسوم
+    //نسبة الإشراف أو نسبة الرسوم
     percentageSupervisionOrFees :number
 }

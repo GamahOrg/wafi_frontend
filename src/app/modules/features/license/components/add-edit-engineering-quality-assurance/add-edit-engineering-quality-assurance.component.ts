@@ -23,7 +23,7 @@ export class AddEditEngineeringQualityAssuranceComponent {
   years?: number[];
   licenseProjectEngineeringMonthlyConsultantStaffRatesForm =
     this._formBuilder.group({
-      currenrYear: [0],
+      currenrYear: [null as number | null],
       licenseProjectEngineeringMonthlyConsultantStaffRates:
         this._formBuilder.array([]),
     });

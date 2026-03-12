@@ -7,7 +7,9 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { CertifiedEngineerService } from '../../services/QualificationCertifiedEngineer/certified-engineer.service';
 import { CertifiedFacilityEngineersFormComponent } from '../certified-facility-engineers-form/certified-facility-engineers-form.component';
+import { CertifiedEngineerCoursesPreviewComponent } from '../certified-engineer-courses-preview/certified-engineer-courses-preview.component';
 import { environment } from 'src/environments/environment';
+import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 
 @Component({
   selector: 'app-certified-facility-engineers',
@@ -61,6 +63,8 @@ export class CertifiedFacilityEngineersComponent {
     if (id) {
       let eng = this.models.filter(x => x.id == id)[0] as CertifiedEngineerDto;
       this._certifiedEngineerService.SetFCertifiedEngineerObj(eng);
+    } else {
+      this._certifiedEngineerService.SetFCertifiedEngineerObj({} as CertifiedEngineerDto);
     }
     let Data = {
       title: "مهندس الشركة المعتمد",
@@ -68,6 +72,25 @@ export class CertifiedFacilityEngineersComponent {
     } as PopupData;
     this._popupService.updatePopupData(Data);
 
+  }
+
+  openCoursesDialog(id: string): void {
+    let eng = this.models.filter(x => x.id == id)[0] as CertifiedEngineerDto;
+    this._certifiedEngineerService.SetFCertifiedEngineerObj(eng);
+    let Data = {
+      title: "دورات المهندس المعتمد",
+      component: CertifiedEngineerCoursesPreviewComponent,
+      buttons: [
+        {
+          icon: "",
+          title: "إغلاق",
+          actionType: ButtonType.cancel,
+          isVisable: true,
+          isDisables: false,
+        }
+      ]
+    } as PopupData;
+    this._popupService.updatePopupData(Data);
   }
 
   ngOnDestroy(): void {

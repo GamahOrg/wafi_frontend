@@ -35,13 +35,13 @@ export class LicenseProjectAccountantComponent implements OnInit, OnDestroy {
       //   disabled: false,
       //   isVisible: true,
       // },
-      {
-        icon: '',
-        title: this.localization.disbursementDocuments,
-        Component: LicenseProjectExchangeDocumentListComponent,
-        disabled: false,
-        isVisible: true,
-      },
+      // {
+      //   icon: '',
+      //   title: this.localization.disbursementDocuments,
+      //   Component: LicenseProjectExchangeDocumentListComponent,
+      //   disabled: false,
+      //   isVisible: true,
+      // },
        {
          icon: '',
          title: this.localization.depositDocuments,

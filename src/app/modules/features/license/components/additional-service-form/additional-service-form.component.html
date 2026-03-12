@@ -12,7 +12,7 @@
                         <label class="form-label">{{localization.sysLicenseProjectServiceId}}</label>
                         <select class="form-select" id="control-sysLicenseProjectServiceId"
                                 formControlName="sysLicenseProjectServiceId">
-                            <option [label]="localization.sysLicenseProjectServiceId"></option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let sysLicenseProjectService of sysProjectServices"
                                     [value]="sysLicenseProjectService.id">{{sysLicenseProjectService.name}}</option>
                         </select>
@@ -24,7 +24,7 @@
                         <label class="form-label">{{localization.period}}</label>
                         <select class="form-select" id="control-period"
                                 formControlName="period">
-                            <option [label]="localization.period" disabled></option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let period of getServicePeriods()"
                                     [value]="period.period">{{period.period}}</option>
                         </select>
@@ -36,8 +36,7 @@
                         <label class="form-label">{{localization.price}}</label>
                         <input type="number" disabled id="control-currentPrice"
                         class="form-control"
-                        [value]="currentPrice"
-                        [placeholder]="localization.price" />
+                        [value]="currentPrice" />
                      </div>
                 </div> 
             </div>

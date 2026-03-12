@@ -1,56 +1,46 @@
-<div class="d-flex flex-column h-100">
-
-  <div class="tab-data-header">
-    <i class="icon hgi hgi-stroke hgi-profile"></i>
-    <h6 class="title">{{localization.SubDeveloper}}</h6>
-  </div>
-  <ng-container *ngIf="form"
-                [formGroup]="form">
-    <div class="tab-data-section">
-      <span>{{localization.HasSubDevelopers}}</span>
-      <br>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input"
-               type="radio"
-               formControlName="hasSubDevelopers"
-               name="hasSubDevelopers"
-               id="yes"
-               [value]="true">
-        <label class="form-check-label"
-               for="yes">{{localization.Yes}}</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input"
-               type="radio"
-               name="hasSubDevelopers"
-               formControlName="hasSubDevelopers"
-               id="no"
-               [value]="false">
-        <label class="form-check-label"
-               for="no">{{localization.No}}</label>
+<div class="tab-data-header">
+  <i class="icon hgi hgi-stroke hgi-profile"></i>
+  <h6 class="title">{{localization.SubDeveloper}}</h6>
+</div>
+<ng-container [formGroup]="form" *ngIf="form">
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
+        <div class="form-grpoup">
+          <label class="form-label">{{localization.HasSubDevelopers}}</label>
+          <div class="row g-3">
+            <div class="col-xl-6">
+              <label class="form-check" for="yes">
+                <input class="form-check-input" type="radio" formControlName="hasSubDevelopers" name="hasSubDevelopers" id="yes" [value]="true">
+                <label class="form-check-label" for="yes">{{localization.Yes}}</label>
+              </label>
+            </div>
+            <div class="col-xl-6">
+              <label class="form-check" for="no">
+                <input class="form-check-input" type="radio" name="hasSubDevelopers" formControlName="hasSubDevelopers" id="no" [value]="false">
+                <label class="form-check-label" for="no">{{localization.No}}</label>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="tab-data-section">
-      <ng-container *ngIf="(listSubject | async) as list">
-        <ng-container *ngIf="form.controls['hasSubDevelopers']?.value === true">
-          <button class="btn btn-primary d-flex mb-2"
-                  (click)="open()">
+  </div>
+
+  <ng-container *ngIf="(listSubject | async) as list">
+    <ng-container *ngIf="form.controls['hasSubDevelopers']?.value === true">
+      <div class="tab-data-section">
+        <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+          <h6 class="title">بيانات {{localization.SubDeveloper}}</h6>
+          <button class="btn btn-outline-primary d-flex" (click)="open()">
+            <i class="hgi hgi-stroke hgi-add-01"></i>
             {{localization.AddNewSubDeveloper}}
           </button>
-          <div class="row">
-            <app-sub-developer-list [list]="list.data"
-                                    (onDelete)="delete($event)"></app-sub-developer-list>
-          </div>
-        </ng-container>
-      </ng-container>
-    </div>
+        </div>
+        <app-sub-developer-list [list]="list.data" (onDelete)="delete($event)"></app-sub-developer-list>
+      </div>
+    </ng-container>
   </ng-container>
-  <app-next-and-previus-buttons></app-next-and-previus-buttons>
-  <!-- <div class="form-actions mt-auto">
-    <button class="btn btn-outline-primary"
-            (click)="back()">{{localization.previous}}</button>
-    <button class="btn btn-outline-primary"
-            (click)="next()">{{localization.next}}</button>
+</ng-container>
 
-  </div> -->
-</div>
+<app-next-and-previus-buttons></app-next-and-previus-buttons>

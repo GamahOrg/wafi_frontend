@@ -23,6 +23,7 @@ import { ProjectSubUnitDto } from '../../../dataModels/project-sub-unit.dto';
 import { CorrectionLicenseProjectUnitService } from '../../../services/correction-license-project-unit.service';
 import { CorrectionZonesBlocksBuildingAndUnitsService } from '../../../services/correction-zones-blocks-building-and-units.service';
 import { CorrectionCodesFileComponent } from '../correction-codes-file/correction-codes-file.component';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-correction-project-unit-codes',
@@ -219,7 +220,7 @@ export class CorrectionProjectUnitCodesComponent implements OnInit, OnDestroy {
 
   isFawriaValidation(): boolean {
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU') return true;
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria) return true;
     else return false;
   }
 

@@ -11,7 +11,6 @@
         formControlName="notes"
         class="form-control"
         rows="5"
-        placeholder="أدخل الملاحظات هنا..."
         [class.is-invalid]="replyForm.get('notes')?.invalid && replyForm.get('notes')?.touched">
       </textarea>
       <div class="invalid-feedback d-block" *ngIf="replyForm.get('notes')?.invalid && replyForm.get('notes')?.touched">

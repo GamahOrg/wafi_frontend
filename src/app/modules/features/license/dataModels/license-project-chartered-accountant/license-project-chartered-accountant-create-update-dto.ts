@@ -1,4 +1,5 @@
 ﻿import { SysFileManagerCreateUpdateDto } from 'src/app/shared/models/sys-file-manager-create-update-dto';
+import { CustomerShortDto } from '../../models/facility-short-dto';
 
 export class LicenseProjectCharteredAccountantCreateUpdateDto {
   id: string | null = '00000000-0000-0000-0000-000000000000';
@@ -29,6 +30,7 @@ export class LicenseProjectCharteredAccountantDelegatorCreateUpdateDto {
   id: string = '00000000-0000-0000-0000-000000000000';
   licenseProjectCharteredAccountantId: string = '';
   delegatorCustomerId: string = '';
+  delegatorCustomer: CustomerShortDto = undefined as any;
   delegatorName: string = '';
   identityNumber: string = '';
   signModelFileId: string = '';

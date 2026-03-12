@@ -1,43 +1,81 @@
 <div class="tab-data-section">
-        <i class="bi bi-card-text"></i>
-        <h6 class="title">{{ isOwner ? 'حالة ملاك الصكوك' : 'حالة المحاسب والاستشاري' }}</h6>
+  <i class="bi bi-card-text"></i>
+  <h6 class="title">
+    {{ isOwner ? "حالة ملاك الصكوك" : "حالة المحاسب والاستشاري" }}
+  </h6>
 
-        <div class="table-responsive">
-          <table class="table table-light">
-            <thead>
-              <tr>
-                <th *ngIf="isOwner">اسم المالك</th>
-                <th *ngIf="!isOwner">اسم الشركة</th>
-                <th *ngIf="!isOwner">قيمة العقد</th>
-                <th *ngIf="!isOwner">الرقم الموحد للمنشأة</th>
-                <th *ngIf="isOwner">رقم الهوية</th>
-                <th *ngIf="isOwner">إجمالي المساحة المملوكة</th>
-                <th>تاريخ الارسال</th>
-                <!-- <th>تاريخ آخر تحديث</th> -->
-                <th *ngIf="isOwner">قيمة الأرض للمالك</th>
-                <th>حالة الطلب</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of projectPartiesStatusList">
-                <td *ngIf="isOwner">{{item.name}}</td>
-                <td *ngIf="!isOwner">{{item.name}}<span *ngIf="item.projectPartiesType == 1">(الاستشاري)</span><span *ngIf="item.projectPartiesType == 2">(المحاسب)</span></td>
-                <td *ngIf="!isOwner">{{item.contarctValue}}</td>
-                <td *ngIf="!isOwner">{{item.nId}}</td>
-                <td *ngIf="isOwner">{{item.nId}}</td>
-                <td *ngIf="isOwner">{{item.owningArea}}</td>
-                <td>{{item.sendDate | date: 'dd/MM/yyyy'}}</td>
-                <!-- <td>{{item.sendUpdatedDate | date: 'dd/MM/yyyy'}}</td> -->
-                <td *ngIf="isOwner">{{item.totalLandValue}}</td>
-                <td>{{item.status == 1 ? 'معتمد' : item.status == 2 ? 'مرفوض' : 'قيد الاعتماد'}}</td>
-                <td>
-                  <button *ngIf="item.status == 2" type="button" class="btn btn-sm btn-danger" (click)="showRejectionReason(item.rejectReason ?? '', item.name)">
-                    سبب الرفض
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <div class="table-responsive">
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th *ngIf="isOwner">اسم المالك</th>
+          <th *ngIf="!isOwner">اسم الشركة</th>
+          <th *ngIf="!isOwner">قيمة العقد</th>
+          <th *ngIf="!isOwner">الرقم الموحد للمنشأة</th>
+          <th *ngIf="isOwner">رقم الهوية</th>
+          <th *ngIf="isOwner">إجمالي المساحة المملوكة</th>
+          <th>تاريخ الإرسال</th>
+          <!-- <th>تاريخ آخر تحديث</th> -->
+          <th *ngIf="isOwner">قيمة الأرض للمالك</th>
+          <th>حالة الطلب</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of projectPartiesStatusList">
+          <td *ngIf="isOwner">{{ item.name }}</td>
+          <td *ngIf="!isOwner">
+            {{ item.name
+            }}<span *ngIf="item.projectPartiesType == 1">(الاستشاري)</span
+            ><span *ngIf="item.projectPartiesType == 2">(المحاسب)</span>
+          </td>
+          <td *ngIf="!isOwner">{{ item.contarctValue }}</td>
+          <td *ngIf="!isOwner">{{ item.nId }}</td>
+          <td *ngIf="isOwner">{{ item.nId }}</td>
+          <td *ngIf="isOwner">{{ item.owningArea }}</td>
+          <td>{{ item.sendDate | date: "dd/MM/yyyy" }}</td>
+          <!-- <td>{{item.sendUpdatedDate | date: 'dd/MM/yyyy'}}</td> -->
+          <td *ngIf="isOwner">{{ item.totalLandValue }}</td>
+          <td>
+            
+
+            <div class="d-flex align-items-center">
+                <span
+                  class="status-pill"
+                  [ngClass]="getStatusClass(item.status)"
+                >
+                  
+                  {{
+              item.status == 1
+                ? "مُعتمد"
+                : item.status == 2
+                  ? "مرفوض"
+                  : "قيد الاعتماد"
+            }}
+                </span>
+              </div>
+          </td>
+
+          <td>
+            <div class="table-actions">
+              <button
+                *ngIf="item.status == 2"
+                type="button"
+                class="btn btn-sm btn-danger"
+                (click)="showRejectionReason(item.rejectReason ?? '', item.name)"
+              >
+                سبب الرفض
+              </button>
+              <button
+                class="btn btn-outline-primary"
+                (click)="navigateToAgreement(item)"
+              >
+                ملف الاتفاقية
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

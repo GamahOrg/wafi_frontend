@@ -25,4 +25,10 @@ export class StorageService {
   getLoginUserType(): string | null {
     return localStorage.getItem('login-user-type');
   }
+  setIsFirstLoading(bool: boolean): void {
+    localStorage.setItem('isFirstLoading', bool.toString());
+  }
+  getIsFirstLoading(): string | null {
+    return localStorage.getItem('isFirstLoading');
+  }
 }

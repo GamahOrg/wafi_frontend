@@ -1,30 +1,41 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  Subject,
+  Subscription,
+} from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { UserDataService } from '../../../../../core/services/user-data/user-data.service';
-import { Pagination, pagination } from '../../../../../shared/models/pagination.model';
+import {
+  Pagination,
+  pagination,
+} from '../../../../../shared/models/pagination.model';
 import { PaginationService } from '../../../../../shared/services/pagination/pagination.service';
-import { PopupService } from '../../../../../shared/services/popup/popup.service';
 import { customerResponse } from '../../../license/models/employee-registration-dto';
-import { FilterProjectList, LicenseRequestHeaderDto } from '../../models/license-request-header-dto';
+import { FilterProjectList } from '../../models/license-request-header-dto';
 import { ProjectListService } from '../../services/project-list.service';
 import { SharedLicenseProjectService } from '../../services/shared-license-project.service';
-import { SysProjectStatusService } from '../../services/sys-projectstatus.service';
 import { RecommendationsLogsResponseDto } from '../../models/recommendations-logs-response-dto';
 import { RecommendationLogsListService } from '../../services/recommendation-logs-list.service';
 import { Configuration } from '../../../../../core/configurations/shared.config';
 import { areaResponseBE } from '../../../facilities/dataModels/area.model';
 import { NationalAddressService } from '../../../facilities/services/facilityProfile/national-address-service/national-address.service';
 import { cityResponseBE } from '../../../facilities/dataModels/city.model';
+import { ExchangeDocumentsSelectDelegatorsComponent } from '../../../license/pages/exchange-documents-select-delegators/exchange-documents-select-delegators.component';
+import { PopupData } from 'src/app/shared/models/popup.model';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
 
 @Component({
   selector: 'app-recommendations-logs-list',
   templateUrl: './recommendations-logs-list.component.html',
-  styleUrls: ['./recommendations-logs-list.component.scss']
+  styleUrls: ['./recommendations-logs-list.component.scss'],
 })
 export class RecommendationsLogsListComponent {
   reqList: Pagination<RecommendationsLogsResponseDto[]> = {} as Pagination<
-    RecommendationsLogsResponseDto[]>;
+    RecommendationsLogsResponseDto[]
+  >;
 
   private searchSubject = new Subject<string>();
 
@@ -41,8 +52,8 @@ export class RecommendationsLogsListComponent {
   currentSelectedFacilityId?: string;
   areasDropDownList: areaResponseBE[] = [];
   citiesDropDownList: cityResponseBE[] = [];
-  selectedCityId: string = '';
-  selectedAreaId: string = '';
+  selectedCityId: string | null = null;
+  selectedAreaId: string | null = null;
   projectStartOn: Date | null = null;
   projectEndOn: Date | null = null;
   private isInitialLoad: boolean = true;
@@ -52,13 +63,13 @@ export class RecommendationsLogsListComponent {
     private _recommendationLogsListService: RecommendationLogsListService,
     private _paginationService: PaginationService,
     private _popupService: PopupService,
-    private _sysProjectStatusService: SysProjectStatusService,
+
     private _userDataService: UserDataService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _router: Router,
     private _nationalAddressService: NationalAddressService,
-  ) { }
-
+    private _dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.obseveCustomerData();
@@ -75,14 +86,11 @@ export class RecommendationsLogsListComponent {
   private setupSearchDebounce(): void {
     this.subscriptions.push(
       this.searchSubject
-        .pipe(
-          debounceTime(500),
-          distinctUntilChanged()
-        )
+        .pipe(debounceTime(500), distinctUntilChanged())
         .subscribe(() => {
           this.pagintationData.currentPage = 1;
           this.getRecommendationsLogsList();
-        })
+        }),
     );
   }
 
@@ -107,22 +115,22 @@ export class RecommendationsLogsListComponent {
 
   GetAreasDropDown() {
     this.subscriptions.push(
-      this._nationalAddressService.GetAreasDropDown().subscribe(res => {
+      this._nationalAddressService.GetAreasDropDown().subscribe((res) => {
         if (res) {
           this.areasDropDownList = res as areaResponseBE[];
         }
-      })
-    )
+      }),
+    );
   }
 
   GetCitiesDropDown() {
     this.subscriptions.push(
-      this._nationalAddressService.GetCitiessDropDown().subscribe(res => {
+      this._nationalAddressService.GetCitiessDropDown().subscribe((res) => {
         if (res) {
           this.citiesDropDownList = res;
         }
-      })
-    )
+      }),
+    );
   }
 
   private obseveCustomerData(): void {
@@ -131,7 +139,11 @@ export class RecommendationsLogsListComponent {
         .getCustomerData()
         .subscribe((res: customerResponse | null) => {
           this.userData = res;
-          if (this.userData && this.userData.facilities && this.userData.facilities.length > 0)
+          if (
+            this.userData &&
+            this.userData.facilities &&
+            this.userData.facilities.length > 0
+          )
             this.currentSelectedFacilityId = this.userData.facilities[0].id;
 
           // تعيين flag بعد تحميل البيانات الأولية
@@ -141,7 +153,7 @@ export class RecommendationsLogsListComponent {
           setTimeout(() => {
             this.isInitialLoad = false;
           }, 500);
-        })
+        }),
     );
   }
 
@@ -157,30 +169,35 @@ export class RecommendationsLogsListComponent {
     params.projectEndOn = this.projectEndOn || undefined;
 
     this.subscriptions.push(
-      this._recommendationLogsListService.getRecommendationLogsList(params)
-        .subscribe((res: Pagination<RecommendationsLogsResponseDto[]> | null) => {
-          if (res) {
-            this.updateRequestList(res as Pagination<RecommendationsLogsResponseDto[]>);
-          }
-        })
+      this._recommendationLogsListService
+        .getRecommendationLogsList(params)
+        .subscribe(
+          (res: Pagination<RecommendationsLogsResponseDto[]> | null) => {
+            if (res) {
+              this.updateRequestList(
+                res as Pagination<RecommendationsLogsResponseDto[]>,
+              );
+            }
+          },
+        ),
     );
   }
 
   private updateRequestList(
-    TypeListView: Pagination<RecommendationsLogsResponseDto[]>
+    TypeListView: Pagination<RecommendationsLogsResponseDto[]>,
   ): void {
     this.reqList = TypeListView;
     this.setPaginationData(
       this.reqList.pageSize,
       this.reqList.totalCount,
-      this.reqList.pageCount
+      this.reqList.pageCount,
     );
   }
 
   private setPaginationData(
     pageSize: number,
     total: number,
-    pageCount: number
+    pageCount: number,
   ): void {
     this.pagintationData.pageCount = pageCount;
     this.pagintationData.pageSize = pageSize;
@@ -198,8 +215,8 @@ export class RecommendationsLogsListComponent {
       this._projectMangerService.submitSuccessfullyEventEmitter.subscribe(
         () => {
           this.getRecommendationsLogsList();
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -207,7 +224,7 @@ export class RecommendationsLogsListComponent {
     this.subscriptions.push(
       this._paginationService.getPageChanged().subscribe((pageNo) => {
         this.newPageNo = pageNo;
-      })
+      }),
     );
   }
 
@@ -218,7 +235,7 @@ export class RecommendationsLogsListComponent {
           this.loadNextPage(nextPage);
           this.pagintationData.currentPage = this.newPageNo;
         }
-      })
+      }),
     );
   }
 
@@ -229,15 +246,51 @@ export class RecommendationsLogsListComponent {
 
   showUnitList(licenseProjectId: string): void {
     this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-      licenseProjectId
+      licenseProjectId,
     );
     this._router.navigateByUrl(
-      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.realStateDeveloperUnitsListComponent}`
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.realStateDeveloperUnitsListComponent}`,
     );
+  }
+
+  showExchangeDocumentsList(project: any): void {
+    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      project.licenseProjectId,
+    );
+
+    this._sharedLicenseProjectService.removeLicenseProjectNamefromLocalStorage();
+    this._sharedLicenseProjectService.setLicenseProjectNameInLocalStorage(
+      project.projectName,
+    );
+    this._router.navigateByUrl(
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.exchangeDocumentsListOnProject}`,
+    );
+  }
+
+  openDelegatorsSelectionPopup(project: any): void {
+    // this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+    //   project.licenseProjectId,
+    // );
+    // this._dialog.open(ExchangeDocumentsSelectDelegatorsComponent, {
+    //   width: '600px',
+    //   disableClose: false,
+    // });
+
+    let Data = {
+          iconClass: 'hgi hgi-stroke hgi-profile-02',
+          title: 'إضافة مفوضين وثائق الصرف',
+          component: ExchangeDocumentsSelectDelegatorsComponent,
+          id: 'ExchangeDocumentsSelectDelegatorsComponent',
+          submitButtonTitle: 'ارسال',
+          data: {
+            licenseProjectId: project.licenseProjectId,
+          },
+        } as PopupData;
+        this._popupService.updatePopupData(Data);
+
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
-
 }

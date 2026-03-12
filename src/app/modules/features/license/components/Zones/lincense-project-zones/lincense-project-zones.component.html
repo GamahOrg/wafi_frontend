@@ -3,11 +3,7 @@
     <div class="card side-card h-100">
       <div class="card-header">
         <h4>الزون</h4>
-        <button
-          *ngIf="!hideActionButtons"
-          class="btn btn-link"
-          (click)="openDialog()"
-        >
+        <button *ngIf="!hideActionButtons" class="btn btn-link" (click)="openDialog()">
           <i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة زون جديد
         </button>
       </div>
@@ -18,10 +14,7 @@
             <div class="item" [ngClass]="{'active': idx === selectedZoneIndex}">
               <mat-icon class="icon align-self-start mt-1">circle</mat-icon>
 
-              <div
-                class="d-flex flex-column gap-2 flex-shrink-0 cursor-pointer"
-                (click)="onZoneSelected(zone, idx)"
-              >
+              <div class="d-flex flex-column gap-2 flex-shrink-0 cursor-pointer" (click)="onZoneSelected(zone, idx)">
                 <h6>زون رقم {{ zone.code }}</h6>
                 <p>
                   تحتوي على {{ zone.numberOfBlocks }} بلوك -
@@ -79,7 +72,7 @@
           <div class="d-flex flex-column gap-2">
             <h4>العمائر والبلوكات</h4>
             <p>
-              تحتوي كل عمارة او بلوك على تفاصيل ( الوحدات ، النماذج , الأكواد )
+              تحتوي كل عمارة أو بلوك على تفاصيل ( الوحدات ، النماذج , الأكواد )
             </p>
           </div>
           <div class="d-flex align-self-center gap-3">
@@ -99,19 +92,17 @@
               <span class="tab-square">البلوكات</span>
             </div>
 
-            <button *ngIf="selectedZoneIndex!=-1 && !hideActionButtons" class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك او عمارة</button>
+            <button *ngIf="selectedZoneIndex!=-1 && !hideActionButtons" class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك أو عمارة</button>
           </div>
         </div>
       </div>
 
       <div class="card">
         <div class="card-body">
-          <ng-container
-            *ngIf="
+          <ng-container *ngIf="
               selectedbuildingOrBlock &&
               selectedbuildingOrBlock.licenseProjectSubUnits != null
-            "
-          >
+            ">
             <div class="row row-gap-4">
               <div class="col-xxl-6">
                 <div class="d-flex flex-column gap-3 h-100">
@@ -122,21 +113,13 @@
 
                   <div class="items-list flex-grow-1 p-3 border rounded-1">
                     <div class="d-flex flex-column gap-2">
-                      <ng-container
-                        *ngFor="let unit of projectUnits; let idx = index"
-                      >
-                        <div
-                          class="item"
-                          [ngClass]="{
+                      <ng-container *ngFor="let unit of projectUnits; let idx = index">
+                        <div class="item" [ngClass]="{
                             active: idx === selectedbuildingOrBlockIndex
-                          }"
-                        >
+                          }">
                           <span class="icon material-icons">circle</span>
 
-                          <div
-                            class="d-flex flex-column gap-2 cursor-pointer"
-                            (click)="onSelectedbuildingOrBlock(unit, idx)"
-                          >
+                          <div class="d-flex flex-column gap-2 cursor-pointer" (click)="onSelectedbuildingOrBlock(unit, idx)">
                             <h6>
                               {{ unit.unitTypeName }} رقم {{ unit.code }} -
                               المرحلة {{ unit.stageNumber }}
@@ -144,7 +127,7 @@
                             <p class="small">
                               تاريخ البداية:
                               {{
-                                unit.constructionStartOn | date : "dd/MM/yyyy"
+                              unit.constructionStartOn | date : "dd/MM/yyyy"
                               }}
                               تاريخ النهاية:
                               {{ unit.constructionEndOn | date : "dd/MM/yyyy" }}
@@ -188,62 +171,45 @@
 
                   <div class="items-list flex-grow-1 p-3 border rounded-1">
                     <div class="d-flex flex-column gap-2">
-                      <ng-container
-                        *ngIf="
+                      <ng-container *ngIf="
                           selectedbuildingOrBlock &&
                           selectedbuildingOrBlock.licenseProjectSubUnits &&
                           selectedbuildingOrBlock.licenseProjectSubUnits
                             .length > 0
-                        "
-                      >
-                        <ng-container
-                          *ngFor="
+                        ">
+                        <ng-container *ngFor="
                             let licenseProjectSubUnit of selectedbuildingOrBlock.licenseProjectSubUnits;
                             let idx = index
-                          "
-                        >
-                          <div
-                            class="item gap-4"
-                            [ngClass]="{
+                          ">
+                          <div class="item gap-4" [ngClass]="{
                               active: idx === selectedLicenseProjectSubUnitIndex
-                            }"
-                          >
+                            }">
                             <span class="icon material-icons">circle</span>
 
-                            <div
-                              class="d-flex align-items-center gap-3 cursor-pointer"
-                              (click)="
+                            <div class="d-flex align-items-center gap-3 cursor-pointer" (click)="
                                 onSelectedLicenseProjectSubUnit(
                                   licenseProjectSubUnit,
                                   idx
                                 )
-                              "
-                            >
-                              <div
-                                class="item-part d-flex align-items-center gap-2"
-                              >
+                              ">
+                              <div class="item-part d-flex align-items-center gap-2">
                                 <h6>نوع الوحدة</h6>
                                 <span class="tag">{{licenseProjectSubUnit.subUnitType?.name}}</span>
                               </div>
 
-                              <div
-                                class="item-part d-flex align-items-center gap-2"
-                              >
+                              <div class="item-part d-flex align-items-center gap-2">
                                 <h6>عدد الوحدات</h6>
                                 <span class="tag">{{licenseProjectSubUnit.subUnitCount}} وحدة</span>
                               </div>
 
                               <div class="item-part">
-                                <button
-                                  class="btn btn-outline-primary fw-bold"
-                                  (click)="
+                                <button class="btn btn-outline-primary fw-bold" (click)="
                                     onSelectedLicenseProjectSubUnit(
                                       licenseProjectSubUnit,
                                       idx
                                     );
                                     openModelDialog()
-                                  "
-                                >
+                                  ">
                                   النماذج
                                 </button>
                               </div>
@@ -270,15 +236,12 @@
               </div>
             </div>
 
-            <div
-              class="d-flex flex-column gap-4 mt-4"
-              *ngIf="
+            <div class="d-flex flex-column gap-4 mt-4" *ngIf="
                 selectedZoneIndex != -1 &&
                 projectUnits &&
                 projectUnits.length > 0 &&
                 !hideActionButtons
-              "
-            >
+              ">
               <div class="d-flex flex-column gap-2">
                 <h4>الأكواد الخاصة بأنواع الوحدات</h4>
                 <p>
@@ -289,13 +252,9 @@
 
               <div class="row row-gap-4">
                 <div class="col-xxl-6">
-                  <div
-                    class="dashed-block d-flex flex-column justify-content-center align-items-center gap-4 h-100"
-                  >
-                    <mat-icon fontIcon="upload_file"></mat-icon>
-                    <div class="d-flex flex-column align-items-center gap-2">
-                      <h6>قم بتحميل القالب الخاص بنوع الوحدة المحددة</h6>
-                    </div>
+                  <div class="dashed-block d-flex flex-column justify-content-center align-items-center gap-4 h-100">
+                    <i class="icon hgi hgi-stroke hgi-file-download"></i>
+                    <h6>قم بتحميل القالب الخاص بنوع الوحدة المحددة</h6>
                     <button class="btn btn-light" (click)="generateExcel()">
                       تحميل القالب
                     </button>
@@ -307,10 +266,7 @@
                     <h6>
                       قم بتحميل ملف اكواد الوحدات الخاص بنوع الوحدة المحددة
                     </h6>
-                    <app-file-uploader
-                      [data]="singleFileUploaderData"
-                      (fileUploaded)="onExcelFileUploaded($event)"
-                    ></app-file-uploader>
+                    <app-file-uploader [data]="singleFileUploaderData" (fileUploaded)="onExcelFileUploaded($event)"></app-file-uploader>
                     <button class="btn btn-light" (click)="saveFileCode()">
                       تحميل ملف الأكواد
                     </button>
@@ -325,12 +281,10 @@
             </div> -->
           </ng-container>
 
-          <ng-container
-            *ngIf="
+          <ng-container *ngIf="
               selectedZoneIndex == -1 ||
               (projectUnits && projectUnits.length == 0)
-            "
-          >
+            ">
             <div class="row justify-content-center">
               <div class="col-xl-6">
                 <div class="d-flex flex-column align-items-center gap-4 py-5">
@@ -341,7 +295,7 @@
                     بسهولة
                   </p>
 
-                  <button *ngIf="selectedZoneIndex!=-1 && !hideActionButtons" class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك او عمارة</button>
+                  <button *ngIf="selectedZoneIndex!=-1 && !hideActionButtons" class="btn btn-outline-primary" (click)="addBuildingOrBlock()"><i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك أو عمارة</button>
                 </div>
               </div>
             </div>

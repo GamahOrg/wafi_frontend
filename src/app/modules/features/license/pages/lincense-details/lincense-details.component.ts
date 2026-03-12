@@ -92,7 +92,7 @@ export class LincenseDetailsComponent {
   selectedRequest: null | LicenseDetails = null;
   selectedRequestID: string | null = '';
   compileWithLogFilesDto: CompileWithLogFilesDto = new CompileWithLogFilesDto();
-  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseSummary}`;
+  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}/${Configuration.pages.license.lincenseSummary}`;
   editFarzNoteRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.farzNote}`;
 
   get externalStatusId() {

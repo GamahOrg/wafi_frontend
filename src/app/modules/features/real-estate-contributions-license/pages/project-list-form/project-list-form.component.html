@@ -7,7 +7,7 @@
                         <label class="form-label">اختر مدير</label>
                         <select class="form-select"
                                 formControlName="managerId">
-                            <option value="">اختر مدير</option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let manager of customers"
                                     [ngValue]="manager.id">
                                 {{ manager.fullName }}

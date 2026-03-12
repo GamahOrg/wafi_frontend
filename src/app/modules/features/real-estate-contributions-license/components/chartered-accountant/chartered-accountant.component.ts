@@ -337,6 +337,10 @@ export class CharteredAccountantComponent {
       message: string;
     };
   }): void {
+    if (filesData.eventRes.data.length == 0) {
+      this.charteredAccountantFiles = [];
+      return;
+    }
     this.charteredAccountantFiles = filesData.eventRes.data?.map((file) => {
       return {
         id: file.id,

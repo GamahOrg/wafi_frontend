@@ -24,7 +24,7 @@ export class ExpectedAnnualBalanceSheetFormComponent implements OnInit, OnDestro
   licenseProjectAnnualBalanceSheetForm = this._formBuilder.group({
     id: [''],
     licenseProjectFeasibilityStudyId: [''],
-    yearId: ['', [Validators.required]],
+    yearId: [null as string | null, [Validators.required]],
     findings: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
     currentAssets: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
     cashAndCashEquivalents: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),

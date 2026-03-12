@@ -103,6 +103,10 @@ export class UpdateActivateRequestComponent implements OnInit, OnDestroy {
     })
   }
   onLicenseProjectActivationRequestFiles(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.licenseProjectActivationRequestFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     if (!this.licenseProjectActivationRequestFiles) {

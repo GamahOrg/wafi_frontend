@@ -113,6 +113,11 @@ import { ProjectStatusUpdateComponent } from './pages/project-list/Project-statu
 import { ExportEngineeringReportComponent } from './pages/ActualPlannedReport/export-engineering-report/export-engineering-report.component';
 import { RecommendationsLogsListComponent } from './pages/recommendations-logs-list/recommendations-logs-list.component';
 import { RecommendationLogsListService } from './services/recommendation-logs-list.service';
+import { LicenseProjectEngineeringConsultantService } from '../license/services/license-project-engineering-consultant.service';
+import { LicenseProjectDelegatorService } from '../license/services/license-project-delegator.service';
+import { LicenseProjectCharteredAccountantService } from '../license/services/license-project-chartered-accountant.service';
+import { ProjectRealStateDeveloperService } from '../license/services/licenseProjects/project-real-state-developer.service';
+import { ExchangeDocumentService } from '../license/services/exchange-document.service';
 
 @NgModule({
   imports: [
@@ -205,6 +210,11 @@ import { RecommendationLogsListService } from './services/recommendation-logs-li
   ],
   providers: [
     ProjectListService,
+    LicenseProjectEngineeringConsultantService,
+    LicenseProjectDelegatorService,
+    LicenseProjectCharteredAccountantService,
+    ProjectRealStateDeveloperService,
+    ExchangeDocumentService,
     SharedLicenseProjectService,
     SysProjectStatusService,
     EngineeringManagementLicenseProjectProblemService,

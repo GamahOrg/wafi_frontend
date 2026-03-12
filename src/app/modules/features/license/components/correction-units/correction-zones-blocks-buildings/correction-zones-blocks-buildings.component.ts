@@ -31,6 +31,7 @@ import { CorrectionLicenseProjectUnitService } from '../../../services/correctio
 import { CorrectionZonesBlocksBuildingAndUnitsService } from '../../../services/correction-zones-blocks-building-and-units.service';
 import { CorrectionProjectModelService } from '../../../services/correct-units/correction-project-model-service.service';
 import { CorrectionProjectUnitCodeService } from '../../../services/correction-project-unit-code.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-correction-zones-blocks-buildings',
@@ -80,7 +81,7 @@ export class CorrectionZonesBlocksBuildingsComponent implements OnInit, OnDestro
     let availabilityToUpdate = this._sharedLicenseProjectService.getAvailabilityToUpdateFarzFromLocalStorage();
 
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(this.licenseProjectId),
         this._licenseRequestService.GetLicenseProjectCompletionData(this.licenseProjectId),
@@ -386,6 +387,10 @@ deleteSubUnit(subUnit: ProjectSubUnitDto): void {
   }
 
   onExcelFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.fileId = "";
+      return;
+    }
     this.fileId = fileRemovedData.eventRes.data[0].id;
   }
 

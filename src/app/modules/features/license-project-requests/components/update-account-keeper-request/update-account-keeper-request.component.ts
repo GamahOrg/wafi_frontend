@@ -189,6 +189,12 @@ export class UpdateAccountKeeperRequestComponent implements OnInit {
   }
  
   escrowAccountAgreementwithAlternativeBankUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changeAccountKeeperForm.controls[
+        'escrowAccountAgreementwithAlternativeBankId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changeAccountKeeperForm.controls[
       'escrowAccountAgreementwithAlternativeBankId'
@@ -197,18 +203,36 @@ export class UpdateAccountKeeperRequestComponent implements OnInit {
   clearanceAcknowledgmentFromPreviousBankForProjectUpload(
     filesData: any
   ): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changeAccountKeeperForm.controls[
+        'clearanceAcknowledgmentFromPreviousBankForProjectId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changeAccountKeeperForm.controls[
       'clearanceAcknowledgmentFromPreviousBankForProjectId'
     ].setValue(filesData.eventRes.data[0].id);
   }
   letterFromPreviousBankToNewBankUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changeAccountKeeperForm.controls[
+        'letterFromPreviousBankToNewBankId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changeAccountKeeperForm.controls[
       'letterFromPreviousBankToNewBankId'
     ].setValue(filesData.eventRes.data[0].id);
   }
   reportFromPreviousBankOnCurrentAccountStatusUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changeAccountKeeperForm.controls[
+        'reportFromPreviousBankOnCurrentAccountStatusId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changeAccountKeeperForm.controls[
       'reportFromPreviousBankOnCurrentAccountStatusId'

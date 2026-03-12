@@ -93,7 +93,10 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     this.getDataVisibilityOfDataSection();
   }
   onFileUploaded(file: any) {
-    
+    if (file.eventRes.data.length === 0) {
+      this.projectRealStateDeveloperForm.controls.paymentReceiptFileId.setValue(null);
+      return;
+    }
     this.projectRealStateDeveloperForm.controls.paymentReceiptFileId.setValue(file.eventRes.data[0].id);
   }
   getCustomerData() {

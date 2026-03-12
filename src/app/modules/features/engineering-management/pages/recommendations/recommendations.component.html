@@ -50,7 +50,7 @@
                 <button type="button" class="btn btn-primary" (click)="viewDialog(recommendation.id)"> عرض التوصية
                 </button>
                 <button *ngIf=" !isDeveloper && recommendation.status.id === sysStatusIssueTypeEnum.Open && recommendation.ownerTypeId === ownerTypeId.ProjectManager" type="button" class="btn btn-primary mx-4" (click)="sendNotificationDialog(recommendation.id)">
-                  ارسال رد
+                  إرسال رد
                 </button>
               </div>
             </td>

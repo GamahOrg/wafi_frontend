@@ -15,8 +15,8 @@
             <div class="row">
               <div class="col-4">
                 <div class="input-group">
-                  <span class="input-group-text" id="basic-addon1"><i class="material-icons-outlined">search</i></span>
-                  <input type="text" class="form-control" placeholder="بحث" (input)="getSearchText($event)" />
+                  <span class="input-group-text"><i class="hgi hgi-stroke hgi-search-01"></i></span>
+                  <input type="text" class="form-control" (input)="getSearchText($event)" placeholder="بحث" />
                 </div>
               </div>
               <div class="col-2">
@@ -44,8 +44,8 @@
             <div class="row">
               <div class="col-4">
                 <div class="input-group">
-                  <span class="input-group-text" id="basic-addon1"><i class="material-icons-outlined">search</i></span>
-                  <input type="text" class="form-control" placeholder="search" (input)="getSearchText($event)" />
+                  <span class="input-group-text"><i class="hgi hgi-stroke hgi-search-01"></i></span>
+                  <input type="text" class="form-control" (input)="getSearchText($event)" placeholder="بحث"/>
                 </div>
               </div>
               <div class="col-2">
@@ -251,7 +251,7 @@
               {{ request.licenseProject?.name??'' }}
             </td>
 
-            <td  (click)="navigateToDetails(request)">
+            <td class="text-nowrap" (click)="navigateToDetails(request)">
               {{request.requestOn | date : "dd-MM-yyyy"}}
             </td>
 
@@ -287,20 +287,20 @@
                       {{
       request.externalStatusId === internalStatusId.RequestCertifiedAndFinallicenseIssued
         ? 'تفاصيل الطلب'
-        : request.licenseRequestType?.typeCode === 'FSRSU'
+        : request.licenseRequestType?.typeCode === licenseTypeCodeEnum.Fawria
           ? 'تفاصيل الرخصة الفورية'
           : 'تفاصيل الرخصة'
                       }}
-                      <!--{{ request.licenseRequestType.typeCode == 'FSRSU' ? 'تفاصيل الرخصة الفورية' : 'تفاصيل الرخصة' }}-->
+                      <!--{{ request.licenseRequestType.typeCode == licenseTypeCodeEnum.Fawria ? 'تفاصيل الرخصة الفورية' : 'تفاصيل الرخصة' }}-->
                     </span>
                   </button>
-                  <button mat-menu-item (click)="navigateToFawriaLicenseComplate(request)" class="menu-edit-btn" *ngIf="request.licenseRequestType.typeCode == 'FSRSU' && request.externalStatusId == 18">
+                  <button mat-menu-item (click)="navigateToFawriaLicenseComplate(request)" class="menu-edit-btn" *ngIf="request.licenseRequestType.typeCode == licenseTypeCodeEnum.Fawria && request.externalStatusId == 18">
                     <i class="hgi hgi-stroke hgi-profile-02"></i>
                     <span>إستكمال ملف المشروع</span>
                   </button>
                 </mat-menu>
               </div>
-              <!-- <div class="dropdown" *ngIf="request.externalStatusId == 18 || !request.requestCode || request.licenseRequestType.typeCode == 'FSRSU'">
+              <!-- <div class="dropdown" *ngIf="request.externalStatusId == 18 || !request.requestCode || request.licenseRequestType.typeCode == licenseTypeCodeEnum.Fawria">
                 <button class="btn btn-link text-dark p-0" type="button" [id]="'dropdownMenuButton' + request.id" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="material-icons">more_vert</i>
                 </button>
@@ -314,10 +314,10 @@
                   <li>
                     <button class="dropdown-item" type="button" (click)="navigateToDetails(request)">
                       <i class="material-icons me-2" style="font-size: 18px; vertical-align: middle;">description</i>
-                      {{ request.licenseRequestType.typeCode == 'FSRSU' ? 'تفاصيل الرخصة الفورية' : 'تفاصيل الرخصة' }}
+                      {{ request.licenseRequestType.typeCode == licenseTypeCodeEnum.Fawria ? 'تفاصيل الرخصة الفورية' : 'تفاصيل الرخصة' }}
                     </button>
                   </li>
-                  <li *ngIf="request.licenseRequestType.typeCode == 'FSRSU' && request.externalStatusId == 18">
+                  <li *ngIf="request.licenseRequestType.typeCode == licenseTypeCodeEnum.Fawria && request.externalStatusId == 18">
                     <button class="dropdown-item" type="button" (click)="navigateToFawriaLicenseComplate(request)">
                       <i class="material-icons me-2" style="font-size: 18px; vertical-align: middle;">assignment</i>
                       إستكمال ملف المشروع

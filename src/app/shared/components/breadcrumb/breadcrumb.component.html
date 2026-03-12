@@ -14,10 +14,14 @@
 </nav> -->
 <ol class="breadcrumb">
   <li class="breadcrumb-item"
-      *ngFor="let breadcrumb of breadcrumbs$ | async; let isLast = last" [ngClass]="{ active: isLast }">
-      <a *ngIf="!isLast" [routerLink]="breadcrumb.url">{{
+      *ngFor="let breadcrumb of breadcrumbs$ | async; let isLast = last"
+      [ngClass]="{ active: isLast && !(selectableItem$ | async) }">
+      <a *ngIf="!isLast || (selectableItem$ | async)" [routerLink]="breadcrumb.url">{{
       breadcrumb.label
     }}</a>
-    <span *ngIf="isLast">{{ breadcrumb.label }}</span>
+    <span *ngIf="isLast && !(selectableItem$ | async)">{{ breadcrumb.label }}</span>
+  </li>
+  <li class="breadcrumb-item active" *ngIf="selectableItem$ | async as selectable">
+    <span>{{ selectable.options[selectable.activeOptionIndex]?.label }}</span>
   </li>
 </ol>

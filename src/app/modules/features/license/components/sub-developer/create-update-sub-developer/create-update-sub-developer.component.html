@@ -1,14 +1,12 @@
 <div class="d-flex flex-column h-100">
   <h6 mat-dialog-title>
     <button class="btn btn-link p-0" mat-dialog-close tabindex="-1">
-      <i class="material-icons h6">close</i>
+      <i class="material-icons">close</i>
     </button>
   </h6>
 
-  <div mat-dialog-content
-       *ngIf="form && form.controls">
-    <ng-container [formGroup]="form"
-                  id="form-form">
+  <div mat-dialog-content *ngIf="form && form.controls">
+    <ng-container [formGroup]="form" id="form-form">
       <h6 class="form-title">
         <span class="icon"><i class="material-icons">list_alt</i></span>
         <span>{{localizations.AddNewSubDeveloper}}</span>
@@ -16,12 +14,7 @@
 
       <div class="row mb-3">
 
-        <app-engineering-consultant-customer-info [form]="form"
-                                                  [buttonName]="localizations.ValidateConsultant"
-                                                  [code]="code.DependantRealEstate"
-                                                  (onChange)="setFacility($event)"
-                                                  [label]="localizations.DeveloperLabel"
-                                                  [requiredMessage]="localizations.DeveloperRequired">
+        <app-engineering-consultant-customer-info [form]="form" [buttonName]="localizations.ValidateConsultant" [code]="code.DependantRealEstate" (onChange)="setFacility($event)" [label]="localizations.DeveloperLabel" [requiredMessage]="localizations.DeveloperRequired">
         </app-engineering-consultant-customer-info>
 
         <ng-container *ngIf="facility$ | async">
@@ -45,24 +38,16 @@
             </div>
           </div>
           <div class="col-12 col-lg-6">
-            <label for="licenseNumber"
-                   class="form-label">{{localizations.licenseNumber}}</label>
-            <input id="control-licenseNumber"
-                   type="text"
-                   class="form-control"
-                   formControlName="licenseNumber">
+            <label for="licenseNumber" class="form-label">{{localizations.licenseNumber}}</label>
+            <input id="control-licenseNumber" type="text" class="form-control" formControlName="licenseNumber">
 
             <mat-error *ngIf="controls['licenseNumber'].hasError('required')">
               {{localizations.delegatorIdentityNumberNoCorrect}}
             </mat-error>
           </div>
           <div class="col-12 col-lg-6">
-            <label for="projectName"
-                   class="form-label">{{localizations.projectName}}</label>
-            <input id="control-projectName"
-                   type="text"
-                   class="form-control"
-                   formControlName="projectName">
+            <label for="projectName" class="form-label">{{localizations.projectName}}</label>
+            <input id="control-projectName" type="text" class="form-control" formControlName="projectName">
           </div>
 
           <!--   <div class="col-12 col-lg-6">
@@ -104,12 +89,9 @@
 
           <div class="col-12 col-lg-6">
             <label class="form-label">{{localizations.AgreementFile}}</label>
-            <app-file-uploader [data]="uploadConfig"
-                               (fileUploaded)="onUpload($event)"
-                               (fileRemoved)="onUpload($event)"></app-file-uploader>
+            <app-file-uploader [data]="uploadConfig" (fileUploaded)="onUpload($event)" (fileRemoved)="onUpload($event)"></app-file-uploader>
 
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['subDeveloperAgreementFileId'].hasError('required')
+            <div class="invalid-feedback d-block" *ngIf="controls['subDeveloperAgreementFileId'].hasError('required')
                  && controls['subDeveloperAgreementFileId'].touched">
               {{localizations.AgreementFileRequired}}
             </div>
@@ -117,10 +99,7 @@
           </div>
           <br>
           <div class="form-actions mt-auto">
-            <button mat-flat-button
-                    color="primary"
-                    id="btn-save"
-                    (click)="save()">
+            <button mat-flat-button color="primary" id="btn-save" (click)="save()">
               {{localizations.Save}}
             </button>
           </div>

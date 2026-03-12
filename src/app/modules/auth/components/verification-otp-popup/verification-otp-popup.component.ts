@@ -15,7 +15,7 @@ export class VerificationOtpPopupComponent implements OnInit, OnDestroy {
   customerMobile: string | null = null;
   OTPInputValue: string | null = null;
   localization = {
-    sendNewOtp: "ارسال الكود مرة اخري",
+    sendNewOtp: "إرسال الكود مرة اخري",
     newOtpSentSuccessfully: " تم إرسال رمز تحقق جديد"
   };
   min = 60;
@@ -59,7 +59,7 @@ export class VerificationOtpPopupComponent implements OnInit, OnDestroy {
           this.clearInterval();
           this.createInteraval();
         }else{
-          this._toastrNotificatioService.showError('حدث خطا اثناء ارسال كود التحقق برجاء المحاولة مرة أخرى');
+          this._toastrNotificatioService.showError('حدث خطا اثناء إرسال كود التحقق برجاء المحاولة مرة أخرى');
         }
       })
     )

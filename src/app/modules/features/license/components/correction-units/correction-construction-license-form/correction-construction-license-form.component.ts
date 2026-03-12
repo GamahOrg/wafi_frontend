@@ -45,7 +45,7 @@ export class CorrectionConstructionLicenseFormComponent
     private _popupService: PopupService,
     private datePipe: DatePipe,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _toastrNotificationService: ToastrNotificatioService
+    private _toastrNotificationService: ToastrNotificatioService,
   ) {}
 
   singleFileUploaderData: FileUploader = {
@@ -79,10 +79,10 @@ export class CorrectionConstructionLicenseFormComponent
     issueOn: 'تاريخ الرخصة',
     licenseType: 'نوع الرخصة',
     letterType:
-      'خطاب من مركز خدمات المطور "إتمام" او اى جهة مختصة بتراخيص البناء',
+      'خطاب من مركز خدمات المطور "إتمام" أو اى جهة مختصة بتراخيص البناء',
     letterTypeFile:
-      'ملف خطاب من مركز خدمات المطور "إتمام" او اى جهة مختصة بتراخيص البناء',
-    licenseNumberType: 'الرخص الانشائية الصادرة من بلدى',
+      'ملف خطاب من مركز خدمات المطور "إتمام" أو اى جهة مختصة بتراخيص البناء',
+    licenseNumberType: 'الرخص الانشائية الصادرة من بلدي',
     licenseFile: 'ملفات الرخصة الانشائية',
     validateLicenseFile: 'يجب اختيار ملفات الرخصة الانشائية',
     licenseNumber: 'رقم الرخصة',
@@ -93,7 +93,7 @@ export class CorrectionConstructionLicenseFormComponent
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
     validateSuccessfully: 'تم التحقق من الرخصة بنجاح',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     verify: 'تحقق من الرخصة',
   };
@@ -102,7 +102,7 @@ export class CorrectionConstructionLicenseFormComponent
     if (res && res.issueOn) {
       res.issueOn = this.datePipe.transform(
         new Date(res.issueOn),
-        'yyyy-MM-dd'
+        'yyyy-MM-dd',
       ) as any;
     }
 
@@ -116,7 +116,7 @@ export class CorrectionConstructionLicenseFormComponent
       this.constructionLicenseForm.valueChanges.subscribe((changes) => {
         this.constructionLicense = this.constructionLicenseForm
           .value as ConstructionLicenseDto;
-      })
+      }),
     );
   }
 
@@ -127,8 +127,8 @@ export class CorrectionConstructionLicenseFormComponent
           if (value) {
             this.setBefor7(value);
           }
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -145,7 +145,7 @@ export class CorrectionConstructionLicenseFormComponent
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         this._popupService.dismissDialog();
-      })
+      }),
     );
   }
 
@@ -153,11 +153,16 @@ export class CorrectionConstructionLicenseFormComponent
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.save();
-      })
+      }),
     );
   }
 
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.constructionLicense.licenseFileId = null;
+      this.controls.licenseFileId.setValue(null);
+      return;
+    }
     this.constructionLicense.licenseFileId = fileData.eventRes.data[0].id;
     this.controls.licenseFileId.setValue(fileData.eventRes.data[0].id);
     this.constructionLicense.licenseFile = null;
@@ -170,7 +175,7 @@ export class CorrectionConstructionLicenseFormComponent
     if (!this.controls.issueOn.valid || !this.controls.licenseNumber.valid) {
       this.showValidation = true;
       this._toastrNotificationService.showError(
-        this.localization.PleaseAddAllRequiredFields
+        this.localization.PleaseAddAllRequiredFields,
       );
       return;
     }
@@ -191,7 +196,7 @@ export class CorrectionConstructionLicenseFormComponent
               this.constructionLicenseIntegrationDto.landInfoList.forEach(
                 (element) => {
                   landArea += element.landArea;
-                }
+                },
               );
             }
             this.constructionLicenseForm
@@ -199,10 +204,10 @@ export class CorrectionConstructionLicenseFormComponent
               ?.setValue(landArea as number);
             this.showLandArea = true;
             this._toastrNotificationService.showSuccess(
-              this.localization.validateSuccessfully
+              this.localization.validateSuccessfully,
             );
           } else this._toastrNotificationService.showError(res.message);
-        })
+        }),
     );
   }
 
@@ -219,7 +224,7 @@ export class CorrectionConstructionLicenseFormComponent
       if (!this.constructionLicenseForm.valid) {
         this.showValidation = true;
         this._toastrNotificationService.showError(
-          this.localization.PleaseAddAllRequiredFields
+          this.localization.PleaseAddAllRequiredFields,
         );
         return;
       }
@@ -230,7 +235,7 @@ export class CorrectionConstructionLicenseFormComponent
       ) {
         this.showValidation = true;
         this._toastrNotificationService.showError(
-          this.localization.PleaseAddAllRequiredFields
+          this.localization.PleaseAddAllRequiredFields,
         );
         return;
       }
@@ -246,14 +251,14 @@ export class CorrectionConstructionLicenseFormComponent
         .subscribe((res) => {
           if (res.isDone) {
             this._toastrNotificationService.showSuccess(
-              this.localization.savedSuccessfully
+              this.localization.savedSuccessfully,
             );
             this._constructionLicenseService.SetSubjectListObjs(
-              res.data as ConstructionLicenseDto[]
+              res.data as ConstructionLicenseDto[],
             );
             this._popupService.dismissDialog();
           } else this._toastrNotificationService.showError(res.message);
-        })
+        }),
     );
   }
 
@@ -274,7 +279,7 @@ export class CorrectionConstructionLicenseFormComponent
   }
 }
 export const dateValidator: ValidatorFn = (
-  control: AbstractControl
+  control: AbstractControl,
 ): ValidationErrors | null => {
   const end = control.get('issueOn');
   return end?.value !== null && new Date() < new Date(end?.value)

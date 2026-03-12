@@ -189,11 +189,24 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
     this.basicInfoForm.patchValue(this.facilityData);
   }
   onUploadCooperativeSocietyLicensingFile($event: any): void {
+    if ($event.eventRes.data.length == 0) {
+      this.FacilityBasicUpdateInfo.cooperativeSocietyLicensingFileId = "";
+      return;
+    }
+    if ($event.eventRes.data.length == 0) {
+      this.FacilityBasicUpdateInfo.cooperativeSocietyLicensingFileId = "";
+      return;
+    }
+    if (!$event.eventRes.data || !$event.eventRes.data.length) return;
     this.FacilityBasicUpdateInfo.cooperativeSocietyLicensingFileId = $event.eventRes.data[0].id;
   }
 
 
   onUploadQualificationIssuesDocumentCreateUpdateDtoFile($event: any): void {
+    if ($event.eventRes.data.length == 0) {
+      this.FacilityBasicUpdateInfo.qualificationIssuesDocumentCreateUpdateDtos = [];
+      return;
+    }
     let issueFileDate = {
       id: "00000000-0000-0000-0000-000000000000",
       facilityId: this.userData?.facilities[0].id as string,
@@ -203,9 +216,17 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
     this.FacilityBasicUpdateInfo.qualificationIssuesDocumentCreateUpdateDtos.push(issueFileDate)
   }
   onUploadCompanyEstablishingContractFile($event: any): void {
+    if ($event.eventRes.data.length == 0) {
+      this.facilityData.companyEstablishingContractFileId = "";
+      return;
+    }
     this.facilityData.companyEstablishingContractFileId = $event.eventRes.data[0].id
   }
   onUploadSocialInsuranceEmployeesFile($event: any): void {
+    if ($event.eventRes.data.length == 0) {
+      this.facilityData.socialInsuranceEmployeesListFileId = "";
+      return;
+    }
     this.facilityData.socialInsuranceEmployeesListFileId = $event.eventRes.data[0].id
   }
   updateBrokerRentDocumentType(type: any) {

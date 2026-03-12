@@ -16,7 +16,7 @@
               <label class="key">المشروع</label>
               <select class="form-select" id="control-licenseProjectId" aria-label="Default select example"
                 formControlName="licenseProjectId">
-                <option selected disabled>المشروع</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
                   {{ licenseProject.name }}
                 </option>
@@ -31,7 +31,7 @@
             <div class="form-group">
               <label class="key" for="justificationsAndReasons">مبررات و مشفوعات اعادة تفعيل الرخصة</label>
               <textarea  rows="6" type="text" id="control-justificationsAndReasons" class="form-control"
-              formControlName="justificationsAndReasons" placeholder="مبررات و مشفوعات اعادة تفعيل الرخصة"></textarea>
+              formControlName="justificationsAndReasons"></textarea>
               <mat-error *ngIf="showValidation && form.get('justificationsAndReasons')?.invalid">حقل مطلوب</mat-error>           
             </div>
           </div>

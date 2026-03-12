@@ -22,7 +22,8 @@ import { LicenseRequestService } from '../../../services/license-request.service
   styleUrls: ['./fawria-licenseproject-contact-info-container.component.scss'],
 })
 export class FawriaLicenseprojectContactInfoContainerComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   subscriptions: Subscription[] = [];
 
   subCustomerList: CustomerShortDto[] = [];
@@ -47,8 +48,8 @@ export class FawriaLicenseprojectContactInfoContainerComponent
     private _toastrNotificationService: ToastrNotificatioService,
     private _toastrService: ToastrService,
     private _licenseRequestService: LicenseRequestService,
-    private _tabsService: TabsService
-  ) { }
+    private _tabsService: TabsService,
+  ) {}
 
   ngOnInit() {
     this.getCustomerData();
@@ -78,7 +79,7 @@ export class FawriaLicenseprojectContactInfoContainerComponent
         }
         this.projectRealStateDeveloper = this.projectContactsDataForm
           .value as ProjectRealStateDeveloperDto;
-      })
+      }),
     );
   }
   localization = {
@@ -95,8 +96,12 @@ export class FawriaLicenseprojectContactInfoContainerComponent
 
   projectContactsDataForm = this._formBuilder.group({
     id: [this.EMPTY_GUID, [Validators.required]],
-    delegatorCustomerId: this._formBuilder.control<string | null>(null, [Validators.required]),
-    officerCustomerId: this._formBuilder.control<string | null>(null, [Validators.required]),
+    delegatorCustomerId: this._formBuilder.control<string | null>(null, [
+      Validators.required,
+    ]),
+    officerCustomerId: this._formBuilder.control<string | null>(null, [
+      Validators.required,
+    ]),
   });
 
   get controls() {
@@ -109,7 +114,7 @@ export class FawriaLicenseprojectContactInfoContainerComponent
         .subscribe((res: customerResponse | null) => {
           this.userData = res;
           this.isExistingValidation = this.userData?.isEmployee as boolean;
-        })
+        }),
     );
   }
 
@@ -124,12 +129,14 @@ export class FawriaLicenseprojectContactInfoContainerComponent
         next: (res) => {
           if (res && (res.delegatorCustomerId || res.contactCustomerId)) {
             // ✅ تحويل GUID الفارغ إلى null
-            const delegatorId = res.delegatorCustomerId === this.EMPTY_GUID
-              ? null
-              : res.delegatorCustomerId;
-            const officerId = res.contactCustomerId === this.EMPTY_GUID
-              ? null
-              : res.contactCustomerId;
+            const delegatorId =
+              res.delegatorCustomerId === this.EMPTY_GUID
+                ? null
+                : res.delegatorCustomerId;
+            const officerId =
+              res.contactCustomerId === this.EMPTY_GUID
+                ? null
+                : res.contactCustomerId;
 
             this.projectContactsDataForm.patchValue({
               delegatorCustomerId: delegatorId,
@@ -168,7 +175,7 @@ export class FawriaLicenseprojectContactInfoContainerComponent
     const requests = [
       // this._projectRealStateDeveloperService.GetProjectRealStateDeveloperByLicenseProjectId(this.licenseProjectId as string),
       this._projectRealStateDeveloperService.GetFacilitySubCustomers(
-        this.facilityId
+        this.facilityId,
       ),
     ];
     const subscriptions = forkJoin(requests).subscribe((results) => {
@@ -187,8 +194,8 @@ export class FawriaLicenseprojectContactInfoContainerComponent
       this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
         (res: null) => {
           this.save(true);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -197,8 +204,8 @@ export class FawriaLicenseprojectContactInfoContainerComponent
       this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(
         (res: null) => {
           this.save();
-        }
-      )
+        },
+      ),
     );
   }
   save(moveToNextTab: boolean = false): void {
@@ -206,11 +213,14 @@ export class FawriaLicenseprojectContactInfoContainerComponent
     //if (!this.projectRealStateDeveloper.id) {
     //  this.projectRealStateDeveloper.id = '00000000-0000-0000-0000-000000000000';
     //}
-    if (this.projectContactsDataForm.invalid || !this.projectContactsDataForm.controls.delegatorCustomerId.value || // ✅ تحقق من empty string
-      !this.projectContactsDataForm.controls.officerCustomerId.value) {
+    if (
+      this.projectContactsDataForm.invalid ||
+      !this.projectContactsDataForm.controls.delegatorCustomerId.value || // ✅ تحقق من empty string
+      !this.projectContactsDataForm.controls.officerCustomerId.value
+    ) {
       this.showValidation = true;
       this._toastrNotificationService.showError(
-        this.localization.PleaseAddAllRequiredFields
+        this.localization.PleaseAddAllRequiredFields,
       );
       this.projectContactsDataForm.markAllAsTouched();
       return;
@@ -219,15 +229,15 @@ export class FawriaLicenseprojectContactInfoContainerComponent
     if (
       this.projectContactsDataForm.invalid ||
       this.projectContactsDataForm.controls.delegatorCustomerId.value ===
-      '00000000-0000-0000-0000-000000000000' ||
+        '00000000-0000-0000-0000-000000000000' ||
       this.projectContactsDataForm.controls.officerCustomerId.value ===
-      '00000000-0000-0000-0000-000000000000'
+        '00000000-0000-0000-0000-000000000000'
     ) {
       this.showValidation = true;
       this.projectContactsDataForm.controls.delegatorCustomerId.setValue(null);
       this.projectContactsDataForm.controls.officerCustomerId.setValue(null);
       this._toastrNotificationService.showError(
-        this.localization.PleaseAddAllRequiredFields
+        this.localization.PleaseAddAllRequiredFields,
       );
       this.projectContactsDataForm.markAllAsTouched();
       return;
@@ -250,15 +260,15 @@ export class FawriaLicenseprojectContactInfoContainerComponent
 
     const saveSubscription = this._fawriaLicenseProjectContactInfoService
       .SaveFawriaLicenseProjectContactInfo(
-        this.fawriaLicenseprojectContactInfoDto
+        this.fawriaLicenseprojectContactInfoDto,
       )
       .subscribe({
         next: (res) => {
           if (res.isDone) {
-            this._toastrService.success(this.localization.savedSuccessfully);
             this.projectContactsDataForm.markAsPristine();
             this._tabsService.setUnsavedChanges(false);
             this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
+            this._toastrNotificationService.showSuccess('تم الحفظ');
             if (moveToNextTab) {
               this.moveToNextTab();
             }
@@ -289,8 +299,8 @@ export class FawriaLicenseprojectContactInfoContainerComponent
       this.controls.delegatorCustomerId.valueChanges.subscribe(
         (delegatorId) => {
           this.checkDelegatorDateOfBirth(delegatorId);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -302,7 +312,7 @@ export class FawriaLicenseprojectContactInfoContainerComponent
     }
 
     const selectedDelegator = this.subCustomerList.find(
-      (customer) => customer.id === delegatorId
+      (customer) => customer.id === delegatorId,
     );
 
     if (selectedDelegator && !selectedDelegator.dateOfBirth) {

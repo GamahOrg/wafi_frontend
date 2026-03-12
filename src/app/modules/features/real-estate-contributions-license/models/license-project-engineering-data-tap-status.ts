@@ -10,7 +10,7 @@ export enum LicenseProjectEngineeringRequestStatus
     UnderStudy = 1,
     ///<summary>يوجد الملاحظات</summary>
     CustomerFeedback = 2,
-    ///<summary> تم ارسال معالجة الملاحظات</summary>
+    ///<summary> تم إرسال معالجة الملاحظات</summary>
     Compile = 3,
     ///<summary>تم الاعتماد</summary>
     Certified = 4,

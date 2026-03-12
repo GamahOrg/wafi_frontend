@@ -115,18 +115,36 @@ export class CreateObjectionToSupervisionAndFollowupCostsRequestComponent {
       });
   }
   applicationFormFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.objectionToSupervisionAndFollowupCostsForm.controls[
+        'applicationFormFileId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.objectionToSupervisionAndFollowupCostsForm.controls['applicationFormFileId'].setValue(
       filesData.eventRes.data[0].id
     );
   }
   developerLetterForObjectionUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.objectionToSupervisionAndFollowupCostsForm.controls[
+        'developerLetterForObjectionId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.objectionToSupervisionAndFollowupCostsForm.controls[
       'developerLetterForObjectionId'
     ].setValue(filesData.eventRes.data[0].id);
   }
   supportingDocumentsFromDeveloperUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.objectionToSupervisionAndFollowupCostsForm.controls[
+        'supportingDocumentsFromDeveloperId'
+      ].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.objectionToSupervisionAndFollowupCostsForm.controls[
       'supportingDocumentsFromDeveloperId'

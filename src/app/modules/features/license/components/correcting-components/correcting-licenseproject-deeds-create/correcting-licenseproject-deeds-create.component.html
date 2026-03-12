@@ -37,7 +37,7 @@
       <!-- Row 2: Deed Number and Date -->
       <div class="col-12 col-lg-6" *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.JusticeMinistry">
         <label class="form-label"><span class="required-star">*</span> رقم صك وزارة العدل</label>
-        <input type="text" class="form-control" formControlName="deedNumber" placeholder="رقم صك وزارة العدل" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
+        <input type="text" class="form-control" formControlName="deedNumber" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
         <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched">
           <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']">رقم صك وزارة العدل مطلوب</span>
         </div>
@@ -45,7 +45,7 @@
 
       <div class="col-12 col-lg-6" *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER">
         <label class="form-label"><span class="required-star">*</span> رقم صك السجل العقاري</label>
-        <input type="text" class="form-control" formControlName="fawriaRERNumber" placeholder="رقم صك السجل العقاري" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
+        <input type="text" class="form-control" formControlName="fawriaRERNumber" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
         <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched">
           <span *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']">رقم صك السجل العقاري مطلوب</span>
         </div>
@@ -53,7 +53,7 @@
 
       <div class="col-12 col-lg-6">
         <label class="form-label"><span class="required-star">*</span> تاريخ الصك</label>
-        <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [placeholder]="'اختر تاريخ الصك'" [showGregorian]="false" [isInvalid]="verifyForm.get('deedDate')?.invalid && verifyForm.get('deedDate')?.touched">
+        <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm"  [showGregorian]="false" [isInvalid]="verifyForm.get('deedDate')?.invalid && verifyForm.get('deedDate')?.touched">
         </app-hijri-datepicker>
 
         <div class="form-text" [ngClass]="{'text-danger' : verifyForm.get('deedDate')?.invalid && verifyForm.get('deedDate')?.touched}">
@@ -152,7 +152,7 @@
         <!-- Row 2: Deed Number and Date -->
         <div class="col-12 col-lg-6" *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.JusticeMinistry">
           <label class="form-label"><span class="required-star">*</span> رقم صك وزارة العدل</label>
-          <input type="text" class="form-control" formControlName="deedNumber" placeholder="رقم صك وزارة العدل" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="deedNumber" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched">
             <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']">رقم صك وزارة العدل مطلوب</span>
           </div>
@@ -160,7 +160,7 @@
 
         <div class="col-12 col-lg-6" *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER">
           <label class="form-label"><span class="required-star">*</span> رقم صك السجل العقاري</label>
-          <input type="text" class="form-control" formControlName="fawriaRERNumber" placeholder="رقم صك السجل العقاري" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="fawriaRERNumber" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched">
             <span *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']">رقم صك السجل العقاري مطلوب</span>
           </div>
@@ -168,7 +168,7 @@
 
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> تاريخ الصك</label>
-          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [placeholder]="'اختر تاريخ الصك'" [showGregorian]="false" [isInvalid]="
+          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm"  [showGregorian]="false" [isInvalid]="
                   verifyForm.get('deedDate')?.invalid &&
                   verifyForm.get('deedDate')?.touched
                 ">
@@ -241,7 +241,7 @@
       <ng-container *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.JusticeMinistry">
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> رقم صك وزارة العدل</label>
-          <input type="text" class="form-control" formControlName="deedNumber" placeholder="رقم صك وزارة العدل" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="deedNumber" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched">
             <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']">رقم صك وزارة العدل مطلوب</span>
           </div>
@@ -249,7 +249,7 @@
 
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> تاريخ الصك</label>
-          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [placeholder]="'اختر تاريخ الصك'" [showGregorian]="false" [isInvalid]="
+          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm"  [showGregorian]="false" [isInvalid]="
               verifyForm.get('deedDate')?.invalid &&
               verifyForm.get('deedDate')?.touched
             ">
@@ -274,7 +274,7 @@
       <ng-container *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER">
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> رقم صك السجل العقاري</label>
-          <input type="text" class="form-control" formControlName="fawriaRERNumber" placeholder="رقم صك السجل العقاري" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="fawriaRERNumber" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched">
             <span *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']">رقم صك السجل العقاري مطلوب</span>
           </div>
@@ -282,7 +282,7 @@
 
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> تاريخ الصك</label>
-          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [placeholder]="'اختر تاريخ الصك'" [showGregorian]="false" [isInvalid]="
+          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm"  [showGregorian]="false" [isInvalid]="
               verifyForm.get('deedDate')?.invalid &&
               verifyForm.get('deedDate')?.touched
             ">
@@ -400,7 +400,7 @@
         ">
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> رقم رخصة البناء لبلدي</label>
-          <input type="text" class="form-control" formControlName="licenseNumber" placeholder="رقم رخصة البناء لبلدي" [class.is-invalid]="verifyForm.get('licenseNumber')?.invalid && verifyForm.get('licenseNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="licenseNumber" [class.is-invalid]="verifyForm.get('licenseNumber')?.invalid && verifyForm.get('licenseNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('licenseNumber')?.invalid && verifyForm.get('licenseNumber')?.touched">
             <span *ngIf="verifyForm.get('licenseNumber')?.errors?.['required']">رقم رخصة البناء لبلدي مطلوب</span>
           </div>
@@ -415,7 +415,7 @@
         ">
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> رقم رخصة بناء صادرة من أمانة الرياض</label>
-          <input type="text" class="form-control" formControlName="riyadhAmanahLicenseNumber" placeholder="رقم رخصة بناء صادرة من أمانة الرياض" [class.is-invalid]="verifyForm.get('riyadhAmanahLicenseNumber')?.invalid && verifyForm.get('riyadhAmanahLicenseNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="riyadhAmanahLicenseNumber" [class.is-invalid]="verifyForm.get('riyadhAmanahLicenseNumber')?.invalid && verifyForm.get('riyadhAmanahLicenseNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('riyadhAmanahLicenseNumber')?.invalid && verifyForm.get('riyadhAmanahLicenseNumber')?.touched">
             <span *ngIf="verifyForm.get('riyadhAmanahLicenseNumber')?.errors?.['required']">رقم رخصة بناء صادرة من أمانة الرياض مطلوب</span>
           </div>
@@ -495,7 +495,7 @@
         <div class="col-12 col-lg-6 col-xl-4">
           <label for="totalArea" class="form-label"><span class="required-star">*</span> القيمة الكلية للأرض</label>
           <div class="input-group">
-            <input (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" type="text" class="form-control" (change)="updateLandValue()" formControlName="totalArea" id="totalArea" placeholder="أدخل القيمة الكلية للأرض" [class.is-invalid]="
+            <input (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" type="text" class="form-control" (change)="updateLandValue()" formControlName="totalArea" id="totalArea" [class.is-invalid]="
                 deedForm.get('totalArea')?.invalid &&
                 deedForm.get('totalArea')?.touched
               " />
@@ -531,7 +531,7 @@
         <div class="col-12 col-lg-3 col-xl-2">
           <!-- <label class="form-label">اسم الراهن</label>
           <div class="input-group">
-            <input type="text" class="form-control" [value]="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeName" placeholder="قيمة الأرض للمالك" readonly="readonly">
+            <input type="text" class="form-control" [value]="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeName" readonly="readonly">
             <span class="input-group-text">
               <i class="hgi hgi-stroke hgi-user"></i>
             </span>
@@ -552,7 +552,7 @@
         <div class="col-12 col-lg-3 col-xl-2">
           <!-- <label class="form-label">هوية الراهن</label>
           <div class="input-group">
-            <input type="text" class="form-control" [value]="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeId" placeholder="قيمة الأرض للمالك" readonly="readonly">
+            <input type="text" class="form-control" [value]="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeId" readonly="readonly">
             <span class="input-group-text">
               <i class="hgi hgi-stroke hgi-credit-card"></i>
             </span>
@@ -631,7 +631,7 @@
                   <div class="input-group">
                     <input type="number" class="form-control" [value]="
                         ((landValue ?? 0) * (owner?.owningArea ?? 0)).toFixed(2)
-                      " placeholder="قيمة الأرض للمالك" readonly="readonly" />
+                      " readonly="readonly" />
                     <span class="input-group-text">
                       <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon opacity-100" />
                     </span>
@@ -641,7 +641,7 @@
                   <select class="form-select" [formControlName]="i" [class.is-invalid]="
                       ownerBanks.at(i)?.invalid && ownerBanks.at(i)?.touched
                     ">
-                    <option value="">اختر البنك</option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let bank of bankDtoList" [value]="bank.id">
                       {{ bank.name }}
                     </option>
@@ -653,7 +653,7 @@
                   </div>
                 </td>
                 <td formArrayName="ownerAccountNumber" *ngIf="isUnit">
-                  <input type="text" class="form-control" [formControlName]="i" placeholder="رقم الآيبان للمالك" maxlength="24" [class.is-invalid]="
+                  <input type="text" class="form-control" [formControlName]="i" maxlength="24" [class.is-invalid]="
                       ownerAccountNumber.at(i)?.invalid &&
                       ownerAccountNumber.at(i)?.touched
                     " />

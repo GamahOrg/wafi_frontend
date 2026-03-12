@@ -76,12 +76,20 @@ export class AddEditChangeplanLicenseRequestDeveloperSummaryComponent {
 
 
   onExistBuyersApprovalLetterFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.buyersApprovalLetterFileId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.buyersApprovalLetterFileId=data.id;
     });
   }
   onExistApprovalLetterForStartEndDateFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.approvalLetterForStartEndDateId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.approvalLetterForStartEndDateId=data.id;

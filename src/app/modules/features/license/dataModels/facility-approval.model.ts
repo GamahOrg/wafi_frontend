@@ -4,4 +4,5 @@ export interface FacilityApproval {
     facilityName: string;
     telephone: string;
     email: string;
+    entity700Number: string;
 }

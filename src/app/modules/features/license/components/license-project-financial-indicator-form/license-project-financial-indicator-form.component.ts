@@ -23,7 +23,7 @@ export class LicenseProjectFinancialIndicatorFormComponent {
   licenseProjectFinancialIndicatorForm = this._formBuilder.group({
     id: [''],
     licenseProjectFeasibilityStudyId: [''],
-    yearId: ['', [Validators.required]],
+    yearId: [null as string | null, [Validators.required]],
     totalProfit: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
     netProfit: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
     returnOnEquityInTheProject: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),

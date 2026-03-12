@@ -43,23 +43,29 @@
       <!-- Row 2: Deed Number and Date -->
       <div class="col-12 col-lg-6" *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.JusticeMinistry">
         <label class="form-label"><span class="required-star">*</span> رقم صك وزارة العدل</label>
-        <input type="text" class="form-control" formControlName="deedNumber" placeholder="رقم صك وزارة العدل" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
+        <input type="text" class="form-control" formControlName="deedNumber" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
         <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched">
           <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']">رقم صك وزارة العدل مطلوب</span>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.hasError('pattern') && verifyForm.get('deedNumber')?.touched">
+         رقم الصك يجب أن يحتوي على أرقام فقط
         </div>
       </div>
 
       <div class="col-12 col-lg-6" *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER">
         <label class="form-label"><span class="required-star">*</span> رقم صك السجل العقاري</label>
-        <input type="text" class="form-control" formControlName="fawriaRERNumber" placeholder="رقم صك السجل العقاري" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
+        <input type="text" class="form-control" formControlName="fawriaRERNumber"  [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
         <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched">
           <span *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']">رقم صك السجل العقاري مطلوب</span>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.hasError('pattern') && verifyForm.get('fawriaRERNumber')?.touched">
+         رقم الصك يجب أن يحتوي على أرقام فقط
         </div>
       </div>
 
       <div class="col-12 col-lg-6">
         <label class="form-label"><span class="required-star">*</span> تاريخ الصك</label>
-        <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [placeholder]="'اختر تاريخ الصك'" [showGregorian]="false" [isInvalid]="verifyForm.get('deedDate')?.invalid && verifyForm.get('deedDate')?.touched">
+        <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [showGregorian]="false" [isInvalid]="verifyForm.get('deedDate')?.invalid && verifyForm.get('deedDate')?.touched">
         </app-hijri-datepicker>
 
         <div class="form-text" [ngClass]="{'text-danger' : verifyForm.get('deedDate')?.invalid && verifyForm.get('deedDate')?.touched}">
@@ -80,6 +86,15 @@
         <app-file-uploader [data]="multiFileUploaderData" (fileUploaded)="onApprovedPlansUploaded($event)"></app-file-uploader>
         <div class="invalid-feedback d-block" *ngIf="verifyForm.get('approvedPlansFileIds')?.invalid && verifyForm.get('approvedPlansFileIds')?.touched">
           <span *ngIf="verifyForm.get('approvedPlansFileIds')?.errors?.['required']">رفع المخططات المعتمدة للأرض مطلوب</span>
+        </div>
+      </div>
+
+      <!-- Total Number of Lands -->
+      <div class="col-12 col-lg-6">
+        <label class="form-label"><span class="required-star">*</span> اجمالي عدد الاراضي</label>
+        <input type="number" class="form-control" formControlName="totalUnit" [class.is-invalid]="verifyForm.get('totalUnit')?.invalid && verifyForm.get('totalUnit')?.touched" />
+        <div class="invalid-feedback d-block" *ngIf="verifyForm.get('totalUnit')?.invalid && verifyForm.get('totalUnit')?.touched">
+          <span *ngIf="verifyForm.get('totalUnit')?.errors?.['required']">اجمالي عدد الاراضي مطلوب</span>
         </div>
       </div>
 
@@ -170,23 +185,29 @@
         <!-- Row 2: Deed Number and Date -->
         <div class="col-12 col-lg-6" *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.JusticeMinistry">
           <label class="form-label"><span class="required-star">*</span> رقم صك وزارة العدل</label>
-          <input type="text" class="form-control" formControlName="deedNumber" placeholder="رقم صك وزارة العدل" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="deedNumber" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched">
             <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']">رقم صك وزارة العدل مطلوب</span>
           </div>
+         <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.hasError('pattern') && verifyForm.get('deedNumber')?.touched">
+         رقم الصك يجب أن يحتوي على أرقام فقط
+        </div>
         </div>
 
         <div class="col-12 col-lg-6" *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER">
           <label class="form-label"><span class="required-star">*</span> رقم صك السجل العقاري</label>
-          <input type="text" class="form-control" formControlName="fawriaRERNumber" placeholder="رقم صك السجل العقاري" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="fawriaRERNumber" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched">
             <span *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']">رقم صك السجل العقاري مطلوب</span>
           </div>
+         <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.hasError('pattern') && verifyForm.get('fawriaRERNumber')?.touched">
+         رقم الصك يجب أن يحتوي على أرقام فقط
+        </div>
         </div>
 
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> تاريخ الصك</label>
-          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [placeholder]="'اختر تاريخ الصك'" [showGregorian]="false" [isInvalid]="
+          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [showGregorian]="false" [isInvalid]="
                   verifyForm.get('deedDate')?.invalid &&
                   verifyForm.get('deedDate')?.touched
                 ">
@@ -259,15 +280,18 @@
       <ng-container *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.JusticeMinistry">
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> رقم صك وزارة العدل</label>
-          <input type="text" class="form-control" formControlName="deedNumber" placeholder="رقم صك وزارة العدل" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="deedNumber" [class.is-invalid]="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.invalid && verifyForm.get('deedNumber')?.touched">
             <span *ngIf="verifyForm.get('deedNumber')?.errors?.['required']">رقم صك وزارة العدل مطلوب</span>
           </div>
+          <div class="invalid-feedback d-block" *ngIf="verifyForm.get('deedNumber')?.hasError('pattern') && verifyForm.get('deedNumber')?.touched">
+         رقم الصك يجب أن يحتوي على أرقام فقط
+        </div>
         </div>
 
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> تاريخ الصك</label>
-          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [placeholder]="'اختر تاريخ الصك'" [showGregorian]="false" [isInvalid]="
+          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm"  [showGregorian]="false" [isInvalid]="
               verifyForm.get('deedDate')?.invalid &&
               verifyForm.get('deedDate')?.touched
             ">
@@ -292,15 +316,18 @@
       <ng-container *ngIf="verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER">
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> رقم صك السجل العقاري</label>
-          <input type="text" class="form-control" formControlName="fawriaRERNumber" placeholder="رقم صك السجل العقاري" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="fawriaRERNumber" [class.is-invalid]="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.invalid && verifyForm.get('fawriaRERNumber')?.touched">
             <span *ngIf="verifyForm.get('fawriaRERNumber')?.errors?.['required']">رقم صك السجل العقاري مطلوب</span>
           </div>
+         <div class="invalid-feedback d-block" *ngIf="verifyForm.get('fawriaRERNumber')?.hasError('pattern') && verifyForm.get('fawriaRERNumber')?.touched">
+         رقم الصك يجب أن يحتوي على أرقام فقط
+        </div>
         </div>
 
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> تاريخ الصك</label>
-          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [placeholder]="'اختر تاريخ الصك'" [showGregorian]="false" [isInvalid]="
+          <app-hijri-datepicker [iconDirection]="'left'" [formControlName]="'deedDate'" [parentForm]="verifyForm" [showGregorian]="false" [isInvalid]="
               verifyForm.get('deedDate')?.invalid &&
               verifyForm.get('deedDate')?.touched
             ">
@@ -418,7 +445,7 @@
         ">
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> رقم رخصة البناء لبلدي</label>
-          <input type="text" class="form-control" formControlName="licenseNumber" placeholder="رقم رخصة البناء لبلدي" [class.is-invalid]="verifyForm.get('licenseNumber')?.invalid && verifyForm.get('licenseNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="licenseNumber" [class.is-invalid]="verifyForm.get('licenseNumber')?.invalid && verifyForm.get('licenseNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('licenseNumber')?.invalid && verifyForm.get('licenseNumber')?.touched">
             <span *ngIf="verifyForm.get('licenseNumber')?.errors?.['required']">رقم رخصة البناء لبلدي مطلوب</span>
           </div>
@@ -433,7 +460,7 @@
         ">
         <div class="col-12 col-lg-6">
           <label class="form-label"><span class="required-star">*</span> رقم رخصة بناء صادرة من أمانة الرياض</label>
-          <input type="text" class="form-control" formControlName="riyadhAmanahLicenseNumber" placeholder="رقم رخصة بناء صادرة من أمانة الرياض" [class.is-invalid]="verifyForm.get('riyadhAmanahLicenseNumber')?.invalid && verifyForm.get('riyadhAmanahLicenseNumber')?.touched" />
+          <input type="text" class="form-control" formControlName="riyadhAmanahLicenseNumber" [class.is-invalid]="verifyForm.get('riyadhAmanahLicenseNumber')?.invalid && verifyForm.get('riyadhAmanahLicenseNumber')?.touched" />
           <div class="invalid-feedback d-block" *ngIf="verifyForm.get('riyadhAmanahLicenseNumber')?.invalid && verifyForm.get('riyadhAmanahLicenseNumber')?.touched">
             <span *ngIf="verifyForm.get('riyadhAmanahLicenseNumber')?.errors?.['required']">رقم رخصة بناء صادرة من أمانة الرياض مطلوب</span>
           </div>
@@ -510,10 +537,10 @@
             }}
           </div>
         </div>
-        <div class="col-12 col-lg-6 col-xl-4">
+        <div class="col-12 col-lg-6 col-xl-4" *ngIf="shouldShowTotalArea">
           <label for="totalArea" class="form-label"><span class="required-star">*</span> القيمة الكلية للأرض</label>
           <div class="input-group">
-            <input (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" type="text" class="form-control" (change)="updateLandValue()" formControlName="totalArea" id="totalArea" placeholder="أدخل القيمة الكلية للأرض" [class.is-invalid]="
+            <input (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" type="text" class="form-control" (change)="updateLandValue()" formControlName="totalArea" id="totalArea" [class.is-invalid]="
                 deedForm.get('totalArea')?.invalid &&
                 deedForm.get('totalArea')?.touched
               " />
@@ -529,83 +556,84 @@
           </div>
         </div>
       </div>
+ 
+      <br/>
+      <hr/>
+        <!-- بيانات الراهن -->
+    <div *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.isRealEstateMortgaged &&
+        (fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList?.length ?? 0) > 0">
+      <div class="d-flex align-items-center gap-2" style="margin-top: 20px; margin-bottom: 20px;">
+        <i class="icon hgi hgi-stroke hgi-user-multiple"></i>
+        <h6 class="title mb-0">بيانات الراهنين</h6>
+      </div>
+        <!-- Mortgagees Table -->
+        <div class="table-responsive">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th scope="col">اسم الراهن</th>
+                <th scope="col">رقم الهوية</th>
+                <th scope="col">اتفاقية الرهن</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let mortgagee of fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList;
+                  let i = index
+                "
+                [class.table-danger]="
+                  hasMortgageeRowError(i) &&
+                  mortgageeFiles.at(i)?.touched
+                "
+              >
+                <td>{{ mortgagee.mortgageeName }}</td>
+                <td>
+                  <span class="tag">{{ mortgagee.mortgageeId }}</span>
+                </td>
+                <td>
+                  <div formArrayName="mortgageeFiles">
+                    <!-- Show file link if file is uploaded -->
+                    <div *ngIf="mortgageeFilesInfo[i]?.filePath; else mortgageeUploader" class="d-flex align-items-center gap-2">
+                      <a [href]="baseUrl + mortgageeFilesInfo[i]?.filePath"
+                         target="_blank"
+                         class="text-primary text-decoration-none">
+                        عرض الاتفاقية
+                      </a>
+                      <a href="javascript:void(0)" class="text-danger text-decoration-none" (click)="deleteMortgageeFile(i)">
+                        <i class="hgi hgi-stroke hgi-delete-02"></i>
+                      </a>
+                    </div>
+                    <!-- Show uploader if no file -->
+                    <ng-template #mortgageeUploader>
+                      <app-file-uploader
+                        [data]="singleFileUploaderData"
+                        (fileUploaded)="onMortgageeFileUploaded($event, i)"
+                      ></app-file-uploader>
+                    </ng-template>
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="
+                        mortgageeFiles.at(i)?.invalid &&
+                        mortgageeFiles.at(i)?.touched
+                      "
+                    >
+                      <span *ngIf="mortgageeFiles.at(i)?.errors?.['required']"
+                        >حقل مطلوب</span
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     </div>
 
-    <!-- بيانات الراهن -->
-    <div class="tab-data-section" *ngIf="
-        fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
-          ?.isRealEstateMortgaged
-      ">
-      <div class="d-flex justify-content-between align-items-center gap-3">
-        <h6 class="title">بيانات الراهن</h6>
-        <span class="status-pill" [ngClass]="{ orange: true, green: false }">
-
-          {{ "مرهون" }}
-        </span>
-      </div>
-
-      <div class="row row-gap-4">
-        <!-- Mortgagor Name -->
-        <div class="col-12 col-lg-3 col-xl-2">
-          <!-- <label class="form-label">اسم الراهن</label>
-          <div class="input-group">
-            <input type="text" class="form-control" [value]="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeName" placeholder="قيمة الأرض للمالك" readonly="readonly">
-            <span class="input-group-text">
-              <i class="hgi hgi-stroke hgi-user"></i>
-            </span>
-          </div> -->
-          <div class="key">
-            <i class="icon hgi hgi-stroke hgi-user"></i>
-            اسم الراهن
-          </div>
-          <div class="value">
-            {{
-            fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
-            ?.mortgageeName
-            }}
-          </div>
-        </div>
-
-        <!-- Mortgagor ID -->
-        <div class="col-12 col-lg-3 col-xl-2">
-          <!-- <label class="form-label">هوية الراهن</label>
-          <div class="input-group">
-            <input type="text" class="form-control" [value]="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeId" placeholder="قيمة الأرض للمالك" readonly="readonly">
-            <span class="input-group-text">
-              <i class="hgi hgi-stroke hgi-credit-card"></i>
-            </span>
-          </div> -->
-          <div class="key">
-            <i class="icon hgi hgi-stroke hgi-student-card"></i>
-            هوية الراهن
-          </div>
-          <div class="value">
-            {{
-            fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
-            ?.mortgageeId
-            }}
-          </div>
-        </div>
-
-        <!-- Mortgage Agreement -->
-        <div class="col-12 col-lg-4 col-xl-3">
-          <label class="form-label key" [class.required]="
-              fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
-                ?.isRealEstateMortgaged
-            "><span class="required-star">*</span> اتفاقية الرهن</label>
-          <app-file-uploader [data]="singleFileUploaderData" (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
-          <div class="invalid-feedback d-block" *ngIf="
-              deedForm.get('mortgageAgreement')?.invalid &&
-              deedForm.get('mortgageAgreement')?.touched
-            ">
-            <span *ngIf="deedForm.get('mortgageAgreement')?.errors?.['required']">حقل مطلوب</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <br/>
+    <hr/>
 
     <!-- الملاك -->
-    <div class="mt-4">
       <div class="tab-data-header">
         <i class="icon hgi hgi-stroke hgi-user-multiple"></i>
         <h6 class="title">
@@ -619,12 +647,13 @@
             <thead>
               <tr>
                 <th scope="col">اسم المالك</th>
+                <th scope="col"></th>
                 <th scope="col">الهوية</th>
                 <th scope="col">إجمالي المساحة المملوكة</th>
-                <th scope="col">قيمة الأرض للمالك</th>
-                <th scope="col" *ngIf="isUnit">اسم البنك للمالك</th>
-                <th scope="col" *ngIf="isUnit">رقم الآيبان للمالك</th>
-                <th scope="col" *ngIf="isUnit">الاتفاقية</th>
+                <th scope="col" *ngIf="shouldShowTotalArea">قيمة الأرض للمالك</th>
+                <th scope="col" *ngIf="shouldShowOwnerBankColumns">اسم البنك للمالك</th>
+                <th scope="col" *ngIf="shouldShowOwnerBankColumns">رقم الآيبان للمالك</th>
+                <th scope="col" *ngIf="shouldShowOwnerBankColumns">الاتفاقية</th>
               </tr>
             </thead>
             <tbody>
@@ -640,76 +669,102 @@
                 ">
                 <td>{{ owner.ownerName }}</td>
                 <td>
-                  <span class="tag">{{ owner.idNumber }}</span>
+                  <span *ngIf="owner.isOwnerByDeveloper" class="tag">المطور العقاري</span>
                 </td>
+                <td>{{ owner.idNumber }}</td>
                 <td>
                   <span class="tag">{{ owner.owningArea }}</span>
                 </td>
-                <td>
+                <td *ngIf="shouldShowTotalArea">
                   <div class="input-group">
                     <input type="number" class="form-control" [value]="
                         ((landValue ?? 0) * (owner?.owningArea ?? 0)).toFixed(2)
-                      " placeholder="قيمة الأرض للمالك" readonly="readonly" />
+                      "  readonly="readonly" />
                     <span class="input-group-text">
                       <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon opacity-100" />
                     </span>
                   </div>
                 </td>
-                <td formArrayName="ownerBanks" *ngIf="isUnit">
-                  <select class="form-select" [formControlName]="i" [class.is-invalid]="
-                      ownerBanks.at(i)?.invalid && ownerBanks.at(i)?.touched
-                    ">
-                    <option value="">اختر البنك</option>
-                    <option *ngFor="let bank of bankDtoList" [value]="bank.id">
-                      {{ bank.name }}
-                    </option>
-                  </select>
-                  <div class="invalid-feedback d-block" *ngIf="
-                      ownerBanks.at(i)?.invalid && ownerBanks.at(i)?.touched
-                    ">
-                    <span>حقل مطلوب</span>
-                  </div>
+                <td *ngIf="shouldShowOwnerBankColumns">
+                  <ng-container *ngIf="!owner.isOwnerByDeveloper; else bankDash">
+                    <div formArrayName="ownerBanks">
+                      <select class="form-select" [formControlName]="i" [class.is-invalid]="
+                          ownerBanks.at(i)?.invalid && ownerBanks.at(i)?.touched
+                        ">
+                        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+                        <option *ngFor="let bank of bankDtoList" [value]="bank.id">
+                          {{ bank.name }}
+                        </option>
+                      </select>
+                      <div class="invalid-feedback d-block" *ngIf="
+                          ownerBanks.at(i)?.invalid && ownerBanks.at(i)?.touched
+                        ">
+                        <span>حقل مطلوب</span>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #bankDash>-</ng-template>
                 </td>
-                <td formArrayName="ownerAccountNumber" *ngIf="isUnit">
-                  <input type="text" class="form-control" [formControlName]="i" placeholder="رقم الآيبان للمالك" maxlength="24" [class.is-invalid]="
-                      ownerAccountNumber.at(i)?.invalid &&
-                      ownerAccountNumber.at(i)?.touched
-                    " />
-                  <div class="invalid-feedback d-block" *ngIf="
-                      ownerAccountNumber.at(i)?.invalid &&
-                      ownerAccountNumber.at(i)?.touched
-                    ">
-                    <span *ngIf="ownerAccountNumber.at(i)?.errors?.['required']">حقل مطلوب</span>
-                    <span *ngIf="ownerAccountNumber.at(i)?.errors?.['pattern']">رقم الآيبان يجب أن يبدأ بـ SA ويتكون من 24 حرف</span>
-                  </div>
+                <td *ngIf="shouldShowOwnerBankColumns">
+                  <ng-container *ngIf="!owner.isOwnerByDeveloper; else accountDash">
+                    <div formArrayName="ownerAccountNumber">
+                      <input type="text" class="form-control" [placeholder]="'رقم الآيبان للمالك'" [formControlName]="i" maxlength="24" [class.is-invalid]="
+                          ownerAccountNumber.at(i)?.invalid &&
+                          ownerAccountNumber.at(i)?.touched
+                        " />
+                      <div class="invalid-feedback d-block" *ngIf="
+                          ownerAccountNumber.at(i)?.invalid &&
+                          ownerAccountNumber.at(i)?.touched
+                        ">
+                        <span *ngIf="ownerAccountNumber.at(i)?.errors?.['required']">حقل مطلوب</span>
+                        <span *ngIf="ownerAccountNumber.at(i)?.errors?.['pattern']">رقم الآيبان يجب أن يبدأ بـ SA ويتكون من 24 حرف</span>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #accountDash>-</ng-template>
                 </td>
-                <td formArrayName="ownerAgreementFiles" *ngIf="isUnit">
-                  <app-file-uploader *ngIf="!owner.isCustomer" [data]="singleFileUploaderData" (fileUploaded)="onOwnerFileUploaded($event, i)"></app-file-uploader>
-                  <div class="invalid-feedback d-block" *ngIf="
-                      !owner.isCustomer &&
-                      ownerAgreementFiles.at(i)?.invalid &&
-                      ownerAgreementFiles.at(i)?.touched
-                    ">
-                    <span>حقل مطلوب</span>
-                  </div>
-                  <span *ngIf="owner.isCustomer">-</span>
+                <td *ngIf="shouldShowOwnerBankColumns">
+                  <ng-container *ngIf="!owner.isOwnerByDeveloper; else fileDash">
+                    <div formArrayName="ownerAgreementFiles">
+                      <ng-container *ngIf="!owner.isCustomer">
+                        <!-- Show file link if file is uploaded -->
+                        <div *ngIf="ownerAgreementFilesInfo[i]?.filePath; else ownerFileUploader" class="d-flex align-items-center gap-2">
+                          <a [href]="baseUrl + ownerAgreementFilesInfo[i]?.filePath"
+                             target="_blank"
+                             class="text-primary text-decoration-none">
+                            اتفاقية المالك
+                          </a>
+                          <a href="javascript:void(0)" class="text-danger text-decoration-none" (click)="deleteOwnerAgreementFile(i)">
+                            <i class="hgi hgi-stroke hgi-delete-02"></i>
+                          </a>
+                        </div>
+                        <!-- Show uploader if no file -->
+                        <ng-template #ownerFileUploader>
+                          <app-file-uploader [data]="singleFileUploaderData" (fileUploaded)="onOwnerFileUploaded($event, i)"></app-file-uploader>
+                        </ng-template>
+                      </ng-container>
+                      <div class="invalid-feedback d-block" *ngIf="
+                          !owner.isCustomer &&
+                          ownerAgreementFiles.at(i)?.invalid &&
+                          ownerAgreementFiles.at(i)?.touched
+                        ">
+                        <span>حقل مطلوب</span>
+                      </div>
+                      <span *ngIf="owner.isCustomer">-</span>
+                    </div>
+                  </ng-container>
+                  <ng-template #fileDash>-</ng-template>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-    </div>
+  </div>
 
     <!-- رخصة البناء -->
-    <div class="mt-3" *ngIf="
-        isUnit &&
-        !(
-          verifyForm.get('constructionLicenseType')?.value ===
-            ConstructionLicenseTypeEnum.RiyadhAmanah &&
-          verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER
-        )
-      ">
+    <div class="mt-3" *ngIf="isUnit && verifyForm.get('constructionLicenseType')?.value === ConstructionLicenseTypeEnum.Balady">
+
       <div class="tab-data-header">
         <i class="icon hgi hgi-stroke hgi-profile-02"></i>
         <h6 class="title">
@@ -746,16 +801,73 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let unit of fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.buildingInfo?.componentList?.component || []; let i = index">
-                  <td>{{ unit.numberOfUnits }}</td>
-                  <td>{{ unit.componentName?.description }}</td>
-                </tr>
+                <ng-container *ngFor="let unit of fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.buildingInfo?.componentList?.component || []; let i = index">
+                  <tr *ngIf="+unit.numberOfUnits > 0 && unit.numberOfUnits !== null && unit.numberOfUnits !== undefined">
+                    <td>{{ unit.numberOfUnits }}</td>
+                    <td>{{ unit.componentName.description }}</td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- رخصة البناء - Input fields for اتمام or امانة الرياض -->
+    <div class="mt-3" *ngIf="isUnit && (verifyForm.get('constructionLicenseType')?.value === ConstructionLicenseTypeEnum.Itmam || verifyForm.get('constructionLicenseType')?.value === ConstructionLicenseTypeEnum.RiyadhAmanah)">
+      <div class="tab-data-header">
+        <i class="icon hgi hgi-stroke hgi-profile-02"></i>
+        <h6 class="title">
+          {{ "رخصة البناء" }}
+        </h6>
+      </div>
+      <div class="tab-data-section">
+        <div class="row row-gap-4">
+          <div class="col-12 col-lg-3">
+            <div class="key">
+              <i class="icon hgi hgi-stroke hgi-profile-02"></i>
+              نوع الرخصة
+            </div>
+            <div class="value">
+              {{ getConstructionLicenseTypeName() }}
+            </div>
+          </div>
+          
+        <div class="col-12 col-lg-6 col-xl-4">
+          <label for="totalLandArea" class="form-label">
+            <span class="required-star">*</span>اجمالي مساحة مسطح البناء</label>
+          <div class="input-group">
+            <input type="number" class="form-control"
+              formControlName="totalLandArea" id="totalLandArea"
+      
+              [class.is-invalid]="deedForm.get('totalLandArea')?.invalid && deedForm.get('totalLandArea')?.touched"/>
+          </div>
+          <div class="invalid-feedback d-block"
+            *ngIf="deedForm.get('totalLandArea')?.invalid && deedForm.get('totalLandArea')?.touched">
+            <span *ngIf="deedForm.get('totalLandArea')?.errors?.['required']">حقل مطلوب</span>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6 col-xl-4">
+          <label for="totalUnit" class="form-label">
+            <span class="required-star">*</span>اجمالي عدد الوحدات</label>
+          <div class="input-group">
+            <input type="number" class="form-control"
+              formControlName="totalUnit" id="totalUnit"
+          
+              [class.is-invalid]="deedForm.get('totalUnit')?.invalid && deedForm.get('totalUnit')?.touched"/>
+          </div>
+          <div class="invalid-feedback d-block"
+            *ngIf="deedForm.get('totalUnit')?.invalid && deedForm.get('totalUnit')?.touched">
+            <span *ngIf="deedForm.get('totalUnit')?.errors?.['required']">حقل مطلوب</span>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
   </ng-container>
 
   <!-- actions -->

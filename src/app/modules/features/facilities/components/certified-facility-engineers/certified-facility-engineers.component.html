@@ -25,6 +25,7 @@
                     <td>{{eng?.qualificationEngineerType==null?'':eng?.qualificationEngineerType==1?'استشارى هندسى':'محاسب قانونى'}}</td>
                     <td>
                         <div class="d-flex align-items-center justify-content-end column-gap-2">
+                         <button mat-icon-button color="primary" (click)="openCoursesDialog(eng.id)" title="عرض الدورات"><mat-icon>school</mat-icon></button>
                          <button mat-icon-button color="warn" (click)="delete(eng.id)"><mat-icon>delete</mat-icon></button>
                         </div>
                     </td>

@@ -78,7 +78,7 @@ export class ComplaintRequestFromLoginComponent implements OnInit, OnDestroy{
     this.complaintRequest.ComplaintRequestFiles=this.complaintRequestFileList
     if(!this.complaintRequest.ComplaintRequestFiles || this.complaintRequest.ComplaintRequestFiles.length ==0)
       {
-        this._toastrNotificationService.showError("نأمل رفع ملفات الشكوى او البلاغ");
+        this._toastrNotificationService.showError("نأمل رفع ملفات الشكوى أو البلاغ");
         return;
       }
       this.createComplaintRequest();
@@ -90,14 +90,14 @@ export class ComplaintRequestFromLoginComponent implements OnInit, OnDestroy{
     this.subscriptions.push(
       this._loginService.CreateComplaintRequest(this.complaintRequest as ComplaintRequest).subscribe((res: CoreResponseDTO<any> | null) => {
         if (res && res.isDone) {
-          this._toastrNotificationService.showSuccess("تم تقديم الشكوى او البلاغ");
+          this._toastrNotificationService.showSuccess("تم تقديم الشكوى أو البلاغ");
           this.complaintRequestForm.reset();
           this.complaintRequestFileList=[];
           this.showValidation=false;
         }
         else
         {
-          this._toastrNotificationService.showError("لم يتم تقديم الشكوى او البلاغ");
+          this._toastrNotificationService.showError("لم يتم تقديم الشكوى أو البلاغ");
 
         }
       }
@@ -105,6 +105,9 @@ export class ComplaintRequestFromLoginComponent implements OnInit, OnDestroy{
     )
   }
   public onExistComplaintFilesUploaded(filesData: any) :void{
+    if(filesData.eventRes.data.length == 0) {
+      this.complaintRequestFileList = [];
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.complaintRequestFileList) this.complaintRequestFileList = [];
     filesData.eventRes.data.forEach((data: any) => {

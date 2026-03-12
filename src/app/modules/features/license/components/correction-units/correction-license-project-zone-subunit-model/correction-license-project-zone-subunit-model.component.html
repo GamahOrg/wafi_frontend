@@ -24,10 +24,7 @@
                           class="form-select"
                           formControlName="name"
                         >
-                          <!-- optional placeholder -->
-                          <option value="" disabled selected>
-                            {{ localization.name }}
-                          </option>
+                          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                           <option value="A">A</option>
                           <option value="B">B</option>
                           <option value="C">C</option>

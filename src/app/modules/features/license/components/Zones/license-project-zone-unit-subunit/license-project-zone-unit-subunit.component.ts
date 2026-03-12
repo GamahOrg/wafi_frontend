@@ -60,7 +60,7 @@ export class LicenseProjectZoneUnitSubunitComponent implements OnInit, OnDestroy
   }
 
   localization = {
-    errorMsg: 'لا يمكن اضافة او تعديل بلوكات او عماير الآن',
+    errorMsg: 'لا يمكن اضافة أو تعديل بلوكات أو عماير الآن',
     UnitType: 'إضافة بلوك / عمارة ',
     unitCode: 'رقم البلوك / رقم العمارة',
     stageNo: 'رقم المرحلة',
@@ -69,9 +69,9 @@ export class LicenseProjectZoneUnitSubunitComponent implements OnInit, OnDestroy
     chooseUnitTitle: 'تحديد نوع الوحدات داخل البلوك',
     addingNewUnit: 'حفظ و إضافة نوع وحدة جديد ',
     chooseUnitTitleHint: '( يمكنك اختيار أكثر من نوع من الوحدات داخل البلوك )',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب أن يكون تاريخ البدايه اقل من تاريخ النهايه',
     subUnitsType: 'اضاقة أنواع الوحدات بالبلوك / العمارة ',
-    subUnitCount: 'عدد وحدات الخاص بالبلوك او العمارة  ',
+    subUnitCount: 'عدد وحدات الخاص بالبلوك أو العمارة  ',
     actions: 'إجراءات',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
   };
@@ -84,7 +84,7 @@ export class LicenseProjectZoneUnitSubunitComponent implements OnInit, OnDestroy
       '00000000-0000-0000-0000-000000000000',
       Validators.required,
     ],
-    subUnitTypeId: 0,
+    subUnitTypeId: null as number | null,
     subUnitCount: this._formBuilder.control<number | null>(0, [
       Validators.required,
       Validators.min(1),

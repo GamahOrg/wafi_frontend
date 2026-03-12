@@ -3,9 +3,9 @@ export interface LicenseCertificateUnitDto {
      licenseCertificateTemplateId :number;
     //اسم الزون
     zoneName:string;
-    //النوع بلوك او عمارة
+    //النوع بلوك أو عمارة
     unitTypeName :string;
-    //رقم البلوك او العمارة
+    //رقم البلوك أو العمارة
     unitCode :string;
     //المرحلة
      stageName:string;

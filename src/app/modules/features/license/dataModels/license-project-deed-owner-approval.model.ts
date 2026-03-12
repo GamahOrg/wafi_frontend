@@ -1,3 +1,4 @@
+import { LicenseProjectAgreementStatusEnum } from '../enums/license-project-agreement-status.enum';
 import { SysFileManagerCreateUpdateDto } from '../models/license-request-project-details-dto';
 import { SysCityCreateUpdateDto } from '../models/sys-city-create-update-dto';
 import { FacilityApproval } from './facility-approval.model';
@@ -9,6 +10,7 @@ export interface LicenseProjectDeedOwnerApproval {
   cityId: string;
   isApproved: boolean;
   approvedOn: string | null;
+  agreementStatusEnum: LicenseProjectAgreementStatusEnum;
   ownerName: string;
   idNumber: string | null;
   idType: string | null;

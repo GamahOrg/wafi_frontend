@@ -144,7 +144,7 @@ export class PromissoryNoteComponent implements OnInit, OnDestroy{
     if(this.licenseProjectPromissoryNoteCreateUpdateDto.licenseProjectPromissoryNoteIncorporationContracts && 
       this.licenseProjectPromissoryNoteCreateUpdateDto.licenseProjectPromissoryNoteIncorporationContracts.length == 0)
     {
-      this.toastr.showInfo("يجب ان يتم ادخال ملف عقد تأسيس الشركة");
+      this.toastr.showInfo("يجب أن يتم ادخال ملف عقد تأسيس الشركة");
       this.toastr.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
       this.showValidation = true;
       return;
@@ -182,7 +182,7 @@ export class PromissoryNoteComponent implements OnInit, OnDestroy{
   
         )
       {
-        this.toastr.showInfo("يجب ان يتم ادخال ملف وكالة الموقع على سند لأمر");
+        this.toastr.showInfo("يجب أن يتم ادخال ملف وكالة الموقع على سند لأمر");
         this.toastr.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
         this.showValidation = true;
         return;
@@ -237,6 +237,10 @@ export class PromissoryNoteComponent implements OnInit, OnDestroy{
   }
 
   onExistPromissoryNoteIncorporationContractsFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.contracts = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       
@@ -245,6 +249,10 @@ export class PromissoryNoteComponent implements OnInit, OnDestroy{
   }
 
   onExistPromissoryNotePowerOfAttorneyFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.powerOfAttorney = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       

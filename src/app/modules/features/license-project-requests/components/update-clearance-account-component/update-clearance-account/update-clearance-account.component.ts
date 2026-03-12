@@ -131,6 +131,10 @@ export class UpdateClearanceAccountComponent implements OnInit, OnDestroy {
 
 
   onLicenseProjectSoldUnitAttachmentFilesUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.licenseProjectSoldUnitAttachmentFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     if (!this.licenseProjectSoldUnitAttachmentFiles) {
@@ -145,6 +149,11 @@ export class UpdateClearanceAccountComponent implements OnInit, OnDestroy {
   }
 
   clearanceLastFinancialReportIdFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.form.get('lastFinancialReportId')?.setValue(null)
+      this.lastFinancialReportId = '00000000-0000-0000-0000-000000000000'
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) {
       this.form.get('lastFinancialReportId')?.setValue(null)
       this.lastFinancialReportId = '00000000-0000-0000-0000-000000000000'

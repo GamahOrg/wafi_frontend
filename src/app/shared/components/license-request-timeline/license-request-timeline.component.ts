@@ -7,6 +7,7 @@ import { LicenseRequestHeaderDto } from 'src/app/modules/features/license/dataMo
 import { LicenseRequestHeaderService } from 'src/app/modules/features/license/services/license-request-header.service';
 import { LicenseDetails } from 'src/app/modules/features/license/models/license-details.model';
 import { LicenseDetailsService } from 'src/app/modules/features/license/services/license-details/license-details.service';
+import { LicenseRequestTypeTypeCodeEnum } from 'src/app/modules/features/license/enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-license-request-timeline',
@@ -65,7 +66,7 @@ isShow: boolean = false;
         if (this.requestId == null)
           this.requestId = this.sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage();
 
-        if(this.requestType != 'FSRSU'){
+        if(this.requestType != LicenseRequestTypeTypeCodeEnum.Fawria){
           this.getLicenseRequestHeaderTimeLine();
           this.isShow = true;
         }

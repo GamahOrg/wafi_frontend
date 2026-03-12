@@ -7,8 +7,7 @@
             <select class="form-select"
                     formControlName="projectCategoryId"
                     (change)="onProjectCategoryChange($event)">
-                <option selected
-                        label="-- اختار التصنيف الاساسي --"></option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let item of projectCategories"
                         [value]="item.id">{{item.categoryName}}</option>
             </select>
@@ -22,7 +21,7 @@
                    class="form-label">التصنيف الفرعي</label>
             <select class="form-select"
                     formControlName="projectSubCategoryId">
-                <option label="-- اختار التصنيف الفرعي --"></option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let item of projectSubCategoriesFiltered"
                         [value]="item.id">{{item.subCategoryName}}</option>
             </select>
@@ -57,8 +56,7 @@
                    class="form-label">اسم المشروع</label>
             <input type="text"
                    class="form-control"
-                   formControlName="projectName"
-                   placeholder="اسم المشروع" />
+                   formControlName="projectName" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['projectName'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -69,8 +67,7 @@
                    class="form-label">مالك المشروع</label>
             <input type="text"
                    class="form-control"
-                   formControlName="projectOwner"
-                   placeholder="مالك المشروع" />
+                   formControlName="projectOwner" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['projectOwner'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -84,8 +81,7 @@
                    class="form-label">المقاول المنفذ</label>
             <input type="text"
                    class="form-control"
-                   formControlName="executingContractor"
-                   placeholder="المقاول المنفذ" />
+                   formControlName="executingContractor" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['executingContractor'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -96,8 +92,7 @@
                    class="form-label">تصنيف المقاول</label>
             <input type="text"
                    class="form-control"
-                   formControlName="contractorClassification"
-                   placeholder="تصنيف المقاول" />
+                   formControlName="contractorClassification" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['contractorClassification'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -111,8 +106,7 @@
                    class="form-label">موقع المشروع</label>
             <input type="text"
                    class="form-control"
-                   formControlName="projectLocation"
-                   placeholder="موقع المشروع" />
+                   formControlName="projectLocation" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['projectLocation'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -123,8 +117,7 @@
                    class="form-label">عدد الوحدات</label>
             <input type="number"
                    class="form-control"
-                   formControlName="unitsCount"
-                   placeholder="عدد الوحدات" />
+                   formControlName="unitsCount" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['unitsCount'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -138,8 +131,7 @@
                    class="form-label">مساحة المشروع بـ م٢</label>
             <input type="number"
                    class="form-control"
-                   formControlName="projectArea"
-                   placeholder="مساحة المشروع بـ م٢" />
+                   formControlName="projectArea" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['projectArea'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -150,8 +142,7 @@
                    class="form-label">قيمة المشروع</label>
             <input type="number"
                    class="form-control"
-                   formControlName="projectValue"
-                   placeholder="قيمة المشروع" />
+                   formControlName="projectValue" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['projectValue'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -165,8 +156,7 @@
                    class="form-label">تاريخ البدء</label>
             <input type="date"
                    class="form-control"
-                   formControlName="startDate"
-                   placeholder="تاريخ البدء" />
+                   formControlName="startDate" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['startDate'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -177,8 +167,7 @@
                    class="form-label">مدة المشروع بالأيام</label>
             <input type="number"
                    class="form-control"
-                   formControlName="projectDuration"
-                   placeholder="مدة المشروع بالأيام" />
+                   formControlName="projectDuration" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['projectDuration'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -192,8 +181,7 @@
                    class="form-label">نسبة الإنجاز</label>
             <input type="number"
                    class="form-control"
-                   formControlName="achievementRate"
-                   placeholder="نسبة الإنجاز" />
+                   formControlName="achievementRate" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['achievementRate'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -204,8 +192,7 @@
                    class="form-label">حالة التسويق</label>
             <input type="text"
                    class="form-control"
-                   formControlName="marketingStatus"
-                   placeholder="حالة التسويق" />
+                   formControlName="marketingStatus" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['marketingStatus'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
@@ -219,8 +206,7 @@
                    class="form-label">المنهج المتبع في التنفيذ</label>
             <input type="text"
                    class="form-control"
-                   formControlName="implementationMethodology"
-                   placeholder="المنهج المتبع في التنفيذ" />
+                   formControlName="implementationMethodology" />
             <div class="invalid-feedback d-block"
                  *ngIf="controls['implementationMethodology'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب

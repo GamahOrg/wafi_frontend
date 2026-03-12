@@ -161,14 +161,26 @@ export class DistinctiveAdditionalTechnicalCapabilitiesFormComponent {
     let file = fileRemovedData.eventRes.file;
   }
   onFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.additionTechnicalCapability.wafiProjectLicenseFileId = '';
+      return;
+    }
     this.additionTechnicalCapability.wafiProjectLicenseFileId = fileRemovedData.eventRes.data[0].id;
   }
 
   onMarketingSellingLicenseFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.additionTechnicalCapability.marketingSellingLicenseFileId = '';
+      return
+    }
     this.additionTechnicalCapability.marketingSellingLicenseFileId = fileRemovedData.eventRes.data[0].id;
   }
 
   onCompletedSmallOrMediumProjectsLicenseFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.addedQualificationCompletedSmallOrMediumProjectsLicenses = [];
+      return
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.addedQualificationCompletedSmallOrMediumProjectsLicenses)
       this.addedQualificationCompletedSmallOrMediumProjectsLicenses = [];

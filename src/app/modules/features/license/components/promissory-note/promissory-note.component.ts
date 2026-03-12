@@ -158,7 +158,7 @@ export class PromissoryNoteComponent implements OnInit, OnDestroy {
     }
     if (this.licenseProjectPromissoryNoteCreateUpdateDto.licenseProjectPromissoryNoteIncorporationContracts &&
       this.licenseProjectPromissoryNoteCreateUpdateDto.licenseProjectPromissoryNoteIncorporationContracts.length == 0) {
-      this._toastrNotificationService.showError("يجب ان يتم ادخال ملف عقد تأسيس الشركة");
+      this._toastrNotificationService.showError("يجب أن يتم ادخال ملف عقد تأسيس الشركة");
       this.showValidation = true;
       return;
     }
@@ -193,7 +193,7 @@ export class PromissoryNoteComponent implements OnInit, OnDestroy {
       if (this.licenseProjectPromissoryNoteCreateUpdateDto?.licenseProjectPromissoryNotePowerOfAttorney &&
         this.licenseProjectPromissoryNoteCreateUpdateDto?.licenseProjectPromissoryNotePowerOfAttorney.licenseProjectPromissoryNotePowerOfAttorneyFiles &&
         this.licenseProjectPromissoryNoteCreateUpdateDto?.licenseProjectPromissoryNotePowerOfAttorney.licenseProjectPromissoryNotePowerOfAttorneyFiles.length == 0) {
-        this._toastrNotificationService.showError("يجب ان يتم ادخال ملف وكالة الموقع على سند لأمر");
+        this._toastrNotificationService.showError("يجب أن يتم ادخال ملف وكالة الموقع على سند لأمر");
         this.showValidation = true;
         return;
       }
@@ -253,6 +253,10 @@ export class PromissoryNoteComponent implements OnInit, OnDestroy {
   }
 
   onExistPromissoryNoteIncorporationContractsFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.contracts = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
 
@@ -261,6 +265,10 @@ export class PromissoryNoteComponent implements OnInit, OnDestroy {
   }
 
   onExistPromissoryNotePowerOfAttorneyFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.powerOfAttorney = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
 

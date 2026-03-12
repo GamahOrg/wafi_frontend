@@ -14,8 +14,7 @@
                     <input type="number" id="control-landTotalSpace"
                            class="form-control"
                            formControlName="landTotalSpace"
-                           [disabled]="false"
-                           placeholder=" المساحة الإجمالية للمشروع ">
+                           [disabled]="false"/>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
@@ -23,8 +22,7 @@
                     <label class="form-label">مساحة الأرض </label>
                     <input type="number" id="control-landSpace"
                            class="form-control"
-                           formControlName="landSpace"
-                           placeholder="مساحة الأرض ">
+                           formControlName="landSpace"/>
                     <mat-error *ngIf="controls.landSpace?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.landSpace?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.landSpace?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -36,8 +34,7 @@
                     <label class="form-label">مساحة أرض سكنية</label>
                     <input type="number" id="control-residentialLandSpace"
                            class="form-control"
-                           formControlName="residentialLandSpace"
-                           placeholder="مساحة الأرض سكنية">
+                           formControlName="residentialLandSpace"/>
                     <mat-error *ngIf="controls.residentialLandSpace?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.residentialLandSpace?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.residentialLandSpace?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -51,8 +48,7 @@
                     <label class="form-label">إجمالي قيمة المشروع</label>
                     <input type="number" id="control-totalProjectValue"
                            class="form-control"
-                           formControlName="totalProjectValue"
-                           placeholder="إجمالي قيمة المشروع">
+                           formControlName="totalProjectValue"/>
                     <mat-error *ngIf="controls.totalProjectValue?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.totalProjectValue?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.totalProjectValue?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -64,9 +60,8 @@
                     <label class="form-label">تكلفة البناء</label>
                     <input type="number" id="control-constructionCost"
                            class="form-control"
-                           formControlName="constructionCost"
-                           placeholder="تكلفة البناء">
-                    <mat-error *ngIf="controls.constructionCost?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                           formControlName="constructionCost"/>
+                        <mat-error *ngIf="controls.constructionCost?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         <mat-error *ngIf="controls.constructionCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                         <mat-error *ngIf="controls.constructionCost?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
 
@@ -77,9 +72,8 @@
                     <label class="form-label">تكلفة استشاري</label>
                     <input type="number" id="control-consultantCost"
                            class="form-control"
-                           formControlName="consultantCost"
-                           placeholder="تكلفة استشاري">
-                    <mat-error *ngIf="controls.consultantCost?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                           formControlName="consultantCost"/>
+                        <mat-error *ngIf="controls.consultantCost?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         <mat-error *ngIf="controls.consultantCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                         <mat-error *ngIf="controls.consultantCost?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
 
@@ -90,8 +84,7 @@
                     <label class="form-label">سعر الأرض</label>
                     <input type="number" id="control-landPrice"
                            class="form-control"
-                           formControlName="landPrice"
-                           placeholder="سعر الأرض">
+                           formControlName="landPrice"/>
                     <mat-error *ngIf="controls.landPrice?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.landPrice?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.landPrice?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -103,9 +96,8 @@
                     <label class="form-label">الرسوم الإدارية</label>
                     <input type="number" id="control-administrativeFees"
                            class="form-control"
-                           formControlName="administrativeFees"
-                           placeholder="الرسوم الإدارية">
-                    <mat-error *ngIf="controls.administrativeFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                           formControlName="administrativeFees"/>
+                        <mat-error *ngIf="controls.administrativeFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         <mat-error *ngIf="controls.administrativeFees?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                         <mat-error *ngIf="controls.administrativeFees?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
 
@@ -116,9 +108,8 @@
                     <label class="form-label">رسوم التسويق</label>
                     <input type="number" id="control-marketingFees"
                            class="form-control"
-                           formControlName="marketingFees"
-                           placeholder="رسوم التسويق">
-                    <mat-error *ngIf="controls.marketingFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
+                           formControlName="marketingFees"/>
+                        <mat-error *ngIf="controls.marketingFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         <mat-error *ngIf="controls.marketingFees?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                         <mat-error *ngIf="controls.marketingFees?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
 
@@ -129,8 +120,7 @@
                     <label class="form-label">أرباح</label>
                     <input type="number" id="control-profits"
                            class="form-control"
-                           formControlName="profits"
-                           placeholder="أرباح">
+                           formControlName="profits"/>
                     <mat-error *ngIf="controls.profits?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.constructionCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.constructionCost?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -187,10 +177,8 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <textarea type="text" id="control-assumptionsOnWhichTheStudyIsBased"
-                           placeholder="{{'الافتراضات التي تستند إلى الدراسة'}}"
                            class="form-control"
-                           formControlName="assumptionsOnWhichTheStudyIsBased"
-                           placeholder="الافتراضات التي تستند إلى الدراسة"></textarea>
+                           formControlName="assumptionsOnWhichTheStudyIsBased"></textarea>
                 </div>
             </div>
             <hr>
@@ -199,7 +187,6 @@
                 <div class="form-group mb-4">
                     <label class="form-label">اسم الجهة</label>
                     <input type="text" id="control-entityName"
-                           placeholder="اسم الجهة"
                            class="form-control"
                            formControlName="entityName">
                 </div>
@@ -209,8 +196,7 @@
                     <label class="form-label">رقم الجوال</label>
                     <input type="text" id="control-mobileNumber"
                            class="form-control"
-                           formControlName="mobileNumber"
-                           placeholder="رقم الجوال">
+                           formControlName="mobileNumber">
                 </div>
             </div>
             <div class="col-12 col-lg-6">
@@ -218,8 +204,7 @@
                    <label class="form-label">رقم الهاتف</label>
                    <input type="text" id="control-phoneNumber"
                           class="form-control"
-                          formControlName="phoneNumber"
-                          placeholder="رقم الهاتف">
+                          formControlName="phoneNumber">
                </div>
            </div>
            <div class="col-12 col-lg-6">
@@ -227,8 +212,7 @@
                    <label class="form-label"> البريد الإلكتروني</label>
                    <input type="text" id="control-emailAddress"
                           class="form-control"
-                          formControlName="emailAddress"
-                          placeholder=" البريد الإلكتروني">
+                          formControlName="emailAddress">
                    <mat-error *ngIf="controls.emailAddress?.hasError('pattern')">من فضلك ادخل البريد الإلكتروني صحيح</mat-error>
 <!--                    <mat-error *ngIf="controls.emailAddress?.hasError('min')">
                        قيمة الحقل يجب الا تقل عن صفر

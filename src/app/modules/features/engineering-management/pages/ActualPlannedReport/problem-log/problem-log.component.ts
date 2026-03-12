@@ -173,7 +173,7 @@ export class ProblemLogComponent {
 
     this._licenseProjectProblemService.setLicenseProjectProblemId(licenseProjectProblemId);
     let Data = {
-      title: "إضافة او تعديل المشكلة",
+      title: "إضافة أو تعديل المشكلة",
       component: AddEditProblemLogComponent,
       id: "AddEditProblemLogComponent",
     } as PopupData;

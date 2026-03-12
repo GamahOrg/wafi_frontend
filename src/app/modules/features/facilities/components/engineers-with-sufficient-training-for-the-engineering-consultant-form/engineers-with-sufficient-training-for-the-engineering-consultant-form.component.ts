@@ -28,7 +28,7 @@ export class EngineersWithSufficientTrainingForTheEngineeringConsultantFormCompo
   showError : boolean = false
   qualificationCertifiedEngineers: CertifiedEngineerDto[] = [];
   qualificationqualificatedEngineersForm = this._formBuilder.group({
-    qualificationCertifiedEngineerId: ['', [Validators.required]]
+    qualificationCertifiedEngineerId: [null, [Validators.required]]
   });
   showValidation: boolean = false;
 
@@ -142,7 +142,7 @@ export class EngineersWithSufficientTrainingForTheEngineeringConsultantFormCompo
       this.qualificationqualificatedEngineersForm?.markAllAsTouched();
       return;
     }
-    this.qualificationqualificatedEngineerDto.qualificationCertifiedEngineerId = this.qualificationqualificatedEngineersForm.value.qualificationCertifiedEngineerId as string;
+    this.qualificationqualificatedEngineerDto.qualificationCertifiedEngineerId = this.qualificationqualificatedEngineersForm.value.qualificationCertifiedEngineerId != null ? this.qualificationqualificatedEngineersForm.value.qualificationCertifiedEngineerId as string : '';
     this.qualificationqualificatedEngineerDto.facilityId = this.userData?.facilities[0].id as string;
     this.qualificationqualificatedEngineerDto.id = this.qualificationqualificatedEngineerDto.id ? this.qualificationqualificatedEngineerDto.id : "00000000-0000-0000-0000-000000000000";
     this.subscriptions.push(
@@ -160,6 +160,12 @@ export class EngineersWithSufficientTrainingForTheEngineeringConsultantFormCompo
   }
 
   onTrainingCertificateFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.qualificationqualificatedEngineerDto.trainingCertificateFileId = '';
+      return;
+    }
+      if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length)
+        return;
     this.qualificationqualificatedEngineerDto.trainingCertificateFileId = fileRemovedData.eventRes.data[0].id;
   }
 

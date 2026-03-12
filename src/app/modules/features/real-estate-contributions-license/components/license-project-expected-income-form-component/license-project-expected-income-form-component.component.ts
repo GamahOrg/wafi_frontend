@@ -129,7 +129,7 @@ export class LicenseProjectExpectedIncomeFormComponentComponent implements OnIni
   }
   else
   {
-    this.toastr.showInfo(" لم يتم الحفظ يجب ان يتم ادخال دراسة جدوى اولا ثم يتم ادخال باقي البيانات ");
+    this.toastr.showInfo(" لم يتم الحفظ يجب أن يتم ادخال دراسة جدوى اولا ثم يتم ادخال باقي البيانات ");
 
   }
 }

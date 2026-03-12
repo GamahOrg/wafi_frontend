@@ -52,7 +52,7 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   localization = {
     send: 'إرسال الطلب',
-    approvalDecisions: 'الموافقه على الاقرارات',
+    approvalDecisions: 'الموافقة على الإقرارات',
   };
 
   requestSteps: RequestStep[] = [
@@ -279,7 +279,9 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
       stepStatusId ==
       LicenseRequestHeaderStepStatusEnum.OwnersAgreementsApproved ||
       stepStatusId == LicenseRequestHeaderStepStatusEnum.PaymentCompleted ||
-      stepStatusId == LicenseRequestHeaderStepStatusEnum.RequestCreated
+      stepStatusId == LicenseRequestHeaderStepStatusEnum.RequestCreated ||
+      stepStatusId == LicenseRequestHeaderStepStatusEnum.AutomaticallyCompleted ||
+      stepStatusId == LicenseRequestHeaderStepStatusEnum.Completed
     );
   }
 
@@ -462,7 +464,7 @@ export class FawriaLicenseDetailsComponent implements OnInit, OnDestroy {
   openApprovalDialog(): void {
     let Data = {
       title:
-        'يجب الموافقه على جميع الاقرارات الخاصة بالرخصة حتى يتم ارسال الطلب',
+        'يجب الموافقة على جميع الإقرارات الخاصة بالرخصة حتى يتم إرسال الطلب',
       component: ApprovalComponent,
       id: 'ApprovalComponent',
     } as PopupData;

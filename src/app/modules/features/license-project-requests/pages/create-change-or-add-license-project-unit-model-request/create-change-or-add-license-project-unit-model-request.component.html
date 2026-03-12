@@ -1,7 +1,7 @@
 <div class="card">
 
     <div class="card-header">
-      <h6 class="card-title">طلب تغيير او إضافة نماذج وحدات بالمشروع عقاري</h6>
+      <h6 class="card-title">طلب تغيير أو إضافة نماذج وحدات بالمشروع عقاري</h6>
     </div>
     <div class="card-body">
       <form class="d-flex flex-column h-100" [formGroup]="changeOrAddLicenseProjectUnitModelForm"
@@ -13,9 +13,7 @@
                 <label class="key">المشروع</label>
                 <select class="form-select" id="control-licenseProjectId" aria-label="Default select example"
                   formControlName="licenseProjectId">
-                  <option selected disabled>
-                    المشروع
-                  </option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                   <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
                     {{ licenseProject.name }}
                   </option>

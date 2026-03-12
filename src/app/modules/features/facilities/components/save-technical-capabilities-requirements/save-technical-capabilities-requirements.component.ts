@@ -123,7 +123,10 @@ export class SaveTechnicalCapabilitiesRequirementsComponent implements OnInit, O
   }
 
   onFacilityCertificationsFilesUploaded(filesData: any) {
-
+    if (filesData.eventRes.data.length == 0) {
+      this.addedQualificationFacilityCertifications = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     if (!this.addedQualificationFacilityCertifications)

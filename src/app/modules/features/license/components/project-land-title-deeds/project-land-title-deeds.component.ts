@@ -77,7 +77,7 @@ export class ProjectLandTitleDeedsComponent implements OnInit, OnDestroy {
     savedSuccessfully: 'تم الحفظ',
     owners: 'الملاك',
     showowners: 'عرض الملاك',
-    dateValidator: 'يجب ان يكون تاريخ الصك اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الصك اقل من تاريخ الحالي',
     close: 'إغلاق',
   };
   private loadComponentData() {

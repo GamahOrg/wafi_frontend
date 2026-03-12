@@ -28,6 +28,7 @@ import { Pagemode } from '../../../enums/pagemode.enum';
 import { ProjectInstantLicenseDeedService } from 'src/app/modules/features/real-estate-contributions-license/services/project-instant-license-deed.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { PopupData, confirmationPopupData } from 'src/app/shared/models/popup.model';
+import { Subscription } from 'rxjs';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { LicenseRequestService } from '../../../services/license-request.service';
 import { CorrectionProjectLandDeedService } from '../../../services/correction-project-land-deed.service';
@@ -46,6 +47,7 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   @Input() isUnit: boolean | null = null;
   @Output() changePage = new EventEmitter<Pagemode>();
 
+  private subscriptions: Subscription[] = [];
   baseUrl = `${environment.baseURL}/`;
   deedForm!: FormGroup;
   verifyForm!: FormGroup;
@@ -87,7 +89,7 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     after7: 'بعد 1-7',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     letterType: 'خطاب تعهد إتمام',
 
   };
@@ -138,6 +140,7 @@ export class CorrectionLicenseprojectDeedsCreateComponent
 
   ngOnDestroy(): void {
     this._tabsService.setUnsavedChanges(false);
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   private loadComponentData() {
@@ -786,10 +789,12 @@ debugger;
   }
 
   private observeconfirmAction() {
-    this._popupService.confirmAction.subscribe((res: PopupData) => {
-      this.changePage.emit(Pagemode.List);
-      this.closeDialog();
-    });
+    this.subscriptions.push(
+      this._popupService.confirmAction.subscribe((res: PopupData) => {
+        this.changePage.emit(Pagemode.List);
+        this.closeDialog();
+      })
+    );
   }
 
   closeCancelModal(): void {

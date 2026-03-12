@@ -51,7 +51,7 @@ subscriptions: Subscription[] = [];
         agreementBetweenDevelperAndAccountantId? :string;
         //ملحق الاتفاقية المبرم بين المطور المكتب الاستشارى 
         agreementBetweenDevelperAndEngineeringId? :string;
-        //ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض او مالك منفعتها 
+        //ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض أو مالك منفعتها 
         agreementBetweenDeveloperAndLandOwnerId? :string;
         //تقرير البنك عن حساب الضمان 
              bankReportOnEscrowAccountId ?:string;
@@ -59,7 +59,7 @@ subscriptions: Subscription[] = [];
              updatedFeasibilityStudyId? :string;
             //التصاميم المعمارية والمخططات الهندسية المعتمدة من الجهات المختصة
              architecturalDesignsAndEngineeringPlansId? :string;
-            //تحديث رخصة البناء او الخطاب المقدم من مركز اتمام
+            //تحديث رخصة البناء أو الخطاب المقدم من مركز اتمام
              updatedBuildingLicenseOrLetterId?:string;
             //خطاب من المحاسب القانونى يفيد بعدم وجود مبيعات على الوحدات الملغاة مرفقا به تقرير عن حالة المشروع
              accountantLetterForCancelledUnitsId? :string;
@@ -126,6 +126,10 @@ subscriptions: Subscription[] = [];
   }
   //نموذج الطلب، موضحاً به أسباب طلب التغيير
   onExistApplicationFormFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.applicationFormFileId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.applicationFormFileId = data.id;
@@ -133,6 +137,10 @@ subscriptions: Subscription[] = [];
   }
    //تقرير عن حالة المشروع الحالية
   onExistReportForCurrentProjectStatusFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.reportForCurrentProjectStatusId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.reportForCurrentProjectStatusId = data.id;
@@ -140,6 +148,10 @@ subscriptions: Subscription[] = [];
   }
 //تقرير مساحى للمساحة المحدثة
   onExistReportForUpdateSpaceFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.reportForUpdateSpaceId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.reportForUpdateSpaceId = data.id;
@@ -147,6 +159,10 @@ subscriptions: Subscription[] = [];
   }
    //جدول الاوزان النسبية المحدث
   onExistUpdatedRelativeWeightTableUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.updatedRelativeWeightTableId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.updatedRelativeWeightTableId = data.id;
@@ -154,6 +170,10 @@ subscriptions: Subscription[] = [];
   }
    //جدول الكميات المحدث
   onExistUpdatedQuantityTableFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.updatedQuantityTableId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.updatedQuantityTableId = data.id;
@@ -161,6 +181,10 @@ subscriptions: Subscription[] = [];
   }
    //البرنامج الزمنى المحدث
   onExistUpdatedTimeSchedualeFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.updatedTimeSchedualeId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.updatedTimeSchedualeId = data.id;
@@ -168,6 +192,10 @@ subscriptions: Subscription[] = [];
   }
    //بيان محدث يتضمن رقم مميز لكل وحدة من وحدات المشروع بالاضافة إلى عدع الوحدات
   onExistUpdatedStatementForUnitsFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.updatedStatementForUnitsId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.updatedStatementForUnitsId = data.id;
@@ -175,6 +203,10 @@ subscriptions: Subscription[] = [];
   }
 //محضر فرز الوحدات
   onExistUnitSortingMinutesFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.unitSortingMinutesId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.unitSortingMinutesId = data.id;
@@ -182,6 +214,10 @@ subscriptions: Subscription[] = [];
   }
    //ملحق الاتفاقية المبرم بين المطور والمحاسب القانونى
   onExistAgreementBetweenDevelperAndAccountantFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.agreementBetweenDevelperAndAccountantId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.agreementBetweenDevelperAndAccountantId = data.id;
@@ -189,13 +225,21 @@ subscriptions: Subscription[] = [];
   }
    //ملحق الاتفاقية المبرم بين المطور المكتب الاستشارى 
   onExistAgreementBetweenDevelperAndEngineeringFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.agreementBetweenDevelperAndEngineeringId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.agreementBetweenDevelperAndEngineeringId = data.id;
     });
   }
- //ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض او مالك منفعتها 
+ //ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض أو مالك منفعتها 
   onExistAgreementBetweenDeveloperAndLandOwnerFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.agreementBetweenDeveloperAndLandOwnerId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.agreementBetweenDeveloperAndLandOwnerId = data.id;
@@ -203,6 +247,10 @@ subscriptions: Subscription[] = [];
   }
    //تقرير البنك عن حساب الضمان 
   onExistBankReportOnEscrowAccountFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.bankReportOnEscrowAccountId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.bankReportOnEscrowAccountId = data.id;
@@ -210,6 +258,10 @@ subscriptions: Subscription[] = [];
   }
    //تحديث دراسة الجدوى الخاصة بالمشروع 
   onExistUpdatedFeasibilityStudyFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.updatedFeasibilityStudyId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.updatedFeasibilityStudyId = data.id;
@@ -217,13 +269,21 @@ subscriptions: Subscription[] = [];
   }
  //التصاميم المعمارية والمخططات الهندسية المعتمدة من الجهات المختصة
   onExistArchitecturalDesignsAndEngineeringPlansFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.architecturalDesignsAndEngineeringPlansId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.architecturalDesignsAndEngineeringPlansId = data.id;
     });
   }
-   //تحديث رخصة البناء او الخطاب المقدم من مركز اتمام
+   //تحديث رخصة البناء أو الخطاب المقدم من مركز اتمام
   onExistUpdatedBuildingLicenseOrLetterFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.updatedBuildingLicenseOrLetterId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.updatedBuildingLicenseOrLetterId = data.id;
@@ -231,6 +291,10 @@ subscriptions: Subscription[] = [];
   }
 //خطاب من المحاسب القانونى يفيد بعدم وجود مبيعات على الوحدات الملغاة مرفقا به تقرير عن حالة المشروع
   onExistAccountantLetterForCancelledUnitsFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.accountantLetterForCancelledUnitsId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.accountantLetterForCancelledUnitsId = data.id;

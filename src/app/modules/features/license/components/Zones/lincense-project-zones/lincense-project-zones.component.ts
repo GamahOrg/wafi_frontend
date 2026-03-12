@@ -29,6 +29,7 @@ import { LicenseProjectSubUnitsListCodeFile } from '../../../dataModels/license-
 import { DataVisibilityOfLicenseProjectService } from '../../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { TabCode } from '../../../models/tab-code.model';
 import { LicenseRequestService } from '../../../services/license-request.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-lincense-project-zones',
@@ -80,7 +81,7 @@ export class LincenseProjectZonesComponent implements OnInit {
 
     const typeCode =
       this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(
           this.licenseProjectId
@@ -422,7 +423,7 @@ export class LincenseProjectZonesComponent implements OnInit {
   isFawriaValidation(): boolean {
     const typecode =
       this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU') return true;
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria) return true;
     else return false;
   }
 
@@ -433,6 +434,10 @@ export class LincenseProjectZonesComponent implements OnInit {
   }
 
   onExcelFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.fileId = '';
+      return;
+    }
     this.fileId = fileRemovedData.eventRes.data[0].id;
   }
 

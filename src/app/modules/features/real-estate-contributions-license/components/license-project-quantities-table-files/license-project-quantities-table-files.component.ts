@@ -26,7 +26,7 @@ export class LicenseProjectQuantitiesTableFilesComponent  implements OnInit,OnDe
     quantitiesTableFileId: 'ملف جدول الكميات',
 
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',

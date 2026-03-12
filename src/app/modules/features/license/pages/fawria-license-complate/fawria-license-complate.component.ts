@@ -31,6 +31,7 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { LicenseProjectCompletionData } from '../../dataModels/license-project-model.dto';
 import { FarzRequestStatusEnum } from '../../models/license-details.model';
 import { LicenseRequestHeaderService } from '../../services/license-request-header.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-fawria-license-complate',
@@ -83,7 +84,7 @@ export class FawriaLicenseComplateComponent implements OnInit, OnDestroy {
     editPaymentandAdditionalTermsTitle: 'تعديل الدفعات و البنود الإضافية',
     send: 'إرسال الطلب',
     verify: 'استكمال ملف المشروع',
-    approvalDecisions: 'الموافقه على الاقرارات',
+    approvalDecisions: 'الموافقة على الإقرارات',
     farzRejectionMessage: 'تعذر القبول لوجود ملاحظات!',
     handleFarzNotes: 'معالجة ملاحظات فرز',
     farzApprovedMessage: 'قبول الطلب من فرز.',
@@ -465,7 +466,7 @@ export class FawriaLicenseComplateComponent implements OnInit, OnDestroy {
   }
 
   licenseLink(): string {
-    if (this.typeCode === 'FSRSU') {
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
       this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
         this.licenseProjectId as string
       );
@@ -476,7 +477,7 @@ export class FawriaLicenseComplateComponent implements OnInit, OnDestroy {
   }
   openConfirmaDialog(res: string): void {
     // Check if it's a fawria license type
-    if (this.typeCode === 'FSRSU') {
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
       // Show regular success popup
       let Data = {
         imagePath: 'assets/images/auth/ForgotPass.svg',
@@ -503,8 +504,8 @@ export class FawriaLicenseComplateComponent implements OnInit, OnDestroy {
       // Show regular success popup
       let Data = {
         imagePath: 'assets/images/auth/ForgotPass.svg',
-        title: 'تم ارسال الطلب بنجاح',
-        staticMessage: 'تم ارسال طلبك بنجاح ويمكنك عرض الطلب',
+        title: 'تم إرسال الطلب بنجاح',
+        staticMessage: 'تم إرسال طلبك بنجاح ويمكنك عرض الطلب',
         dynamicMessage: res,
         buttonText: 'عرض الطلب',
         buttonLink: this.licenseLink(),
@@ -619,7 +620,7 @@ export class FawriaLicenseComplateComponent implements OnInit, OnDestroy {
   openApprovalDialog(): void {
     let Data = {
       title:
-        'يجب الموافقه على جميع الاقرارات الخاصة بالرخصة حتى يتم ارسال الطلب',
+        'يجب الموافقة على جميع الإقرارات الخاصة بالرخصة حتى يتم إرسال الطلب',
       component: ApprovalComponent,
       id: 'ApprovalComponent',
       disableClose: true,
@@ -630,7 +631,7 @@ export class FawriaLicenseComplateComponent implements OnInit, OnDestroy {
   openConfirmtionSendTOFarzDialog() {
     let obj = {
       id: 'sendToFarzConfirmation',
-      staticMessage: "هل انت متأكد من اعادة ارسال الطلب لفرز",
+      staticMessage: "هل انت متأكد من اعادة إرسال الطلب لفرز",
       dynamicMessage: "",
       secondeStaticMessage: '',
       acceptButtonText: 'نعم'

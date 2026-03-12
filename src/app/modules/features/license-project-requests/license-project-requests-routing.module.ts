@@ -230,7 +230,7 @@ const routes: Routes = [
 {
   path: Configuration.pages.licenseProjectRequests.createchangeoraddunitmodel,
   component: CreateChangeOrAddLicenseProjectUnitModelRequestComponent,
-  data: { breadcrumb: 'إنشاء طلب تغيير او إضافة نماذج وحدات بالمشروع عقاري ' },
+  data: { breadcrumb: 'إنشاء طلب تغيير أو إضافة نماذج وحدات بالمشروع عقاري ' },
 },
 {
   path: Configuration.pages.licenseProjectRequests.changeoraddunitmodelsummary,

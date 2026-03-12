@@ -15,6 +15,7 @@ import {
 } from '../../dataModels/request-validation.model';
 import {
   PopupData,
+  PromptPopupData,
   confirmationPopupData,
   notePopupData,
 } from 'src/app/shared/models/popup.model';
@@ -22,6 +23,9 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { LicenseRequestValidationPopupComponent } from '../../components/license-request-validation-popup/license-request-validation-popup.component';
 import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FacilityStatus } from '../../enums/facility-status.enum';
+import { RatingComponent } from 'src/app/shared/components/rating/rating.component';
 
 @Component({
   selector: 'app-create-license',
@@ -30,26 +34,29 @@ import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-
 })
 export class CreateLincenseComponent {
   requestSummeryLink: string =
-    `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseSummary}` as string;
+    `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}/${Configuration.pages.license.lincenseSummary}` as string;
   requestTypeCode: string = '';
   subscriptions: Subscription[] = [];
   createRequstForm = this._formBuilder.group({
-    priod: this._formBuilder.control<number | null>(null, [Validators.required,]),
+    priod: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+    ]),
   });
   showValidation: boolean = false;
   licenseRequestType: SysLicenseRequestTypeDto = new SysLicenseRequestTypeDto();
   price: Number = 0;
   periodTypeId: string = '';
   userData: customerResponse | null = null;
-  typeCode: string = ''
+  typeCode: string = '';
   get controls() {
     return this.createRequstForm.controls;
   }
   renewLicense: boolean = false;
   licenseProjectId: string = '';
   facilityId: string = '';
-  requestStudyingDuration: any
-  paymentMethod: string = ''
+  requestStudyingDuration: any;
+  paymentMethod: string = '';
+  licenseTypeCodeEnum = LicenseRequestTypeTypeCodeEnum;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -59,8 +66,9 @@ export class CreateLincenseComponent {
     private _licenseRequestService: LicenseRequestService,
     private _userDataService: UserDataService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-    private _popupService: PopupService
-  ) { }
+    private _popupService: PopupService,
+    private sanitizer: DomSanitizer,
+  ) {}
 
   ngOnInit(): void {
     this.obseveCustomerData();
@@ -74,7 +82,7 @@ export class CreateLincenseComponent {
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.CheckCreateOrRenewLicense();
         this._popupService.closeDialog.emit();
-      })
+      }),
     );
   }
   private getLicenseProjectId(): void {
@@ -82,6 +90,7 @@ export class CreateLincenseComponent {
       this._sharedLicenseProjectService.getLicenseProjectIdStorage() as string;
   }
   private getFacilityId(): void {
+    debugger;
     this.facilityId =
       this._sharedLicenseProjectService.getFacilityIdFromLocalStorage() as string;
   }
@@ -92,7 +101,7 @@ export class CreateLincenseComponent {
         .getCustomerData()
         .subscribe((res: customerResponse | null) => {
           this.userData = res;
-        })
+        }),
     );
   }
 
@@ -105,31 +114,31 @@ export class CreateLincenseComponent {
           Configuration.pages.license.renewLincense;
         console.log(
           'this._activatedRoute.snapshot.url[0].path',
-          this._activatedRoute.snapshot.url[0].path
+          this._activatedRoute.snapshot.url[0].path,
         );
         console.log(
           'Configuration.pages.license.renewLincense',
-          Configuration.pages.license.renewLincense
+          Configuration.pages.license.renewLincense,
         );
         console.log('this.renewLicense', this.renewLicense);
         if (this.renewLicense) {
           this.getLicenseProjectId();
           this.getFacilityId();
         }
-              
+
         this.updateDataWhenFawria();
-      })
-    )
+      }),
+    );
   }
 
-
-  updateDataWhenFawria(){
-    if(this.requestTypeCode  == 'FSRSU'){
-      this.requestStudyingDuration = 'فورية'
-      this.paymentMethod = 'طريقة الدفع'
-    }else{
-      this.requestStudyingDuration = this.licenseRequestType.requestStudyingDuration
-      this.paymentMethod = 'طريقة الدفع'
+  updateDataWhenFawria() {
+    if (this.requestTypeCode == LicenseRequestTypeTypeCodeEnum.Fawria) {
+      this.requestStudyingDuration = 'فورية';
+      this.paymentMethod = 'طريقة الدفع';
+    } else {
+      this.requestStudyingDuration =
+        this.licenseRequestType.requestStudyingDuration;
+      this.paymentMethod = 'طريقة الدفع';
     }
   }
 
@@ -150,13 +159,21 @@ export class CreateLincenseComponent {
         .subscribe((res) => {
           if (res) {
             this.licenseRequestType = res;
-            debugger
-            this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(this.requestTypeCode as string); 
+            console.log('licenseRequestType', this.licenseRequestType);
+            debugger;
+            this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(
+              this.requestTypeCode as string,
+            );
             // If requestTypeCode is 'FSRSU', set first item as default and disable
-            if (this.requestTypeCode === 'FSRSU' && this.licenseRequestType.licenseRequestPeriods && this.licenseRequestType.licenseRequestPeriods.length > 0) {
-              const firstItem = this.licenseRequestType.licenseRequestPeriods[0];
+            if (
+              this.requestTypeCode === LicenseRequestTypeTypeCodeEnum.Fawria &&
+              this.licenseRequestType.licenseRequestPeriods &&
+              this.licenseRequestType.licenseRequestPeriods.length > 0
+            ) {
+              const firstItem =
+                this.licenseRequestType.licenseRequestPeriods[0];
               this.createRequstForm.patchValue({
-                priod: firstItem.period
+                priod: firstItem.period,
               });
               this.price = firstItem.price;
               this.periodTypeId = firstItem.sysPeriodType?.id as string;
@@ -164,7 +181,7 @@ export class CreateLincenseComponent {
             }
           }
           console.log(this.licenseRequestType);
-        })
+        }),
     );
   }
   /**
@@ -173,8 +190,41 @@ export class CreateLincenseComponent {
   public CreateOrRenewLicense(): void {
     const formValue = this.createRequstForm.getRawValue();
     if (formValue.priod) {
-      if (this.licenseRequestType.typeCode == LicenseRequestTypeTypeCodeEnum.SellRealEstateUnits ||
-        this.licenseRequestType.typeCode == LicenseRequestTypeTypeCodeEnum.Fawria
+      if (
+        this.licenseRequestType.typeCode ==
+        LicenseRequestTypeTypeCodeEnum.Fawria
+      ) {
+        debugger;
+        if (
+          this.facilityId == '00000000-0000-0000-0000-000000000000' ||
+          this.facilityId == null ||
+          this.facilityId == ''
+        )
+          this.facilityId = this.userData?.facilities[0].id as string;
+
+        this._licenseRequestTypeService
+          .CheckFacilityStatus(this.facilityId as string)
+          .subscribe((res) => {
+            switch (res) {
+              case FacilityStatus.Valid:
+                this.showSRSULicenseRequestTypeWarnings();
+                break;
+              case FacilityStatus.QualificationNotFound:
+                this.showQualificationNotFoundPopup();
+                break;
+              case FacilityStatus.QualificationExpired:
+                this.showQualificationExpiryPopup();
+                break;
+              case FacilityStatus.NotFawriaDeveloper:
+                this.showNotFawriaDeveloperPopup();
+                break;
+              default:
+                break;
+            }
+          });
+      } else if (
+        this.licenseRequestType.typeCode ==
+        LicenseRequestTypeTypeCodeEnum.SellRealEstateUnits
       ) {
         this.showSRSULicenseRequestTypeWarnings();
       } else {
@@ -192,7 +242,7 @@ export class CreateLincenseComponent {
     }
   }
   private showSRSULicenseRequestTypeWarnings() {
-    let deleteConfirmationObj: confirmationPopupData = {     
+    let deleteConfirmationObj: confirmationPopupData = {
       staticMessage: `يجب على المنشأة إضافة مفوض للتوقيع على وثيقة الصرف عن طريق "إدارة المنشأة"
                 <br/> يجب أن يكون لدى الاستشاري الهندسي حساب في منصة البيع على الخارطة وبأن يكون مؤهل
                 <br/> يجب أن يكون لدى المحاسب القانوني حساب في منصة البيع على الخارطة وبأن يكون مؤهل`,
@@ -201,11 +251,7 @@ export class CreateLincenseComponent {
       title:
         'تقديم طلب رخصة بيع على الخارطة يجب الحرص على تحقيق الشروط التالية:',
     };
-    this._popupService.updateConfirmationPopupData(
-      deleteConfirmationObj,
-      '40vw',
-      // '43vh'
-    );
+    this._popupService.updateConfirmationPopupData(deleteConfirmationObj);
   }
   private renew(): void {
     const formValue = this.createRequstForm.getRawValue();
@@ -216,14 +262,14 @@ export class CreateLincenseComponent {
           this.requestTypeCode,
           formValue.priod as number,
           this.periodTypeId as string,
-          this.licenseProjectId
+          this.licenseProjectId,
         )
         .subscribe((res: RequestValidation | RequestSuccessResponse | null) => {
           if (res) {
             if ('id' in res && 'requestCode' in res) {
               // this.requestSubmittedSuccessfully=true;
               this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
-                res.id
+                res.id,
               );
               this.openConfirmaDialog(res.requestCode as string);
               this._sharedLicenseProjectService.removeFacilityIdfromLocalStorage();
@@ -233,7 +279,7 @@ export class CreateLincenseComponent {
               this.openValidationDialog();
             }
           }
-        })
+        }),
     );
   }
   openConfirmaDialog(res: string): void {
@@ -278,15 +324,19 @@ export class CreateLincenseComponent {
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
+
   private updateRequestValidation(data: RequestValidation) {
     this._licenseRequestService.updateRequestValidation(
-      data as RequestValidation
+      data as RequestValidation,
     );
   }
   Create(): void {
     const formValue = this.createRequstForm.getRawValue();
 
-    if (this.facilityId == '00000000-0000-0000-0000-000000000000' || this.facilityId == null)
+    if (
+      this.facilityId == '00000000-0000-0000-0000-000000000000' ||
+      this.facilityId == null
+    )
       this.facilityId = this.userData?.facilities[0].id as string;
 
     // this.subscriptions.push(
@@ -302,20 +352,27 @@ export class CreateLincenseComponent {
     // );
 
     this.subscriptions.push(
-      this._licenseRequestService.Create(this.facilityId as string, this.requestTypeCode,
-        formValue.priod as number, this.periodTypeId as string)
+      this._licenseRequestService
+        .Create(
+          this.facilityId as string,
+          this.requestTypeCode,
+          formValue.priod as number,
+          this.periodTypeId as string,
+        )
         .subscribe((res) => {
           if (res) {
             this.setProjectIdInlocalStorage(res);
             this.navigate();
           }
-        })
+        }),
     );
   }
   private setProjectIdInlocalStorage(projectId: string): void {
     this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
-      projectId
+      projectId,
     );
+    this._sharedLicenseProjectService.setLicenseTypeCodeInLocalStorage(this.requestTypeCode);
+    this._sharedLicenseProjectService.setLicenseTypeNameInLocalStorage(this.licenseRequestType?.name as string);
   }
 
   changePriod(data: any) {
@@ -324,13 +381,106 @@ export class CreateLincenseComponent {
     } else {
       let priod = data.target.value;
       this.price = this.licenseRequestType.licenseRequestPeriods.filter(
-        (x) => x.period == priod
+        (x) => x.period == priod,
       )[0].price;
 
       this.periodTypeId = this.licenseRequestType?.licenseRequestPeriods.filter(
-        (x) => x.period == priod
+        (x) => x.period == priod,
       )[0].sysPeriodType?.id as string;
     }
+  }
+
+  openRatingDialog(type: 'stars' | 'numbers' = 'stars'): void {
+    let Data = {
+      id: 'starRatingComponentPopup',
+      minWidth: '30vw',
+      iconClass: 'hgi hgi-stroke hgi-message-question',
+      title: `قيّم تجربتك معنا`,
+      component: RatingComponent,
+      buttons: [
+        {
+          icon: '',
+          title: 'تخطي',
+          actionType: ButtonType.cancel,
+          isVisable: true,
+          isDisables: false,
+          // onclick: () => this.openNotesDialog()
+        },
+        {
+          icon: '',
+          title: 'ارسل التقييم',
+          actionType: ButtonType.confirm,
+          isVisable: true,
+          isDisables: false,
+          // onclick: () => this.openAssignEmployeeDialog()
+        },
+      ],
+    } as PopupData;
+    this._popupService.updatePopupData(Data);
+  }
+
+  showNotFawriaDeveloperPopup(): void {
+    this._popupService.updateConfirmationPopupData({
+      title: `نأسف لعدم تمكنك من استخدام المسار الفوري،</br>
+             لعدم تسجيل المنشأة ضمن المنشآت المسموح لها بالخدمة`,
+      staticMessage:
+        'يرجى التواصل مع الهيئة العامة للعقار للمزيد من الاستفسارات، عبر الرقم الموحد 199011',
+      dynamicMessage: '',
+      acceptButtonText: 'التقديم على الرخصة - المسار الافتراضي',
+      popupType: 'primary',
+      hideCancelButton: true,
+    });
+
+    // Subscribe to confirm action
+    const confirmSub = this._popupService.confirmAction.subscribe(() => {
+      this._router.navigate([
+        `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}`,
+      ]);
+      this._popupService.dismissDialog();
+    });
+
+    this.subscriptions.push(confirmSub);
+  }
+  showQualificationExpiryPopup(): void {
+    this._popupService.updateConfirmationPopupData({
+      title: 'نأسف لعدم إمكانية المتابعة حالياً، وذلك لانتهاء صلاحية التأهيل.',
+      staticMessage: '',
+      dynamicMessage: '',
+      acceptButtonText: 'الإطلاع على خدمة التأهيل',
+      popupType: 'primary',
+      hideCancelButton: true,
+    });
+
+    // Subscribe to confirm action
+    const confirmSub = this._popupService.confirmAction.subscribe(() => {
+      this._router.navigate([
+        `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requestList}`,
+      ]);
+      this._popupService.dismissDialog();
+    });
+
+    this.subscriptions.push(confirmSub);
+  }
+  showQualificationNotFoundPopup(): void {
+    this._popupService.updateConfirmationPopupData({
+      title:
+        'نأسف لعدم إمكانية استكمال الطلب حاليًا، لعدم استيفاء متطلب التأهيل يرجى التقدم بطلب التأهيل أولًا',
+      staticMessage: '',
+      dynamicMessage: '',
+      acceptButtonText: 'الإطلاع على خدمة التأهيل',
+      popupType: 'primary',
+      hideCancelButton: true,
+    });
+
+    // Subscribe to confirm action
+    const confirmSub = this._popupService.confirmAction.subscribe(() => {
+      this._router.navigate([
+        `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requests}`,
+      ]);
+      this._popupService.dismissDialog();
+    });
+
+    this.subscriptions.push(confirmSub);
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

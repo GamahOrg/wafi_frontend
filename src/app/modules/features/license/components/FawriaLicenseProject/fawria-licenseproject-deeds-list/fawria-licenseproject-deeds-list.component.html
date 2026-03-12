@@ -69,10 +69,10 @@
             <h4 class="card-title">{{deedHeaderProjectDataDto?.constructionAreaAmount}} م²</h4>
             <p class="card-text">{{localization.projectAreaAccordingToPermit}}</p>
           </div>
-          <button class="btn btn-sm btn-outline-primary ms-auto" *ngIf="hasNonType1Deeds()" (click)="openUpdateBuildingAreaDialog(false)">
+          <!-- <button class="btn btn-sm btn-outline-primary ms-auto" *ngIf="hasNonType1Deeds()" (click)="openUpdateBuildingAreaDialog(false)">
             <i class="icon hgi hgi-stroke hgi-add-square"></i>
             إضافة
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -91,10 +91,10 @@
             <h4 class="card-title">{{deedHeaderProjectDataDto?.totalUnit || '0'}}</h4>
             <p class="card-text">عدد الوحدات</p>
           </div>
-          <button class="btn btn-sm btn-outline-primary ms-auto" *ngIf="hasNonType1Deeds() || !isUnit" (click)="openUpdateBuildingAreaDialog(true)">
+          <!-- <button class="btn btn-sm btn-outline-primary ms-auto" *ngIf="hasNonType1Deeds() || !isUnit" (click)="openUpdateBuildingAreaDialog(true)">
             <i class="icon hgi hgi-stroke hgi-add-square"></i>
             إضافة
-          </button>
+          </button> -->
         </div>
       </div>
     </div>

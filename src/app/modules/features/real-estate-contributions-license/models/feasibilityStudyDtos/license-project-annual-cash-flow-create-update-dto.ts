@@ -1,6 +1,6 @@
 export class LicenseProjectAnnualCashFlowCreateUpdateDto {
         public id:string="";
-        public  yearId :string="";
+        public  yearId :string |null=null;
         public  licenseProjectFeasibilityStudyId :string="";
         public  cashFlowsCollectedForTheProject :number|null=null;
         public  amountsCollectedFromOperationsSaleUnits :number|null=null;

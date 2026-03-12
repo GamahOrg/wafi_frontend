@@ -66,10 +66,10 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
     projectDescription: ['', [Validators.required]],
     projectServices: [''],
     typeId: this._formBuilder.control<number | null>(null, [Validators.required]),
-    categoryId: ['', [Validators.required]],
-    subCategoryId: ['', [Validators.required]],
+    categoryId: [null, [Validators.required]],
+    subCategoryId: [null, [Validators.required]],
     projectSize: [ProjectSizeEnum.Small, [Validators.required]],
-    licenseProjectScopeId: ['', [Validators.required]],
+    licenseProjectScopeId: [null, [Validators.required]],
     startOn: ['', [Validators.required]],
     isProjectStarted: [false, [Validators.required]],
     endOn: ['', [Validators.required]],
@@ -135,7 +135,7 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
     projectStarted: 'تم البدء في تنفيذ المشروع؟',
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',
@@ -190,7 +190,7 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
       res.startOn = res.startOn ? new Date(res.startOn) : null as any;
       res.endOn = res.endOn ? new Date(res.endOn) : null as any;
     }
-    this.projectBasicDataForm.patchValue({ ...res });
+    this.projectBasicDataForm.patchValue({ ...res } as any);
     this.projectBasicData = res;
   }
 
@@ -198,7 +198,7 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.projectBasicDataForm.valueChanges.subscribe(changes => {
         let engineeringConsultantReportFile = this.projectBasicData.engineeringConsultantReportFile;
-        this.projectBasicData = this.projectBasicDataForm.value as ProjectBasicDataDto;
+        this.projectBasicData = this.projectBasicDataForm.value as unknown as ProjectBasicDataDto;
         this.projectBasicData.engineeringConsultantReportFile = engineeringConsultantReportFile
       })
     )
@@ -247,6 +247,12 @@ export class ProjectBasicDataComponent implements OnInit, OnDestroy {
   }
 
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length === 0) {
+      this.projectBasicData.engineeringConsultantReportFileId = null;
+      this.projectBasicData.engineeringConsultantReportFile = null;
+      this.controls.engineeringConsultantReportFileId.setValue(null);
+      return;
+    }
     this.projectBasicData.engineeringConsultantReportFileId = fileData.eventRes.data[0].id;
     this.controls.engineeringConsultantReportFileId.setValue(fileData.eventRes.data[0].id);
     this.projectBasicData.engineeringConsultantReportFile = fileData.eventRes.data[0];

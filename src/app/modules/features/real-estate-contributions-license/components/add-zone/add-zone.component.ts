@@ -35,7 +35,7 @@ export class AddZoneComponent implements OnInit, OnDestroy {
   }
 
   localization = {
-    addingNewZone: "إضافة زون جديدة",
+    addingNewZone: "رقم الزون الجديدة",
     addingNewZonePlaceholder: "أكتب رقم الزون",
     addingNewZoneHint: "يمكنك إضافة اكثر من زون وغير مسموح بتكرار الرقم ",
     PleaseAddAllRequiredFields:

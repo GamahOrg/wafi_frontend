@@ -6,7 +6,7 @@
             <div class="form-group mb-4">
               <label class="form-label">تحديث حالة المشروع</label>
               <select class="form-select" formControlName="statusId">
-                <option value="">اختر حالة</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let status of statuses" [ngValue]="status.id">
                   {{ status.name }}
                 </option>

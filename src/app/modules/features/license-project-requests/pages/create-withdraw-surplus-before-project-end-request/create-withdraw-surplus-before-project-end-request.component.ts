@@ -117,6 +117,10 @@ subscriptions: Subscription[] = [];
   
   //نموذج الطلب، موضحاً به أسباب طلب التغيير
   onExistApplicationFormFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.applicationFormFileId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.applicationFormFileId = data.id;
@@ -124,6 +128,10 @@ subscriptions: Subscription[] = [];
   }
      //تقرير المكتب الاستشاري
   onExistConsultingEngineeringFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.consultingEngineeringId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.consultingEngineeringId = data.id;
@@ -131,6 +139,10 @@ subscriptions: Subscription[] = [];
   }
  //تقرير المحاسب القانون
  onExistCharteredAccountantReportFilesUloaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.charteredAccountantReportId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.charteredAccountantReportId = data.id;
@@ -138,6 +150,10 @@ subscriptions: Subscription[] = [];
   }
      //تقرير البنك
      onExistBankReportFilesUploaded(filesData: any) {
+      if(filesData.eventRes.data.length === 0) {
+        this.bankReportId = undefined;
+        return;
+      }
       if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       filesData.eventRes.data.forEach((data: any) => {
         this.bankReportId = data.id;
@@ -145,6 +161,10 @@ subscriptions: Subscription[] = [];
     }
     //اتفاقيات الموردين
     onExistSupplierAgreementsFilesUploaded(filesData: any) {
+      if(filesData.eventRes.data.length === 0) {
+        this.supplierAgreementsId = undefined;
+        return;
+      }
       if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       filesData.eventRes.data.forEach((data: any) => {
         this.supplierAgreementsId = data.id;
@@ -152,6 +172,10 @@ subscriptions: Subscription[] = [];
     }
      //اتفاقيات المقاولين
     onExistContractorAgreementsFilesUploaded(filesData: any) {
+      if(filesData.eventRes.data.length === 0) {
+        this.contractorAgreementsId = undefined;
+        return;
+      }
       if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       filesData.eventRes.data.forEach((data: any) => {
         this.contractorAgreementsId = data.id;
@@ -159,6 +183,10 @@ subscriptions: Subscription[] = [];
     }
       //اتفاقيات مقدمى الخدمات
     onExistserviceProviderAgreementFilesUploaded(filesData: any) {
+      if(filesData.eventRes.data.length === 0) {
+        this.serviceProviderAgreementsId = undefined;
+        return;
+      }
       if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       filesData.eventRes.data.forEach((data: any) => {
         this.serviceProviderAgreementsId = data.id;
@@ -166,6 +194,10 @@ subscriptions: Subscription[] = [];
     }
      //تقرير المقاول
     onExistContractorReportFilesUploaded(filesData: any) {
+      if(filesData.eventRes.data.length === 0) {
+        this.contractorReportId = undefined;
+        return;
+      }
       if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       filesData.eventRes.data.forEach((data: any) => {
         this.contractorReportId = data.id;
@@ -173,6 +205,10 @@ subscriptions: Subscription[] = [];
     }
        //تقرير مالي لإنهاء المشروع متضمن تكلفة المشروع الفعلية( ) مصادقاُ عليها من المكتب الهندسي والمحاسب القانوني.
     onExistFinancialReportFilesUploaded(filesData: any) {
+      if(filesData.eventRes.data.length === 0) {
+        this.financialReportId = undefined;
+        return;
+      }
       if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       filesData.eventRes.data.forEach((data: any) => {
         this.financialReportId = data.id;
@@ -180,6 +216,10 @@ subscriptions: Subscription[] = [];
     }
    //خطاب التزام من المحاسب القانوني يفيد بالإبقاء على ما نسبته (20%) في حساب الضمان، إلى حين انتهاء المشروع عقاري
    onExistLetterOfCommitmentFromCharteredAccountantFilesUploaded(filesData: any) {
+      if(filesData.eventRes.data.length === 0) {
+        this.letterOfCommitmentFromCharteredAccountantId = undefined;
+        return;
+      }
       if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
       filesData.eventRes.data.forEach((data: any) => {
         this.letterOfCommitmentFromCharteredAccountantId = data.id;

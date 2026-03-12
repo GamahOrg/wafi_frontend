@@ -158,7 +158,7 @@ export class RecordDangerLogComponent {
   openEditDangerLogDialog(licenseProjectRiskId: string): void {
     this._licenseProjectRiskService.setLicenseProjectRiskId(licenseProjectRiskId);
     let Data = {
-      title: "اضافة او تعديل الخطر",
+      title: "اضافة أو تعديل الخطر",
       component: RecordAddEditDangerLogComponent,
       id: "AddEditDangerLogComponent",
     } as PopupData;

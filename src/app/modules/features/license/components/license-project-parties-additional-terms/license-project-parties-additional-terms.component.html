@@ -90,22 +90,20 @@
       </div>
     </ng-container>
   </div>
-</div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteConfirmation()">
-  <div class="confirmation-modal" (click)="$event.stopPropagation()">
-    <div class="modal-icon">
-      <i class="hgi hgi-stroke hgi-delete-03"></i>
-    </div>
-    <h3 class="modal-title">هل أنت متأكد من حذف البند؟</h3>
-    <div class="modal-actions">
-      <button type="button" class="btn btn-cancel" (click)="closeDeleteConfirmation()">
-        إلغاء
-      </button>
-      <button type="button" class="btn btn-delete" (click)="confirmDelete()">
-        حذف البند
-      </button>
+  <!-- Footer with View Draft Button -->
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
+    <h6 class="title">
+      {{ localization.draftTitle }}
+    </h6>
+  </div>
+
+  <div class="tab-data-section">
+    <div class="d-flex align-items-center gap-2">
+      <p class="fw-semibold" style="color: #1F2A37">{{ localization.draftDescription }}</p>
+      <button type="button" class="btn btn-primary" (click)="viewDraft()">عرض المسودة</button>
     </div>
   </div>
 </div>
+

@@ -53,8 +53,8 @@ export class ProjectAddressComponent implements OnInit, OnDestroy {
   projectAddressForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
     licenseProjectsId: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
-    areasId: ['', [Validators.required]],
-    citiesId: ['', [Validators.required]],
+    areasId: [null as string | null, [Validators.required]],
+    citiesId: [null as string | null, [Validators.required]],
     neighborhoodName: ['', [Validators.required]],
     streetName: [''],
     longitude: [''],

@@ -30,6 +30,7 @@ import { LicenseProjectCompletionData } from '../../../dataModels/license-projec
 import { CorrectionArchitecturalDesignFilesService } from '../../../services/licenseProjects/correction-architectural-design-files.service';
 import { CorrectionLicenseProjectUnitService } from '../../../services/correction-license-project-unit.service';
 import { CorrectionLicenseProjectPlanAccordingApprovedStandardsFileService } from '../../../services/licenseProjects/correction-license-project-plan-according-approved-standards-file.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-correction-architectural-designs',
@@ -95,7 +96,7 @@ export class CorrectionArchitecturalDesignsComponent
   private checkIfTabIsCompleted(): void {
     const typeCode =
       this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(
           this.licenseProjectId
@@ -216,6 +217,10 @@ export class CorrectionArchitecturalDesignsComponent
   }
 
   onApprovedStandardsFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles.push(
@@ -236,6 +241,10 @@ export class CorrectionArchitecturalDesignsComponent
   }
 
   onDesignFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.architecturalDesign.licenseProjectDesignFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.architecturalDesign.licenseProjectDesignFiles.push({
@@ -402,7 +411,7 @@ export class CorrectionArchitecturalDesignsComponent
   }
 
   openConfirmaDialog(res: string): void {
-    if (this.typeCode === 'FSRSU') {
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
       let Data = {
         imagePath: 'assets/images/auth/ForgotPass.svg',
         title: 'تم إرسال الطلب بنجاح !',
@@ -443,7 +452,7 @@ export class CorrectionArchitecturalDesignsComponent
   isFawriaValidation(): boolean {
     const typecode =
       this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU') return true;
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria) return true;
     else return false;
   }
 

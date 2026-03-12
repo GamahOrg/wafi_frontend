@@ -118,7 +118,7 @@ export class UnitCodesFormComponent implements OnInit, OnDestroy {
     save: 'حفظ البيانات',
     projectModelId: 'نوع النموذج',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     MinValueError: 'قيمة الحقل يجب الا تقل عن صفر',
   };
 

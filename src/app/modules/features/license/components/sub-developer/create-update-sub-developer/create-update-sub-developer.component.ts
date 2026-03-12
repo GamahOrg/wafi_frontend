@@ -99,6 +99,14 @@ export class CreateUpdateSubDeveloperComponent implements OnInit {
   }
 
   onUpload($event: any) {
+    if ($event.eventRes.data.length === 0) {
+      let controls = this.form?.controls;
+      if (controls) {
+        let control = controls['subDeveloperAgreementFileId'];
+        control.setValue(undefined);
+      }
+      return;
+    }
     let result = $event ?
       $event.eventRes as CoreResponseDTO<SysFileManagerCreateUpdateDto[]> : <any>{};
     let controls = this.form?.controls;

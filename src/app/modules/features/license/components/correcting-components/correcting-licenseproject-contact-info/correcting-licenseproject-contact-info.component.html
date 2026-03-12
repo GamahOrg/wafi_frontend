@@ -20,7 +20,7 @@
               aria-label="Default select example"
               formControlName="delegatorCustomerId"
               [class.is-invalid]="controls.delegatorCustomerId?.invalid && (controls.delegatorCustomerId?.touched || showValidation)">
-              <option [ngValue]="null" disabled hidden>{{ localization.delegatorName }}</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>
@@ -54,7 +54,7 @@
               aria-label="Default select example"
               formControlName="officerCustomerId"
               [class.is-invalid]="controls.officerCustomerId?.invalid && (controls.officerCustomerId?.touched || showValidation)">
-              <option [ngValue]="null" disabled hidden>{{ localization.officerName }}</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>

@@ -3,7 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Pagination } from 'src/app/shared/models/pagination.model';
-import { LiceneProjectBeneficiaryTypeDto, LicenseProjectExchangeDocumentMainItemDto, LicenseProjectExchangeDocumentMainItemEnum, LicenseProjectExchangeDocumentPagingDto, LicenseProjectExchangeDocumentSubItemDto } from '../dataModels/license-project-exchange-document-paging-dto';
+import { LiceneProjectBeneficiaryTypeDto, LicenseProjectExchangeDocumentInsuranceCompanyDto, LicenseProjectExchangeDocumentMainItemDto, LicenseProjectExchangeDocumentMainItemEnum, LicenseProjectExchangeDocumentMainSubItemDto, LicenseProjectExchangeDocumentPagingDto, LicenseProjectExchangeDocumentSubItemDto, LicenseProjectExchangeDocumentWithdrawalMethodDto } from '../dataModels/license-project-exchange-document-paging-dto';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LicenseProjectExchangeDocumentCreateUpdateDto } from '../dataModels/license-project-exchange-document-create-update-dto';
 import { LicenseProjectExchangeDocumentDto } from '../dataModels/license-project-exchange-document-dto';
@@ -80,10 +80,25 @@ export class LicenseProjectExchangeDocumentService {
       })
     )
   }
+  getExchangeDocumentMainItemListByProjectId(licenseProjectId: string): Observable<LicenseProjectExchangeDocumentMainItemDto[] |null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentMainItemDto[]>>
+      (`${Configuration.APIs.LicenseProjectExchangeDocument.GetExchangeDocumentMainItemListByProjectId}/${licenseProjectId}`).pipe(
+      map((res: CoreResponseDTO<LicenseProjectExchangeDocumentMainItemDto[]>) => {
+        return res.data  ? res.data as LicenseProjectExchangeDocumentMainItemDto[] : null
+      })
+    )
+  }
   getExchangeDocumentSubItemList(): Observable<LicenseProjectExchangeDocumentSubItemDto[] |null> {
     return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentSubItemDto[]>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetExchangeDocumentSubItemList}`).pipe(
       map((res: CoreResponseDTO<LicenseProjectExchangeDocumentSubItemDto[]>) => {
         return res.data  ? res.data as LicenseProjectExchangeDocumentSubItemDto[] : null
+      })
+    )
+  }
+  getExchangeDocumentMainSubItemList(): Observable<LicenseProjectExchangeDocumentMainSubItemDto[] |null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentMainSubItemDto[]>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetExchangeDocumentMainSubItemList}`).pipe(
+      map((res: CoreResponseDTO<LicenseProjectExchangeDocumentMainSubItemDto[]>) => {
+        return res.data ? res.data as LicenseProjectExchangeDocumentMainSubItemDto[] : null
       })
     )
   }
@@ -94,5 +109,20 @@ export class LicenseProjectExchangeDocumentService {
           return res.isDone ? res.data as LicenseProjectDto : null
         })
       )
+  }
+
+  getLicenseProjectExchangeDocumentWithdrawalMethodList(): Observable<LicenseProjectExchangeDocumentWithdrawalMethodDto[] | null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentWithdrawalMethodDto[]>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetLicenseProjectExchangeDocumentWithdrawalMethodList}`).pipe(
+      map((res: CoreResponseDTO<LicenseProjectExchangeDocumentWithdrawalMethodDto[]>) => {
+        return res.data ? res.data as LicenseProjectExchangeDocumentWithdrawalMethodDto[] : null
+      })
+    )
+  }
+  getLicenseProjectExchangeDocumentInsuranceCompanyList(): Observable<LicenseProjectExchangeDocumentInsuranceCompanyDto[] | null> {
+    return this._httpClient.get<CoreResponseDTO<LicenseProjectExchangeDocumentInsuranceCompanyDto[]>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetLicenseProjectExchangeDocumentInsuranceCompanyList}`).pipe(
+      map((res: CoreResponseDTO<LicenseProjectExchangeDocumentInsuranceCompanyDto[]>) => {
+        return res.data ? res.data as LicenseProjectExchangeDocumentInsuranceCompanyDto[] : null
+      })
+    )
   }
 }

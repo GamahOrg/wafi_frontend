@@ -6,7 +6,7 @@ import { LicenseProjectEngineeringConsultantDto } from '../../dataModels/license
 import { LicenseProjectEngineeringConsultantService } from '../../services/license-project-engineering-consultant.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { StaffTypes } from '../engineering-consultant/engineering-consultant-agreement-staff/staff-types';
-import { config, forkJoin, ReplaySubject, Subscription, takeUntil } from 'rxjs';
+import { forkJoin, ReplaySubject, Subscription, takeUntil } from 'rxjs';
 import { Guid } from 'src/app/core/configurations/guid';
 import { LicenseProjectEngineeringConsultantCreateUpdateDto } from '../../dataModels/license-project-engineering-consultant/license-project-engineering-consultant-create-update-dto';
 import { NextAndPreviusButtonsService } from '../../services/next-and-previous-buttons/next-and-previus-buttons.service';
@@ -21,6 +21,7 @@ import { DataVisibilityOfLicenseProjectService } from '../../services/data-visib
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LicenseProjectCompletionData } from '../../dataModels/license-project-model.dto';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-fawria-engineering-supervision-staff',
@@ -89,7 +90,7 @@ export class FawriaEngineeringSupervisionStaffComponent implements OnInit, After
     next: 'التالي',
     previous: 'السابق',
     requestWasSentToEngineeringConsultant:
-      'تم ارسال طلب للاستشاري الهندسي للموافقة على الاتفاقية',
+      'تم إرسال طلب للاستشاري الهندسي للموافقة على الاتفاقية',
   };
 
   constructor(
@@ -171,7 +172,7 @@ export class FawriaEngineeringSupervisionStaffComponent implements OnInit, After
           this.buildForm();
         } else {
           this._toastrNotificationService.showError(
-            'يجب ان يتم ادخال تاريخ بداية المشروع ونهاية المشروع في بيانات المشروع '
+            'يجب أن يتم ادخال تاريخ بداية المشروع ونهاية المشروع في بيانات المشروع '
           );
         }
       });
@@ -558,7 +559,7 @@ export class FawriaEngineeringSupervisionStaffComponent implements OnInit, After
   getCompletedTabs() {
     if (!this.licenseProjectId) return;
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(this.licenseProjectId),
@@ -683,7 +684,7 @@ export class FawriaEngineeringSupervisionStaffComponent implements OnInit, After
   }
 
   openConfirmaDialog(res: string): void {
-    if (this.typeCode === 'FSRSU') {
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
       let Data = {
         imagePath: 'assets/images/auth/ForgotPass.svg',
         title: 'تم إرسال الطلب بنجاح !',
@@ -744,7 +745,7 @@ export class FawriaEngineeringSupervisionStaffComponent implements OnInit, After
 
   isFawriaValidation(): boolean {
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU')
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria)
       return true;
     else
       return false;

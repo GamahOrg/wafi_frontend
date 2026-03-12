@@ -67,7 +67,7 @@
         <div class="card-header with-separator">
           <div class="d-flex flex-column gap-2">
             <h4>العمائر والبلوكات</h4>
-            <p>تحتوي كل عمارة او بلوك على تفاصيل ( الوحدات ، النماذج , الأكواد )</p>
+            <p>تحتوي كل عمارة أو بلوك على تفاصيل ( الوحدات ، النماذج , الأكواد )</p>
           </div>
           <div class="d-flex align-self-center gap-3">
             <div class="stats-square">
@@ -87,7 +87,7 @@
             </div>
 
             <button *ngIf="selectedZoneIndex!=-1" class="btn btn-outline-primary" (click)="addBuildingOrBlock()">
-              <i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك او عمارة
+              <i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك أو عمارة
             </button>
           </div>
         </div>
@@ -113,7 +113,7 @@
                           <div class="d-flex flex-column align-items-start gap-2 cursor-pointer" (click)="onSelectedbuildingOrBlock(unit, idx)">
                             <div class="d-flex justify-content-between align-items-center gap-2">
                               <h6>{{ unit.unitTypeName }} رقم {{ unit.code }} - المرحلة {{ unit.stageNumber }}</h6>
-                            
+
                               <span class="tag tag-info">
                                 {{ unit.isPrevious ? 'سابقة' : 'جديدة' }}
                               </span>
@@ -207,10 +207,8 @@
               <div class="row row-gap-4">
                 <div class="col-xxl-6">
                   <div class="dashed-block d-flex flex-column justify-content-center align-items-center gap-4 h-100">
-                    <mat-icon fontIcon="upload_file"></mat-icon>
-                    <div class="d-flex flex-column align-items-center gap-2">
-                      <h6>قم بتحميل القالب الخاص بنوع الوحدة المحددة</h6>
-                    </div>
+                    <i class="icon hgi hgi-stroke hgi-file-download"></i>
+                    <h6>قم بتحميل القالب الخاص بنوع الوحدة المحددة</h6>
                     <button class="btn btn-light" (click)="generateExcel()">تحميل القالب</button>
                   </div>
                 </div>
@@ -235,7 +233,7 @@
                   </p>
 
                   <button *ngIf="selectedZoneIndex!=-1" class="btn btn-outline-primary" (click)="addBuildingOrBlock()">
-                    <i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك او عمارة
+                    <i class="icon hgi hgi-stroke hgi-add-square"></i> إضافة بلوك أو عمارة
                   </button>
                 </div>
               </div>

@@ -13,9 +13,7 @@
             aria-label="Default select example"
             formControlName="subUnitTypeId"
           >
-            <option selected [value]="0" disabled>
-              {{ localization.subUnitsType }}
-            </option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let type of subUnitType" [value]="type.id">
               {{ type.name }}
             </option>
@@ -40,7 +38,7 @@
             min="1"
             id="control-subUnitCount"
             class="form-control"
-            [placeholder]="localization.subUnitCount"
+            
             formControlName="subUnitCount"
           />
           <div

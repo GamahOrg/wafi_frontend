@@ -7,9 +7,15 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { SysFileManagerCreateUpdateDto } from 'src/app/shared/models/sys-file-manager-create-update-dto';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { environment } from 'src/environments/environment';
-import { LicenseProjectEngineeringConsultantCreateUpdateDto, LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto } from '../../../dataModels/license-project-engineering-consultant/license-project-engineering-consultant-create-update-dto';
+import {
+  LicenseProjectEngineeringConsultantCreateUpdateDto,
+  LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto,
+} from '../../../dataModels/license-project-engineering-consultant/license-project-engineering-consultant-create-update-dto';
 import { LicenseProjectEngineeringConsultantDto } from '../../../dataModels/license-project-engineering-consultant/license-project-engineering-consultant-dto';
-import { CustomerShortDto, FacilityShortDto } from '../../../models/facility-short-dto';
+import {
+  CustomerShortDto,
+  FacilityShortDto,
+} from '../../../models/facility-short-dto';
 import { TermsPartType } from '../../../models/license-project-parties-additional-terms-model';
 import { LicenseProjectDelegatorService } from '../../../services/license-project-delegator.service';
 import { LicenseProjectEngineeringConsultantService } from '../../../services/license-project-engineering-consultant.service';
@@ -22,11 +28,14 @@ import { LicenseRequestService } from '../../../services/license-request.service
 
 @Component({
   selector: 'app-fawria-licenseproject-engineering-consultants-create',
-  templateUrl: './fawria-licenseproject-engineering-consultants-create.component.html',
-  styleUrls: ['./fawria-licenseproject-engineering-consultants-create.component.scss']
+  templateUrl:
+    './fawria-licenseproject-engineering-consultants-create.component.html',
+  styleUrls: [
+    './fawria-licenseproject-engineering-consultants-create.component.scss',
+  ],
 })
 export class FawriaLicenseprojectEngineeringConsultantsCreateComponent {
-baseUrl = `${environment.baseURL}/`;
+  baseUrl = `${environment.baseURL}/`;
 
   subscriptions: Subscription[] = [];
   facility: CustomerShortDto | null = null;
@@ -36,7 +45,9 @@ baseUrl = `${environment.baseURL}/`;
   TermsPartType: typeof TermsPartType = TermsPartType;
   entity!: LicenseProjectEngineeringConsultantDto;
   entity$: BehaviorSubject<LicenseProjectEngineeringConsultantDto | undefined> =
-    new BehaviorSubject<LicenseProjectEngineeringConsultantDto | undefined>(undefined);
+    new BehaviorSubject<LicenseProjectEngineeringConsultantDto | undefined>(
+      undefined,
+    );
 
   form!: FormGroup;
   facility$: BehaviorSubject<FacilityShortDto | undefined> =
@@ -64,7 +75,7 @@ baseUrl = `${environment.baseURL}/`;
     NoItemsAdded: 'لا يوجد بنود إضافية بعد!',
     AddNew: 'إضافة بند',
     PaymentData: 'بيانات السداد بالاتفاقية',
-    // requestWasSentToEngineeringConsultant: 'تم ارسال طلب للاستشاري الهندسي للموافقة على الاتفاقية',
+    // requestWasSentToEngineeringConsultant: 'تم إرسال طلب للاستشاري الهندسي للموافقة على الاتفاقية',
     requestWasSentToEngineeringConsultant: 'تم الحفظ بنجاح',
   };
 
@@ -109,7 +120,7 @@ baseUrl = `${environment.baseURL}/`;
     private _licenseRequestService: LicenseRequestService,
     private _popupService: PopupService,
     private _licenseProjectPartiesAdditionalTermsService: LicenseProjectPartiesAdditionalTermsService,
-    private _tabsService: TabsService
+    private _tabsService: TabsService,
   ) {}
 
   ngOnInit() {
@@ -126,13 +137,14 @@ baseUrl = `${environment.baseURL}/`;
         if (this.form.dirty) {
           this._tabsService.setUnsavedChanges(true);
         }
-      })
+      }),
     );
   }
 
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (this.licenseProjectId){
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    if (this.licenseProjectId) {
       this.onGet();
     }
   }
@@ -143,12 +155,13 @@ baseUrl = `${environment.baseURL}/`;
 
   GetProjectDelegatorByFacilityId(): void {
     this.subscriptions.push(
-      this._licenseProjectDelegatorService.GetFacilitySubCustomers(this.x.id as string)
+      this._licenseProjectDelegatorService
+        .GetFacilitySubCustomers(this.x.id as string)
         .subscribe((res) => {
           if (res) {
             this.licenseProjectDelegators = res as CustomerShortDto[];
           }
-        })
+        }),
     );
   }
 
@@ -160,29 +173,39 @@ baseUrl = `${environment.baseURL}/`;
   }
 
   validate() {
+    this.controls['commercialRegister'].markAsTouched();
+
     this.errorMessage = null;
     let commercialRegister = this.controls['commercialRegister'].value;
     if (commercialRegister) {
-      this._engineeringConsultantService.validateCommercialRegisterNumber(commercialRegister, QualificationTypeCode.EngineeringConsultant, this.licenseProjectId, true)
+      this._engineeringConsultantService
+        .validateCommercialRegisterNumber(
+          commercialRegister,
+          QualificationTypeCode.EngineeringConsultant,
+          this.licenseProjectId,
+          true,
+        )
         .pipe(takeUntil(this.destroyed$))
         .subscribe((result) => {
-          
           if (result && result.data) {
-            if(!this.entity || this.entity == undefined)
+            if (!this.entity || this.entity == undefined)
               this.entity = {} as LicenseProjectEngineeringConsultantDto;
 
-            this.entity.engineeringConsultant = result.data.facility as FacilityShortDto;
+            this.entity.engineeringConsultant = result.data
+              .facility as FacilityShortDto;
             this.facility = result.data as CustomerShortDto;
             this.setFacility(this.facility.facility);
-          }
-          else {
+          } else {
             this.errorMessage = result.message;
-            this.entity = {} as  LicenseProjectEngineeringConsultantDto;
+            this.entity = {} as LicenseProjectEngineeringConsultantDto;
             this.x.facilityName = '';
-            const commercialRegisterValue = this.controls['commercialRegister'].value;
+            const commercialRegisterValue =
+              this.controls['commercialRegister'].value;
             this.form.reset();
-            this.controls['commercialRegister'].setValue(commercialRegisterValue);
-            this.paymentTableData  = [
+            this.controls['commercialRegister'].setValue(
+              commercialRegisterValue,
+            );
+            this.paymentTableData = [
               {
                 item: '',
                 quantity: null,
@@ -201,15 +224,31 @@ baseUrl = `${environment.baseURL}/`;
 
   buildForm() {
     this.form = this.formGroup.group({
-      commercialRegister: ['', Validators.compose([Validators.required, Validators.min(0)]), ],
-      contarctValue: ['', Validators.compose([Validators.required, Validators.min(0)])],
-      financialReportApprovalPeriodInDays: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(30)])],
+      commercialRegister: [
+        '',
+        Validators.compose([Validators.required, Validators.min(0)]),
+      ],
+      contarctValue: [
+        '',
+        Validators.compose([Validators.required, Validators.min(0)]),
+      ],
+      financialReportApprovalPeriodInDays: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.min(1),
+          Validators.max(30),
+        ]),
+      ],
       paymentDeadline: ['', Validators.compose([Validators.required])],
-      authorizedToSignDelegator: [null, Validators.compose([Validators.required])],
+      authorizedToSignDelegator: [
+        null,
+        Validators.compose([Validators.required]),
+      ],
     });
   }
 
-  x:FacilityShortDto = new FacilityShortDto();
+  x: FacilityShortDto = new FacilityShortDto();
   setFacility($event: any) {
     this.x = $event;
     this.GetProjectDelegatorByFacilityId();
@@ -277,7 +316,7 @@ baseUrl = `${environment.baseURL}/`;
       this.paymentTableErrors.splice(index, 1);
     } else {
       this._toastrNotificationService.info(
-        'يجب أن يحتوي الجدول على صف واحد على الأقل'
+        'يجب أن يحتوي الجدول على صف واحد على الأقل',
       );
     }
   }
@@ -299,20 +338,30 @@ baseUrl = `${environment.baseURL}/`;
       this.paymentTableErrors[index].item = !row.item || row.item.trim() === '';
       if (this.paymentTableErrors[index].item) isValid = false;
       // Validate quantity
-      this.paymentTableErrors[index].quantity = row.quantity === null || row.quantity === undefined || row.quantity === '';
+      this.paymentTableErrors[index].quantity =
+        row.quantity === null ||
+        row.quantity === undefined ||
+        row.quantity === '';
       if (this.paymentTableErrors[index].quantity) isValid = false;
       // Validate unitPrice
-      this.paymentTableErrors[index].unitPrice = row.unitPrice === null || row.unitPrice === undefined || row.unitPrice === '';
+      this.paymentTableErrors[index].unitPrice =
+        row.unitPrice === null ||
+        row.unitPrice === undefined ||
+        row.unitPrice === '';
       if (this.paymentTableErrors[index].unitPrice) isValid = false;
       // Validate description
-      this.paymentTableErrors[index].description = !row.description || row.description.trim() === '';
+      this.paymentTableErrors[index].description =
+        !row.description || row.description.trim() === '';
       if (this.paymentTableErrors[index].description) isValid = false;
-      });
+    });
 
-      return isValid;
-    }
+    return isValid;
+  }
 
-  clearPaymentError(index: number, field: 'item' | 'quantity' | 'unitPrice' | 'description'): void {
+  clearPaymentError(
+    index: number,
+    field: 'item' | 'quantity' | 'unitPrice' | 'description',
+  ): void {
     if (this.paymentTableErrors[index]) {
       this.paymentTableErrors[index][field] = false;
     }
@@ -320,7 +369,8 @@ baseUrl = `${environment.baseURL}/`;
 
   // Check if selected delegator has dateOfBirth
   onDelegatorChange(): void {
-    const selectedDelegatorCustomerId = this.form.value.authorizedToSignDelegator;
+    const selectedDelegatorCustomerId =
+      this.form.value.authorizedToSignDelegator;
 
     if (!selectedDelegatorCustomerId) {
       this.showMissingDateOfBirthAlert = false;
@@ -329,7 +379,7 @@ baseUrl = `${environment.baseURL}/`;
 
     // Find the selected delegator by delegatorCustomerId
     const selectedDelegator = this.licenseProjectDelegators.find(
-      (d) => d.id === selectedDelegatorCustomerId
+      (d) => d.id === selectedDelegatorCustomerId,
     );
 
     // Check if dateOfBirth is null or undefined
@@ -341,99 +391,132 @@ baseUrl = `${environment.baseURL}/`;
   }
 
   onGet() {
-    this._engineeringConsultantService.fawryLicenseGetAsync(this.licenseProjectId as string).subscribe((result) => {
-      if (result.data) {
-        
-        this.entity = result.data;
-        // this.x = this.entity.engineeringConsultant.id as string;
-        this.facility$.next(this.entity.engineeringConsultant);
-        this.entity$.next(this.entity);
-        this.setFacility(this.entity.engineeringConsultant);
-        this.form.patchValue({
-          commercialRegister: this.entity.engineeringConsultant?.commercialRegisterNumber,
-          contarctValue: this.entity.contarctValue,
-          financialReportApprovalPeriodInDays: this.entity.financialReportApprovalPeriodInDays,
-          paymentDeadline: this.entity.paymentDeadline,
-          authorizedToSignDelegator: this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators && this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators.length > 0
-            ? this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators[0].delegatorCustomerId
-            : ''
-        });
+    this._engineeringConsultantService
+      .fawryLicenseGetAsync(this.licenseProjectId as string)
+      .subscribe((result) => {
+        if (result.data) {
+          this.entity = result.data;
+          // this.x = this.entity.engineeringConsultant.id as string;
+          this.facility$.next(this.entity.engineeringConsultant);
+          this.entity$.next(this.entity);
+          this.setFacility(this.entity.engineeringConsultant);
+          this.form.patchValue({
+            commercialRegister:
+              this.entity.engineeringConsultant?.commercialRegisterNumber,
+            contarctValue: this.entity.contarctValue,
+            financialReportApprovalPeriodInDays:
+              this.entity.financialReportApprovalPeriodInDays,
+            paymentDeadline: this.entity.paymentDeadline,
+            authorizedToSignDelegator:
+              this.entity
+                .licenseProjectEngineeringConsultantAuthorizedToSignDelegators &&
+              this.entity
+                .licenseProjectEngineeringConsultantAuthorizedToSignDelegators
+                .length > 0
+                ? this.entity
+                    .licenseProjectEngineeringConsultantAuthorizedToSignDelegators[0]
+                    .delegatorCustomerId
+                : '',
+          });
 
-        // Format contract value with commas after loading
-        setTimeout(() => {
-          const contractValueInput = document.getElementById('contarctValue') as HTMLInputElement;
-          if (contractValueInput && this.entity.contarctValue) {
-            const parts = this.entity.contarctValue.toString().split('.');
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            contractValueInput.value = parts.join('.');
-          }
-        }, 0);
+          // Format contract value with commas after loading
+          setTimeout(() => {
+            const contractValueInput = document.getElementById(
+              'contarctValue',
+            ) as HTMLInputElement;
+            if (contractValueInput && this.entity.contarctValue) {
+              const parts = this.entity.contarctValue.toString().split('.');
+              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+              contractValueInput.value = parts.join('.');
+            }
+          }, 0);
 
-        this.paymentTableData = this.entity.licenseProjectEngineeringConsultantPayments?.map(payment => ({
-          item: payment.item,
-          quantity: payment.quantity,
-          unitPrice: payment.unitPrice,
-          description: payment.description
-        })) || this.paymentTableData;
+          this.paymentTableData =
+            this.entity.licenseProjectEngineeringConsultantPayments?.map(
+              (payment) => ({
+                item: payment.item,
+                quantity: payment.quantity,
+                unitPrice: payment.unitPrice,
+                description: payment.description,
+              }),
+            ) || this.paymentTableData;
 
-        // Initialize errors array to match data array size
-        this.paymentTableErrors = this.paymentTableData.map(() => ({
-          item: false,
-          quantity: false,
-          unitPrice: false,
-          description: false,
-        }));
+          // Initialize errors array to match data array size
+          this.paymentTableErrors = this.paymentTableData.map(() => ({
+            item: false,
+            quantity: false,
+            unitPrice: false,
+            description: false,
+          }));
 
-        this.onDelegatorChange();
-        // this.buildForm();
-      }
-    });
+          this.onDelegatorChange();
+          // this.buildForm();
+        }
+      });
   }
 
   save(moveToNextTab: boolean = false) {
-    
     if (!this.licenseProjectId) {
-      this._toastrNotificationService.error(this.localizations.PleaseAddProject);
+      this._toastrNotificationService.error(
+        this.localizations.PleaseAddProject,
+      );
       return;
     }
 
     if (this.form?.invalid) {
-      this._toastrNotificationService.error(this.localizations.PleaseAddAllRequiredFields);
+      this._toastrNotificationService.error(
+        this.localizations.PleaseAddAllRequiredFields,
+      );
       this.form?.markAllAsTouched();
       return;
     }
 
     // Validate payment table
     if (!this.validatePaymentTable()) {
-      this._toastrNotificationService.error(this.localizations.PleaseAddAllRequiredFields);
+      this._toastrNotificationService.error(
+        this.localizations.PleaseAddAllRequiredFields,
+      );
       return;
     }
 
-    let object = this.form?.value as LicenseProjectEngineeringConsultantCreateUpdateDto;
+    let object = this.form
+      ?.value as LicenseProjectEngineeringConsultantCreateUpdateDto;
     object.licenseProjectId = this.licenseProjectId;
     object.engineeringConsultantId = this.x?.id as string as string;
     object.id = this.entity.id;
-    object.engineeringConsultantLicenseNumber = this.x?.saudiAuthorityOfEngineersLicenseNumber as string;
+    object.engineeringConsultantLicenseNumber = this.x
+      ?.saudiAuthorityOfEngineersLicenseNumber as string;
     object.cityId = this.x.facilityCity as string;
     // Populate licenseProjectEngineeringConsultantDelegators
     const selectedDelegatorId = this.form?.value.authorizedToSignDelegator;
     if (selectedDelegatorId) {
-      const delegatorDto = new LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto();
-      delegatorDto.id = this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators && this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators.length > 0
-        ? this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators[0].id
-        : '00000000-0000-0000-0000-000000000000';
+      const delegatorDto =
+        new LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto();
+      delegatorDto.id =
+        this.entity
+          .licenseProjectEngineeringConsultantAuthorizedToSignDelegators &&
+        this.entity
+          .licenseProjectEngineeringConsultantAuthorizedToSignDelegators
+          .length > 0
+          ? this.entity
+              .licenseProjectEngineeringConsultantAuthorizedToSignDelegators[0]
+              .id
+          : '00000000-0000-0000-0000-000000000000';
       delegatorDto.delegatorCustomerId = selectedDelegatorId;
-      delegatorDto.licenseProjectEngineeringConsultantId = this.x?.id as string
-      object.licenseProjectEngineeringConsultantAuthorizedToSignDelegators = [delegatorDto];
+      delegatorDto.licenseProjectEngineeringConsultantId = this.x?.id as string;
+      object.licenseProjectEngineeringConsultantAuthorizedToSignDelegators = [
+        delegatorDto,
+      ];
     }
-    object.licenseProjectEngineeringConsultantPayments = this.paymentTableData.map(payment => ({
-      id: '00000000-0000-0000-0000-000000000000',
-      item: payment.item,
-      quantity: payment.quantity,
-      unitPrice: payment.unitPrice,
-      description: payment.description,
-      licenseProjectEngineeringConsultantId: this.x?.id as string
-    }));
+    object.licenseProjectEngineeringConsultantPayments =
+      this.paymentTableData.map((payment) => ({
+        id: '00000000-0000-0000-0000-000000000000',
+        item: payment.item,
+        quantity: payment.quantity,
+        unitPrice: payment.unitPrice,
+        description: payment.description,
+        licenseProjectEngineeringConsultantId: this.x?.id as string,
+      }));
 
     if (this.entity.id !== Guid.empty && this.entity.id) {
       this.update(object, moveToNextTab);
@@ -442,37 +525,49 @@ baseUrl = `${environment.baseURL}/`;
     }
   }
 
-  create(object: LicenseProjectEngineeringConsultantCreateUpdateDto, moveToNextTab: boolean = false) {
+  create(
+    object: LicenseProjectEngineeringConsultantCreateUpdateDto,
+    moveToNextTab: boolean = false,
+  ) {
     object.id = Guid.empty;
-    this._engineeringConsultantService.fawryLicenseCreateAsync(object)
+    this._engineeringConsultantService
+      .fawryLicenseCreateAsync(object)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((result) => {
         if (result && result.data) this.entity.id = result.data.id;
         // this._toastrNotificationService.showSuccess(this.localizations.CreatedSuccessfully);
-        this._toastrNotificationService.success(this.localizations.requestWasSentToEngineeringConsultant);
+        // this._toastrNotificationService.success(this.localizations.requestWasSentToEngineeringConsultant);
         this.form.markAsPristine();
         this._tabsService.setUnsavedChanges(false);
         this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
         if (moveToNextTab) {
           this.moveToNextTab();
         } else {
-          this.onGet()
+          this.onGet();
         }
       });
   }
 
-  update(object: LicenseProjectEngineeringConsultantCreateUpdateDto, moveToNextTab: boolean = false) {
-    this._engineeringConsultantService.fawryLicenseUpdateAsync(object).pipe(takeUntil(this.destroyed$)).subscribe(() => {
-      // this._toastrNotificationService.showSuccess(this.localizations.UpdatedSuccessfully);
-      this._toastrNotificationService.success(this.localizations.requestWasSentToEngineeringConsultant);
-      this.form.markAsPristine();
-      this._tabsService.setUnsavedChanges(false);
-      if (moveToNextTab) {
-        this.moveToNextTab();
-      } else {
-        this.onGet()
-      }
-    });
+  update(
+    object: LicenseProjectEngineeringConsultantCreateUpdateDto,
+    moveToNextTab: boolean = false,
+  ) {
+    this._engineeringConsultantService
+      .fawryLicenseUpdateAsync(object)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(() => {
+        // this._toastrNotificationService.showSuccess(this.localizations.UpdatedSuccessfully);
+        this._toastrNotificationService.success(
+          this.localizations.requestWasSentToEngineeringConsultant,
+        );
+        this.form.markAsPristine();
+        this._tabsService.setUnsavedChanges(false);
+        if (moveToNextTab) {
+          this.moveToNextTab();
+        } else {
+          this.onGet();
+        }
+      });
   }
 
   // Format contract value with thousand separators
@@ -491,7 +586,9 @@ baseUrl = `${environment.baseURL}/`;
 
     // Store numeric value in form control
     const numericValue = value ? parseFloat(value) : null;
-    this.form.get('contarctValue')?.setValue(numericValue, { emitEvent: false });
+    this.form
+      .get('contarctValue')
+      ?.setValue(numericValue, { emitEvent: false });
 
     // Format with commas for display
     if (value) {

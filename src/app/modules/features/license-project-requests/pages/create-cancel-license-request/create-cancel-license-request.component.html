@@ -17,7 +17,7 @@
                 aria-label="Default select example"
                 formControlName="licenseProjectId"
               >
-                <option selected disabled>المشروع</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
 
                 <option
                   *ngFor="let licenseProject of licenseProjects"
@@ -52,7 +52,6 @@
                 class="form-control"
                 [(ngModel)]="justificationsAndReasons"
                 formControlName="justificationsAndReasons"
-                placeholder="مبررات و مشفوعات الغاء الرخصة"
               ></textarea>
 
               <mat-error
@@ -194,7 +193,6 @@
                     reasonsForNotFinalizingEngineeringConsultantClearance
                   "
                   formControlName="reasonsForNotFinalizingEngineeringConsultantClearance"
-                  placeholder="اسباب عدم اتمام المخالصة مع الاستشاري الهندسي"
                 ></textarea>
 
                 <mat-error
@@ -330,7 +328,6 @@
                   class="form-control"
                   [(ngModel)]="reasonsForNotFinalizingAccountantClearance"
                   formControlName="reasonsForNotFinalizingAccountantClearance"
-                  placeholder="اسباب عدم اتمام المخالصة مع المحاسب القانوني"
                 ></textarea>
 
                 <mat-error

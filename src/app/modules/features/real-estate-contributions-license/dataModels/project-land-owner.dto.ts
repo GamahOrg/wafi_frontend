@@ -53,4 +53,5 @@ export class DeebOwnerList {
   owningArea:number =0.0;
   accountNumber:string='';
   agreementFileUrl: string = '';
+  isOwnerByDeveloper: boolean = false;
 }

@@ -113,6 +113,12 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.accountKeeper.accountKeeperAgreementFileId = '';
+      this.controls.accountKeeperAgreementFileId.setValue('');
+      this.accountKeeper.accountKeeperAgreementFile = null;
+      return;
+    }
     this.accountKeeper.accountKeeperAgreementFileId = fileData.eventRes.data[0].id;
     this.controls.accountKeeperAgreementFileId.setValue(fileData.eventRes.data[0].id);
     this.accountKeeper.accountKeeperAgreementFile = null;

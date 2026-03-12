@@ -6,7 +6,7 @@
                 color="primary"
                 (click)="send()"
                 [disabled]="!disabledSend">{{localization.send}}</button>
-                <button 
+                <button
                 class="btn d-flex align-items-center justify-content-between btn-primary"
                 (click)="openCompilNotesDialog()"
                 type="button">
@@ -18,17 +18,17 @@
 <ng-container *ngIf="!availabilityToUpdate">
   <div class="buttons-wrapper mb-3 d-flex justify-content-end">
     <div>
-      <button type="button" mat-flat-button color="primary" (click)="send()" [disabled]="!disabledSend || requestSubmittedSuccessfully">
+      <button type="button" class="btn btn-primary" (click)="openApprovalDialogThenSendRequest()" [disabled]="requestSubmittedSuccessfully">
         {{ localization.send }}
       </button>
       &nbsp;
-      <button type="button" [disabled]="requestSubmittedSuccessfully" class="btn btn-outline-primary" (click)="openApprovalDialog()">
+      <!-- <button type="button" [disabled]="requestSubmittedSuccessfully" class="btn btn-outline-primary" (click)="openApprovalDialog()">
         {{ localization.approvalDecisions }}
-      </button>
+      </button> -->
     </div>
   </div>
 </ng-container>
 
-<app-license-request-timeline></app-license-request-timeline>
+<app-license-request-timeline *ngIf="!isFawri"></app-license-request-timeline>
 
 <app-tabs [hasProgress]="false"></app-tabs>

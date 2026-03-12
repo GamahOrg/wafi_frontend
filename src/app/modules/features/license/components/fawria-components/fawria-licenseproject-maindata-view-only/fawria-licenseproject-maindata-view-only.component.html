@@ -19,7 +19,7 @@
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.typeId }}</label>
             <select class="form-select" id="control-typeId" formControlName="typeId" [disabled]="true">
-              <option [label]="localization.typeId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let type of types" [ngValue]="type.id">
                 {{ type.name }}
               </option>
@@ -31,7 +31,7 @@
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.categoryId }}</label>
             <select class="form-select" id="control-categoryId" formControlName="categoryId" [disabled]="true">
-              <option [label]="localization.categoryId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let category of categories" [value]="category.id">
                 {{ category.categoryName }}
               </option>
@@ -43,7 +43,7 @@
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.subCategoryId }}</label>
             <select class="form-select" id="control-subCategoryId" formControlName="subCategoryId" [disabled]="true">
-              <option [label]="localization.subCategoryId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let subCategory of tempSubCategories" [value]="subCategory.id">
                 {{ subCategory.subCategoryName }}
               </option>
@@ -55,6 +55,7 @@
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.licenseNatureType }}</label>
             <select class="form-select" id="control-licenseNatureType" formControlName="licenseProjectNatureTypeId" [disabled]="true">
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let licenseNatureType of licenseNatureType" [value]="licenseNatureType.id" [selected]="licenseNatureType.id === licenseNatureTypeEnum.Units">
                 {{ licenseNatureType.name }}
               </option>
@@ -69,7 +70,7 @@
               localization.licenseProjectScopeId
               }}</label>
             <select class="form-select" id="control-licenseProjectScopeId" formControlName="licenseProjectScopeId" [disabled]="true">
-              <option [label]="localization.licenseProjectScopeId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let scope of licenseProjectScopes" [value]="scope.id">
                 {{ scope.name }}
               </option>

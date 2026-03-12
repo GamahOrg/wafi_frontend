@@ -1,0 +1,13 @@
+<div mat-dialog-title class="pb-0">
+  <button class="btn btn-link p-0" (click)="true" mat-dialog-close tabindex="-1" aria-label="Close">
+    <i class="material-icons">close</i>
+  </button>
+</div>
+
+<div mat-dialog-content class="pt-0">
+  <div class="d-flex flex-column align-items-center gap-3">
+    <span class="icon" [innerHTML]="promptPopupData.iconHTML"></span>
+    <h6 class="title" *ngIf="promptPopupData.title">{{promptPopupData.title}}</h6>
+    <ng-container *ngComponentOutlet="promptPopupData.component"></ng-container>
+  </div>
+</div>

@@ -95,7 +95,7 @@ export class ProjectDeedsOwnerFormComponent implements OnInit, OnDestroy {
     requiredErrorMsg: 'حقل مطلوب',
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
 
   };
 
@@ -135,6 +135,12 @@ export class ProjectDeedsOwnerFormComponent implements OnInit, OnDestroy {
     )
   }
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.projectLandOwner.agreementFileId = null;
+      this.controls.agreementFileId.setValue(null);
+      this.projectLandOwner.agreementFile = null;
+      return;
+    }
     this.projectLandOwner.agreementFileId = fileData.eventRes.data[0].id;
     this.controls.agreementFileId.setValue(fileData.eventRes.data[0].id);
     this.projectLandOwner.agreementFile = null;

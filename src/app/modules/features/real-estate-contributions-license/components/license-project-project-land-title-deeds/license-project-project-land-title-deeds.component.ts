@@ -30,7 +30,7 @@ export class LicenseProjectProjectLandTitleDeedsComponent {
     requiredErrorMsg: 'حقل مطلوب',
     save:'حفظ البيانات',
     savedSuccessfully:'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     send: "إرسال الطلب",
     owners:"الملاك",
     showowners:"عرض الملاك",

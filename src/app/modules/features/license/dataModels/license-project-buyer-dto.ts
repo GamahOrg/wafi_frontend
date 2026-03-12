@@ -38,11 +38,11 @@ export interface LicenseProjectBuyerDto {
   totalPrice: number;
   //تكاليف رسوم الاراضي
   landFeeCosts: number;
-  //نسبة الإشراف او نسبة الرسوم
+  //نسبة الإشراف أو نسبة الرسوم
   percentageSupervisionOrFees: number;
-  //نسبة الإشراف او نسبة الرسوم للأرض
+  //نسبة الإشراف أو نسبة الرسوم للأرض
   percentageSupervisionOrFeesForLand: number;
-  //نسبة الإشراف او نسبة الرسوم للوحدة
+  //نسبة الإشراف أو نسبة الرسوم للوحدة
   percentageSupervisionOrFeesForUnit: number;
   supervisionFromProjectBeginning: number;
   projectDayCounts: number;
@@ -94,7 +94,7 @@ export class LicenseProjectBuyerSettingDto {
   // نسبة الرسوم للأرض
   percentageSupervisionOrFeesForLand: number = 0;
 
-  //نسبة الإشراف او نسبة الرسوم للوحدة
+  //نسبة الإشراف أو نسبة الرسوم للوحدة
   percentageSupervisionOrFeesForUnit: number = 0;
   supervisionFromProjectBeginning: number = 0;
   projectDayCounts: number = 0;
@@ -148,7 +148,15 @@ export interface LicenseProjectAccountsDto {
     //حساب الحفظ
     custodyAccountNumber: string
     //المبلغ المتوفر بحساب الحفظ
-    custodyAvailableAmount: number
+  custodyAvailableAmount: number
+  //حساب التمويل
+  financingSubIBAN: string
+  //المبلغ المتوفر بحساب التمويل
+  financingSubIBANAvailableAmount: number
+  //حساب الحوافز
+  incentivesSubIBAN: string
+  // المبلغ المتوفر بحساب الحوافز
+  incentivesSubIBANAvailableAmount: number
 }
 export interface BuyerBusinessPaymentInstallementsDto {
   id: string;

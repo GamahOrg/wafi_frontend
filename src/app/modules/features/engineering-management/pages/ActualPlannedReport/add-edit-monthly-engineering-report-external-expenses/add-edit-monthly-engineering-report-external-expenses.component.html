@@ -12,7 +12,6 @@
           <input bsDatepicker
                  type="text" id="control-expenseDate"
                  class="form-control"
-                 placeholder="yyyy-mm-dd"
                  formControlName="expenseDate"
                  [value]="controls.expenseDate.value == '0001-01-01T00:00:00' ? getDateNow() : controls.expenseDate.value | date: 'dd/MM/yyyy' ">
           <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
@@ -25,7 +24,7 @@
         <div class="form-group mb-4">
           <label class="form-label">المبلغ</label>
           <input type="text" id="control-expectedConstructionCost" class="form-control" formControlName="amount"
-              placeholder="المبلغ">
+              >
           <div class="invalid-feedback d-block" *ngIf="controls.amount?.hasError('required') && showValidation">
       حقل مطلوب
           </div>
@@ -37,7 +36,7 @@
         <div class="form-group mb-4">
           <label class="form-label">البيان</label>
           <input type="text" id="control-description" class="form-control" formControlName="description"
-            placeholder="البيان">
+            >
           <div class="invalid-feedback d-block" *ngIf="controls.description?.hasError('required') && showValidation">
             حقل مطلوب
           </div>

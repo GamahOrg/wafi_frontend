@@ -18,7 +18,7 @@ export class ProjectUnitsComponent implements OnInit, OnDestroy {
   selectedProjectZoneTitle: string | null = null;
   localization = {
     totalNumberOfUnits: "إجمالي عدد البلوكات والعمائر المضافة ",
-    addingNewUnit: "إضافة بلوك او عمارة",
+    addingNewUnit: "إضافة بلوك أو عمارة",
     zoneNumber: "زون رقم ",
     type: "النوع",
     unitNumber: "رقم البلوك / رقم العمارة",

@@ -1,3 +1,9 @@
+// Prevent page content from jumping when dialog opens
+html.cdk-global-scrollblock {
+  position: static !important;
+  overflow: hidden;
+}
+
 .cdk-overlay-dark-backdrop {
   background: rgba(#000, .4);
 }

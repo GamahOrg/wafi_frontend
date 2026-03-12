@@ -28,6 +28,15 @@ export class SharedLicenseProjectService {
   removeLicenseProjectIdfromLocalStorage(): void {
     localStorage.removeItem('licenseProjectId')
   }
+  setLicenseProjectNameInLocalStorage(licenseProjectName: string): void {
+    localStorage.setItem('licenseProjectName', licenseProjectName)
+  }
+  getLicenseProjectNameStorage(): string | null {
+    return localStorage.getItem('licenseProjectName')
+  }
+  removeLicenseProjectNamefromLocalStorage(): void {
+    localStorage.removeItem('licenseProjectName')
+  }
   setLicenseRequestIdInLocalStorage(licenseRequestId: string): void {
     localStorage.setItem('licenseRequestId', licenseRequestId)
   }

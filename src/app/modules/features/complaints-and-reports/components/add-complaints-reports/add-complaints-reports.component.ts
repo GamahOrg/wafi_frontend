@@ -97,7 +97,7 @@ export class AddComplaintsReportsComponent implements OnInit, OnDestroy {
     this.complaintRequest.complaintRequestTypeId = Number(this.complaintRequest.complaintRequestTypeId);
     this.complaintRequest.ComplaintRequestFiles = this.complaintRequestFileList
     if (!this.complaintRequest.ComplaintRequestFiles || this.complaintRequest.ComplaintRequestFiles.length == 0) {
-      this._toastrNotificationService.showError("نأمل رفع ملفات الشكوى او البلاغ");
+      this._toastrNotificationService.showError("نأمل رفع ملفات الشكوى أو البلاغ");
       return;
     }
     this.SaveComplaintRequest();
@@ -106,12 +106,12 @@ export class AddComplaintsReportsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._complaintsReportsService.SaveComplaintRequest(this.complaintRequest as ComplaintRequestCreateUpdateDto).subscribe(res => {
         if (res && res.isDone) {
-          this._toastrNotificationService.showSuccess("تم تقديم الشكوى او البلاغ");
+          this._toastrNotificationService.showSuccess("تم تقديم الشكوى أو البلاغ");
           this._complaintsReportsService.submitSuccessfullyEventEmitter.emit();
           this.closeDialog();
         }
         else {
-          this._toastrNotificationService.showError("لم يتم تقديم الشكوى او البلاغ");
+          this._toastrNotificationService.showError("لم يتم تقديم الشكوى أو البلاغ");
 
         }
       }
@@ -119,6 +119,9 @@ export class AddComplaintsReportsComponent implements OnInit, OnDestroy {
     )
   }
   public onExistComplaintFilesUploaded(filesData: any): void {
+    if(filesData.eventRes.data.length == 0) {
+      this.complaintRequestFileList = [];
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.complaintRequestFileList) this.complaintRequestFileList = [];
     filesData.eventRes.data.forEach((data: any) => {

@@ -21,11 +21,12 @@ export class RealStateDeveloperUnitsListComponent implements OnInit, OnDestroy {
   error: string | null = null;
   subscriptions: Subscription[] = [];
   newPageNo: number = 1;
-
+LicenseProjectUnitCodeStatus = LicenseProjectUnitCodeStatus
   // الفلاتر والبحث
   searchTerm = '';
   statusFilter: LicenseProjectUnitCodeStatus = LicenseProjectUnitCodeStatus.All;
   unitType:LicenseProjectUnitType = LicenseProjectUnitType.All;
+  LicenseProjectUnitType = LicenseProjectUnitType
   private searchSubject = new Subject<string>();
 
   // Dropdown data

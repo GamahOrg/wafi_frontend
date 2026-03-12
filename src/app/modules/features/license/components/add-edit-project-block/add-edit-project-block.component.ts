@@ -53,7 +53,7 @@ export class AddEditProjectBlockComponent implements OnInit, OnDestroy {
       unitTypeId: ['', Validators.required],
       // unitTypeName: [''],
       code: ['', Validators.required],
-      stageNumberId: ['', Validators.required],
+      stageNumberId: [null, Validators.required],
       // stageNumber: ['', Validators.required],
       constructionStartOn: ['', Validators.required],
       constructionEndOn: ['', Validators.required],
@@ -94,7 +94,7 @@ export class AddEditProjectBlockComponent implements OnInit, OnDestroy {
   }
 
   localization = {
-    errorMsg: 'لا يمكن اضافة او تعديل بلوكات او عماير الآن',
+    errorMsg: 'لا يمكن اضافة أو تعديل بلوكات أو عماير الآن',
     UnitType: 'إضافة بلوك / عمارة ',
     unitCode: 'رقم البلوك / رقم العمارة',
     stageNo: 'رقم المرحلة',
@@ -103,9 +103,9 @@ export class AddEditProjectBlockComponent implements OnInit, OnDestroy {
     chooseUnitTitle: 'تحديد نوع الوحدات داخل البلوك',
     addingNewUnit: 'حفظ و إضافة نوع وحدة جديد ',
     chooseUnitTitleHint: '( يمكنك اختيار أكثر من نوع من الوحدات داخل البلوك )',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     subUnitsType: 'اضاقة أنواع الوحدات بالبلوك / العمارة ',
-    subUnitCount: 'عدد وحدات الخاص بالبلوك او العمارة  ',
+    subUnitCount: 'عدد وحدات الخاص بالبلوك أو العمارة  ',
     actions: 'إجراءات',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
   };

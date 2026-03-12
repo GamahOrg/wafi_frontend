@@ -102,7 +102,7 @@
                             <label class="form-label">نسبة الإنجاز الفعلى الشهرية</label>
                             <input type="number" id="control-actualMonthlyPlannedCompletionPercentage"
                                 class="form-control" formControlName="actualMonthlyPlannedCompletionPercentage"
-                                placeholder="نسبة الإنجاز الفعلى الشهرية" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.actualMonthlyPlannedCompletionPercentage?.hasError('required') && showValidation
     ">
@@ -145,7 +145,7 @@
                             <label class="form-label">عدد الوحدات الجاهزة للتسليم للربط خلال الشهر</label>
                             <input type="number" id="control-noOfUnitsReadyForConnection" class="form-control"
                                 formControlName="noOfUnitsReadyForConnection"
-                                placeholder="عدد الوحدات الجاهزة للتسليم للربط خلال الشهر" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.noOfUnitsReadyForConnection?.hasError('required') && showValidation
     ">
@@ -168,7 +168,7 @@
                             <label class="form-label">عدد الوحدات التراكمي الكاملة التشطيبات</label>
                             <input type="number" id="control-cumulativeNoOfFullyFinishedUnits" class="form-control"
                                 formControlName="cumulativeNoOfFullyFinishedUnits"
-                                placeholder="عدد الوحدات التراكمي الكاملة التشطيبات" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.cumulativeNoOfFullyFinishedUnits?.hasError('required') && showValidation
     ">
@@ -190,6 +190,7 @@
                         <div class="form-group mb-4">
                             <label for="" class="form-label">شبكات البنية التحية</label>
                             <select class="form-select" formControlName="isInfrastructureNetworkElectricity">
+                                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                                 <option [value]="true">
                                     نعم
                                 </option>
@@ -207,7 +208,7 @@
                         <div class="form-group mb-4">
                             <label class="form-label">سداد رسوم الخدمة</label>
                             <input type="number" id="control-serviceFeesPaymentElectricity" class="form-control"
-                                formControlName="serviceFeesPaymentElectricity" placeholder="سداد رسوم الخدمة" />
+                                formControlName="serviceFeesPaymentElectricity" />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.serviceFeesPaymentElectricity?.hasError('required') && showValidation
     ">
@@ -221,7 +222,7 @@
                             <label class="form-label">عدد عدادات الكهرباء التى تم تركيبه</label>
                             <input type="number" id="control-noOfElectricityMetersInstalled" class="form-control"
                                 formControlName="noOfElectricityMetersInstalled"
-                                placeholder="عدد عدادات الكهرباء التى تم تركيبه" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.noOfElectricityMetersInstalled?.hasError('required') && showValidation
     ">
@@ -235,7 +236,7 @@
                             <label class="form-label">عدد الوحدات التى تم ربط الخدمة بها</label>
                             <input type="number" id="control-noOfConnectedUnitsElectricity" class="form-control"
                                 formControlName="noOfConnectedUnitsElectricity"
-                                placeholder="عدد الوحدات التى تم ربط الخدمة بها" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.noOfConnectedUnitsElectricity?.hasError('required') && showValidation
     ">
@@ -250,7 +251,7 @@
                             <label class="form-label">عدد الوحدات التى تم إطلاق تيار بها</label>
                             <input type="number" id="control-noOfUnitsWithActiveElectricityService" class="form-control"
                                 formControlName="noOfUnitsWithActiveElectricityService"
-                                placeholder="عدد الوحدات التى تم إطلاق تيار بها" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.noOfUnitsWithActiveElectricityService?.hasError('required') && showValidation
     ">
@@ -274,6 +275,7 @@
                         <div class="form-group mb-4">
                             <label for="" class="form-label">شبكات البنية التحية</label>
                             <select class="form-select" formControlName="isInfrastructureNetworkWater">
+                                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                                 <option [value]="true">
                                     نعم
                                 </option>
@@ -291,7 +293,7 @@
                         <div class="form-group mb-4">
                             <label class="form-label">سداد رسوم الخدمة</label>
                             <input type="number" id="control-serviceFeesPaymentWater" class="form-control"
-                                formControlName="serviceFeesPaymentWater" placeholder="سداد رسوم الخدمة" />
+                                formControlName="serviceFeesPaymentWater" />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.serviceFeesPaymentWater?.hasError('required') && showValidation
     ">
@@ -304,7 +306,7 @@
                             <label class="form-label">عدد عدادات المياه التى تم تركيبها</label>
                             <input type="number" id="control-noOfWaterMetersInstalled" class="form-control"
                                 formControlName="noOfWaterMetersInstalled"
-                                placeholder="عدد عدادات المياه التى تم تركيبها" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.noOfWaterMetersInstalled?.hasError('required') && showValidation
     ">
@@ -318,7 +320,7 @@
                             <label class="form-label">عدد الوحدات التى تم ربط الخدمة بها</label>
                             <input type="number" id="control-noOfConnectedUnitsWater" class="form-control"
                                 formControlName="noOfConnectedUnitsWater"
-                                placeholder="عدد الوحدات التى تم ربط الخدمة بها" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.noOfConnectedUnitsWater?.hasError('required') && showValidation
     ">
@@ -331,7 +333,7 @@
                             <label class="form-label">عدد الوحدات التى تم تفعيل الخدمة بها</label>
                             <input type="number" id="control-noOfUnitsWithActiveWaterService" class="form-control"
                                 formControlName="noOfUnitsWithActiveWaterService"
-                                placeholder="عدد الوحدات التى تم تفعيل الخدمة بها" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
       controls.noOfUnitsWithActiveWaterService?.hasError('required') && showValidation
     ">
@@ -355,6 +357,7 @@
                         <div class="form-group mb-4">
                             <label for="" class="form-label">شبكات البنية التحية</label>
                             <select class="form-select" formControlName="isInfrastructureNetworkSewage">
+                                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                                 <option [value]="true">
                                     نعم
                                 </option>
@@ -372,7 +375,7 @@
                         <div class="form-group mb-4">
                             <label class="form-label">عدد الوحدات التى تم ربط الخدمة بها</label>
                             <input type="number" id="control-noOfConnectedUnits" class="form-control"
-                                formControlName="noOfConnectedUnits" placeholder="عدد الوحدات التى تم ربط الخدمة بها" />
+                                formControlName="noOfConnectedUnits" />
                             <div class="invalid-feedback d-block" *ngIf="
                       controls.noOfConnectedUnits?.hasError('required') && showValidation
                     ">
@@ -385,7 +388,7 @@
                             <label class="form-label">عدد الوحدات التى تم تفعيل الخدمة بها</label>
                             <input type="number" id="control-noOfUnitsWithActiveSewagerService" class="form-control"
                                 formControlName="noOfUnitsWithActiveSewagerService"
-                                placeholder="عدد الوحدات التى تم تفعيل الخدمة بها" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
                       controls.noOfUnitsWithActiveSewagerService?.hasError('required') && showValidation
                     ">
@@ -411,7 +414,7 @@
                             <label class="form-label">عدد الوحدات الجاهزة للتسليم للمستفيدين (موصولة بالخدمات)</label>
                             <input type="number" id="control-noOfUnitsReadyForHandover" class="form-control"
                                 formControlName="noOfUnitsReadyForHandover"
-                                placeholder="عدد الوحدات الجاهزة للتسليم للمستفيدين (موصولة بالخدمات)" />
+                                />
                             <div class="invalid-feedback d-block" *ngIf="
                                       controls.noOfUnitsReadyForHandover?.hasError('required') && showValidation
                                     ">
@@ -425,6 +428,7 @@
                             <label for="" class="form-label">جاهزية البلوكات للتسليم متضمنة المرافق الخارجية للسكن
                                 (السلفتة - الإنارة - الأرصفة)</label>
                             <select class="form-select" formControlName="blocksReadyForHandover">
+                                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                                 <option [value]="true">
                                     جاهزة
                                 </option>
@@ -485,7 +489,7 @@
                     <div class="col-6 col-md-6">
                         <div class="form-group mb-4">
                             <textarea type="text" id="control-notes" class="form-control" formControlName="notes"
-                                placeholder=" الملاحظات"></textarea>
+                                ></textarea>
                             <div class="invalid-feedback d-block"
                                 *ngIf="controls.notes?.hasError('required') && showValidation">
                                 حقل مطلوب

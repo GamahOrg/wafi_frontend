@@ -23,7 +23,7 @@ export class ProjectListFormComponent {
   userData: customerResponse | null = null;
   showValidation:boolean=false;
   ProjectManagerForm = this._formBuilder.group({
-    managerId: ['', [Validators.required]],
+    managerId: [null as string | null, [Validators.required]],
   })
 /**
  *

@@ -88,6 +88,11 @@ export class QualificationFacilityCertificationFormComponent {
   }
 
   onFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.qualificationFacilityCertification.certificationFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length) return;
     this.qualificationFacilityCertification.certificationFileId = fileRemovedData.eventRes.data[0].id;
   }
 

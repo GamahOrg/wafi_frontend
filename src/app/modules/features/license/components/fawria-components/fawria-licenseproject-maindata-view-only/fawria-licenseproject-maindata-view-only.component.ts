@@ -138,7 +138,7 @@ export class FawriaLicenseprojectMainDataViewOnlyComponent  implements OnInit, O
     projectStarted: 'تم البدء في تنفيذ المشروع؟',
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
     requiredErrorMsg: 'هذا الحقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',

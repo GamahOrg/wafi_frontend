@@ -26,7 +26,7 @@
                     showValidation && controls.complaintRequestTypeId.errors
                 }"
               >
-                <option label="نوع الطلب" disabled></option>
+                <option label="يرجى الاختيار" [ngValue]="null" disabled hidden></option>
                 <option
                   *ngFor="let complaintRequestType of complaintRequestTypes"
                   [value]="complaintRequestType.id"
@@ -50,13 +50,12 @@
           <div class="col-md-6 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label" for="customerName"
-                >اسم مقدم الشكوى او البلاغ</label
+                >اسم مقدم الشكوى أو البلاغ</label
               >
               <input
                 type="text"
                 id="control-customerName"
                 formControlName="customerName"
-                placeholder="اسم مقدم الشكوى او البلاغ"
                 class="form-control"
                 [ngClass]="{
                   'is-invalid': showValidation && controls.customerName.errors
@@ -80,7 +79,6 @@
                 formControlName="nIDNumber"
                 id="control-nIDNumber"
                 class="form-control"
-                placeholder="رقم الهوية"
                 [ngClass]="{
                   'is-invalid': showValidation && controls.nIDNumber.errors
                 }"
@@ -100,7 +98,6 @@
                 type="text"
                 id="control-facilityName"
                 formControlName="facilityName"
-                placeholder="اسم الشركة"
                 class="form-control"
                 [ngClass]="{
                   'is-invalid': showValidation && controls.facilityName.errors
@@ -125,7 +122,6 @@
                 type="text"
                 id="control-commercialRegisterNumber"
                 formControlName="commercialRegisterNumber"
-                placeholder="رقم سجل التجاري"
                 class="form-control"
                 [ngClass]="{
                   'is-invalid':
@@ -152,7 +148,6 @@
                 formControlName="email"
                 id="control-email"
                 class="form-control"
-                placeholder="البريد الإلكتروني"
                 [ngClass]="{
                   'is-invalid': showValidation && controls.email.errors
                 }"
@@ -173,7 +168,6 @@
                 formControlName="phone"
                 class="form-control"
                 id="control-phone"
-                placeholder="رقم الجوال"
                 [ngClass]="{
                   'is-invalid': showValidation && controls.phone.errors
                 }"
@@ -195,7 +189,7 @@
           <div class="col-md-6 col-lg-6">
             <div class="form-group mb-4">
               <label for="description" class="form-label"
-                >وصف البلاغ او الشكوى</label
+                >وصف البلاغ أو الشكوى</label
               >
               <textarea
                 type="text"
@@ -216,7 +210,7 @@
 
           <div class="col-md-6 col-lg-6">
             <div class="form-group mb-4">
-              <div class="key">ملفات الشكوى او البلاغ</div>
+              <div class="key">ملفات الشكوى أو البلاغ</div>
               <app-file-uploader
                 [data]="multiFilesUploaderData"
                 (fileUploaded)="onExistComplaintFilesUploaded($event)"
@@ -237,7 +231,7 @@
           <div class="form-group mt-5">
             <div class="actions">
               <button class="btn btn-primary" id="btn-save" (click)="save()">
-                ارسال الطلب
+                إرسال الطلب
               </button>
               <a class="mx-5" [routerLink]="[loginLink]" id="link-fogotPassword"
                 >الرجوع لتسجل الدخول</a

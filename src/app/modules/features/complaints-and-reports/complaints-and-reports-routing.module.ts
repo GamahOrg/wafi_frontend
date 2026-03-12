@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: Configuration.pages.complaintsAndReport.complaintsReports,
     component:ComplaintsReportsComponent ,
-    data: {breadcrumb :  'تقديم بلاغ او شكوى'},
+    data: {breadcrumb :  'تقديم بلاغ أو شكوى'},
 
   },
   

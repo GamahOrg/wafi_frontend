@@ -13,7 +13,7 @@
                            class="form-label">{{localization.projectModelId}}</label>
                     <select class="form-select" id="control-projectModelId"
                             formControlName="projectModelId">
-                        <!--<option [label]="localization.projectModelId"></option>-->
+                        <option [value]="''" disabled hidden>يرجى الاختيار</option>
                         <option *ngFor="let type of models"
                                 [value]="type.id">{{type.name}}</option>
                     </select>

@@ -27,7 +27,7 @@
             <div class="form-group mb-4">
               <label class="form-label">{{localization.typeId}}</label>
               <select class="form-select" id="control-typeId" formControlName="typeId">
-                <option selected disabled [value]="0">{{localization.typeId}}</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let type of deedTypes" [value]="type.id">{{type.name}}</option>
               </select>
               <mat-error
@@ -38,9 +38,11 @@
           <div class="col-3 col-lg-3">
             <div class="form-group mb-4">
               <label class="form-label">{{isDeedType? localization.number:localization.ducumentNumber}}</label>
-              <input type="text" placeholder="{{isDeedType? localization.number:localization.ducumentNumber}}" class="form-control" formControlName="number">
+              <input type="text" class="form-control" formControlName="number">
               <mat-error
                 *ngIf="controls.number?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
+              <mat-error
+                *ngIf="controls.number?.hasError('pattern') && showValidation">رقم الصك يجب أن يحتوي على أرقام فقط</mat-error>
             </div>
           </div>
 
@@ -49,7 +51,7 @@
               <label class="form-label">{{localization.day}}</label>
               <select formControlName="day" id="control-day" class="form-select">
                 <!-- [ngClass]="{'is-invalid': showValidation}"> -->
-                <option selected disabled [value]="0">{{localization.day}}</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let day of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]">
                   {{day}}</option>
@@ -64,7 +66,7 @@
               <label class="form-label">{{localization.month}}</label>
               <select formControlName="month" id="control-month" class="form-select">
                 <!-- [ngClass]="{'is-invalid': showValidation} -->
-                <option selected disabled [value]="0">{{localization.month}}</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]">{{month}}</option>
               </select>
 
@@ -76,7 +78,7 @@
           <div class="col-1 col-lg-2">
             <div class="form-group mb-2">
               <label class="form-label">{{localization.year}}</label>
-              <input type="text" placeholder="{{localization.year}}" class="form-control" formControlName="year">
+              <input type="text" class="form-control" formControlName="year">
               <mat-error
                 *ngIf="controls.year?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
             </div>

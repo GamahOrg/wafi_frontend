@@ -27,7 +27,7 @@ export class AddEditConstructionWorkPositionComponent {
   years?: number[];
   licenseProjectEngineeringConstructionWorkPositionForm =
     this._formBuilder.group({
-      currenrYear: [0],
+      currenrYear: [null as number | null],
       licenseProjectEngineeringConstructionWorkStatus: this._formBuilder.array(
         []
       ),

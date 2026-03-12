@@ -73,7 +73,7 @@ export class RequestAttachmentsComponent implements OnInit, OnDestroy{
     } 
     if(!this.form.controls.operationAndMaintenanceAcknowledgment.value)
     {
-      this.toastr.showError("نأمل الموافقه على الاقرار حتي يتم التسجيل ");
+      this.toastr.showError("نأمل الموافقة على الاقرار حتي يتم التسجيل ");
      return;
     }
     this.licenseProjectRequestAttachmentDto = this.form.value as LicenseProjectRequestAttachmentDto;
@@ -121,12 +121,20 @@ export class RequestAttachmentsComponent implements OnInit, OnDestroy{
   }
 
   onExistSpecifiedProtocolsDurationCommitmentFilesUploaded(filesData: any) {
+    if( filesData.eventRes.data.length === 0) {
+      this.form.controls.specifiedProtocolsDurationCommitmentFileId.setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.form.controls.specifiedProtocolsDurationCommitmentFileId.setValue(data.id as string);
     });
   }
   onExistMarketingFilesUploaded(filesData: any) {
+    if( filesData.eventRes.data.length === 0) {
+      this.form.controls.projectMarketingFileId.setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.form.controls.projectMarketingFileId.setValue(data.id as string);

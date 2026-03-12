@@ -31,10 +31,10 @@
               <span class="status-pill" [ngClass]="getApprovalClass(approval)">
                 
                 {{
-                approval.approvedOn != null
-                ? approval.isApproved
+                approval.agreementStatusEnum === agreementStatusEnum.Certified
                 ? "معتمد"
-                : "مرفوض"
+                : approval.agreementStatusEnum === agreementStatusEnum.Rejected
+                ? "مرفوض"
                 : "قيد الانتظار"
                 }}
               </span>

@@ -12,124 +12,146 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 @Component({
   selector: 'app-agreements',
   templateUrl: './agreements.component.html',
-  styleUrls: ['./agreements.component.scss']
+  styleUrls: ['./agreements.component.scss'],
 })
 export class AgreementsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  realEstateContribution : RealEstateContributionDto =new RealEstateContributionDto();
+  realEstateContribution: RealEstateContributionDto =
+    new RealEstateContributionDto();
   baseUrl = `${environment.baseURL}/`;
   showContributorValidation: boolean = false;
   showfinancialValidation: boolean = false;
-  licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
-  
+  licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
+
   constructor(
     private _realEstateContributionService: RealEstateContributionService,
     private _toastrService: ToastrNotificatioService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService
-  ) { }
+  ) {}
   singleFileUploaderData: FileUploader = {
     multiple: false,
   } as FileUploader;
   ngOnInit() {
-    this.getLicenseProjectIdStorage()
-   
+    this.getLicenseProjectIdStorage();
+
     this.observeTabsButtons();
     this.updateSaveAsDraftBtnIsvisible();
   }
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     this.loadComponentData();
   }
   private loadComponentData() {
     this.subscriptions.push(
-      this._realEstateContributionService.GetByLicenseProjectId(this.licenseProjectId as string).subscribe((res) => {
-       
-        this.realEstateContribution=res.data as RealEstateContributionDto;
-  }))
-    }
-
-    onShareholderContractFormFileUploaded(fileData: any) {
-     
-            this.realEstateContribution.shareholderContractFormFileId = fileData.eventRes.data[0].id as string;
-          }
-  
-  onContributorDirectorAgreementFileUploaded(fileData: any) {
-
-      this.realEstateContribution.contributorDirectorAgreementFileId = fileData.eventRes.data[0].id as string;
-    }
-  onFinancialMarketInstitutionAgreementFileUploaded(fileData: any) {
-   
-      this.realEstateContribution.financialMarketInstitutionAgreementFileId = fileData.eventRes.data[0].id as string;
-
+      this._realEstateContributionService
+        .GetByLicenseProjectId(this.licenseProjectId as string)
+        .subscribe((res) => {
+          this.realEstateContribution = res.data as RealEstateContributionDto;
+        })
+    );
   }
-  save(moveToNextTab: boolean = false): void {
-   
-    if(!this.realEstateContribution.contributorDirectorAgreementFileId)
-    {
-      this._toastrService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
-      this.showContributorValidation=true;
+
+  onShareholderContractFormFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.realEstateContribution.shareholderContractFormFileId = '';
+      return;
+    }
+    this.realEstateContribution.shareholderContractFormFileId = fileData
+      .eventRes.data[0].id as string;
+  }
+
+  onContributorDirectorAgreementFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.realEstateContribution.contributorDirectorAgreementFileId = '';
       return;
     }
 
-if(!this.realEstateContribution.financialMarketInstitutionAgreementFileId)
-{
-  this._toastrService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
-  this.showfinancialValidation=true;
-  return;
-}
-if(!this.realEstateContribution.shareholderContractFormFileId)
-{
-  this._toastrService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
-  this.showfinancialValidation=true;
-  return;
-}
-    if (!this.realEstateContribution.id) this.realEstateContribution.id =this.licenseProjectId as string;
+    this.realEstateContribution.contributorDirectorAgreementFileId = fileData
+      .eventRes.data[0].id as string;
+  }
+  onFinancialMarketInstitutionAgreementFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.realEstateContribution.financialMarketInstitutionAgreementFileId =
+        '';
+      return;
+    }
+    this.realEstateContribution.financialMarketInstitutionAgreementFileId =
+      fileData.eventRes.data[0].id as string;
+  }
+  save(moveToNextTab: boolean = false): void {
+    if (!this.realEstateContribution.contributorDirectorAgreementFileId) {
+      this._toastrService.showError(
+        'نأمل ادخال كل الحقول اللازمة واعادة المحاولة'
+      );
+      this.showContributorValidation = true;
+      return;
+    }
 
-  this.subscriptions.push(
-    this._realEstateContributionService.Save(this.realEstateContribution as RealEstateContributionDto ).subscribe(res => {
-      if (res.isDone) {
-       
-        this.showContributorValidation = false;
-        this.showfinancialValidation = false;
-        this._toastrService.showSuccess("تم حفظ ملفات الاتفاقية");
-        this.realEstateContribution=res.data as RealEstateContributionDto;
-        if (moveToNextTab) this.moveToNextTab()
-      }
-      else
-        this._toastrService.showError(res.message);
-    })
-  )
+    if (
+      !this.realEstateContribution.financialMarketInstitutionAgreementFileId
+    ) {
+      this._toastrService.showError(
+        'نأمل ادخال كل الحقول اللازمة واعادة المحاولة'
+      );
+      this.showfinancialValidation = true;
+      return;
+    }
+    if (!this.realEstateContribution.shareholderContractFormFileId) {
+      this._toastrService.showError(
+        'نأمل ادخال كل الحقول اللازمة واعادة المحاولة'
+      );
+      this.showfinancialValidation = true;
+      return;
+    }
+    if (!this.realEstateContribution.id)
+      this.realEstateContribution.id = this.licenseProjectId as string;
+
+    this.subscriptions.push(
+      this._realEstateContributionService
+        .Save(this.realEstateContribution as RealEstateContributionDto)
+        .subscribe((res) => {
+          if (res.isDone) {
+            this.showContributorValidation = false;
+            this.showfinancialValidation = false;
+            this._toastrService.showSuccess('تم حفظ ملفات الاتفاقية');
+            this.realEstateContribution = res.data as RealEstateContributionDto;
+            if (moveToNextTab) this.moveToNextTab();
+          } else this._toastrService.showError(res.message);
+        })
+    );
   }
   // TabsButtons
   private observeNextButtonIsCliced() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
-        this.save(true)
-      })
-    )
+      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
+        (res: null) => {
+          this.save(true);
+        }
+      )
+    );
   }
   private observeSaveAsDraftIsClicked() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe((res: null) => {
-        this.save()
-      })
-    )
+      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(
+        (res: null) => {
+          this.save();
+        }
+      )
+    );
   }
   private observeTabsButtons(): void {
     this.observeNextButtonIsCliced();
-    this.observeSaveAsDraftIsClicked()
+    this.observeSaveAsDraftIsClicked();
   }
   private updateSaveAsDraftBtnIsvisible(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(true)
+    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(true);
   }
   private moveToNextTab(): void {
-    this._nextAndPreviusButtonsService.moveToNextTab.emit()
+    this._nextAndPreviusButtonsService.moveToNextTab.emit();
   }
   ngOnDestroy() {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 }
-
-
-

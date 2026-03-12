@@ -114,9 +114,9 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     requiredErrorMsg: 'حقل مطلوب',
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
-    dateValidatorMeg: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidatorMeg: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     verify: 'تحقق من الصك',
-    dataErorMsg: 'يجب ان يكون التاريخ اقل او مساوي تاريخ اليوم',
+    dataErorMsg: 'يجب أن يكون التاريخ اقل أو مساوي تاريخ اليوم',
 
     owningArea: 'المساحة المملوكة',
     ownerNationalId: 'السجل /رقم الهوية',
@@ -202,6 +202,10 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     idNumber: string | null,
     index: number
   ) {
+    if (fileData.eventRes.data.length === 0) {
+      this.formArr.controls[index].get('agreementFileId')?.setValue(null);
+      return;
+    }
     let ownerObj = this.deedFromIntegration.deedOwners.filter(
       (x) => x.idNumber == idNumber
     );
@@ -218,6 +222,11 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     idNumber: string | null,
     index: number
   ) {
+    if (fileData.eventRes.data.length === 0) {
+      this.formArr.controls[index].get('deedMarginalizationFileId')?.setValue(null);
+
+      return;
+    }
     let ownerObj = this.deedFromIntegration.deedOwners.filter(
       (x) => x.idNumber == idNumber
     );

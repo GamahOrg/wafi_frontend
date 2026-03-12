@@ -8,6 +8,7 @@
                     id="control-actualValueReportId"
                     formControlName="actualValueReportId"
                     >
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let item of actualValueReportList"
                         [value]="item.id">{{item.monthName}}</option>
             </select>

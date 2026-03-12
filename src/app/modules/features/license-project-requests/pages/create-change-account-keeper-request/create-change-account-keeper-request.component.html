@@ -13,7 +13,7 @@
               <label class="key">المشروع</label>
               <select class="form-select" id="control-licenseProjectId" aria-label="Default select example"
                 formControlName="licenseProjectId" (change)="onLicenseProjectChange()">
-                <option selected disabled>المشروع</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
 
                 <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
                   {{ licenseProject.name }}
@@ -121,9 +121,7 @@
                 <label class="key">اسم البنك</label>
                 <select class="form-select" id="control-bankId" aria-label="Default select example"
                   formControlName="bankId">
-                  <option value="" disabled [selected]="!changeAccountKeeperForm.controls.bankId.value">
-                    اختر البنك
-                  </option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
 
                   <option *ngFor="let bank of banks" [value]="bank.id">
                     {{ bank.name }}
@@ -138,8 +136,7 @@
             <div class="col-12 col-lg-6">
               <div class="form-group mb-4">
                 <label class="key">رقم ايبان الحساب</label>
-                <input type="text" id="control-accountNumber" class="form-control" formControlName="accountNumber"
-                  placeholder="رقم ايبان الحساب" />
+                <input type="text" id="control-accountNumber" class="form-control" formControlName="accountNumber" />
                 <mat-error *ngIf="
                   controls.accountNumber?.hasError('required') &&
                   showValidation
@@ -156,7 +153,7 @@
             <div class="form-group mb-4">
               <label class="key">بريد الكتروني أمين الحساب</label>
               <input type="email" id="control-accountKeeperEmail" class="form-control"
-                formControlName="accountKeeperEmail" placeholder="أدخل البريد الإلكتروني" />
+                formControlName="accountKeeperEmail" />
               <mat-error *ngIf="
                   controls.accountKeeperEmail?.hasError('required') &&
                   showValidation
@@ -171,7 +168,7 @@
             <div class="form-group mb-4">
               <label class="key">هاتف أمين الحساب</label>
               <input type="text" id="control-accountKeeperTelephone" class="form-control"
-                formControlName="accountKeeperTelephone" placeholder="هاتف أمين الحساب" />
+                formControlName="accountKeeperTelephone" />
               <mat-error *ngIf="
                   controls.accountKeeperTelephone?.hasError('required') &&
                   showValidation
@@ -184,7 +181,7 @@
             <div class="form-group mb-4">
               <label class="key">رقم تحويلة أمين الحساب</label>
               <input type="text" id="control-accountKeeperExtentionNumber" class="form-control"
-                formControlName="accountKeeperExtentionNumber" placeholder="رقم تحويلة أمين الحساب" />
+                formControlName="accountKeeperExtentionNumber" />
               <mat-error *ngIf="
                   controls.accountKeeperExtentionNumber?.hasError('required') &&
                   showValidation
@@ -197,7 +194,7 @@
             <div class="form-group mb-4">
               <label class="key">المسمى الوظيفى للموقع على الاتفاقية</label>
               <input type="text" id="control-accountKeeperJobTitle" class="form-control"
-                formControlName="accountKeeperJobTitle" placeholder="المسمى الوظيفى للموقع على الاتفاقية " />
+                formControlName="accountKeeperJobTitle" />
               <mat-error *ngIf="
                   controls.accountKeeperJobTitle?.hasError('required') &&
                   showValidation
@@ -211,8 +208,7 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="key">رقم فاكس أمين الحساب</label>
-              <input type="text" id="control-accountKeeperFax" class="form-control" formControlName="accountKeeperFax"
-                placeholder="رقم فاكس أمين الحساب" />
+              <input type="text" id="control-accountKeeperFax" class="form-control" formControlName="accountKeeperFax" />
               <mat-error *ngIf="
                   controls.accountKeeperFax?.hasError('required') &&
                   showValidation
@@ -226,7 +222,7 @@
             <div class="form-group mb-4">
               <label class="key">جوال أمين الحساب</label>
               <input type="text" id="control-accountKeeperMobile" class="form-control"
-                formControlName="accountKeeperMobile" placeholder="أدخل رقم الجوال" />
+                formControlName="accountKeeperMobile" />
               <mat-error *ngIf="
                   controls.accountKeeperMobile?.hasError('required') &&
                   showValidation

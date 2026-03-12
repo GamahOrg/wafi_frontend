@@ -1,0 +1,203 @@
+<div class="layout d-flex" [dir]="'rtl'">
+  <div class="sidebar">
+    <div
+      class="logo d-flex flex-column justify-content-between align-items-center py-4 flex-md-row"
+    >
+      <span class="sidebar-toggle">
+        <!-- <i class="material-icons">{{ hideSideBar ? 'menu' : 'close'}}</i> -->
+      </span>
+
+      <a href="javascript:void(0)" class="flex-grow-1 text-center">
+        <img
+          [src]="baseImagePath + 'REGA_LOGO_2.svg'"
+          alt=""
+          class="img-fluid logo-img"
+        />
+      </a>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column justify-content-between flex-grow-1">
+    <section class="content-area h-100 p-4">
+      <div
+        *ngIf="showSuccessAlert"
+        class="alert alert-success alert-dismissible fade show custom-alert"
+        role="alert"
+      >
+        <span class="material-icons align-middle me-2">success</span>
+        <span>{{ showSuccessAlertMsg }}</span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+          (click)="showSuccessAlert = false"
+        ></button>
+      </div>
+      <div class="card-header">
+        <h2 class="title">طلب وثيقة صرف</h2>
+      </div>
+      <div class="document-page" dir="rtl">
+        <div class="card">
+          <div class="details-grid">
+            <span class="main-title">البيانات الرئيسية</span>
+            <div class="detail-item">
+              <span class="label">اسم المشروع</span>
+              <span class="value">{{
+                requestDetails?.licenseProjectName ?? "--"
+              }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">رقم الوثيقة</span>
+              <span class="value">{{
+                requestDetails?.documentNumber ?? "--"
+              }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">تاريخ الصرف</span>
+              <span class="value">{{
+                requestDetails?.exchangeDate | date: "dd-MM-yyyy"
+              }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">تاريخ الاعتماد</span>
+              <span class="value">{{
+                requestDetails?.approvalDate | date: "dd-MM-yyyy"
+              }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">البيان</span>
+              <span class="value">{{ requestDetails?.statement ?? "--" }}</span>
+            </div>
+
+            <div class="detail-item">
+              <span class="value attachment">
+                <img
+                  src="assets/images/icons/file-attachment.svg"
+                  alt="attachment-icon"
+                />
+
+                <a
+                  [href]="
+                    baseUrl +
+                    requestDetails?.licenseProjectExchangeDocumentFiles?.[0]
+                      ?.file?.filePath
+                  "
+                  target="_blank"
+                >
+                  {{
+                    requestDetails?.licenseProjectExchangeDocumentFiles?.[0]
+                      ?.file?.fileDescription
+                  }}</a
+                >
+              </span>
+            </div>
+            <hr />
+            <span class="main-title">بيانات الصرف والحسابات</span>
+            <div class="detail-item">
+              <span class="label">البند الرئيسي</span>
+              <span class="value">{{ requestDetails?.mainItem ?? "--" }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">البند الفرعي</span>
+              <span class="value">{{ requestDetails?.subItem ?? "--" }}</span>
+            </div>
+
+            <div class="detail-item">
+              <span class="label"> غرض الصرف</span>
+              <span class="value">{{
+                requestDetails?.exchangePurpose ?? "--"
+              }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">بند الصرف من جدول الكميات </span>
+              <span class="value">{{
+                requestDetails?.elementName ?? "--"
+              }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">رقم الحساب الرئيسي</span>
+              <span class="value">{{
+                requestDetails?.mainAccountNumber ?? "--"
+              }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">رقم الحساب الفرعي</span>
+              <span class="value">{{
+                requestDetails?.subAccountNumber ?? "--"
+              }}</span>
+            </div>
+            <hr />
+            <span class="main-title">بيانات المستفيد</span>
+
+            <div class="detail-item">
+              <span class="label"> المستفيد</span>
+              <span class="value">
+                {{ requestDetails?.beneficiaryName ?? "--" }}</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="label">وصف المستفيد</span>
+              <span class="value">{{
+                requestDetails?.beneficiaryDescription ?? "--"
+              }}</span>
+            </div>
+            <hr />
+            <span class="main-title">بيانات الأرصدة المالية</span>
+
+            <div class="detail-item">
+              <span class="label">المبلغ</span>
+              <span class="value">{{ requestDetails?.amount ?? "--" }}</span>
+            </div>
+
+            <div class="detail-item">
+              <span class="label">المبلغ المتبقي في الحساب بعد الصرف</span>
+              <span class="value">{{
+                requestDetails?.availableAmountAfterExchange ?? "--"
+              }}</span>
+            </div>
+
+            <div class="detail-item">
+              <span class="label">المبلغ المتوفر في الحساب قبل الصرف</span>
+              <span class="value">{{
+                requestDetails?.availableAmountBeforeExchange ?? "--"
+              }}</span>
+            </div>
+          </div>
+          <div class="rejection-reason" *ngIf="requestDetails?.rejectionReason">
+            <div class="rejection-reason-header">
+              <h2 class="title">سبب الرفض</h2>
+              <div class="badge">
+                {{
+                  getRejectionOwner(
+                    requestDetails?.licenseProjectExchangeDocumentRejectionBy
+                  )
+                }}
+              </div>
+            </div>
+            <span>{{ requestDetails?.rejectionReason }}</span>
+          </div>
+          <div class="card-footer">
+            <img
+              src="assets/images/icons/keyboard.svg"
+              alt=""
+              class="img-fluid logo-img"
+            />
+
+            <span>وثيقة صرف {{ requestDetails?.documnetNumber }}</span>
+          </div>
+          <div class="pdf-viewer-section" style="min-height: 600px">
+            <app-pdf-viewer
+              [fileId]="requestDetails?.documentFileId ?? ''"
+              [noContentMessage]="'لا يوجد وثيقة الصرف متاح'"
+              [noContentDescription]="'لم يتم العثور على وثيقة الصرف'"
+              [loadingMessage]="'جاري تحميل وثيقة الصرف'"
+              [loadingDescription]="'يرجى الانتظار بينما يتم تحميل وثيقة الصرف'"
+              [errorMessage]="'حدث خطأ في تحميل وثيقة الصرف'"
+            ></app-pdf-viewer>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -193,6 +193,11 @@ export class MainRealStateDeveloperComponent implements OnInit, OnDestroy {
   }
 
   onExistMainRealStateDeveloperFilesUploaded(filesData: any) {
+    if(filesData.eventRes.data.length === 0) {
+      this.licenseProjectMainRealStateDeveloperCreateUpdateDto.mainRealStateDeveloperAgreementFileId = "";
+      this.showFileValidation = true;
+      return;
+    }
     console.log("filesData", filesData);
     console.log("!filesData.eventRes.data || !filesData.eventRes.data.length", !filesData.eventRes.data || !filesData.eventRes.data.length)
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;

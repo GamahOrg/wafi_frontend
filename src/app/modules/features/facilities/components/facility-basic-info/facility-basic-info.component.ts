@@ -73,7 +73,7 @@ export class FacilityBasicInfoComponent implements OnInit, OnDestroy {
 
   openDialog(): void {
     let Data = {
-      title: "إضافة او استكمال البيانات الأساسية",
+      title: "إضافة أو استكمال البيانات الأساسية",
       component: EditFacilityBasicInfoComponent
     } as PopupData;
     this._popupService.updatePopupData(Data)

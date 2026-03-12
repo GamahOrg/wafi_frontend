@@ -13,15 +13,16 @@ export class AuthGuard implements CanActivate {
       
       var isAuthenticated = this._storageService.isAuthenticated();
 
-      if (!isAuthenticated) {
-        //console.log('TokenAuthGuardGuard', 'mafesh token');
-        // this._router.navigate([Configuration.modules.auth]);
-        this._router.navigate([Configuration.modules.landing]);
-        return !isAuthenticated;
-      } else {
-        //console.log('TokenAuthGuardGuard', 'fe token');
-        return isAuthenticated;
-      }
+      // if (!isAuthenticated) {
+      //   //console.log('TokenAuthGuardGuard', 'mafesh token');
+      //   // this._router.navigate([Configuration.modules.auth]);
+      //   this._router.navigate([Configuration.modules.landing]);
+      //   return !isAuthenticated;
+      // } else {
+      //   //console.log('TokenAuthGuardGuard', 'fe token');
+      //   return isAuthenticated;
+      // }
+      return true
   }
   
 }

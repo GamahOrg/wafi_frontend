@@ -18,6 +18,7 @@ import { CorrectionLicenseProjectUnitService } from '../../../services/correctio
 import { CorrectionProjectSubUnitService } from '../../../services/correction-project-sub-unit.service';
 import { CorrectionZonesBlocksBuildingAndUnitsService } from '../../../services/correction-zones-blocks-building-and-units.service';
 import { CorrectionProjectModelService } from '../../../services/correct-units/correction-project-model-service.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-correction-unit-types',
@@ -116,7 +117,7 @@ export class CorrectionUnitTypesComponent implements OnInit, OnDestroy {
     BlocksAndbuildingsAndunitsComponent: 'أنواع الوحدات بالبلوك / العمارة',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
   };
 
   private loadComponentData() {
@@ -155,7 +156,7 @@ export class CorrectionUnitTypesComponent implements OnInit, OnDestroy {
 
   isFawriaValidation(): boolean {
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU') return true;
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria) return true;
     else return false;
   }
 

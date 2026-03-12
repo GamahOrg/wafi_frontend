@@ -1,25 +1,32 @@
 <ng-container>
-    <form class="d-flex flex-column h-100"
-          [formGroup]="projectExternalAddressForm" id="form-projectExternalAddressForm">
-        <div class="tab-data-header">
-            <i class="icon hgi hgi-stroke hgi-profile"></i>
-            <h6 class="title">{{localization.title}}</h6>
-        </div>
+  <form
+    class="d-flex flex-column h-100"
+    [formGroup]="projectExternalAddressForm"
+    id="form-projectExternalAddressForm"
+  >
+    <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
+      <h6 class="title">{{ localization.title }}</h6>
+    </div>
 
-        <div class="tab-data-section">
-            <div class="row mb-3">
-                <div class="col-12 col-lg-6">
-                    <div class="form-group mb-4">
-                        <label class="form-label">{{localization.address}}</label>
-                        <input type="text" id="control-address"
-                               placeholder="{{localization.address}}"
-                               class="form-control"
-                               formControlName="address">
-                        <mat-error
-                                   *ngIf="controls.address?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-                    </div>
-                </div>
-                <!-- <div class="col-12 col-lg-6">
+    <div class="tab-data-section">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label">{{ localization.address }}</label>
+            <input
+              type="text"
+              id="control-address"
+              class="form-control"
+              formControlName="address"
+            />
+            <mat-error
+              *ngIf="controls.address?.hasError('required') && showValidation"
+              >{{ localization.requiredErrorMsg }}</mat-error
+            >
+          </div>
+        </div>
+        <!-- <div class="col-12 col-lg-6">
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.street}}</label>
                         <input type="text"
@@ -30,7 +37,7 @@
                                    *ngIf="controls.streetName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
                     </div>
                 </div> -->
-                <!-- <div class="col-12">
+        <!-- <div class="col-12">
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.location}}</label>
                         <app-google-maps *ngIf="longitude && latitude"
@@ -42,10 +49,10 @@
                                    *ngIf="controls.latitude?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
                     </div>
                 </div> -->
-            </div>
-        </div>
-        <app-next-and-previus-buttons></app-next-and-previus-buttons>
-        <!-- <div class="form-actions mt-auto">
+      </div>
+    </div>
+    <app-next-and-previus-buttons></app-next-and-previus-buttons>
+    <!-- <div class="form-actions mt-auto">
             <button class="btn btn-outline-primary"
                     (click)="back()">{{localization.previous}}</button>
 
@@ -53,5 +60,5 @@
                     (click)="save(true)">{{localization.next}}</button>
 
         </div> -->
-    </form>
-  </ng-container>
+  </form>
+</ng-container>

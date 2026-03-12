@@ -50,7 +50,7 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
   accountKeeperForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
     accountNumber: ['', [Validators.required, Validators.pattern(this.ibanPattern)]],
-    bankId: ['', [Validators.required]],
+    bankId: [null as string | null, [Validators.required]],
     // accountKeeperName: ['', [Validators.required]],
     accountKeeperMobile: ['', [Validators.required, Validators.pattern(Configuration.validators.PhoneNumber)]],
     accountKeeperTelephone: ['', [Validators.pattern(Configuration.validators.PhoneNumber)]],
@@ -132,6 +132,12 @@ export class AccoutKeeperDataComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.accountKeeper.accountKeeperAgreementFileId = '';
+      this.controls.accountKeeperAgreementFileId.setValue('');
+      return;
+    }
+    if (!fileData.eventRes.data || !fileData.eventRes.data.length) return;
     this.accountKeeper.accountKeeperAgreementFileId = fileData.eventRes.data[0].id;
     this.controls.accountKeeperAgreementFileId.setValue(fileData.eventRes.data[0].id);
     this.accountKeeper.accountKeeperAgreementFile = null;

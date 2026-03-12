@@ -14,9 +14,7 @@
                 <label class="key">المشروع</label>
                 <select class="form-select" id="control-licenseProjectId" aria-label="Default select example" (change)="getProjectDelegatorByLicenseProjectId()"
                   formControlName="licenseProjectId"(change)="loadProjectDetails()">
-                  <option selected disabled>
-                    المشروع
-                  </option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                   <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
                     {{ licenseProject.name }}
                   </option>
@@ -40,9 +38,7 @@
                   <select class="form-select" id="control-changeLicenseProjectDelegatorIds"  aria-label="Default select example"
                     formControlName="changeLicenseProjectDelegatorIds"
                     (change)="onDelegatorChange()">
-                    <option selected disabled>
-                      اختار المفوض
-                    </option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let customer of customers" [ngValue]="customer?.delegatorCustomer?.id">
                       {{ customer?.delegatorCustomer?.fullName }}
                     </option>

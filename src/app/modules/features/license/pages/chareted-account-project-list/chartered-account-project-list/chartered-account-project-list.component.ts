@@ -10,7 +10,7 @@ import { CharteredAccountProjectService } from '../../../services/chareted-accou
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { Router } from '@angular/router';
 import { LicenseProjectAccountantLocalStorageService } from '../../../services/license-project-accountant-local-storage.service';
-import  { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
+import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import { ProjectBasicDataService } from '../../../services/licenseProjects/project-basic-data.service';
 import { LicenseNatureTypeListDto } from '../../../models/license-nature-type-list-dto';
 import { GetLicenseProjectListRequestDto } from '../../../dataModels/get-license-project-list-request-dto';
@@ -21,12 +21,14 @@ import { GetLicenseProjectListRequestDto } from '../../../dataModels/get-license
   styleUrls: ['./chartered-account-project-list.component.scss'],
 })
 export class CharteredAccountProjectListComponent implements OnInit {
-  projectList: Pagination<ProjectListDto[]> = {} as Pagination<ProjectListDto[]>;
+  projectList: Pagination<ProjectListDto[]> = {} as Pagination<
+    ProjectListDto[]
+  >;
   licenseNatureType: LicenseNatureTypeListDto[] = [];
 
   // Filter properties
   searchText: string = '';
-  selectedNatureTypeId: string = '';
+  selectedNatureTypeId: string | null = null;
   private searchSubject = new Subject<string>();
 
   subscriptions: Subscription[] = [];
@@ -47,7 +49,7 @@ export class CharteredAccountProjectListComponent implements OnInit {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _paginationService: PaginationService,
     private _charteredAccount: CharteredAccountProjectService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.obseveCustomerData();
@@ -63,23 +65,20 @@ export class CharteredAccountProjectListComponent implements OnInit {
   private setupSearchDebounce(): void {
     this.subscriptions.push(
       this.searchSubject
-        .pipe(
-          debounceTime(300),
-          distinctUntilChanged()
-        )
+        .pipe(debounceTime(300), distinctUntilChanged())
         .subscribe(() => {
           this.applyFilters();
         })
     );
   }
-  
+
   obseveCustomerData(): void {
     this.subscriptions.push(
       this._userDataService
         .getCustomerData()
         .subscribe((res: customerResponse | null) => {
           this.facilityId = res ? res.facilities[0].id : null;
-          this.observeProjectList()
+          this.observeProjectList();
         })
     );
   }
@@ -89,8 +88,14 @@ export class CharteredAccountProjectListComponent implements OnInit {
       pageIndex: this.pagintationData.currentPage,
       pageSize: this.pagintationData.pageSize,
       currentSelectedFacilityId: this.facilityId as string,
-      searchText: this.searchText && this.searchText.trim() ? this.searchText.trim() : null,
-      natureTypeId: this.selectedNatureTypeId && this.selectedNatureTypeId.trim() ? this.selectedNatureTypeId.trim() : null
+      searchText:
+        this.searchText && this.searchText.trim()
+          ? this.searchText.trim()
+          : null,
+      natureTypeId:
+        this.selectedNatureTypeId && this.selectedNatureTypeId.trim()
+          ? this.selectedNatureTypeId.trim()
+          : null,
     };
 
     this.subscriptions.push(
@@ -102,10 +107,12 @@ export class CharteredAccountProjectListComponent implements OnInit {
     );
   }
 
-  getLicenseNatureType(){
-    this._projectBasicDataService.GetLicenseNatureType().subscribe((res: LicenseNatureTypeListDto[]) => {
-      this.licenseNatureType = res;
-    })
+  getLicenseNatureType() {
+    this._projectBasicDataService
+      .GetLicenseNatureType()
+      .subscribe((res: LicenseNatureTypeListDto[]) => {
+        this.licenseNatureType = res;
+      });
   }
 
   private loadNextPage(nextPage: number): void {
@@ -113,9 +120,7 @@ export class CharteredAccountProjectListComponent implements OnInit {
     this.observeProjectList();
   }
 
-  private updateRequestList(
-    TypeListView: Pagination<ProjectListDto[]>
-  ): void {
+  private updateRequestList(TypeListView: Pagination<ProjectListDto[]>): void {
     this.projectList = TypeListView;
     this.setPaginationData(
       this.projectList.pageSize,
@@ -156,18 +161,30 @@ export class CharteredAccountProjectListComponent implements OnInit {
   }
 
   showDetails(licenseProjectId: string) {
-    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(licenseProjectId);
-    this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.licenseProjectsAccountantDetails}`]);
+    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      licenseProjectId
+    );
+    this._router.navigate([
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.licenseProjectsAccountantDetails}`,
+    ]);
   }
 
   showBuyerList(licenseProjectId: string) {
-    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(licenseProjectId);
-    this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.buyerListTabs}`]);
+    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      licenseProjectId
+    );
+    this._router.navigate([
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.buyerListTabs}`,
+    ]);
   }
 
   showTotals(licenseProjectId: string) {
-    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(licenseProjectId);
-    this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.charteredAccountProjectTotal}`]);
+    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      licenseProjectId
+    );
+    this._router.navigate([
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.charteredAccountProjectTotal}`,
+    ]);
   }
 
   /**

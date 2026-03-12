@@ -105,6 +105,10 @@ subscriptions: Subscription[] = [];
     );
   }
   onExistApplicationFormFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.applicationFormFileId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.applicationFormFileId = data.id;

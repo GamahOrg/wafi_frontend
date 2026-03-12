@@ -10,8 +10,7 @@
                     <select class="form-select" id="control-sysLicenseInfrastructureElementId"
                             aria-label="Default select example"
                             formControlName="sysLicenseInfrastructureElementId">
-                        <option selected  [value]="0"
-                                disabled>البنود </option>
+                        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                         <option *ngFor="let element of sysLicenseInfrastructureElementList"
                                 [value]="element.id">{{element.elementName}}</option>
                     </select>
@@ -28,8 +27,7 @@
                            class="form-label">تكلفة البند</label>
                     <input type="number" id="control-itemCost"
                            class="form-control"
-                           placeholder="تكلفة البند"
-                           formControlName="itemCost">
+                                                      formControlName="itemCost">
                     <div class="invalid-feedback d-block"
                          *ngIf="controls.itemCost.errors?.['required'] && showValidation">
                          حقل مطلوب
@@ -48,8 +46,7 @@
                            class="form-label">نسبه الانجاز المخططه الشهريه</label>
                     <input type="number" id="control-monthlyPlannedCompletionPercentage"
                            class="form-control"
-                           placeholder="نسبه الانجاز المخططه الشهريه"
-                           formControlName="monthlyPlannedCompletionPercentage">
+                                                      formControlName="monthlyPlannedCompletionPercentage">
                     <div class="invalid-feedback d-block"
                          *ngIf="controls.monthlyPlannedCompletionPercentage.errors?.['required'] && showValidation">
                          حقل مطلوب

@@ -109,6 +109,10 @@ export class EditProfileComponent implements OnInit {
   }
 
   onFileUpload(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.editForm.patchValue({profileImageFileId :null});
+      return;
+    }
     this.editForm.patchValue({profileImageFileId :fileData.eventRes.data[0].id});
   }
 

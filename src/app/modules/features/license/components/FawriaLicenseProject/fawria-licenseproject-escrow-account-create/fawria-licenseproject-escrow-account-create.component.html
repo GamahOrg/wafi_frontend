@@ -93,7 +93,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> الرقم الضريبى السعودى</label>
-            <input type="text" class="form-control" id="control-saudiTaxNumber" formControlName="saudiTaxNumber" placeholder="الرقم الضريبى السعودى" />
+            <input type="text" class="form-control" id="control-saudiTaxNumber" formControlName="saudiTaxNumber"/>
             <div class="invalid-feedback d-block" *ngIf="controls['saudiTaxNumber']?.hasError('required') && showValidation">
               {{ localization.requiredErrorMsg }}
             </div>
@@ -104,7 +104,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label"> الرقم الضريبى FATCA</label>
-            <input type="text" class="form-control" id="control-fatcaTaxNumber" formControlName="fatcaTaxNumber" placeholder="الرقم الضريبى FATCA" />
+            <input type="text" class="form-control" id="control-fatcaTaxNumber" formControlName="fatcaTaxNumber" />
             <div class="invalid-feedback d-block" *ngIf="controls['fatcaTaxNumber']?.hasError('required') && showValidation">
               {{ localization.requiredErrorMsg }}
             </div>
@@ -115,7 +115,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label"> الرقم الضريبى CRS</label>
-            <input type="text" class="form-control" id="control-crsTaxNumber" formControlName="crsTaxNumber" placeholder="الرقم الضريبى CRS" />
+            <input type="text" class="form-control" id="control-crsTaxNumber" formControlName="crsTaxNumber" />
             <div class="invalid-feedback d-block" *ngIf="controls['crsTaxNumber']?.hasError('required') && showValidation">
               {{ localization.requiredErrorMsg }}
             </div>
@@ -124,13 +124,13 @@
 
         <div class="col-12">
           <div class="form-group">
-            <div>
-              <input type="checkbox" id="control-approvedBankTermsConditions" formControlName="approvedBankTermsConditions" />
-              <label style="margin-right: 5px;" for="control-approvedBankTermsConditions">
+            <label class="form-check form-check-normal d-inline-flex" for="control-approvedBankTermsConditions">
+              <input type="checkbox" class="form-check-input" id="control-approvedBankTermsConditions" formControlName="approvedBankTermsConditions" />
+              <label class="form-check-label" for="control-approvedBankTermsConditions">
                 أقر بالموافقة على
                 <a href="javascript:void(0)" class="terms-link" (click)="openTermsConditionsPopup()">شروط وأحكام البنك</a>.
               </label>
-            </div>
+            </label>
             <div class="invalid-feedback d-block" *ngIf="controls['approvedBankTermsConditions']?.hasError('required')">
               {{ localization.requiredErrorMsg }}
             </div>

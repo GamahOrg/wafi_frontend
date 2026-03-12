@@ -20,7 +20,7 @@
                 class="form-select"
                 formControlName="qualityManagementPlanStatusId"
               >
-                <option label="اختار موقف خطة ادارة الجودة" disabled></option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let status of licenseProjectQualityStatusList"
                   [value]="status.id"
@@ -43,10 +43,7 @@
                 class="form-select"
                 formControlName="qualityManagementProceduresAndModelsId"
               >
-                <option
-                  label="اختار إجراءات ونماذج ادارة الجودة"
-                  disabled
-                ></option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let status of licenseProjectQualityStatusList"
                   [value]="status.id"
@@ -67,7 +64,7 @@
                 class="form-select"
                 formControlName="examinationAndTestPlanId"
               >
-                <option label="اختار خطة الفحص والاختبار" disabled></option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let status of licenseProjectQualityStatusList"
                   [value]="status.id"
@@ -120,8 +117,7 @@
                 id="control-actualMonthlyConsultantEngineerStaffAccordingPlan"
                 class="form-control"
                 formControlName="actualMonthlyConsultantEngineerStaffAccordingPlan"
-                placeholder="كادر الاستشاري الشهري حسب خطة التواجد (مهندسين) الفعلى"
-              />
+                              />
               <div
                 class="invalid-feedback d-block"
                 *ngIf="
@@ -159,8 +155,7 @@
                 id="control-actualMonthlyConsultantInspectorStaffAccordingPlan"
                 class="form-control"
                 formControlName="actualMonthlyConsultantInspectorStaffAccordingPlan"
-                placeholder="كادر الاستشاري الشهري حسب خطة التواجد (مفتشين) الفعلى"
-              />
+                              />
               <div
                 class="invalid-feedback d-block"
                 *ngIf="
@@ -177,7 +172,7 @@
             <div class="form-group mb-4">
               <label for="" class="form-label">خطوات التنفيذ</label>
               <select class="form-select" formControlName="methodStatementsId">
-                <option label="اختار خطوات التنفيذ" disabled></option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let status of licenseProjectQualityStatusList"
                   [value]="status.id"

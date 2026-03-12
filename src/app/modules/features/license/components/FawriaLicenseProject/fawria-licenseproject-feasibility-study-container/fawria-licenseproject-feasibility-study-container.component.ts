@@ -2,7 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LicenseProjectFeasibilityStudyDto } from '../../../models/feasibilityStudyDtos/license-project-feasibility-study-dto';
 import { Subscription } from 'rxjs';
 import { LicenseProjectFeasibilityStudyService } from '../../../services/feasibilityStudyServices/license-project-feasibility-study.service';
-import { LicenseProjectFeasibilityStudyCreateUpdateDto, LicenseProjectFeasibilityStudySaveDto } from '../../../models/feasibilityStudyDtos/license-project-feasibility-study-create-update-dto';
+import {
+  LicenseProjectFeasibilityStudyCreateUpdateDto,
+  LicenseProjectFeasibilityStudySaveDto,
+} from '../../../models/feasibilityStudyDtos/license-project-feasibility-study-create-update-dto';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { LicenseProjectProposedScheduleFileCreateUpdateDto } from '../../../models/feasibilityStudyDtos/license-project-proposed-schedule-file-create-update-dto';
@@ -15,37 +18,92 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { ToastrService } from 'ngx-toastr';
 import { LicenseProjectFeasibilityStudyFileCreateUpdateDto } from '../../../models/feasibilityStudyDtos/license-project-feasibility-study-file-create-update-dto';
 import { LicenseRequestService } from '../../../services/license-request.service';
- 
+
 @Component({
   selector: 'app-fawria-licenseproject-feasibility-study-container',
-  templateUrl: './fawria-licenseproject-feasibility-study-container.component.html',
-  styleUrls: ['./fawria-licenseproject-feasibility-study-container.component.scss']
+  templateUrl:
+    './fawria-licenseproject-feasibility-study-container.component.html',
+  styleUrls: [
+    './fawria-licenseproject-feasibility-study-container.component.scss',
+  ],
 })
-export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements OnInit, OnDestroy {
+export class FawriaLicenseprojectFeasibilityStudyContainerComponent
+  implements OnInit, OnDestroy
+{
   baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
-  licenseProjectFeasibilityStudyDto: LicenseProjectFeasibilityStudyDto = new LicenseProjectFeasibilityStudyDto();
-  licenseProjectFeasibilityStudyCreateUpdateDto: LicenseProjectFeasibilityStudySaveDto = new LicenseProjectFeasibilityStudySaveDto();
-  
+  licenseProjectFeasibilityStudyDto: LicenseProjectFeasibilityStudyDto =
+    new LicenseProjectFeasibilityStudyDto();
+  licenseProjectFeasibilityStudyCreateUpdateDto: LicenseProjectFeasibilityStudySaveDto =
+    new LicenseProjectFeasibilityStudySaveDto();
+
   licenseProjectFeasibilityStudyForm = this._formBuilder.group({
-    totlaAreaOfCommonAreas: this._formBuilder.control<number | null>(null, [Validators.required, Validators.min(0)]),
-    infrastructureDevelopmentCosts: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
-    totalConstructionCosts: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
-    totalNonConstructionCosts: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
-    totalLandCost: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
-    totalSalesValue: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
-    totalProjectCosts: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
-    expectedNetProfit: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
-    averageSalesPricePerMeter: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
-    averageConstructionCostPerMeter: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
+    totlaAreaOfCommonAreas: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+      Validators.min(0),
+    ]),
+    infrastructureDevelopmentCosts: this._formBuilder.control<number | null>(
+      null,
+      [
+        Validators.required,
+        Validators.pattern(Configuration.validators.decimal),
+        Validators.min(0),
+      ],
+    ),
+    totalConstructionCosts: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+      Validators.pattern(Configuration.validators.decimal),
+      Validators.min(0),
+    ]),
+    totalNonConstructionCosts: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+      Validators.pattern(Configuration.validators.decimal),
+      Validators.min(0),
+    ]),
+    totalLandCost: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+      Validators.pattern(Configuration.validators.decimal),
+      Validators.min(0),
+    ]),
+    totalSalesValue: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+      Validators.pattern(Configuration.validators.decimal),
+      Validators.min(0),
+    ]),
+    totalProjectCosts: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+      Validators.pattern(Configuration.validators.decimal),
+      Validators.min(0),
+    ]),
+    expectedNetProfit: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+      Validators.pattern(Configuration.validators.decimal),
+      Validators.min(0),
+    ]),
+    averageSalesPricePerMeter: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+      Validators.pattern(Configuration.validators.decimal),
+      Validators.min(0),
+    ]),
+    averageConstructionCostPerMeter: this._formBuilder.control<number | null>(
+      null,
+      [
+        Validators.required,
+        Validators.pattern(Configuration.validators.decimal),
+        Validators.min(0),
+      ],
+    ),
   });
   mueltiFilesUploaderData: FileUploader = {
-    multiple: true
+    multiple: true,
   } as FileUploader;
-  licenseProjectProposedScheduleFiles: LicenseProjectProposedScheduleFileCreateUpdateDto[] = [];
-  licenseProjectMarketingPlanFiles: LicenseProjectMarketingPlanFileCreateUpdateDto[] = [];
-  licenseProjectFeasibilityStudyFiles: LicenseProjectFeasibilityStudyFileCreateUpdateDto[] = [];
-  licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
+  licenseProjectProposedScheduleFiles: LicenseProjectProposedScheduleFileCreateUpdateDto[] =
+    [];
+  licenseProjectMarketingPlanFiles: LicenseProjectMarketingPlanFileCreateUpdateDto[] =
+    [];
+  licenseProjectFeasibilityStudyFiles: LicenseProjectFeasibilityStudyFileCreateUpdateDto[] =
+    [];
+  licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   showValidation: boolean = false;
   get controls() {
     return this.licenseProjectFeasibilityStudyForm.controls;
@@ -58,143 +116,196 @@ export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements O
     private _licenseRequestService: LicenseRequestService,
     private _toastrNotificationService: ToastrNotificatioService,
     private _toastrService: ToastrService,
-  ) { }
+  ) {}
   ngOnInit(): void {
-    this.getLicenseProjectIdStorage()
+    this.getLicenseProjectIdStorage();
     this.GetByLicenseProjectId();
     this.observeTabsButtons();
     this.updateSaveAsDraftBtnIsvisible();
   }
 
-
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     // this.licenseProjectFeasibilityStudyDto.licenseProjectId = this.licenseProjectId as string;
   }
   GetByLicenseProjectId() {
     this.subscriptions.push(
-      this._licenseProjectFeasibilityStudyService.GetByLicenseProjectId(this.licenseProjectId as string).subscribe(res => {
-        if (res) {
-          this.licenseProjectFeasibilityStudyDto = res as LicenseProjectFeasibilityStudyDto;
+      this._licenseProjectFeasibilityStudyService
+        .GetByLicenseProjectId(this.licenseProjectId as string)
+        .subscribe((res) => {
+          if (res) {
+            this.licenseProjectFeasibilityStudyDto =
+              res as LicenseProjectFeasibilityStudyDto;
 
-          // Convert 0 values to null so placeholders are displayed
-          this.licenseProjectFeasibilityStudyForm.patchValue({
-            totlaAreaOfCommonAreas: this.licenseProjectFeasibilityStudyDto.totalAreaOfCommonAreas || null,
-            infrastructureDevelopmentCosts: this.licenseProjectFeasibilityStudyDto.infrastructureDevelopmentCosts || null,
-            totalConstructionCosts: this.licenseProjectFeasibilityStudyDto.totalConstructionCosts || null,
-            totalNonConstructionCosts: this.licenseProjectFeasibilityStudyDto.totalNonConstructionCosts || null,
-            totalLandCost: this.licenseProjectFeasibilityStudyDto.totalLandCost || null,
-            totalSalesValue: this.licenseProjectFeasibilityStudyDto.totalSalesValue || null,
-            totalProjectCosts: this.licenseProjectFeasibilityStudyDto.totalProjectCosts || null,
-            expectedNetProfit: this.licenseProjectFeasibilityStudyDto.expectedNetProfit || null,
-            averageSalesPricePerMeter: this.licenseProjectFeasibilityStudyDto.averageSalesPricePerMeter || null,
-            averageConstructionCostPerMeter: this.licenseProjectFeasibilityStudyDto.averageConstructionCostPerMeter || null,
-          });
+            // Convert 0 values to null so placeholders are displayed
+            this.licenseProjectFeasibilityStudyForm.patchValue({
+              totlaAreaOfCommonAreas:
+                this.licenseProjectFeasibilityStudyDto.totalAreaOfCommonAreas ||
+                null,
+              infrastructureDevelopmentCosts:
+                this.licenseProjectFeasibilityStudyDto
+                  .infrastructureDevelopmentCosts || null,
+              totalConstructionCosts:
+                this.licenseProjectFeasibilityStudyDto.totalConstructionCosts ||
+                null,
+              totalNonConstructionCosts:
+                this.licenseProjectFeasibilityStudyDto
+                  .totalNonConstructionCosts || null,
+              totalLandCost:
+                this.licenseProjectFeasibilityStudyDto.totalLandCost || null,
+              totalSalesValue:
+                this.licenseProjectFeasibilityStudyDto.totalSalesValue || null,
+              totalProjectCosts:
+                this.licenseProjectFeasibilityStudyDto.totalProjectCosts ||
+                null,
+              expectedNetProfit:
+                this.licenseProjectFeasibilityStudyDto.expectedNetProfit ||
+                null,
+              averageSalesPricePerMeter:
+                this.licenseProjectFeasibilityStudyDto
+                  .averageSalesPricePerMeter || null,
+              averageConstructionCostPerMeter:
+                this.licenseProjectFeasibilityStudyDto
+                  .averageConstructionCostPerMeter || null,
+            });
 
-          this.licenseProjectMarketingPlanFiles = this.licenseProjectFeasibilityStudyDto.licenseProjectMarketingPlanFiles;
-          this.licenseProjectProposedScheduleFiles = this.licenseProjectFeasibilityStudyDto.licenseProjectProposedScheduleFiles;
-          this.licenseProjectFeasibilityStudyFiles=this.licenseProjectFeasibilityStudyDto.licenseProjectFeasibilityStudyFiles;
-          this._licenseProjectFeasibilityStudyService.setFeasibilityStudyId(this.licenseProjectFeasibilityStudyDto.id);
+            this.licenseProjectMarketingPlanFiles =
+              this.licenseProjectFeasibilityStudyDto.licenseProjectMarketingPlanFiles;
+            this.licenseProjectProposedScheduleFiles =
+              this.licenseProjectFeasibilityStudyDto.licenseProjectProposedScheduleFiles;
+            this.licenseProjectFeasibilityStudyFiles =
+              this.licenseProjectFeasibilityStudyDto.licenseProjectFeasibilityStudyFiles;
+            this._licenseProjectFeasibilityStudyService.setFeasibilityStudyId(
+              this.licenseProjectFeasibilityStudyDto.id,
+            );
 
-          // Format numbers with commas after loading data
-          setTimeout(() => this.formatAllNumberInputs(), 0);
-        }
-      })
-    )
+            // Format numbers with commas after loading data
+            setTimeout(() => this.formatAllNumberInputs(), 0);
+          }
+        }),
+    );
   }
 
   save(moveToNextTab: boolean = false): void {
     if (!this.licenseProjectFeasibilityStudyForm.valid) {
       this.showValidation = true;
-      this._toastrNotificationService.showError('لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة');
+      this._toastrNotificationService.showError(
+        'لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة',
+      );
       this.licenseProjectFeasibilityStudyForm?.markAllAsTouched();
       return;
     }
-    this.licenseProjectFeasibilityStudyCreateUpdateDto = this.licenseProjectFeasibilityStudyForm.value as LicenseProjectFeasibilityStudySaveDto;
-    this.licenseProjectFeasibilityStudyCreateUpdateDto.id = this.licenseProjectFeasibilityStudyDto.id;
-    this.licenseProjectFeasibilityStudyCreateUpdateDto.licenseProjectId = this.licenseProjectId as string;
+    this.licenseProjectFeasibilityStudyCreateUpdateDto = this
+      .licenseProjectFeasibilityStudyForm
+      .value as LicenseProjectFeasibilityStudySaveDto;
+    this.licenseProjectFeasibilityStudyCreateUpdateDto.id =
+      this.licenseProjectFeasibilityStudyDto.id;
+    this.licenseProjectFeasibilityStudyCreateUpdateDto.licenseProjectId = this
+      .licenseProjectId as string;
 
-
-    this.licenseProjectFeasibilityStudyCreateUpdateDto.id = this.licenseProjectFeasibilityStudyCreateUpdateDto.id ? this.licenseProjectFeasibilityStudyCreateUpdateDto.id : "00000000-0000-0000-0000-000000000000";
+    this.licenseProjectFeasibilityStudyCreateUpdateDto.id = this
+      .licenseProjectFeasibilityStudyCreateUpdateDto.id
+      ? this.licenseProjectFeasibilityStudyCreateUpdateDto.id
+      : '00000000-0000-0000-0000-000000000000';
     this.subscriptions.push(
-      this._licenseProjectFeasibilityStudyService.SaveFawriaFeasibilityStudy(this.licenseProjectFeasibilityStudyCreateUpdateDto).subscribe(res => {
-        if (res.isDone) {
-          this.licenseProjectFeasibilityStudyDto = res.data as LicenseProjectFeasibilityStudyDto;
-          this._licenseProjectFeasibilityStudyService.setFeasibilityStudyId(this.licenseProjectFeasibilityStudyDto.id);
-          this._toastrService.success('تم الحفظ');
-          this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
-          if (moveToNextTab) this.moveToNextTab()
-        }
-      else{
-        this._toastrNotificationService.showError(res.message);
-      }
-      })
-    )
+      this._licenseProjectFeasibilityStudyService
+        .SaveFawriaFeasibilityStudy(
+          this.licenseProjectFeasibilityStudyCreateUpdateDto,
+        )
+        .subscribe((res) => {
+          if (res.isDone) {
+            this.licenseProjectFeasibilityStudyDto =
+              res.data as LicenseProjectFeasibilityStudyDto;
+            this._licenseProjectFeasibilityStudyService.setFeasibilityStudyId(
+              this.licenseProjectFeasibilityStudyDto.id,
+            );
+            this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
+            this._toastrNotificationService.showSuccess('تم الحفظ بنجاح',);
+            if (moveToNextTab) this.moveToNextTab();
+          } else {
+            this._toastrNotificationService.showError(res.message);
+          }
+        }),
+    );
   }
-
 
   // TabsButtons
   private observeNextButtonIsCliced() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
-        this.save(true)
-      })
-    )
+      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
+        (res: null) => {
+          this.save(true);
+        },
+      ),
+    );
   }
   private observeSaveAsDraftIsClicked() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe((res: null) => {
-        this.save()
-      })
-    )
+      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(
+        (res: null) => {
+          this.save();
+        },
+      ),
+    );
   }
   private observeTabsButtons(): void {
     this.observeNextButtonIsCliced();
-    this.observeSaveAsDraftIsClicked()
+    this.observeSaveAsDraftIsClicked();
   }
   private moveToNextTab(): void {
-    this._nextAndPreviusButtonsService.moveToNextTab.emit()
+    this._nextAndPreviusButtonsService.moveToNextTab.emit();
   }
   private updateSaveAsDraftBtnIsvisible(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false)
+    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
     this._nextAndPreviusButtonsService.nextBtnIsVisible.next(true);
   }
   ngOnDestroy(): void {
-    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 
   onExistProjectProposedScheduleFilesUploaded(filesData: any) {
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
-    if (!this.licenseProjectProposedScheduleFiles) this.licenseProjectProposedScheduleFiles = [];
+    if (!this.licenseProjectProposedScheduleFiles)
+      this.licenseProjectProposedScheduleFiles = [];
     filesData.eventRes.data.forEach((data: any) => {
       this.licenseProjectProposedScheduleFiles.push({
         proposedScheduleFileId: data.id,
         id: '00000000-0000-0000-0000-000000000000',
-        licenseProjectFeasibilityStudyId: this.licenseProjectFeasibilityStudyDto.id ? this.licenseProjectFeasibilityStudyDto.id : "00000000-0000-0000-0000-000000000000"
-
+        licenseProjectFeasibilityStudyId: this.licenseProjectFeasibilityStudyDto
+          .id
+          ? this.licenseProjectFeasibilityStudyDto.id
+          : '00000000-0000-0000-0000-000000000000',
       });
     });
   }
   onExistLicenseProjectFeasibilityStudyFilesUploaded(filesData: any) {
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
-    if (!this.licenseProjectFeasibilityStudyFiles) this.licenseProjectFeasibilityStudyFiles = [];
+    if (!this.licenseProjectFeasibilityStudyFiles)
+      this.licenseProjectFeasibilityStudyFiles = [];
     filesData.eventRes.data.forEach((data: any) => {
       this.licenseProjectFeasibilityStudyFiles.push({
         feasibilityStudyFileId: data.id,
         id: '00000000-0000-0000-0000-000000000000',
-        licenseProjectFeasibilityStudyId: this.licenseProjectFeasibilityStudyDto.id ? this.licenseProjectFeasibilityStudyDto.id : "00000000-0000-0000-0000-000000000000"
-
+        licenseProjectFeasibilityStudyId: this.licenseProjectFeasibilityStudyDto
+          .id
+          ? this.licenseProjectFeasibilityStudyDto.id
+          : '00000000-0000-0000-0000-000000000000',
       });
     });
   }
   onExistProjectMarketingPlanFilesUploaded(filesData: any) {
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
-    if (!this.licenseProjectMarketingPlanFiles) this.licenseProjectMarketingPlanFiles = [];
+    if (!this.licenseProjectMarketingPlanFiles)
+      this.licenseProjectMarketingPlanFiles = [];
     filesData.eventRes.data.forEach((data: any) => {
       this.licenseProjectMarketingPlanFiles.push({
         marketingPlanFileId: data.id,
         id: '00000000-0000-0000-0000-000000000000',
-        licenseProjectFeasibilityStudyId: this.licenseProjectFeasibilityStudyDto.id ? this.licenseProjectFeasibilityStudyDto.id : "00000000-0000-0000-0000-000000000000"
+        licenseProjectFeasibilityStudyId: this.licenseProjectFeasibilityStudyDto
+          .id
+          ? this.licenseProjectFeasibilityStudyDto.id
+          : '00000000-0000-0000-0000-000000000000',
       });
     });
   }
@@ -215,7 +326,9 @@ export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements O
       // Trigger value change in the form control
       const controlName = input.getAttribute('formControlName');
       if (controlName) {
-        this.licenseProjectFeasibilityStudyForm.get(controlName)?.setValue(value);
+        this.licenseProjectFeasibilityStudyForm
+          .get(controlName)
+          ?.setValue(value);
       }
     }
   }
@@ -234,14 +347,21 @@ export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements O
     const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
     const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     arabicNumbers.forEach((arabic, index) => {
-      numericValue = numericValue.replace(new RegExp(arabic, 'g'), englishNumbers[index]);
+      numericValue = numericValue.replace(
+        new RegExp(arabic, 'g'),
+        englishNumbers[index],
+      );
     });
 
     // Update form control with numeric value (without commas)
     if (numericValue) {
-      this.licenseProjectFeasibilityStudyForm.get(controlName)?.setValue(parseFloat(numericValue), { emitEvent: false });
+      this.licenseProjectFeasibilityStudyForm
+        .get(controlName)
+        ?.setValue(parseFloat(numericValue), { emitEvent: false });
     } else {
-      this.licenseProjectFeasibilityStudyForm.get(controlName)?.setValue(null, { emitEvent: false });
+      this.licenseProjectFeasibilityStudyForm
+        .get(controlName)
+        ?.setValue(null, { emitEvent: false });
     }
 
     // Format with commas for display
@@ -273,13 +393,16 @@ export class FawriaLicenseprojectFeasibilityStudyContainerComponent implements O
       'totalProjectCosts',
       'expectedNetProfit',
       'averageSalesPricePerMeter',
-      'averageConstructionCostPerMeter'
+      'averageConstructionCostPerMeter',
     ];
 
-    numberFields.forEach(fieldName => {
-      const value = this.licenseProjectFeasibilityStudyForm.get(fieldName)?.value;
+    numberFields.forEach((fieldName) => {
+      const value =
+        this.licenseProjectFeasibilityStudyForm.get(fieldName)?.value;
       if (value) {
-        const input = document.getElementById(`control-${fieldName}`) as HTMLInputElement;
+        const input = document.getElementById(
+          `control-${fieldName}`,
+        ) as HTMLInputElement;
         if (input) {
           const parts = value.toString().split('.');
           parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');

@@ -1,0 +1,81 @@
+<div class="page">
+  <div class="page-title">
+    <h6 class="title">{{ "اتفاقيات المشروع" }}</h6>
+  </div>
+
+  <div *ngIf="approvalList.length > 0" class="table-responsive mt-3">
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <!-- <th class="checkbox-column">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              [checked]="isAllSelected"
+              (change)="toggleSelectAll()"
+            >
+          </th> -->
+          <th>رقم الصك</th>
+          <th>رقم الاتفاقيه</th>
+          <th>تاريخ الصك</th>
+          <th>المساحة الإجمالية للصك</th>
+          <th>إجمالي المساحة المملوكة</th>
+          <th>حالة الاتفاقية</th>
+          <th>تاريخ آخر تحديث</th>
+          <th>معتمد الإتفاقية</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let approval of approvalList; let i = index">
+          <!-- <td class="checkbox-column">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              [checked]="isRowSelected(approval)"
+              (change)="toggleRowSelection(approval)"
+            >
+          </td> -->
+          <td>{{ approval.deedNumber }}</td>
+          <td>{{ approval.agreementReferenceNumber }}</td>
+          <td>{{ approval.deedDate | date : "dd/MM/yyyy"}}</td>
+          <td>{{ approval.deedAreaText }}</td>
+          <td>{{ approval.owningArea }}</td>
+          <td class="text-nowrap">
+            <div class="d-flex align-items-center">
+              <span class="status-pill" [ngClass]="getApprovalClass(approval)">
+                
+                {{
+                approval.agreementStatusEnum === agreementStatusEnum.Certified
+                ? "معتمد"
+                : approval.agreementStatusEnum === agreementStatusEnum.Rejected
+                ? "مرفوض"
+                : "قيد الانتظار"
+                }}
+              </span>
+            </div>
+          </td>
+          <td>{{ approval.approvedOn | date : "dd/MM/yyyy" }}</td>
+          <td> {{approval.approveCustomer}}</td>
+          <td class="text-nowrap">
+            <div class="table-actions">
+              <button class="btn btn-outline-primary" (click)="navigateToDetails(approval)">
+                عرض الاتفاقية
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-container *ngIf="!isLoading && approvalList.length === 0">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false" [showText]="true" [text]="'لا توجد اتفاقيات متاحة'"></app-no-data>
+    </div>
+  </ng-container>
+</div>
+<div *ngIf="isLoading" class="loading-state">
+  <div class="spinner"></div>
+  <p>جاري التحميل...</p>
+</div>

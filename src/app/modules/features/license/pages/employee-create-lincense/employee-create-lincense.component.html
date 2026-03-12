@@ -10,7 +10,6 @@
                   <input type="text"
                          formControlName="nationalNumber"
                          class="form-control" id="control-nationalNumber"
-                         placeholder="اكتب {{localization.nationalNumber}}"
                          [ngClass]="{'is-invalid': nationalNumber.touched && nationalNumber.errors}" />
                   <div *ngIf="nationalNumber.errors"
                        class="invalid-feedback d-block">

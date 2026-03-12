@@ -127,6 +127,10 @@ export class CreateRequestTemplateComponent {
   }
   
   onFileUpload(event: any, fileId: string): void {
+    if (event.eventRes.data.length == 0) {
+      this.uploadedFiles[fileId] = { fileId: '', hasError: true };
+      return;
+    }
     this.uploadedFiles[fileId] = { fileId: event.eventRes.data[0].id, hasError: false };
   }
   save() {
