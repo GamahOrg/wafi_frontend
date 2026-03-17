@@ -106,18 +106,34 @@ export class EditTransferAmountRequestComponent implements OnInit{
     });
   }
   applicationFormFileUpload(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.transferAmountsForm.controls['applicationFormFileId'].setValue('');
+      return;
+    }
     this.transferAmountsForm.controls['applicationFormFileId'].setValue(filesData.eventRes.data[0].id);
   }
 
   consultingEngineeringUpload(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.transferAmountsForm.controls['consultingEngineeringId'].setValue('');
+      return;
+    }
     this.transferAmountsForm.controls['consultingEngineeringId'].setValue(filesData.eventRes.data[0].id);
   }
 
   charteredAccountantReportUpload(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.transferAmountsForm.controls['charteredAccountantReportId'].setValue('');
+      return;
+    }
     this.transferAmountsForm.controls['charteredAccountantReportId'].setValue(filesData.eventRes.data[0].id);
   }
 
   bankReportUpload(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.transferAmountsForm.controls['bankReportId'].setValue('');
+      return;
+    }
     this.transferAmountsForm.controls['bankReportId'].setValue(filesData.eventRes.data[0].id);
   }
   save() {

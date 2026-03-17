@@ -3,7 +3,7 @@
   <div class="col-12 col-lg-6">
     <label for="" class="form-label">الوزن النسبي</label>
     <select class="form-select" formControlName="weightId">
-        <option label="-- اختار الوزن النسبي --"></option>
+        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
         <option *ngFor="let weight of sysLicenseRelativeWeightList" [value]="weight.id">{{weight.elementName}}</option>
     </select>
     <div>

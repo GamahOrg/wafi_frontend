@@ -29,7 +29,7 @@ export class LicenseProjectExpectedIncomeFormComponentComponent
   licenseProjectExpectedIncomeForm = this._formBuilder.group({
     id: [''],
     licenseProjectFeasibilityStudyId: [''],
-    yearId: ['', [Validators.required]],
+    yearId: [null as string | null, [Validators.required]],
     totalRevenue: this._formBuilder.control<number | null>(null, [
       Validators.required,
       Validators.pattern(Configuration.validators.decimal),

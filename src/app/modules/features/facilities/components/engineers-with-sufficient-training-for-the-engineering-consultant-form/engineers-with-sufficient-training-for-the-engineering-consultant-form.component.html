@@ -4,7 +4,7 @@
             <div class="form-group">
                 <label for="" class="form-label">المهندسين المعتمدين</label>
                 <select class="form-select" formControlName="qualificationCertifiedEngineerId">
-                    <option label="اختار مهندس"></option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let item of qualificationCertifiedEngineers" [value]="item.id">{{item.engineerName}}
                     </option>
                 </select>

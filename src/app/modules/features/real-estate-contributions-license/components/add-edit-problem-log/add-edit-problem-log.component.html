@@ -34,7 +34,7 @@ id="form-licenseProjectProblemLogForm">
     <div class="form-group mb-4">
         <label class="form-label">النوع</label>
     <select class="form-select" formControlName="problemTypeId">
-      <option label= "اختر نوع المشكلة" disabled></option>
+      <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
       <option *ngFor="let type of licenseProjectProblemTypeList" [value]="type.id">
         {{ type.name }}
       </option>
@@ -47,8 +47,7 @@ id="form-licenseProjectProblemLogForm">
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
       <label class="form-label">  وصف المشكلة</label>
-      <input type="text" id="control-description" class="form-control" formControlName="description"
-        placeholder="وصف المشكلة">
+      <input type="text" id="control-description" class="form-control" formControlName="description">
       <div class="invalid-feedback d-block" *ngIf="controls.description?.hasError('required') && showValidation">
         حقل مطلوب
       </div>
@@ -71,7 +70,7 @@ id="form-licenseProjectProblemLogForm">
     <div class="form-group mb-4">
         <label class="form-label">الشدة</label>
     <select class="form-select" formControlName="levelTypeId">
-      <option label= "اختر نوع الشدة" disabled></option>
+      <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
       <option *ngFor="let level of SysLevelTypeList" [value]="level.id">
         {{ level.name }}
       </option>
@@ -85,7 +84,7 @@ id="form-licenseProjectProblemLogForm">
     <div class="form-group mb-4">
         <label class="form-label">المالك</label>
     <select class="form-select" formControlName="riskOwnerId">
-      <option label= "اختر نوع المالك" disabled></option>
+      <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
       <option *ngFor="let owner of ownerTypeList" [value]="owner.id">
         {{ owner.name }}
       </option>
@@ -118,8 +117,7 @@ id="form-licenseProjectProblemLogForm">
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
       <label class="form-label">الحل المقترح </label>
-      <input type="text" id="control-recommendedAction" class="form-control" formControlName="recommendedAction"
-        placeholder="وصف المشكلة">
+      <input type="text" id="control-recommendedAction" class="form-control" formControlName="recommendedAction">
       <div class="invalid-feedback d-block" *ngIf="controls.recommendedAction?.hasError('required') && showValidation">
         حقل مطلوب
       </div>
@@ -142,7 +140,7 @@ id="form-licenseProjectProblemLogForm">
     <div class="form-group mb-4">
         <label class="form-label">الحالة</label>
     <select class="form-select" formControlName="statusId" >
-      <option label="اخترالحالة" disabled></option>
+      <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
       <option *ngFor="let status of ProblemStatusList" [value]="status.id">
         {{ status.name }}
       </option>

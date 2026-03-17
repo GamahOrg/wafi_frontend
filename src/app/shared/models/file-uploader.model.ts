@@ -19,5 +19,7 @@ export class FileUploader {
     size: number =5120;
     allowedExtensionsText:string = 'jpg, jpeg أو png';
     /** Allowed files extensions in lower case */
-    allowedExtensions?:string[]=[];
+  allowedExtensions?: string[] = [];
+
+  maxFileSizeMB?: number | null;
 }

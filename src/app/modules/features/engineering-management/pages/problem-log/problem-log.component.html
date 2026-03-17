@@ -85,7 +85,7 @@
                     <td>
                         <button type="button" class="btn btn-outline-primary" (click)="openShowProblemLogDialog(comdata.id)">عرض </button>
                         <button *ngIf="!isDeveloper && comdata.status.id === sysProblemStatusEnum.Open && comdata.ownerTypeId === ownerTypeId.ProjectManager" type="button" class="btn btn-primary mx-4" (click)="sendNotificationDialog(comdata.id)">
-                            ارسال رد
+                            إرسال رد
                           </button>
                      </td>
                 </tr>

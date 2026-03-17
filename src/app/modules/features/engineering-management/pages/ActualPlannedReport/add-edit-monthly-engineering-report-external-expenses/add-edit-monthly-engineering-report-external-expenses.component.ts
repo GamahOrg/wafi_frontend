@@ -48,6 +48,10 @@ export class AddEditMonthlyEngineeringReportExternalExpensesComponent implements
   } as FileUploader;
 
   onMonthlyEngineeringReportExternalExpensesAttachmentFilesUploaded(filesData: any) {
+
+    if(filesData.eventRes.data.length == 0) {
+      this.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments = [];
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     if (!this.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments)

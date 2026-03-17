@@ -139,18 +139,33 @@ export class InstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesF
   }
 
   onAccountingSupervisionForWafiSalesProjectsFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.qualificationAdditionHRDto.accountingSupervisionForWafiSalesProjectsFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length) return;
     this.qualificationAdditionHRDto.accountingSupervisionForWafiSalesProjectsFileId = fileRemovedData.eventRes.data[0].id;
   }
 
   onEngineeringSupervisionForWafiSalesProjectsFileRemoved(fileRemovedData: any) {
+    
     let file = fileRemovedData.eventRes.file;
   }
 
   onEngineeringSupervisionForWafiSalesProjectsFileUploaded(fileRemovedData: any) {
+     if (fileRemovedData.eventRes.data.length == 0) {
+      this.qualificationAdditionHRDto.engineeringSupervisionForWafiSalesProjectsFileId = '';
+      return; 
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length) return;
     this.qualificationAdditionHRDto.engineeringSupervisionForWafiSalesProjectsFileId = fileRemovedData.eventRes.data[0].id;
   }
 
   onExistSystemsApprovalCertificationsFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.addedExistSystemsApprovalCertifications = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.addedExistSystemsApprovalCertifications) this.addedExistSystemsApprovalCertifications = [];
     filesData.eventRes.data.forEach((data: any) => {
@@ -163,6 +178,10 @@ export class InstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesF
   }
 
   onLocalAndInternationalIssuedCertificationsUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.addedLocalAndInternationalIssuedCertifications = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.addedLocalAndInternationalIssuedCertifications) this.addedLocalAndInternationalIssuedCertifications = [];
     filesData.eventRes.data.forEach((data: any) => {

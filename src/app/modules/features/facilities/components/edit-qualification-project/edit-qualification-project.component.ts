@@ -190,10 +190,22 @@ export class EditQualificationProjectComponent implements OnInit, OnDestroy {
   }
 
   onProjectScheduleFileUploaded(fileRemovedData: any): void {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.projectDto!.projectScheduleFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length)
+      return;
     this.projectDto!.projectScheduleFileId = fileRemovedData.eventRes.data[0].id
   }
 
   onProjectContractFilesUploaded(fileRemovedData: any): void {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.newUploadedProjectContractFiles = [];
+      return;
+    } 
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length)
+      return;
     this.newUploadedProjectContractFiles.push({ fileManagerId: fileRemovedData.eventRes.data[0].id });
   }
 

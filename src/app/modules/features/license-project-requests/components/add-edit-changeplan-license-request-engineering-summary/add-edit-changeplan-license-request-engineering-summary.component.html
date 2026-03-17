@@ -6,8 +6,7 @@ id="form-licenseProjectProblemLogForm">
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4" *ngIf="!isEditMode">
       <label class="form-label">أسباب ومبررات تغيير خطة المشروع</label>
-      <textarea type="text" id="control-reasonsAndJustificationsForChangingProjectPlan" class="form-control" formControlName="reasonsAndJustificationsForChangingProjectPlan"
-        placeholder="أسباب ومبررات تغيير خطة المشروع"></textarea>
+      <textarea type="text" id="control-reasonsAndJustificationsForChangingProjectPlan" class="form-control" formControlName="reasonsAndJustificationsForChangingProjectPlan"></textarea>
       <div class="invalid-feedback d-block" *ngIf="controls.reasonsAndJustificationsForChangingProjectPlan?.hasError('required') && showValidation">
         حقل مطلوب
       </div>
@@ -18,8 +17,7 @@ id="form-licenseProjectProblemLogForm">
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
       <label class="form-label">نسبة إنجاز المشروع</label>
-      <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate"
-        placeholder="رصيد حساب الضمان">
+      <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate">
       <div class="invalid-feedback d-block" *ngIf="controls.achievementRate?.hasError('required') && showValidation">
         حقل مطلوب
       </div>

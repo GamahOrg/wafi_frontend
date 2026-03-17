@@ -14,6 +14,7 @@ import { LicenseRequestService } from '../../services/license-request.service';
 import { LicenseProjectCompletionData } from '../../dataModels/license-project-model.dto';
 import { TabCode } from '../../models/tab-code.model';
 import { ToastrNotificatioService } from '../../../../../core/services/toastr-notification/toastr-notificatio.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-fawria-final-beneficiary-agreement',
@@ -78,7 +79,7 @@ export class FawriaFinalBeneficiaryAgreementComponent {
   isTabCompleted: boolean = false
   private checkIfTabIsCompleted(): void {
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(this.licenseProjectId),

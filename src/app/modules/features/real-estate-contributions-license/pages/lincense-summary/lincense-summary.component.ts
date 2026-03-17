@@ -31,7 +31,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   availabilityToUpdate: boolean = false;
   localization = {
     send: "إرسال الطلب",
-    approvalDecisions:"الموافقه على الاقرارات",
+    approvalDecisions:"الموافقة على الإقرارات",
   };
   mainTabsComponentList: tabsComponent[] = [
     {
@@ -248,7 +248,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   openApprovalDialog(): void {
 
     let Data = {
-      title: "يجب الموافقه على جميع الاقرارات الخاصة بالرخصة حتى يتم ارسال الطلب",
+      title: "يجب الموافقة على جميع الإقرارات الخاصة بالرخصة حتى يتم إرسال الطلب",
       component: ApprovalComponent,
       id: "ApprovalComponent"
     } as PopupData;

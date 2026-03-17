@@ -1,355 +1,224 @@
 <ng-container>
-  <form
-    class="d-flex flex-column h-100"
-    [formGroup]="licenseProjectFeasibilityStudyForm"
-    id="form-licenseProjectFeasibilityStudyForm"
-  >
+  <form class="d-flex flex-column h-100" [formGroup]="licenseProjectFeasibilityStudyForm" id="form-licenseProjectFeasibilityStudyForm">
     <div class="tab-data-header">
-      <i class="material-icons-outlined">description</i>
+      <i class="icon hgi hgi-stroke hgi-book-bookmark-02"></i>
       <h6 class="title">بيانات دراسة الجدوى</h6>
     </div>
+    <!-- Basic Information Section -->
     <div class="tab-data-section">
-      <!-- Basic Information Section -->
-      <div class="form-section-wrapper">
-        <h3 class="section-subtitle">البيانات الأساسية للمشروع</h3>
+      <h6 class="title">البيانات الأساسية للمشروع</h6>
 
-        <div class="row mb-3">
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span>
-                إجمالى مساحة الأجزاء المشتركة
-              </label>
-              <input
-                type="text"
-                id="control-totlaAreaOfCommonAreas"
-                class="form-control"
-                formControlName="totlaAreaOfCommonAreas"
-                placeholder="إجمالى مساحة الأجزاء المشتركة"
-                (input)="formatNumberWithCommas($event)"
-                (focus)="onNumberInputFocus($event)"
-                (blur)="onNumberInputBlur($event)"
-              />
-              <mat-error
-                *ngIf="(controls.totlaAreaOfCommonAreas?.hasError('required') || controls.totlaAreaOfCommonAreas?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.totlaAreaOfCommonAreas?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
-            </div>
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span>
+              إجمالى مساحة الأجزاء المشتركة
+            </label>
+            <input type="text" id="control-totlaAreaOfCommonAreas" class="form-control" formControlName="totlaAreaOfCommonAreas" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+            <mat-error *ngIf="(controls.totlaAreaOfCommonAreas?.hasError('required') || controls.totlaAreaOfCommonAreas?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.totlaAreaOfCommonAreas?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Divider -->
-      <hr class="section-divider">
+    <!-- Financial Information Section -->
+    <div class="tab-data-section">
+      <h6 class="title">بيانات دراسة الجدوى للمشروع</h6>
 
-      <!-- Financial Information Section -->
-      <div class="form-section-wrapper">
-        <h3 class="section-subtitle">بيانات دراسة الجدوى للمشروع</h3>
-
-        <!-- Row 1 -->
-        <div class="row mb-3">
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> تكاليف تطوير البنية التحتية
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-infrastructureDevelopmentCosts"
-                  class="form-control"
-                  formControlName="infrastructureDevelopmentCosts"
-                  placeholder="أدخل تكاليف تطوير البنية التحتية"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.infrastructureDevelopmentCosts?.hasError('required') || controls.infrastructureDevelopmentCosts?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.infrastructureDevelopmentCosts?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.infrastructureDevelopmentCosts?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
+      <!-- Row 1 -->
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> تكاليف تطوير البنية التحتية
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-infrastructureDevelopmentCosts" class="form-control" formControlName="infrastructureDevelopmentCosts" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
             </div>
-          </div>
-
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> إجمالي التكاليف الإنشائية
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-totalConstructionCosts"
-                  class="form-control"
-                  formControlName="totalConstructionCosts"
-                  placeholder="أدخل إجمالي التكاليف الإنشائية"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.totalConstructionCosts?.hasError('required') || controls.totalConstructionCosts?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.totalConstructionCosts?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.totalConstructionCosts?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
-            </div>
+            <mat-error *ngIf="(controls.infrastructureDevelopmentCosts?.hasError('required') || controls.infrastructureDevelopmentCosts?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.infrastructureDevelopmentCosts?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.infrastructureDevelopmentCosts?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
           </div>
         </div>
 
-        <!-- Row 2 -->
-        <div class="row mb-3">
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> إجمالي التكاليف غير الإنشائية
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-totalNonConstructionCosts"
-                  class="form-control"
-                  formControlName="totalNonConstructionCosts"
-                  placeholder="أدخل إجمالي التكاليف غير الإنشائية"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.totalNonConstructionCosts?.hasError('required') || controls.totalNonConstructionCosts?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.totalNonConstructionCosts?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.totalNonConstructionCosts?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> إجمالي التكاليف الإنشائية
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-totalConstructionCosts" class="form-control" formControlName="totalConstructionCosts" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
             </div>
-          </div>
-
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> إجمالي تكلفة الأرض
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-totalLandCost"
-                  class="form-control"
-                  formControlName="totalLandCost"
-                  placeholder="أدخل إجمالي تكلفة الأرض"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.totalLandCost?.hasError('required') || controls.totalLandCost?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.totalLandCost?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.totalLandCost?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
-            </div>
+            <mat-error *ngIf="(controls.totalConstructionCosts?.hasError('required') || controls.totalConstructionCosts?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.totalConstructionCosts?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.totalConstructionCosts?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
           </div>
         </div>
 
-        <!-- Row 3 -->
-        <div class="row mb-3">
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> إجمالي قيمة المبيعات (الإيرادات)
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-totalSalesValue"
-                  class="form-control"
-                  formControlName="totalSalesValue"
-                  placeholder="أدخل إجمالي قيمة المبيعات (الإيرادات)"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.totalSalesValue?.hasError('required') || controls.totalSalesValue?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.totalSalesValue?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.totalSalesValue?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> إجمالي التكاليف غير الإنشائية
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-totalNonConstructionCosts" class="form-control" formControlName="totalNonConstructionCosts" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
             </div>
-          </div>
-
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> إجمالي تكاليف المشروع
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-totalProjectCosts"
-                  class="form-control"
-                  formControlName="totalProjectCosts"
-                  placeholder="أدخل إجمالي تكاليف المشروع"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.totalProjectCosts?.hasError('required') || controls.totalProjectCosts?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.totalProjectCosts?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.totalProjectCosts?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
-            </div>
+            <mat-error *ngIf="(controls.totalNonConstructionCosts?.hasError('required') || controls.totalNonConstructionCosts?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.totalNonConstructionCosts?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.totalNonConstructionCosts?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
           </div>
         </div>
 
-        <!-- Row 4 -->
-        <div class="row mb-3">
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> صافي الربح المتوقع
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-expectedNetProfit"
-                  class="form-control"
-                  formControlName="expectedNetProfit"
-                  placeholder="أدخل صافي الربح المتوقع"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.expectedNetProfit?.hasError('required') || controls.expectedNetProfit?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.expectedNetProfit?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.expectedNetProfit?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> إجمالي تكلفة الأرض
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-totalLandCost" class="form-control" formControlName="totalLandCost" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
             </div>
-          </div>
-
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> متوسط سعر المتر البيعي
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-averageSalesPricePerMeter"
-                  class="form-control"
-                  formControlName="averageSalesPricePerMeter"
-                  placeholder="أدخل متوسط سعر المتر البيعي"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.averageSalesPricePerMeter?.hasError('required') || controls.averageSalesPricePerMeter?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.averageSalesPricePerMeter?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.averageSalesPricePerMeter?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
-            </div>
+            <mat-error *ngIf="(controls.totalLandCost?.hasError('required') || controls.totalLandCost?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.totalLandCost?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.totalLandCost?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
           </div>
         </div>
 
-        <!-- Row 5 -->
-        <div class="row mb-3">
-          <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label class="form-label">
-                <span class="required-star">*</span> متوسط تكلفة المتر الإنشائي
-              </label>
-              <div class="input-with-currency">
-                <input
-                  type="text"
-                  id="control-averageConstructionCostPerMeter"
-                  class="form-control"
-                  formControlName="averageConstructionCostPerMeter"
-                  placeholder="أدخل متوسط تكلفة المتر الإنشائي"
-                  (input)="formatNumberWithCommas($event)"
-                  (focus)="onNumberInputFocus($event)"
-                  (blur)="onNumberInputBlur($event)"
-                />
-                <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
-              </div>
-              <mat-error
-                *ngIf="(controls.averageConstructionCostPerMeter?.hasError('required') || controls.averageConstructionCostPerMeter?.value == 0) && showValidation"
-              >
-                هذا الحقل مطلوب
-              </mat-error>
-              <mat-error *ngIf="controls.averageConstructionCostPerMeter?.hasError('pattern')">
-                لا يسمح الا برقمين بعد الفاصله العشريه
-              </mat-error>
-              <mat-error *ngIf="controls.averageConstructionCostPerMeter?.hasError('min')">
-                قيمة الحقل يجب الا تقل عن صفر
-              </mat-error>
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> إجمالي قيمة المبيعات (الإيرادات)
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-totalSalesValue" class="form-control" formControlName="totalSalesValue" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
             </div>
+            <mat-error *ngIf="(controls.totalSalesValue?.hasError('required') || controls.totalSalesValue?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.totalSalesValue?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.totalSalesValue?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> إجمالي تكاليف المشروع
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-totalProjectCosts" class="form-control" formControlName="totalProjectCosts" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+            </div>
+            <mat-error *ngIf="(controls.totalProjectCosts?.hasError('required') || controls.totalProjectCosts?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.totalProjectCosts?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.totalProjectCosts?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> صافي الربح المتوقع
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-expectedNetProfit" class="form-control" formControlName="expectedNetProfit" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+            </div>
+            <mat-error *ngIf="(controls.expectedNetProfit?.hasError('required') || controls.expectedNetProfit?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.expectedNetProfit?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.expectedNetProfit?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> متوسط سعر المتر البيعي
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-averageSalesPricePerMeter" class="form-control" formControlName="averageSalesPricePerMeter" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+            </div>
+            <mat-error *ngIf="(controls.averageSalesPricePerMeter?.hasError('required') || controls.averageSalesPricePerMeter?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.averageSalesPricePerMeter?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.averageSalesPricePerMeter?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> متوسط تكلفة المتر الإنشائي
+            </label>
+            <div class="input-with-currency">
+              <input type="text" id="control-averageConstructionCostPerMeter" class="form-control" formControlName="averageConstructionCostPerMeter" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)" />
+              <img src="assets/images/general/riyal-icon.svg" alt="﷼" class="currency-icon">
+            </div>
+            <mat-error *ngIf="(controls.averageConstructionCostPerMeter?.hasError('required') || controls.averageConstructionCostPerMeter?.value == 0) && showValidation">
+              هذا الحقل مطلوب
+            </mat-error>
+            <mat-error *ngIf="controls.averageConstructionCostPerMeter?.hasError('pattern')">
+              لا يسمح الا برقمين بعد الفاصله العشريه
+            </mat-error>
+            <mat-error *ngIf="controls.averageConstructionCostPerMeter?.hasError('min')">
+              قيمة الحقل يجب الا تقل عن صفر
+            </mat-error>
           </div>
         </div>
       </div>

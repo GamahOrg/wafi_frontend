@@ -147,11 +147,11 @@ export class AddContractPopupComponent implements OnInit {
       contractDate: [''],
       price: [0, [Validators.required, Validators.min(0.01)]],
       delegatorFileId: [''],
-      licenseProjectDeedId: ['', Validators.required],
+      licenseProjectDeedId: [null, Validators.required],
       isOldContract: [false],
       contractFileId: ['',Validators.required],
       deliveryDate:['',Validators.required],
-      paymentTypeId:['', Validators.required],
+      paymentTypeId:[null, Validators.required],
       paymentPlanId:['' ,Validators.required],
       saleDate: ['',Validators.required]
     });
@@ -309,6 +309,11 @@ export class AddContractPopupComponent implements OnInit {
     })
   }
   onContractFileUploaded(fileData: any): void {
+    if(fileData.eventRes.data.length == 0){
+      this.contractFileId = '';
+      this.contractFile = null;
+      this.contractForm.patchValue({ contractFileId: '' });
+    }
     // Handle the uploaded contract file
     if (fileData && fileData.eventRes && fileData.eventRes.data && fileData.eventRes.data.length > 0) {
       this.contractFileId = fileData.eventRes.data[0].id;
@@ -334,6 +339,13 @@ export class AddContractPopupComponent implements OnInit {
   }
 
   onFileUploaded(fileData: any): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.authorizationFileId = '';
+      this.authorizationFile = null;
+      this.showDelegatorFileError = true;
+      this.contractForm.get('delegatorFileId')?.setValue(null);
+      return;
+    }
     // Handle the uploaded file
     if (fileData && fileData.eventRes && fileData.eventRes.data && fileData.eventRes.data.length > 0) {
       this.authorizationFileId = fileData.eventRes.data[0].id;

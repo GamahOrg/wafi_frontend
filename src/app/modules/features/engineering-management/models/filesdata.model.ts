@@ -91,7 +91,7 @@ export enum licenseProjectTimeScheduleRequestStatusEnum {
   UnderStudy = 1,
   ///<summary>يوجد الملاحظات</summary>
   CustomerFeedback = 3,
-  ///<summary> تم ارسال معالجة الملاحظات</summary>
+  ///<summary> تم إرسال معالجة الملاحظات</summary>
   Compile = 4,
   ///<summary>تم الاعتماد</summary>
   Certified = 5,

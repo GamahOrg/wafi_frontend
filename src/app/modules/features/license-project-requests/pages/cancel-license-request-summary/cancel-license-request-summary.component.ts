@@ -30,7 +30,7 @@ export class CancelLicenseRequestSummaryComponent implements OnInit, OnDestroy {
   localization = {
     send: "إرسال الطلب",
     sendToParties: 'إرسال الطلب لأطراف المشروع',
-    approvalDecisions: "الموافقه على الاقرارات",
+    approvalDecisions: "الموافقة على الإقرارات",
   };
   subscriptions: Subscription[] = [];
   mainTabsComponentList: tabsComponent[] = [
@@ -151,7 +151,7 @@ export class CancelLicenseRequestSummaryComponent implements OnInit, OnDestroy {
   sendToParties() {
     this.projectLicenseServiceDetailsService.sendRequestForParties(this.requestId!).subscribe(res => {
       if (res) {
-        this._toastrNotificatioService.showSuccess('تم ارسال الطلب لأطراف المشروع')
+        this._toastrNotificatioService.showSuccess('تم إرسال الطلب لأطراف المشروع')
         this.request = res;
         this.projectLicenseServiceDetailsService.selectRequest$.next(res);
       }
@@ -167,7 +167,7 @@ export class CancelLicenseRequestSummaryComponent implements OnInit, OnDestroy {
       //   this.requestValidationData = res;
       //   this.checkGeneralErrorTabsIsExist();
       // }
-      //this._toastrNotificatioService.showSuccess('تم ارسال الطلب')
+      //this._toastrNotificatioService.showSuccess('تم إرسال الطلب')
       this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`]);
       console.log(res);
 

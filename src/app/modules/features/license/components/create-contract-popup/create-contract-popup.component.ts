@@ -51,6 +51,10 @@ export class CreateContractPopupComponent implements OnInit, OnDestroy {
   }
 
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.contractForm.get('delegatorFileId')?.setValue(null);
+      return;
+    }
     if (fileData.eventRes && fileData.eventRes.data && fileData.eventRes.data.length > 0) {
       const fileId = fileData.eventRes.data[0].id;
       this.contractForm.get('delegatorFileId')?.setValue(fileId);
@@ -196,7 +200,7 @@ export class CreateContractPopupComponent implements OnInit, OnDestroy {
       staticMessage: 'هل أنت متأكد من إنشاء العقد؟',
       dynamicMessage: '',
       acceptButtonText: 'إنشاء العقد'
-    }, '550px', 'auto');
+    });
 
     const confirmSub = this.popupService.confirmAction.subscribe(() => {
       this.saveContract();

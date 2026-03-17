@@ -63,6 +63,10 @@ export class ArchitecturalDesignFilesComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
   onApprovedStandardsFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.architecturalDesign.licenseProjectPlanAccordingApprovedStandardsFiles.push({
@@ -74,6 +78,10 @@ export class ArchitecturalDesignFilesComponent implements OnInit, OnDestroy {
     });
   }
   onDesignFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.architecturalDesign.licenseProjectDesignFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.architecturalDesign.licenseProjectDesignFiles.push({

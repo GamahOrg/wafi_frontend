@@ -2,13 +2,14 @@ import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
-import { PopupData } from 'src/app/shared/models/popup.model';
+import { confirmationPopupData, PopupData } from 'src/app/shared/models/popup.model';
 import { LicenseProjectPartiesAdditionalTermsFormComponent } from '../license-project-parties-additional-terms-form/license-project-parties-additional-terms-form.component';
 import { LicenseProjectPartiesAdditionalTermsDto, TermsPartType } from '../../models/license-project-parties-additional-terms-model';
 import { LicenseProjectPartiesAdditionalTermsService } from '../../services/LicenseProjectPartiesAdditionalTerms.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { DeebOwnerList } from '../../../real-estate-contributions-license/dataModels/project-land-owner.dto';
 import { environment } from 'src/environments/environment';
+import { LicenseRequestService } from '../../services/license-request.service';
 
 @Component({
   selector: 'app-license-project-parties-additional-terms',
@@ -22,10 +23,6 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
   expandedItems: Set<string> = new Set();
  
-  // Delete confirmation modal
-  showDeleteModal: boolean = false;
-  deleteItemId: string | null = null;
-  deleteItemIndex: number | null = null;
   baseUrl = `${environment.baseURL}/`;
   // showItemsLog: boolean = false;
   @Input() TermsPartType:TermsPartType = null as any;
@@ -35,6 +32,7 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
     private _toastrService: ToastrNotificatioService,
     private _popupService: PopupService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
+    private _licenseRequestService: LicenseRequestService,
   ) { }
 
   ngOnInit() {
@@ -79,21 +77,26 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
     status: 'حالة البند',
     activeStatus: 'ساري',
     inActiveStatus: 'معطل',
+    draftTitle: 'مسودة اتفاقية الاستشاري الهندسي',
+    draftDescription: 'في حال قمت بالانتهاء من وضع كافة البنود الاضافية على الاتفاقية، يمكنك عرض مسودة الاتفاقية',
   };
 
-  updateLocalization() { 
+  updateLocalization() {
     if(this.TermsPartType === TermsPartType.Owners){
-      this.localization.title = 'البنود الإضافية لاتفاقية الملاك'; 
-      this.localization.titlePoupupAdd = 'البنود الإضافية لاتفاقية الملاك'; 
-      this.localization.titlePoupupEdit = 'تعديل الإضافية لاتفاقية الملاك'; 
+      this.localization.title = 'البنود الإضافية لاتفاقية الملاك';
+      this.localization.titlePoupupAdd = 'البنود الإضافية لاتفاقية الملاك';
+      this.localization.titlePoupupEdit = 'تعديل الإضافية لاتفاقية الملاك';
+      this.localization.draftTitle = 'مسودة اتفاقية الملاك';
     }else if(this.TermsPartType === TermsPartType.EngineeringConsultant){
-      this.localization.title = 'البنود الإضافية للاستشاري الهندسي'; 
-      this.localization.titlePoupupAdd = 'إضافة البنود الإضافية للاستشاري الهندسي'; 
-      this.localization.titlePoupupEdit = 'تعديل البنود الإضافية للاستشاري الهندسي'; 
+      this.localization.title = 'البنود الإضافية للاستشاري الهندسي';
+      this.localization.titlePoupupAdd = 'إضافة البنود الإضافية للاستشاري الهندسي';
+      this.localization.titlePoupupEdit = 'تعديل البنود الإضافية للاستشاري الهندسي';
+      this.localization.draftTitle = 'مسودة اتفاقية الاستشاري الهندسي';
     }else if(this.TermsPartType === TermsPartType.Accountant){
-      this.localization.title = 'البنود الإضافية للمحاسب القانوني'; 
-      this.localization.titlePoupupAdd = 'إضافة البنود الإضافية للمحاسب القانوني'; 
-      this.localization.titlePoupupEdit = 'تعديل البنود الإضافية للمحاسب القانوني'; 
+      this.localization.title = 'البنود الإضافية للمحاسب القانوني';
+      this.localization.titlePoupupAdd = 'إضافة البنود الإضافية للمحاسب القانوني';
+      this.localization.titlePoupupEdit = 'تعديل البنود الإضافية للمحاسب القانوني';
+      this.localization.draftTitle = 'مسودة اتفاقية المحاسب القانوني';
     }
   }
 
@@ -119,38 +122,39 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
     }
   }
 
-  // Delete confirmation modal methods
   showDeleteConfirmation(id: string, index: number): void {
-    this.deleteItemId = id;
-    this.deleteItemIndex = index;
-    this.showDeleteModal = true;
+    let deleteConfirmation: confirmationPopupData = {
+      popupType: 'danger',
+      title: 'هل أنت متأكد من حذف البند؟',
+      staticMessage: '',
+      acceptButtonText: 'حذف البند',
+      dynamicMessage: '',
+      secondeStaticMessage: '',
+    };
+    // Subscribe BEFORE opening popup
+    const sub = this._popupService.confirmAction.subscribe(() => {
+      this.performDelete(id);
+      sub.unsubscribe(); // prevent memory leaks / multiple calls
+    });
+    this._popupService.updateConfirmationPopupData(deleteConfirmation);
   }
 
-  closeDeleteConfirmation(): void {
-    this.showDeleteModal = false;
-    this.deleteItemId = null;
-    this.deleteItemIndex = null;
+  private closeDialog(): void {
+    this._popupService.dismissDialog();
   }
 
-  confirmDelete(): void {
-    if (this.deleteItemId !== null && this.deleteItemIndex !== null) {
-      this.delete(this.deleteItemId, this.deleteItemIndex);
-      this.closeDeleteConfirmation();
-    }
-  }
-
-  delete(id: string,index:number) {
+  private performDelete(id: string): void {
     this.subscriptions.push(
       this._licenseProjectPartiesAdditionalTermsService.Delete(id).subscribe(res => {
         if (res.isDone) {
-          this._toastrService.showSuccess(this.localization.savedSuccessfully)
-          // Reload the entire list to ensure consistency and handle parent-child relationships
+          this._toastrService.showSuccess(this.localization.savedSuccessfully);
+          this.closeDialog();
           this.loadComponentData();
         }
         else
           this._toastrService.showError(res.message);
       })
-    )
+    );
   }
 
   addNewItem(): void {
@@ -219,8 +223,30 @@ export class LicenseProjectPartiesAdditionalTermsComponent {
   private observeConfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        
+
         this.loadComponentData();
+      })
+    );
+  }
+
+  viewDraft(): void {
+    if (!this.licenseProjectId || !this.TermsPartType) {
+      return;
+    }
+
+    this.subscriptions.push(
+      this._licenseRequestService.GenerateDraftAgreements(this.TermsPartType, this.licenseProjectId).subscribe({
+        next: (url) => {
+          if (url) {
+            window.open(this.baseUrl + url, '_blank');
+          } else {
+            this._toastrService.showError('فشل في تحميل المسودة');
+          }
+        },
+        error: (error) => {
+          console.error('Error generating draft:', error);
+          this._toastrService.showError('حدث خطأ أثناء تحميل المسودة');
+        }
       })
     );
   }

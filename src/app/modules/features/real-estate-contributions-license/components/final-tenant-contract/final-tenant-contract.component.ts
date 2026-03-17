@@ -141,6 +141,10 @@ export class FinalTenantContractComponent  implements OnInit, OnDestroy {
       message: string;
     };
   }): void {
+    if (filesData.eventRes.data.length == 0) {
+      this.beneficiaryFiles = [];
+      return;
+    }
     this.beneficiaryFiles = filesData.eventRes.data?.map((file) => {
       return {
         id: file.id,

@@ -56,7 +56,7 @@ export class CorrectionLicenseProjectZoneUnitSubunitComponent implements OnInit,
   }
 
   localization = {
-    errorMsg: 'لا يمكن اضافة او تعديل بلوكات او عماير الآن',
+    errorMsg: 'لا يمكن اضافة أو تعديل بلوكات أو عماير الآن',
     UnitType: 'إضافة بلوك / عمارة ',
     unitCode: 'رقم البلوك / رقم العمارة',
     stageNo: 'رقم المرحلة',
@@ -65,9 +65,9 @@ export class CorrectionLicenseProjectZoneUnitSubunitComponent implements OnInit,
     chooseUnitTitle: 'تحديد نوع الوحدات داخل البلوك',
     addingNewUnit: 'حفظ و إضافة نوع وحدة جديد ',
     chooseUnitTitleHint: '( يمكنك اختيار أكثر من نوع من الوحدات داخل البلوك )',
-    dateValidator: 'يجب ان يكون تاريخ البدايه اقل من تاريخ النهايه',
+    dateValidator: 'يجب أن يكون تاريخ البدايه اقل من تاريخ النهايه',
     subUnitsType: 'اضاقة أنواع الوحدات بالبلوك / العمارة ',
-    subUnitCount: 'عدد وحدات الخاص بالبلوك او العمارة  ',
+    subUnitCount: 'عدد وحدات الخاص بالبلوك أو العمارة  ',
     actions: 'إجراءات',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
   };

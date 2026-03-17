@@ -44,9 +44,13 @@
   <nav class="me-auto" aria-label="breadcrumb">
   <app-breadcrumb></app-breadcrumb>
   </nav>
+   <div class="notifications " (click)="openRatingModal()">
+    <img [src]="baseImagePath+'rating-star.svg'" alt="" />
+  </div>
   <div class="notifications dropdown">
     <app-notifications></app-notifications>
   </div>
+ 
 
   <div class="user dropdown">
     <!-- <div class="image">

@@ -92,11 +92,6 @@
                   <input
                     type="text"
                     class="form-control"
-                    [placeholder]="
-                      buyerType === buyerTypeEnum.Facility
-                        ? 'الرقم الموحد للمنشأه'
-                        : '  '
-                    "
                     formControlName="nationalNumber"
                     [class.is-invalid]="hasError('nationalNumber')"
                   />
@@ -124,7 +119,6 @@
                 <input
                   type="text"
                   class="form-input readonly-input"
-                  placeholder="اسم المنشأة"
                   formControlName="facilityName"
                   readonly
                   [class.is-invalid]="hasError('facilityName')"
@@ -143,11 +137,6 @@
               <input
                 type="text"
                 class="form-control"
-                [placeholder]="
-                  buyerType === buyerTypeEnum.Facility
-                    ? 'رقم هوية المفوض'
-                    : 'رقم الهوية الوطنية'
-                "
                 formControlName="nidNumber"
                 [class.is-invalid]="hasError('nidNumber')"
               />
@@ -158,11 +147,6 @@
             <div class="form-group">
               <div class="date-input-with-button">
                 <app-hijri-datepicker
-                  [placeholder]="
-                    buyerType === buyerTypeEnum.Facility
-                      ? 'تاريخ ميلاد المفوض'
-                      : 'تاريخ ميلاد'
-                  "
                   formControlName="birthDate"
                   [showGregorian]="true"
                 >
@@ -188,7 +172,6 @@
               <input
                 type="text"
                 class="form-control readonly-input"
-                placeholder="اسم المشترى"
                 formControlName="name"
                 readonly
                 [class.is-invalid]="hasError('name')"
@@ -205,7 +188,6 @@
               <input
                 type="email"
                 class="form-control"
-                placeholder="البريد الإلكتروني"
                 formControlName="email"
                 [class.is-invalid]="hasError('email')"
               />
@@ -217,7 +199,6 @@
               <input
                 type="tel"
                 class="form-control"
-                placeholder="رقم الجوال"
                 formControlName="mobileNumber"
                 [class.is-invalid]="hasError('mobileNumber')"
               />
@@ -320,7 +301,7 @@
                 formControlName="licenseProjectDeedId"
                 [class.is-invalid]="hasError('licenseProjectDeedId')"
               >
-                <option value="" disabled selected>اختر الصك</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let deed of deedsList" [value]="deed.id">
                   {{ deed.data?.deedNo || "صك رقم " + deed.id }}
                 </option>
@@ -447,7 +428,6 @@
                   type="text"
                   class="form-control"
                   formControlName="saleDate"
-                  placeholder="تاريخ أنشاء العقد"
                   [bsConfig]="{
                     dateInputFormat: 'YYYY-MM-DD',
                     containerClass: 'theme-default'
@@ -472,7 +452,6 @@
                   type="text"
                   class="form-control date-input"
                   formControlName="deliveryDate"
-                  placeholder="تاريخ التسليم"
                   [bsConfig]="{
                     dateInputFormat: 'YYYY-MM-DD',
                     containerClass: 'theme-default'
@@ -524,15 +503,7 @@
                   filteredPaymentPlansList.length === 0
                 "
               >
-                <option value="" disabled selected>
-                  {{
-                    !contractForm.get("paymentTypeId")?.value
-                      ? "يرجى اختيار نوع الدفعة أولاً"
-                      : filteredPaymentPlansList.length === 0
-                      ? "لا توجد خطط دفع متاحة"
-                      : "اختر خطة الدفع"
-                  }}
-                </option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let plan of filteredPaymentPlansList"
                   [value]="plan.paymentPlanId"

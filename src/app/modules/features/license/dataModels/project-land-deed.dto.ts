@@ -456,6 +456,8 @@ export class DeedOwnersDto {
   ownerName: string | null = '';
   idNumber: string | null = '';
   idType: string | null = '';
+   // لو المالك هو المطور
+  isOwnerByDeveloper: boolean | null = false;
   sexType: string | null = '';
   birthDateYear: number | null = 0;
   birthDateMonth: number | null = 0;

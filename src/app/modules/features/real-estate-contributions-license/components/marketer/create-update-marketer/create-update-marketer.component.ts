@@ -78,6 +78,14 @@ export class CreateUpdateMarketerComponent implements OnInit {
   }
 
   onUpload($event: any) {
+    if ($event.eventRes.data.length === 0) {
+      let controls = this.form?.controls;
+      if (controls) {
+        let control = controls['realStateMarketerAgreementFiles'];
+        control.setValue(null);
+      }
+      return;
+    }
 
     let result = $event ?
       $event.eventRes as CoreResponseDTO<SysFileManagerCreateUpdateDto[]> : <any>{};

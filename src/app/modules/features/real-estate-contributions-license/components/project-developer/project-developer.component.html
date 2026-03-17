@@ -95,8 +95,7 @@
                     <label class="form-label">رقم رخصة بيع المطور عقاري </label>
                     <input type="text" id="control-licenseNumber"
                            class="form-control"
-                           formControlName="licenseNumber"
-                           placeholder="رقم رخصة بيع المطور عقاري ">
+                           formControlName="licenseNumber">
                            <div *ngIf="developerControls.licenseNumber.errors?.['pattern']">يجب ادخال ارقام فقط</div>
  
                 </div>
@@ -106,8 +105,7 @@
                   <label class="form-label"> اسم مفوض المطور عقاري  </label>
                   <input type="text"
                          class="form-control" id="control-delegatorName"
-                         formControlName="delegatorName"
-                         placeholder="اسم مفوض المطور عقاري ">
+                         formControlName="delegatorName">
                          <mat-error *ngIf="developerControls.delegatorName?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
               </div>
@@ -117,8 +115,7 @@
                   <label class="form-label">رقم هوية مفوض المطور عقاري  </label>
                   <input type="text"
                          class="form-control"
-                         formControlName="delegatorIdentityNumber" id="control-delegatorIdentityNumber"
-                         placeholder="رقم هوية مفوض المطور عقاري ">
+                         formControlName="delegatorIdentityNumber" id="control-delegatorIdentityNumber">
                          <mat-error *ngIf="developerControls.delegatorIdentityNumber?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                          <div *ngIf="developerControls.delegatorIdentityNumber.errors?.['pattern']">يجب ادخال ارقام فقط</div>
 
@@ -129,8 +126,7 @@
                 <label class="form-label">رقم جوال مفوض المطور عقاري</label>
                 <input type="text"
                        class="form-control"
-                       formControlName="delegatorMobile" id="control-delegatorMobile"
-                       placeholder="رقم جوال مفوض المطور عقاري">
+                       formControlName="delegatorMobile" id="control-delegatorMobile">
                        <mat-error *ngIf="developerControls.delegatorMobile?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                        <div *ngIf="developerControls.delegatorMobile.errors?.['pattern']">يجب ادخال ارقام فقط</div>
 
@@ -142,8 +138,7 @@
               <label class="form-label"> البريد الإلكتروني الخاص بمفوض المطور عقاري </label>
               <input type="text"
                      class="form-control"
-                     formControlName="delegatorEmail" id="control-delegatorEmail"
-                     placeholder="البريد الإلكتروني الخاص بمفوض المطور عقاري ">
+                     formControlName="delegatorEmail" id="control-delegatorEmail">
                      <mat-error *ngIf="developerControls.delegatorEmail?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                        <div *ngIf="developerControls.delegatorEmail.errors?.['pattern']">يجب ادخال بريد الإلكتروني صحيح </div>
 

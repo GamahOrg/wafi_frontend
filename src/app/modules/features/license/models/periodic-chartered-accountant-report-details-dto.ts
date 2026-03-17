@@ -435,7 +435,7 @@ export interface PeriodicCharteredAccountantReportFinancialConstraintDto {
   // قيمة استرداد الدفعة الأولى
   firstPaymentRefundValue?: number;
 
-  // هل نسبة تحصيل المبيعات وصلت الى 90% من إجمالي قيمة المبيعات
+  // هل نسبة تحصيل المبيعات وصلت إلى 90% من إجمالي قيمة المبيعات
   salesRateReached90Percentage?: number;
 
   // قيمة استرداد الدفعة الثانية

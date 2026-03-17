@@ -439,7 +439,7 @@ export class EngineeringConsultantComponent implements OnInit {
           this.entity.numberOfMonths = res;
         } else {
           this.toastService.showError(
-            'يجب ان يتم ادخال تاريخ البداية  او النهاية للمشروع او المساهمه '
+            'يجب أن يتم ادخال تاريخ البداية  أو النهاية للمشروع أو المساهمه '
           );
         }
       });
@@ -607,6 +607,10 @@ export class EngineeringConsultantComponent implements OnInit {
       message: string;
     };
   }): void {
+    if (filesData.eventRes.data.length == 0) {
+      this.engineeringConsultantFiles = [];
+      return;
+    }
     this.engineeringConsultantFiles = filesData.eventRes.data?.map((file) => {
       return {
         id: file.id,

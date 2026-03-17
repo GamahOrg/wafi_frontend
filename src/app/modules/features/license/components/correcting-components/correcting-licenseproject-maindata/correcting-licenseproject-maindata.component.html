@@ -10,7 +10,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.name }}</label>
-            <input type="text" id="control-name" placeholder="{{ localization.name }}" class="form-control" formControlName="name" />
+            <input type="text" id="control-name" class="form-control" formControlName="name" />
             <mat-error *ngIf="controls.name?.hasError('required') && showValidation">{{ localization.requiredErrorMsg }}</mat-error>
           </div>
         </div>
@@ -19,7 +19,7 @@
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.typeId }}</label>
             <select class="form-select" id="control-typeId" formControlName="typeId">
-              <option [ngValue]="null" disabled hidden>{{ localization.typeId }}</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let type of types" [ngValue]="type.id">
                 {{ type.name }}
               </option>
@@ -32,7 +32,7 @@
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.categoryId }}</label>
             <select class="form-select" id="control-categoryId" formControlName="categoryId">
-              <option [ngValue]="null" disabled hidden>{{ localization.categoryId }}</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let category of categories" [value]="category.id">
                 {{ category.categoryName }}
               </option>
@@ -47,7 +47,7 @@
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.subCategoryId }}</label>
             <select class="form-select" id="control-subCategoryId" formControlName="subCategoryId">
-              <option [ngValue]="null" disabled hidden>{{ localization.subCategoryId }}</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let subCategory of tempSubCategories" [value]="subCategory.id">
                 {{ subCategory.subCategoryName }}
               </option>
@@ -62,7 +62,7 @@
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.licenseNatureType }}</label>
             <select class="form-select" id="control-licenseNatureType" formControlName="licenseProjectNatureTypeId">
-              <option [ngValue]="null" disabled hidden>{{ localization.licenseNatureType }}</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let licenseNatureType of licenseNatureType" [value]="licenseNatureType.id">
                 {{ licenseNatureType.name }}
               </option>
@@ -79,7 +79,7 @@
               localization.licenseProjectScopeId
               }}</label>
             <select class="form-select" id="control-licenseProjectScopeId" formControlName="licenseProjectScopeId">
-              <option [ngValue]="null" disabled hidden>{{ localization.licenseProjectScopeId }}</option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let scope of licenseProjectScopes" [value]="scope.id">
                 {{ scope.name }}
               </option>

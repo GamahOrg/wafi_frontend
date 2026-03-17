@@ -1,5 +1,6 @@
 .btn {
-  --bs-btn-font-weight: 600;
+  --bs-btn-font-size: 1rem;
+  --bs-btn-font-weight: 500;
 
   display: inline-flex;
   justify-content: center;
@@ -8,7 +9,7 @@
 
   .icon {
     line-height: 1;
-    font-size: 1rem !important;
+    font-size: 1.25rem;
   }
 }
 
@@ -26,7 +27,7 @@
   --bs-btn-active-border-color: #{$darkgreen};
   --bs-btn-active-bg: #{$darkgreen};
 
-  --bs-btn-bg: #F5FCFC;
+  --bs-btn-bg: #E7F2ED;
   --bs-btn-hover-bg: #{$darkgreen};
 }
 
@@ -38,6 +39,12 @@
 
   --bs-btn-border-color: transparent;
   --bs-btn-bg: #{$lightblue};
+}
+
+.btn-light {
+  --bs-btn-color: #{$dark};
+  --bs-btn-border-color: #F3F4F6;
+  --bs-btn-bg: #F3F4F6;
 }
 
 .btn-dark {

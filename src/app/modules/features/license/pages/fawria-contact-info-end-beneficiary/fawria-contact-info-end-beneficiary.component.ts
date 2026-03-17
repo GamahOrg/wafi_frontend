@@ -22,6 +22,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { DataVisibilityOfLicenseProjectService } from '../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { LicenseProjectCompletionData } from '../../dataModels/license-project-model.dto';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-fawria-contact-info-end-beneficiary',
@@ -89,7 +90,7 @@ export class FawriaContactInfoEndBeneficiaryComponent {
 
   private checkIfTabIsCompleted(): void {
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(this.licenseProjectId),
@@ -218,7 +219,7 @@ export class FawriaContactInfoEndBeneficiaryComponent {
 
   isFawriaValidation(): boolean {
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU')
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria)
       return true;
     else
       return false;

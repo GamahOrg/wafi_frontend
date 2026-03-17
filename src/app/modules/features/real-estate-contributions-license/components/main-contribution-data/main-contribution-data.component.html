@@ -16,7 +16,6 @@
             <input
               type="text"
               id="control-contributionName"
-              placeholder="{{ localization.name }}"
               class="form-control"
               formControlName="contributionName"
             />
@@ -38,7 +37,7 @@
               id="control-contributionTypeId"
               formControlName="contributionTypeId"
             >
-              <option [label]="localization.typeId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let type of types" [value]="type.id">
                 {{ type.contributionType }}
               </option>
@@ -60,7 +59,7 @@
               id="control-contributionCategoryId"
               formControlName="contributionCategoryId"
             >
-              <option [label]="localization.categoryId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let category of categories" [value]="category.id">
                 {{ category.categoryName }}
               </option>
@@ -82,7 +81,7 @@
               id="control-contributionSubCategoryId"
               formControlName="contributionSubCategoryId"
             >
-              <option [label]="localization.subCategoryId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option
                 *ngFor="let subCategory of tempSubCategories"
                 [value]="subCategory.id"
@@ -182,7 +181,6 @@
             <input
               type="text"
               id="control-contributionDuration"
-              placeholder="{{ localization.contributionDuration }}"
               class="form-control"
               formControlName="contributionDuration"
             />

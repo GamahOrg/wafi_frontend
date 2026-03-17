@@ -26,7 +26,7 @@ export class EmployeeLicenseListComponent implements OnInit, OnDestroy {
   baseUrl = `${environment.baseURL}/`;
 
   showFilter: boolean = false;
-  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseSummary}`;
+  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}/${Configuration.pages.license.lincenseSummary}`;
   @HostListener('document:click', ['$event']) onDocumentClick() {
     this.showFilter = false;
   }

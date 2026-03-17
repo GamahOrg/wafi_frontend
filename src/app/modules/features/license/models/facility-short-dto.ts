@@ -29,4 +29,5 @@ export interface CustomerShortDto {
   facility: FacilityShortDto;
   nationality?:NationalityModel;
   dateOfBirth?:Date;
+  isSelected?:boolean;
 }

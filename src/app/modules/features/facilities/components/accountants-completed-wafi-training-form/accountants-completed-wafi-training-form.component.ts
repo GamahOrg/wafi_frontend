@@ -19,16 +19,17 @@ import { QualificationEngineerType } from '../../dataModels/qualification-engine
 @Component({
   selector: 'app-accountants-completed-wafi-training-form',
   templateUrl: './accountants-completed-wafi-training-form.component.html',
-  styleUrls: ['./accountants-completed-wafi-training-form.component.scss']
+  styleUrls: ['./accountants-completed-wafi-training-form.component.scss'],
 })
 export class AccountantsCompletedWafiTrainingFormComponent {
   userData: customerResponse | null = null;
   subscriptions: Subscription[] = [];
   qualificationCertifiedEngineers: CertifiedEngineerDto[] = [];
-  qualificatedAccountantDto: QualificationQualifiedAccountantCreateUpdateDto = new QualificationQualifiedAccountantCreateUpdateDto();
+  qualificatedAccountantDto: QualificationQualifiedAccountantCreateUpdateDto =
+    new QualificationQualifiedAccountantCreateUpdateDto();
   socialInsuranceEmployeeList: SocialInsuranceEmployeeLockUpList[] = [];
   qualificatedAccountantsForm = this._formBuilder.group({
-    qualificationCertifiedEngineerId: ['', [Validators.required]]
+    qualificationCertifiedEngineerId: [null, [Validators.required]],
   });
   showValidation: boolean = false;
 
@@ -41,8 +42,8 @@ export class AccountantsCompletedWafiTrainingFormComponent {
     private _popupService: PopupService,
     private _certifiedEngineerService: CertifiedEngineerService,
     private _router: Router,
-    private _toastrNotificationService: ToastrNotificatioService,
-  ) { }
+    private _toastrNotificationService: ToastrNotificatioService
+  ) {}
 
   ngOnInit(): void {
     this.obseveCustomerData();
@@ -54,76 +55,84 @@ export class AccountantsCompletedWafiTrainingFormComponent {
 
   // popup
   observePopupEvents(): void {
-    this.observecancelAction()
-    this.observeconfirmAction()
+    this.observecancelAction();
+    this.observeconfirmAction();
   }
 
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
-        console.log(res)
+        console.log(res);
       })
-    )
+    );
   }
 
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        console.log(res)
+        console.log(res);
         this.qualificatedAccountantDto;
-        this.save()
+        this.save();
       })
-    )
+    );
   }
 
   private closeDialog(): void {
-    this._popupService.dismissDialog()
+    this._popupService.dismissDialog();
   }
 
   private obseveCustomerData(): void {
     this.subscriptions.push(
-      this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-        this.userData = res
-        if (this.userData) {
-          this.getQualificationCertifiedEngineers();
-          this.GetLockUpEmps()
-        }
-      })
-    )
+      this._userDataService
+        .getCustomerData()
+        .subscribe((res: customerResponse | null) => {
+          this.userData = res;
+          if (this.userData) {
+            this.getQualificationCertifiedEngineers();
+            this.GetLockUpEmps();
+          }
+        })
+    );
   }
 
   GetLockUpEmps() {
     this.subscriptions.push(
-      this.socialInsuranceEmployeeListService.getByFacilityId(this.userData?.facilities[0].id as string).subscribe((res) => {
-
-        this.socialInsuranceEmployeeList = res;
-      })
+      this.socialInsuranceEmployeeListService
+        .getByFacilityId(this.userData?.facilities[0].id as string)
+        .subscribe((res) => {
+          this.socialInsuranceEmployeeList = res;
+        })
     );
   }
 
   getQualificationCertifiedEngineers() {
     this.subscriptions.push(
-      this._certifiedEngineerService.GetFacilityById(this.userData?.facilities[0].id as string,QualificationEngineerType.Accountant).subscribe(res => {
-        this.qualificationCertifiedEngineers = res;
-      })
+      this._certifiedEngineerService
+        .GetFacilityById(
+          this.userData?.facilities[0].id as string,
+          QualificationEngineerType.Accountant
+        )
+        .subscribe((res) => {
+          this.qualificationCertifiedEngineers = res;
+        })
     );
   }
 
   observeQualificatedAccountantForm(): void {
     this.subscriptions.push(
-      this.qualificatedAccountantsForm.valueChanges.subscribe(changes => {
-      })
-    )
+      this.qualificatedAccountantsForm.valueChanges.subscribe((changes) => {})
+    );
   }
 
   observeQualificatedAccountantObj(): void {
     this.subscriptions.push(
-      this._qualificatedAccountantService.getCertifiedAccountantrObj().subscribe((Acc) => {
-
-        if (Acc && (Object.keys(Acc).length != 0))
-          this.getQualificatedAccountantObj(Acc.id);
-      })
-    )
+      this._qualificatedAccountantService
+        .getCertifiedAccountantrObj()
+        .subscribe((Acc) => {
+          if (Acc && Object.keys(Acc).length != 0)
+            this.getQualificatedAccountantObj(Acc.id);
+        })
+    );
   }
 
   getQualificatedAccountantObj(id: string) {
@@ -131,31 +140,43 @@ export class AccountantsCompletedWafiTrainingFormComponent {
       this._qualificatedAccountantService.GetById(id).subscribe((res) => {
         if (res) {
           this.qualificatedAccountantDto = res;
-          this.qualificatedAccountantsForm.patchValue(this.qualificatedAccountantDto as any);
+          this.qualificatedAccountantsForm.patchValue(
+            this.qualificatedAccountantDto as any
+          );
         }
       })
-    )
+    );
   }
 
   save(): void {
     if (this.qualificatedAccountantsForm?.invalid) {
       this.showValidation = true;
-      this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
+      this._toastrNotificationService.showError(
+        'نأمل ادخال كل الحقول اللازمة واعادة المحاولة'
+      );
       this.qualificatedAccountantsForm?.markAllAsTouched();
       return;
     }
-    this.qualificatedAccountantDto.qualificationCertifiedEngineerId = this.qualificatedAccountantsForm.value.qualificationCertifiedEngineerId as string;
-    this.qualificatedAccountantDto.facilityId = this.userData?.facilities[0].id as string;
-    this.qualificatedAccountantDto.id = this.qualificatedAccountantDto.id ? this.qualificatedAccountantDto.id : "00000000-0000-0000-0000-000000000000";
+    this.qualificatedAccountantDto.qualificationCertifiedEngineerId = this.qualificatedAccountantsForm.value.qualificationCertifiedEngineerId != null ? this.qualificatedAccountantsForm.value.qualificationCertifiedEngineerId as string : '';
+ 
+    this.qualificatedAccountantDto.facilityId = this.userData?.facilities[0]
+      .id as string;
+    this.qualificatedAccountantDto.id = this.qualificatedAccountantDto.id
+      ? this.qualificatedAccountantDto.id
+      : '00000000-0000-0000-0000-000000000000';
     this.subscriptions.push(
-      this._qualificatedAccountantService.Save(this.qualificatedAccountantDto).subscribe(res => {
-        if (res != undefined && res != null) {
-          this._qualificatedAccountantService.SetFCertifiedAccountantrList(res.data as QualificationQualificatedAccountantDto[])
-          // this.dialogRef.close();
-          this.closeDialog()
-        }
-      })
-    )
+      this._qualificatedAccountantService
+        .Save(this.qualificatedAccountantDto)
+        .subscribe((res) => {
+          if (res != undefined && res != null) {
+            this._qualificatedAccountantService.SetFCertifiedAccountantrList(
+              res.data as QualificationQualificatedAccountantDto[]
+            );
+            // this.dialogRef.close();
+            this.closeDialog();
+          }
+        })
+    );
   }
 
   onTrainingCertificateFileRemoved(fileRemovedData: any) {
@@ -163,7 +184,14 @@ export class AccountantsCompletedWafiTrainingFormComponent {
   }
 
   onTrainingCertificateFileUploaded(fileRemovedData: any) {
-    this.qualificatedAccountantDto.trainingCertificateFileId = fileRemovedData.eventRes.data[0].id;
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.qualificatedAccountantDto.trainingCertificateFileId = '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length)
+      return;
+    this.qualificatedAccountantDto.trainingCertificateFileId =
+      fileRemovedData.eventRes.data[0].id;
   }
 
   get controls() {

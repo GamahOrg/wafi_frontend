@@ -73,7 +73,7 @@ export class FawriaUpdateBuildingFlatAreaComponent implements OnInit {
 
     this._projectInstantDeedService.UpdateTotalAreaForProject(this.updateTotalAreaForProjectDto).subscribe((res) => {
       if (res.isDone) {
-        this._toastrNotificationService.showSuccess('تم الحفظ');
+       this._toastrNotificationService.showSuccess('تم الحفظ بنجاح');
         this._popupService.dismissDialog();
         this._projectInstantDeedService.closeDialog.emit();
       }

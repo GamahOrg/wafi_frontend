@@ -22,7 +22,7 @@
                 aria-label="Default select example"
                 formControlName="licenseProjectId"
               >
-                <option selected disabled>المشروع</option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let licenseProject of licenseProjects"
                   [ngValue]="licenseProject.id"
@@ -271,7 +271,7 @@
                 <div class="value">
                   <span class="icon material-icons-outlined">content_copy</span>
                   <div class="key">
-                    ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض او مالك
+                    ملحق الاتفاقية المبرم بين المطور وبين مالك الأرض أو مالك
                     منفعتها
                   </div>
                 </div>
@@ -366,7 +366,7 @@
                 <div class="value">
                   <span class="icon material-icons-outlined">content_copy</span>
                   <div class="key">
-                    تحديث رخصة البناء او الخطاب المقدم من مركز اتمام
+                    تحديث رخصة البناء أو الخطاب المقدم من مركز اتمام
                   </div>
                 </div>
                 <app-file-uploader

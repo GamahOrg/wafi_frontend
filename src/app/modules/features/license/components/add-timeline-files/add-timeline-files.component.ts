@@ -46,7 +46,7 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
 
   mueltiFilesUploaderData: FileUploader = {
     multiple: true,
-    allowedExtensionsText: 'pdf، jpg، jpeg، png، bmp، tiff، docx، xlsx، zip، rar، kmz، XER او dwg',
+    allowedExtensionsText: 'pdf، jpg، jpeg، png، bmp، tiff، docx، xlsx، zip، rar، kmz، XER أو dwg',
     allowedExtensions: ['.pdf', '.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.docx', '.xlsx', '.zip', '.rar', '.kmz', '.XER', '.dwg']
   } as FileUploader;
 
@@ -163,34 +163,68 @@ export class AddTimelineFilesComponent implements OnInit, OnDestroy {
   }
 
   ongeneralSitePlanFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.filesdataForm.patchValue({ generalSitePlanFileId: null })
+      return;
+    }
+
     this.filesdataForm.patchValue({ generalSitePlanFileId: $event.eventRes.data[0].id })
   }
 
   onthreeDReportFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.filesdataForm.patchValue({ threeDReportFileId: null })
+      return;
+    }
+
     this.filesdataForm.patchValue({ threeDReportFileId: $event.eventRes.data[0].id })
   }
 
   onprimaveraFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.filesdataForm.patchValue({ primaveraFileId: null })
+      return;
+    }
     this.filesdataForm.patchValue({ primaveraFileId: $event.eventRes.data[0].id })
   }
 
   onscheduleFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.filesdataForm.patchValue({ scheduleFileId: null })
+      return;
+    }
     this.filesdataForm.patchValue({ scheduleFileId: $event.eventRes.data[0].id })
   }
 
   onworkProgressCurveMonthlyAndCumulativePercentageOfCompletionFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.filesdataForm.patchValue({ workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId: null })
+      return;
+    }
     this.filesdataForm.patchValue({ workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId: $event.eventRes.data[0].id })
   }
 
   oncashFlowCurveFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.filesdataForm.patchValue({ cashFlowCurveFileId: null })
+      return;
+    }
     this.filesdataForm.patchValue({ cashFlowCurveFileId: $event.eventRes.data[0].id })
   }
 
   onemploymentCountCurveFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.filesdataForm.patchValue({ employmentCountCurveFileId: null })
+      return;
+    }
     this.filesdataForm.patchValue({ employmentCountCurveFileId: $event.eventRes.data[0].id })
   }
 
   onlicenseProjectTimeScheduleOtherAttachmentsFileUploaded($event: any) {
+    if ($event.eventRes.data.length == 0) {
+      this.filesdataForm.patchValue({ licenseProjectTimeScheduleOtherAttachments: [] })
+      return;
+    }
     let attachmentFiles: LicenseProjectTimeScheduleOtherAttachment[] = this.filesdataForm.value.licenseProjectTimeScheduleOtherAttachments ?? [];
 
     $event.eventRes.data.forEach((file: any) => {

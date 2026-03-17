@@ -10,8 +10,7 @@
                   <input type="text"
                          formControlName="commercialRegistrationNo"
                          class="form-control" id="control-commercialRegistrationNo"
-                         placeholder="اكتب {{localization.commercialRegistrationNo}}"
-                         [ngClass]="{'is-invalid': commercialRegistrationNo.touched && commercialRegistrationNo.errors}" />
+                                                  [ngClass]="{'is-invalid': commercialRegistrationNo.touched && commercialRegistrationNo.errors}" />
                   <div *ngIf="commercialRegistrationNo.errors"
                        class="invalid-feedback d-block">
                       <div *ngIf="commercialRegistrationNo.errors?.['required']">{{localization.requiredErrorMsg}}</div>

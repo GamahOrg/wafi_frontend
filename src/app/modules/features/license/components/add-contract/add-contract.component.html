@@ -48,7 +48,7 @@
           <div class="col-md-6">
             <label class="form-label required">الاسم </label>
             <input type="text" class="form-control" formControlName="name"
-                   placeholder="أدخل الاسم الكامل">
+                   >
             <div class="invalid-feedback d-block" *ngIf="getFieldError('name')">
               {{ getFieldError('name') }}
             </div>
@@ -59,7 +59,7 @@
             <label *ngIf="contractForm.get('buyerTypeId')?.value == 1" class="form-label required">رقم الهوية الوطنية </label>
             <label *ngIf="contractForm.get('buyerTypeId')?.value == 2" class="form-label required">رقم الهوية المفوض </label>
             <input type="text" class="form-control" formControlName="nidNumber"
-                   placeholder="أدخل رقم الهوية" maxlength="10">
+                    maxlength="10">
             <div class="invalid-feedback d-block" *ngIf="getFieldError('nidNumber')">
               {{ getFieldError('nidNumber') }}
             </div>
@@ -71,6 +71,7 @@
                 class="form-select"
                 formControlName="nationalityName"
               >
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option
                   *ngFor="let nationality of sysNationalites"
                   [value]="nationality.nationalityName"
@@ -83,7 +84,7 @@
           <div *ngIf="contractForm.get('buyerTypeId')?.value == 2" class="col-md-6">
             <label class="form-label required">الرقم الموحد للمنشأة </label>
             <input type="text" class="form-control" formControlName="nationalNumber"
-                   placeholder="أدخل الموحد للمنشأة" maxlength="10">
+                    maxlength="10">
             <button (click)="checkFacility()" type="button" class="btn-verify">تحقق</button>
             <div class="invalid-feedback d-block" *ngIf="getFieldError('nationalNumber')">
               {{ getFieldError('nationalNumber') }}
@@ -99,8 +100,7 @@
                 type="text"
                 class="form-control"
                 formControlName="birthDate"
-                placeholder="اختر تاريخ الميلاد"
-                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-default' }"
+                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-default' }"
               />
               <span class="calendar-icon">
                 <i class="bi bi-calendar3"></i>
@@ -112,7 +112,7 @@
           <div class="col-md-6">
             <label class="form-label required">رقم الجوال</label>
             <input type="tel" class="form-control" formControlName="mobileNumber"
-                   placeholder="05xxxxxxxx">
+                   >
             <div class="invalid-feedback d-block" *ngIf="getFieldError('mobileNumber')">
               {{ getFieldError('mobileNumber') }}
             </div>
@@ -122,7 +122,7 @@
           <div class="col-md-6">
             <label class="form-label">البريد الإلكتروني</label>
             <input type="email" class="form-control" formControlName="email"
-                   placeholder="example@email.com">
+                   >
             <div class="invalid-feedback d-block" *ngIf="getFieldError('email')">
               {{ getFieldError('email') }}
             </div>

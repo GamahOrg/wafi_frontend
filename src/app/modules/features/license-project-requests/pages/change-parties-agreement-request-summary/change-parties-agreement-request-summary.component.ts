@@ -28,7 +28,7 @@ export class ChangePartiesAgreementRequestSummaryComponent {
   localization = {
     send: 'إرسال الطلب',
     sendToParties: 'إرسال الطلب لأطراف المشروع',
-    approvalDecisions: 'الموافقه على الاقرارات',
+    approvalDecisions: 'الموافقة على الإقرارات',
   };
   mainTabsComponentList: tabsComponent[] = [
     {
@@ -116,7 +116,7 @@ export class ChangePartiesAgreementRequestSummaryComponent {
     this.projectLicenseServiceDetailsService
       .Create(this.licenseProjectRequestId!)
       .subscribe((res) => {
-        // this._toastrNotificatioService.showSuccess('تم ارسال الطلب');
+        // this._toastrNotificatioService.showSuccess('تم إرسال الطلب');
         this._router.navigate([
           `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`,
         ]);

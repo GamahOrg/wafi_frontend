@@ -62,7 +62,7 @@ export class UnitCodesFormComponent implements OnInit, OnDestroy {
 
   codeForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
-    projectModelId: ['', [Validators.required]],
+    projectModelId: [null as string | null, [Validators.required]],
     unitTypeId: ['', [Validators.required]],
     unitId: ['', [Validators.required]],
     code: ['', [Validators.required]],
@@ -198,7 +198,7 @@ export class UnitCodesFormComponent implements OnInit, OnDestroy {
     save: 'حفظ البيانات',
     projectModelId: 'نوع النموذج',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     MinValueError: 'قيمة الحقل يجب الا تقل عن صفر',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     space: 'المساحة الإجمالية للوحدة',
@@ -206,7 +206,7 @@ export class UnitCodesFormComponent implements OnInit, OnDestroy {
     unitLandShare: 'حصة الوحدة من الأرض',
     unitShareOfCommonAreas: 'حصة الوحدة من الأجزاء المشتركه',
     unitFacilities: 'مرافق الوحدة',
-    selectUnitFacilities: 'اختر مرافق الوحدة',
+    selectUnitFacilities: 'يرجى الاختيار',
     courtyardArea: 'مساحة الفناء',
     supportedPrice: 'السعر المدعوم',
   };

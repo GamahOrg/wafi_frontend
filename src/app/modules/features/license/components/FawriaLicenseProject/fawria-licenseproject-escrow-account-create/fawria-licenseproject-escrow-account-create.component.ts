@@ -1,5 +1,10 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Subscription, forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ToastrNotificatioService } from '../../../../../../core/services/toastr-notification/toastr-notificatio.service';
@@ -20,6 +25,12 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { BankTermsConditionsPopupComponent } from '../bank-terms-conditions-popup/bank-terms-conditions-popup.component';
 import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 import { LicenseRequestService } from '../../../services/license-request.service';
+import { PopupData, notePopupData } from 'src/app/shared/models/popup.model';
+import { ProjectApprovalsService } from '../../../services/licenseProjects/project-approvals.service';
+import { ApprovalComponent } from '../../approval/approval.component';
+import { RequestSuccessResponse, RequestValidation } from '../../../dataModels/request-validation.model';
+import { LicenseRequestValidationPopupComponent } from '../../license-request-validation-popup/license-request-validation-popup.component';
+import { Configuration } from 'src/app/core/configurations/shared.config';
 
 interface Delegator {
   id: string;
@@ -30,14 +41,16 @@ interface Delegator {
 @Component({
   selector: 'app-fawria-licenseproject-escrow-account-create',
   templateUrl: './fawria-licenseproject-escrow-account-create.component.html',
-  styleUrls: ['./fawria-licenseproject-escrow-account-create.component.scss']
+  styleUrls: ['./fawria-licenseproject-escrow-account-create.component.scss'],
 })
-export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit, OnDestroy {
+export class FawriaLicenseprojectEscrowAccountCreateComponent
+  implements OnInit, OnDestroy
+{
   baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
   escrowAccountForm: FormGroup;
   showValidation: boolean = false;
-  termsCondtition: any[] = []
+  termsCondtition: any[] = [];
   banks: BankDto[] = [];
   delegators: Delegator[] = [];
   subCustomerList: CustomerShortDto[] = [];
@@ -46,7 +59,10 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
   facilityId: string = '00000000-0000-0000-0000-000000000000';
 
   isExistingValidation: boolean = false;
-  fawriaLicenseBankInfoDto: FawriaLicenseBankInfoDto = new FawriaLicenseBankInfoDto();
+  isProjectDecisionsApproved: boolean = false;
+  requestSubmittedSuccessfully: boolean = false;
+  fawriaLicenseBankInfoDto: FawriaLicenseBankInfoDto =
+    new FawriaLicenseBankInfoDto();
 
   // Multiselect dropdown state
   isDelegatorsDropdownOpen: boolean = false;
@@ -60,12 +76,14 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     delegator: 'المفوضين',
     requiredErrorMsg: 'هذا الحقل مطلوب',
     savedSuccessfully: 'تم الحفظ بنجاح',
-    PleaseAddAllRequiredFields: 'لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة',
+    PleaseAddAllRequiredFields:
+      'لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة',
     approvedBankTermsConditionsMessage: 'يجب الموافقة على اقرار شروط البنك',
     saveAsDraft: 'حفظ كمسودة',
     next: 'السابق',
     previous: 'التالي',
-    approvedBankTermsConditions: 'أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_engineering_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية الاستشاري الهندسي</a>'
+    approvedBankTermsConditions:
+      'أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_engineering_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية الاستشاري الهندسي</a>',
   };
 
   constructor(
@@ -80,7 +98,8 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     private _projectBankInfoService: FawriaLicenseProjectBankInfoService,
     private _licenseRequestService: LicenseRequestService,
     private _tabsService: TabsService,
-    private _popupService: PopupService
+    private _popupService: PopupService,
+    private _projectApprovalsService: ProjectApprovalsService,
   ) {
     this.escrowAccountForm = this._formBuilder.group({
       bankId: [null, [this.requiredGuidValidator()]],
@@ -102,7 +121,6 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
     this.showSaveAsNextButton();
   }
 
-
   setSelectedBank(bankId: string) {
     const control = this.escrowAccountForm.get('bankId');
 
@@ -114,7 +132,7 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
   }
   requiredGuidValidator() {
     return (control: AbstractControl) => {
-      debugger
+      debugger;
       const emptyGuid = '00000000-0000-0000-0000-000000000000';
       return !control.value || control.value === emptyGuid
         ? { required: true }
@@ -129,7 +147,9 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
 
   openTermsConditionsPopup(): void {
     if (this.termsCondtition.length === 0) {
-      this._toastrNotificationService.showInfo('لا توجد شروط وأحكام متاحة للبنك المحدد');
+      this._toastrNotificationService.showInfo(
+        'لا توجد شروط وأحكام متاحة للبنك المحدد',
+      );
       return;
     }
 
@@ -139,14 +159,13 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
       component: BankTermsConditionsPopupComponent,
       data: this.termsCondtition,
       panelClass: ['terms-conditions-dialog', 'large-dialog'],
-      buttons: [
-      ]
+      buttons: [],
     });
   }
 
   ngOnDestroy(): void {
     this._tabsService.setUnsavedChanges(false);
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   get controls() {
@@ -154,19 +173,20 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
   }
 
   private loadUserData(): void {
-    const sub = this._userDataService.getCustomerData().subscribe(res => {
+    const sub = this._userDataService.getCustomerData().subscribe((res) => {
       this.userData = res;
       this.isExistingValidation = this.userData?.isEmployee ?? false;
       this.facilityId = this.userData?.isEmployee
         ? '00000000-0000-0000-0000-000000000000'
-        : this.userData?.facilities[0]?.id ?? this.facilityId;
+        : (this.userData?.facilities[0]?.id ?? this.facilityId);
     });
     this.subscriptions.push(sub);
   }
 
   private loadLicenseProjectId(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage()
-      ?? '00000000-0000-0000-0000-000000000000';
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage() ??
+      '00000000-0000-0000-0000-000000000000';
   }
 
   private observeFormChanges(): void {
@@ -174,17 +194,18 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
       if (this.escrowAccountForm.dirty) {
         this._tabsService.setUnsavedChanges(true);
       }
-      debugger
+      debugger;
       const rawValue = this.escrowAccountForm.getRawValue();
       this.fawriaLicenseBankInfoDto = {
         ...this.fawriaLicenseBankInfoDto,
         bankId: rawValue.bankId ?? '',
         delegatorCustomerIds: rawValue.delegatorIds ?? [],
         licenseProjectId: this.licenseProjectId,
-        approvedBankTermsConditions: rawValue.approvedBankTermsConditions ?? false,
+        approvedBankTermsConditions:
+          rawValue.approvedBankTermsConditions ?? false,
         crsTaxNumber: rawValue.crsTaxNumber ?? '',
         fatcaTaxNumber: rawValue.fatcaTaxNumber ?? '',
-        saudiTaxNumber: rawValue.saudiTaxNumber ?? ''
+        saudiTaxNumber: rawValue.saudiTaxNumber ?? '',
       };
     });
     this.subscriptions.push(sub);
@@ -192,39 +213,43 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
 
   private loadTermsCondition(): void {
     const rawValue = this.escrowAccountForm.getRawValue();
-    this._bankService.GetSysBankTermsCondition(rawValue.bankId).subscribe((res) => {
-      this.termsCondtition = res.data as any[]
-    })
+    this._bankService
+      .GetSysBankTermsCondition(rawValue.bankId)
+      .subscribe((res) => {
+        this.termsCondtition = res.data as any[];
+      });
   }
   private loadComponentData(): void {
     const sub = forkJoin({
       banksResponse: this._bankService.GetIntegrationBanks(),
-      subCustomers: this._projectRealStateDeveloperService.GetFacilitySubCustomers(this.facilityId),
+      subCustomers:
+        this._projectRealStateDeveloperService.GetFacilitySubCustomers(
+          this.facilityId,
+        ),
     }).subscribe({
       next: ({ banksResponse, subCustomers }) => {
         this.banks = banksResponse.data as BankDto[];
 
-        debugger
+        debugger;
         //set default selected Bank if only one Bank
-        if(this.banks.length==1){
-          this.setSelectedBank(this.banks[0].id)
+        if (this.banks.length == 1) {
+          this.setSelectedBank(this.banks[0].id);
         }
-
 
         this.subCustomerList = subCustomers;
         // Convert subCustomerList to delegators array
-        this.delegators = this.subCustomerList.map(customer => ({
+        this.delegators = this.subCustomerList.map((customer) => ({
           id: customer.id,
           name: customer.fullName,
-          selected: false
+          selected: false,
         }));
 
         // Load existing delegators if any
         this.loadExistingDelegators();
       },
-      error: err => {
+      error: (err) => {
         console.error('Error loading component data', err);
-      }
+      },
     });
 
     this.subscriptions.push(sub);
@@ -249,25 +274,21 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
 
   updateDelegatorIds(): void {
     const selectedIds = this.delegators
-      .filter(d => d.selected)
-      .map(d => d.id);
+      .filter((d) => d.selected)
+      .map((d) => d.id);
     this.controls['delegatorIds'].setValue(selectedIds);
   }
 
   getSelectedDelegatorsCount(): number {
-    return this.delegators.filter(d => d.selected).length;
+    return this.delegators.filter((d) => d.selected).length;
   }
 
   getSelectedDelegatorsText(): string {
-    const count = this.getSelectedDelegatorsCount();
-    if (count === 0) {
-      return this.localization.selectDelegators;
-    }
     return this.localization.selectDelegators;
   }
 
   getSelectedDelegators(): Delegator[] {
-    return this.delegators.filter(d => d.selected);
+    return this.delegators.filter((d) => d.selected);
   }
 
   removeDelegator(delegator: Delegator, event: Event): void {
@@ -286,7 +307,7 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
       if (!this.isExistingValidation) {
         this.showValidation = true;
         this._toastrNotificationService.showError(
-          this.localization.PleaseAddAllRequiredFields
+          this.localization.PleaseAddAllRequiredFields,
         );
       }
 
@@ -294,9 +315,13 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
       return;
     }
 
-    if (this.escrowAccountForm.get('approvedBankTermsConditions')?.value == false) {
+    if (
+      this.escrowAccountForm.get('approvedBankTermsConditions')?.value == false
+    ) {
       this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.approvedBankTermsConditionsMessage);
+      this._toastrNotificationService.showError(
+        this.localization.approvedBankTermsConditionsMessage,
+      );
       this.escrowAccountForm.markAllAsTouched();
       return;
     }
@@ -311,35 +336,39 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
       approvedBankTermsConditions: formValue.approvedBankTermsConditions,
       crsTaxNumber: formValue.crsTaxNumber,
       fatcaTaxNumber: formValue.fatcaTaxNumber,
-      saudiTaxNumber: formValue.saudiTaxNumber
+      saudiTaxNumber: formValue.saudiTaxNumber,
     };
 
-    const sub = this._projectBankInfoService.SaveFawriaLicenseprojectBankInfo(dto).subscribe(res => {
-      if (res.isDone) {
-        this._toastrService.success(this.localization.savedSuccessfully);
-        this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
-
-        this.escrowAccountForm.patchValue({
-          bankId: res.data.bankId,
-          delegatorIds: res.data.delegatorCustomerIds ?? [],
-        });
-        this.escrowAccountForm.markAsPristine();
-        this._tabsService.setUnsavedChanges(false);
-        this.fawriaLicenseBankInfoDto = res.data;
-        if (moveToNextTab) this.moveToNextTab();
-      } else {
-        this._toastrService.error(res.message);
-      }
-    });
+    const sub = this._projectBankInfoService
+      .SaveFawriaLicenseprojectBankInfo(dto)
+      .subscribe((res) => {
+        if (res.isDone) {
+          this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
+this._toastrNotificationService.showSuccess('تم الحفظ بنجاح');
+          this.escrowAccountForm.patchValue({
+            bankId: res.data.bankId,
+            delegatorIds: res.data.delegatorCustomerIds ?? [],
+          });
+          this.escrowAccountForm.markAsPristine();
+          this._tabsService.setUnsavedChanges(false);
+          this.fawriaLicenseBankInfoDto = res.data;
+          if (moveToNextTab) this.moveToNextTab();
+          // this.openApprovalDialogThenSendRequest();
+        } else {
+          this._toastrService.error(res.message);
+        }
+      });
 
     this.subscriptions.push(sub);
   }
 
-
   private loadExistingDelegators(): void {
     if (!this.licenseProjectId) return;
 
-    console.log('Loading existing delegators for project:', this.licenseProjectId);
+    console.log(
+      'Loading existing delegators for project:',
+      this.licenseProjectId,
+    );
 
     const sub = this._projectBankInfoService
       .GetFawriaLicenseprojectBankInfoById(this.licenseProjectId)
@@ -352,16 +381,19 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
             // Set bank in form if exists and is not the default empty GUID
             if (res.bankId && res.bankId !== emptyGuid) {
               this.escrowAccountForm.patchValue({
-                bankId: res.bankId
+                bankId: res.bankId,
               });
               this.loadTermsCondition();
             }
 
             // Set other fields if delegators exist
-            if (res.delegatorCustomerIds && res.delegatorCustomerIds.length > 0) {
-              const delegatorIds: string[] = (res.delegatorCustomerIds ?? []).filter(
-                (id): id is string => id !== null
-              );
+            if (
+              res.delegatorCustomerIds &&
+              res.delegatorCustomerIds.length > 0
+            ) {
+              const delegatorIds: string[] = (
+                res.delegatorCustomerIds ?? []
+              ).filter((id): id is string => id !== null);
 
               console.log('Found existing delegators:', delegatorIds);
 
@@ -371,11 +403,11 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
                 saudiTaxNumber: res.saudiTaxNumber,
                 fatcaTaxNumber: res.fatcaTaxNumber,
                 approvedBankTermsConditions: res.approvedBankTermsConditions,
-                crsTaxNumber: res.crsTaxNumber
+                crsTaxNumber: res.crsTaxNumber,
               });
 
               // Update delegators selected state
-              this.delegators.forEach(delegator => {
+              this.delegators.forEach((delegator) => {
                 delegator.selected = delegatorIds.includes(delegator.id);
               });
             }
@@ -385,31 +417,35 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
               ...this.fawriaLicenseBankInfoDto,
               licenseProjectId: res.licenseProjectId,
               bankId: res.bankId ?? '',
-              delegatorCustomerIds: (res.delegatorCustomerIds ?? []).filter((id): id is string => id !== null)
+              delegatorCustomerIds: (res.delegatorCustomerIds ?? []).filter(
+                (id): id is string => id !== null,
+              ),
             };
           } else {
             console.log('No existing data found');
           }
         },
-        error: err => {
+        error: (err) => {
           console.error('Error loading existing delegators', err);
-        }
+        },
       });
 
     this.subscriptions.push(sub);
   }
 
   private observeNextButtonIsClicked(): void {
-    const sub = this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(() => {
-      this.save(true);
-    });
+    const sub =
+      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(() => {
+        this.save(true);
+      });
     this.subscriptions.push(sub);
   }
 
   private observeSaveAsDraftIsClicked(): void {
-    const sub = this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(() => {
-      this.save();
-    });
+    const sub =
+      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(() => {
+        this.save();
+      });
     this.subscriptions.push(sub);
   }
 
@@ -437,6 +473,107 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent implements OnInit,
 
   saveAsDraft(): void {
     this.save();
+  }
+
+  openApprovalDialogThenSendRequest(): void {
+    this._projectApprovalsService
+      .getApprovalSubject()
+      .subscribe((isApproved) => {
+        this.isProjectDecisionsApproved = isApproved;
+
+        if (!this.isProjectDecisionsApproved) {
+          let Data = {
+            title:
+              'يجب الموافقة على جميع الإقرارات الخاصة بالرخصة حتى يتم إرسال الطلب',
+            iconClass: 'hgi hgi-stroke hgi-checkmark-badge-02',
+            component: ApprovalComponent,
+            id: 'ApprovalComponent',
+            disableClose: true,
+            submitButtonTitle: 'إرسال الطلب',
+            cancelButtonPosition: 'left',
+          } as PopupData;
+          this._popupService.updatePopupData(Data);
+        }
+      });
+
+    this._projectApprovalsService
+      .getApprovalSubject()
+      .subscribe((isApproved) => {
+        this.isProjectDecisionsApproved = isApproved;
+
+        if (this.isProjectDecisionsApproved) {
+          this.sendRequest();
+        }
+      });
+  }
+
+  private sendRequest(): void {
+    let licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    if (!licenseProjectId) return;
+    this.subscriptions.push(
+      this._licenseRequestService
+        .SendByProjectId(licenseProjectId)
+        .subscribe((res: RequestValidation | RequestSuccessResponse | null) => {
+          if (res) {
+            if ('id' in res && 'requestCode' in res && 'typeCode' in res) {
+              this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+                res.licenseProjectId,
+              );
+              this.requestSubmittedSuccessfully = true;
+              this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
+                res.id,
+              );
+              this.openSuccessDialog();
+            } else {
+              this.updateRequestValidation(res as RequestValidation);
+              this.openValidationDialog();
+            }
+          }
+        }),
+    );
+  }
+
+  private openSuccessDialog(): void {
+    const successNoteData: notePopupData = {
+      popupType: 'success',
+      title: 'تم إرسال الطلب بنجاح !',
+      dynamicMessage: 'تم إنشاء الاتفاقيات بين الأطراف وفي انتظار موافقتهم',
+      buttonText: 'متابعة طلبك',
+      buttonLink: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`,
+    };
+    this._popupService.updateNotePopupData(successNoteData);
+  }
+
+  private openValidationDialog(): void {
+    let Data = {
+      title: `التحقق من بيانات المشروع`,
+      component: LicenseRequestValidationPopupComponent,
+      id: 'LicenseRequestValidationPopupComponent',
+      buttons: [
+        {
+          icon: '',
+          title: 'إلغاء',
+          actionType: ButtonType.cancel,
+          isVisable: true,
+          isDisables: false,
+        },
+        {
+          icon: '',
+          title: 'إستكمال البيانات',
+          actionType: ButtonType.confirm,
+          isVisable: true,
+          isDisables: false,
+        },
+      ],
+    } as PopupData;
+    this._popupService.updatePopupData(Data);
+  }
+
+  private updateRequestValidation(data: RequestValidation): void {
+    this._licenseRequestService.updateRequestValidation(
+      data as RequestValidation,
+    );
   }
 
   @HostListener('document:click', ['$event'])

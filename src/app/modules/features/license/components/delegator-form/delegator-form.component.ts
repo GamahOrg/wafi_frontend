@@ -116,6 +116,10 @@ export class DelegatorFormComponent implements OnInit, OnDestroy {
     )
   }
   delegatorSignModelFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.licenseProjectDelegatorForm.controls.signModelFileId.setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.licenseProjectDelegatorForm.controls.signModelFileId.setValue(data.id as string);
@@ -131,7 +135,7 @@ export class DelegatorFormComponent implements OnInit, OnDestroy {
     if (this.controls.licenseProjectId.value) {
       this.LicenseProjectDelegatorCreateUpdateDto = this.licenseProjectDelegatorForm.value as LicenseProjectDelegatorCreateUpdateDto;
       if (!this.LicenseProjectDelegatorCreateUpdateDto.delegatorAcknowledgment) {
-        this.toastr.error("نأمل الموافقه على الاقرار حتى يتم تسجيل المفوض");
+        this.toastr.error("نأمل الموافقة على الاقرار حتى يتم تسجيل المفوض");
         return;
       }
       this.LicenseProjectDelegatorCreateUpdateDto.id = this.LicenseProjectDelegatorCreateUpdateDto.id ? this.LicenseProjectDelegatorCreateUpdateDto.id : "00000000-0000-0000-0000-000000000000";

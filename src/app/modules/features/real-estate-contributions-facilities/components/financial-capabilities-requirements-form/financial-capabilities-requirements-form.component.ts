@@ -174,6 +174,10 @@ export class FinancialCapabilitiesRequirementsFormComponent implements OnInit, O
     //     })
     //   )
     // }
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.financialCapability.creditRecordIntegrityCertificateFileId = '';
+      return;
+    }
     this.financialCapability.creditRecordIntegrityCertificateFileId = fileRemovedData.eventRes.data[0].id;
 
   }
@@ -207,6 +211,10 @@ export class FinancialCapabilitiesRequirementsFormComponent implements OnInit, O
     //     })
     //   )
     // }
+    if (filesData.eventRes.data.length === 0) {
+      this.financialCapability.addedQualificationFinancialStatements = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     filesData.eventRes.data.forEach((data: any) => {

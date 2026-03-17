@@ -17,10 +17,7 @@
               class="form-select"
               formControlName="name"
             >
-              <!-- optional placeholder -->
-              <option value="" disabled selected>
-                {{ localization.name }}
-              </option>
+              <option [ngValue]="''" disabled hidden>يرجى الاختيار</option>
 
               <option value="A">A</option>
               <option value="B">B</option>
@@ -156,6 +153,14 @@
               >
                 {{ file.designFile.fileDescription }}</a
               >
+              <button
+                *ngIf="file && file.designFile"
+                type="button"
+                class="btn btn-sm"
+                (click)="DeleteDesignFile(file.designFileId)"
+              >
+                <i class="hgi hgi-stroke hgi-delete-02"></i>
+              </button>
             </div>
             <app-file-uploader
               [data]="multipleFileUploaderData"

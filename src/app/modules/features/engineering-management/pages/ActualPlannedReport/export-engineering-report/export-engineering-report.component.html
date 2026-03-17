@@ -53,7 +53,7 @@
                         <select class="form-select form-select-lg"
                                 id="control-actualValueReportId"
                                 formControlName="monthDate">
-                            <option value="" disabled selected>-- اختر الشهر --</option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let item of actualValueReportList"
                                     [value]="item.monthDate">
                                 {{item.monthName}} - {{item.monthDate | date:'yyyy'}}
@@ -79,7 +79,7 @@
                                 <select class="form-select form-select-lg"
                                         id="yearSelect"
                                         formControlName="currenrYear">
-                                    <option value="" disabled selected>-- اختر السنة --</option>
+                                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                                     <option *ngFor="let year of yearsList"
                                             [value]="year">{{year}}</option>
                                 </select>
@@ -99,7 +99,7 @@
                                 <select class="form-select form-select-lg"
                                         id="quarterSelect"
                                         formControlName="quarterNumber">
-                                    <option value="" disabled selected>-- اختر الربع --</option>
+                                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                                     <option *ngFor="let quarter of quartersList"
                                             [value]="quarter.value">{{quarter.name}}</option>
                                 </select>

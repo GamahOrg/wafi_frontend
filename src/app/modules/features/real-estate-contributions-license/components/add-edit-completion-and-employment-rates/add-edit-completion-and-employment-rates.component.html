@@ -7,7 +7,7 @@ id="form-licenseProjectEngineeringSupervisionPlannedReportForm">
   <div class="row mb-3">
     <div class="col-12 col-lg-6">
     <select class="form-select" formControlName="currenrYear" (change)="onChangeYear($event)">
-      <option label="اختار سنه"></option>
+      <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
       <option *ngFor="let item of years" [value]="item">
         {{ item }}
       </option>

@@ -61,7 +61,7 @@ baseUrl = `${environment.baseURL}/`;
     NoItemsAdded: 'لا يوجد بنود إضافية بعد!',
     AddNew: 'إضافة بند',
     PaymentData: 'بيانات السداد بالاتفاقية',
-    // requestWasSentToEngineeringConsultant: 'تم ارسال طلب للاستشاري الهندسي للموافقة على الاتفاقية',
+    // requestWasSentToEngineeringConsultant: 'تم إرسال طلب للاستشاري الهندسي للموافقة على الاتفاقية',
     requestWasSentToEngineeringConsultant: 'تم الحفظ بنجاح'
   };
 

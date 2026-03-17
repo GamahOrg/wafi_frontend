@@ -7,8 +7,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">اسم المشتري</label>
-          <input type="text" id="control-name" class="form-control" formControlName="name"
-            placeholder="اسم المشتري">
+          <input type="text" id="control-name" class="form-control" formControlName="name">
           <mat-error
             *ngIf="(controls.name?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -19,7 +18,7 @@
         <div class="form-group mb-4">
           <label class="form-label">رقم الهوية</label>
           <input type="text" id="control-nIDNumber" class="form-control"
-            formControlName="nIDNumber" placeholder="رقم الهوية">
+            formControlName="nIDNumber">
           <mat-error
             *ngIf="(controls.nIDNumber?.hasError('required'))&& showValidation">حقل
             مطلوب</mat-error>
@@ -29,7 +28,7 @@
         <div class="form-group mb-4">
           <label class="form-label">رقم الجوال</label>
           <input type="text" id="control-mobile" class="form-control"
-            formControlName="mobile" placeholder="رقم الجوال">
+            formControlName="mobile">
           <mat-error
             *ngIf="(controls.mobile?.hasError('required'))&& showValidation">حقل
             مطلوب</mat-error>

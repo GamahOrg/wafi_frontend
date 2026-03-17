@@ -79,18 +79,30 @@ subscriptions: Subscription[] = [];
     );
   }
   onExistApplicationFormFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.applicationFormFileId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.applicationFormFileId = data.id;
     });
   }
   onExistContarctCopyFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.contarctCopyId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.contarctCopyId = data.id;
     });
   }
   onExistWrittenAgreementFromBuyerOrTenantFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.writtenAgreementFromBuyerOrTenantId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.writtenAgreementFromBuyerOrTenantId = data.id;

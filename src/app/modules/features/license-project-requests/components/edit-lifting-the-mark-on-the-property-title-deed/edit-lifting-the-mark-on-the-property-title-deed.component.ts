@@ -186,6 +186,9 @@ export class EditLiftingTheMarkOnThePropertyTitleDeedComponent {
       });
   }
   applicationFormFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.liftingTheMarkOnThePropertyTitleDeedForm.controls['applicationFormFileId'].setValue('');
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.liftingTheMarkOnThePropertyTitleDeedForm.controls['applicationFormFileId'].setValue(
       filesData.eventRes.data[0].id

@@ -72,12 +72,20 @@ export class AddEditChangeplanLicenseRequestAccountantSummaryComponent {
 
 
   onExistLastFinancialReportFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.lastFinancialReportId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.lastFinancialReportId=data.id;
     });
   }
   onExistSoldUnitsAttachmentFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.soldUnitsAttachmentId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.soldUnitsAttachmentId=data.id;

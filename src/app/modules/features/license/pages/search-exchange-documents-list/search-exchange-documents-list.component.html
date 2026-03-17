@@ -1,0 +1,108 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3 align-items-center">
+      <div class="col-12 col-lg-6 col-xl-7">
+        <!-- Page Title -->
+        <div class="page-title mb-0">
+          <h5 class="title">قائمة وثائق الصرف</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6 col-xl-5">
+        <!-- Filter Section -->
+        <div class="filter">
+          <div class="row g-2 align-items-center">
+            <!-- Search Input -->
+            <div class="col-12 col-lg-6 col-xl-8">
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                  <i class="hgi hgi-stroke hgi-search-01"></i>
+                </span>
+                <input type="text" id="control-search" class="form-control" [(ngModel)]="searchText" placeholder="البحث باسم المشروع او رقم الوثيقة" (input)="onSearchChange()" />
+              </div>
+            </div>
+
+            <!-- Status Filter Dropdown -->
+            <div class="col-12 col-lg-6 col-xl-4">
+              <select class="form-select" [(ngModel)]="statusFilter" (change)="onFilterChange()">
+                <option [ngValue]="null" selected>حالة الوثيقة</option>
+                <option *ngFor="let status of statusFilterList" [value]="status.id">
+                  {{ status.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="documentsList?.results && documentsList.results.length > 0">
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">رقم الوثيقة</th>
+            <th scope="col">اسم المشروع</th>
+            <th scope="col">المستفيد</th>
+            <th scope="col">البند الرئيسي</th>
+            <th scope="col">البند الفرعي</th>
+            <th scope="col">حالة وثيقة الصرف</th>
+            <th scope="col">الاجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let document of documentsList.results">
+            <td>
+
+              {{ document.documnetNumber }}
+            </td>
+            <td>
+
+              {{ document.licenseProjectName }}
+
+            </td>
+            <td>
+
+              {{ document.beneficiaryDescription }}
+
+            </td>
+            <td>
+
+              {{ document.mainItem }}
+
+            </td>
+            <td>
+
+              {{document.subItem}}
+            </td>
+            <td>
+              <span class="status-pill" [ngClass]="getStatusClass(document)">
+
+                {{document.status}}
+
+              </span>
+            </td>
+            <td>
+              <div class="table-actions">
+                <button class="btn btn-outline-primary" (click)="viewDetails(document)">
+                  عرض التفاصيل
+                </button>
+              </div>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+  <!-- Empty State -->
+  <ng-container *ngIf="documentsList.results.length === 0">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false" [showText]="true" [text]="'لا توجد وثائق متاحة'"></app-no-data>
+    </div>
+  </ng-container>
+</div>

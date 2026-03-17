@@ -63,6 +63,11 @@ export class EditorRequestNotesComponent implements OnInit, OnDestroy {
 
 
   onLicenseProcessingLogFile(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.Ids = [];
+      this._requestNotesService.setFilesIds(this.Ids);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     // this._requestNotesService.setFilesIds(filesData.eventRes.data);
     filesData.eventRes.data.forEach((data: any) => {

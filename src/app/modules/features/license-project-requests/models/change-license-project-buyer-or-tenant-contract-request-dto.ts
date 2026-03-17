@@ -11,7 +11,7 @@ export interface ChangeLicenseProjectBuyerOrTenantContractRequestDto {
 //نسخة من العقد
 contarctCopyId :string;
  contarctCopy :SysFileManagerCreateUpdateDto
-//موافقة مكتوبة من المشترين او المستاجرين على التغيير فى عقودهم
+//موافقة مكتوبة من المشترين أو المستاجرين على التغيير فى عقودهم
 writtenAgreementFromBuyerOrTenantId:string;
  writtenAgreementFromBuyerOrTenant :SysFileManagerCreateUpdateDto
 }
@@ -23,6 +23,6 @@ export interface ChangeLicenseProjectBuyerOrTenantContractRequestCreateUpdateDto
   applicationFormFileId :string;
 //نسخة من العقد
 contarctCopyId :string;
-//موافقة مكتوبة من المشترين او المستاجرين على التغيير فى عقودهم
+//موافقة مكتوبة من المشترين أو المستاجرين على التغيير فى عقودهم
 writtenAgreementFromBuyerOrTenantId:string;
 }

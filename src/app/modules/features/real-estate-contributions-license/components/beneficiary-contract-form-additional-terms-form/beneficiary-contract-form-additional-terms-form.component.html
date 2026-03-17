@@ -21,7 +21,7 @@
                         <label class="form-label">{{localization.licenseBeneficiaryContractFormId}}</label>
                         <select class="form-select"  id="control-licenseBeneficiaryContractFormId"
                         formControlName="licenseBeneficiaryContractFormId">
-                    <option value="">اختر البند</option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let beneficiary of sysLicenseBeneficiaryContractFormList"
                             [ngValue]="beneficiary.id">
                         {{ beneficiary.description }}
@@ -36,7 +36,6 @@
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.itemText}}</label>
                         <textarea type="text"  id="control-itemText"
-                               placeholder="{{localization.itemText}}"
                                class="form-control"
                                formControlName="itemText"></textarea>
                         <mat-error *ngIf="controls.itemText?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>

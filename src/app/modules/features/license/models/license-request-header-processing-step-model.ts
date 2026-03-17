@@ -71,6 +71,10 @@ export enum LicenseRequestHeaderStepStatusEnum {
   PendingWait = 15,
   //تخطي مهلة السداد
   SkipPaymentDeadline = 16,
+  // مكتمل تلقائيا
+  AutomaticallyCompleted = 17,
+  //مكتمل
+  Completed=18
 }
 
 export enum LicenseRequestHeaderStepTypeEnum {

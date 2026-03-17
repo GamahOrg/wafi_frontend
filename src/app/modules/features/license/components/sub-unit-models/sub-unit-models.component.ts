@@ -14,6 +14,7 @@ import { SharedLicenseProjectService } from '../../services/sharedLicenseProject
 import { DataVisibilityOfLicenseProjectService } from '../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { TabCode } from '../../models/tab-code.model';
 import { LicenseRequestService } from '../../services/license-request.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-sub-unit-models',
@@ -34,7 +35,7 @@ export class SubUnitModelsComponent implements OnInit, OnDestroy {
     requiredErrorMsg: 'حقل مطلوب',
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
 
   };
   constructor(
@@ -58,7 +59,7 @@ export class SubUnitModelsComponent implements OnInit, OnDestroy {
   private checkIfShouldHideActionButtons(): void {
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
      const licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (typeCode === 'FSRSU' && licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(licenseProjectId),
@@ -131,6 +132,7 @@ export class SubUnitModelsComponent implements OnInit, OnDestroy {
     }
     this._projectModelService.SetSubjectObj(license as LicenseProjectModelDto);
     let Data = {
+      iconClass: 'hgi hgi-stroke hgi-profile-02',
       title: this.localization.title + " - " + this._sharedLicenseProjectService.stripHtml(this.selectedSubUnitTitle ?? ''),
       component: ProjectModuleModelsFormComponent,
       id: "ProjectModuleModelsFormComponent"

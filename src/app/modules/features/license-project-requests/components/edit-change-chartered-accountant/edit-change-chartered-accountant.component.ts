@@ -148,14 +148,26 @@ localization = {
     }
   }
   alternativeCharteredAccountantAgreementUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changeCharteredAccountantForm.controls['alternativeCharteredAccountantAgreementId'].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changeCharteredAccountantForm.controls['alternativeCharteredAccountantAgreementId'].setValue(filesData.eventRes.data[0].id);
   }
   previousCharteredAccountantReportUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changeCharteredAccountantForm.controls['previousCharteredAccountantReportId'].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changeCharteredAccountantForm.controls['previousCharteredAccountantReportId'].setValue(filesData.eventRes.data[0].id);
   }
   clearanceCharteredAccountantFileUpload(filesData: any): void {
+    if (filesData.eventRes.data.length === 0) {
+      this.changeCharteredAccountantForm.controls['clearanceCharteredAccountantFileId'].setValue(null);
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.changeCharteredAccountantForm.controls['clearanceCharteredAccountantFileId'].setValue(filesData.eventRes.data[0].id);
   }

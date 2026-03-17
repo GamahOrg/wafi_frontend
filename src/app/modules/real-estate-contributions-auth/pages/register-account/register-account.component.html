@@ -9,7 +9,6 @@
         <input type="text" id="control-nIdNumber"
                formControlName="nIdNumber"
                class="form-control"
-               placeholder="اكتب {{localization.NIDNumberDisplayName}}"
                [ngClass]="{'is-invalid': controls.nIdNumber.errors && showValidation}" />
 
         <div *ngIf="controls.nIdNumber.errors && showValidation"

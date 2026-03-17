@@ -318,6 +318,10 @@ export class CorrectingLicenseprojectDeedsCreateComponent
   }
 
   onFileUploaded(fileData: any): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.deedForm.get('mortgageAgreement')?.setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -331,6 +335,10 @@ export class CorrectingLicenseprojectDeedsCreateComponent
   }
 
   onOwnerFileUploaded(fileData: any, ownerIndex: number): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.ownerAgreementFiles.at(ownerIndex).setValue(null);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -703,6 +711,9 @@ export class CorrectingLicenseprojectDeedsCreateComponent
   }
 
   onConstructionLicenseFileUploaded(fileData: any): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.verifyForm.get('constructionLicenseFileId')?.setValue(null);
+    }
     if (
       fileData &&
       fileData.eventRes &&
@@ -718,6 +729,10 @@ export class CorrectingLicenseprojectDeedsCreateComponent
   }
 
   onApprovedPlansUploaded(fileData: any): void {
+    if (fileData.eventRes.data.length === 0) {
+      this.verifyForm.get('approvedPlansFileIds')?.setValue([]);
+      return;
+    }
     if (
       fileData &&
       fileData.eventRes &&

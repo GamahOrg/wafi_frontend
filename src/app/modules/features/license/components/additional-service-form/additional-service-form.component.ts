@@ -36,7 +36,7 @@ export class AdditionalServiceFormComponent implements OnInit, OnDestroy {
   projectAdditionalServicesForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
     licenseProjectsId: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
-    sysLicenseProjectServiceId: ['', [Validators.required]],
+    sysLicenseProjectServiceId: [null as string | null, [Validators.required]],
     period: this._formBuilder.control<number | null>(null, [Validators.required]),
   })
 
@@ -79,6 +79,7 @@ export class AdditionalServiceFormComponent implements OnInit, OnDestroy {
   }
 
   setResponseToForm(res: AdditionalServicesDto): void {
+    if (!res) return;
     this.projectAdditionalServicesForm.patchValue({ ...res });
   }
 

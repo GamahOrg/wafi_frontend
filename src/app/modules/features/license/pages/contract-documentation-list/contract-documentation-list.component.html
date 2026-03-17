@@ -16,15 +16,15 @@
         <!-- Search -->
         <div class="col-3">
           <div class="input-group">
-            <span class="input-group-text" id="basic-addon1">
-              <i class="material-icons-outlined">search</i>
+            <span class="input-group-text">
+              <i class="hgi hgi-stroke hgi-search-01"></i>
             </span>
             <input
               type="text"
               class="form-control"
-              placeholder="البحث برقم العقد، اسم المشروع أو رقم الوحدة"
               [value]="searchTerm"
               (input)="onSearchChange($any($event.target).value)"
+               placeholder="بحث"
             />
           </div>
         </div>
@@ -34,8 +34,7 @@
           <select class="form-select"
                   [(ngModel)]="statusFilter"
                   (change)="onStatusFilterChange()">
-            <!-- Placeholder -->
-            <option value="" disabled selected>حالة العقد</option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let status of contractStatus" [value]="status.id">
               {{ status.name }}
             </option>

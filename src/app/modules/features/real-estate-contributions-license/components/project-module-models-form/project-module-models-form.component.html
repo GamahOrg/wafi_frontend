@@ -6,7 +6,6 @@
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.name}}</label>
                         <input type="text"  id="control-name"
-                               placeholder="{{localization.name}}"
                                class="form-control"
                                formControlName="name">
                         <mat-error *ngIf="controls.name?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>

@@ -37,7 +37,7 @@ export class ExternalProjectInformationComponent implements OnInit, OnDestroy {
     RightOfSaudisToOwnRealEstateFile: "ملف بأحقية السعوديين بتملك العقارات في بلد المشروع",
     FinancialGuaranteeOfProjectOwnershipFile: "ملف ضمان مالي بقيمة ١٪ من القيمة الإجمالية للمشروع لمدة ثلاثة أشهر بعد تاريخ انتهاء الترخيص",
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     yes: 'نعم',
     no: 'لا',
     savedSuccessfully: 'تم الحفظ',
@@ -68,6 +68,10 @@ export class ExternalProjectInformationComponent implements OnInit, OnDestroy {
     }
   }
   onOwnershipApprovedDocumentFileUploaded(filesData: any) {
+    if(filesData.eventRes.data.length == 0){
+      this.externalProjectDataCreateUpdateDto.licenseProjectOwnershipApprovedDocuments = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.externalProjectDataCreateUpdateDto.licenseProjectOwnershipApprovedDocuments.push({
@@ -88,6 +92,10 @@ export class ExternalProjectInformationComponent implements OnInit, OnDestroy {
     });
   }
   onLicenseDocumentFileUploaded(filesData: any) {
+    if(filesData.eventRes.data.length == 0){
+      this.externalProjectDataCreateUpdateDto.licenseProjectLicenseDocuments = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.externalProjectDataCreateUpdateDto.licenseProjectLicenseDocuments.push({
@@ -98,12 +106,20 @@ export class ExternalProjectInformationComponent implements OnInit, OnDestroy {
     });
   }
   onFinancialGuaranteeOfProjectOwnershipFileUploaded(filesData: any) {
+    if(filesData.eventRes.data.length == 0){
+      this.externalProjectDataCreateUpdateDto.financialGuaranteeOfProjectOwnershipFileId = "";
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.externalProjectDataCreateUpdateDto.financialGuaranteeOfProjectOwnershipFileId = data.id;
     });
   }
   onRightOfSaudisToOwnRealEstateFileUploaded(filesData: any) {
+    if(filesData.eventRes.data.length == 0){
+      this.externalProjectDataCreateUpdateDto.licenseProjectRightOfSaudisToOwnRealEstateFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.externalProjectDataCreateUpdateDto.licenseProjectRightOfSaudisToOwnRealEstateFiles.push({

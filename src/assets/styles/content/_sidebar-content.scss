@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  border-inline-end: 1px solid rgba($black, 0.1);
+  // border-inline-end: 1px solid rgba($black, 0.1);
   background-color: $white;
 
   .sidebar-toggle {
@@ -26,7 +26,7 @@
 
   .profile {
     padding-block: 1rem;
-    padding-inline: .5rem;
+    padding-inline: 0.5rem;
 
     background-color: $theme-light;
 
@@ -66,9 +66,9 @@
     }
 
     .link-group {
-      >.link-group-title {
-        margin-bottom: .5rem;
-        padding: .5rem 1rem;
+      > .link-group-title {
+        margin-bottom: 0.5rem;
+        padding: 0.5rem 1rem;
 
         font-size: $font-size-sm;
         font-weight: normal;
@@ -78,11 +78,13 @@
       .nav-link {
         display: flex;
         align-items: center;
-        column-gap: .5rem;
+        column-gap: 0.5rem;
 
-        padding: .5rem 1rem;
+        padding: 0.5rem 1rem;
         color: $headings-color;
-        transition: color .15s, font-weight .15s;
+        transition:
+          color 0.15s,
+          font-weight 0.15s;
 
         &.disabled {
           opacity: 0.5;
@@ -133,7 +135,7 @@
     }
 
     .profile {
-      padding-block: .75rem;
+      padding-block: 0.75rem;
       padding-inline: 1.25rem;
 
       .image {
@@ -160,7 +162,7 @@
               display: none;
             }
 
-            &~.icon {
+            & ~ .icon {
               display: none;
             }
           }

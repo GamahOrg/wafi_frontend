@@ -74,7 +74,7 @@ export class RegisterAccountComponent implements OnInit, OnDestroy {
         maxLengthErrorMsg: 'يجب ألا يقل طول الحقل عن 10 أرقام',
         minLength4ErrorMsg: 'يجب ألا يقل طول الحقل عن 4 أرقام',
         verification: 'تحقق',
-        pattern: 'يجب ان تكون القيمة بالأرقام فقط',
+        pattern: 'يجب أن تكون القيمة بالأرقام فقط',
         minErrorMsg: 'هذا الحقل مطلوب',
         month: "شهر",
         year: "سنه",

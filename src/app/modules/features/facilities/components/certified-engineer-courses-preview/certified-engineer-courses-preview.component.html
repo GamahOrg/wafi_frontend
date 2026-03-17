@@ -1,0 +1,23 @@
+<div class="table-responsive">
+    <table class="table table-light" *ngIf="courses && courses.length > 0">
+        <thead>
+            <tr>
+                <th>اسم الدورة (عربي)</th>
+                <th>اسم الدورة (انجليزي)</th>
+                <th>تاريخ حضور الدورة</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let course of courses">
+                <td>{{ course.courseNameInArabic }}</td>
+                <td>{{ course.courseNameInEnglish }}</td>
+                <td>{{ course.attendCourseDate | date: 'yyyy-MM-dd' }}</td>
+                <td>{{ course.statusDescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="!courses || courses.length === 0" class="text-center p-3">
+        <p>لا توجد دورات</p>
+    </div>
+</div>

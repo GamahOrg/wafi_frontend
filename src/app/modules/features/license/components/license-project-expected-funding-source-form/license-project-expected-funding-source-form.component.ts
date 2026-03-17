@@ -23,7 +23,7 @@ export class LicenseProjectExpectedFundingSourceFormComponent {
   licenseProjectExpectedFundingSourceForm = this._formBuilder.group({
     id: [''],
     licenseProjectFeasibilityStudyId: [''],
-    fundingTypeId: ['', [Validators.required]],
+    fundingTypeId: [null as string | null, [Validators.required]],
     financingTypeDescription: ['', [Validators.required]],
     funderNationalNumber: ['', [Validators.required]],
     funderEmailAddress: ['', [Validators.required, Validators.email]],

@@ -40,6 +40,11 @@ export class CodesFileComponent implements OnInit, OnDestroy {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
   }
   onExcelFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.fileId = "";
+      return;
+    }
+    
     this.fileId = fileRemovedData.eventRes.data[0].id;
   }
   save() {

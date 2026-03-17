@@ -3,7 +3,7 @@
     <span class="material-icons" *ngIf="currentLicenseRequestHeaderTimeLine.isRequestSentToDevelopers; else pending">check_circle</span>
     <ng-template #pending>
       <span class="material-icons">hourglass_empty</span></ng-template>
-    <label> تم ارسال الطلب لاطراف المشروع</label>
+    <label> تم إرسال الطلب لاطراف المشروع</label>
   </div>
 
   <div class="timeline-item" [ngClass]="{completed: currentLicenseRequestHeaderTimeLine.isRequestApprovedFromDevelopers}">

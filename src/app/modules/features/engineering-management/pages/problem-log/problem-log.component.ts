@@ -224,7 +224,7 @@ export class EngineerProblemLogComponent {
     localStorage.setItem('licenseProjectProblemId', id);
     let Data = {
       id: id,
-      title: 'ارسال رد',
+      title: 'إرسال رد',
       component: ProblemReplyComponent,
       buttons: [],
     } as PopupData;

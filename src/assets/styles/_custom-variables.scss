@@ -1,39 +1,39 @@
 // Colors
-$black: #0D121C;
+$black: #0d121c;
 $dark: #161616;
 $white: white;
-$light: #F7F8F8;
+$light: #f7f8f8;
 
-$lightergray: #E7EAEA;
-$lightgray: #D2D6DB;
-$darkgray: #8A9393;
-$greengray: #61796F;
-$bluegray: #D9D9D9;
+$lightergray: #e7eaea;
+$lightgray: #d2d6db;
+$darkgray: #8a9393;
+$greengray: #61796f;
+$bluegray: #d9d9d9;
 
-$lightergreen: #F6FEF9;
-$lightgreen: #ABEFC6;
-$mintgreen: #84C03F;
-$midgreen: #00B2BD;
+$lightergreen: #f6fef9;
+$lightgreen: #abefc6;
+$mintgreen: #84c03f;
+$midgreen: #00b2bd;
 $green: #067647;
 $darkgreen: #005257;
 
-$lighterOrange: #FFFCF5;
-$lightOrange: #FEDF89;
-$orange: #DC6803;
-$orangegray: #F2EDE1;
-$darkorange: #B54708;
+$lighterOrange: #fffcf5;
+$lightOrange: #fedf89;
+$orange: #dc6803;
+$orangegray: #f2ede1;
+$darkorange: #b54708;
 
-$blue: #59A8D4;
-$lightblue: #ECFDF3;
-$grayblue: #BAE9EB;
-$midblue: #80CEC8;
+$blue: #59a8d4;
+$lightblue: #ecfdf3;
+$grayblue: #bae9eb;
+$midblue: #80cec8;
 $darkblue: #093266;
 
-$lighterred: #FFFBFA;
-$lightred: #FECDCA;
-$midred: #FF7A69;
-$red: #D92D20;
-$darkred: #B42318;
+$lighterred: #fffbfa;
+$lightred: #fecdca;
+$midred: #ff7a69;
+$red: #d92d20;
+$darkred: #b42318;
 
 $primary: $darkgreen;
 $primary-bg: $lightblue;
@@ -41,7 +41,7 @@ $info: $blue;
 $success: $green;
 $warning: $darkorange;
 $danger: $darkred;
-$secondary: #959FA8;
+$secondary: #959fa8;
 
 // Theme
 $theme-main: $darkgreen;
@@ -60,26 +60,26 @@ $body-font-size: 16px;
 $body-color: $dark;
 
 // - Custom Font Sizes
-$font-size-sm: $body-font-size * .875;
-$font-size-xs: $body-font-size * .75;
-$font-size-xxs: $body-font-size * .625;
+$font-size-sm: $body-font-size * 0.875;
+$font-size-xs: $body-font-size * 0.75;
+$font-size-xxs: $body-font-size * 0.625;
 // - Heading
 $headings-margin-bottom: 0;
 $headings-font-weight: bold;
 $headings-line-height: 1.5;
-$headings-color: #001F21;
+$headings-color: #001f21;
 $paragraph-margin-bottom: 0;
 // - Others
 $success-text: $darkgreen;
 $nav-link-font-size: $font-size-sm;
 
 // Sizes
-$size-xs: .25rem; // 4px
-$size-sm: .5rem; // 8px
+$size-xs: 0.25rem; // 4px
+$size-sm: 0.5rem; // 8px
 $size-md: 1rem; // 16px
 $size-lg: 1.25rem; // 20px
 $size-xl: 1.5rem; // 24px
-$header-height: 4.5rem;
+$header-height: 3.5rem;
 
 // Border
 $border-color: $lightgray;
@@ -97,8 +97,8 @@ $card-border-radius: $border-radius-sm;
 
 // Alerts
 $alert-margin-bottom: 0;
-$alert-padding-y: .75rem;
-$alert-padding-x: .75rem;
+$alert-padding-y: 0.75rem;
+$alert-padding-x: 0.75rem;
 $alert-border: $darkgreen;
 
 // Dropdown
@@ -125,7 +125,7 @@ $form-check-radio-checked-bg-image: none;
 $form-feedback-font-size: $font-size-xxs;
 
 // Buttons
-$btn-padding-y-lg: calc($size-lg - .5rem - 1px);
+$btn-padding-y-lg: calc($size-lg - 0.5rem - 1px);
 $btn-padding-x-lg: $size-lg;
 $btn-font-size-lg: $size-md;
 $btn-font-size: $font-size-sm;

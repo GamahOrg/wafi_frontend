@@ -19,7 +19,7 @@ import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { UploadFileModel } from 'src/app/shared/models/upload-file.model';
 import { environment } from 'src/environments/environment';
 import { SysFileManagerCreateUpdateDto } from 'src/app/shared/models/sys-file-manager-create-update-dto';
-import  { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 
 @Component({
   selector: 'app-engineering-consultant',
@@ -41,14 +41,15 @@ export class EngineeringConsultantComponent implements OnInit {
   >{};
   entity$: BehaviorSubject<LicenseProjectEngineeringConsultantDto | undefined> =
     new BehaviorSubject<LicenseProjectEngineeringConsultantDto | undefined>(
-      undefined
+      undefined,
     );
   facility$: BehaviorSubject<FacilityShortDto | undefined> =
     new BehaviorSubject<FacilityShortDto | undefined>(undefined);
   types = StaffTypes;
   isEdit: boolean = false;
   engineeringConsultantFiles: SysFileManagerCreateUpdateDto[] | undefined = [];
-  saveEngineeringConsultantFiles: SysFileManagerCreateUpdateDto[] | undefined = [];
+  saveEngineeringConsultantFiles: SysFileManagerCreateUpdateDto[] | undefined =
+    [];
   localizations = {
     EngineeringConsultantTitle: 'الاستشاري الهندسي',
     EngineeringConsultant: 'رقم السجل التجاري للاستشاري الهندسي',
@@ -74,7 +75,7 @@ export class EngineeringConsultantComponent implements OnInit {
     next: 'التالي',
     previous: 'السابق',
     requestWasSentToEngineeringConsultant:
-      'تم ارسال طلب للاستشاري الهندسي للموافقة على الاتفاقية',
+      'تم إرسال طلب للاستشاري الهندسي للموافقة على الاتفاقية',
   };
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
@@ -87,7 +88,7 @@ export class EngineeringConsultantComponent implements OnInit {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private toastr: ToastrService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
-    private _toastrNotificationService: ToastrNotificatioService
+    private _toastrNotificationService: ToastrNotificatioService,
   ) {}
 
   // begin of life cycle
@@ -114,13 +115,12 @@ export class EngineeringConsultantComponent implements OnInit {
   }
 
   deletFile(id: string) {
-    this._filemangementService.DeletFile(id).subscribe(res => {
+    this._filemangementService.DeletFile(id).subscribe((res) => {
       if (res.isDone) {
         this.onGet();
       }
-    })
+    });
   }
-
 
   buildForm() {
     this.form = this.formGroup.group({
@@ -342,7 +342,7 @@ export class EngineeringConsultantComponent implements OnInit {
       ],
       otherSpecialtiesDocumentControlSpecialistStartDate: [
         this.transform(
-          this.entity.otherSpecialtiesDocumentControlSpecialistStartDate
+          this.entity.otherSpecialtiesDocumentControlSpecialistStartDate,
         ),
         Validators.compose([Validators.required]),
       ],
@@ -360,7 +360,7 @@ export class EngineeringConsultantComponent implements OnInit {
       ],
       otherSpecialtiesHealthAndSafetySpecialistStartDate: [
         this.transform(
-          this.entity.otherSpecialtiesHealthAndSafetySpecialistStartDate
+          this.entity.otherSpecialtiesHealthAndSafetySpecialistStartDate,
         ),
         Validators.compose([Validators.required]),
       ],
@@ -445,7 +445,7 @@ export class EngineeringConsultantComponent implements OnInit {
           this.entity.numberOfMonths = res;
         } else {
           this._toastrNotificationService.showError(
-            'يجب ان يتم ادخال تاريخ بداية المشروع ونهاية المشروع في بيانات المشروع '
+            'يجب أن يتم ادخال تاريخ بداية المشروع ونهاية المشروع في بيانات المشروع ',
           );
         }
       });
@@ -464,7 +464,8 @@ export class EngineeringConsultantComponent implements OnInit {
         if (result.data) {
           this.engineeringConsultantFiles =
             result.data.licenseProjectEngineeringConsultantFiles;
- this.saveEngineeringConsultantFiles = result.data.licenseProjectEngineeringConsultantFiles;
+          this.saveEngineeringConsultantFiles =
+            result.data.licenseProjectEngineeringConsultantFiles;
           this.entity = result.data;
           //this.entity.engineeringConsultantDelegatorSignModelFile = result.data.licenseProjectEngineeringConsultantDelegators[0].EngineeringConsultantDelegatorSignModelFile;
           //this.entity.engineeringConsultantDelegatorSignModelFileId = result.data.licenseProjectEngineeringConsultantDelegators[0].signModelFileId;
@@ -487,7 +488,7 @@ export class EngineeringConsultantComponent implements OnInit {
   save(moveToNextTab: boolean = false) {
     if (!this.licenseProjectId) {
       this._toastrNotificationService.showError(
-        this.localizations.PleaseAddProject
+        this.localizations.PleaseAddProject,
       );
       return;
     }
@@ -505,7 +506,7 @@ export class EngineeringConsultantComponent implements OnInit {
 
     if (this.form?.invalid) {
       this._toastrNotificationService.showError(
-        this.localizations.PleaseAddAllRequiredFields
+        this.localizations.PleaseAddAllRequiredFields,
       );
       this.form?.markAllAsTouched();
       return;
@@ -538,7 +539,7 @@ export class EngineeringConsultantComponent implements OnInit {
 
     // object.engineeringConsultantLicenseNumber =
     //   object.engineeringConsultantLicenseNumber.toString();
-    
+
     if (this.entity.id !== Guid.empty && this.entity.id) {
       this.update(object, moveToNextTab);
     } else {
@@ -548,7 +549,7 @@ export class EngineeringConsultantComponent implements OnInit {
 
   create(
     object: LicenseProjectEngineeringConsultantCreateUpdateDto,
-    moveToNextTab: boolean = false
+    moveToNextTab: boolean = false,
   ) {
     this.appService
       .createAsync(object)
@@ -556,21 +557,20 @@ export class EngineeringConsultantComponent implements OnInit {
       .subscribe((result) => {
         if (result && result.data) this.entity.id = result.data.id;
         // this._toastrNotificationService.showSuccess(this.localizations.CreatedSuccessfully);
-        this._toastrNotificationService.showSuccess(
-          this.localizations.requestWasSentToEngineeringConsultant
-        );
+        // this._toastrNotificationService.showSuccess(
+        //   this.localizations.requestWasSentToEngineeringConsultant,
+        // );
         if (moveToNextTab) {
           this.moveToNextTab();
         } else {
-          this.onGet()
+          this.onGet();
         }
-
       });
   }
 
   update(
     object: LicenseProjectEngineeringConsultantCreateUpdateDto,
-    moveToNextTab: boolean = false
+    moveToNextTab: boolean = false,
   ) {
     this.appService
       .updateAsync(object)
@@ -578,14 +578,13 @@ export class EngineeringConsultantComponent implements OnInit {
       .subscribe(() => {
         // this._toastrNotificationService.showSuccess(this.localizations.UpdatedSuccessfully);
         this._toastrNotificationService.showSuccess(
-          this.localizations.requestWasSentToEngineeringConsultant
+          this.localizations.requestWasSentToEngineeringConsultant,
         );
         if (moveToNextTab) {
           this.moveToNextTab();
         } else {
-          this.onGet()
+          this.onGet();
         }
-
       });
   }
 
@@ -629,6 +628,10 @@ export class EngineeringConsultantComponent implements OnInit {
       message: string;
     };
   }): void {
+    if (filesData.eventRes.data.length == 0) {
+      this.engineeringConsultantFiles = [];
+      return;
+    }
     this.engineeringConsultantFiles = filesData.eventRes.data?.map((file) => {
       return {
         id: file.id,

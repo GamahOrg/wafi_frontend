@@ -33,9 +33,20 @@
 
 .dashed-block {
   padding: 1.5rem;
-  border: 2px dashed $lightergray;
-  border-radius: $card-border-radius;
-  background-color: $light;
+  border: 2px dashed $lightgray;
+  border-radius: $border-radius-xs;
+  background-color: #F3F4F6;
+
+  .icon {
+    line-height: 1;
+    font-size: 1.25rem;
+    color: $headings-color;
+  }
+
+  .btn-light {
+    --bs-btn-color: $headings-color;
+    --bs-btn-bg: #F3F4F6;
+  }
 }
 
 .upload-hints {
@@ -80,7 +91,15 @@
     }
 
     .icon {
-      color: $theme-main;
+      color: $dark;
+    }
+
+    a {
+      color: $dark;
+
+      &:hover {
+        color: $theme-main;
+      }
     }
   }
 }
@@ -108,6 +127,19 @@
     border-color: #B2DDFF;
     background-color: #EFF8FF;
   }
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: #6c757d;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  white-space: nowrap;
 }
 
 .chip {

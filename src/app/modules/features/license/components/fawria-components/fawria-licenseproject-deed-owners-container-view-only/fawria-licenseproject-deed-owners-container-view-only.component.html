@@ -13,6 +13,7 @@
           <tr>
             <th>رقم الصك</th>
             <th>أسم مالك</th>
+            <th></th>
             <th>الهوية</th>
             <th class="text-nowrap">اجمالي المساحة المملوكة</th>
             <th class="text-nowrap">قيمة ألارض للمالك</th>
@@ -29,12 +30,19 @@
             <tr>
               <td>{{ deebOwner?.deepNumber }}</td>
               <td>{{ deebOwner?.ownerName }}</td>
-              <td>{{ deebOwner?.idNumber }}</td>
+              <td>
+
+                <span *ngIf="deebOwner?.isOwnerByDeveloper" class="tag">المطور العقاري</span>
+                <!-- <img *ngIf="deebOwner?.isOwnerByDeveloper" src="assets/images/general/developer-tag.svg" alt="المطور العقاري" /> -->
+              </td>
+              <td>
+                
+                {{ deebOwner?.idNumber }}</td>
               <td>{{ deebOwner?.owningArea }}م2</td>
               <td>
                 <span class="d-inline-flex align-items-center gap-1">
                   <span class="price-text">{{
-                    deebOwner?.owningAmount | number : "1.0-0"
+                    deebOwner?.owningAmount | number: "1.0-0"
                   }}</span>
                   <img
                     src="assets/images/general/riyal-icon.svg"
@@ -44,22 +52,10 @@
                 </span>
               </td>
               <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  [value]="deebOwner?.bankName"
-                  disabled
-                  readonly
-                />
+                <p *ngIf="deebOwner?.bankName">{{ deebOwner?.bankName }}</p>
               </td>
               <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  [value]="deebOwner?.accountNumber"
-                  disabled
-                  readonly
-                />
+                <p *ngIf="deebOwner?.accountNumber">{{ deebOwner?.accountNumber }}</p>
               </td>
               <td>
                 <div
@@ -87,6 +83,8 @@
   </ng-container>
 </div>
 
-<app-license-project-parties-additional-terms-view-only
-  [TermsPartType]="TermsPartType.Owners"
-></app-license-project-parties-additional-terms-view-only>
+<ng-container *ngIf="!isOwnerByDeveloper">
+  <app-license-project-parties-additional-terms-view-only    
+    [TermsPartType]="TermsPartType.Owners"
+  ></app-license-project-parties-additional-terms-view-only>
+</ng-container>

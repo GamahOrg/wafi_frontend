@@ -19,9 +19,9 @@ export enum SysRequestApprovalTypeEnum {
 }
 
 export enum SysRequestApprovalActionTypeEnum {
-  //ارسال الطلب
+  //إرسال الطلب
   SendRequest = 1,
-  //اعادة ارسال الطلب للدراسة
+  //اعادة إرسال الطلب للدراسة
   ResendForReview = 2,
 }
 

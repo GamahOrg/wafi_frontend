@@ -138,7 +138,7 @@ export class CorrectingLicenseprojectMaindataComponent implements OnInit, OnDest
     projectStarted: 'تم البدء في تنفيذ المشروع؟',
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
     requiredErrorMsg: 'هذا الحقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',
@@ -279,6 +279,11 @@ export class CorrectingLicenseprojectMaindataComponent implements OnInit, OnDest
   }
 
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length === 0) {
+      this.projectBasicData.engineeringConsultantReportFileId = null;
+      this.controls.engineeringConsultantReportFileId.setValue(null);
+      return;
+    }
     this.projectBasicData.engineeringConsultantReportFileId = fileData.eventRes.data[0].id;
     this.controls.engineeringConsultantReportFileId.setValue(fileData.eventRes.data[0].id);
     this.projectBasicData.engineeringConsultantReportFile = fileData.eventRes.data[0];

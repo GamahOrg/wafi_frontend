@@ -1,0 +1,61 @@
+.details-page {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  border-radius: $border-radius;
+  background-color: $white;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+
+  &~.page-header {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #E0EAEC;
+  }
+
+  .page-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .title {
+      font-size: 1.5rem;
+
+      &.sm {
+        font-size: 1.125rem;
+      }
+    }
+
+    .tag {
+      font-size: 1rem;
+    }
+
+  }
+}
+
+.page-section {
+  &+.page-section {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #E0EAEC;
+  }
+
+  .title {
+    margin-bottom: 1.25rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+}
+
+.page-actions {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.5rem 1rem;
+  border: 1px solid $lightergray;
+  border-radius: $border-radius-xs;
+}

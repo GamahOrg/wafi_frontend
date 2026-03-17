@@ -143,36 +143,36 @@
             </div>
 
             <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.licenseTypes)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.licenseTypes, $event)">
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.licenseTypes, $event)">
               <span class="icon"><i class="material-icons-outlined">add_box</i></span>
               <span class="nav-link-text">إنشاء طلب جديد</span>
             </a>
 
             <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseList)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseList, $event)">
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseList, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text">قائمة الطلبات</span>
             </a>
 
 
             <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseCertificates)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseCertificates, $event)">
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseCertificates, $event)">
               <span class="icon"><i class="material-icons-outlined">local_police</i></span>
               <span class="nav-link-text">شهادات الترخيص</span>
             </a>
             <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.renewLicensesList)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.renewLicensesList, $event)">
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.renewLicensesList, $event)">
               <span class="icon"><i class="material-icons-outlined">new_releases</i></span>
               <span class="nav-link-text">تجديد الرخص</span>
             </a>
             <!-- <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseRequestApprovals)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseRequestApprovals, $event)">
-              <span class="icon"><i class="material-icons-outlined">approval</i></span>
-              <span class="nav-link-text">الموافقات</span>
-            </a> -->
+    href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseRequestApprovals, $event)">
+    <span class="icon"><i class="material-icons-outlined">approval</i></span>
+    <span class="nav-link-text">الموافقات</span>
+  </a> -->
 
             <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.developerApprovalsList)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.developerApprovalsList, $event)">
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.developerApprovalsList, $event)">
               <span class="icon"><i class="material-icons-outlined">handshake</i></span>
               <span class="nav-link-text">اتفاقيات التطوير العقارى</span>
             </a>
@@ -198,7 +198,7 @@
               <span class="nav-link-text"> سجل التوصيات والإشعارات</span>
 
             </a>
-            
+
 
 
 
@@ -230,6 +230,11 @@
                href="javascript:void(0)" (click)="navigateWithCheck('/' + links.charteredaccountprojectlist, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text"> مشاريع المحاسب القانوني</span>
+            </a>
+            <a *ngIf="isAccountant || isEngineer" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.searchExchangeDocumentsList)}"
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.searchExchangeDocumentsList, $event)">
+              <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
+              <span class="nav-link-text"> وثائق الصرف</span>
             </a>
           </accordion-group>
         </ng-container>

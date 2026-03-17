@@ -29,7 +29,7 @@ export class BlocksAndbuildingsAndunitsComponent implements OnInit, OnDestroy {
   localization = {
     BlocksAndbuildingsAndunitsComponent: 'الزون و بلوكات وعمائر المشروع',
     totalNumberOfZones: 'إجمالي عدد الزون المضافة',
-    addingNewZone: 'إضافة زون جديدة',
+    addingNewZone: "رقم الزون الجديدة",
     addingZoneDetailsHint: ' يمكنك إضافة تفاصيل البلوكات والعماير داخل الزون',
     zoneNumber: 'زون رقم ',
   };

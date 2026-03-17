@@ -121,6 +121,10 @@ requestTemplateForm = this._formBuilder.group({
   }
   
   onFileUpload(event: any, fileId: string): void {
+    if (event.eventRes.data.length == 0) {
+      this.uploadedFiles[fileId] = { fileId: '', hasError: true };
+      return;
+    }
     
     this.uploadedFiles[fileId] = { fileId: event.eventRes.data[0].id, hasError: false };
   }

@@ -32,7 +32,7 @@ export class AddBuyerComponent {
   paymentTypes: LicenseProjectBuyerPaymentTypeDto[] = [];
   licenseProjectBuyerForm = this._formBuilder.group({
     licenseProjectBuyerTypeId: this._formBuilder.control<number | null>(1, [Validators.required]),
-    paymentTypeId: this._formBuilder.control<number | null>(0, [Validators.required]),
+    paymentTypeId: this._formBuilder.control<number | null>(null, [Validators.required]),
     name: this._formBuilder.control<string | null>(null, [Validators.required]),
     nidNumber: this._formBuilder.control<string | null>(null, [Validators.required]),
     mobile: this._formBuilder.control<string | null>(null, [Validators.required]),
@@ -279,6 +279,10 @@ export class AddBuyerComponent {
     return Math.ceil(millisecondsDiff / (1000 * 3600 * 24));
   }
   onExistContractFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.contractFileId = '';
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.contractFileId = data.id

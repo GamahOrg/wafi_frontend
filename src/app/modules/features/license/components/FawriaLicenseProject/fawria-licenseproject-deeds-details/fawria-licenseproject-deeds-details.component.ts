@@ -107,4 +107,32 @@ selectedDeedId:string=''
         .some(code => code.errorCode === this.deedIntegrationErrorCode.AiniDeed);
     }
   }
+
+  // Check if any owner has isOwnerByDeveloper = false
+  get hasNonDeveloperOwner(): boolean {
+    const owners = this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedOwners;
+    if (!owners || owners.length === 0) {
+      return false;
+    }
+    return owners.some(owner => owner.isOwnerByDeveloper === false);
+  }
+
+  // Check if owner bank columns (اسم البنك, رقم الآيبان) should be shown
+  get shouldShowOwnerBankColumns(): boolean {
+    return this.isUnit === true && this.hasNonDeveloperOwner;
+  }
+
+  getConstructionLicenseTypeName(): string {
+    const licenseType = this.fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseProjectConstructionLicenseTypeId;
+    switch (licenseType) {
+      case ConstructionLicenseTypeEnum.Balady:
+        return 'رخصة بناء صادرة من بلدي';
+      case ConstructionLicenseTypeEnum.Itmam:
+        return 'إتمام';
+      case ConstructionLicenseTypeEnum.RiyadhAmanah:
+        return 'رخصة بناء صادرة من أمانة الرياض';
+      default:
+        return '';
+    }
+  }
 }

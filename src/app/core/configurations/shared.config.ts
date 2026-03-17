@@ -2,6 +2,14 @@ export const Configuration = {
   languages: ['ar', 'en'],
   defaultLang: 'ar',
   APIs: {
+    Rating: {
+      GetUserRecommendationRatingStatus:
+        '/api/Rating/GetUserRecommendationRatingStatus',
+      Dismiss: '/api/Rating/Dismiss',
+      GetInstantLicenseRatingStatus:
+        '/api/Rating/GetInstantLicenseRatingStatus',
+      Create: '/api/Rating/Create',
+    },
     LicenseProjectRequestLog: {
       GetLicenseProjectRequestLogs:
         '/api/LicenseProjectRequestLog/GetLicenseProjectRequestLogs',
@@ -263,6 +271,7 @@ export const Configuration = {
       GetById: '/api/QualificationCertifiedEngineer/GetById',
       Save: '/api/QualificationCertifiedEngineer/Save',
       Delete: '/api/QualificationCertifiedEngineer/Remove',
+      GetQualificationCertifiedEngineerCourse: '/api/QualificationCertifiedEngineer/GetQualificationCertifiedEngineerCourse',
     },
     QualificationFacilityCertification: {
       GetByFacilityId:
@@ -411,6 +420,8 @@ export const Configuration = {
       Save: '/api/LicenseProjectFeasibilityStudy/Save',
       SaveFawriaFeasibilityStudy:
         '/api/LicenseProjectFeasibilityStudy/SaveFawriaFeasibilityStudy',
+      Delete: (licenseProjectId: string, fileId: string) =>
+        `/api/LicenseProjectFeasibilityStudy/${licenseProjectId}/files/${fileId}`,
     },
     LicenseProjectRequestAttachment: {
       GetByLicenseProjectId:
@@ -648,7 +659,7 @@ export const Configuration = {
         '/api/LicenseProjectPartiesAdditionalTerms/GetAllAdditionalAsync',
       GetMaxItemNumberByLicenseProjectId:
         '/api/LicenseProjectPartiesAdditionalTerms/GetMaxItemNumberByLicenseProjectId',
-      Save: '/api/LicenseProjectPartiesAdditionalTerms/Save',
+      Save: '/api/LicenseProjectPartiesAdditionalTerms/SaveTermsData',
       Delete: '/api/LicenseProjectPartiesAdditionalTerms/DeleteAsync',
     },
     licenseProjectDelegator: {
@@ -670,6 +681,8 @@ export const Configuration = {
       Save: '/api/LicenseProjectExhibition/Save',
     },
     LicenseProject: {
+      AddDelegator:
+        '/api/LicenseProject/AddDelegator',
       GetLicenseProjectCompletionData:
         '/api/LicenseProject/GetLicenseProjectCompletionData',
       GetLicenseProjectById: '/api/LicenseProject/GetLicenseProjectById',
@@ -742,7 +755,8 @@ export const Configuration = {
         '/api/LicenseProject/GetFawriaEndBeneficiaryContactsInfoById',
       SaveFawriaEndBeneficiaryContactsInfoAsync:
         '/api/LicenseProject/SaveFawriaEndBeneficiaryContactsInfoAsync',
-      ValidateProjectForContractCreation: '/api/LicenseProject/ValidateProjectForContractCreationAsync',
+      ValidateProjectForContractCreation:
+        '/api/LicenseProject/ValidateProjectForContractCreationAsync',
     },
     LicenseProjectExchangeDocument: {
       GetExchangeDocumentOnProject:
@@ -752,12 +766,35 @@ export const Configuration = {
         '/api/LicenseProjectExchangeDocument/GetLicenseProjectExchangeDocumentDetail',
       GetExchangeDocumentMainItemList:
         '/api/LicenseProjectExchangeDocument/GetExchangeDocumentMainItemList',
+      GetExchangeDocumentMainItemListByProjectId:
+        '/api/LicenseProjectExchangeDocument/GetExchangeDocumentMainItemListByProjectId',
       GetExchangeDocumentSubItemList:
         '/api/LicenseProjectExchangeDocument/GetExchangeDocumentSubItemList',
       GetLiceneProjectBeneficiaryTypeList:
         '/api/LicenseProjectExchangeDocument/GetLiceneProjectBeneficiaryTypeList',
       GetLicenseProjectData:
         '/api/LicenseProjectExchangeDocument/GetLicenseProjectData',
+      SearchExchangeDocumentList:
+        '/api/LicenseProjectExchangeDocument/SearchExchangeDocumentList',
+      GetExchangeDocumentMainSubItemList:
+        '/api/LicenseProjectExchangeDocument/GetExchangeDocumentMainSubItemList',
+
+      ExchangeDocumentList:
+        '/api/LicenseProjectExchangeDocument/GetExchangeDocumentsOnProjectByLicenseProjectId',
+
+      CheckDelegatorPermission:
+        '/api/LicenseProjectExchangeDocument/CheckDelegatorPermission',
+      GetLicenseProjectExchangeDocumentWithdrawalMethodList:
+        '/api/LicenseProjectExchangeDocument/GetLicenseProjectExchangeDocumentWithdrawalMethodList',
+      GetLicenseProjectExchangeDocumentInsuranceCompanyList:
+        '/api/LicenseProjectExchangeDocument/GetLicenseProjectExchangeDocumentInsuranceCompanyList',
+      GetLiceneProjectExchangeDocumentStatusList:
+        '/api/LicenseProjectExchangeDocument/GetLiceneProjectExchangeDocumentStatusList',
+        GetExchangeDocumentDetailWithCustomerInfo:
+        '/api/LicenseProjectExchangeDocument/GetExchangeDocumentDetailWithCustomerInfo',
+       ApproveRejectExchangeDocument :'/api/LicenseProjectExchangeDocument/ApproveReject',
+       GetExchangeDocumentDetail:'/api/LicenseProjectExchangeDocument/GetExchangeDocumentDetail',
+
     },
     PeriodicCharteredAccountantReport: {
       Save: '/api/PeriodCharteredAccountantReport/Save',
@@ -965,6 +1002,7 @@ export const Configuration = {
       GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId:
         '/api/LicenseProjectDeed/GetFawriaLicenseDeedAndConstructionLicenseByLicenseProjectId',
       GetDeedOwnersListAsync: '/api/LicenseProjectDeed/GetDeedOwnersListAsync',
+      IsAllDeedOwnersAsync: '/api/LicenseProjectDeed/IsAllDeedOwnersAsync',
     },
 
     CorrectionLicenseProjectDeed: {
@@ -1017,6 +1055,8 @@ export const Configuration = {
         '/api/SysLicenseRelativeWeight/GetSysLicenseRelativeWeightByLicenceProjectId',
       GetScopeItemsByLicenseProjectAsync:
         '/api/SysLicenseRelativeWeight/GetScopeItemsByLicenseProjectAsync',
+      GetScopeItemsListAsync:
+        '/api/SysLicenseRelativeWeight/GetScopeItemsListAsync',
     },
     LicenseProjectLandOwner: {
       GetByDeedId: '/api/LicenseProjectLandOwner/GetByDeedId',
@@ -1052,6 +1092,7 @@ export const Configuration = {
       Delete: '/api/CorrectionLicenseProjectModel/Remove',
       GetLicenseRequestUnitFacilitiesList:
         '/api/CorrectionLicenseProjectModel/GetLicenseRequestUnitFacilitiesList',
+      DeleteFile: '/api/CorrectionLicenseProjectModel/DeleteFile',
     },
     LicenseProjectSubUnit: {
       GetByLicenseProjectId: '/api/LicenseProjectSubUnit/GetByLicenseProjectId',
@@ -1137,6 +1178,7 @@ export const Configuration = {
       GetAllLicenseTypes: '/api/SysLicenseRequestType/Get',
       GetLicenseRequestTypes:
         '/api/SysLicenseRequestType/GetLicenseRequestTypes',
+      CheckFacilityStatus: '/api/Facility/CheckFacilityStatus',
       // GetRenewalLicenseRequestType: "/api/SysLicenseRequestType/GetRenewalLicenseRequestType"
     },
     LicenseRequestHeaderProcessingStep: {
@@ -1196,11 +1238,16 @@ export const Configuration = {
       CompileOpenBankAccount:
         '/api/LicenseRequestService/CompileOpenBankAccount',
 
+      GetProjectAgreementsSummary:
+        '/api/LicenseRequestService/GetProjectAgreementsSummary',
       GetApprovals: '/api/LicenseRequestService/GetApprovals',
       GetApproval: '/api/LicenseRequestService/GetApproval',
       SaveApproval: '/api/LicenseRequestService/SaveApproval',
       UpdateApproval: '/api/LicenseRequestService/UpdateApproval',
       Renew: '/api/LicenseRequestService/Renew',
+      GenerateDraftAgreements:
+        '/api/LicenseRequestService/GenerateDraftAgreements',
+      GetDeedOwners: '/api/LicenseRequestService/GetDeedOwners',
     },
     LicenseRequestHeader: {
       GetEmployeeUnderStudingLicenseRequests:
@@ -1670,15 +1717,29 @@ export const Configuration = {
       licenseProjectFawriaDeveloperList:
         'license-project-fawria-developer-list',
       projectPartiesStatus: 'fawria-project-parties-status',
+      fawriaAgreementFileWithParam: 'fawria-agreement-file/:id',
       fawriaLicenseComplate: 'fawria-license-complate',
       contractDetailsWithParam: 'contract-details/:id',
       contractReadonlyWithParam: 'contract-readonly/:id',
       contractViewer: 'contract-viewer',
       developerApprovalsList: 'developer-approvals-list',
+      agreementsApprovalList: 'agreements-approval-list',
       developerApprovalDetailsWithParam: 'developer-approval-details/:id',
+      enginnerApprovalDetailsWithParam: 'engineer-approval-details/:id',
+      charteredAccountApprovalDetailsWithParam:
+        'chartered-account-approval-details/:id',
+      deedOwnerList: 'deed-owner-list',
+      ownerApprovalDetailsWithParam: 'owner-approval-details/:id',
       correctingUnitsDetailsWithParam: 'correcting-units-details/:id',
       correctionLicenseProjectRequestDetails:
         'correction-license-project-request-details',
+      searchExchangeDocumentsList: 'search-exchange-documents-list',
+      exchangeDocumentsListOnProject: 'exchange-documents-list',
+      addExchangeDocuments: 'add-exchange-documents',
+      exchangeDocumentsDetails: 'exchange-documents-details',
+      developerExchangeDocumentsDetails: 'developer-exchange-documents-details',
+      accountantExchangeDocumentsDetails: 'accountant-exchange-documents-details',
+      engineeringExchangeDocumentsDetails: 'engineering-exchange-documents-details',
     },
     licenseProjectRequests: {
       createLicenseProjectRequestList: 'create-license-project-request',

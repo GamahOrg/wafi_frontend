@@ -6,6 +6,8 @@ import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { FarzStatusWhenNaturalTypeUnitDto, RequestSuccessResponse, RequestValidation } from '../dataModels/request-validation.model';
 import { CreateLicenseRequestHeaderDto } from '../models/license-request-header.model';
 import { LicenseProjectCompletionData } from '../dataModels/license-project-model.dto';
+import { Pagination } from 'src/app/shared/models/pagination.model';
+import { ProjectAgreementSummaryDto } from '../dataModels/project-agreement-summary.dto';
 
 @Injectable()
 export class LicenseRequestService {
@@ -118,5 +120,41 @@ export class LicenseRequestService {
   }
   getRequestValidation(): Observable<RequestValidation | null> {
     return this.Requestvalidation$.asObservable();
+  }
+
+  GetProjectAgreementsSummary(facilityId: string, pageIndex: number = 1, pageSize: number = 10): Observable<Pagination<ProjectAgreementSummaryDto[]> | null> {
+    const params = new HttpParams()
+      .set('facilityId', facilityId)
+      .set('pageIndex', pageIndex.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this._httpClient.get<CoreResponseDTO<Pagination<ProjectAgreementSummaryDto[]>>>(`${Configuration.APIs.LicenseRequestService.GetProjectAgreementsSummary}`, { params }).pipe(
+      map((res) => {
+        if (res.isDone && res.data) {
+          return res.data;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
+  GenerateDraftAgreements(agreementsType: number, licenseProjectId: string): Observable<string | null> {
+    const params = new HttpParams()
+      .set('agreementsType', agreementsType.toString())
+      .set('licenseProjectId', licenseProjectId);
+
+    return this._httpClient.get<CoreResponseDTO<string>>(
+      `${Configuration.APIs.LicenseRequestService.GenerateDraftAgreements}`,
+      { params }
+    ).pipe(
+      map((res) => {
+        if (res.isDone && res.data) {
+          return res.data as string;
+        } else {
+          return null;
+        }
+      })
+    );
   }
 }

@@ -12,8 +12,17 @@
         {{ localizations.CharteredAccountant }}
       </label>
       <div class="input-group">
-        <input id="commercialRegister" name="commercialRegister" type="text" class="form-control" [ngClass]="{'is-invalid': errorMessage}" 
-        formControlName="commercialRegister" placeholder="أدخل الرقم الموحد للمنشأه" [disabled]="true" [readonly]="true">
+        <input
+          id="commercialRegister"
+          name="commercialRegister"
+          type="text"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': errorMessage }"
+          formControlName="commercialRegister"
+  
+          [disabled]="true"
+          [readonly]="true"
+        />
       </div>
     </div>
   </div>
@@ -42,30 +51,58 @@
           <label for="financialReportApprovalPeriodInDays" class="form-label">
             مهلة المصادقة على التقرير المالي
           </label>
-          <input id="financialReportApprovalPeriodInDays" name="financialReportApprovalPeriodInDays" type="number" class="form-control" formControlName="financialReportApprovalPeriodInDays" max="30" placeholder="أدخل مهلة المصادقة على التقرير المالي" [disabled]="true" [readonly]="true">
+          <input
+            id="financialReportApprovalPeriodInDays"
+            name="financialReportApprovalPeriodInDays"
+            type="number"
+            class="form-control"
+            formControlName="financialReportApprovalPeriodInDays"
+            max="30"
+
+            [disabled]="true"
+            [readonly]="true"
+          />
         </div>
 
         <!-- Contract Value -->
         <div class="col-12 col-lg-6">
-          <label for="contractValue" class="form-label">
-            قيمة العقد
-          </label>
+          <label for="contractValue" class="form-label"> قيمة العقد </label>
 
           <div class="input-group">
-            <input id="contractValue" name="contractValue" type="number" class="form-control" formControlName="contarctValue" placeholder="اختر قيمة العقد" [disabled]="true" [readonly]="true">
+            <input
+              id="contractValue"
+              name="contractValue"
+              type="number"
+              class="form-control"
+              formControlName="contarctValue"
+
+              [disabled]="true"
+              [readonly]="true"
+            />
             <span class="input-group-text">
-              <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+              <img
+                src="assets/images/general/riyal-icon.svg"
+                alt="ريال"
+                class="riyal-icon"
+              />
             </span>
           </div>
         </div>
 
         <!-- Payment Monitoring -->
         <div class="col-12 col-lg-6">
-          <label for="paymentDeadline" class="form-label">
-            مهلة السداد
-          </label>
+          <label for="paymentDeadline" class="form-label"> مهلة السداد </label>
 
-          <input id="paymentDeadline" name="paymentDeadline" type="text" class="form-control" formControlName="paymentDeadline" placeholder="أدخل مهلة السداد" [disabled]="true" [readonly]="true">
+          <input
+            id="paymentDeadline"
+            name="paymentDeadline"
+            type="text"
+            class="form-control"
+            formControlName="paymentDeadline"
+
+            [disabled]="true"
+            [readonly]="true"
+          />
         </div>
 
         <!-- Authorized Signatories -->
@@ -73,10 +110,18 @@
           <label for="authorizedSignatories" class="form-label">
             المفوضين بالتوقيع على وثائق الصرف
           </label>
-          <select id="authorizedSignatories" class="form-select" formControlName="authorizedToSignDelegator" [disabled]="true">
-            <option value="" selected disabled>اختر المفوضين على وثائق الصرف</option>
-            <option *ngFor="let signatory of licenseProjectDelegators" [value]="signatory.id">
-              {{ signatory?.fullName}}
+          <select
+            id="authorizedSignatories"
+            class="form-select"
+            formControlName="authorizedToSignDelegator"
+            [disabled]="true"
+          >
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+            <option
+              *ngFor="let signatory of licenseProjectDelegators"
+              [value]="signatory.id"
+            >
+              {{ signatory?.fullName }}
             </option>
           </select>
         </div>
@@ -100,21 +145,57 @@
           <tbody>
             <tr *ngFor="let item of paymentTableData; let i = index">
               <td>
-                <input type="text" class="form-control table-input" [(ngModel)]="item.item" [ngModelOptions]="{standalone: true}" placeholder="البند"[disabled]="true" [readonly]="true">
+                <input
+                  type="text"
+                  class="form-control table-input"
+                  [(ngModel)]="item.item"
+                  [ngModelOptions]="{ standalone: true }"
+            
+                  [disabled]="true"
+                  [readonly]="true"
+                />
               </td>
               <td>
-                <input type="number" class="form-control table-input" [(ngModel)]="item.quantity" [ngModelOptions]="{standalone: true}" placeholder="الكمية" [disabled]="true" [readonly]="true">
+                <input
+                  type="number"
+                  class="form-control table-input"
+                  [(ngModel)]="item.quantity"
+                  [ngModelOptions]="{ standalone: true }"
+               
+                  [disabled]="true"
+                  [readonly]="true"
+                />
               </td>
               <td>
                 <div class="input-group">
-                  <input type="number" class="form-control table-input" [(ngModel)]="item.unitPrice" [ngModelOptions]="{standalone: true}" placeholder="السعر للوحدة" [disabled]="true" [readonly]="true">
+                  <input
+                    type="number"
+                    class="form-control table-input"
+                    [(ngModel)]="item.unitPrice"
+                    [ngModelOptions]="{ standalone: true }"
+              
+                    [disabled]="true"
+                    [readonly]="true"
+                  />
                   <span class="input-group-text">
-                    <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+                    <img
+                      src="assets/images/general/riyal-icon.svg"
+                      alt="ريال"
+                      class="riyal-icon"
+                    />
                   </span>
                 </div>
               </td>
               <td>
-                <input type="text" class="form-control table-input" [(ngModel)]="item.description" [ngModelOptions]="{standalone: true}" placeholder="الوصف" [disabled]="true" [readonly]="true">
+                <input
+                  type="text"
+                  class="form-control table-input"
+                  [(ngModel)]="item.description"
+                  [ngModelOptions]="{ standalone: true }"
+    
+                  [disabled]="true"
+                  [readonly]="true"
+                />
               </td>
             </tr>
           </tbody>
@@ -125,5 +206,7 @@
 </ng-container>
 
 <div class="mt-3" *ngIf="entity">
-  <app-license-project-parties-additional-terms-view-only [TermsPartType]='TermsPartType.Accountant'></app-license-project-parties-additional-terms-view-only>
+  <app-license-project-parties-additional-terms-view-only
+    [TermsPartType]="TermsPartType.Accountant"
+  ></app-license-project-parties-additional-terms-view-only>
 </div>

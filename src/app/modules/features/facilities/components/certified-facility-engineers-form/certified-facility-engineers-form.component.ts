@@ -28,7 +28,7 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     engineerName: ['', [Validators.required]],
     identityNumber: ['', [Validators.required]],
     professionalLicenseNumber: ['', [Validators.required]],
-    qualificationEngineerType:[1,[Validators.required]]
+    qualificationEngineerType:[null,[Validators.required]]
   });
   showValidation = false;
   /**

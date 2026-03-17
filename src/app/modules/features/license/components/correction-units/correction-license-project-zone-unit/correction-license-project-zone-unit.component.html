@@ -23,7 +23,7 @@
       <div class="form-group">
         <label for="" class="form-label"><span class="required-star">*</span> {{ localization.projectBuildingBlockType }}</label>
         <select class="form-select" id="control-projectBuildingBlockType" aria-label="Default select example" formControlName="buildingBlockTypeId">
-          <option selected disabled>{{ localization.projectBuildingBlockType }}</option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of projectBuildingBlockType" [value]="item.id">
             {{ item.name }}
           </option>
@@ -37,7 +37,7 @@
     <div class="col-12 col-lg-6">
       <div class="form-group">
         <label for="" class="form-label"><span class="required-star">*</span> {{ localization.unitCode }}</label>
-        <input type="text" class="form-control" id="control-code" [placeholder]="localization.unitCode" formControlName="code" />
+        <input type="text" class="form-control" id="control-code" formControlName="code" />
         <div class="invalid-feedback d-block" *ngIf="controls.code.errors?.['required'] && showValidation">
           حقل مطلوب
         </div>
@@ -48,7 +48,7 @@
       <div class="form-group">
         <label for="" class="form-label"><span class="required-star">*</span> {{ localization.stageNo }}</label>
         <select class="form-select" id="control-stageNumberId" aria-label="Default select example" formControlName="stageNumberId">
-          <option selected disabled>{{ localization.stageNo }}</option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let stage of stageNumber" [value]="stage.id">
             {{ stage.name }}
           </option>
@@ -63,7 +63,7 @@
       <div class="form-group">
         <label for="" class="form-label"><span class="required-star">*</span>{{ localization.constructionStartOn }}</label>
         <div class="input-group">
-          <input bsDatepicker id="control-constructionStartOn" type="text" class="form-control" formControlName="constructionStartOn" [placeholder]="localization.constructionStartOn" value="{{
+          <input bsDatepicker id="control-constructionStartOn" type="text" class="form-control" formControlName="constructionStartOn" value="{{
               controls.constructionStartOn.value
                 ? (controls.constructionStartOn.value | date : 'yyyy-MM-dd')
                 : null
@@ -85,7 +85,7 @@
       <div class="form-group">
         <label for="" class="form-label"><span class="required-star">*</span>{{ localization.constructionEndOn }}</label>
         <div class="input-group">
-          <input bsDatepicker id="control-constructionEndOn" type="text" class="form-control" formControlName="constructionEndOn" [placeholder]="localization.constructionEndOn" value="{{
+          <input bsDatepicker id="control-constructionEndOn" type="text" class="form-control" formControlName="constructionEndOn" value="{{
               controls.constructionEndOn.value
                 ? (controls.constructionEndOn.value | date : 'yyyy-MM-dd')
                 : null
@@ -102,7 +102,7 @@
       <div class="form-group">
         <label for="" class="form-label"><span class="required-star">*</span> {{ localization.deed }}</label>
         <select class="form-select" id="control-licenseProjectDeedId" aria-label="Default select example" formControlName="licenseProjectDeedId">
-          <option selected disabled>{{ localization.deed }}</option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of projectDeedsDDLList" [value]="item.id">
             {{ item.name }}
           </option>

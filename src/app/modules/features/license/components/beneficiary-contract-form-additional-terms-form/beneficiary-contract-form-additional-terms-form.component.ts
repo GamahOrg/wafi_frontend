@@ -60,7 +60,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _popupService: PopupService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
   ) {}
 
   beneficiaryContractFormAdditionalTermsForm = this._formBuilder.group({
@@ -84,12 +84,11 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
 
   get additionalTermsArray(): FormArray {
     return this.beneficiaryContractFormAdditionalTermsForm.get(
-      'additionalTerms'
+      'additionalTerms',
     ) as FormArray;
   }
 
   ngOnInit() {
-   
     this.getLicenseProjectIdStorage();
     // this.getList();
     this.observePopupEvents();
@@ -106,7 +105,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
         } else {
           this.getMaxItemNumber();
         }
-      })
+      }),
     );
   }
 
@@ -119,7 +118,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
   }
 
   // getList() {
-  
+
   //   this._beneficiaryContractFormAdditionalTermsService
   //     .GetList()
   //     .subscribe((res) => {
@@ -154,7 +153,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         this._popupService.dismissDialog();
-      })
+      }),
     );
   }
 
@@ -180,7 +179,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
       parentId: null,
       licenseBeneficiaryContractForm: mainTerm.licenseBeneficiaryContractForm,
       isActive: mainTerm.isActive,
-      createdOn : ''
+      createdOn: '',
     };
 
     // Patch the form with main term data
@@ -209,7 +208,10 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     // Add each additional term to the form array
     additionalTerms.forEach((term) => {
       const additionalTermGroup = this._formBuilder.group({
-        itemText: [term.itemText || '', [Validators.required, Validators.maxLength(2000)]],
+        itemText: [
+          term.itemText || '',
+          [Validators.required, Validators.maxLength(2000)],
+        ],
       });
       this.additionalTermsArray.push(additionalTermGroup);
     });
@@ -246,7 +248,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.save();
-      })
+      }),
     );
   }
 
@@ -258,22 +260,21 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
         const r = (Math.random() * 16) | 0;
         const v = c === 'x' ? r : (r & 0x3) | 0x8;
         return v.toString(16);
-      }
+      },
     );
   }
 
-   stringToBoolean(str:string) {
-  return str.toLowerCase() === "true";
-}
+  stringToBoolean(str: string) {
+    return str.toLowerCase() === 'true';
+  }
 
   save(): void {
-
-      
     this.controls.licenseProjectId.setValue(this.licenseProjectId);
 
     // Check if this is an update (existing record)
-    const isUpdate = this.controls.id.value &&
-                     this.controls.id.value !== '00000000-0000-0000-0000-000000000000';
+    const isUpdate =
+      this.controls.id.value &&
+      this.controls.id.value !== '00000000-0000-0000-0000-000000000000';
 
     // Generate new GUID if id is default
     if (
@@ -286,15 +287,15 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
     if (!this.beneficiaryContractFormAdditionalTermsForm.valid) {
       this.showValidation = true;
       this._toastrNotificationService.showError(
-        this.localization.PleaseAddAllRequiredFields
+        this.localization.PleaseAddAllRequiredFields,
       );
       this.beneficiaryContractFormAdditionalTermsForm?.markAllAsTouched();
       return;
     }
 
-     const isactiveFlag =
-      this.stringToBoolean(this._sharedLicenseProjectService.getIsActiveTermsFlag()!);
-
+    const isactiveFlag = this.stringToBoolean(
+      this._sharedLicenseProjectService.getIsActiveTermsFlag()!,
+    );
 
     // Get form values
     const formValues = this.beneficiaryContractFormAdditionalTermsForm.value;
@@ -311,10 +312,10 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
         formValues.additionalTermsAcknowledgment || false,
       isMainTerm: true, // Main term
       parentId: null,
-      isActive:isactiveFlag,
+      isActive: isactiveFlag,
       licenseBeneficiaryContractForm:
         new SysLicenseBeneficiaryContractFormDto(),
-      createdOn: ''
+      createdOn: '',
     };
 
     if (
@@ -322,7 +323,7 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
         .additionalTermsAcknowledgment
     ) {
       this._toastrService.error(
-        'نأمل الموافقه على الاقرار حتى يتم تسجيل البند'
+        'نأمل الموافقة على الاقرار حتى يتم تسجيل البند',
       );
       return;
     }
@@ -347,11 +348,11 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
             itemText: additionalTerm.itemText.trim(),
             additionalTermsAcknowledgment: false,
             isMainTerm: false, // Additional term
-            isActive:isactiveFlag,
+            isActive: isactiveFlag,
             parentId: this.beneficiaryContractFormAdditionalTermsDto.id, // Reference to main term
             licenseBeneficiaryContractForm:
               new SysLicenseBeneficiaryContractFormDto(),
-              createdOn : ''
+            createdOn: '',
           };
           termsToSave.push(additionalTermDto);
         }
@@ -361,9 +362,9 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
       .SaveAsync(termsToSave)
       .subscribe((res) => {
         if (res.isDone) {
-          this._toastrService.success(this.localization.savedSuccessfully);
+          // this._toastrService.success(this.localization.savedSuccessfully);
           this._beneficiaryContractFormAdditionalTermsService.setBeneficiaryList(
-            res.data as BeneficiaryContractFormAdditionalTermsDto[]
+            res.data as BeneficiaryContractFormAdditionalTermsDto[],
           );
 
           const title = 'تم تعديل البنود';
@@ -371,30 +372,33 @@ export class BeneficiaryContractFormAdditionalTermsFormComponent {
 
           // Show confirmation popup only if this was an update
           if (isUpdate) {
-            const dialogRef = this._dialog.open(SaveUpdateConfirmationComponent, {
-              width: '600px',
-              disableClose: true,
-              panelClass: 'save-update-confirmation-dialog',
-              data: {
-                title,
-                message
-              }
-            });
+            const dialogRef = this._dialog.open(
+              SaveUpdateConfirmationComponent,
+              {
+                width: '600px',
+                disableClose: true,
+                panelClass: 'save-update-confirmation-dialog',
+                data: {
+                  title,
+                  message,
+                },
+              },
+            );
 
             // Close the form popup when user clicks OK on the confirmation
             this.subscriptions.push(
               dialogRef.afterClosed().subscribe(() => {
                 this._popupService.dismissDialog();
-              })
+              }),
             );
           } else {
             // For new records, just close the form popup
             this._popupService.dismissDialog();
           }
         } //else this._toastrService.error(res.message);
-      })
+      });
     //this.subscriptions.push(
-      
+
     //);
   }
 

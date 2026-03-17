@@ -30,7 +30,7 @@ export class AddEditCompletionAndEmploymentRatesComponent {
   expectedConstructionCostDuringMonthValue: number = 0;
   licenseProjectEngineeringSupervisionPlannedReportForm =
     this._formBuilder.group({
-      currenrYear: [0],
+      currenrYear: [null as number | null],
       licenseProjectEngineeringSupervisionPlannedReportDetails:
         this._formBuilder.array([]),
     });

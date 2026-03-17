@@ -1,20 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { Subscription, finalize } from 'rxjs';
-import { BeneficiaryContractFormAdditionalTermsDto } from '../../models/beneficiary-contract-form-additional-terms-dto';
-import { BeneficiaryContractFormAdditionalTermsService } from '../../services/beneficiary-contract-form-additional-terms.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
-import { SysLicenseBeneficiaryContractFormDto } from '../../dataModels/sys-license-beneficiary-contract-form-dto';
 import { BeneficiaryPopupData, PopupData } from 'src/app/shared/models/popup.model';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { MatDialog } from '@angular/material/dialog';
-import { SaveUpdateConfirmationComponent } from 'src/app/shared/components/save-update-confirmation/save-update-confirmation.component';
 import { LicenseProjectPartiesAdditionalTermsDto, TermsPartType } from '../../models/license-project-parties-additional-terms-model';
 import { LicenseProjectPartiesAdditionalTermsService } from '../../services/LicenseProjectPartiesAdditionalTerms.service';
 import { environment } from 'src/environments/environment';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
+import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 
 @Component({
   selector: 'app-license-project-parties-additional-terms-form',
@@ -47,6 +44,7 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
 
   // Prevent multiple submissions
   isSaving: boolean = false;
+  private popupDataInitialized: boolean = false;
 
   localization = {
     title: 'إضافة البنود الإضافية لكل نموذج عقد المستفيد النهائي',
@@ -89,7 +87,7 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
     itemTitle: ['', [Validators.required, Validators.maxLength(150)]],
     itemText: ['', [Validators.required, Validators.maxLength(2000)]],
     isMainTerm: [true, [Validators.required]],
-    additionalTermsAcknowledgment: [false, [Validators.required]],
+    additionalTermsAcknowledgment: [false, [Validators.requiredTrue]],
     additionalTerms: this._formBuilder.array([]),
   });
 
@@ -105,11 +103,14 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
 
   get acknowledgmentMessage(): string {
     if(this.TermsPartType === TermsPartType.EngineeringConsultant){
-        return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_engineering_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية الاستشاري الهندسي</a>.`;
+      return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية.`;
+        // return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_engineering_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية الاستشاري الهندسي</a>.`;
     }else if(this.TermsPartType === TermsPartType.Owners){
-        return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_developer_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية الملاك</a>.`;
+      return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية.`;  
+      // return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_developer_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية الملاك</a>.`;
     }else if(this.TermsPartType === TermsPartType.Accountant){
-        return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_accountant_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية المحاسب القانوني</a>.`;
+      return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية.`;
+        // return `أقر بأن البنود الإضافية لا تتعارض مع البنود الأساسية المرفقة في <a href="${this.baseUrl}Resources/AgreementsTemplates/agreement_accountant_temp.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">النموذج الموحّد لاتفاقية المحاسب القانوني</a>.`;
     }
     return '';
   }
@@ -140,24 +141,22 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
       // }
       this.subscriptions.push(
         this._popupService.popupData.subscribe((res: BeneficiaryPopupData) => {
+          if (this.popupDataInitialized) return;
 
           if (res && res.data) {
+            this.popupDataInitialized = true;
             if (typeof res.data === 'object' && 'actionType' in res.data) {
-              // Setter will automatically call getMaxItemNumber() when value changes
               this.TermsPartType = (res.data as any).actionType;
             }
             if (typeof res.data === 'object' && 'pageNode' in res.data) {
-              // Setter will automatically call getMaxItemNumber() when value changes
               const pageNode = (res.data as any).pageNode;
               if(pageNode === 'add'){
                 this.getMaxItemNumber();
               }
             }
             if (typeof res.data === 'object' && 'obj' in res.data) {
-              // this.partiesAdditionalTermsForm.patchValue((res.data as any).obj);
               this.mapPopupDataToForm((res.data as any).obj);
             }
-          // } else {
           }
       })
       );
@@ -308,20 +307,20 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
 
     this.controls.licenseProjectId.setValue(this.licenseProjectId);
 
-    const isUpdate = this.controls.id.value && this.controls.id.value !== '00000000-0000-0000-0000-000000000000';
-
     if (!this.controls.id.value || this.controls.id.value === '00000000-0000-0000-0000-000000000000' ) {
       this.controls.id.setValue(this.generateGuid());
     }
 
     if (!this.partiesAdditionalTermsForm.valid) {
       this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+      if (this.controls.additionalTermsAcknowledgment?.hasError('required')) {
+        this._toastrNotificationService.showError('نأمل الموافقة على الاقرار حتى يتم تسجيل البند');
+      } else {
+        this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+      }
       this.partiesAdditionalTermsForm?.markAllAsTouched();
       return;
     }
-
-    // const isactiveFlag = this.stringToBoolean(this._sharedLicenseProjectService.getIsActiveTermsFlag()!);
 
     const formValues = this.partiesAdditionalTermsForm.value;
 
@@ -337,13 +336,6 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
       termsPartType: this.TermsPartType,
     };
 
-    if (!this.licenseProjectPartiesAdditionalTermsDto.additionalTermsAcknowledgment) {
-      this._toastrService.error(
-        'نأمل الموافقه على الاقرار حتى يتم تسجيل البند'
-      );
-      return;
-    }
-
     const termsToSave: LicenseProjectPartiesAdditionalTermsDto[] = [];
 
     termsToSave.push(this.licenseProjectPartiesAdditionalTermsDto);
@@ -358,7 +350,6 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
             itemNumber: index + 1,
             itemTitle: null,
             itemText: additionalTerm.itemText.trim(),
-            // additionalTermsAcknowledgment: false,
             isMainTerm: false,
             parentId: this.licenseProjectPartiesAdditionalTermsDto.id,
             termsPartType: this.TermsPartType,
@@ -370,23 +361,43 @@ export class LicenseProjectPartiesAdditionalTermsFormComponent {
     }
 
     this.isSaving = true;
+    this.setPopupButtonsDisabled(true);
+
     this.subscriptions.push(
       this._licenseProjectPartiesAdditionalTermsService
         .SaveAsync(termsToSave)
         .pipe(
-          finalize(() => this.isSaving = false)
+          finalize(() => {
+            this.isSaving = false;
+            this.setPopupButtonsDisabled(false);
+          })
         )
-        .subscribe((res) => {
-          if (res.isDone) {
-            this._toastrService.success(this.localization.savedSuccessfully);
-            this.partiesAdditionalTermsForm.markAsPristine();
-            this._tabsService.setUnsavedChanges(false);
-            this._popupService.dismissDialog();
-            this._popupService.confirmAction.emit();
-          } 
-          // else this._toastrService.error(res.message);
+        .subscribe({
+          next: (res) => {
+            if (res.isDone) {
+              this._toastrService.success(this.localization.savedSuccessfully);
+              this.partiesAdditionalTermsForm.markAsPristine();
+              this._tabsService.setUnsavedChanges(false);
+              this._popupService.dismissDialog();
+              this._popupService.confirmAction.emit();
+            } else {
+              this._toastrNotificationService.showError(res.message);
+            }
+          },
+          error: () => {
+            this._toastrNotificationService.showError('حدث خطأ أثناء حفظ البيانات');
+          }
         })
     );
+  }
+
+  private setPopupButtonsDisabled(disabled: boolean): void {
+    const currentData = this._popupService.popupData.getValue();
+    const buttons = [
+      { title: 'إلغاء', actionType: ButtonType.cancel, isVisable: true, isDisables: disabled },
+      { title: currentData.submitButtonTitle || 'إضافة بند', actionType: ButtonType.confirm, isVisable: true, isDisables: disabled },
+    ];
+    this._popupService.popupData.next({ ...currentData, buttons });
   }
 
   ngOnDestroy() {

@@ -1,0 +1,123 @@
+<div class="rating-wrapper">
+  <div class="d-flex flex-column gap-3">
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.PlatformUsability">
+      بشكل عام، ما مدى رضاك عن سهولة استخدام منصة البيع والتأجير على الخارطة؟
+    </h6>
+    <h6
+      class="title"
+      *ngIf="ratingType === RatingTypeEnum.InstantLicenseServiceEaseOfUse"
+    >
+      ما مدى رضاك عن سهولة استخدام خدمة الرخصة الفورية؟
+    </h6>
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.UserRecommendation">
+      إلى أي مدى توصي الآخرين بالاستفادة من خدمات منصة البيع والتأجير على
+      الخارطة ؟
+    </h6>
+    <p class="desc">
+      هذا سوف يساعدنا على تحسين تجربتك وجعلها أكثر سلاسة وتخصيصًا لك
+    </p>
+  </div>
+
+  <!-- for stars rating -->
+  <div
+    class="rating-stars"
+    *ngIf="
+      ratingType === RatingTypeEnum.PlatformUsability ||
+      ratingType === RatingTypeEnum.InstantLicenseServiceEaseOfUse
+    "
+  >
+    <rating
+      [max]="fiveStar.length || 5"
+      [(ngModel)]="selectedRate"
+      [customTemplate]="ratingStars"
+    ></rating>
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <span class="rate-text">غير راضي جداً</span>
+      <span class="rate-text">أوصي بشدة</span>
+    </div>
+
+    <ng-template #ratingStars let-idx="index" let-val="value">
+      <button class="btn btn-rate" (click)="onRateChange(val)">
+        <ng-container *ngIf="idx < val; else templateName">
+          <svg
+            width="41"
+            height="39"
+            viewBox="0 0 41 39"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18.4729 1.16389C19.1878 -0.385855 21.3903 -0.385852 22.1052 1.16389L26.5914 10.8901C26.8828 11.5217 27.4813 11.9566 28.1721 12.0385L38.8086 13.2996C40.5034 13.5006 41.184 15.5953 39.931 16.7541L32.0672 24.0263C31.5565 24.4986 31.3279 25.2023 31.4634 25.8845L33.5509 36.3901C33.8835 38.0641 32.1016 39.3587 30.6123 38.5251L21.2659 33.2934C20.659 32.9536 19.9191 32.9536 19.3122 33.2934L9.96578 38.5251C8.47656 39.3587 6.69464 38.0641 7.02725 36.3901L9.11471 25.8845C9.25027 25.2023 9.02164 24.4986 8.51096 24.0263L0.647116 16.7541C-0.605884 15.5953 0.0747523 13.5006 1.76954 13.2996L12.406 12.0385C13.0968 11.9566 13.6953 11.5217 13.9867 10.8901L18.4729 1.16389Z"
+              fill="#004D52"
+            />
+          </svg>
+        </ng-container>
+        <ng-template #templateName>
+          <svg
+            width="41"
+            height="39"
+            viewBox="0 0 41 39"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18.4729 1.16389C19.1878 -0.385855 21.3903 -0.385852 22.1052 1.16389L26.5914 10.8901C26.8828 11.5217 27.4813 11.9566 28.1721 12.0385L38.8086 13.2996C40.5034 13.5006 41.184 15.5953 39.931 16.7541L32.0672 24.0263C31.5565 24.4986 31.3279 25.2023 31.4634 25.8845L33.5509 36.3901C33.8835 38.0641 32.1016 39.3587 30.6123 38.5251L21.2659 33.2934C20.659 32.9536 19.9191 32.9536 19.3122 33.2934L9.96578 38.5251C8.47656 39.3587 6.69464 38.0641 7.02725 36.3901L9.11471 25.8845C9.25027 25.2023 9.02164 24.4986 8.51096 24.0263L0.647116 16.7541C-0.605884 15.5953 0.0747523 13.5006 1.76954 13.2996L12.406 12.0385C13.0968 11.9566 13.6953 11.5217 13.9867 10.8901L18.4729 1.16389Z"
+              fill="#E5E7EB"
+            />
+          </svg>
+        </ng-template>
+      </button>
+    </ng-template>
+  </div>
+
+  <!-- for numbers rating -->
+  <div
+    class="rating-numbers"
+    *ngIf="ratingType === RatingTypeEnum.UserRecommendation"
+  >
+    <rating
+      [max]="tenNumbers.length || 10"
+      [(ngModel)]="selectedRate"
+      [customTemplate]="ratingNumbers"
+    ></rating>
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <span class="rate-text">غير راضي جداً</span>
+      <span class="rate-text">أوصي بشدة</span>
+    </div>
+
+    <ng-template #ratingNumbers let-idx="index" let-val="value">
+      <button class="btn btn-rate" [ngClass]="{ selected: idx + 1 === val }" (click)="onRateChange(val)">
+        {{ idx + 1 }}
+      </button>
+    </ng-template>
+  </div>
+
+  <div class="notes" *ngIf="ratingType !== RatingTypeEnum.UserRecommendation">
+    <label for="notes" class="form-label"
+      >هل لديك مقترحات تساعدنا في تحسين تجربتك؟</label
+    >
+    <textarea
+      rows="5"
+ 
+      [(ngModel)]="notes"
+      name="notes"
+      id="notes"
+      class="form-control"
+      (ngModelChange)="onNotesChange($event)"
+    ></textarea>
+  </div>
+</div>
+<!-- <div>
+  <button mat-flat-button class="me-auto" (click)="dismissRating()">
+    تخطي
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="submitRating()"
+    [disabled]="isDisableSave()"
+  >
+    تقييم
+  </button>
+</div> -->

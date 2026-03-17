@@ -11,7 +11,7 @@
           <div class="form-group mb-4">
             
             <label class="form-label"><span class="required-star">*</span>{{ localization.problemsEmail }}</label>
-            <input type="text" id="control-complaintEmail" [placeholder]="localization.problemsPlaceholderEmail" class="form-control" formControlName="complaintEmail" />
+            <input type="text" id="control-complaintEmail"  class="form-control" formControlName="complaintEmail" />
             <mat-error *ngIf="controls.complaintEmail?.invalid 
                   && controls.complaintEmail?.touched 
                   && !controls.complaintEmail?.hasError('required')">
@@ -30,7 +30,7 @@
           <div class="form-group mb-4">
             
             <label class="form-label"><span class="required-star">*</span>{{ localization.salesEmail }}</label>
-            <input type="text" id="control-salesEmail" [placeholder]="localization.salesPlaceholderEmail" class="form-control" formControlName="salesEmail" />
+            <input type="text" id="control-salesEmail"  class="form-control" formControlName="salesEmail" />
             <mat-error  *ngIf="controls.salesEmail?.invalid 
                   && controls.salesEmail?.touched 
                   && !controls.salesEmail?.hasError('required')">

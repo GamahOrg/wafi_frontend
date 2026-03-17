@@ -1,14 +1,30 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, forkJoin } from 'rxjs';
-import { ProjectBasicDataDto, ProjectSizeEnum, type SysLicenseRequestTypeDto } from '../../../dataModels/project-basic-data.dto';
+import {
+  ProjectBasicDataDto,
+  ProjectSizeEnum,
+  type SysLicenseRequestTypeDto,
+} from '../../../dataModels/project-basic-data.dto';
 import { environment } from 'src/environments/environment';
 import { ProjectBasicDataService } from '../../../services/licenseProjects/project-basic-data.service';
-import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { TechnicalCapabilitiesRequirementsService } from '../../../../facilities/services/technicalCapabilitiesRequirements/technical-capabilities-requirements.service';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
-import { ProjectCategoryDto, ProjectSubCategoryDto } from '../../../../facilities/dataModels/qualificationTechnicalCapabilitiesRequirement.model';
-import { DropDownNameDto, DropDownSubUnitTypeDto } from '../../../dataModels/drop-down-name.dto';
+import {
+  ProjectCategoryDto,
+  ProjectSubCategoryDto,
+} from '../../../../facilities/dataModels/qualificationTechnicalCapabilitiesRequirement.model';
+import {
+  DropDownNameDto,
+  DropDownSubUnitTypeDto,
+} from '../../../dataModels/drop-down-name.dto';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import { NextAndPreviusButtonsService } from '../../../services/next-and-previous-buttons/next-and-previus-buttons.service';
@@ -24,13 +40,15 @@ import { LicenseRequestService } from '../../../services/license-request.service
 @Component({
   selector: 'app-fawria-licenseproject-maindata-container',
   templateUrl: './fawria-licenseproject-maindata-container.component.html',
-  styleUrls: ['./fawria-licenseproject-maindata-container.component.scss']
+  styleUrls: ['./fawria-licenseproject-maindata-container.component.scss'],
 })
-export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, OnDestroy {
+export class FawriaLicenseprojectMaindataContainerComponent
+  implements OnInit, OnDestroy
+{
   subscriptions: Subscription[] = [];
   projectBasicData: ProjectBasicDataDto = new ProjectBasicDataDto();
   baseUrl = `${environment.baseURL}/`;
-  licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
+  licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   categories: ProjectCategoryDto[] = [];
   subCategories: ProjectSubCategoryDto[] = [];
   tempSubCategories: ProjectSubCategoryDto[] = [];
@@ -47,7 +65,7 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
 
   singleFileUploaderData: FileUploader = {
     multiple: false,
-    size: 3072
+    size: 3072,
   } as FileUploader;
   userData: customerResponse | null = null;
   constructor(
@@ -60,25 +78,33 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
     private _toastrNotificationService: ToastrNotificatioService,
     private _userDataService: UserDataService,
     private _licenseRequestService: LicenseRequestService,
-    private _tabsService: TabsService
-  ) { }
+    private _tabsService: TabsService,
+  ) {}
 
-  projectBasicDataForm = this._formBuilder.group({
-    id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
-    name: ['', [Validators.required]],
-    projectDescription: [''],
-    projectServices: [''],
-    typeId: this._formBuilder.control<number | null>(null, [Validators.required]),
-    categoryId: ['', [Validators.required]],
-    subCategoryId: ['', [Validators.required]],
-    licenseProjectScopeId: ['', [Validators.required]],
-    startOn: ['', [Validators.required]],
-    isProjectStarted: [false, [Validators.required]],
-    endOn: ['', [Validators.required]],
-    achievementRate: [0, [Validators.min(1), Validators.max(100)]],
-    engineeringConsultantReportFileId: [''],
-    licenseProjectNatureTypeId: [LicenseNatureTypeEnum.Units, [Validators.required]],
-  }, { validators: dateValidator });
+  projectBasicDataForm = this._formBuilder.group(
+    {
+      id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
+      name: ['', [Validators.required]],
+      projectDescription: [''],
+      projectServices: [''],
+      typeId: this._formBuilder.control<number | null>(null, [
+        Validators.required,
+      ]),
+      categoryId: ['', [Validators.required]],
+      subCategoryId: ['', [Validators.required]],
+      licenseProjectScopeId: ['', [Validators.required]],
+      startOn: ['', [Validators.required]],
+      isProjectStarted: [false, [Validators.required]],
+      endOn: ['', [Validators.required]],
+      achievementRate: [0, [Validators.min(1), Validators.max(100)]],
+      engineeringConsultantReportFileId: [''],
+      licenseProjectNatureTypeId: [
+        LicenseNatureTypeEnum.Units,
+        [Validators.required],
+      ],
+    },
+    { validators: dateValidator },
+  );
 
   get controls() {
     return this.projectBasicDataForm.controls;
@@ -86,7 +112,7 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
 
   ngOnInit() {
     this.getCustomerData();
-    this.getLicenseProjectIdStorage()
+    this.getLicenseProjectIdStorage();
     this.observeForm();
     this.loadComponentData();
     this.observeCategoryControl();
@@ -95,25 +121,30 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
   }
 
   getCustomerData() {
-    this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-      this.userData = res;
-      this.isExistingValidation = this.userData?.isEmployee as boolean;
-    })
+    this._userDataService
+      .getCustomerData()
+      .subscribe((res: customerResponse | null) => {
+        this.userData = res;
+        this.isExistingValidation = this.userData?.isEmployee as boolean;
+      });
   }
   getLicenseNatureType() {
-    this._projectBasicDataService.GetLicenseNatureType().subscribe((res: LicenseNatureTypeListDto[]) => {
-      this.licenseNatureType = res;
-    })
+    this._projectBasicDataService
+      .GetLicenseNatureType()
+      .subscribe((res: LicenseNatureTypeListDto[]) => {
+        this.licenseNatureType = res;
+      });
   }
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     this.getLicenseNatureType();
   }
 
   localization = {
-    HasStarted: "هل تم بدأ المشروع ؟",
-    Yes: "نعم",
-    No: "لا",
+    HasStarted: 'هل تم بدأ المشروع ؟',
+    Yes: 'نعم',
+    No: 'لا',
     title: 'البيانات الأساسية للمشروع',
     projectLandData: 'بيانات أرض المشروع',
     name: 'اسم المشروع',
@@ -138,40 +169,54 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
     projectStarted: 'تم البدء في تنفيذ المشروع؟',
     engineeringConsultantReportFileId: 'تقرير الاستشاري الهندسي',
     requiredErrorMsg: 'هذا الحقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     save: 'حفظ كمسودة',
     yes: 'نعم',
     no: 'لا',
     savedSuccessfully: 'تم الحفظ بنجاح',
     phoneNumberPattern: 'من فضلك ادخل رقم جوال صحيح',
     emailPattern: 'من فضلك ادخل البريد الإلكتروني صحيح',
-    send: "إرسال الطلب",
+    send: 'إرسال الطلب',
     next: 'التالي',
     previous: 'السابق',
-    PleaseAddAllRequiredFields: 'لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة',
+    PleaseAddAllRequiredFields:
+      'لم يتم إدخال جميع الحقول الإلزامية، يرجى استكمال البيانات المطلوبة',
     licenseNatureType: 'طبيعة المشروع',
   };
 
   private loadComponentData() {
     const requests = [
-      this._projectBasicDataService.GetMainDataByLicenseProjectId(this.licenseProjectId as string),
-      this._projectBasicDataService.GetProjectCategoryDropDown(this.licenseProjectId as string),
+      this._projectBasicDataService.GetMainDataByLicenseProjectId(
+        this.licenseProjectId as string,
+      ),
+      this._projectBasicDataService.GetProjectCategoryDropDown(
+        this.licenseProjectId as string,
+      ),
       this._technicalCapService.GetProjectSubCategoryDropDown(),
       this._projectBasicDataService.GetLicenseProjectScopeDropDown(),
       this._projectBasicDataService.GetSysLicenseProjectTypeDropDown(),
-      this._projectBasicDataService.GetRequetTypeLicenseProjectId(this.licenseProjectId as string)
+      this._projectBasicDataService.GetRequetTypeLicenseProjectId(
+        this.licenseProjectId as string,
+      ),
     ];
 
     const subscriptions = forkJoin(requests).subscribe((results) => {
-      this.setResponseToForm((results[0] as CoreResponseDTO<ProjectBasicDataDto>).data as ProjectBasicDataDto);
-      this.projectBasicData = (results[0] as CoreResponseDTO<ProjectBasicDataDto>).data as ProjectBasicDataDto;
+      this.setResponseToForm(
+        (results[0] as CoreResponseDTO<ProjectBasicDataDto>)
+          .data as ProjectBasicDataDto,
+      );
+      this.projectBasicData = (
+        results[0] as CoreResponseDTO<ProjectBasicDataDto>
+      ).data as ProjectBasicDataDto;
       if (this.projectBasicData.achievementRate)
-        this.controls.isProjectStarted.setValue(true)
-      this.categories = results[1] as ProjectCategoryDto[],
-        this.subCategories = results[2] as ProjectSubCategoryDto[],
-        this.licenseProjectScopes = results[3] as DropDownNameDto[],
-        this.types = results[4] as DropDownSubUnitTypeDto[];
-      this.updateProjectServicesValidation(results[5] as SysLicenseRequestTypeDto)
+        this.controls.isProjectStarted.setValue(true);
+      ((this.categories = results[1] as ProjectCategoryDto[]),
+        (this.subCategories = results[2] as ProjectSubCategoryDto[]),
+        (this.licenseProjectScopes = results[3] as DropDownNameDto[]),
+        (this.types = results[4] as DropDownSubUnitTypeDto[]));
+      this.updateProjectServicesValidation(
+        results[5] as SysLicenseRequestTypeDto,
+      );
       if (this.projectBasicData && this.projectBasicData.categoryId) {
         this.filterSubCategory(this.projectBasicData.categoryId as string);
       }
@@ -179,8 +224,16 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
     this.subscriptions.push(subscriptions);
   }
 
-  updateProjectServicesValidation(licenseRequestType?: SysLicenseRequestTypeDto) {
-    if (licenseRequestType && (licenseRequestType.typeCode == LicenseRequestTypeTypeCodeEnum.RentalReceiptAmountsNotMoreFirstYear || licenseRequestType.typeCode == LicenseRequestTypeTypeCodeEnum.RentalReceiptAmountsMoreThanFirstYear)) {
+  updateProjectServicesValidation(
+    licenseRequestType?: SysLicenseRequestTypeDto,
+  ) {
+    if (
+      licenseRequestType &&
+      (licenseRequestType.typeCode ==
+        LicenseRequestTypeTypeCodeEnum.RentalReceiptAmountsNotMoreFirstYear ||
+        licenseRequestType.typeCode ==
+          LicenseRequestTypeTypeCodeEnum.RentalReceiptAmountsMoreThanFirstYear)
+    ) {
       this.projectBasicDataForm.controls.projectServices.clearAsyncValidators();
     } else {
       this.projectBasicDataForm.controls.projectServices.addValidators([]);
@@ -190,15 +243,20 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
 
   setResponseToForm(res: ProjectBasicDataDto): void {
     if (res) {
-      res.startOn = res.startOn ? new Date(res.startOn) : null as any;
-      res.endOn = res.endOn ? new Date(res.endOn) : null as any;
+      res.startOn = res.startOn ? new Date(res.startOn) : (null as any);
+      res.endOn = res.endOn ? new Date(res.endOn) : (null as any);
       // Ensure isProjectStarted has a default value of false if not set
       if (res.isProjectStarted === null || res.isProjectStarted === undefined) {
         res.isProjectStarted = false;
       }
       // Ensure licenseProjectNatureTypeId is properly set
-      if (res.licenseProjectNatureTypeId !== null && res.licenseProjectNatureTypeId !== undefined) {
-        res.licenseProjectNatureTypeId = parseInt(res.licenseProjectNatureTypeId.toString());
+      if (
+        res.licenseProjectNatureTypeId !== null &&
+        res.licenseProjectNatureTypeId !== undefined
+      ) {
+        res.licenseProjectNatureTypeId = parseInt(
+          res.licenseProjectNatureTypeId.toString(),
+        );
       }
     }
     this.projectBasicDataForm.patchValue({ ...res });
@@ -207,15 +265,18 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
 
   observeForm(): void {
     this.subscriptions.push(
-      this.projectBasicDataForm.valueChanges.subscribe(changes => {
+      this.projectBasicDataForm.valueChanges.subscribe((changes) => {
         if (this.projectBasicDataForm.dirty) {
           this._tabsService.setUnsavedChanges(true);
         }
-        let engineeringConsultantReportFile = this.projectBasicData.engineeringConsultantReportFile;
-        this.projectBasicData = this.projectBasicDataForm.value as ProjectBasicDataDto;
-        this.projectBasicData.engineeringConsultantReportFile = engineeringConsultantReportFile
-      })
-    )
+        let engineeringConsultantReportFile =
+          this.projectBasicData.engineeringConsultantReportFile;
+        this.projectBasicData = this.projectBasicDataForm
+          .value as ProjectBasicDataDto;
+        this.projectBasicData.engineeringConsultantReportFile =
+          engineeringConsultantReportFile;
+      }),
+    );
   }
 
   ngOnDestroy() {
@@ -224,13 +285,14 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
   }
 
   save(moveToNextTab: boolean = false): void {
-
     if (!this.isExistingValidation) {
       console.log(this.projectBasicDataForm);
 
       if (!this.projectBasicDataForm.valid) {
         this.showValidation = true;
-        this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+        this._toastrNotificationService.showError(
+          this.localization.PleaseAddAllRequiredFields,
+        );
         this.projectBasicDataForm?.markAllAsTouched();
         return;
       }
@@ -241,7 +303,9 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
       const achievementRate = this.controls.achievementRate.value || 0;
       if (achievementRate < 1 || achievementRate > 100) {
         this.showValidation = true;
-        this._toastrNotificationService.showError('نسبة الإنجاز يجب أن تكون بين 1 و 100');
+        this._toastrNotificationService.showError(
+          'نسبة الإنجاز يجب أن تكون بين 1 و 100',
+        );
         this.controls.achievementRate.markAsTouched();
         return;
       }
@@ -259,29 +323,43 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
 
     // Convert licenseProjectNatureTypeId to integer
     if (this.projectBasicData.licenseProjectNatureTypeId) {
-      this.projectBasicData.licenseProjectNatureTypeId = parseInt(this.projectBasicData.licenseProjectNatureTypeId.toString());
+      this.projectBasicData.licenseProjectNatureTypeId = parseInt(
+        this.projectBasicData.licenseProjectNatureTypeId.toString(),
+      );
     }
 
     this.subscriptions.push(
-      this._projectBasicDataService.SaveMainData(this.projectBasicData).subscribe(res => {
-        if (res.isDone) {
-          this._toastrService.success(this.localization.savedSuccessfully);
-          this.setResponseToForm(res.data as ProjectBasicDataDto);
-          this.projectBasicDataForm.markAsPristine();
-          this._tabsService.setUnsavedChanges(false);
-           this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
-          if (moveToNextTab) this.moveToNextTab()
-        } else {
-          //this._toastrNotificationService.showError(res.message);
-        }
-      })
-    )
+      this._projectBasicDataService
+        .SaveMainData(this.projectBasicData)
+        .subscribe((res) => {
+          if (res.isDone) {
+            this._toastrService.success(this.localization.savedSuccessfully);
+            this.setResponseToForm(res.data as ProjectBasicDataDto);
+            this.projectBasicDataForm.markAsPristine();
+            this._tabsService.setUnsavedChanges(false);
+            this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
+            if (moveToNextTab) this.moveToNextTab();
+          } else {
+            //this._toastrNotificationService.showError(res.message);
+          }
+        }),
+    );
   }
 
   onFileUploaded(fileData: any) {
-    this.projectBasicData.engineeringConsultantReportFileId = fileData.eventRes.data[0].id;
-    this.controls.engineeringConsultantReportFileId.setValue(fileData.eventRes.data[0].id);
-    this.projectBasicData.engineeringConsultantReportFile = fileData.eventRes.data[0];
+    if (fileData.eventRes.data.length === 0) {
+      this.projectBasicData.engineeringConsultantReportFileId = null;
+      this.projectBasicData.engineeringConsultantReportFile = null;
+      this.controls.engineeringConsultantReportFileId.setValue(null);
+      return;
+    }
+    this.projectBasicData.engineeringConsultantReportFileId =
+      fileData.eventRes.data[0].id;
+    this.controls.engineeringConsultantReportFileId.setValue(
+      fileData.eventRes.data[0].id,
+    );
+    this.projectBasicData.engineeringConsultantReportFile =
+      fileData.eventRes.data[0];
   }
   // isProjectStarted() {
   //   let started = new Date(this.controls.startOn.value as string) <= new Date();
@@ -291,59 +369,74 @@ export class FawriaLicenseprojectMaindataContainerComponent implements OnInit, O
   // }
   isProjectStarted() {
     let started = this.projectBasicData.isProjectStarted === true;
-    this.controls.achievementRate.setValidators(started ? [Validators.required, Validators.min(1), Validators.max(100)] : null);
+    this.controls.achievementRate.setValidators(
+      started
+        ? [Validators.required, Validators.min(1), Validators.max(100)]
+        : null,
+    );
     this.controls.achievementRate.updateValueAndValidity();
-    this.controls.engineeringConsultantReportFileId.setValidators(started ? [Validators.required] : null);
+    this.controls.engineeringConsultantReportFileId.setValidators(
+      started ? [Validators.required] : null,
+    );
     this.controls.engineeringConsultantReportFileId.updateValueAndValidity();
     return started;
   }
 
-
-
   observeCategoryControl() {
-    this.controls.categoryId.valueChanges.subscribe(res => {
+    this.controls.categoryId.valueChanges.subscribe((res) => {
       if (res) {
         this.filterSubCategory(res as string);
       }
-    })
+    });
   }
 
   filterSubCategory(categoryId: string): void {
-    this.projectBasicData.subCategoryId = ''
+    this.projectBasicData.subCategoryId = '';
     if (categoryId) {
-      this.tempSubCategories = this.subCategories.filter(sub => sub.projectCategoryId == categoryId)
+      this.tempSubCategories = this.subCategories.filter(
+        (sub) => sub.projectCategoryId == categoryId,
+      );
     }
   }
   // TabsButtons
   private observeNextButtonIsCliced() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
-        this.save(true)
-      })
-    )
+      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
+        (res: null) => {
+          this.save(true);
+        },
+      ),
+    );
   }
   private observeSaveAsDraftIsClicked() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe((res: null) => {
-        this.save()
-      })
-    )
+      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(
+        (res: null) => {
+          this.save();
+        },
+      ),
+    );
   }
   private observeTabsButtons(): void {
     this.observeNextButtonIsCliced();
-    this.observeSaveAsDraftIsClicked()
+    this.observeSaveAsDraftIsClicked();
   }
   private updateSaveAsDraftBtnIsvisible(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false)
+    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
   }
   private moveToNextTab(): void {
-    this._nextAndPreviusButtonsService.moveToNextTab.emit()
+    this._nextAndPreviusButtonsService.moveToNextTab.emit();
   }
 }
 
-export const dateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+export const dateValidator: ValidatorFn = (
+  control: AbstractControl,
+): ValidationErrors | null => {
   const start = control.get('startOn');
   const end = control.get('endOn');
-  return start?.value !== null && end?.value !== null && new Date(start?.value) < new Date(end?.value)
-    ? null : { dateValid: true };
-}
+  return start?.value !== null &&
+    end?.value !== null &&
+    new Date(start?.value) < new Date(end?.value)
+    ? null
+    : { dateValid: true };
+};

@@ -335,13 +335,15 @@ export class DeveloperApprovalDetailsComponent implements OnInit, OnDestroy {
     this._popupService.dismissDialog();
   }
   private observeconfirmAction() {
-    this._popupService.confirmAction.subscribe((res: PopupData) => {
-      //this.changePage.emit(Pagemode.List);
-      this.closeDialog();
-      //  if(res.data.cancel){
+    this.subscriptions.push(
+      this._popupService.confirmAction.subscribe((res: PopupData) => {
+        //this.changePage.emit(Pagemode.List);
+        this.closeDialog();
+        //  if(res.data.cancel){
 
-      //  }
-    });
+        //  }
+      })
+    );
   }
 
   saveApproval(): void {
@@ -349,7 +351,7 @@ export class DeveloperApprovalDetailsComponent implements OnInit, OnDestroy {
     // if(!this.saveApprovalDto.isApproved)
     // {
 
-    //   this.toastr.error("نأمل الموافقه على المشروع");
+    //   this.toastr.error("نأمل الموافقة على المشروع");
     //  return;
     // }
     
@@ -383,7 +385,7 @@ export class DeveloperApprovalDetailsComponent implements OnInit, OnDestroy {
           //  this._licenseRequestApprovalsService.setLicenseSelectedApprovalInLocalStorage(this.selectedApproval);
           //}
 
-          if (res.isApproved) this.toastr.success('تم الموافقه على الاتفاقية');
+          if (res.isApproved) this.toastr.success('تم الموافقة على الاتفاقية');
           else this.toastr.success('تم الرفض الاتفاقية');
         })
     );
@@ -396,7 +398,7 @@ export class DeveloperApprovalDetailsComponent implements OnInit, OnDestroy {
       popupType: 'primary',
       title: 'ما هو سبب رفضك للإتفاقية؟',
       staticMessage: '',
-      acceptButtonText: 'ارسال سبب الرفض',
+      acceptButtonText: 'إرسال سبب الرفض',
       dynamicMessage: '',
       secondeStaticMessage: '',
     };

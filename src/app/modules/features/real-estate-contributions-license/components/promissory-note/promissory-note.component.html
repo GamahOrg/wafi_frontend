@@ -26,8 +26,7 @@
                     <label class="form-label">مكان الإنشاء</label>
                     <input type="text" id="control-creationPlace"
                            class="form-control"
-                           formControlName="creationPlace"
-                           placeholder="مكان الإنشاء">
+                           formControlName="creationPlace">
                     <mat-error *ngIf="controls.creationPlace?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
                 </div>
@@ -37,8 +36,7 @@
                     <label class="form-label">المبلغ المستحق (رقما)</label>
                     <input type="text" id="control-value"
                            class="form-control"
-                           formControlName="value"
-                           placeholder="المبلغ المستحق (رقما)">
+                           formControlName="value">
                     <mat-error *ngIf="controls.value?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.value?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
                     <mat-error *ngIf="controls.value?.hasError('pattern')">لا يسمح الا بأرقام فقط</mat-error>
@@ -59,8 +57,7 @@
                     <label class="form-label">ممثل المحرر</label>
                     <input type="text" id="control-editor"
                            class="form-control"
-                           formControlName="editor"
-                           placeholder="ممثل المحرر">
+                           formControlName="editor">
                     <mat-error *ngIf="controls.editor?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
                 </div>
@@ -70,8 +67,7 @@
                     <label class="form-label">رقم الهوية الوطنية المحرر</label>
                     <input type="text" id="control-editorIdentityNumber"
                            class="form-control"
-                           formControlName="editorIdentityNumber"
-                           placeholder="رقم الهوية الوطنية المحرر">
+                           formControlName="editorIdentityNumber">
                     <mat-error *ngIf="controls.editorIdentityNumber?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.editorIdentityNumber?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
                     <mat-error *ngIf="controls.editorIdentityNumber?.hasError('pattern')">لا يسمح الا بأرقام فقط</mat-error>
@@ -83,8 +79,7 @@
                     <label class="form-label">صفة المحرر</label>
                     <input type="text" id="control-editorTitle"
                            class="form-control"
-                           formControlName="editorTitle"
-                           placeholder="صفة المحرر">
+                           formControlName="editorTitle">
                     <mat-error *ngIf="controls.editorTitle?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
                 </div>
@@ -149,8 +144,7 @@
                     <label class="form-label">اسم الوكيل الموقع على ملف سند لأمر</label>
                     <input type="text" id="control-name"
                            class="form-control"
-                           formControlName="name"
-                           placeholder="اسم الوكيل الموقع على ملف سند لأمر">
+                           formControlName="name">
                            <mat-error *ngIf="promissoryControls.name?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
 
@@ -162,8 +156,7 @@
                     <label class="form-label">صفته الاعتبارية</label>
                     <input type="text" id="control-legalStatus"
                            class="form-control"
-                           formControlName="legalStatus"
-                           placeholder="صفته الاعتبارية">
+                           formControlName="legalStatus">
                     <mat-error *ngIf="promissoryControls.legalStatus?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
                 </div>
@@ -173,8 +166,7 @@
                     <label class="form-label">رقم الهوية الموقع على ملف سند لأمر</label>
                     <input type="text" id="control-identityNumber"
                            class="form-control"
-                           formControlName="identityNumber"
-                           placeholder="رقم الهوية الموقع على ملف سند لأمر">
+                           formControlName="identityNumber">
                     <mat-error *ngIf="promissoryControls.identityNumber?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
                 </div>
@@ -184,8 +176,7 @@
                     <label class="form-label">رقم جوال الموقع على ملف سند لأمر</label>
                     <input type="text" id="control-mobile"
                            class="form-control"
-                           formControlName="mobile"
-                           placeholder="رقم جوال الموقع على ملف سند لأمر">
+                           formControlName="mobile">
                     <mat-error *ngIf="promissoryControls.mobile?.hasError('required') && showValidation">حقل مطلوب</mat-error>
 
                 </div>

@@ -51,7 +51,7 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     private _popupService: PopupService,
     private _toastrNotificationService: ToastrNotificatioService,
     private _changeDetectorRef: ChangeDetectorRef
-  ) { }
+  ) {}
 
   singleFileUploaderData: FileUploader = {
     multiple: true,
@@ -61,12 +61,12 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
     licenseProjectsId: ['', [Validators.required]],
     integrationType: [0, [Validators.required]],
-    typeId: [0, [Validators.required, Validators.min(1)]],
+    typeId: [null as number | null, [Validators.required, Validators.min(1)]],
     // typeId: new FormControl<number | null>(0, Validators.required),
-    number: ['', [Validators.required]],
+    number: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
     year: ['', [Validators.required]],
-    month: [0, [Validators.required, Validators.min(1)]],
-    day: [0, [Validators.required, Validators.min(1)]],
+    month: [null as number | null, [Validators.required, Validators.min(1)]],
+    day: [null as number | null, [Validators.required, Validators.min(1)]],
     //space: ['', [Validators.required]],
     isApproved: [false, []],
     approvedOn: ['', []],
@@ -102,9 +102,9 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
-    dateValidatorMeg: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidatorMeg: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     verify: 'تحقق من الصك',
-    dataErorMsg: 'يجب ان يكون التاريخ اقل او مساوي تاريخ اليوم',
+    dataErorMsg: 'يجب أن يكون التاريخ اقل أو مساوي تاريخ اليوم',
     owningArea: 'المساحة المملوكة',
     ownerNationalId: 'السجل /رقم الهوية',
     ownerName: 'الاسم',
@@ -117,7 +117,7 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
   hideDeedType(event: any) {
     if (!event) {
       this.isDeedType = false;
-      this.projectLandDeedForm.get('typeId')?.setValue(null)
+      this.projectLandDeedForm.get('typeId')?.setValue(null);
       this.projectLandDeedForm.get('typeId')?.clearValidators();
       this.projectLandDeedForm.get('typeId')?.updateValueAndValidity();
     } else {
@@ -192,6 +192,11 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     let ownerObj = this.deedFromIntegration.deedOwners.filter(
       (x) => x.idNumber == idNumber
     );
+    if (fileData.eventRes.data.length === 0) {
+      this.formArr.controls[index].get('agreementFileId')?.setValue(null);
+      ownerObj[0].agreementFileId = '';
+      return;
+    }
     if (ownerObj.length > 0) {
       let formGroup = this.formArr.controls[index] as FormGroup;
       formGroup.get('agreementFileId')?.setValue(fileData.eventRes.data[0].id);
@@ -208,6 +213,14 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     let ownerObj = this.deedFromIntegration.deedOwners.filter(
       (x) => x.idNumber == idNumber
     );
+    if (fileData.eventRes.data.length === 0) {
+      this.formArr
+        .controls[index]
+        .get('deedMarginalizationFileId')
+        ?.setValue(null);
+      ownerObj[0].deedMarginalizationFileId = '';
+      return;
+    }
     if (ownerObj.length > 0) {
       let formGroup = this.formArr.controls[index] as FormGroup;
       formGroup
@@ -300,10 +313,8 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
     if (!this.projectLandDeedCreateUpdate.approvedOn)
       this.projectLandDeedCreateUpdate.approvedOn = null;
 
-    console.log(
-      'validateDeedInfo this.projectLandDeedCreateUpdate',
-      this.projectLandDeedCreateUpdate
-    );
+    this.deedFromIntegration = new DeedData();
+    
     this.subscriptions.push(
       this._projectLandDeedService
         .ValidateDeedInfo(this.projectLandDeedCreateUpdate)
@@ -368,23 +379,20 @@ export class ProjectLandTitleDeedsFormComponent implements OnInit, OnDestroy {
       licenseProjectsId: this.projectLandDeed.licenseProjectsId,
       typeId: this.projectLandDeed.typeId,
       deedOwners: this.projectLandDeed.data.deedOwners,
-
     } as SaveLicenseProjectDeed;
 
     this.subscriptions.push(
-      this._projectLandDeedService
-        .SaveDeedData(model)
-        .subscribe((res) => {
-          if (res.isDone) {
-            this._projectLandDeedService.SetSubjectListObjs(
-              res.data as ProjectLandDeedDto[]
-            );
-            this._toastrService.success(this.localization.savedSuccessfully);
-            this._popupService.dismissDialog();
-          }
-          // else
-          //   this._toastrService.error(res.message);
-        })
+      this._projectLandDeedService.SaveDeedData(model).subscribe((res) => {
+        if (res.isDone) {
+          this._projectLandDeedService.SetSubjectListObjs(
+            res.data as ProjectLandDeedDto[]
+          );
+          this._toastrService.success(this.localization.savedSuccessfully);
+          this._popupService.dismissDialog();
+        }
+        // else
+        //   this._toastrService.error(res.message);
+      })
     );
   }
 }

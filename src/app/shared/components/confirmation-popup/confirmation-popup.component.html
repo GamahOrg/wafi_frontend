@@ -1,33 +1,66 @@
-<div mat-dialog-title>
-  <div class="d-flex flex-column align-items-center gap-2">
-    <span class="icon text-{{confirmationPopupData.popupType}}">
-      <i class="hgi hgi-stroke" [ngClass]="{
-        'hgi-message-question': confirmationPopupData.popupType === 'primary',
-        'hgi-alert-02': confirmationPopupData.popupType === 'warning',
-        'hgi-delete-03': confirmationPopupData.popupType === 'danger'
-        }"></i>
-      <!-- <i class="hgi hgi-stroke hgi-delete-03"></i> -->
+<div mat-dialog-title class="text-center pt-4 pb-0">
+  <div class="d-flex flex-column align-items-center gap-3">
+    <span class="icon">
+      <ng-container *ngIf="confirmationPopupData.popupType === 'primary'">
+        <svg width="58" height="55" viewBox="0 0 58 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M22.7398 0.18C26.6332 -0.06 30.6866 -0.06 34.5799 0.18C46.7666 1.00667 56.4198 10.82 57.2198 23.1133C57.3531 25.4067 57.3531 27.8067 57.2198 30.1001C56.4198 42.3934 46.7666 52.2334 34.5799 53.0334C30.6866 53.3 26.6332 53.3 22.7398 53.0334C21.2198 52.9267 19.5931 52.58 18.1531 51.9667C17.5131 51.7267 17.0867 51.54 16.7667 51.4334C16.5533 51.5667 16.26 51.78 15.8333 52.1C13.7267 53.6467 11.0598 54.7399 7.27318 54.6599H7.16667C6.42 54.6333 5.64651 54.6067 5.00651 54.5C4.23318 54.34 3.29995 53.9665 2.71328 52.9532C2.07328 51.8598 2.31328 50.7667 2.57995 50.0467C2.81995 49.4067 3.21995 48.6334 3.64661 47.8334L3.7 47.7266C4.92667 45.3533 5.27318 43.4332 4.60651 42.1532C2.39318 38.7932 0.393333 34.6867 0.1 30.1001C-0.0333333 27.8067 -0.0333333 25.4067 0.1 23.1133C0.9 10.82 10.5532 1.00667 22.7398 0.18ZM26.0198 20.0198C26.0198 19.2198 26.8731 17.9933 28.6865 17.9933C30.4998 17.9933 31.3531 19.2198 31.3531 20.0198C31.3531 20.3398 31.2465 20.66 31.0065 20.98C30.7132 21.38 30.3133 21.8334 29.8333 22.3667C29.7533 22.4467 29.6732 22.5534 29.5932 22.6334C29.1666 23.0867 28.7132 23.5933 28.2599 24.1266C27.2732 25.2999 26.0198 27.1133 26.0198 29.38V30.5532C26.0198 32.0465 27.2198 33.2198 28.6865 33.2198C30.1531 33.2198 31.3531 32.0465 31.3531 30.5532V29.38C31.3531 29.0867 31.5132 28.5533 32.3932 27.5133C32.7132 27.1133 33.0865 26.7133 33.4865 26.2599C33.5665 26.1799 33.6731 26.0734 33.7531 25.9667C34.2598 25.4334 34.8199 24.7933 35.3266 24.1266C36.1532 22.9799 36.6865 21.5665 36.6865 20.0198C36.6865 15.6465 32.7665 12.6599 28.6865 12.6599C24.6065 12.6599 20.6865 15.6465 20.6865 20.0198C20.6865 21.4865 21.8865 22.6865 23.3531 22.6865C24.8198 22.6865 26.0198 21.4865 26.0198 20.0198ZM28.6865 36.6599C27.2198 36.6599 26.0198 37.8599 26.0198 39.3266C26.0198 40.7933 27.2198 41.9933 28.6865 41.9933H28.7133C30.1799 41.9933 31.3799 40.7933 31.3799 39.3266C31.3799 37.8599 30.1799 36.6599 28.7133 36.6599H28.6865Z" fill="#005257" />
+        </svg>
+      </ng-container>
+
+      <ng-container *ngIf="confirmationPopupData.popupType === 'danger'">
+        <svg width="54" height="58" viewBox="0 0 54 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M34.3989 1.5891C33.1827 0.682018 31.7663 0.222159 30.2594 0.0873811C29.3349 0.00468932 28.2261 0.00347173 26.9955 0.00212045C26.8868 0.00200111 26.7772 0.00188072 26.6667 0.00170307C26.5557 0.0015248 26.4448 0.00123154 26.3338 0.00093819C25.2797 -0.0018471 24.2226 -0.00464066 23.1731 0.0909002C21.6324 0.231164 20.1875 0.710015 18.9563 1.65455C18.0459 2.35298 17.4237 3.20552 16.898 4.12678C16.4107 4.98086 15.9256 6.04522 15.3748 7.25376L14.4269 9.33333L2.66667 9.33521C1.19391 9.33521 0 10.5291 0 12.0019C0 13.4746 1.19391 14.6685 2.66667 14.6685H4.98556L6.40326 38.3876C6.60327 41.7342 6.76198 44.3898 7.09219 46.5112C7.43082 48.6866 7.97528 50.4985 9.06741 52.0835C10.0665 53.5335 11.3537 54.7575 12.8469 55.6774C14.4792 56.6829 16.3027 57.1227 18.473 57.333L34.8083 57.3333C36.9762 57.1234 38.7976 56.6845 40.4288 55.6808C41.9211 54.7626 43.2078 53.5408 44.2073 52.0931C45.2997 50.5107 45.8459 48.7016 46.1871 46.5292C46.5198 44.4108 46.6821 41.7589 46.8866 38.417L48.3401 14.6685H50.6667C52.1394 14.6685 53.3333 13.4746 53.3333 12.0019C53.3333 10.5291 52.1394 9.33521 50.6667 9.33521L39.1518 9.33333L38.0148 6.98774C37.4498 5.82212 36.9518 4.79461 36.4571 3.97047C35.9233 3.08113 35.2983 2.25994 34.3989 1.5891ZM33.2249 9.33333C32.6211 8.08803 32.2344 7.29855 31.8842 6.7152C31.3715 5.86099 30.7572 5.48652 29.7843 5.39951C29.0929 5.33767 28.1918 5.33521 26.7587 5.33521C25.2899 5.33521 24.3653 5.33776 23.6566 5.40227C22.659 5.49309 22.037 5.88182 21.5304 6.76977C21.1986 7.35136 20.8374 8.12977 20.2882 9.33333H33.2249ZM18.6667 27.5104C17.5621 27.5104 16.6667 28.4058 16.6667 29.5104C16.6667 30.615 17.5621 31.5104 18.6667 31.5104H34.6667C35.7712 31.5104 36.6667 30.615 36.6667 29.5104C36.6667 28.4058 35.7712 27.5104 34.6667 27.5104H18.6667ZM20.6667 39.9583C20.6667 38.8538 21.5621 37.9583 22.6667 37.9583H30.6667C31.7712 37.9583 32.6667 38.8538 32.6667 39.9583C32.6667 41.0629 31.7712 41.9583 30.6667 41.9583H22.6667C21.5621 41.9583 20.6667 41.0629 20.6667 39.9583Z" fill="#E40A0A" />
+        </svg>
+      </ng-container>
+
+      <ng-container *ngIf="confirmationPopupData.popupType === 'warning'">
+        <i class="hgi hgi-stroke hgi-alert-02"></i>
+      </ng-container>
     </span>
-    <h6 class="title" *ngIf="confirmationPopupData.title">{{confirmationPopupData.title}}</h6>
+
+    <h6 class="title" *ngIf="confirmationPopupData.title" [innerHTML]="confirmationPopupData.title"></h6>
   </div>
 
   <button class="btn btn-link p-0" (click)="onClickOnCancel()" mat-dialog-close tabindex="-1" aria-label="Close" *ngIf="!disableClose">
-    <i class="material-icons h6">close</i>
+    <i class="material-icons">close</i>
   </button>
 </div>
 
-<div mat-dialog-content>
-  <div *ngIf="confirmationPopupData.staticMessage" class="text-center mb-4" [innerHTML]="confirmationPopupData.staticMessage"></div>
-  <div *ngIf="confirmationPopupData.dynamicMessage" class="text-center mb-4">{{ confirmationPopupData.dynamicMessage }}</div>
-  <div *ngIf="confirmationPopupData.secondeStaticMessage" class="text-center mb-4">{{ confirmationPopupData.secondeStaticMessage }}</div>
-
-  <div class="d-flex justify-content-center align-items-center gap-3">
-    <ng-container *ngIf="confirmationPopupData.showCloseButtonOnly; else defaultButtons">
-      <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnCancel()">{{confirmationPopupData.closeButtonText ?? 'إغلاق'}}</button>
+<div mat-dialog-content class="py-4">
+  <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+    <ng-container *ngIf="confirmationPopupData.staticMessage">
+      <p class="text" [innerHTML]=" confirmationPopupData.staticMessage">
+        <!-- {{ confirmationPopupData.staticMessage }} -->
+      </p>
     </ng-container>
-    <ng-template #defaultButtons>
-      <button class="btn btn-link" (click)="onClickOnCancel()">إلغاء</button>
-      <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnConfirm()">{{confirmationPopupData.acceptButtonText ?? 'حفظ '}}</button>
-    </ng-template>
+
+    <ng-container *ngIf="confirmationPopupData.dynamicMessage">
+      <p class="text">
+        {{ confirmationPopupData.dynamicMessage }}
+      </p>
+    </ng-container>
+
+    <ng-container *ngIf="confirmationPopupData.secondeStaticMessage">
+      <p class="text">
+        {{ confirmationPopupData.secondeStaticMessage }}
+      </p>
+    </ng-container>
+
+    <ng-container *ngIf="confirmationPopupData.alertText">
+      <p class="text" [ngClass]="confirmationPopupData.alertClass">
+        <i class="icon hgi hgi-stroke hgi-alert-circle"></i>
+        {{ confirmationPopupData.alertText }}
+      </p>
+    </ng-container>
+
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <ng-container *ngIf="confirmationPopupData.showCloseButtonOnly; else defaultButtons">
+        <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnCancel()">{{confirmationPopupData.closeButtonText ?? 'إغلاق'}}</button>
+      </ng-container>
+      <ng-template #defaultButtons>
+        <button class="btn btn-link px-xl-4" (click)="onClickOnCancel()" *ngIf="!confirmationPopupData.hideCancelButton">إلغاء</button>
+        <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnConfirm()">{{confirmationPopupData.acceptButtonText ?? 'حفظ '}}</button>
+      </ng-template>
+    </div>
   </div>
 </div>

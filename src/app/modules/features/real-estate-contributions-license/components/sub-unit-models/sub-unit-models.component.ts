@@ -29,7 +29,7 @@ export class SubUnitModelsComponent implements OnInit, OnDestroy {
     requiredErrorMsg: 'حقل مطلوب',
     save:'حفظ البيانات',
     savedSuccessfully:'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
 
   };
   constructor(

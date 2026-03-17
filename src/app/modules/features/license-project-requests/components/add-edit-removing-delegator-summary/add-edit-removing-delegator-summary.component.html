@@ -18,7 +18,7 @@
                   aria-label="Default select example"
                   formControlName="changeLicenseProjectDelegatorIds"
                   (change)="onDelegatorChange()">
-                  <option selected disabled>اختار المفوض</option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                   <option *ngFor="let customer of customers" [ngValue]="customer?.delegatorCustomer?.id">
                     {{ customer?.delegatorCustomer?.fullName }}
                   </option>

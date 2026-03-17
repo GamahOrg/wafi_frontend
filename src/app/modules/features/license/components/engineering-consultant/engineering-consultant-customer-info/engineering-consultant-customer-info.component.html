@@ -1,56 +1,38 @@
-﻿<div *ngIf="form"
-     class="row"
-     [formGroup]="form">
-  <div class="commercial-register">
-    <div class="row mb-3">
-      <div class="col-12 col-lg-12">
-        <div class="form-group mb-4">
-          <label for="commercialRegister"
-                 class="form-label">{{label}}</label>
-          <div class="input-group">
-            <input id="commercialRegister"
-                   name="commercialRegister"
-                   type="text"
-                   class="form-control"
-                   formControlName="commercialRegister">
-            <button [disabled]="!controls['commercialRegister'].value"
-                    (click)="validate()"
-                    class="btn btn-primary"
-                    type="button">{{buttonName}}</button>
-          </div>
-          <div class="invalid-feedback d-block"
-               *ngIf="controls['commercialRegister'].hasError('required') && controls['commercialRegister'].touched">
-            {{requiredMessage}}
-          </div>
-          <div class="invalid-feedback d-block"
-               *ngIf="controls['commercialRegister'].hasError('min') && controls['commercialRegister'].touched">
-            قيمة الحقل يجب الا تقل عن صفر
-          </div>
+﻿<ng-container [formGroup]="form" *ngIf="form">
+  <div class="row row-gap-4">
+    <div class="col-12 col-lg-12">
+      <div class="form-group">
+        <label for="commercialRegister" class="form-label"><span class="required-star">*</span> {{label}}</label>
+        <div class="input-group">
+          <input id="commercialRegister" name="commercialRegister" type="text" class="form-control" formControlName="commercialRegister">
+          <button [disabled]="!controls['commercialRegister'].value" (click)="validate()" class="btn btn-primary" type="button">{{buttonName}}</button>
         </div>
+        <div class="invalid-feedback d-block" *ngIf="controls['commercialRegister'].hasError('required') && controls['commercialRegister'].touched">
+          {{requiredMessage}}
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="controls['commercialRegister'].hasError('min') && controls['commercialRegister'].touched">
+          قيمة الحقل يجب الا تقل عن صفر
+        </div>
+        <ng-content select="[hint]"></ng-content>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
 
-<div class="row row-gap-3 mb-3"
-     *ngIf="facility">
-  <div class="col-12 col-lg-6"
-       *ngIf="facility.facilityName">
+<div class="row row-gap-4" *ngIf="facility">
+  <div class="col-12 col-lg-6" *ngIf="facility.facilityName">
     <div class="key">{{localizations.FacilityType}}</div>
     <div class="value">{{facility.facilityType}}</div>
   </div>
-  <div class="col-12 col-lg-6"
-       *ngIf="facility.facilityName">
+  <div class="col-12 col-lg-6" *ngIf="facility.facilityName">
     <div class="key">{{localizations.FacilityName}}</div>
     <div class="value">{{facility.facilityName}}</div>
   </div>
-  <div class="col-12 col-lg-6"
-       *ngIf="facility.certificateNumber">
+  <div class="col-12 col-lg-6" *ngIf="facility.certificateNumber">
     <div class="key">{{localizations.CertificateNumber}}</div>
     <div class="value">{{facility.certificateNumber}}</div>
   </div>
-  <div class="col-12 col-lg-6"
-       *ngIf="facility.engineerLicenseNumber">
+  <div class="col-12 col-lg-6" *ngIf="facility.engineerLicenseNumber">
     <div class="key">{{localizations.LicenseNumber}}</div>
     <div class="value">{{facility.engineerLicenseNumber}}</div>
   </div>

@@ -17,7 +17,7 @@
               <div class="form-group">
                 <label class="form-label">نوع الطلب</label>
                 <select class="form-select form-select-sm" id="control-priod" (change)="changePriod($event)">
-                  <option value=null selected disabled>اختر المدة</option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                   <option value="1">سنه واحدة</option>
                   <option value="2">سنتين</option>
                   <option value="3">ثلاث سنوات</option>
@@ -36,7 +36,7 @@
               <div class="form-group">
                 <label class="form-label">المشروع </label>
                 <select class="form-select form-select-sm" id="control-priod" (change)="changePriod($event)">
-                  <option value=null selected disabled>اختر المدة</option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                   <option value="1">سنه واحدة</option>
                   <option value="2">سنتين</option>
                   <option value="3">ثلاث سنوات</option>

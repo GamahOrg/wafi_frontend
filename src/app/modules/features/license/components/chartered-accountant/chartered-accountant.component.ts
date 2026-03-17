@@ -32,14 +32,15 @@ export class CharteredAccountantComponent {
   entity: LicenseProjectCharteredAccountantDto = <any>{};
   entity$: BehaviorSubject<LicenseProjectCharteredAccountantDto | undefined> =
     new BehaviorSubject<LicenseProjectCharteredAccountantDto | undefined>(
-      undefined
+      undefined,
     );
   baseUrl = `${environment.baseURL}/`;
 
   typeCode = QualificationTypeCode;
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   charteredAccountantFiles: SysFileManagerCreateUpdateDto[] | undefined = [];
-  savedCharteredAccountantFiles: SysFileManagerCreateUpdateDto[] | undefined = [];
+  savedCharteredAccountantFiles: SysFileManagerCreateUpdateDto[] | undefined =
+    [];
   multiFilesUploaderData: FileUploader = {
     multiple: true,
   } as FileUploader;
@@ -66,7 +67,7 @@ export class CharteredAccountantComponent {
     CreatedSuccessfully: 'تم الحفظ بنجاح',
     emailPattern: 'من فضلك ادخل البريد الإلكتروني صحيح',
     requestSentToCharteredAccountant:
-      'تم ارسال طلب للمحاسب القانوني للموافقة على الاتفاقية',
+      'تم إرسال طلب للمحاسب القانوني للموافقة على الاتفاقية',
     CharteredAccountantLicenseNumberRequired:
       'رقم رخصة المحاسب القانوني مطلوب فى منشاة المحاسب القانوني',
   };
@@ -79,7 +80,7 @@ export class CharteredAccountantComponent {
     private _filemangementService: FileManagementService,
     public toastService: ToastrNotificatioService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-    private _nextAndPreviusButtonsService: NextAndPreviusButtonsService
+    private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
   ) {}
 
   // begin of life cycle
@@ -107,11 +108,11 @@ export class CharteredAccountantComponent {
   }
 
   deletFile(id: string) {
-    this._filemangementService.DeletFile(id).subscribe(res => {
+    this._filemangementService.DeletFile(id).subscribe((res) => {
       if (res.isDone) {
         this.onGet();
       }
-    })
+    });
   }
 
   buildForm() {
@@ -183,7 +184,8 @@ export class CharteredAccountantComponent {
         if (result.data) {
           this.charteredAccountantFiles =
             result.data.licenseProjectCharteredAccountantFiles;
-            this.savedCharteredAccountantFiles = result.data.licenseProjectCharteredAccountantFiles;
+          this.savedCharteredAccountantFiles =
+            result.data.licenseProjectCharteredAccountantFiles;
           this.entity = result.data;
           // this.entity.charteredAccountantDelegatorSignModelFile = result.data.licenseProjectCharteredAccountantDelegators[0].charteredAccountantDelegatorSignModelFile;
           // this.entity.charteredAccountantDelegatorSignModelFileId = result.data.licenseProjectCharteredAccountantDelegators[0].signModelFileId;
@@ -212,7 +214,7 @@ export class CharteredAccountantComponent {
 
     if (this.form?.invalid) {
       this.toastService.showError(
-        this.localizations.PleaseAddAllRequiredFields
+        this.localizations.PleaseAddAllRequiredFields,
       );
       this.form?.markAllAsTouched();
       return;
@@ -223,7 +225,7 @@ export class CharteredAccountantComponent {
     object.id = this.entity.id;
     object.charteredAccountantId = this.facility$.value?.id as string;
     object.CharteredAccountantFilesId = this.charteredAccountantFiles?.flatMap(
-      (file) => file.id
+      (file) => file.id,
     );
     // object.charteredAccountantLicenseNumber = object.charteredAccountantLicenseNumber.toString();
     object.charteredAccountantLicenseNumber = this.facility$.value
@@ -254,7 +256,7 @@ export class CharteredAccountantComponent {
 
     console.log(
       'CharteredAccountantComponent this.form?.value',
-      this.form?.value
+      this.form?.value,
     );
     console.log('CharteredAccountantComponent object', object);
 
@@ -267,7 +269,7 @@ export class CharteredAccountantComponent {
 
   update(
     object: LicenseProjectCharteredAccountantCreateUpdateDto,
-    moveToNextTab: boolean = false
+    moveToNextTab: boolean = false,
   ) {
     this.appService
       .updateAsync(object)
@@ -275,19 +277,19 @@ export class CharteredAccountantComponent {
       .subscribe(() => {
         // this.toastService.showSuccess(this.localizations.UpdatedSuccessfully);
         this.toastService.showSuccess(
-          this.localizations.requestSentToCharteredAccountant
+          this.localizations.requestSentToCharteredAccountant,
         );
         if (moveToNextTab) {
           this.moveToNextTab();
         } else {
-          this.onGet()
+          this.onGet();
         }
       });
   }
 
   create(
     object: LicenseProjectCharteredAccountantCreateUpdateDto,
-    moveToNextTab: boolean = false
+    moveToNextTab: boolean = false,
   ) {
     this.appService
       .createAsync(object)
@@ -297,12 +299,12 @@ export class CharteredAccountantComponent {
         if (result && result.data) this.entity.id = result.data.id;
         // this.toastService.showSuccess(this.localizations.CreatedSuccessfully);
         this.toastService.showSuccess(
-          this.localizations.requestSentToCharteredAccountant
+          this.localizations.requestSentToCharteredAccountant,
         );
         if (moveToNextTab) {
           this.moveToNextTab();
         } else {
-          this.onGet()
+          this.onGet();
         }
       });
   }
@@ -343,6 +345,11 @@ export class CharteredAccountantComponent {
       message: string;
     };
   }): void {
+    if (filesData.eventRes.data.length == 0) {
+      this.charteredAccountantFiles = [];
+      return;
+    }
+
     this.charteredAccountantFiles = filesData.eventRes.data?.map((file) => {
       return {
         id: file.id,

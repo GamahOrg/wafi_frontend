@@ -18,6 +18,7 @@ import { ZonesBlocksBuildingAndUnitsService } from '../../services/zones-blocks-
 import { ProjectUnit } from '../../models/project-units';
 import { LicenseProjectUnitService } from '../../services/license-project-unit/license-project-unit.service';
 import { Zone } from '../../models/zone.model';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-project-module-models',
@@ -131,7 +132,7 @@ export class ProjectModuleModelsComponent implements OnInit, OnDestroy {
     BlocksAndbuildingsAndunitsComponent: 'أنواع الوحدات بالبلوك / العمارة',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
   };
   private loadComponentData() {
     const requests = [
@@ -178,7 +179,7 @@ export class ProjectModuleModelsComponent implements OnInit, OnDestroy {
 
   isFawriaValidation(): boolean{
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if(typecode == 'FSRSU')
+    if(typecode == LicenseRequestTypeTypeCodeEnum.Fawria)
       return true;
     else
       return false;

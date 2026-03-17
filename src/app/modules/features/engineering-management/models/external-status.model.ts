@@ -17,7 +17,7 @@ export enum ExternalStatus {
     ReqApprovedInitialLicIssuedAndBeingCompleted = 8,
     ///<summary>تم الموافقة المشروطه على الطلب</summary>
     ReqHasConditionalApproval = 9,
-    ///<summary>تم الموافقة المشروطه على الطلب وارسال الشروط لمقدم الطلب</summary>
+    ///<summary>تم الموافقة المشروطه على الطلب وإرسال الشروط لمقدم الطلب</summary>
     ReqHasConditionalApprovalConditionsSentForCustomer = 10,
     ///<summary>تم رفض الطلب</summary>
     ReqRejected = 11,

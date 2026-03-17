@@ -4,14 +4,14 @@
 
     <div class="form-group mb-4">
       <label class="form-label"><span class="required-star">*</span> {{localization.itemTitle}}</label>
-      <input type="text" id="control-itemText" placeholder="{{localization.itemTitlePlaceholder}}" class="form-control" formControlName="itemTitle" />
+      <input type="text" id="control-itemText"  class="form-control" formControlName="itemTitle" />
       <div class="invalid-feedback d-block" *ngIf="controls.itemTitle?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
       <div class="invalid-feedback d-block" *ngIf="controls.itemTitle?.hasError('maxlength') && showValidation">{{localization.maxLengthErrorMsg150}}</div>
     </div>
 
     <div class="form-group mb-4">
       <label class="form-label"><span class="required-star">*</span> {{localization.itemText}}</label>
-      <textarea type="text" id="control-itemText" placeholder="{{localization.itemTextPlaceholder}}" class="form-control" formControlName="itemText"></textarea>
+      <textarea type="text" id="control-itemText"  class="form-control" formControlName="itemText"></textarea>
       <div class="invalid-feedback d-block" *ngIf="controls.itemText?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
       <div class="invalid-feedback d-block" *ngIf="controls.itemText?.hasError('maxlength') && showValidation">{{localization.maxLengthErrorMsg2000}}</div>
     </div>
@@ -27,7 +27,7 @@
               <i class="hgi hgi-stroke hgi-delete-03"></i>
             </button>
           </div>
-          <textarea class="form-control" maxlength="2000" [id]="'additional-term-' + i" [placeholder]="localization.additionalTermTextPlaceholder" rows="3" formControlName="itemText"></textarea>
+          <textarea class="form-control" maxlength="2000" [id]="'additional-term-' + i"  rows="3" formControlName="itemText"></textarea>
           <div class="invalid-feedback d-block" *ngIf="getAdditionalTermGroup(i).get('itemText')?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
         </div>
       </ng-container>

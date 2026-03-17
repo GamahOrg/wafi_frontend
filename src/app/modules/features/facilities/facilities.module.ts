@@ -58,6 +58,7 @@ import { QualificationRequestListComponent } from './components/qualification-re
 import { LicenseListComponent } from './components/license-list/license-list.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DashboardService } from './services/dashboard.service';
+import { CertifiedEngineerCoursesPreviewComponent } from './components/certified-engineer-courses-preview/certified-engineer-courses-preview.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { DashboardService } from './services/dashboard.service';
     QualificationRequestListComponent,
     LicenseListComponent,
     DashboardComponent,
+    CertifiedEngineerCoursesPreviewComponent,
   ],
   providers: [
     SharedLicenseProjectService,

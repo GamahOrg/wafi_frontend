@@ -14,7 +14,7 @@
     <div class="col-12 col-lg-6">
         <label for="" class="form-label">  الزون</label>
         <select class="form-select"  id="control-areasId"  (change)="selected($event)">
-            <option disabled label="-- اختار  الزون --"></option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let zone of zoneslist" [value]="zone.id">{{zone.code}}</option>
         </select>
     </div>

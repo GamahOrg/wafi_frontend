@@ -24,7 +24,7 @@ export class WorkStatusReportsComponent {
   subscriptions: Subscription[] = [];
   licenseProjectEngineeringSupervisionPlannedReportDetailList?: LicenseProjectEngineeringSupervisionPlannedReportDetailCreateUpdateDto[];
   licenseProjectEngineeringSupervisionPlannedReportDetailDtoList?:LicenseProjectEngineeringSupervisionPlannedReportDetailDto[]
-currenrYear?:number;
+currenrYear?:number|null=null;
 years?:number[];
 cumulativeAmountPriorToThatYear ?: number;
 engineerinSupervisionPlannedReportAllowToEdit:boolean=false;

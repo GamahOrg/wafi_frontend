@@ -12,7 +12,7 @@
                       <label class="form-label">{{localization.area}}</label>
                       <select class="form-select" id="control-areasId"
                               formControlName="areasId">
-                          <option [label]="localization.selectArea"></option>
+                          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                           <option *ngFor="let area of areas"
                                   [value]="area.id">{{area.areaName}}</option>
                       </select>
@@ -25,7 +25,7 @@
                       <label class="form-label">{{localization.city}}</label>
                       <select class="form-select" id="control-citiesId"
                               formControlName="citiesId">
-                          <option [label]="localization.selectCity"></option>
+                          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                           <option *ngFor="let city of tempCities"
                                   [value]="city.id">{{city.cityName}}</option>
                       </select>
@@ -41,7 +41,6 @@
                   <div class="form-group mb-4">
                       <label class="form-label">{{localization.neighborhood}}</label>
                       <input type="text" id="control-neighborhoodName"
-                             placeholder="{{localization.neighborhood}}"
                              class="form-control"
                              formControlName="neighborhoodName">
                       <mat-error
@@ -52,7 +51,6 @@
                   <div class="form-group mb-4">
                       <label class="form-label">{{localization.street}}</label>
                       <input type="text" id="control-streetName"
-                             placeholder="{{localization.street}}"
                              class="form-control"
                              formControlName="streetName">
                       <mat-error

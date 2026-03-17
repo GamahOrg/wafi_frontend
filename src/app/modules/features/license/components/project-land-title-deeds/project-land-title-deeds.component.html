@@ -1,48 +1,45 @@
-<div class="d-flex flex-column h-100">
-  <div class="tab-data-header">
-    <i class="icon hgi hgi-stroke hgi-profile"></i>
-    <h6 class="title">{{localization.title}}</h6>
-    <button class="opposite-title btn btn-outline-primary"
-            (click)="openDialog(undefined)"><span class="material-icons">add</span></button>
-  </div>
-  <div class="tab-data-section">
-    <div class="table-responsive">
-      <table class="table table-light">
-        <thead>
-          <tr>
-            <th>{{localization.typeId}}</th>
-            <th>{{localization.number}}</th>
-            <th> {{localization.issueOn}}</th>
-            <!-- <th> {{localization.imageFileId}}</th> -->
-            <th> {{localization.ownersCount}}</th>
-            <th>{{localization.owners}}</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="projectDeeds && projectDeeds.length">
-          <tr *ngFor="let deed of projectDeeds">
-            <td>{{deed.typeName}}</td>
-            <td>{{deed?.data?.deedNo}}</td>
-            <td>{{deed?.data?.deedDate}}</td>
-            <!-- <td>{{deed?.issueOn | date:'yyyy-MM-dd'}}</td> -->
-            <!-- <td><img *ngIf="deed && deed.imageFile"
+<div class="tab-data-header">
+  <i class="icon hgi hgi-stroke hgi-profile"></i>
+  <h6 class="title">{{localization.title}}</h6>
+  <button class="opposite-title btn btn-outline-primary" (click)="openDialog(undefined)"><span class="material-icons">add</span></button>
+</div>
+
+<div class="tab-data-section">
+  <div class="table-responsive" *ngIf="projectDeeds && projectDeeds.length">
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th>{{localization.typeId}}</th>
+          <th>{{localization.number}}</th>
+          <th> {{localization.issueOn}}</th>
+          <!-- <th> {{localization.imageFileId}}</th> -->
+          <th> {{localization.ownersCount}}</th>
+          <th>{{localization.owners}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let deed of projectDeeds">
+          <td>{{deed.typeName}}</td>
+          <td>{{deed?.data?.deedNo}}</td>
+          <td>{{deed?.data?.deedDate}}</td>
+          <!-- <td>{{deed?.issueOn | date:'yyyy-MM-dd'}}</td> -->
+          <!-- <td><img *ngIf="deed && deed.imageFile"
                    [src]="baseUrl + deed.imageFile.filePath"
                    alt=""> </td> -->
-            <td> {{deed?.data?.deedOwners?.length}}</td>
-            <td>
-              <div class="table-actions">
-                <div class="menu-trigger">
-                  <button mat-mini-fab
-                          [matMenuTriggerFor]="tableActions">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                </div>
-                <mat-menu #tableActions="matMenu">
-                  <button mat-menu-item
-                          (click)="openEditOwnerDialog(deed)">
-                    <mat-icon color="primary">edit</mat-icon>
-                    <span>تعديل بيانات المُلاك</span>
-                  </button>
-                  <!-- <button mat-menu-item
+          <td> {{deed?.data?.deedOwners?.length}}</td>
+          <td>
+            <div class="table-actions">
+              <div class="menu-trigger">
+                <button mat-mini-fab [matMenuTriggerFor]="tableActions">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </div>
+              <mat-menu #tableActions="matMenu">
+                <button mat-menu-item (click)="openEditOwnerDialog(deed)">
+                  <mat-icon color="primary">edit</mat-icon>
+                  <span>تعديل بيانات المُلاك</span>
+                </button>
+                <!-- <button mat-menu-item
                           (click)="openLanOwnerDialog(deed)">
                     <mat-icon>add</mat-icon>
                     <span>إضافة مالك جديد</span>
@@ -52,24 +49,21 @@
                     <mat-icon>add</mat-icon>
                     <span>إضافة مالك من قائمة الملاك</span>
                   </button> -->
-                  <button mat-menu-item
-                          (click)="delete(deed.id)">
-                    <mat-icon color="warn">delete</mat-icon>
-                    <span>حذف صك</span>
-                  </button>
-                </mat-menu>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                <button mat-menu-item (click)="delete(deed.id)">
+                  <mat-icon color="warn">delete</mat-icon>
+                  <span>حذف صك</span>
+                </button>
+              </mat-menu>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <app-next-and-previus-buttons></app-next-and-previus-buttons>
-  <!-- <div class="form-actions mt-auto">
-    <button class="btn btn-outline-primary"
-    (click)="back()">{{localization.previous}}</button>
-    <button class="btn btn-outline-primary"
-            (click)="next()">{{localization.next}}</button>
-  </div> -->
+
+  <ng-container *ngIf="!projectDeeds || projectDeeds.length === 0">
+    <app-no-data [showText]="false" [showCompleteBtn]="false"></app-no-data>
+  </ng-container>
 </div>
+
+<app-next-and-previus-buttons></app-next-and-previus-buttons>

@@ -1,21 +1,11 @@
-<div class="row row-gap-3 mb-3" *ngFor="let item of approvalList; let i = index">
-    <div class="form-check form-check-rtl">
-     <input class="form-check-input"
-            type="checkbox"
-            [value]="item.isChecked"
-            (change)="checkValue($event,i)"
-            id="item.discerption{{i}}" />
-     <label class="form-check-label"
-            for="item.discerption{{i}}">
-            {{item.discerption}}
-     </label>
- </div>
- </div>
- &nbsp;
- <div class="col-12 col-lg-6">
-     <div class="alert alert-danger flex-column align-items-start row-gap-1" role="alert" *ngIf="showValidation">
-         <h6 class="alert-heading d-flex align-items-center column-gap-1"><i class="material-icons">warning</i> توجد أخطاء</h6>
-         يجب الموافقه على جميع الاقرارات الخاصة بالرخصة حتى يتم ارسال الطلب
-     </div>
- </div>
- 
+<div class="form-check form-check-normal" *ngFor="let item of approvalList; let i = index">
+  <input class="form-check-input" type="checkbox" [value]="item.isChecked" (change)="checkValue($event,i)" id="item.discerption{{i}}" />
+  <label class="form-check-label" for="item.discerption{{i}}">
+    {{item.discerption}}
+  </label>
+</div>
+
+<div class="alert alert-danger flex-column align-items-start row-gap-1 mt-3" role="alert" *ngIf="showValidation">
+  <h6 class="alert-heading d-flex align-items-center column-gap-1"><i class="material-icons">warning</i> توجد أخطاء</h6>
+  يجب الموافقة على جميع الإقرارات الخاصة بالرخصة حتى يتم إرسال الطلب
+</div>

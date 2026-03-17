@@ -1,3 +1,9 @@
+.table {
+  .btn-icon {
+    --bs-btn-font-weight: 400;
+  }
+}
+
 td {
   .image {
     display: flex;
@@ -20,12 +26,12 @@ td {
     color: $secondary
   }
 
-  .form-control {
+  .form-control:read-only {
 
-    &:not(:focus),
+    &,
     &+.input-group-text {
-      background-color: $lightergray;
-      border-color: transparent;
+      border-color: #F3F4F6;
+      background-color: #F3F4F6;
     }
   }
 

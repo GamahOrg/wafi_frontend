@@ -1,33 +1,33 @@
-a {
-  text-decoration: none;
-}
+// a {
+//   text-decoration: none;
+// }
 
-.type-item {
-  position: relative;
-  z-index: 2;
+// .type-item {
+//   position: relative;
+//   z-index: 2;
 
-  padding: .5rem 1rem;
-  text-align: center;
+//   padding: .5rem 1rem;
+//   text-align: center;
 
-  background-color: $white;
-  border-bottom: 2px solid transparent;
+//   background-color: $white;
+//   border-bottom: 2px solid transparent;
 
-  .title {
-    font-weight: bold;
-    color: $lightgray;
-  }
+//   .title {
+//     font-weight: bold;
+//     color: $lightgray;
+//   }
 
-  &.active {
-    border-color: $theme-main;
+//   &.active {
+//     border-color: $theme-main;
 
-    .title {
-      color: $theme-main;
-    }
-  }
-}
+//     .title {
+//       color: $theme-main;
+//     }
+//   }
+// }
 
-.licenses-group {
-  .licenses-group-data {
-    margin-top: 1.5rem;
-  }
-}
+// .licenses-group {
+//   .licenses-group-data {
+//     margin-top: 1.5rem;
+//   }
+// }

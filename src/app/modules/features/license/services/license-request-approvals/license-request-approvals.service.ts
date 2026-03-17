@@ -88,7 +88,13 @@ setLicenseProjectDeedOwnerApprovalBS(LatestValue: LicenseProjectDeedOwnerApprova
       })
     )
   }
-
+  GetOwneerDeed(id:string,facilityId:string):Observable<any>{
+    return this._httpClient.get<CoreResponseDTO<any>>(`${Configuration.APIs.LicenseRequestService.GetDeedOwners}/${id}/${facilityId}`).pipe(
+      map((res:CoreResponseDTO<any>) => {
+        return res.isDone ? res.data : null
+      })
+    )
+  }
   SaveApproval(SaveApprovalObj: SaveApproval): Observable<LicenseProjectMainRealStateDeveloperApproval | LicenseProjectSubDeveloperApproval | LicenseProjectCharteredAccountantApproval | LicenseProjectEngineeringConsultantApproval | LicenseProjectRealStateMarketerApproval | null> {
     return this._httpClient.post<CoreResponseDTO<LicenseProjectMainRealStateDeveloperApproval | LicenseProjectSubDeveloperApproval | LicenseProjectCharteredAccountantApproval | LicenseProjectEngineeringConsultantApproval | LicenseProjectRealStateMarketerApproval>>(Configuration.APIs.LicenseRequestService.SaveApproval, SaveApprovalObj).pipe(
       map((res: CoreResponseDTO<any>) => {

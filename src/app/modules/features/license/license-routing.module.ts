@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ResolveFn } from '@angular/router';
+import { inject } from '@angular/core';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LincenseTypesComponent } from './pages/lincense-types/lincense-types.component';
 import { LincenseListComponent } from './pages/lincense-list/lincense-list.component';
@@ -45,36 +46,64 @@ import { BuyerListTabsComponent } from './components/buyer-list-tabs/buyer-list-
 import { ItemsLogComponent } from './pages/items-log/items-log.component';
 import { LicenseProjectFawriaDeveloperListComponent } from './pages/license-project-fawria-developer-list/license-project-fawria-developer-list.component';
 import { FawriaProjectPartiesStatusComponent } from './components/fawria-components/fawria-project-parties-status/fawria-project-parties-status.component';
+import { FawriaAgreementFileComponent } from './components/fawria-components/fawria-agreement-file/fawria-agreement-file.component';
 import { DeveloperApprovalsListComponent } from './pages/developer-approvals-list/developer-approvals-list.component';
+import { AgreementsApprovalListComponent } from './pages/agreements-approval-list/agreements-approval-list.component';
 import { DeveloperApprovalDetailsComponent } from './pages/developer-approval-details/developer-approval-details.component';
-import { UnitsCorrectionsTabsComponent } from './components/units-correction/units-corrections-tabs/units-corrections-tabs.component';
 import { LicenseTabsComponent } from './pages/license-tabs/license-tabs.component';
 import { CorrectingUnitsDetailsComponent } from './pages/correcting-units-details/correcting-units-details.component';
 import { CorrectionLicenseSummaryComponent } from './pages/correction-license-summary/correction-license-summary.component';
 import { CorrectionLicenseProjectRequestDetailsComponent } from './pages/correction-license-project-request-details/correction-license-project-request-details.component';
 import { EditCorrectionFarzNoteComponent } from './pages/edit-correction-farz-note/edit-correction-farz-note.component';
+import { EngineerApprovalDetailsComponent } from './pages/engineer-approval-details/engineer-approval-details.component';
+import { CharteredAccountApprovalDetailsComponent } from './pages/chartered-account-approval-details/chartered-account-approval-details.component';
+import { DeedOwnersListComponent } from './pages/deed-owners-list/deed-owners-list.component';
+import { OwnerApprovalDetailsComponent } from './pages/owner-approval-details/owner-approval-details.component';
+import { SearchExchangeDocumentsListComponent } from './pages/search-exchange-documents-list/search-exchange-documents-list.component';
+import { ExchangeDocumentsListComponent } from './pages/exchange-documents-list/exchange-documents-list.component';
+import { AddExchangeDocumentComponent } from './components/add-exchange-document/add-exchange-document.component';
+import { ViewExchangeRequestDetailsComponent } from './pages/view-exchange-request-details/view-exchange-request-details.component';
+import { SharedLicenseProjectService } from './services/sharedLicenseProject/shared-license-project.service';
+import { CustomerTypeEnum } from './models/search-exchange-document-list-response-dto';
+
+const licenseTypeBreadcrumbResolver: ResolveFn<string> = () => {
+  const sharedLicenseProjectService = inject(SharedLicenseProjectService);
+  return sharedLicenseProjectService.getLicenseTypeNameStorage() || 'تأكيد بيانات الطلب';
+};
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: Configuration.pages.license.lincenseTypes,
+    redirectTo: Configuration.pages.license.lincenseList,
     pathMatch: 'full',
   },
   {
     path: Configuration.pages.license.lincenseTypes,
-    component: LincenseTypesComponent,
-    data: { breadcrumb: 'قائمة الطلبات' },
+    data: { breadcrumb: 'انشاء طلب جديد' },
+    children: [
+      {
+        path: '',
+        component: LincenseTypesComponent,
+        data: { breadcrumb: '' },
+      },
+      {
+        path: Configuration.pages.license.lincenseSummary,
+        component: LincenseSummaryComponent,
+        resolve: { licenseTypeName: licenseTypeBreadcrumbResolver },
+        data: { breadcrumb: (data: any) => data['licenseTypeName'] || 'تأكيد بيانات الطلب' },
+      },
+    ],
   },
   {
     path: Configuration.pages.license.lincenseList,
     component: LicenseTabsComponent,
     data: { breadcrumb: 'قائمة التراخيص' },
-  }, 
+  },
   {
     path: Configuration.pages.license.licenseUnderStudy,
     component: EmployeeUnderStudingLicenseRequestsComponent,
-    data: { breadcrumb: 'تحديث طلب الترخيص'},
-  }, 
+    data: { breadcrumb: 'تحديث طلب الترخيص' },
+  },
   {
     path: `${Configuration.pages.license.createLincense}/:code`,
     component: CreateLincenseComponent,
@@ -86,11 +115,6 @@ const routes: Routes = [
     data: { breadcrumb: 'تجديد طلب ترخيص جديد' },
   },
   {
-    path: Configuration.pages.license.lincenseSummary,
-    component: LincenseSummaryComponent,
-    data: { breadcrumb: 'تأكيد بيانات الطلب' },
-  },
-  {
     path: Configuration.pages.license.lincenseDetails,
     component: LincenseDetailsComponent,
     data: { breadcrumb: 'تفاصيل الطلب' },
@@ -98,7 +122,7 @@ const routes: Routes = [
   {
     path: Configuration.pages.license.fawriaLicenseDetails,
     component: FawriaLicenseDetailsComponent,
-    data: { breadcrumb: 'تفاصيل الطلب الفوري' },
+    data: { breadcrumb: 'تفاصيل طلب الرخصة الفورية' },
   },
   {
     path: Configuration.pages.license.fawriaLicenseComplate,
@@ -155,11 +179,11 @@ const routes: Routes = [
     component: EmployeeLicenseListComponent,
     data: { breadcrumb: 'قائمة تراخيص الموظف' },
   },
-   {
+  {
     path: Configuration.pages.license.addPeriodiccharteredaccountantreport,
     component: AddPeriodicCharteredAccountantReportComponent,
     data: { breadcrumb: 'أضافة تقرير محاسب قانوني عن فترة' },
-  }, 
+  },
   {
     path: Configuration.pages.license.periodiccharteredaccountantreportlist,
     component: PeriodicCharteredAccountantReportComponent,
@@ -169,7 +193,7 @@ const routes: Routes = [
     path: Configuration.pages.license.contractdocumentation,
     component: ContractDocumentationListComponent,
     data: { breadcrumb: 'عقود التوثيق' },
-  }, 
+  },
   {
     path: Configuration.pages.license.contractDetailsWithParam,
     component: BuyerContractUpdateComponent,
@@ -186,7 +210,7 @@ const routes: Routes = [
     path: Configuration.pages.license.licensecertificatetemplate,
     component: LicenseCertificateTemplateListComponent,
     data: { breadcrumb: 'قائمة المشاريع الجديدة' },
-  }, 
+  },
   {
     path: Configuration.pages.license.licensecertificatetemplatedetails,
     component: LicenseCertificateTemplateDetailsComponent,
@@ -232,7 +256,7 @@ const routes: Routes = [
     component: ContractUnitDetailsComponent,
     data: { breadcrumb: 'تفاصيل الوحدة' },
   },
-   {
+  {
     path: Configuration.pages.license.contractRequestList,
     component: ContractRequestListComponent,
     data: { breadcrumb: 'طلبات ألغاء العقود' },
@@ -277,11 +301,7 @@ const routes: Routes = [
     component: PaymentTermsTabsComponent,
     data: { breadcrumb: 'الدفعات والشروط الإضافية' },
   },
-    {
-    path: Configuration.pages.license.unitsCorrection,
-    component: UnitsCorrectionsTabsComponent,
-    data: { breadcrumb: 'تصحيح الوحدات' },
-  },
+
   {
     path: Configuration.pages.license.correctionLicenseSummary,
     component: CorrectionLicenseSummaryComponent,
@@ -303,13 +323,38 @@ const routes: Routes = [
     data: { breadcrumb: 'تفقد حالة المحاسب والإستشاري' },
   },
   {
+    path: Configuration.pages.license.fawriaAgreementFileWithParam,
+    component: FawriaAgreementFileComponent,
+    data: { breadcrumb: 'ملف الاتفاقية' },
+  },
+  {
     path: Configuration.pages.license.developerApprovalsList,
-    component: DeveloperApprovalsListComponent,
+    component: AgreementsApprovalListComponent,
     data: { breadcrumb: 'اتفاقيات التطوير العقارى' },
   },
   {
     path: Configuration.pages.license.developerApprovalDetailsWithParam,
     component: DeveloperApprovalDetailsComponent,
+    data: { breadcrumb: 'تفاصيل اتفاقية التطوير العقارى' },
+  },
+  {
+    path: Configuration.pages.license.enginnerApprovalDetailsWithParam,
+    component: EngineerApprovalDetailsComponent,
+    data: { breadcrumb: 'تفاصيل اتفاقية الإستشاري  ' },
+  },
+  {
+    path: Configuration.pages.license.charteredAccountApprovalDetailsWithParam,
+    component: CharteredAccountApprovalDetailsComponent,
+    data: { breadcrumb: 'تفاصيل اتفاقية المحاسب القانوني' },
+  },
+  {
+    path: Configuration.pages.license.deedOwnerList,
+    component: DeedOwnersListComponent,
+    data: { breadcrumb: 'اتفاقيات المشروع' },
+  },
+  {
+    path: Configuration.pages.license.ownerApprovalDetailsWithParam,
+    component: OwnerApprovalDetailsComponent,
     data: { breadcrumb: 'تفاصيل اتفاقية التطوير العقارى' },
   },
   {
@@ -322,10 +367,45 @@ const routes: Routes = [
     component: CorrectionLicenseProjectRequestDetailsComponent,
     data: { breadcrumb: 'تفاصيل طلب تصحيح الوحدات' },
   },
+  {
+    path: Configuration.pages.license.searchExchangeDocumentsList,
+    component: SearchExchangeDocumentsListComponent,
+    data: { breadcrumb: 'قائمة وثائق الصرف' },
+  },
+  {
+    path: Configuration.pages.license.exchangeDocumentsListOnProject,
+    component: ExchangeDocumentsListComponent,
+    data: { breadcrumb: 'قائمة وثائق الصرف' },
+  },
+  {
+    path: Configuration.pages.license.addExchangeDocuments,
+    component: AddExchangeDocumentComponent,
+    data: { breadcrumb: 'انشاء وثائق الصرف' },
+  },
+   {
+    path: Configuration.pages.license.exchangeDocumentsDetails+'/:customerType/:id',
+    component: ViewExchangeRequestDetailsComponent,
+    data: { breadcrumb: 'تفاصيل وثائق الصرف' },
+  },
+  {
+    path: Configuration.pages.license.developerExchangeDocumentsDetails+'/:id',
+    component: ViewExchangeRequestDetailsComponent,
+    data: { breadcrumb: 'تفاصيل وثائق الصرف', customerType: CustomerTypeEnum.DeveloperDelegator },
+  },
+  {
+    path: Configuration.pages.license.accountantExchangeDocumentsDetails+'/:id',
+    component: ViewExchangeRequestDetailsComponent,
+    data: { breadcrumb: 'تفاصيل وثائق الصرف', customerType: CustomerTypeEnum.AccountantDelegator },
+  },
+  {
+    path: Configuration.pages.license.engineeringExchangeDocumentsDetails+'/:id',
+    component: ViewExchangeRequestDetailsComponent,
+    data: { breadcrumb: 'تفاصيل وثائق الصرف', customerType: CustomerTypeEnum.ConsultantDelegator },
+  },
 ];
 //
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LicenseRoutingModule { }
+export class LicenseRoutingModule {}

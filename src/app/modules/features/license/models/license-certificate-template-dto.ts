@@ -37,7 +37,7 @@ projectOrContributionType :string;
 categoryName :string;
 //نطاق الأعمال
  projectScopeName :string;
-//هل المشروع او المساهمة بدات
+//هل المشروع أو المساهمة بدات
  IsProjectOrContributionStarted :boolean;
 //نسبة الانجاز
 achievementRate :number;

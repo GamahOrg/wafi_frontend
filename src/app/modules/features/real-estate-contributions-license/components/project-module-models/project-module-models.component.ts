@@ -131,7 +131,7 @@ export class ProjectModuleModelsComponent implements OnInit, OnDestroy {
     BlocksAndbuildingsAndunitsComponent: 'أنواع الوحدات بالبلوك / العمارة',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
   };
   private loadComponentData() {
     const requests = [

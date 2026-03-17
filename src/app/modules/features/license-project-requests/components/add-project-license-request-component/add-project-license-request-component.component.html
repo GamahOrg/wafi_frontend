@@ -8,7 +8,7 @@
         formControlName="requestType"
         class="form-control"
       >
-        <option value="" disabled>حدد نوع الطلب</option>
+        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
         <option
           *ngFor="let requestType of requestTypes"
           [value]="requestType.id | number"
@@ -29,7 +29,7 @@
         formControlName="licenseProject"
         class="form-control"
       >
-        <option value="" disabled>حدد اسم مشروع</option>
+        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
         <option
           *ngFor="let licenseProject of licenseProjects"
           [value]="licenseProject.licenseProjectId"

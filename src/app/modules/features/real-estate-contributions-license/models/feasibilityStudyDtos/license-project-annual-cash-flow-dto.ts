@@ -2,7 +2,7 @@ import { SysYearCreateUpdateDto } from "./sys-year-create-update-dto";
 
 export class LicenseProjectAnnualCashFlowDto {
     public id: string = "";
-    public   yearId :string="";
+    public   yearId :string|null=null;
     public  year =new SysYearCreateUpdateDto;
     public   licenseProjectFeasibilityStudyId :string="";
     public  cashFlowsCollectedForTheProject :number|null=null;

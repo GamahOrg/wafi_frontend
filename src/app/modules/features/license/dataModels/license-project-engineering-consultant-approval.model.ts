@@ -1,3 +1,4 @@
+import { LicenseProjectAgreementStatusEnum } from "../enums/license-project-agreement-status.enum";
 import { SysFileManagerCreateUpdateDto } from "../models/license-request-project-details-dto";
 import { SysCityCreateUpdateDto } from "../models/sys-city-create-update-dto";
 import { CustomerApproval } from "./customer-approval.model";
@@ -10,12 +11,17 @@ export interface LicenseProjectEngineeringConsultantApproval {
     licenseProjectId: string;
     isApproved: boolean;
     approvedOn: string | null;
+    agreementDate: string | null;
+    name: string | null;
+    entity700Number: string | null;
+    contarctValue: number | null;
+    agreementStatusEnum: LicenseProjectAgreementStatusEnum;
     delegatorCustomerId: string | null;
     delegatorCustomer: CustomerApproval | null;
     facility: FacilityApproval;
     licenseProject: LicenseProjectShortApproval;
-     agreementFileId: string | null;
-      agreementFile: SysFileManagerCreateUpdateDto | null;
+    agreementFileId: string | null;
+    agreementFile: SysFileManagerCreateUpdateDto | null;
     //
     cityId: string;
     engineeringConsultantLicenseNumber: string | null;

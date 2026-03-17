@@ -34,7 +34,7 @@ export class AddEditDetachedLicenseProjectUnitsComponent
       '00000000-0000-0000-0000-000000000000',
       Validators.required,
     ],
-    subUnitTypeId: this._formBuilder.control<number>(0, [Validators.required]),
+    subUnitTypeId: this._formBuilder.control<number | null>(null, [Validators.required]),
     subUnitCount: this._formBuilder.control<number | null>(null, [
       Validators.required,
       Validators.min(0),
@@ -48,7 +48,7 @@ export class AddEditDetachedLicenseProjectUnitsComponent
     subUnitsType: 'اضاقة أنواع الوحدات ',
     subUnitCount: 'عدد وحدات',
     actions: 'إجراءات',
-    errorMsg: 'لا يمكن اضافة او تعديل وحدات الآن',
+    errorMsg: 'لا يمكن اضافة أو تعديل وحدات الآن',
     saveSuccessfully: 'تم أضافة الوحدات بنجاح',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
   };

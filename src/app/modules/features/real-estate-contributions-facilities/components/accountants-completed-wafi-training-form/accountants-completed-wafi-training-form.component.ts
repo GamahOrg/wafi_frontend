@@ -28,7 +28,7 @@ export class AccountantsCompletedWafiTrainingFormComponent {
   qualificatedAccountantDto: QualificationQualifiedAccountantCreateUpdateDto = new QualificationQualifiedAccountantCreateUpdateDto();
   socialInsuranceEmployeeList: SocialInsuranceEmployeeLockUpList[] = [];
   qualificatedAccountantsForm = this._formBuilder.group({
-    qualificationCertifiedEngineerId: ['', [Validators.required]]
+    qualificationCertifiedEngineerId: [null, [Validators.required]]
   });
   showValidation: boolean = false;
   constructor(
@@ -136,7 +136,7 @@ export class AccountantsCompletedWafiTrainingFormComponent {
       this.showValidation = true;
       return;
     }
-    this.qualificatedAccountantDto.qualificationCertifiedEngineerId = this.qualificatedAccountantsForm.value.qualificationCertifiedEngineerId as string;
+    this.qualificatedAccountantDto.qualificationCertifiedEngineerId = this.qualificatedAccountantsForm.value.qualificationCertifiedEngineerId != null ? this.qualificatedAccountantsForm.value.qualificationCertifiedEngineerId as string : '';
     this.qualificatedAccountantDto.facilityId = this.userData?.facilities[0].id as string;
     this.qualificatedAccountantDto.id = this.qualificatedAccountantDto.id ? this.qualificatedAccountantDto.id : "00000000-0000-0000-0000-000000000000";
     this.subscriptions.push(
@@ -153,6 +153,10 @@ export class AccountantsCompletedWafiTrainingFormComponent {
     let file = fileRemovedData.eventRes.file;
   }
   onTrainingCertificateFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.qualificatedAccountantDto.trainingCertificateFileId = '';
+      return
+    }
     this.qualificatedAccountantDto.trainingCertificateFileId = fileRemovedData.eventRes.data[0].id;
   }
 

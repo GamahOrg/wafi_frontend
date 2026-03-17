@@ -14,9 +14,7 @@
                 <label class="key">المشروع</label>
                 <select class="form-select" id="control-licenseProjectId" aria-label="Default select example"
                   formControlName="licenseProjectId">
-                  <option selected disabled>
-                    المشروع
-                  </option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                   <option *ngFor="let licenseProject of licenseProjects" [ngValue]="licenseProject.id">
                     {{ licenseProject.name }}
                   </option>
@@ -38,7 +36,7 @@
               <div class="form-group mb-4">
                 <label class="key">الأسم الجديد</label>
                 <input type="text" id="control-projectName" class="form-control"
-                  formControlName="projectName" placeholder="الأسم الجديد">
+                  formControlName="projectName">
                 <div class="invalid-feedback d-block"
                   *ngIf="controls.projectName?.hasError('required') && showValidation">
                   حقل مطلوب

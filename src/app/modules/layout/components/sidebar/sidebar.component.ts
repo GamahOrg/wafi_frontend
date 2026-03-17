@@ -82,6 +82,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     developerProjects: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}/${Configuration.pages.license.developerProjectList}`,
     recommendationLogsList: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}/${Configuration.pages.license.recommendationLogsList}`,
     contractRequestList: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.contractRequestList}`,
+    searchExchangeDocumentsList: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.searchExchangeDocumentsList}`,
+
   };
 
   constructor(

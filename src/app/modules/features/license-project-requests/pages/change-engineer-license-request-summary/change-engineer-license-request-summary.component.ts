@@ -31,7 +31,7 @@ export class ChangeEngineerLicenseRequestSummaryComponent {
   licenseProjectRequestStatusEnum=LicenseProjectRequestStatusEnum;
   localization = {
     send: "إرسال الطلب",
-    approvalDecisions: "الموافقه على الاقرارات",
+    approvalDecisions: "الموافقة على الإقرارات",
     sendToParties: 'إرسال الطلب لأطراف المشروع',
   };
   subscriptions: Subscription[] = [];
@@ -121,7 +121,7 @@ export class ChangeEngineerLicenseRequestSummaryComponent {
   }
     create() {
       this.projectLicenseServiceDetailsService.Create(this.requestId!).subscribe(res => {
-        //this._toastrNotificatioService.showSuccess('تم ارسال الطلب')
+        //this._toastrNotificatioService.showSuccess('تم إرسال الطلب')
         this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`]);
         console.log(res);
   

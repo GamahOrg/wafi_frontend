@@ -15,16 +15,19 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 @Component({
   selector: 'app-job-requirements-and-human-resources-form',
   templateUrl: './job-requirements-and-human-resources-form.component.html',
-  styleUrls: ['./job-requirements-and-human-resources-form.component.scss']
+  styleUrls: ['./job-requirements-and-human-resources-form.component.scss'],
 })
-export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, OnDestroy {
+export class JobRequirementsAndHumanResourcesFormComponent
+  implements OnInit, OnDestroy
+{
   subscriptions: Subscription[] = [];
-  institutionalCapacityAndHrRequirements: QualificationInstitutionalCapacityAndHrRequirementCreatUpdateDto = new QualificationInstitutionalCapacityAndHrRequirementCreatUpdateDto();
+  institutionalCapacityAndHrRequirements: QualificationInstitutionalCapacityAndHrRequirementCreatUpdateDto =
+    new QualificationInstitutionalCapacityAndHrRequirementCreatUpdateDto();
   singleFileUploaderData: FileUploader = {
     multiple: false,
   } as FileUploader;
   mueltiFilesUploaderData: FileUploader = {
-    multiple: true
+    multiple: true,
   } as FileUploader;
 
   userData: customerResponse | null = null;
@@ -34,83 +37,91 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     private _service: QualificationInstitutionalCapacityAndHrRequirementsService,
     // public dialogRef: MatDialogRef<PopupComponent>,
     private _userDataService: UserDataService,
-    private _popupService: PopupService,
-  ) { }
+    private _popupService: PopupService
+  ) {}
 
   ngOnInit(): void {
-    this.obseveCustomerData()
+    this.obseveCustomerData();
     this.observeSubjectObj();
-    this.observePopupEvents()
+    this.observePopupEvents();
   }
 
   // popup
   observePopupEvents(): void {
-    this.observecancelAction()
-    this.observeconfirmAction()
+    this.observecancelAction();
+    this.observeconfirmAction();
   }
 
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
-        console.log(res)
+        console.log(res);
       })
-    )
+    );
   }
 
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        console.log(res)
-        this.save()
+        console.log(res);
+        this.save();
       })
-    )
+    );
   }
 
   private closeDialog(): void {
-    this._popupService.dismissDialog()
+    this._popupService.dismissDialog();
   }
 
   obseveCustomerData(): void {
     this.subscriptions.push(
-      this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-        this.userData = res
-        // if(this.userData){
-        //   this.GetFacilityById();
-        // }
-      })
-    )
+      this._userDataService
+        .getCustomerData()
+        .subscribe((res: customerResponse | null) => {
+          this.userData = res;
+          // if(this.userData){
+          //   this.GetFacilityById();
+          // }
+        })
+    );
   }
 
   observeSubjectObj(): void {
     this.subscriptions.push(
-      this._service.getSubjectObj().subscribe((institutionalCapacityAndHrRequirements) => {
-        if (institutionalCapacityAndHrRequirements.id) this.GetById(institutionalCapacityAndHrRequirements.id);
-      })
-    )
+      this._service
+        .getSubjectObj()
+        .subscribe((institutionalCapacityAndHrRequirements) => {
+          if (institutionalCapacityAndHrRequirements.id)
+            this.GetById(institutionalCapacityAndHrRequirements.id);
+        })
+    );
   }
 
   GetById(id: string) {
     this.subscriptions.push(
       this._service.GetById(id).subscribe((res) => {
-        console.log("GETBYID",res)
-        if(res)this.institutionalCapacityAndHrRequirements = res;
+        console.log('GETBYID', res);
+        if (res) this.institutionalCapacityAndHrRequirements = res;
       })
-    )
+    );
   }
 
   save(): void {
     // this.institutionalCapacityAndHrRequirements.facilityId
-    this.institutionalCapacityAndHrRequirements.facilityId = this.userData?.facilities[0].id as string
+    this.institutionalCapacityAndHrRequirements.facilityId = this.userData
+      ?.facilities[0].id as string;
     this.subscriptions.push(
-      this._service.Save(this.institutionalCapacityAndHrRequirements).subscribe(res => {
-        if (res.isDone && res.data) {
-          this._service.SetSubjectObj(res.data);
-          this.closeDialog();
-        }
-        // else
-        //   alert(res.message);
-      })
-    )
+      this._service
+        .Save(this.institutionalCapacityAndHrRequirements)
+        .subscribe((res) => {
+          if (res.isDone && res.data) {
+            this._service.SetSubjectObj(res.data);
+            this.closeDialog();
+          }
+          // else
+          //   alert(res.message);
+        })
+    );
   }
 
   onCreditSaudizationCertificateFileUploaded(fileRemovedData: any) {
@@ -123,7 +134,8 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
-    this.institutionalCapacityAndHrRequirements.saudizationCertificateFileId = fileRemovedData.eventRes.data[0].id;
+    this.institutionalCapacityAndHrRequirements.saudizationCertificateFileId =
+      fileRemovedData.eventRes.data[0].id;
   }
 
   onCreditOrganizationalStructureFileUploaded(fileRemovedData: any) {
@@ -136,7 +148,15 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
-    this.institutionalCapacityAndHrRequirements.organizationalStructureFileId = fileRemovedData.eventRes.data[0].id;
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.institutionalCapacityAndHrRequirements.organizationalStructureFileId =
+        '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length)
+      return;
+    this.institutionalCapacityAndHrRequirements.organizationalStructureFileId =
+      fileRemovedData.eventRes.data[0].id;
   }
 
   onCreditLaborRegulationCertificateFileUploaded(fileRemovedData: any) {
@@ -149,7 +169,15 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
-    this.institutionalCapacityAndHrRequirements.laborRegulationCertificateFileId = fileRemovedData.eventRes.data[0].id;
+      if (fileRemovedData.eventRes.data.length == 0) {
+      this.institutionalCapacityAndHrRequirements.laborRegulationCertificateFileId =
+        '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length)
+      return;
+    this.institutionalCapacityAndHrRequirements.laborRegulationCertificateFileId =
+      fileRemovedData.eventRes.data[0].id;
   }
 
   onCreditOccupationalSafetyAndHealthFileUploaded(fileRemovedData: any) {
@@ -162,7 +190,14 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
-    this.institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFileId = fileRemovedData.eventRes.data[0].id;
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFileId =
+        '';
+      return;
+    }
+    if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length)
+    this.institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFileId =
+      fileRemovedData.eventRes.data[0].id;
   }
 
   onSocialResponsibilityProgramFilesUploaded(filesData: any) {
@@ -185,20 +220,25 @@ export class JobRequirementsAndHumanResourcesFormComponent implements OnInit, On
     //     })
     //   )
     // }
+    if (filesData.eventRes.data.length == 0) {
+      this.institutionalCapacityAndHrRequirements.addedSocialResponsibilityProgramsFiles =
+        [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
 
     filesData.eventRes.data.forEach((data: any) => {
-      this.institutionalCapacityAndHrRequirements.addedSocialResponsibilityProgramsFiles.push({
-        socialResponsibilityProgramFileId: data.id,
-        id: '00000000-0000-0000-0000-000000000000',
-        qualificationInstitutionalCapacityAndHrRequirementId: this.institutionalCapacityAndHrRequirements.id
-      });
+      this.institutionalCapacityAndHrRequirements.addedSocialResponsibilityProgramsFiles.push(
+        {
+          socialResponsibilityProgramFileId: data.id,
+          id: '00000000-0000-0000-0000-000000000000',
+          qualificationInstitutionalCapacityAndHrRequirementId:
+            this.institutionalCapacityAndHrRequirements.id,
+        }
+      );
     });
-
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
-
 }
-

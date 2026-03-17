@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Tabs, tabsComponent } from 'src/app/shared/models/tabs.model';
+import { BreadcrumbOption } from 'src/app/shared/models/breadcrumb.model';
 import { MainDataComponent } from '../../components/main-data/main-data.component';
 import { ProjectDataComponent } from '../../components/project-data/project-data.component';
 import { FeasibilityStudyComponent } from '../../components/feasibility-study/feasibility-study.component';
@@ -26,6 +27,8 @@ import { GoogleAnalyticsService } from 'src/app/shared/services/GoogleAnalytics.
 import { RequestStep } from '../fawria-license-details/fawria-license-details.component';
 import { LicenseNatureTypeEnum } from '../../enums/license-nature-type';
 import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
+import { BreadcrumbService } from 'src/app/shared/services/breadcrumb/breadcrumb.service';
+import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 
 @Component({
   selector: 'app-lincense-summary',
@@ -34,51 +37,52 @@ import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-
 })
 export class LincenseSummaryComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  licenseTypeCode:string = '';
+  licenseTypeCode: string = '';
   licenseTypeCodeEnum = LicenseRequestTypeTypeCodeEnum;
-  isFawri:boolean = false;
-   requestSteps: RequestStep[] = [
+  isFawri: boolean = false;
+  isProjectDecisionsApproved: boolean = false;
+  requestSteps: RequestStep[] = [
     {
       title: 'إنشاء طلب الترخيص رقم 133132323328',
       status: 'completed',
       statusText: 'تم الإنشاء',
-      date: '20/20/2020'
+      date: '20/20/2020',
     },
     {
       title: 'إرسال الإخطارات لبنك المضمون',
       status: 'current',
-      statusText: 'قيد الانتظار'
+      statusText: 'قيد الانتظار',
     },
     {
       title: 'إرسال الإخطارات للمحاسب والمستشار',
       status: 'pending',
-      statusText: 'قيد الانتظار'
+      statusText: 'قيد الانتظار',
     },
     {
       title: 'فتح حساب الضمان',
       status: 'pending',
-      statusText: 'قيد الانتظار'
+      statusText: 'قيد الانتظار',
     },
     {
       title: 'سداد الفاتورة',
       status: 'pending',
-      statusText: 'قيد الانتظار'
+      statusText: 'قيد الانتظار',
     },
     {
       title: 'تهميش المضمون',
       status: 'pending',
-      statusText: 'قيد الانتظار'
+      statusText: 'قيد الانتظار',
     },
     {
       title: 'إصدار الرخصة',
       status: 'pending',
-      statusText: 'قيد الانتظار'
-    }
+      statusText: 'قيد الانتظار',
+    },
   ];
-  
+
   localization = {
-    send: "إرسال الطلب",
-    approvalDecisions: "الموافقه على الاقرارات",
+    send: 'إرسال الطلب',
+    // approvalDecisions: 'الموافقة على الإقرارات',
   };
   mainTabsComponentList: tabsComponent[] = [
     {
@@ -129,7 +133,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
       isVisible: true,
       isCompleted: false,
     },
-  ]
+  ];
   tabContent: Tabs = {
     verticalTabs: false,
     activeTabIndex: 0,
@@ -138,8 +142,8 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   disabledSend: boolean = false;
   requestSubmittedSuccessfully: boolean = false;
   requestValidationData: RequestValidation | null = null;
-  licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
-  availabilityToUpdate: boolean = false
+  licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
+  availabilityToUpdate: boolean = false;
   constructor(
     private _licenseRequestService: LicenseRequestService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
@@ -147,26 +151,42 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
     private _popupService: PopupService,
     private _projectApprovalsService: ProjectApprovalsService,
     private _googleAnalyticsService: GoogleAnalyticsService,
+    private _breadcrumbService: BreadcrumbService,
+    private _tabsService: TabsService,
     // private _licenseDetailsService: LicenseDetailsService,
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
     this.observeDataVisibilityOfLicenseProject();
     this.getApprovalSubject();
     this.getAvailabilityToUpdateFromLocalStorage();
     // this.observePopupEvents();
-    this._googleAnalyticsService.trackEvent('License Loading', 'License Summary View Page', 'License Summary');
-    this._googleAnalyticsService.trackEvent('Testing', 'License Summary View Page', 'License Summary');
+    this._googleAnalyticsService.trackEvent(
+      'License Loading',
+      'License Summary View Page',
+      'License Summary',
+    );
+    this._googleAnalyticsService.trackEvent(
+      'Testing',
+      'License Summary View Page',
+      'License Summary',
+    );
+    this._breadcrumbService.setSkipFirstBreadcrumb(true);
+    this.setupSelectableBreadcrumb();
+    this.observeActiveTabForBreadcrumb();
   }
   private getAvailabilityToUpdateFromLocalStorage() {
-    this.availabilityToUpdate = this._sharedLicenseProjectService.getAvailabilityToUpdateFromLocalStorage() as boolean;
+    this.availabilityToUpdate =
+      this._sharedLicenseProjectService.getAvailabilityToUpdateFromLocalStorage() as boolean;
   }
   getApprovalSubject(): void {
     this.subscriptions.push(
-      this._projectApprovalsService.getApprovalSubject().subscribe((disabledSend) => {
-        this.disabledSend = disabledSend as boolean;
-      })
-    )
+      this._projectApprovalsService
+        .getApprovalSubject()
+        .subscribe((disabledSend) => {
+          this.disabledSend = disabledSend as boolean;
+        }),
+    );
   }
 
   completedTapCodes: string[] = [];
@@ -175,7 +195,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
     this._licenseRequestService.updateCompletedTapCodesIsClicked.subscribe(
       (res) => {
         this.GetCompletedLicenseProjectProfileTaps();
-      }
+      },
     );
   }
 
@@ -186,7 +206,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
         this.completedTapCodes = res;
 
         // Update isCompleted for tabs that are in completedTapCodes
-        this.mainTabsComponentList.forEach(tab => {
+        this.mainTabsComponentList.forEach((tab) => {
           if (tab.tabCode && this.completedTapCodes.includes(tab.tabCode)) {
             tab.isCompleted = true;
           }
@@ -195,7 +215,12 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   }
 
   private observeDataVisibilityOfLicenseProject() {
-    this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProjectForCertainTab(this.subscriptions, this.mainTabsComponentList, true, false)
+    this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProjectForCertainTab(
+      this.subscriptions,
+      this.mainTabsComponentList,
+      true,
+      false,
+    );
   }
 
   private removeLicenseProjectIdfromLocalStorage(): void {
@@ -207,22 +232,29 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   }
   private GetLicenseRequestHeadersByLicenseProjectId() {
     this.subscriptions.push(
-      this._dataVisibilityOfLicenseProjectService.GetLicenseRequestHeadersByLicenseProjectId(this.licenseProjectId as string).subscribe((res: string[]) => {
-        this.updateDataVisibilityOfLicenseProject(res)
-      })
-    )
+      this._dataVisibilityOfLicenseProjectService
+        .GetLicenseRequestHeadersByLicenseProjectId(
+          this.licenseProjectId as string,
+        )
+        .subscribe((res: string[]) => {
+          this.updateDataVisibilityOfLicenseProject(res);
+          if (res.includes(TabCode.fawriaLicenseProjectMainData)) {
+            this.isFawri = true;
+          }
+        }),
+    );
   }
   private updateDataVisibilityOfLicenseProject(data: string[]) {
-    this._dataVisibilityOfLicenseProjectService.updateDataVisibilityOfLicenseProject(data)
+    this._dataVisibilityOfLicenseProjectService.updateDataVisibilityOfLicenseProject(
+      data,
+    );
   }
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    this.licenseTypeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage() as string;
-    
-    if(this.licenseTypeCode && this.licenseTypeCode === this.licenseTypeCodeEnum.Fawria)
-      this.isFawri = true;
-    else
-      this.isFawri = false;
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseTypeCode =
+      this._sharedLicenseProjectService.getLicenseTypeCodeStorage() as string;
+
 
     if (this.licenseProjectId) {
       this.GetLicenseRequestHeadersByLicenseProjectId();
@@ -231,34 +263,39 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
     }
   }
   resetDataVisibilityOfLicenseProject() {
-    this._dataVisibilityOfLicenseProjectService.resetDataVisibilityOfLicenseProject()
+    this._dataVisibilityOfLicenseProjectService.resetDataVisibilityOfLicenseProject();
   }
 
   typeCode: string | null = null;
   // licenseProjectId: string | null = null;
   send() {
-    let licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    let licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
     if (!licenseProjectId) return;
     this.subscriptions.push(
-      this._licenseRequestService.SendByProjectId(licenseProjectId).subscribe((res: RequestValidation | RequestSuccessResponse | null) => {
-        if (res) {
-          if ('id' in res && 'requestCode' in res && 'typeCode' in res) {
-            this.typeCode = res.typeCode
-            this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(res.licenseProjectId);
-            this.requestSubmittedSuccessfully = true;
-            this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(res.id);
-            this.openConfirmaDialog(res.requestCode as string);
-          } else {
-            this.updateRequestValidation(res as RequestValidation);
-            this.openValidationDialog();
+      this._licenseRequestService
+        .SendByProjectId(licenseProjectId)
+        .subscribe((res: RequestValidation | RequestSuccessResponse | null) => {
+          if (res) {
+            if ('id' in res && 'requestCode' in res && 'typeCode' in res) {
+              this.typeCode = res.typeCode;
+              this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+                res.licenseProjectId,
+              );
+              this.requestSubmittedSuccessfully = true;
+              this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
+                res.id,
+              );
+              this.openConfirmaDialog(res.requestCode as string);
+            } else {
+              this.updateRequestValidation(res as RequestValidation);
+              this.openValidationDialog();
+            }
           }
-        }
-      })
-    )
+        }),
+    );
   }
-  approvalDecisions() {
-
-  }
+  approvalDecisions() {}
   public openCompilNotesDialog() {
     let Data = {
       id: ButtonType.allowCompile,
@@ -272,30 +309,47 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   }
 
   licenseLink(): string {
-    if(this.typeCode === 'FSRSU'){
-      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.licenseProjectId as string);
-      this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage() as string);
-      return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`
-    }else
-      return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+        this.licenseProjectId as string,
+      );
+      this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
+        this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage() as string,
+      );
+      return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.fawriaLicenseDetails}`;
+    } else
+      return `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseDetails}`;
     return '';
   }
+
+    showSuccessPopup(): void {
+    const successNoteData: notePopupData = {
+      popupType: 'success',
+      title: 'تم إرسال الطلب بنجاح !',
+      dynamicMessage: 'تم إنشاء الاتفاقيات بين الأطراف وفي انتظار موافقتهم',
+      buttonText: 'متابعة طلبك',
+      buttonLink: this.licenseLink(),
+    };
+    this._popupService.updateNotePopupData(successNoteData);
+  }
+
   openConfirmaDialog(res: string): void {
     // Check if it's a fawria license type
-    if (this.typeCode === 'FSRSU') {
- // Show regular success popup
-      let Data = {
-        imagePath: 'assets/images/auth/ForgotPass.svg',
-        title: 'تم إرسال الطلب بنجاح !',
-        staticMessage: 'تم إنشاء الاتفاقيات بين الأطراف وفي انتظار موافقتهم',
-        dynamicMessage: res,
-        buttonText: 'متابعة طلبك',
-        buttonLink: this.licenseLink(),
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
+      this.showSuccessPopup();
+      // // Show regular success popup
+      // let Data = {
+      //   imagePath: 'assets/images/auth/ForgotPass.svg',
+      //   title: 'تم إرسال الطلب بنجاح !',
+      //   staticMessage: 'تم إنشاء الاتفاقيات بين الأطراف وفي انتظار موافقتهم',
+      //   dynamicMessage: res,
+      //   buttonText: 'متابعة طلبك',
+      //   buttonLink: this.licenseLink(),
 
-          // surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
-          // surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
-      } as notePopupData;
-      this._popupService.updateNotePopupData(Data);
+      //   // surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
+      //   // surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
+      // } as notePopupData;
+      // this._popupService.updateNotePopupData(Data);
 
       // Show fawria certificate popup
       // let fawriaData = {
@@ -309,42 +363,41 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
       // Show regular success popup
       let Data = {
         imagePath: 'assets/images/auth/ForgotPass.svg',
-        title: 'تم ارسال الطلب بنجاح',
-        staticMessage: 'تم ارسال طلبك بنجاح ويمكنك عرض الطلب',
+        title: 'تم إرسال الطلب بنجاح',
+        staticMessage: 'تم إرسال طلبك بنجاح ويمكنك عرض الطلب',
         dynamicMessage: res,
         buttonText: 'عرض الطلب',
         buttonLink: this.licenseLink(),
 
-          surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
-          surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
+        surveyTitle: 'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
+        surveyLink: 'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d',
       } as notePopupData;
       this._popupService.updateNotePopupData(Data);
     }
   }
   openValidationDialog(): void {
     let Data = {
-      title:
-        `التحقق من بيانات المشروع`,
+      title: `التحقق من بيانات المشروع`,
       component: LicenseRequestValidationPopupComponent,
-      id: "LicenseRequestValidationPopupComponent",
+      id: 'LicenseRequestValidationPopupComponent',
       buttons: [
         {
-          icon: "",
-          title: "إلغاء",
+          icon: '',
+          title: 'إلغاء',
           actionType: ButtonType.cancel,
           isVisable: true,
           isDisables: false,
           // onclick: () => this.openNotesDialog()
         },
         {
-          icon: "",
-          title: "إستكمال البيانات",
+          icon: '',
+          title: 'إستكمال البيانات',
           actionType: ButtonType.confirm,
           isVisable: true,
           isDisables: false,
           // onclick: () => this.openAssignEmployeeDialog()
         },
-      ]
+      ],
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
@@ -367,15 +420,40 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   // }
   private updateRequestValidation(data: RequestValidation) {
     this._licenseRequestService.updateRequestValidation(
-      data as RequestValidation
+      data as RequestValidation,
     );
   }
   private removeAvailabilityToUpdatefromLocalStorage(): void {
-    this._sharedLicenseProjectService.removeAvailabilityToUpdatefromLocalStorage()
+    this._sharedLicenseProjectService.removeAvailabilityToUpdatefromLocalStorage();
+  }
+
+  private setupSelectableBreadcrumb(): void {
+    this.subscriptions.push(
+      this._tabsService.getTabContent().subscribe((tabContent) => {
+        const visibleTabs = tabContent.tabsComponentList.filter((tab) => tab.isVisible);
+        if (visibleTabs.length > 0) {
+          const options: BreadcrumbOption[] = visibleTabs.map((tab, i) => ({
+            label: tab.title,
+            index: i,
+          }));
+          this._breadcrumbService.setSelectableItems(options, tabContent.activeTabIndex);
+        }
+      }),
+    );
+  }
+
+  private observeActiveTabForBreadcrumb(): void {
+    this.subscriptions.push(
+      this._tabsService.getActiveTabIndex().subscribe((index: number) => {
+        this._breadcrumbService.updateActiveOption(index);
+      }),
+    );
   }
 
   ngOnDestroy(): void {
-    this.removeAvailabilityToUpdatefromLocalStorage()
+    this._breadcrumbService.setSkipFirstBreadcrumb(false);
+    this._breadcrumbService.clearSelectableItems();
+    this.removeAvailabilityToUpdatefromLocalStorage();
     this.removeLicenseProjectIdfromLocalStorage();
     this.resetRequestValidation();
     this.resetDataVisibilityOfLicenseProject();
@@ -423,14 +501,31 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
   //       })
   //   );
   // }
-  openApprovalDialog(): void {
+  openApprovalDialogThenSendRequest(): void {
+    this._projectApprovalsService.SetApprovalSubject(false);
+    this.isProjectDecisionsApproved = false;
 
     let Data = {
-      title: "يجب الموافقه على جميع الاقرارات الخاصة بالرخصة حتى يتم ارسال الطلب",
+      title:
+        'يجب الموافقة على جميع الإقرارات الخاصة بالرخصة حتى يتم إرسال الطلب',
+      iconClass: 'hgi hgi-stroke hgi-checkmark-badge-02',
       component: ApprovalComponent,
-      id: "ApprovalComponent",
-      disableClose: true
+      id: 'ApprovalComponent',
+      disableClose: true,
+      submitButtonTitle: 'إرسال الطلب',
+      cancelButtonPosition: 'left',
     } as PopupData;
     this._popupService.updatePopupData(Data);
+
+    const sub = this._projectApprovalsService
+      .getApprovalSubject()
+      .subscribe((isApproved) => {
+        if (isApproved) {
+          this.isProjectDecisionsApproved = true;
+          this.send();
+          sub.unsubscribe();
+        }
+      });
+    this.subscriptions.push(sub);
   }
 }

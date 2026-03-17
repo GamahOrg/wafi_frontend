@@ -1,0 +1,88 @@
+<div class="page">
+  <!-- Filter Section -->
+  <div class="col-12">
+    <div class="filter">
+      <div class="row g-3 align-items-center">
+        <!-- Page Title -->
+        <div class="col-8">
+          <div class="page-title mb-0">
+            <h5 class="title">قائمة وثائق الصرف</h5>
+          </div>
+        </div>
+        <div class="col-4">
+
+            <button *ngIf="showAddExchangeDocumentButton" type="button" class="btn btn-primary" (click)="addExchangeDocument()" style="float:left">انشاء وثيقة صرف </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <ng-container
+    *ngIf="documentsList?.results && documentsList.results.length > 0"
+  >
+    <div class="table-responsive mt-4">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">رقم الوثيقة</th>
+            <th scope="col">اسم المشروع</th>
+            <th scope="col">المستفيد</th>
+            <th scope="col">البند الرئيسي</th>
+            <th scope="col">البند الفرعي</th>
+            <th scope="col">حالة وثيقة الصرف</th>
+            <th scope="col">الاجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let document of documentsList.results">
+            <td>
+              {{ document.documentNumber }}
+            </td>
+            <td>
+              {{ document.licenseProjectName }}
+            </td>
+            <td>
+              {{ document.beneficiaryDescription }}
+            </td>
+            <td>
+              {{ document.mainItem }}
+            </td>
+            <td>
+              {{ document.subItem }}
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <span
+                  class="status-pill"
+                  [ngClass]="getStatusClass(document.statusId)"
+                >
+                  {{ document.statusId ? statusMap[document.statusId] : "-" }}
+                </span>
+              </div>
+            </td>
+
+            <td>
+              <div class="d-flex align-items-center">
+                <button class="btn btn-outline-primary" (click)="viewDetails(document)">عرض التفاصيل</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+  <!-- Empty State -->
+  <ng-container *ngIf="documentsList?.results?.length === 0">
+    <div class="mt-4">
+      <app-no-data
+        [showCompleteBtn]="false"
+        [showText]="true"
+        [text]="'لا توجد وثائق متاحة'"
+      ></app-no-data>
+    </div>
+  </ng-container>
+</div>

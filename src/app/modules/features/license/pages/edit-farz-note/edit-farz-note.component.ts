@@ -95,7 +95,7 @@ export class EditFarzNoteComponent implements OnInit, OnDestroy {
 
   openConfirmtionSendTOFarzDialog() {
     let obj = {
-      staticMessage: 'هل انت متأكد من اعادة ارسال الطلب لفرز',
+      staticMessage: 'هل انت متأكد من اعادة إرسال الطلب لفرز',
       dynamicMessage: '',
       secondeStaticMessage: '',
       acceptButtonText: 'نعم',

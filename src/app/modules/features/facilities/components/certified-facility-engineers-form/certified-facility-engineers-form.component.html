@@ -30,7 +30,7 @@
       <div class="form-group">
         <label for="" class="form-label">المهنة</label>
         <select class="form-select" formControlName="qualificationEngineerType">
-          <!-- <option disabled="true"  [ngValue]="null" label="نوع الموظف"></option> -->
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option  [ngValue]="1" label="استشارى هندسى"></option>
           <option  [ngValue]="2" label="محاسب قانونى"></option>
 

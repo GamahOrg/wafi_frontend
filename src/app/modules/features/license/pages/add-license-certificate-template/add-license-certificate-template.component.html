@@ -5,8 +5,7 @@ id="form-licenseCertificateTemplateForm">
     <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم السجل التجاري</label>
-          <input type="text" id="control-commercialRegisterNumber" class="form-control" formControlName="commercialRegisterNumber"
-            placeholder="رقم السجل التجاري">
+          <input type="text" id="control-commercialRegisterNumber" class="form-control" formControlName="commercialRegisterNumber">
           <mat-error
             *ngIf="(controls.commercialRegisterNumber?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -16,8 +15,7 @@ id="form-licenseCertificateTemplateForm">
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم  الهوية</label>
-          <input type="text" id="control-nidnumber" class="form-control" formControlName="nidnumber"
-            placeholder="رقم  الهوية">
+          <input type="text" id="control-nidnumber" class="form-control" formControlName="nidnumber">
           <mat-error
             *ngIf="(controls.nidnumber?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -27,8 +25,7 @@ id="form-licenseCertificateTemplateForm">
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم السجل التجاري للإستشاري</label>
-          <input type="text" id="control-consultanatCommercialRegisterNumber" class="form-control" formControlName="consultanatCommercialRegisterNumber"
-            placeholder="رقم السجل التجاري للإستشاري">
+          <input type="text" id="control-consultanatCommercialRegisterNumber" class="form-control" formControlName="consultanatCommercialRegisterNumber">
           <mat-error
             *ngIf="(controls.consultanatCommercialRegisterNumber?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -38,8 +35,7 @@ id="form-licenseCertificateTemplateForm">
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم السجل التجاري للمحاسب</label>
-          <input type="text" id="control-accountantCommercialRegisterNumber" class="form-control" formControlName="accountantCommercialRegisterNumber"
-            placeholder="رقم السجل التجاري للمحاسب">
+          <input type="text" id="control-accountantCommercialRegisterNumber" class="form-control" formControlName="accountantCommercialRegisterNumber">
           <mat-error
             *ngIf="(controls.accountantCommercialRegisterNumber?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -49,8 +45,7 @@ id="form-licenseCertificateTemplateForm">
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم الرخصة</label>
-          <input type="text" id="control-certificateNumber" class="form-control" formControlName="certificateNumber"
-            placeholder="رقم الرخصة">
+          <input type="text" id="control-certificateNumber" class="form-control" formControlName="certificateNumber">
           <mat-error
             *ngIf="(controls.certificateNumber?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -61,8 +56,7 @@ id="form-licenseCertificateTemplateForm">
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">مدة الرخصة</label>
-          <input type="number" id="control-certificatePeriod" class="form-control" formControlName="certificatePeriod"
-            placeholder="مدة الرخصة">
+          <input type="number" id="control-certificatePeriod" class="form-control" formControlName="certificatePeriod">
           <mat-error
             *ngIf="(controls.certificatePeriod?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -123,7 +117,7 @@ id="form-licenseCertificateTemplateForm">
         <div class="form-group mb-4">
             <label class="form-label">نوع الرخصة</label>
         <select class="form-select" formControlName="licenseType">
-          <option label="نوع الرخصة" disabled></option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of licenseTypes" [value]="item.name">
             {{ item.name }}
           </option>
@@ -134,8 +128,7 @@ id="form-licenseCertificateTemplateForm">
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">اسم المشروع</label>
-          <input type="text" id="control-projectOrContributionName" class="form-control" formControlName="projectOrContributionName"
-            placeholder="اسم المشروع">
+          <input type="text" id="control-projectOrContributionName" class="form-control" formControlName="projectOrContributionName">
           <mat-error
             *ngIf="(controls.projectOrContributionName?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -146,8 +139,7 @@ id="form-licenseCertificateTemplateForm">
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">وصف المشروع</label>
-          <input type="text" id="control-projectOrContributionDescription" class="form-control" formControlName="projectOrContributionDescription"
-            placeholder="وصف المشروع">
+          <input type="text" id="control-projectOrContributionDescription" class="form-control" formControlName="projectOrContributionDescription">
           <mat-error
             *ngIf="(controls.projectOrContributionDescription?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -158,7 +150,7 @@ id="form-licenseCertificateTemplateForm">
         <div class="form-group mb-4">
             <label class="form-label">نوع المشروع</label>
         <select class="form-select" formControlName="projectOrContributionType">
-          <option label="نوع المشروع" disabled></option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of types" [value]="item.name">
             {{ item.name }}
           </option>
@@ -170,7 +162,7 @@ id="form-licenseCertificateTemplateForm">
         <div class="form-group mb-4">
             <label class="form-label">تصنيف المشروع</label>
         <select class="form-select" formControlName="categoryName">
-          <option label="تصنيف المشروع" disabled></option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of categories" [value]="item.categoryName">
             {{ item.categoryName }}
           </option>
@@ -182,7 +174,7 @@ id="form-licenseCertificateTemplateForm">
         <div class="form-group mb-4">
             <label class="form-label">نطاق الأعمال</label>
         <select class="form-select" formControlName="projectScopeName">
-          <option label="نطاق الأعمال" disabled></option>
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
           <option *ngFor="let item of licenseProjectScopes" [value]="item.name">
             {{ item.name }}
           </option>
@@ -199,7 +191,7 @@ id="form-licenseCertificateTemplateForm">
                    formControlName="isProjectOrContributionStarted" />
             <label class="form-check-label"
                    for="isProjectOrContributionStarted">
-                   هل المشروع او المساهمة بدات
+                   هل المشروع أو المساهمة بدات
             </label>
         </div>
     
@@ -209,16 +201,14 @@ id="form-licenseCertificateTemplateForm">
     <div class="col-12 col-lg-6" *ngIf="controls.isProjectOrContributionStarted.value">
         <div class="form-group mb-4">
           <label class="form-label">نسبة الانجاز</label>
-          <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate"
-            placeholder="نسبة الانجاز">
+          <input type="number" id="control-achievementRate" class="form-control" formControlName="achievementRate">
          
         </div>
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">مساحة مسطح البناء للمشروع</label>
-          <input type="number" id="control-buildingFlatArea" class="form-control" formControlName="buildingFlatArea"
-            placeholder="مساحة مسطح البناء للمشروع">
+          <input type="number" id="control-buildingFlatArea" class="form-control" formControlName="buildingFlatArea">
           <mat-error
             *ngIf="(controls.buildingFlatArea?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -228,8 +218,7 @@ id="form-licenseCertificateTemplateForm">
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">مساحة المشروع حسب الصك</label>
-          <input type="number" id="control-landTotalSpace" class="form-control" formControlName="landTotalSpace"
-            placeholder="مساحة المشروع حسب الصك">
+          <input type="number" id="control-landTotalSpace" class="form-control" formControlName="landTotalSpace">
           <mat-error
             *ngIf="(controls.landTotalSpace?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
@@ -286,7 +275,7 @@ id="form-licenseCertificateTemplateForm">
               let i=index;let l=last" [formGroupName]="i">
               <td>
                 <select class="form-select" formControlName="deedType">
-                  <option label="نوع الصك" disabled></option>
+                  <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                   <option *ngFor="let deed of deedTypes" [value]="deed.name">
                     {{ deed.name }}
                   </option>
@@ -345,8 +334,8 @@ id="form-licenseCertificateTemplateForm">
               <thead>
                   <tr>
                       <th scope="col">اسم الزون</th>
-                      <th scope="col">النوع بلوك او عمارة</th>
-                      <th scope="col">رقم البلوك او العمارة</th>
+                      <th scope="col">النوع بلوك أو عمارة</th>
+                      <th scope="col">رقم البلوك أو العمارة</th>
                       <th scope="col"> المرحلة</th>
                       <th scope="col">تاريخ بداية الإنشاء</th>
                       <th scope="col">تاريخ نهاية الإنشاء</th>

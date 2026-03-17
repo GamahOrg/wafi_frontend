@@ -169,6 +169,11 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
   onLicenseProjectEngineeringSupervisionPlannedReportAttachmentFilesUploaded(
     filesData: any
   ) {
+    if (filesData.eventRes.data.length === 0) {
+      this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles =
+        [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles)
       this.licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles =

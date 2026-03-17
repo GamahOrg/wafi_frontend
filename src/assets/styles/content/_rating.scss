@@ -1,0 +1,86 @@
+.rating-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .desc {
+    font-size: $font-size-sm;
+    color: $dark;
+  }
+}
+
+.rate-text {
+  color: #61686b;
+}
+
+::ng-deep {
+  rating {
+    span[role="slider"] {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+
+      .bs-rating-star {
+        flex: 1;
+        text-align: center;
+
+        .btn-rate {
+          &.btn {
+            --bs-btn-padding-x: 0.5rem;
+            --bs-btn-padding-y: 0.5rem;
+            --bs-btn-border-color: #b1b6b8;
+            --bs-btn-hover-border-color: #{$theme-main};
+
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 5.75rem;
+            height: 4rem;
+          }
+        }
+
+        &.active {
+          .btn-rate {
+            &.btn {
+              --bs-btn-border-color: #{$theme-main};
+              --bs-btn-bg: #{$light};
+            }
+          }
+        }
+      }
+    }
+
+    .rating-numbers & {
+      .bs-rating-star {
+        .btn-rate {
+          &.btn {
+            --bs-btn-font-size: 1.125rem;
+            --bs-btn-color: #b1b6b8;
+
+            width: 4rem;
+            height: 4rem;
+          }
+        }
+
+        &.active {
+          .btn-rate {
+            &.btn {
+              &:not(.selected) {
+                --bs-btn-border-color: #b1b6b8;
+                --bs-btn-hover-border-color: #{$theme-main};
+                --bs-btn-bg: transparent;
+              }
+
+              &.selected {
+                --bs-btn-color: #{$theme-main};
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

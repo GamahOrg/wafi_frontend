@@ -204,9 +204,7 @@
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.selectDelegator }}</label>
             <select class="form-select" id="control-delegatorCustomerId" aria-label="Default select example" formControlName="delegatorCustomerId">
-              <option selected disabled>
-                {{ localization.selectDelegator }}
-              </option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>
@@ -229,7 +227,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.name }}</label>
-            <input type="text" id="control-executiveDirectorName" [placeholder]="localization.name" class="form-control" formControlName="executiveDirectorName" />
+            <input type="text" id="control-executiveDirectorName" class="form-control" formControlName="executiveDirectorName" />
             <mat-error *ngIf="
                 controls.executiveDirectorName?.hasError('required') &&
                 showValidation
@@ -239,7 +237,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.mobile }}</label>
-            <input type="text" id="control-executiveDirectorMobile" [placeholder]="localization.mobile" class="form-control" formControlName="executiveDirectorMobile" />
+            <input type="text" id="control-executiveDirectorMobile" class="form-control" formControlName="executiveDirectorMobile" />
             <mat-error *ngIf="
                 controls.executiveDirectorMobile?.hasError('required') &&
                 showValidation
@@ -254,7 +252,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.email }}</label>
-            <input type="text" id="control-executiveDirectorEmail" [placeholder]="localization.email" class="form-control" formControlName="executiveDirectorEmail" />
+            <input type="text" id="control-executiveDirectorEmail" class="form-control" formControlName="executiveDirectorEmail" />
             <mat-error *ngIf="
                 controls.executiveDirectorEmail?.hasError('required') &&
                 showValidation
@@ -271,7 +269,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.name }}</label>
-            <input type="text" id="control-contactOfficerName" [placeholder]="localization.name" class="form-control" formControlName="contactOfficerName" />
+            <input type="text" id="control-contactOfficerName" class="form-control" formControlName="contactOfficerName" />
             <mat-error *ngIf="
                 controls.contactOfficerName?.hasError('required') &&
                 showValidation
@@ -281,7 +279,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.mobile }}</label>
-            <input type="text" id="control-contactOfficerMobile" [placeholder]="localization.mobile" class="form-control" formControlName="contactOfficerMobile" />
+            <input type="text" id="control-contactOfficerMobile" class="form-control" formControlName="contactOfficerMobile" />
             <mat-error *ngIf="
                 controls.contactOfficerMobile?.hasError('required') &&
                 showValidation
@@ -292,7 +290,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.email }}</label>
-            <input type="text" id="control-contactOfficerEmail" [placeholder]="localization.email" class="form-control" formControlName="contactOfficerEmail" />
+            <input type="text" id="control-contactOfficerEmail" class="form-control" formControlName="contactOfficerEmail" />
             <mat-error *ngIf="
                 controls.contactOfficerEmail?.hasError('required') &&
                 showValidation
@@ -323,7 +321,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.problemsEmail }}</label>
-            <input type="text" id="control-complaintEmail" [placeholder]="localization.email" class="form-control" formControlName="complaintEmail" />
+            <input type="text" id="control-complaintEmail" class="form-control" formControlName="complaintEmail" />
             <mat-error *ngIf="controls.complaintEmail?.hasError('pattern')">{{
               localization.emailPattern
               }}</mat-error>
@@ -335,7 +333,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.salesEmail }}</label>
-            <input type="text" id="control-salesEmail" [placeholder]="localization.email" class="form-control" formControlName="salesEmail" />
+            <input type="text" id="control-salesEmail" class="form-control" formControlName="salesEmail" />
             <mat-error *ngIf="controls.salesEmail?.hasError('pattern')">{{
               localization.emailPattern
               }}</mat-error>

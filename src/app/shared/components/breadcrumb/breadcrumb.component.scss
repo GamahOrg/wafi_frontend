@@ -56,3 +56,21 @@
 //     }
 //   }
 // }
+
+.breadcrumb-select {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid currentColor;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 500;
+  padding: 0 4px;
+  cursor: pointer;
+  outline: none;
+  appearance: auto;
+
+  &:focus {
+    border-bottom-color: #0d6efd;
+  }
+}

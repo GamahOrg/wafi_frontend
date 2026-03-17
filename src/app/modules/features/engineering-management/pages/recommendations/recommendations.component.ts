@@ -117,7 +117,7 @@ export class RecommendationsComponent {
     localStorage.setItem('licenseProjectRecommendationId', id);
     let Data = {
       id: id,
-      title: 'ارسال رد',
+      title: 'إرسال رد',
       component: RecommendationReplyComponent,
       buttons: [],
     } as PopupData;

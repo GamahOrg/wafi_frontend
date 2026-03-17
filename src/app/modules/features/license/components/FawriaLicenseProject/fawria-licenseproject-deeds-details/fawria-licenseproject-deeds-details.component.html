@@ -27,15 +27,14 @@
             <i class=""></i>
             <h6 class="title mb-0">بيانات الصك</h6>
           </div>
-          <span class="status-pill red" *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.isRealEstateMortgaged"><span class="badge-dot">•</span> مرهون</span>
         </div>
 
           <!-- <div class="deed-info-card"> -->
       
-            <div class="info-grid">
-              <!-- Deed Number -->
-              <div class="row row-gap-4">
-              <div class="col-3 col-lg-2">
+        <div class="info-grid">
+          <!-- Deed Number -->
+          <div class="row row-gap-4">
+            <div class="col-3 col-lg-2">
                 <div class="info-icon-wrapper">
                   <i class="icon hgi hgi-stroke"></i>
                 </div>
@@ -43,10 +42,10 @@
                   <span class="key">رقم الصك</span>
                   <span class="value">{{fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedNo}}</span>
                 </div>
-              </div>
-            
-              <!-- Deed Date -->
-              <div  class="col-3 col-lg-2">
+            </div>
+          
+            <!-- Deed Date -->
+            <div  class="col-3 col-lg-2">
                 <div class="info-icon-wrapper">
                   <i class="bi bi-calendar3"></i>
                 </div>
@@ -54,10 +53,10 @@
                   <span class="key">تاريخ الصك</span>
                   <span class="value">{{fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedDate}}</span>
                 </div>
-              </div>
-            
-              <!-- Deed Area -->
-              <div  class="col-3 col-lg-2">
+            </div>
+          
+            <!-- Deed Area -->
+            <div  class="col-3 col-lg-2">
                 <div class="info-icon-wrapper">
                   <i class="bi bi-square"></i>
                 </div>
@@ -65,10 +64,10 @@
                   <span class="key">مساحة الصك</span>
                   <span class="value">{{fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedAreaText}}</span>
                 </div>
-              </div>
-            
-              <!-- Number of Owners -->
-              <div  class="col-3 col-lg-2">
+            </div>
+          
+            <!-- Number of Owners -->
+            <div  class="col-3 col-lg-2">
                 <div class="info-icon-wrapper">
                   <i class="bi bi-people"></i>
                 </div>
@@ -76,92 +75,123 @@
                   <span class="key">عدد الملاك</span>
                   <span class="value">{{fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedOwners?.length || 0}}</span>
                 </div>
-              </div>
-              </div>
-
-              <div class="row row-gap-4" style="padding:15px 0" *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.isRealEstateMortgaged">
-              <!-- Mortgagor Name (if mortgaged) -->
-              <div class="col-3 col-lg-2">
-                <div class="info-icon-wrapper">
-                  <i class="bi bi-person"></i>
-                </div>
-                <div class="info-content">
-                  <span class="key">اسم الراهن</span>
-                  <span class="value">{{fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeName}}</span>
-                </div>
-              </div>
-            
-              <!-- Mortgagor ID (if mortgaged) -->
-              <div class="col-3 col-lg-2">
-                <div class="info-icon-wrapper">
-                  <i class="bi bi-credit-card-2-front"></i>
-                </div>
-                <div class="info-content">
-                  <span class="key">هوية الراهن</span>
-                  <span class="value">{{fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageeId}}</span>
-                </div>
-              </div>
-            
-              <!-- Mortgage Agreement (if mortgaged) -->
-              <div class="col-3 col-lg-2" *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageAgreementId">
-                <div class="info-icon-wrapper">
-                  <i class="bi bi-file-earmark-pdf"></i>
-                </div>
-                <div class="info-content">
-                  <span class="key">اتفاقية الرهن</span>
-                  <a class="file-link"
-                     *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageAgreement"
-                     [href]="baseUrl + fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.mortgageAgreement?.filePath"
-                     target="_blank">
-                    عرض الملف
-                  </a>
-                </div>
-              </div>
-              </div>
             </div>
-          <!-- </div> -->
 
-      </div>
+            <!-- Number of Lands (only when !isUnit) -->
+            <div class="col-3 col-lg-2" *ngIf="!isUnit">
+                <div class="info-icon-wrapper">
+                  <i class="bi bi-grid-3x3"></i>
+                </div>
+                <div class="info-content">
+                  <span class="key">عدد الاراضي</span>
+                  <span class="value">{{fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.numberOfLands || 0}}</span>
+                </div>
+            </div>
+          </div>
+        </div>
 
-      <br/>
-
-      <!-- ملاك الصك -->
-      <div class="tab-data-section">
-        <i class="bi bi-card-text"></i>
-        <h6 class="title">ملاك الصك</h6>
-
-        <div class="table-responsive">
+        <div *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.isRealEstateMortgaged &&
+          (fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList?.length ?? 0) > 0">
+          <br/>
+          <hr/>
+        </div>
+        
+        
+        <div *ngIf="fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.isRealEstateMortgaged &&
+          (fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList?.length ?? 0) > 0">
+          <div class="d-flex align-items-center gap-2" style="margin-top: 20px; margin-bottom: 20px;">
+            <i class="icon hgi hgi-stroke hgi-user-multiple"></i>
+            <h6 class="title mb-0">بيانات الراهنين</h6>
+          </div>
+          <!-- Mortgagees Table -->
+          <div class="table-responsive">
           <table class="table table-light">
             <thead>
               <tr>
-                <th>اسم المالك</th>
-                <th>الهوية</th>
-                <th>يمتلك المساحة الإجمالية</th>
-                <th>قيمة الأرض للمالك</th>
-                <th>اسم البنك للمالك</th>
-                <th>رقم الآيبان للمالك</th>
+                <th scope="col">اسم الراهن</th>
+                <th scope="col">رقم الهوية</th>
+                <th scope="col">اتفاقية الرهن</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let owner of fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedOwners">
-                <td>{{owner.ownerName}}</td>
-                <td>{{owner.idNumber}}</td>
-                <td>{{owner.owningArea}}</td>
-                <td>{{owner.owningAmount | number:'1.2-2'}}</td>
-                <td>{{owner.bank?.name || '-'}}</td>
-                <td>{{owner.accountNumber || '-'}}</td>
+              <tr *ngFor="let mortgagee of fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList">
+                <td>{{ mortgagee.mortgageeName }}</td>
+                <td>
+                  <span class="tag">{{ mortgagee.mortgageeId }}</span>
+                </td>
+                <td>
+                  <a *ngIf="mortgagee.mortgageeFile?.filePath; else noFile"
+                     [href]="baseUrl + mortgagee.mortgageeFile?.filePath"
+                     target="_blank"
+                     class="text-primary text-decoration-none">
+                    عرض الاتفاقية
+                  </a>
+                  <ng-template #noFile>-</ng-template>
+                </td>
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
+        
+        <br/>
+        <hr/>
+
+      <!-- ملاك الصك -->
+        <div>
+          <i class="bi bi-card-text"></i>
+          <h6 class="title">ملاك الصك</h6>
+
+          <div class="table-responsive">
+            <table class="table table-light">
+              <thead>
+                <tr>
+                  <th>اسم المالك</th>
+                  <th></th>
+                  <th>الهوية</th>
+                  <th>إجمالي المساحة المملوكة</th>
+                  <th *ngIf="shouldShowOwnerBankColumns">قيمة الأرض للمالك</th>
+                  <th *ngIf="shouldShowOwnerBankColumns">اسم البنك للمالك</th>
+                  <th *ngIf="shouldShowOwnerBankColumns">رقم الآيبان للمالك</th>
+                  <th *ngIf="shouldShowOwnerBankColumns">الاتفاقية</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let owner of fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedOwners">
+                  <td>{{owner.ownerName}}</td>
+                  <td>
+                    <span *ngIf="owner.isOwnerByDeveloper" class="tag">المطور العقاري</span>
+                  </td>
+                  <td>{{owner.idNumber}}</td>
+                  <td>{{owner.owningArea}}</td>
+                  <td *ngIf="shouldShowOwnerBankColumns">{{owner.owningAmount | number:'1.2-2'}}</td>
+                  <td *ngIf="shouldShowOwnerBankColumns">{{owner.bank?.name || '-'}}</td>
+                  <td *ngIf="shouldShowOwnerBankColumns">{{owner.accountNumber || '-'}}</td>
+                  <td *ngIf="shouldShowOwnerBankColumns">
+                    <div *ngIf="owner.agreementFile" class="d-flex align-items-center gap-2">
+                          <a [href]="baseUrl + owner?.agreementFile?.filePath"
+                             target="_blank"
+                             class="text-primary text-decoration-none">
+                            اتفاقية المالك
+                          </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
+
 
       <br/>
 
-<!-- رخص البناء -->
-<div class="tab-data-section" *ngIf="isUnit 
-&& !(fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseProjectConstructionLicenseTypeId === ConstructionLicenseTypeEnum.RiyadhAmanah 
-&& fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.integrationTypeId === DeedIntegrationTypeEnum.RER)">
+
+      <!-- رخص البناء -->
+  
+      <div class="tab-data-section" *ngIf="isUnit 
+&& fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseProjectConstructionLicenseTypeId === ConstructionLicenseTypeEnum.Balady">
         <i class="bi bi-card-text"></i>
         <h6 class="title">رخص البناء</h6>
 
@@ -194,20 +224,65 @@
           <table class="table table-light">
             <thead>
               <tr>
-                <th>عدد الوحدات</th>
-                <th>أنواع الوحدات</th>
+                <th scope="col">عدد الوحدات</th>
+                <th scope="col">أنواع الوحدات</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let unit of fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.buildingInfo?.componentList?.component">
-                <td>{{unit.numberOfUnits}}</td>
-                <td>{{unit.componentName?.description}}</td>
-              </tr>
+              <ng-container *ngFor="let unit of fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.buildingInfo?.componentList?.component || []; let i = index">
+                <tr *ngIf="+unit.numberOfUnits > 0 && unit.numberOfUnits !== null && unit.numberOfUnits !== undefined">
+                  <td>{{ unit.numberOfUnits }}</td>
+                  <td>{{ unit.componentName.description }}</td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>
       </div>
-   
+
+      <!-- رخصة البناء - Display for اتمام or امانة الرياض -->
+      <div class="tab-data-section" *ngIf="isUnit &&
+        (fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseProjectConstructionLicenseTypeId === ConstructionLicenseTypeEnum.Itmam ||
+         fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseProjectConstructionLicenseTypeId === ConstructionLicenseTypeEnum.RiyadhAmanah)">
+        <i class="bi bi-card-text"></i>
+        <h6 class="title">رخص البناء</h6>
+
+        <div class="row row-gap-4" style="padding:15px 0">
+          <!-- License Type -->
+          <div class="col-12 col-lg-3">
+            <div class="key">
+              <i class="icon hgi hgi-stroke hgi-profile-02"></i>
+              نوع الرخصة
+            </div>
+            <div class="value">
+              {{ getConstructionLicenseTypeName() }}
+            </div>
+          </div>
+
+          <!-- Building Flat Area -->
+          <div class="col-12 col-lg-3">
+            <div class="key">
+              <i class="icon hgi hgi-stroke hgi-align-selection"></i>
+              اجمالي مساحة مسطح البناء
+            </div>
+            <div class="value">
+              {{ fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.landTotalSpace || 0 }} م²
+            </div>
+          </div>
+
+          <!-- Total Units -->
+          <div class="col-12 col-lg-3">
+            <div class="key">
+              <i class="icon hgi hgi-stroke hgi-building-03"></i>
+              اجمالي عدد الوحدات
+            </div>
+            <div class="value">
+              {{ fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.numberOfUnits || 0 }}
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 

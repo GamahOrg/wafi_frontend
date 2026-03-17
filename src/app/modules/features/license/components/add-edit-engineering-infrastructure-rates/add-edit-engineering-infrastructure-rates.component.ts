@@ -23,7 +23,7 @@ export class AddEditEngineeringInfrastructureRatesComponent {
   cumulativeAmountPriorToThatYear?: number;
   licenseProjectEngineeringSupervisionPlannedReportForm =
     this._formBuilder.group({
-      currenrYear: [0],
+      currenrYear: [null as number | null],
       licenseProjectEngineeringSupervisionPlannedReportDetails:
         this._formBuilder.array([]),
     });

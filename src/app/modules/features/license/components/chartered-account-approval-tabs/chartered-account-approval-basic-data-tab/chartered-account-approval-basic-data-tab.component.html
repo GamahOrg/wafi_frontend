@@ -1,0 +1,29 @@
+<div class="table-responsive">
+    <table class="table table-light">
+        <thead>
+            <tr>
+                <th>رقم الصك</th>
+                <th *ngIf="licenseNatureId == licenseNatureTypeEnum.Units">رقم رخصة البناء</th>
+                <th *ngIf="licenseNatureId == licenseNatureTypeEnum.Units && isHasBaladyConstruction == false">مرفقات رخص البناء</th>
+                <th *ngIf="licenseNatureId == licenseNatureTypeEnum.Lands">مرفقات مخططات الاراضي</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let deed of deeds">
+                <td>{{deed?.number}}</td>
+                <td *ngIf="licenseNatureId == licenseNatureTypeEnum.Units">{{deed?.licenseProjectConstructionLicense?.licenseNumber}}</td>
+                <td *ngIf="licenseNatureId == licenseNatureTypeEnum.Units && isHasBaladyConstruction == false">
+                    <a *ngIf="deed?.licenseProjectConstructionLicense?.licenseFile" [href]="baseUrl + deed?.licenseProjectConstructionLicense?.licenseFile?.filePath" target="_blank">
+                        {{deed?.licenseProjectConstructionLicense?.licenseFile?.fileDescription}}
+                    </a>
+                    <span *ngIf="!deed?.licenseProjectConstructionLicense?.licenseFile">-</span>
+                </td>
+                <td *ngIf="licenseNatureId == licenseNatureTypeEnum.Lands">
+                    <a *ngIf="deed?.certifiedPlansFiles" [href]="baseUrl + deed?.certifiedPlansFiles[0]?.filePath" target="_blank">
+                        {{deed?.certifiedPlansFiles[0]?.fileDescription}}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

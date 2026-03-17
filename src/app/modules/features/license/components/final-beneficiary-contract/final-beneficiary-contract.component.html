@@ -1,48 +1,25 @@
-<form class="final-beneficiary-contract" id="form-sysLicenseBeneficiaryContractForm" [formGroup]="sysLicenseBeneficiaryContractForm">
-
-  <!-- Header - Only show when NOT in fullscreen -->
-  <div class="contract-header" *ngIf="!isFullscreen">
-    <!-- <div class="header-title">
-      <span>عقد المستفيد النهائي</span>
-    </div> -->
-    <!-- <div class="header-actions">
-      <button class="btn-icon" (click)="toggleFullscreen()">
-        <i class="material-icons">fullscreen</i>
-      </button>
-      <span class="file-name">{{ selectedPdfUrl ? 'عقد المستفيد النهائي' : '' }}</span>
-    </div> -->
+<form id="form-sysLicenseBeneficiaryContractForm" [formGroup]="sysLicenseBeneficiaryContractForm">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
+    <h6 class="title">
+      {{ 'عقد المستفيد النهائي' }}
+    </h6>
   </div>
 
   <!-- PDF Viewer Container -->
-  <app-pdf-viewer
-    *ngIf="!isFullscreen"
-    [pdfUrl]="selectedPdfUrl"
-    [isLoading]="isLoadingPdf"
-    [loadError]="pdfLoadError"
-    [retryCallback]="retryGenerateContract"
-    [loadingMessage]="'جاري تحميل العقد'"
-    [loadingDescription]="'يرجى الانتظار بينما يتم تحميل عقد المستفيد النهائي'"
-    [noContentMessage]="'لا يوجد عقد متاح'"
-    [noContentDescription]="'لم يتم العثور على عقد المستفيد النهائي'"
-    [errorMessage]="'حدث خطأ في تحميل العقد'">
-  </app-pdf-viewer>
+  <div class="tab-data-section">
+    <div class="d-flex flex-column gap-4">
+      <app-pdf-viewer *ngIf="!isFullscreen" [pdfUrl]="selectedPdfUrl" [isLoading]="isLoadingPdf" [loadError]="pdfLoadError" [retryCallback]="retryGenerateContract" [loadingMessage]="'جاري تحميل العقد'" [loadingDescription]="'يرجى الانتظار بينما يتم تحميل عقد المستفيد النهائي'" [noContentMessage]="'لا يوجد عقد متاح'" [noContentDescription]="'لم يتم العثور على عقد المستفيد النهائي'" [errorMessage]="'حدث خطأ في تحميل العقد'">
+      </app-pdf-viewer>
 
-  <!-- Contract Files Section - Hide in fullscreen -->
-  <div class="contract-files-section" *ngIf="!isFullscreen">
-    <!-- Contract Approval -->
-    <div class="contract-approval">
-      <div class="form-check">
-        <input
-          type="checkbox"
-          formControlName="beneficiaryContractFormApproval"
-          id="beneficiaryContractFormApproval"
-          class="form-check-input"
-        />
-        <label for="beneficiaryContractFormApproval" class="form-check-label">
-          <i class="material-icons">check_circle</i>
-          الموافقة على عقد المستفيد النهائي
+      <!-- Contract Files Section - Hide in fullscreen -->
+      <ng-container *ngIf="!isFullscreen">
+        <!-- Contract Approval -->
+        <label class="form-check" for="beneficiaryContractFormApproval">
+          <input type="checkbox" class="form-check-input" formControlName="beneficiaryContractFormApproval" id="beneficiaryContractFormApproval" />
+          <label class="form-check-label" for="beneficiaryContractFormApproval">الموافقة على عقد المستفيد النهائي</label>
         </label>
-      </div>
+      </ng-container>
     </div>
   </div>
 

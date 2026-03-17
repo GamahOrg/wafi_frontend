@@ -9,7 +9,7 @@
           class="form-control"
           formControlName="modelTitle"
           [class.is-invalid]="businessPaymentForm.get('modelTitle')?.invalid && (businessPaymentForm.get('modelTitle')?.dirty || businessPaymentForm.get('modelTitle')?.touched || showValidation)"
-          placeholder="أدخل عنوان النموذج">
+          >
         <div class="invalid-feedback d-block" *ngIf="businessPaymentForm.get('modelTitle')?.invalid && (businessPaymentForm.get('modelTitle')?.dirty || businessPaymentForm.get('modelTitle')?.touched || showValidation)">
           {{ localization.requiredErrorMsg }}
         </div>
@@ -43,8 +43,7 @@
               class="form-control"
               formControlName="rentPercentage"
               [class.is-invalid]="installment.get('rentPercentage')?.invalid && (installment.get('rentPercentage')?.dirty || installment.get('rentPercentage')?.touched || showValidation)"
-              placeholder="أدخل نسبة الإنجاز"
-              min="0" max="100">
+                            min="0" max="100">
             <div class="invalid-feedback d-block" *ngIf="installment.get('rentPercentage')?.invalid && (installment.get('rentPercentage')?.dirty || installment.get('rentPercentage')?.touched || showValidation)">
               {{ localization.requiredErrorMsg }}
             </div>
@@ -56,8 +55,7 @@
               class="form-control"
               formControlName="deductionPercentage"
               [class.is-invalid]="installment.get('deductionPercentage')?.invalid && (installment.get('deductionPercentage')?.dirty || installment.get('deductionPercentage')?.touched || showValidation)"
-              placeholder="أدخل نسبة الاستقطاع"
-              min="0" max="100">
+                            min="0" max="100">
             <div class="invalid-feedback d-block" *ngIf="installment.get('deductionPercentage')?.invalid && (installment.get('deductionPercentage')?.dirty || installment.get('deductionPercentage')?.touched || showValidation)">
               {{ localization.requiredErrorMsg }}
             </div>
@@ -70,7 +68,7 @@
             class="form-control"
             formControlName="description"
             rows="2"
-            placeholder="أدخل وصف الدفعة"></textarea>
+            ></textarea>
         </div>
 
       </div>

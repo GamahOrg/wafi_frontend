@@ -37,7 +37,7 @@ const routes: Routes = [
       },
       {
         path: Configuration.modules.license,
-        data: { breadcrumb: 'قائمة الطلبات' },
+        data: { breadcrumb: 'الترخيص' },
         loadChildren: () =>
           import('../features/license/license.module').then(
             (m) => m.LicenseModule

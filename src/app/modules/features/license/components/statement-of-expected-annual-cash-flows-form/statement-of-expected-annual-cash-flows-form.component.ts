@@ -23,7 +23,7 @@ export class StatementOfExpectedAnnualCashFlowsFormComponent implements OnInit, 
   licenseProjectAnnualCashFlowForm = this._formBuilder.group({
     id: [''],
     licenseProjectFeasibilityStudyId: [''],
-    yearId: ['', [Validators.required]],
+    yearId: [null as string | null, [Validators.required]],
     cashFlowsCollectedForTheProject: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
     amountsCollectedFromOperationsSaleUnits: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),
     totalCashFlowsCollected: this._formBuilder.control<number | null>(null, [Validators.required, Validators.pattern(Configuration.validators.decimal), Validators.min(0)]),

@@ -1,5 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { LicenseProjectModelDto, LicenseProjectModelDesignFileDto, LicenseProjectCompletionData } from '../../../dataModels/license-project-model.dto';
+import {
+  LicenseProjectModelDto,
+  LicenseProjectModelDesignFileDto,
+  LicenseProjectCompletionData,
+} from '../../../dataModels/license-project-model.dto';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { forkJoin, Subscription } from 'rxjs';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
@@ -15,13 +19,16 @@ import { TabCode } from '../../../models/tab-code.model';
 import { LicenseRequestService } from '../../../services/license-request.service';
 import { CorrectionProjectModelService } from '../../../services/correct-units/correction-project-model-service.service';
 import { FileUploaderComponent } from 'src/app/shared/components/file-uploader/file-uploader.component';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-correction-license-project-zone-subunit-model',
   templateUrl: './correction-license-project-zone-subunit-model.component.html',
-  styleUrls: ['./correction-license-project-zone-subunit-model.component.scss']
+  styleUrls: ['./correction-license-project-zone-subunit-model.component.scss'],
 })
-export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit, OnDestroy {
+export class CorrectionLicenseProjectZoneSubunitModelComponent
+  implements OnInit, OnDestroy
+{
   @ViewChild(FileUploaderComponent) fileUploader!: FileUploaderComponent;
 
   subscriptions: Subscription[] = [];
@@ -32,19 +39,21 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
   models: LicenseProjectModelDto[] = [];
   hideActionButtons: boolean = false;
 
-  constructor(private _projectModelService: CorrectionProjectModelService,
+  constructor(
+    private _projectModelService: CorrectionProjectModelService,
     private _formBuilder: FormBuilder,
     private _toastrService: ToastrService,
     private _toastrNotificationService: ToastrNotificatioService,
     private _popupService: PopupService,
     private _licenseRequestService: LicenseRequestService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-    private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService) { }
+    private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
+  ) {}
 
   multipleFileUploaderData: FileUploader = {
     multiple: true,
   } as FileUploader;
- 
+
   projectModelForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
     licenseProjectSubUnitId: ['', [Validators.required]],
@@ -52,8 +61,8 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
     //space: [0, [Validators.required, Validators.min(0)]],
     //buildingFlatSpace: [0, [Validators.required, Validators.min(0)]],
     properties: ['', [Validators.required]],
-    unitsCount: [0, [Validators.required, Validators.min(0)]],
-  })
+    unitsCount: [0, [Validators.required, Validators.min(1)]],
+  });
 
   get controls() {
     return this.projectModelForm.controls;
@@ -66,23 +75,35 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
     this.checkIfShouldHideActionButtons();
   }
 
-
   private checkIfShouldHideActionButtons(): void {
-     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    const licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (typeCode === 'FSRSU' && licenseProjectId) {
-
+    const typeCode =
+      this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
+    const licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    if (
+      typeCode === LicenseRequestTypeTypeCodeEnum.Fawria &&
+      licenseProjectId
+    ) {
       const requests = [
-        this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(licenseProjectId),
-        this._licenseRequestService.GetLicenseProjectCompletionData(licenseProjectId)
+        this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(
+          licenseProjectId,
+        ),
+        this._licenseRequestService.GetLicenseProjectCompletionData(
+          licenseProjectId,
+        ),
       ];
       const subscriptions = forkJoin(requests).subscribe((results) => {
         if (results) {
           let completedTabs = results[0] as string[];
           let complete = results[1] as LicenseProjectCompletionData | null;
           if (completedTabs && complete)
-            this.hideActionButtons = completedTabs.includes(TabCode.fawriaArchitecturalUnitsAndDesigns) && complete && (complete.isProfileCompleted || complete.isProjectHasUnitForFarzIntegration);
-
+            this.hideActionButtons =
+              completedTabs.includes(
+                TabCode.fawriaArchitecturalUnitsAndDesigns,
+              ) &&
+              complete &&
+              (complete.isProfileCompleted ||
+                complete.isProjectHasUnitForFarzIntegration);
         }
       });
       this.subscriptions.push(subscriptions);
@@ -94,8 +115,6 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
       //       this.hideActionButtons = completedTabs.includes(TabCode.fawriaArchitecturalUnitsAndDesigns);
       //     })
       // );
-
-
     }
   }
 
@@ -111,7 +130,7 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
     requiredErrorMsg: 'حقل مطلوب',
     save: 'حفظ البيانات',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     MinValueError: 'قيمة الحقل يجب الا تقل عن واحد',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
   };
@@ -123,32 +142,34 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
 
   observeForm(): void {
     this.subscriptions.push(
-      this.projectModelForm.valueChanges.subscribe(changes => {
-        this.projectModel = this.projectModelForm.value as LicenseProjectModelDto;
-      })
-    )
+      this.projectModelForm.valueChanges.subscribe((changes) => {
+        this.projectModel = this.projectModelForm
+          .value as LicenseProjectModelDto;
+      }),
+    );
   }
-
 
   selectModel?: LicenseProjectModelDto | null = null;
   selectedModelIndex: number = 0;
 
   onSelectedModel(model: LicenseProjectModelDto, index: number) {
     this.projectModel = model;
-    this.selectedModelIndex = index
+    this.selectedModelIndex = index;
   }
   private getSelectedProjectSubUnit(): void {
     this.subscriptions.push(
-      this._projectModelService.getSubjectObj().subscribe(res => {
+      this._projectModelService.getSubjectObj().subscribe((res) => {
         if (res) {
           this.loadComponentData(res.licenseProjectSubUnitId);
           this.projectModel = res;
-          if (!this.projectModel.id) this.projectModel.id = '00000000-0000-0000-0000-000000000000';
+          if (!this.projectModel.id)
+            this.projectModel.id = '00000000-0000-0000-0000-000000000000';
           if (this.projectModel.licenseProjectModelDesignFiles)
-            this.licenseProjectModelDesignFiles = this.projectModel.licenseProjectModelDesignFiles;
+            this.licenseProjectModelDesignFiles =
+              this.projectModel.licenseProjectModelDesignFiles;
           this.setResponseToForm(this.projectModel);
         }
-      })
+      }),
     );
 
     // this.subscriptions.push(
@@ -161,17 +182,19 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
     //     this.setResponseToForm(this.projectModel);
     //   })
     // )
-
   }
 
   private loadComponentData(licenseProjectSubUnitId: string) {
     const requests = [
-      this._projectModelService.GetByProjectSubUnitId(licenseProjectSubUnitId as string),
+      this._projectModelService.GetByProjectSubUnitId(
+        licenseProjectSubUnitId as string,
+      ),
       this._projectModelService.GetSysLicenseProjectSubUnitTypeDropDown(),
     ];
     const subscriptions = forkJoin(requests).subscribe((results) => {
       if (results) {
-        this.models = (results[0] as CoreResponseDTO<LicenseProjectModelDto[]>).data as LicenseProjectModelDto[];
+        this.models = (results[0] as CoreResponseDTO<LicenseProjectModelDto[]>)
+          .data as LicenseProjectModelDto[];
         // this.types = (results[1] as CoreResponseDTO<DropDownNameDto[]>).data as DropDownNameDto[];
         // this._projectModelService.SetSubjectListObjs(this.models);
         // this._projectModelService.getSubjectListObjs().subscribe((subjectObj) => {
@@ -187,28 +210,31 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
   }
 
   observePopupEvents(): void {
-    this.observecancelAction()
-    this.observeconfirmAction()
+    this.observecancelAction();
+    this.observeconfirmAction();
   }
 
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         this._popupService.dismissDialog();
-      })
-    )
+      }),
+    );
   }
 
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.save();
-      })
-    )
+      }),
+    );
   }
 
   onFileUploaded(filesData: any) {
-
+    if (filesData.eventRes.data.length == 0) {
+      this.licenseProjectModelDesignFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.licenseProjectModelDesignFiles = [];
     filesData.eventRes.data.forEach((data: any) => {
@@ -216,30 +242,39 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
         designFileId: data.id,
         modelId: this.projectModel.id,
         id: '00000000-0000-0000-0000-000000000000',
-        designFile: null
+        designFile: null,
       });
     });
   }
 
   save(): void {
-    if (!this.projectModel.id) this.projectModel.id = '00000000-0000-0000-0000-000000000000';
+    if (!this.projectModel.id)
+      this.projectModel.id = '00000000-0000-0000-0000-000000000000';
     this.controls.id.setValue(this.projectModel.id);
-    if (!this.projectModelForm.valid || !this.licenseProjectModelDesignFiles.length) {
+    if (
+      !this.projectModelForm.valid ||
+      !this.licenseProjectModelDesignFiles.length
+    ) {
       this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+      this._toastrNotificationService.showError(
+        this.localization.PleaseAddAllRequiredFields,
+      );
       this.projectModelForm?.markAllAsTouched();
       return;
     }
-    this.projectModel.licenseProjectModelDesignFiles = this.licenseProjectModelDesignFiles;
+    this.projectModel.licenseProjectModelDesignFiles =
+      this.licenseProjectModelDesignFiles;
 
     this.subscriptions.push(
-      this._projectModelService.Save(this.projectModel).subscribe(res => {
+      this._projectModelService.Save(this.projectModel).subscribe((res) => {
         if (res.isDone) {
           this._toastrService.success(this.localization.savedSuccessfully);
           // this._projectModelService.SetSubjectListObjs(res.data as LicenseProjectModelDto[]);
           this.models = res.data as LicenseProjectModelDto[];
           this.projectModelForm.reset();
-          this.projectModel.licenseProjectModelDesignFiles = []
+          this.fileUploader.clearSelectedFiles();
+          this.projectModel.licenseProjectModelDesignFiles = [];
+          this.licenseProjectModelDesignFiles = [];
           // this._popupService.dismissDialog();
           this.licenseProjectModelDesignFiles = [];
           // Reset file uploader
@@ -250,25 +285,19 @@ export class CorrectionLicenseProjectZoneSubunitModelComponent implements OnInit
         }
         // else
         //   this._toastrNotificationService.showError(res.message);
-      })
-    )
+      }),
+    );
   }
-
-
 
   delete(id: string) {
     this.subscriptions.push(
-      this._projectModelService.Delete(id).subscribe(res => {
+      this._projectModelService.Delete(id).subscribe((res) => {
         if (res.isDone) {
-          this._toastrService.success(this.localization.savedSuccessfully)
+          this._toastrService.success(this.localization.savedSuccessfully);
           // this._projectModelService.SetSubjectListObjs(res.data as LicenseProjectModelDto[]);
           this.models = res.data as LicenseProjectModelDto[];
-
-        }
-        else
-          this._toastrService.error(res.message);
-      })
-    )
+        } else this._toastrService.error(res.message);
+      }),
+    );
   }
-
 }

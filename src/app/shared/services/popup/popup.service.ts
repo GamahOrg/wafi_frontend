@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import {
   PopupData,
+  PromptPopupData,
   confirmationPopupData,
   notePopupData,
 } from '../../models/popup.model';
@@ -10,6 +11,7 @@ import { ConfirmationPopupComponent } from '../../components/confirmation-popup/
 import { PopupComponent } from '../../components/popup/popup.component';
 import { PopupNoteComponent } from '../../components/popup-note/popup-note.component';
 import { RejectionConfirmationPopupComponent } from '../../components/rejection-confirmation-popup/rejection-confirmation-popup.component';
+import { PopupPropmtComponent } from '../../components/popup-propmt/popup-propmt.component';
 
 @Injectable()
 export class PopupService {
@@ -20,6 +22,9 @@ export class PopupService {
     new BehaviorSubject<confirmationPopupData>({} as confirmationPopupData); // title and component
   NotePopupData: BehaviorSubject<notePopupData> =
     new BehaviorSubject<notePopupData>({} as notePopupData);
+  promptPopupData: BehaviorSubject<PromptPopupData> = new BehaviorSubject<PromptPopupData>(
+    {} as PromptPopupData
+  );
 
   openDialog: EventEmitter<any> = new EventEmitter<any>();
   closeDialog: EventEmitter<any> = new EventEmitter<any>();
@@ -29,15 +34,18 @@ export class PopupService {
     PopupData | confirmationPopupData | notePopupData
   > = new EventEmitter<PopupData | confirmationPopupData | notePopupData>();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) { }
+
   updatePopupData(data: PopupData) {
     this.popupData.next(data);
     const dialogRef = this.dialog.open(PopupComponent, {
       disableClose: true,
-      maxHeight: '80vh',
-      maxWidth: '80vw',
       width: data.width,
+      minWidth: data.minWidth || '50vw',
+      maxWidth: '80vw',
       height: data.height,
+      minHeight: data.minHeight,
+      maxHeight: '80vh',
       panelClass: data.panelClass,
       hasBackdrop: true,
     });
@@ -52,8 +60,7 @@ export class PopupService {
 
   updateConfirmationPopupData(
     confirmationData: confirmationPopupData,
-    width?: string,
-    height?: string
+    disableClose: boolean = true
   ) {
     const dataWithDefaults = {
       ...confirmationData,
@@ -61,10 +68,7 @@ export class PopupService {
     };
     this.ConfirmpopupData.next(dataWithDefaults);
     const dialogRef = this.dialog.open(ConfirmationPopupComponent, {
-      width: width ?? '600px',
-      height: height ?? 'auto',
-      maxHeight: '90vh',
-      maxWidth: '90vw',
+      minWidth: window.innerWidth < 768 ? '90vw' : '660px',
       panelClass: 'confirmation-dialog',
       data: {
         popupType: confirmationData.popupType ?? 'primary',
@@ -73,7 +77,7 @@ export class PopupService {
         dynamicMessage: confirmationData.dynamicMessage,
         secondeStaticMessage: confirmationData.secondeStaticMessage,
       },
-      disableClose: true,
+      disableClose: disableClose ?? true,
       hasBackdrop: true,
       autoFocus: true,
     });
@@ -130,8 +134,8 @@ export class PopupService {
         secondeStaticMessage: noteData.secondeStaticMessage,
         buttonText: noteData.buttonText,
         buttonLink: noteData.buttonLink,
-        surveyTitle:noteData.surveyTitle,
-        surveyLink:noteData.surveyLink
+        surveyTitle: noteData.surveyTitle,
+        surveyLink: noteData.surveyLink
       },
       disableClose: true,
       hasBackdrop: true,
@@ -145,11 +149,26 @@ export class PopupService {
     return dialogRef;
   }
 
+  updatePromptPopupData(data: PromptPopupData) {
+    this.promptPopupData.next(data);
+    const dialogRef = this.dialog.open(PopupPropmtComponent, {
+      hasBackdrop: true,
+      maxHeight: '80vh',
+      maxWidth: '80vw',
+      width: data.width,
+      height: data.height,
+      id: data.id,
+      disableClose: data.disableClose,
+    });
+
+    return dialogRef;
+  }
+
   dismissDialog(): void {
     this.closeDialog.emit();
   }
 
-  dismissDialogWithData(data:any): void {
+  dismissDialogWithData(data: any): void {
     this.closeDialog.emit(data);
   }
 }

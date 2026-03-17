@@ -75,7 +75,7 @@ export class ProjectLandTitleDeedsComponent implements OnInit, OnDestroy {
     ownersCount: 'الملاك',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     owners: 'الملاك',
     showowners: 'عرض الملاك',
     close: 'إغلاق',

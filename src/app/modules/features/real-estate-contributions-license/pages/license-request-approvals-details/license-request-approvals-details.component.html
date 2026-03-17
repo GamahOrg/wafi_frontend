@@ -20,7 +20,7 @@
                   <label class="form-label">اختر مفوض</label>
                   <select class="form-select"  id="control-delegatorCustomerId"
                    aria-label="Default select example" formControlName="delegatorCustomerId">
-                    <option selected disabled>أختر مفوض</option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                         {{customer.fullName}}
                     </option>

@@ -16,6 +16,7 @@ import { LicenseProjectCompletionData } from '../../dataModels/license-project-m
 import { LicenseRequestService } from '../../services/license-request.service';
 import { Pagination, pagination } from '../../../../../shared/models/pagination.model';
 import { PaginationService } from '../../../../../shared/services/pagination/pagination.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-unit-codes',
@@ -79,7 +80,7 @@ export class UnitCodesComponent implements OnInit, OnDestroy {
   private checkIfShouldHideActionButtons(): void {
     let availabilityToUpdate = this._sharedLicenseProjectService.getAvailabilityToUpdateFarzFromLocalStorage()
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(this.licenseProjectId),
@@ -177,8 +178,10 @@ export class UnitCodesComponent implements OnInit, OnDestroy {
     this._projectUnitCodeService.SetSubjectObj(code as ProjectUnitCodeDto);
 
     let Data = {
+      iconClass: 'hgi hgi-stroke hgi-profile-02',
       title: this.localization.code + " - " + this._sharedLicenseProjectService.stripHtml(this.selectedProjectUnitTitle ?? ''),
-      component: UnitCodesFormComponent
+      component: UnitCodesFormComponent,
+      submitButtonTitle: 'إضافة كود الوحدة'
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }

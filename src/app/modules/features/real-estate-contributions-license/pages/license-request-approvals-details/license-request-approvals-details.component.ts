@@ -99,7 +99,7 @@ export class LicenseRequestApprovalsDetailsComponent implements OnInit, OnDestro
     {
       
      
-      this.toastr.error("نأمل الموافقه على المشروع");
+      this.toastr.error("نأمل الموافقة على المشروع");
      return;
     }
     this.saveApprovalDto.id=this.selectedApproval?.id as string;
@@ -108,7 +108,7 @@ export class LicenseRequestApprovalsDetailsComponent implements OnInit, OnDestro
      this.updateSubject(res);
      if(this.selectedApproval)
      this.selectedApproval.isApproved = res.isApproved as boolean;
-      this.toastr.success("تم الموافقه على المشروع"); 
+      this.toastr.success("تم الموافقة على المشروع"); 
     })
   } 
 

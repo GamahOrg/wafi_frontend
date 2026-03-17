@@ -15,7 +15,7 @@
                             <label class="form-label">حالة ربط الخدمة - كهرباء</label>
                             <select class="form-select" formControlName="electricityTieConnectionStatusId"
                             [ngClass]="{'is-invalid': showValidation && controls.electricityTieConnectionStatusId.errors}">
-                            <option label="حالة ربط الخدمة - كهرباء"></option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let licenseProjectTieConnectionStatus of licenseProjectTieConnectionStatusList" [value]="licenseProjectTieConnectionStatus.id">
                                 {{licenseProjectTieConnectionStatus.name}}</option>
                         </select>
@@ -32,7 +32,7 @@
                             <label class="form-label">نوع الخدمة - كهرباء</label>
                             <select class="form-select" formControlName="electricityServiceTypeStatusId"
                             [ngClass]="{'is-invalid': showValidation && controls.electricityServiceTypeStatusId.errors}">
-                            <option label="نوع الخدمة - كهرباء"></option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let licenseProjectServiceTypeStatus of licenseProjectServiceTypeStatusList" [value]="licenseProjectServiceTypeStatus.id">
                                 {{licenseProjectServiceTypeStatus.name}}</option>
                         </select>
@@ -64,7 +64,7 @@
                             <label class="form-label">حالة تفعيل الخدمة -  كهرباء</label>
                             <select class="form-select" formControlName="electricityConnectionStatusId"
                             [ngClass]="{'is-invalid': showValidation && controls.electricityConnectionStatusId.errors}">
-                            <option label="حالة تفعيل الخدمة -  كهرباء"></option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let licenseProjectActivationStatus of licenseProjectActivationStatusList" [value]="licenseProjectActivationStatus.id">
                                 {{licenseProjectActivationStatus.name}}</option>
                         </select>
@@ -81,7 +81,7 @@
                         <label class="form-label">ملاحظات الكهرباء</label>
                         <textarea type="text" id="control-electricityNotes" class="form-control"
                             formControlName="electricityNotes"
-                            placeholder="ملاحظات الكهرباء" ></textarea>
+                             ></textarea>
                         <div class="invalid-feedback d-block" *ngIf="
   controls.electricityNotes?.hasError('required') && showValidation
 ">
@@ -94,7 +94,7 @@
                         <label class="form-label">حالة ربط الخدمة - مياه</label>
                         <select class="form-select" formControlName="waterTieConnectionStatusId"
                         [ngClass]="{'is-invalid': showValidation && controls.waterTieConnectionStatusId.errors}">
-                        <option label="حالة ربط الخدمة - مياه"></option>
+                        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                         <option *ngFor="let licenseProjectTieConnectionStatus of licenseProjectTieConnectionStatusList" [value]="licenseProjectTieConnectionStatus.id">
                             {{licenseProjectTieConnectionStatus.name}}</option>
                     </select>
@@ -111,7 +111,7 @@
                         <label class="form-label">نوع الخدمة - مياه</label>
                         <select class="form-select" formControlName="waterServiceTypeStatusId"
                         [ngClass]="{'is-invalid': showValidation && controls.waterServiceTypeStatusId.errors}">
-                        <option label="نوع الخدمة - مياه"></option>
+                        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                         <option *ngFor="let licenseProjectServiceTypeStatus of licenseProjectServiceTypeStatusList" [value]="licenseProjectServiceTypeStatus.id">
                             {{licenseProjectServiceTypeStatus.name}}</option>
                     </select>
@@ -143,7 +143,7 @@
                         <label class="form-label">حالة تفعيل الخدمة -  مياه</label>
                         <select class="form-select" formControlName="waterConnectionStatusId"
                         [ngClass]="{'is-invalid': showValidation && controls.waterConnectionStatusId.errors}">
-                        <option label="حالة تفعيل الخدمة -  مياه"></option>
+                        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                         <option *ngFor="let licenseProjectActivationStatus of licenseProjectActivationStatusList" [value]="licenseProjectActivationStatus.id">
                             {{licenseProjectActivationStatus.name}}</option>
                     </select>
@@ -160,7 +160,7 @@
                     <label class="form-label">ملاحظات المياه</label>
                     <textarea type="text" id="control-waterNotes" class="form-control"
                         formControlName="waterNotes"
-                        placeholder="ملاحظات المياه" ></textarea>
+                         ></textarea>
                     <div class="invalid-feedback d-block" *ngIf="
 controls.waterNotes?.hasError('required') && showValidation
 ">
@@ -173,7 +173,7 @@ controls.waterNotes?.hasError('required') && showValidation
                     <label class="form-label">حالة ربط الخدمة - صرف صحي</label>
                     <select class="form-select" formControlName="sewageTieConnectionStatusId"
                     [ngClass]="{'is-invalid': showValidation && controls.sewageTieConnectionStatusId.errors}">
-                    <option label="حالة ربط الخدمة - صرف صحي"></option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let licenseProjectTieConnectionStatus of licenseProjectTieConnectionStatusList" [value]="licenseProjectTieConnectionStatus.id">
                         {{licenseProjectTieConnectionStatus.name}}</option>
                 </select>
@@ -190,7 +190,7 @@ controls.sewageTieConnectionStatusId?.hasError('required') && showValidation
                     <label class="form-label">نوع الخدمة - صرف صحي</label>
                     <select class="form-select" formControlName="sewageServiceTypeStatusId"
                     [ngClass]="{'is-invalid': showValidation && controls.sewageServiceTypeStatusId.errors}">
-                    <option label="نوع الخدمة - صرف صحي"></option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let licenseProjectServiceTypeStatus of licenseProjectServiceTypeStatusList" [value]="licenseProjectServiceTypeStatus.id">
                         {{licenseProjectServiceTypeStatus.name}}</option>
                 </select>
@@ -222,7 +222,7 @@ controls.sewageServiceTypeStatusId?.hasError('required') && showValidation
                     <label class="form-label">حالة تفعيل الخدمة -  صرف صحي</label>
                     <select class="form-select" formControlName="sewageConnectionStatusId"
                     [ngClass]="{'is-invalid': showValidation && controls.sewageConnectionStatusId.errors}">
-                    <option label="حالة تفعيل الخدمة -  صرف صحي"></option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option *ngFor="let licenseProjectActivationStatus of licenseProjectActivationStatusList" [value]="licenseProjectActivationStatus.id">
                         {{licenseProjectActivationStatus.name}}</option>
                 </select>
@@ -239,7 +239,7 @@ controls.sewageConnectionStatusId?.hasError('required') && showValidation
                 <label class="form-label">ملاحظات صرف صحي</label>
                 <textarea type="text" id="control-sewageNotes" class="form-control"
                     formControlName="sewageNotes"
-                    placeholder="ملاحظات صرف صحي" ></textarea>
+                     ></textarea>
                 <div class="invalid-feedback d-block" *ngIf="
 controls.sewageNotes?.hasError('required') && showValidation
 ">

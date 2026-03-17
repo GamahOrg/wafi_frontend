@@ -78,7 +78,7 @@
         <div class="col-12 col-lg-6">
             <label for="" class="form-label">اسم المنطقة</label>
             <select class="form-select" formControlName="areasId">
-                <option label="-- اختار اسم المنطقة --"></option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let area of areasDropDownList" [value]="area.id">{{area.areaName}}</option>
             </select>
             <div>
@@ -88,7 +88,7 @@
         <div class="col-12 col-lg-6">
             <label for="" class="form-label">اسم المدينة</label>
             <select class="form-select" formControlName="citiesId">
-                <option label="-- اختار اسم المدينة --"></option>
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let city of citiesDropDownList" [value]="city.id">{{city.cityName}}</option>
             </select>
             <div>

@@ -22,7 +22,7 @@ export class ProjectStatusUpdateComponent {
   statusId:string="";
 
   ProjectStatusForm = this._formBuilder.group({
-    statusId: ['', [Validators.required]],
+    statusId: [null as string | null, [Validators.required]],
   });
 
   constructor(

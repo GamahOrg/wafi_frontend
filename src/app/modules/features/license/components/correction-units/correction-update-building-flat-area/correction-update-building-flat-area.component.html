@@ -4,7 +4,6 @@
 
     <div class="input-group" *ngIf="!isUnit">
       <input type="number" class="form-control" id="totalBuildingFlatArea" formControlName="totalBuildingFlatArea" min="0"
-        placeholder="أدخل إجمالي مساحة مسطح البناء"
         (input)="preventNegativeValue($event)"
         (keydown)="preventNegativeInput($event)"
         [class.is-invalid]="buildingAreaForm.get('totalBuildingFlatArea')?.invalid && buildingAreaForm.get('totalBuildingFlatArea')?.touched" />
@@ -21,7 +20,6 @@
     <label for="totalBuildingFlatArea" class="form-label required" *ngIf="isUnit">إجمالي عدد الوحدات</label>
     <div class="input-group" *ngIf="isUnit">
       <input type="number" class="form-control" id="totalUnits" formControlName="totalUnits" min="0"
-        placeholder=" إجمالي عدد الوحدات"
         (input)="preventNegativeValue($event)"
         (keydown)="preventNegativeInput($event)"
         [class.is-invalid]="buildingAreaForm.get('totalUnits')?.invalid && buildingAreaForm.get('totalUnits')?.touched" />

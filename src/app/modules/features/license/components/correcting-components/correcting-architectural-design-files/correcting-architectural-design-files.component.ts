@@ -24,6 +24,7 @@ import { DataVisibilityOfLicenseProjectService } from '../../../services/data-vi
 import { LicenseProjectCompletionData } from '../../../dataModels/license-project-model.dto';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 import { LicenseRequestHeaderService } from '../../../services/license-request-header.service';
+import { LicenseRequestTypeTypeCodeEnum } from '../../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-correcting-architectural-design-files',
@@ -79,7 +80,7 @@ export class CorrectingArchitecturalDesignFilesComponent implements OnInit, OnDe
 
   private checkIfTabIsCompleted(): void {
     const typeCode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typeCode === 'FSRSU' && this.licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && this.licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(this.licenseProjectId),
@@ -317,7 +318,7 @@ export class CorrectingArchitecturalDesignFilesComponent implements OnInit, OnDe
 
   openConfirmaDialog(res: string): void {
     // Check if it's a fawria license type
-    if (this.typeCode === 'FSRSU') {
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
       // Show regular success popup
       let Data = {
         imagePath: 'assets/images/auth/ForgotPass.svg',
@@ -360,7 +361,7 @@ export class CorrectingArchitecturalDesignFilesComponent implements OnInit, OnDe
 
   isFawriaValidation(): boolean {
     const typecode = this._sharedLicenseProjectService.getLicenseTypeCodeStorage();
-    if (typecode == 'FSRSU')
+    if (typecode == LicenseRequestTypeTypeCodeEnum.Fawria)
       return true;
     else
       return false;

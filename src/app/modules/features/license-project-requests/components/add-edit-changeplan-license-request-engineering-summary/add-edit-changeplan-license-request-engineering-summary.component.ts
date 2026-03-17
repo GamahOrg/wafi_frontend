@@ -82,6 +82,10 @@ export class AddEditChangeplanLicenseRequestEngineeringSummaryComponent {
 
 
   onExistLastEngineeringReportFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.lastEngineeringReportId = undefined;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.lastEngineeringReportId=data.id;
@@ -133,6 +137,10 @@ if(!this.projecTimelineFileAttachments || this.projecTimelineFileAttachments.len
   }
 
   onExistProjecTimelineFileAttachmentsFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.projecTimelineFileAttachments = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.projecTimelineFileAttachments) this.projecTimelineFileAttachments = [];
     filesData.eventRes.data.forEach((data: any) => {
@@ -145,6 +153,10 @@ if(!this.projecTimelineFileAttachments || this.projecTimelineFileAttachments.len
     });
   }
   onExistlicenseProjectRequestChangePlanProjectAttachmentFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.licenseProjectRequestChangePlanProjectAttachments = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     if (!this.licenseProjectRequestChangePlanProjectAttachments) this.licenseProjectRequestChangePlanProjectAttachments = [];
     filesData.eventRes.data.forEach((data: any) => {

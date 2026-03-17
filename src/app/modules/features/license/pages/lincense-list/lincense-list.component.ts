@@ -17,6 +17,7 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { LicenseInternalStatus } from '../../enums/license-internal-status';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-lincense-list',
@@ -31,7 +32,7 @@ export class LincenseListComponent implements OnInit, OnDestroy {
   currentSortColumn: string = '';
   showFilter: boolean = false;
   requestStatusEnum = ExternalStatus
-  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseSummary}`;
+  requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.lincenseTypes}/${Configuration.pages.license.lincenseSummary}`;
   @HostListener('document:click', ['$event']) onDocumentClick() {
     this.showFilter = false;
   }
@@ -66,6 +67,7 @@ export class LincenseListComponent implements OnInit, OnDestroy {
   get externalStatusId() {
     return ExternalStatus;
   }
+  licenseTypeCodeEnum = LicenseRequestTypeTypeCodeEnum;
   constructor(
     private _requestService: LicenseRequestHeaderService,
     private _router: Router,
@@ -149,6 +151,9 @@ export class LincenseListComponent implements OnInit, OnDestroy {
     this._sharedLicenseProjectService.setLicenseTypeCodeInLocalStorage(
       request.licenseRequestType.typeCode
     );
+    this._sharedLicenseProjectService.setLicenseTypeNameInLocalStorage(
+      request.licenseRequestType.name
+    );
     this.setSelectedRequestIdInLocalStorage();
     this.routeToRequestDetails(request);
   }
@@ -174,7 +179,7 @@ export class LincenseListComponent implements OnInit, OnDestroy {
 
   routeToRequestDetails(request: licenseRequest): void {
     if (request.requestCode) {
-      if (request.licenseRequestType?.typeCode === 'FSRSU') {
+      if (request.licenseRequestType?.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
         this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
           this.selectedRequest?.licenseProjectId
         );

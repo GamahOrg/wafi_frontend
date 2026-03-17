@@ -30,6 +30,7 @@ import { TabCode } from '../../models/tab-code.model';
 import { NextAndPreviusButtonsService } from '../../services/next-and-previous-buttons/next-and-previus-buttons.service';
 import { DataVisibilityOfLicenseProjectService } from '../../services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { LicenseProjectCompletionData } from '../../dataModels/license-project-model.dto';
+import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-typeCode.model';
 
 @Component({
   selector: 'app-business-payment-templates',
@@ -76,7 +77,7 @@ export class BusinessPaymentTemplatesComponent implements OnInit, OnDestroy {
   private checkIfShouldHideActionButtons(): void {
     const typeCode = this.sharedLicenseProjectService.getLicenseTypeCodeStorage();
      const licenseProjectId = this.sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (typeCode === 'FSRSU' && licenseProjectId) {
+    if (typeCode === LicenseRequestTypeTypeCodeEnum.Fawria && licenseProjectId) {
 
       const requests = [
         this._dataVisibilityOfLicenseProjectService.GetCompletedLicenseProjectProfileTaps(licenseProjectId),
@@ -414,7 +415,7 @@ export class BusinessPaymentTemplatesComponent implements OnInit, OnDestroy {
 
   openConfirmaDialog(res: string): void {
     // Check if it's a fawria license type
-    if (this.typeCode === 'FSRSU') {
+    if (this.typeCode === LicenseRequestTypeTypeCodeEnum.Fawria) {
       // Show regular success popup
       let Data = {
         imagePath: 'assets/images/auth/ForgotPass.svg',
@@ -457,7 +458,7 @@ export class BusinessPaymentTemplatesComponent implements OnInit, OnDestroy {
 
   isFawriaValidation(): boolean{
      const typecode = this.sharedLicenseProjectService.getLicenseTypeCodeStorage();
-     if(typecode == 'FSRSU')
+     if(typecode == LicenseRequestTypeTypeCodeEnum.Fawria)
        return true;
      else
        return false;

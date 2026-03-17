@@ -9,6 +9,7 @@
               <label for="mainItemId" class="form-label">المصدر</label>
               <select id="mainItemId" formControlName="mainItemId" class="form-select"
                 (change)="onMainItemChange($event)">
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let item of mainItemsDto" [value]="item.id"> {{ item.name }} </option>
               </select>
               <mat-error *ngIf="controls.mainItemId?.hasError('required') && showValidation">
@@ -20,6 +21,7 @@
             <div class="form-group mb-4">
               <label for="bankId" class="form-label">البنوك المرخصة</label>
               <select id="bankId" formControlName="bankId" class="form-select">
+                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                 <option *ngFor="let item of banksDto" [value]="item.id">
                   {{ item.name }}
                 </option>
@@ -223,6 +225,7 @@
             <label for="licenseProjectBuyerId" class="form-label">اسم المشتري</label>
             <select id="licenseProjectBuyer" formControlName="licenseProjectBuyer" class="form-select"
               [(ngModel)]="selectedBuyer" (change)="onBuyerSelect()">
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let buyer of buyerDto" [ngValue]="buyer">
                 {{ buyer.name }}
               </option>
@@ -236,7 +239,7 @@
             <label for="licenseProjectBuyerId-Id" class="form-label">سجل المشترين</label>
             <select id="licenseProjectBuyerId-Id" class="form-select" formControlName="licenseProjectBuyerId"
               (change)="onBuyerTypeSelect()">
-              <option label="اختر سجل المشترين" disabled></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let type of buyerDetailsDto" [value]="type.id">
                 {{
                 type.licenseProjectBuyerType.id === licenseBuyerTypeEnum.Lands
@@ -261,7 +264,7 @@
 
         <div *ngIf="showOtherField && showBuyerDetails && showBuyerType" class="col-12 col-lg-6">
           <div class="form-group mb-4">
-            <label class="form-label">رقم البلوك او العمارة</label>
+            <label class="form-label">رقم البلوك أو العمارة</label>
             <div class="form-control-plaintext">
               <span>
                 {{ selectedBuyerType?.blockCode }}

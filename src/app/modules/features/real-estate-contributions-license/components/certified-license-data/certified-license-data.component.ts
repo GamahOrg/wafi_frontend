@@ -30,7 +30,7 @@ export class CertifiedLicenseDataComponent implements OnInit, OnDestroy {
     savedSuccessfully: 'تم الحفظ',
     save: 'حفظ كمسودة',
     requiredErrorMsg: 'حقل مطلوب',
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     yes: 'نعم',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     no: 'لا'

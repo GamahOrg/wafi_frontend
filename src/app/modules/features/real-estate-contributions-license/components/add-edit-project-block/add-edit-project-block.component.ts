@@ -66,18 +66,18 @@ export class AddEditProjectBlockComponent implements OnInit, OnDestroy {
   }
 
   localization = {
-    errorMsg: "لا يمكن اضافة او تعديل بلوكات او عماير الآن",
+    errorMsg: "لا يمكن اضافة أو تعديل بلوكات أو عماير الآن",
     UnitType: "إضافة بلوك / عمارة ",
     unitCode: "رقم البلوك / رقم العمارة",
     stageNo: "رقم المرحلة",
-    dateValidator: 'يجب ان يكون تاريخ البداية اقل من تاريخ النهاية',
+    dateValidator: 'يجب أن يكون تاريخ البداية اقل من تاريخ النهاية',
     constructionStartOn: "تاريخ بداية الإنشاء",
     constructionEndOn: "تاريخ نهاية الإنشاء",
     chooseUnitTitle: "تحديد نوع الوحدات داخل البلوك",
     addingNewUnit: "حفظ و إضافة نوع وحدة جديد ",
     chooseUnitTitleHint: "( يمكنك اختيار أكثر من نوع من الوحدات داخل البلوك)",
     subUnitsType: " أنواع الوحدات بالبلوك / العمارة ",
-    subUnitCount: "عدد وحدات الخاص بالبلوك او العمارة  ",
+    subUnitCount: "عدد وحدات الخاص بالبلوك أو العمارة  ",
     actions: "إجراءات",
     PleaseAddAllRequiredFields:
     'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',

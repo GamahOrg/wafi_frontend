@@ -83,7 +83,7 @@ export class RequestAttachmentsComponent implements OnInit, OnDestroy {
       return;
     }
     if (!this.form.controls.operationAndMaintenanceAcknowledgment.value) {
-      this._toastrNotificationService.showError("نأمل الموافقه على الاقرار حتى يتم التسجيل ");
+      this._toastrNotificationService.showError("نأمل الموافقة على الاقرار حتى يتم التسجيل ");
       return;
     }
   }
@@ -136,6 +136,11 @@ export class RequestAttachmentsComponent implements OnInit, OnDestroy {
   }
 
   onExistSpecifiedProtocolsDurationCommitmentFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.form.controls.specifiedProtocolsDurationCommitmentFileId.setValue("");
+      this.showValidation = true;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.form.controls.specifiedProtocolsDurationCommitmentFileId.setValue(data.id as string);
@@ -143,6 +148,11 @@ export class RequestAttachmentsComponent implements OnInit, OnDestroy {
   }
 
   onExistMarketingFilesUploaded(filesData: any) {
+    if (filesData.eventRes.data.length === 0) {
+      this.form.controls.projectMarketingFileId.setValue("");
+      this.showValidation = true;
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.form.controls.projectMarketingFileId.setValue(data.id as string);

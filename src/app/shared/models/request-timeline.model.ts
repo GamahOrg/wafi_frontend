@@ -1,5 +1,5 @@
 export interface RequestTimelineResponseDto {
-  //تم ارسال الطلب لاطراف المشروع
+  //تم إرسال الطلب لاطراف المشروع
   isRequestSentToDevelopers: boolean;
   //موافقة اطراف المشروع
   isRequestApprovedFromDevelopers: boolean;

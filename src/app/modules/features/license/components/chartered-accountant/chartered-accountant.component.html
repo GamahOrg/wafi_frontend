@@ -1,233 +1,105 @@
-<div *ngIf="entity$ | async as charteredAccountant">
-  <div
-    *ngIf="form"
-    class="d-flex flex-column h-100"
-    [formGroup]="form"
-    id="form-form"
-  >
+<ng-container *ngIf="entity$ | async as charteredAccountant">
+  <ng-container [formGroup]="form" *ngIf="form">
     <div class="tab-data-header">
       <i class="icon hgi hgi-stroke hgi-profile"></i>
       <h6 class="title">
         {{ localizations.CharteredAccountantTitle }}
       </h6>
     </div>
+
     <div class="tab-data-section">
       <!-- *ngIf="!facility$.value" -->
-      <app-engineering-consultant-customer-info
-        [form]="form"
-        [code]="typeCode.CharteredAccountant"
-        [label]="localizations.CharteredAccountant"
-        [buttonName]="localizations.ValidateConsultant"
-        [requiredMessage]="localizations.CharteredAccountantRequired"
-        (onChange)="setFacility($event)"
-      >
+      <app-engineering-consultant-customer-info [form]="form" [code]="typeCode.CharteredAccountant" [label]="localizations.CharteredAccountant" [buttonName]="localizations.ValidateConsultant" [requiredMessage]="localizations.CharteredAccountantRequired" (onChange)="setFacility($event)">
+        <p class="form-text" hint>يجب أن يكون لدى المحاسب القانوني حساب في المنصة ليتم ربطه بشكل أوتوماتيكي بالرخصة الخاصة بمشروعكم</p>
       </app-engineering-consultant-customer-info>
-
-      <label
-        >يجب أن يكون لدى المحاسب القانوني حساب في المنصة ليتم ربطه بشكل
-        أوتوماتيكي بالرخصة الخاصة بمشروعكم</label
-      >
     </div>
+
     <ng-container *ngIf="facility$.value">
       <div class="tab-data-section">
-        <div class="row">
-          <div class="tab-data-section">
-            <div class="row row-gap-4">
-              <div class="col-12 col-lg-6">
-                <div class="key">رقم السجل التجاري</div>
-                <div class="value">
-                  <span class="icon material-icons">blinds</span>
-                  {{
-                    facility$.value?.commercialRegisterNumber
-                      ? facility$.value?.commercialRegisterNumber
-                      : facility.commercialRegisterNumber
-                  }}
-                </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                <div class="key">نوع الشركة</div>
-                <div class="value">
-                  <span class="icon material-icons">language</span>
-                  {{
-                    facility$.value?.facilityType
-                      ? facility$.value?.facilityType
-                      : facility.facilityType
-                  }}
-                </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                <div class="key">اسم الشركة</div>
-                <div class="value">
-                  <span class="icon material-icons">blinds</span>
-                  {{
-                    facility$.value?.facilityName
-                      ? facility$.value?.facilityName
-                      : facility.facilityName
-                  }}
-                </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                <div class="key">رقم شهادة التأهيل</div>
-                <div class="value">
-                  <span class="icon material-icons">blinds</span>
-                  {{
-                    facility$.value?.certificateNumber
-                      ? facility$.value?.certificateNumber
-                      : facility.certificateNumber
-                  }}
-                </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                <div class="key">رقم الرخصة</div>
-                <div class="value">
-                  <span class="icon material-icons">blinds</span>
-                  {{
-                    facility$.value?.saudiAuthorityForAuditorsAndAccountants
-                      ? facility$.value?.saudiAuthorityForAuditorsAndAccountants
-                      : facility.saudiAuthorityForAuditorsAndAccountants
-                  }}
-                </div>
-              </div>
+        <div class="row row-gap-4">
+          <div class="col-12 col-lg-6">
+            <div class="key">رقم السجل التجاري</div>
+            <div class="value">
+              <span class="icon material-icons">blinds</span>
+              {{
+              facility$.value?.commercialRegisterNumber
+              ? facility$.value?.commercialRegisterNumber
+              : facility.commercialRegisterNumber
+              }}
             </div>
           </div>
-
-          <!-- <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label for="charteredAccountantLicenseNumber"
-                class="form-label">{{localizations.CharteredAccountantLicenseNumber}}</label>
-              <input id="control-charteredAccountantLicenseNumber" name="charteredAccountantLicenseNumber" type="number"
-                class="form-control" formControlName="charteredAccountantLicenseNumber" readonly>
-              <div class="invalid-feedback d-block"
-                *ngIf="controls['charteredAccountantLicenseNumber'].hasError('required') && controls['charteredAccountantLicenseNumber'].touched">
-                {{localizations.Required}}
-              </div>
-              <div class="invalid-feedback d-block"
-                *ngIf="controls['charteredAccountantLicenseNumber'].hasError('min') && controls['charteredAccountantLicenseNumber'].touched">
-                {{localizations.MinValueError}}
-              </div>
+          <div class="col-12 col-lg-6">
+            <div class="key">نوع الشركة</div>
+            <div class="value">
+              <span class="icon material-icons">language</span>
+              {{
+              facility$.value?.facilityType
+              ? facility$.value?.facilityType
+              : facility.facilityType
+              }}
             </div>
-          </div> -->
-
-          <!--   <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label for="delegatorJobTitle"
-                class="form-label">{{localizations.charteredAccountantDelegatorIdentityNumber}}</label>
-              <input id="delegatorJobTitle" name="delegatorIdentityNumber" type="number"
-                class="form-control" formControlName="delegatorIdentityNumber" id="control-delegatorIdentityNumber">
-              <div class="invalid-feedback d-block"
-                *ngIf="controls['delegatorIdentityNumber'].hasError('required') && controls['delegatorIdentityNumber'].touched">
-                {{localizations.Required}}
-              </div>
-              <div class="invalid-feedback d-block"
-                *ngIf="controls['delegatorIdentityNumber'].hasError('min') && controls['delegatorIdentityNumber'].touched">
-                {{localizations.MinValueError}}
-              </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key">اسم الشركة</div>
+            <div class="value">
+              <span class="icon material-icons">blinds</span>
+              {{
+              facility$.value?.facilityName
+              ? facility$.value?.facilityName
+              : facility.facilityName
+              }}
             </div>
-          </div> -->
-
-          <!-- <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label for="delegatorName"
-                class="form-label">{{localizations.charteredAccountantDelegatorName}}</label>
-              <input id="delegatorName" name="delegatorName" type="text" id="control-delegatorName"
-                class="form-control" formControlName="delegatorName">
-              <div class="invalid-feedback d-block"
-                *ngIf="controls['delegatorName'].hasError('required') && controls['delegatorName'].touched">
-                {{localizations.Required}}
-              </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key">رقم شهادة التأهيل</div>
+            <div class="value">
+              <span class="icon material-icons">blinds</span>
+              {{
+              facility$.value?.certificateNumber
+              ? facility$.value?.certificateNumber
+              : facility.certificateNumber
+              }}
             </div>
-          </div> -->
-
-          <!--  <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label for="delegatorEmail"
-                class="form-label">{{localizations.charteredAccountantDelegatorEmail}}</label>
-              <input id="delegatorEmail" name="delegatorEmail" type="text" id="control-delegatorEmail"
-                class="form-control" formControlName="delegatorEmail">
-              <div class="invalid-feedback d-block">
-
-                <div
-                  *ngIf="controls['delegatorEmail'].hasError('required') && controls['delegatorEmail'].touched">
-                  {{localizations.Required}}</div>
-                <div *ngIf="controls['delegatorEmail'].errors?.['pattern']">
-                  {{localizations.emailPattern}}
-
-                </div>
-              </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="key">رقم الرخصة</div>
+            <div class="value">
+              <span class="icon material-icons">blinds</span>
+              {{
+              facility$.value?.saudiAuthorityForAuditorsAndAccountants
+              ? facility$.value?.saudiAuthorityForAuditorsAndAccountants
+              : facility.saudiAuthorityForAuditorsAndAccountants
+              }}
             </div>
-          </div> -->
-
-          <!-- <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label for="delegatorMobile"
-                class="form-label">{{localizations.charteredAccountantDelegatorMobile}}</label>
-              <input id="delegatorEmail" name="delegatorMobile" type="text"
-                class="form-control" formControlName="delegatorMobile" id="control-delegatorMobile">
-              <div class="invalid-feedback d-block"
-                *ngIf="controls['delegatorMobile'].hasError('required') && controls['delegatorMobile'].touched">
-                {{localizations.Required}}
-              </div>
-            </div>
-          </div> -->
-
-          <!-- <div class="col-12 col-lg-6">
-            <div class="form-group mb-4">
-              <label for="agreementDate" class="form-label">{{localizations.AgreementDate}}</label>
-              <div class="input-group">
-                <input bsDatepicker type="text" class="form-control" [formControlName]="'agreementDate'"
-                  [min]="todayDate">
-                <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
-              </div>
-              <div class="invalid-feedback d-block"
-                *ngIf="controls['agreementDate'].hasError('required') && controls['agreementDate'].touched">
-                {{localizations.Required}}
-              </div>
-            </div>
-          </div> -->
+          </div>
         </div>
       </div>
+
       <div class="tab-data-section">
         <app-engineering-consultant-agreement [form]="form">
         </app-engineering-consultant-agreement>
       </div>
 
-      <!-- Begin Of uploader -->
-
-      <!--   <div class="tab-data-section">
-        <app-engineering-consultant-upload [form]="form"
-                                           [entity]="charteredAccountant"
-                                           [propertyFile]="'charteredAccountantDelegatorSignModelFile'"
-                                           [propertyName]="'charteredAccountantDelegatorSignModelFileId'"></app-engineering-consultant-upload>
-      </div> -->
-
       <!-- End Of uploader -->
-      <h6 class="title">ملفات الاتفاقية</h6>
-      <div class="col-12 col-lg-12">
-        <div class="form-group mb-4">
-          <div
-            class="value"
-            *ngFor="let proposedFile of savedCharteredAccountantFiles"
-          >
-            <span class="icon material-icons-outlined">content_copy</span>
-            <a
-              *ngIf="proposedFile && proposedFile.id"
-              id="link-proposedScheduleFile"
-              [href]="baseUrl + proposedFile.filePath"
-              target="_blank"
-            >
-              {{ proposedFile.fileDescription }}</a
-            >
-            <span class="delete"
-            (click)="deletFile(proposedFile.id)"><i
-             class="icon material-icons text-danger">close</i></span>
+      <div class="tab-data-section">
+        <h6 class="title">ملفات الاتفاقية</h6>
+        <div class="row">
+          <div class="col-12 col-lg-12">
+            <label class="form-label"><span class="required-star">*</span> ملفات الاتفاقية</label>
+            <div class="form-group">
+              <div class="d-flex align-items-center gap-2 mb-3" *ngFor="let proposedFile of savedCharteredAccountantFiles">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a *ngIf="proposedFile && proposedFile.id" id="link-proposedScheduleFile" [href]="baseUrl + proposedFile.filePath" target="_blank">
+                  {{ proposedFile.fileDescription }}</a>
+                <span class="delete" (click)="deletFile(proposedFile.id)"><i class="icon material-icons text-danger">close</i></span>
+              </div>
+              <app-file-uploader [data]="multiFilesUploaderData" (fileUploaded)="onCharteredAccountantFilesUploaded($event)"></app-file-uploader>
+            </div>
           </div>
-          <app-file-uploader
-            [data]="multiFilesUploaderData"
-            (fileUploaded)="onCharteredAccountantFilesUploaded($event)"
-          ></app-file-uploader>
         </div>
       </div>
-      <app-next-and-previus-buttons></app-next-and-previus-buttons>
     </ng-container>
-  </div>
-</div>
+  </ng-container>
+
+  <app-next-and-previus-buttons></app-next-and-previus-buttons>
+</ng-container>

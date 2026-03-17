@@ -50,7 +50,7 @@ export class ConstructionLicensesComponent implements OnInit, OnDestroy {
     after7: 'بعد 1-7',
     requiredErrorMsg: 'حقل مطلوب',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     letterType: 'خطاب تعهد إتمام',
 
   };

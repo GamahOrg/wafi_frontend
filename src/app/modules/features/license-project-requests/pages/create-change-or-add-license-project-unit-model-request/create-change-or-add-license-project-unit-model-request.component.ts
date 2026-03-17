@@ -98,6 +98,11 @@ subscriptions: Subscription[] = [];
   
   //نموذج الطلب، موضحاً به أسباب طلب التغيير
   onExistApplicationFormFilesUploaded(filesData: any) {
+
+    if (filesData.eventRes.data.length === 0) {
+      this.applicationFormFileId = '00000000-0000-0000-0000-000000000000';
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.applicationFormFileId = data.id;
@@ -105,6 +110,11 @@ subscriptions: Subscription[] = [];
   }
     //البرنامج الزمني شامل كافة منحنيات البرنامج الزمني
   onExistTimelineIncludingAllTimelineCurvesFilesUploaded(filesData: any) {
+
+    if (filesData.eventRes.data.length === 0) {
+      this.timelineIncludingAllTimelineCurvesId = '00000000-0000-0000-0000-000000000000';
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.timelineIncludingAllTimelineCurvesId = data.id;
@@ -112,6 +122,11 @@ subscriptions: Subscription[] = [];
   }
  //جدول الأوزان النسبية المحدث
  onExistUpdatedRelativeWeightTableFilesUloaded(filesData: any) {
+
+  if (filesData.eventRes.data.length === 0) {
+    this.updatedRelativeWeightsTableId = '00000000-0000-0000-0000-000000000000';
+    return;
+  }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     filesData.eventRes.data.forEach((data: any) => {
       this.updatedRelativeWeightsTableId = data.id;

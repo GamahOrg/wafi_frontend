@@ -22,23 +22,23 @@ import { SysFileManagerCreateUpdateDto } from '../../models/license-request-proj
 @Component({
   selector: 'app-real-estate-developer-data',
   templateUrl: './real-estate-developer-data.component.html',
-  styleUrls: ['./real-estate-developer-data.component.scss']
+  styleUrls: ['./real-estate-developer-data.component.scss'],
 })
-
 export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  projectRealStateDeveloper: ProjectRealStateDeveloperDto = new ProjectRealStateDeveloperDto();
+  projectRealStateDeveloper: ProjectRealStateDeveloperDto =
+    new ProjectRealStateDeveloperDto();
   facilityFullData!: facilityDTO;
   customerDate: Customer | null = null;
   baseUrl = `${environment.baseURL}/`;
-  licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
+  licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   showValidation: boolean = false;
-  isExistingValidation:boolean=false;
-  signModelFileId: string | null = "00000000-0000-0000-0000-000000000000";
+  isExistingValidation: boolean = false;
+  signModelFileId: string | null = '00000000-0000-0000-0000-000000000000';
   paymentReceiptFile: SysFileManagerCreateUpdateDto | null = null;
 
   get tabCode() {
-    return TabCode
+    return TabCode;
   }
 
   dataSection: any = {
@@ -47,8 +47,8 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     [TabCode.customerInfo]: false,
     [TabCode.licenseProjectExecutiveDirector]: false,
     [TabCode.licenseProjectContactOfficer]: false,
-    [TabCode.licenseProjecFinalBeneficiaryContactInformation]: false
-  }
+    [TabCode.licenseProjecFinalBeneficiaryContactInformation]: false,
+  };
 
   constructor(
     private _projectRealStateDeveloperService: ProjectRealStateDeveloperService,
@@ -58,8 +58,8 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
     private _dataVisibilityOfLicenseProjectService: DataVisibilityOfLicenseProjectService,
-    private _toastrNotificationService: ToastrNotificatioService,
-  ) { }
+    private _toastrNotificationService: ToastrNotificatioService
+  ) {}
 
   projectRealStateDeveloperForm = this._formBuilder.group({
     id: ['00000000-0000-0000-0000-000000000000', [Validators.required]],
@@ -67,17 +67,33 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     executiveDirectorName: [''],
     paymentReceiptFileId: [''],
     executiveDirectorEmail: ['', [Validators.email]],
-    executiveDirectorMobile: ['', [Validators.pattern(Configuration.validators.PhoneNumber), Validators.maxLength(10), Validators.minLength(10), Validators.pattern(Configuration.validators.numberOnly)]],
+    executiveDirectorMobile: [
+      '',
+      [
+        Validators.pattern(Configuration.validators.PhoneNumber),
+        Validators.maxLength(10),
+        Validators.minLength(10),
+        Validators.pattern(Configuration.validators.numberOnly),
+      ],
+    ],
     //ضابط الاتصال (اجباري)
     contactOfficerName: [''],
     contactOfficerEmail: ['', [Validators.email]],
-    contactOfficerMobile: ['', [Validators.pattern(Configuration.validators.PhoneNumber), Validators.maxLength(10), Validators.minLength(10), Validators.pattern(Configuration.validators.numberOnly)]],
+    contactOfficerMobile: [
+      '',
+      [
+        Validators.pattern(Configuration.validators.PhoneNumber),
+        Validators.maxLength(10),
+        Validators.minLength(10),
+        Validators.pattern(Configuration.validators.numberOnly),
+      ],
+    ],
     // بيانات التواصل للمستفيد النهانى
-    complaintEmail: ['', [Validators.required,Validators.email]],
-    salesEmail: ['', [Validators.required,Validators.email]],
+    complaintEmail: ['', [Validators.required, Validators.email]],
+    salesEmail: ['', [Validators.required, Validators.email]],
     //بيانات المفوض
-    delegatorCustomerId: ['']
-  })
+    delegatorCustomerId: [null as string | null],
+  });
 
   get controls() {
     return this.projectRealStateDeveloperForm.controls;
@@ -90,7 +106,7 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
   userData: customerResponse | null = null;
   ngOnInit() {
     this.getCustomerData();
-    this.getLicenseProjectIdStorage()
+    this.getLicenseProjectIdStorage();
     this.observeForm();
     this.loadComponentData();
     this.observeTabsButtons();
@@ -99,28 +115,29 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
   }
 
   getCustomerData() {
-
-    this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-      this.userData = res; 
-      this.isExistingValidation=this.userData?.isEmployee as boolean;   
-    })
+    this._userDataService
+      .getCustomerData()
+      .subscribe((res: customerResponse | null) => {
+        this.userData = res;
+        this.isExistingValidation = this.userData?.isEmployee as boolean;
+      });
   }
   private getLicenseProjectIdStorage(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
   }
 
   localization = {
-    PleaseAddAllRequiredFields:
-      'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
+    PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     title: 'بيانات مقدم الطلب',
     goTo: 'اذا كنت تريد تعديل البيانات نأمل الذهاب إلى صفحة ',
-    city : 'المدينة',
-    area : 'المنطقة',
-    paymentReciept:'فاتورةالسداد',
+    city: 'المدينة',
+    area: 'المنطقة',
+    paymentReciept: 'فاتورةالسداد',
     name: 'الاسم',
     email: 'البريد الإلكتروني',
-    problemsEmail : 'بريد إلكتروني خاص بالشكاوى',
-    salesEmail : 'بريد إلكتروني خاص بالمبيعات',
+    problemsEmail: 'بريد إلكتروني خاص بالشكاوى',
+    salesEmail: 'بريد إلكتروني خاص بالمبيعات',
     mobile: 'رقم الجوال',
     facilityData: 'بيانات المنشأة',
     executiveDirectorData: 'بيانات المدير التنفيذي',
@@ -130,44 +147,70 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     savedSuccessfully: 'تم الحفظ',
     phoneNumberPattern: 'من فضلك ادخل رقم جوال صحيح',
     emailPattern: 'من فضلك ادخل البريد الإلكتروني صحيح',
-    send: "إرسال الطلب",
+    send: 'إرسال الطلب',
     next: 'التالي',
-    orderDate : 'تاريخ تقديم الطلب',
+    orderDate: 'تاريخ تقديم الطلب',
     CommercialRegisterNo: '',
-    identityNumberecommerceroom : 'رقم عضوية الغرفة التجارية',
-    CreatDate  : 'تاريخ إصدار شهادة سلامة السجل الائتماني',
+    identityNumberecommerceroom: 'رقم عضوية الغرفة التجارية',
+    CreatDate: 'تاريخ إصدار شهادة سلامة السجل الائتماني',
     finalBeneficiaryContactDetail: 'بيانات  التواصل للمستفيد النهائي',
-    facilityAddress: "عنوان شركة المطور عقاري",
-    applicantData: "بيانات مقدم الطلب (مالك الحساب /مفوض)",
-    applicantName: "اسم مقدم الطلب (المفوض)",
-    applicantJobTitle: "منصب المفوض",
-    delegator:"بيانات المفوض",
-    mobileCompany1 : '1 هاتف الشركة ',
-    selectDelegator:"اختر مفوض",
-    companyType : 'نوع الشركة',
-    companyName : 'اسم الشركة',
-    identityFile : "ملف شهادة السجل الائتماني",
-    maxLengthErrorMsg : "length must not be more than 20"
+    facilityAddress: 'عنوان شركة المطور عقاري',
+    applicantData: 'بيانات مقدم الطلب (مالك الحساب /مفوض)',
+    applicantName: 'اسم مقدم الطلب (المفوض)',
+    applicantJobTitle: 'منصب المفوض',
+    delegator: 'بيانات المفوض',
+    mobileCompany1: '1 هاتف الشركة ',
+    selectDelegator: 'اختر مفوض',
+    companyType: 'نوع الشركة',
+    companyName: 'اسم الشركة',
+    identityFile: 'ملف شهادة السجل الائتماني',
+    maxLengthErrorMsg: 'length must not be more than 20',
   };
 
   facilityId: string = '00000000-0000-0000-0000-000000000000';
   private loadComponentData() {
-    this.facilityId = this.userData?.isEmployee?'00000000-0000-0000-0000-000000000000':this.userData?.facilities[0].id!;
-    
-    if(this.facilityId == undefined || this.facilityId == '00000000-0000-0000-0000-000000000000')
-      this.facilityId = this._sharedLicenseProjectService.getFacilityIdFromLocalStorage() ?? '00000000-0000-0000-0000-000000000000'
-     
+    this.facilityId = this.userData?.isEmployee
+      ? '00000000-0000-0000-0000-000000000000'
+      : this.userData?.facilities[0].id!;
+
+    if (
+      this.facilityId == undefined ||
+      this.facilityId == '00000000-0000-0000-0000-000000000000'
+    )
+      this.facilityId =
+        this._sharedLicenseProjectService.getFacilityIdFromLocalStorage() ??
+        '00000000-0000-0000-0000-000000000000';
+
     const requests = [
-      this._projectRealStateDeveloperService.GetProjectRealStateDeveloperByLicenseProjectId(this.licenseProjectId as string),
+      this._projectRealStateDeveloperService.GetProjectRealStateDeveloperByLicenseProjectId(
+        this.licenseProjectId as string
+      ),
       // this._projectRealStateDeveloperService.GetSubCustomers(),
-      this._projectRealStateDeveloperService.GetFacilitySubCustomers(this.facilityId),
+      this._projectRealStateDeveloperService.GetFacilitySubCustomers(
+        this.facilityId
+      ),
     ];
     const subscriptions = forkJoin(requests).subscribe((results) => {
-      this.projectRealStateDeveloper = results[0] as ProjectRealStateDeveloperDto;
-      if (this.projectRealStateDeveloper.licenseRequestHeaders && this.projectRealStateDeveloper.licenseRequestHeaders.length > 0
-        && this.projectRealStateDeveloper.licenseRequestHeaders[0].licenseRequestVersions && this.projectRealStateDeveloper.licenseRequestHeaders[0].licenseRequestVersions.length > 0) {
-        console.log("this.projectRealStateDeveloper", this.projectRealStateDeveloper)
-        console.log("this.projectRealStateDeveloper", "requestOn", this.projectRealStateDeveloper.licenseRequestHeaders[0].licenseRequestVersions[0].requestOn)
+      this.projectRealStateDeveloper =
+        results[0] as ProjectRealStateDeveloperDto;
+      if (
+        this.projectRealStateDeveloper.licenseRequestHeaders &&
+        this.projectRealStateDeveloper.licenseRequestHeaders.length > 0 &&
+        this.projectRealStateDeveloper.licenseRequestHeaders[0]
+          .licenseRequestVersions &&
+        this.projectRealStateDeveloper.licenseRequestHeaders[0]
+          .licenseRequestVersions.length > 0
+      ) {
+        console.log(
+          'this.projectRealStateDeveloper',
+          this.projectRealStateDeveloper
+        );
+        console.log(
+          'this.projectRealStateDeveloper',
+          'requestOn',
+          this.projectRealStateDeveloper.licenseRequestHeaders[0]
+            .licenseRequestVersions[0].requestOn
+        );
       }
       this.setResponseToForm(results[0] as ProjectRealStateDeveloperDto);
       this.subCustomerList = results[1] as CustomerShortDto[];
@@ -175,101 +218,136 @@ export class RealEstateDeveloperDataComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscriptions);
   }
   onFileUploaded(file: any) {
-    
-    this.projectRealStateDeveloperForm.controls.paymentReceiptFileId.setValue(file.eventRes.data[0].id);
+    if (file.eventRes.data.length == 0) {
+      this.projectRealStateDeveloperForm.controls.paymentReceiptFileId.setValue(
+        null
+      );
+
+      return;
+    }
+    this.projectRealStateDeveloperForm.controls.paymentReceiptFileId.setValue(
+      file.eventRes.data[0].id
+    );
   }
   setResponseToForm(res: ProjectRealStateDeveloperDto): void {
+    if (!res) return;
+    if (!res.delegatorCustomerId || res.delegatorCustomerId === '00000000-0000-0000-0000-000000000000') {
+      res.delegatorCustomerId = null;
+    }
     this.projectRealStateDeveloperForm.patchValue({ ...res });
     this.facilityFullData = { ...res?.licenseRequestHeaders[0].facility };
-    this.customerDate = { ...res?.licenseRequestHeaders[0].customer }
+    this.customerDate = { ...res?.licenseRequestHeaders[0].customer };
     this.paymentReceiptFile = res.paymentReceiptFile;
   }
 
   observeForm(): void {
     this.subscriptions.push(
-      this.projectRealStateDeveloperForm.valueChanges.subscribe(changes => {
-        this.projectRealStateDeveloper = this.projectRealStateDeveloperForm.value as ProjectRealStateDeveloperDto;
+      this.projectRealStateDeveloperForm.valueChanges.subscribe((changes) => {
+        this.projectRealStateDeveloper = this.projectRealStateDeveloperForm
+          .value as ProjectRealStateDeveloperDto;
       })
-    )
+    );
   }
 
   save(moveToNextTab: boolean = false): void {
-    
-
-    console.log("this.projectRealStateDeveloperForm", this.projectRealStateDeveloperForm);
-    if (!this.projectRealStateDeveloper.id) this.projectRealStateDeveloper.id = '00000000-0000-0000-0000-000000000000';
-    if(!this.isExistingValidation)
-      {
-    if (!this.projectRealStateDeveloperForm.valid) {
-      this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
-      this.projectRealStateDeveloperForm?.markAllAsTouched();
-      return;
+    console.log(
+      'this.projectRealStateDeveloperForm',
+      this.projectRealStateDeveloperForm
+    );
+    if (!this.projectRealStateDeveloper.id)
+      this.projectRealStateDeveloper.id =
+        '00000000-0000-0000-0000-000000000000';
+    if (!this.isExistingValidation) {
+      if (!this.projectRealStateDeveloperForm.valid) {
+        this.showValidation = true;
+        this._toastrNotificationService.showError(
+          this.localization.PleaseAddAllRequiredFields
+        );
+        this.projectRealStateDeveloperForm?.markAllAsTouched();
+        return;
+      }
     }
-  }
-  
+
     this.subscriptions.push(
-      this._projectRealStateDeveloperService.SaveProjectRealStateDeveloper(this.projectRealStateDeveloper).subscribe(res => {
-        if (res.isDone) {
-          this._toastrService.success(this.localization.savedSuccessfully)
-          this.setResponseToForm(res.data as ProjectRealStateDeveloperDto);
-          if (moveToNextTab) this.moveToNextTab()
-        }
-        else
-          this._toastrNotificationService.showError(res.message);
-      })
-    )
+      this._projectRealStateDeveloperService
+        .SaveProjectRealStateDeveloper(this.projectRealStateDeveloper)
+        .subscribe((res) => {
+          if (res.isDone) {
+            this._toastrService.success(this.localization.savedSuccessfully);
+            this.setResponseToForm(res.data as ProjectRealStateDeveloperDto);
+            if (moveToNextTab) this.moveToNextTab();
+          } else this._toastrNotificationService.showError(res.message);
+        })
+    );
   }
 
   // TabsButtons
   private observeNextButtonIsCliced() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
-        this.save(true)
-      })
-    )
+      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
+        (res: null) => {
+          this.save(true);
+        }
+      )
+    );
   }
 
   private observeSaveAsDraftIsClicked() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe((res: null) => {
-        this.save()
-      })
-    )
+      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(
+        (res: null) => {
+          this.save();
+        }
+      )
+    );
   }
 
   private observeTabsButtons(): void {
     this.observeNextButtonIsCliced();
-    this.observeSaveAsDraftIsClicked()
+    this.observeSaveAsDraftIsClicked();
   }
 
   private moveToNextTab(): void {
-    this._nextAndPreviusButtonsService.moveToNextTab.emit()
+    this._nextAndPreviusButtonsService.moveToNextTab.emit();
   }
 
   private updateSaveAsDraftBtnIsvisible(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(true)
+    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(true);
   }
 
   getDataVisibilityOfDataSection(): void {
     this.subscriptions.push(
-      this._dataVisibilityOfLicenseProjectService.getDataVisibilityOfLicenseProject().subscribe((res: string[]) => {
-        Object.keys(this.dataSection).forEach(section => {
-          if (res.includes(section as string)) {
-            this.dataSection[section as string] = true;
-            if (section == TabCode.licenseProjectExecutiveDirector) {
-              this.controls.executiveDirectorName.addValidators(Validators.required);
-              this.controls.executiveDirectorEmail.addValidators(Validators.required);
-              this.controls.executiveDirectorMobile.addValidators(Validators.required);
-            } else if (section == TabCode.licenseProjectContactOfficer) {
-              this.controls.contactOfficerName.addValidators(Validators.required)
-              this.controls.contactOfficerEmail.addValidators(Validators.required)
-              this.controls.contactOfficerMobile.addValidators(Validators.required)
+      this._dataVisibilityOfLicenseProjectService
+        .getDataVisibilityOfLicenseProject()
+        .subscribe((res: string[]) => {
+          Object.keys(this.dataSection).forEach((section) => {
+            if (res.includes(section as string)) {
+              this.dataSection[section as string] = true;
+              if (section == TabCode.licenseProjectExecutiveDirector) {
+                this.controls.executiveDirectorName.addValidators(
+                  Validators.required
+                );
+                this.controls.executiveDirectorEmail.addValidators(
+                  Validators.required
+                );
+                this.controls.executiveDirectorMobile.addValidators(
+                  Validators.required
+                );
+              } else if (section == TabCode.licenseProjectContactOfficer) {
+                this.controls.contactOfficerName.addValidators(
+                  Validators.required
+                );
+                this.controls.contactOfficerEmail.addValidators(
+                  Validators.required
+                );
+                this.controls.contactOfficerMobile.addValidators(
+                  Validators.required
+                );
+              }
             }
-          }
-        });
-      })
-    )
+          });
+        })
+    );
   }
 
   ngOnDestroy() {

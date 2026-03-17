@@ -44,16 +44,10 @@
 
   &:focus,
   &:focus-visible {
-
-    &,
-    &+.input-group-text {
-      border-bottom: 2px solid $black !important;
-    }
+    border-bottom: 2px solid $black !important;
   }
 }
 
-
-.form-select,
 .form-control {
 
   &:disabled,
@@ -61,9 +55,10 @@
     color: $dark;
 
     &,
+    &:focus,
     &+.input-group-text {
       color: #9DA4AE;
-      border-color: $lightgray;
+      border-color: $lightgray !important;
     }
 
     &+.input-group-text {
@@ -92,6 +87,12 @@
 
   &:disabled {
     --bs-form-select-bg-img: url("/assets/images/icons/select-arrow-dimmed.svg");
+
+    &,
+    &+.input-group-text {
+      color: #9DA4AE;
+      border-color: $lightgray;
+    }
   }
 
   &[multiple] {
@@ -103,10 +104,27 @@
   }
 }
 
+.input-group {
+
+  &:has(.form-control:not(:read-only):focus),
+  &:has(.form-control:not(:read-only):focus-visible),
+  &:has(.form-select:not(:disabled):focus),
+  &:has(.form-select:not(:disabled):focus-visible) {
+
+    .input-group-text {
+      border-bottom: 2px solid $black !important;
+    }
+  }
+}
+
 .was-validated .form-control:invalid,
 .form-control.is-invalid {
-  background-image: none;
   padding-right: $input-padding-x;
+  background-image: none;
+
+  &:focus {
+    box-shadow: none;
+  }
 
   &+.input-group-text {
     border-color: var(--bs-danger);
@@ -115,6 +133,9 @@
 
 .was-validated .form-select:invalid,
 .form-select.is-invalid {
+  &:focus {
+    box-shadow: none;
+  }
 
   &:not([multiple]):not([size]),
   &:not([multiple])[size="1"] {
@@ -148,16 +169,16 @@
 }
 
 .form-check {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-
+  
   padding: 0;
   cursor: pointer;
-
+  
   &:not(.form-check-normal) {
+    display: flex;
     justify-content: center;
-    align-items: center;
 
     padding: $input-padding-y $input-padding-x;
     border: $input-border-width solid $input-border-color;
@@ -171,6 +192,7 @@
 
   .form-check-input {
     float: none;
+    margin-top: 0;
   }
 
   .multi-select & {

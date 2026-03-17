@@ -1,86 +1,53 @@
-<ng-container>
-  <form class="d-flex flex-column h-100"
-        [formGroup]="projectAddressForm"  id="form-projectAddressForm">
-      <div class="tab-data-header">
-          <i class="icon hgi hgi-stroke hgi-profile"></i>
-          <h6 class="title">{{localization.title}}</h6>
+<form [formGroup]="projectAddressForm" id="form-projectAddressForm">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
+    <h6 class="title">{{localization.title}}</h6>
+  </div>
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label"><span class="required-star">*</span> {{localization.area}}</label>
+          <select class="form-select" id="control-areasId" formControlName="areasId">
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+            <option *ngFor="let area of areas" [value]="area.id">{{area.areaName}}</option>
+          </select>
+          <div class="invalid-feedback d-block" *ngIf="controls.areasId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+        </div>
       </div>
-      <div class="tab-data-section">
-          <div class="row mb-3">
-              <div class="col-12 col-lg-6">
-                  <div class="form-group mb-4">
-                      <label class="form-label">{{localization.area}}</label>
-                      <select class="form-select" id="control-areasId"
-                              formControlName="areasId">
-                          <option [label]="localization.selectArea"></option>
-                          <option *ngFor="let area of areas"
-                                  [value]="area.id">{{area.areaName}}</option>
-                      </select>
-                      <mat-error
-                                 *ngIf="controls.areasId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-                  </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                  <div class="form-group mb-4">
-                      <label class="form-label">{{localization.city}}</label>
-                      <select class="form-select" id="control-citiesId"
-                              formControlName="citiesId">
-                          <option [label]="localization.selectCity"></option>
-                          <option *ngFor="let city of tempCities"
-                                  [value]="city.id">{{city.cityName}}</option>
-                      </select>
-                      <mat-error
-                                 *ngIf="controls.citiesId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-                  </div>
-              </div>
-          </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label"><span class="required-star">*</span> {{localization.city}}</label>
+          <select class="form-select" id="control-citiesId" formControlName="citiesId">
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+            <option *ngFor="let city of tempCities" [value]="city.id">{{city.cityName}}</option>
+          </select>
+          <div class="invalid-feedback d-block" *ngIf="controls.citiesId?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+        </div>
       </div>
-      <div class="tab-data-section">
-          <div class="row mb-3">
-              <div class="col-12 col-lg-6">
-                  <div class="form-group mb-4">
-                      <label class="form-label">{{localization.neighborhood}}</label>
-                      <input type="text" id="control-neighborhoodName"
-                             placeholder="{{localization.neighborhood}}"
-                             class="form-control"
-                             formControlName="neighborhoodName">
-                      <mat-error
-                                 *ngIf="controls.neighborhoodName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-                  </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                  <div class="form-group mb-4">
-                      <label class="form-label">{{localization.street}}</label>
-                      <input type="text" id="control-streetName"
-                             placeholder="{{localization.street}}"
-                             class="form-control"
-                             formControlName="streetName">
-                      <mat-error
-                                 *ngIf="controls.streetName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-                  </div>
-              </div>
-              <div class="col-12">
-                  <div class="form-group mb-4">
-                      <label class="form-label">{{localization.location}}</label>
-                      <app-google-maps *ngIf="longitude && latitude"
-                                       [longitude]="longitude"
-                                       [latitude]="latitude"
-                                       [useSearch]="true"
-                                       (locationSelected)="setLocationOnMapChanges($event)"></app-google-maps>
-                      <mat-error
-                                 *ngIf="controls.latitude?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</mat-error>
-                  </div>
-              </div>
-          </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label"><span class="required-star">*</span> {{localization.neighborhood}}</label>
+          <input type="text" id="control-neighborhoodName" class="form-control" formControlName="neighborhoodName">
+          <div class="invalid-feedback d-block" *ngIf="controls.neighborhoodName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+        </div>
       </div>
-      <app-next-and-previus-buttons></app-next-and-previus-buttons>
-      <!-- <div class="form-actions mt-auto">
-          <button class="btn btn-outline-primary"
-                  (click)="back()">{{localization.previous}}</button>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label"><span class="required-star">*</span> {{localization.street}}</label>
+          <input type="text" id="control-streetName" class="form-control" formControlName="streetName">
+          <div class="invalid-feedback d-block" *ngIf="controls.streetName?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label class="form-label"><span class="required-star">*</span> {{localization.location}}</label>
+          <app-google-maps *ngIf="longitude && latitude" [longitude]="longitude" [latitude]="latitude" [useSearch]="true" (locationSelected)="setLocationOnMapChanges($event)"></app-google-maps>
+          <div class="invalid-feedback d-block" *ngIf="controls.latitude?.hasError('required') && showValidation">{{localization.requiredErrorMsg}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <button class="btn btn-outline-primary"
-                  (click)="save(true)">{{localization.next}}</button>
-
-      </div> -->
-  </form>
-</ng-container>
+  <app-next-and-previus-buttons></app-next-and-previus-buttons>
+</form>

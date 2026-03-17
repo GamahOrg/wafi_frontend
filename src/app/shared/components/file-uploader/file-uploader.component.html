@@ -1,7 +1,13 @@
 <div class="file-upload">
   <div class="upload-drop-zone d-flex flex-column gap-2">
     <div class="upload-hints">
-      <p>الصيغة {{data.allowedExtensionsText}} و {{this.data.size}} كيلو بايت بحد أقصى</p>
+      <p>
+        الصيغة {{data.allowedExtensionsText}} و {{
+    data.maxFileSizeMB
+      ? data.maxFileSizeMB + ' ميجا بايت'
+      : data.size + ' كيلو بايت'
+        }}  بحد أقصى
+      </p>
     </div>
 
     <div class="d-flex flex-column gap-2">

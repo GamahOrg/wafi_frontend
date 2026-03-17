@@ -91,7 +91,7 @@
                 <div class="form-group">
                   <label class="form-label">مدة التأهيل</label>
                   <select class="form-select form-select-sm" id="control-priod" (change)="changePriod($event)" formControlName="priod">
-                    <option value=null selected disabled>اختر المدة</option>
+                    <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                     <option value="1">سنه واحدة</option>
                     <option value="2">سنتين</option>
                     <option value="3">ثلاث سنوات</option>

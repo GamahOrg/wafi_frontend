@@ -2,7 +2,7 @@
     <div class="col-12 col-lg-6">
         <label for="" class="form-label"> تاريخ البرنامج الزمني</label>
         <select class="form-select"  id="control-areasId" formControlName="monthDate" (change)="onSelectedDateChanged($event)">
-            <option selected disabled value="" label="-- اختار  التاريخ --"></option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let date of dateList" [value]="date">{{date | date:'dd/MM/yyyy'}}</option>
         </select>
         <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.monthDate.errors && filesdataForm.controls.monthDate.errors['required'] && isFormSubmitted" >حقل مطلوب

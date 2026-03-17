@@ -16,7 +16,6 @@
         <input type="text"
                id="modelTitle" S
                formControlName="modelTitle"
-               placeholder="عنوان النموذج"
                class="form-control"
                [class.invalid]="paymentForm.get('modelTitle')?.invalid && paymentForm.get('modelTitle')?.touched" />
         <div class="error-message" *ngIf="paymentForm.get('modelTitle')?.invalid && paymentForm.get('modelTitle')?.touched">
@@ -65,7 +64,7 @@
 
         <div class="error-message" *ngIf="numberOfPayments?.invalid && numberOfPayments?.touched">
           <span *ngIf="numberOfPayments?.errors?.['required']">هذا الحقل مطلوب</span>
-          <span *ngIf="numberOfPayments?.errors?.['min']">القيمة يجب أن تكون أكبر من او تساوي  {{minNumberOfPayments}}</span>
+          <span *ngIf="numberOfPayments?.errors?.['min']">القيمة يجب أن تكون أكبر من أو تساوي  {{minNumberOfPayments}}</span>
           <span *ngIf="numberOfPayments?.errors?.['max']">القيمة يجب أن تكون أقل من أو تساوي {{ maxNumberOfPayments }}</span>
           <span *ngIf="numberOfPayments?.errors?.['pattern']">القيمة يجب أن تكون رقم صحيح بدون كسور</span>
         </div>
@@ -140,7 +139,6 @@
             min="0.01"
             [max]="maxWithholdingRate"
             step="0.01"
-            placeholder="قيمة الدفعة المقدمة"
             (input)="onAdvancePaymentChange()"
             [class.invalid]="advancePaymentValue?.invalid && advancePaymentValue?.touched"
           />
@@ -207,8 +205,7 @@
                   min="0"
                   max="100"
                   step="0.01"
-                  placeholder="%"
-                />
+                  />
                 <span class="percentage-symbol">%</span>
               </div>
             </ng-container>
@@ -231,8 +228,7 @@
                   min="0"
                   max="100"
                   step="0.01"
-                  placeholder="%"
-                />
+                  />
                 <span class="percentage-symbol">%</span>
               </div>
             </ng-container>
@@ -244,7 +240,6 @@
               [(ngModel)]="row.description"
               [ngModelOptions]="{standalone: true}"
               class="form-control table-input"
-              placeholder="وصف الدفعة"
               [readonly]="isFirstRowInCashMode(row.id) || row.description === 'الدفعة الاخيرة'"
               [class.readonly]="isFirstRowInCashMode(row.id) || row.description === 'الدفعة الاخيرة'"
             />

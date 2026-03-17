@@ -12,7 +12,7 @@
        هل نسيت كلمة المرور ؟
      </h1>
      <h2 class="h5 mb-3 form-label">
-       نأمل ادخال اسم المستخدم  لارسال رمز التحقق
+       نأمل ادخال اسم المستخدم  لإرسال رمز التحقق
      </h2>
    </div> 
     <form [formGroup]="forgotPassForm" id="form-forgotPassForm">
@@ -23,7 +23,6 @@
          class="form-control"
          formControlName="username"
          id="username"
-         placeholder=" أكتب اسم المستخدم "
          [ngClass]="{
            'is-invalid': usernameControl.touched && usernameControl.errors
          }"

@@ -26,9 +26,7 @@
             aria-label="Default select example"
             formControlName="paymentTypeId"
           >
-            <option selected disabled>
-              طريقة الدفع
-            </option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option
               *ngFor="let paymentType of paymentTypes"
               [ngValue]="paymentType.id"
@@ -50,7 +48,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">اسم المشتري</label>
-          <input type="text" id="control-name" class="form-control" formControlName="name" placeholder="اسم المشتري">
+          <input type="text" id="control-name" class="form-control" formControlName="name">
           <mat-error *ngIf="(controls.name?.hasError('required')) && showValidation">حقل
             مطلوب</mat-error>
 
@@ -59,8 +57,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم الهوية</label>
-          <input type="text" id="control-nidNumber" class="form-control" formControlName="nidNumber"
-            placeholder="رقم الهوية">
+          <input type="text" id="control-nidNumber" class="form-control" formControlName="nidNumber">
           <mat-error *ngIf="(controls.nidNumber?.hasError('required'))&& showValidation">حقل
             مطلوب</mat-error>
         </div>
@@ -68,7 +65,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم الجوال</label>
-          <input type="text" id="control-mobile" class="form-control" formControlName="mobile" placeholder="رقم الجوال">
+          <input type="text" id="control-mobile" class="form-control" formControlName="mobile">
           <mat-error *ngIf="(controls.mobile?.hasError('required'))&& showValidation">حقل
             مطلوب</mat-error>
         </div>
@@ -76,8 +73,7 @@
       <div class="col-12 col-lg-6" *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Lands">
         <div class="form-group mb-4">
           <label class="form-label">عدد الأراضي</label>
-          <input type="text" id="control-mobile" class="form-control" formControlName="landNumbers"
-            placeholder="عدد الأراضي">
+          <input type="text" id="control-mobile" class="form-control" formControlName="landNumbers">
           <mat-error *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Lands && 
             !controls.landNumbers.value && showValidation">حقل
             مطلوب</mat-error>
@@ -87,7 +83,7 @@
         <div class="form-group mb-4">
           <label class="form-label">رقم الوحدة </label>
           <select class="form-select" formControlName="unitCodeId" (change)="loadAveragePrice()">
-            <option label="اختر رقم الوحدة" disabled></option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let unit of projectUnitCodes" [value]="unit.id">
               {{ unit.code }}
             </option>
@@ -100,9 +96,9 @@
       </div>
       <div *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Lands" class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">رقم البلوك او العمارة</label>
+          <label class="form-label">رقم البلوك أو العمارة</label>
           <select class="form-select" formControlName="blockId">
-            <option label="اختر او عمارة" disabled></option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let type of projectUnits" [value]="type.id">
               {{ type.code }}
             </option>
@@ -114,9 +110,9 @@
       </div>
       <div *ngIf="selectedBuyerType==licenseProjectBuyerTypeEnum.Units" class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">رقم البلوك او العمارة</label>
+          <label class="form-label">رقم البلوك أو العمارة</label>
           <input type="number" id="control-averagePrice" class="form-control" readonly="readonly"
-          [value]="blockName" placeholder="رقم البلوك او العمارة">
+          [value]="blockName">
 
           <!-- <div id="control-block" class="form-control-plaintext">
             {{ blockName }}
@@ -126,8 +122,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
           <label class="form-label">رقم العقد</label>
-          <input type="text" id="control-contractNumber" class="form-control" formControlName="contractNumber"
-            placeholder="رقم العقد">
+          <input type="text" id="control-contractNumber" class="form-control" formControlName="contractNumber">
           <mat-error *ngIf="(controls.contractNumber?.hasError('required'))&& showValidation">حقل
             مطلوب</mat-error>
         </div>
@@ -197,9 +192,9 @@
      
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">سعر الوحدة او الأرض قبل ضريبة القيمة المضافة</label>
+          <label class="form-label">سعر الوحدة أو الأرض قبل ضريبة القيمة المضافة</label>
           <input (change)="observelicenseProjectBuyerForm()" type="number" id="control-price" class="form-control"
-            formControlName="price" placeholder="سعر الوحدة او الأرض قبل ضريبة القيمة المضافة">
+            formControlName="price">
           <mat-error *ngIf="(controls.price?.hasError('required'))&& showValidation">حقل
             مطلوب</mat-error>
         </div>
@@ -208,7 +203,7 @@
         <div class="form-group mb-4">
           <label class="form-label">متوسط سعر المتر</label>
           <input type="number" id="control-averagePrice" class="form-control" readonly="readonly"
-        [value]="averagePrice" placeholder="متوسط سعر المتر">
+        [value]="averagePrice">
 
           <!-- <div id="control-averagePrice" class="form-control-plaintext">
             {{ averagePrice }}
@@ -217,9 +212,9 @@
       </div>      
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">نسبة الضريبة المضافة للأرض او الوحدة</label>
+          <label class="form-label">نسبة الضريبة المضافة للأرض أو الوحدة</label>
           <input type="number" id="control-currentTax" class="form-control" readonly="readonly"
-            formControlName="currentTax" placeholder="نسبة الضريبة المضافة للأرض او الوحدة">
+            formControlName="currentTax">
 
         </div>
       </div>
@@ -227,7 +222,7 @@
         <div class="form-group mb-4">
           <label class="form-label">ضريبة القيمة المضافة من سعر البيع</label>
           <input type="number" id="control-priceAfterTax" class="form-control" readonly="readonly"
-            formControlName="priceAfterTax" placeholder="ضريبة القيمة المضافة من سعر البيع">
+            formControlName="priceAfterTax">
 
         </div>
       </div>
@@ -235,35 +230,35 @@
         <div class="form-group mb-4">
           <label class="form-label"> قيمة البيع شاملة القيمة المضافة </label>
           <input type="number" id="control-totalPrice" class="form-control" readonly="readonly"
-            formControlName="totalPrice" placeholder="قيمة البيع شاملة القيمة المضافة ">
+            formControlName="totalPrice">
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Lands">
         <div class="form-group mb-4">
           <label class="form-label">نسبة الرسوم للأراضي</label>
           <input type="number" id="control-percentageSupervisionOrFees" class="form-control" readonly="readonly"
-            formControlName="percentageSupervisionOrFees" placeholder="نسبة الرسوم للأراضي">
+            formControlName="percentageSupervisionOrFees">
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Lands">
         <div class="form-group mb-4">
           <label class="form-label">تكاليف رسوم الأراضي</label>
           <input type="number" id="control-landFeeCosts" class="form-control" readonly="readonly"
-            formControlName="landFeeCosts" placeholder="تكاليف رسوم الأراضي">
+            formControlName="landFeeCosts">
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Units">
         <div class="form-group mb-4">
           <label class="form-label">نسبة الإشراف والمتابعة</label>
           <input type="number" id="control-percentageSupervisionOrFees" class="form-control" readonly="readonly"
-            formControlName="percentageSupervisionOrFees" placeholder="نسبة الإشراف والمتابعة">
+            formControlName="percentageSupervisionOrFees">
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf="controls.licenseProjectBuyerTypeId.value==licenseProjectBuyerTypeEnum.Units">
         <div class="form-group mb-4">
           <label class="form-label">الأشراف والمتابعة منذ بداية المشروع</label>
           <input type="number" id="control-supervisionFromProjectBeginning" class="form-control" readonly="readonly"
-            formControlName="supervisionFromProjectBeginning" placeholder="الأشراف والمتابعة منذ بداية المشروع">
+            formControlName="supervisionFromProjectBeginning">
         </div>
       </div>
       <div class="col-12 col-lg-12">

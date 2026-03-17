@@ -1,0 +1,204 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/bootstrap-custom/buttons";
+
+@import "/src/assets/styles/content/layout-content";
+.content-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .card-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding-block-end: 4px;
+    padding-inline: 24px;
+    border-bottom: 1px solid rgba(231, 234, 234, 1);
+
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+  }
+}
+.document-page {
+  background: #f8f9fb;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+
+  .card {
+    background: #fff;
+    width: 100%;
+    min-width: 100%;
+    max-width: 1100px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding-inline: 16px;
+    padding-block: 24px;
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px 60px;
+      hr {
+        grid-column: 1 / -1;
+        border: none;
+        border-top: 1px solid rgba(224, 234, 236, 1);
+
+        height: 0px;
+        width: 75%;
+        opacity: 1;
+        border-width: 1px;
+        margin: 0px;
+      }
+      .main-title {
+        grid-column: 1 / -1;
+        font-weight: 600;
+        font-style: SemiBold;
+        font-size: 18px;
+        width: 100%;
+        line-height: 24px;
+        letter-spacing: 2%;
+        text-align: right;
+        color: rgba(0, 31, 33, 1);
+      }
+      .detail-item {
+        display: flex;
+
+        gap: 16px;
+
+        .label {
+          font-weight: 600;
+
+          font-size: 16px;
+
+          line-height: 24px;
+          letter-spacing: 2%;
+          text-align: right;
+
+          color: rgba(0, 31, 33, 1);
+        }
+
+        .value {
+          font-weight: 500;
+          font-style: Medium;
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 2%;
+          text-align: right;
+          color: rgba(93, 93, 93, 1);
+          &.attachment {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            color: rgba(22, 22, 22, 1);
+            text-decoration: underline;
+          }
+        }
+
+        &.full-width {
+          grid-column: span 2;
+        }
+      }
+    }
+
+    .card-footer {
+      margin-top: 40px;
+      display: flex;
+      background: #fff;
+      gap: 12px;
+      span {
+        font-family: IBM Plex Sans Arabic;
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 16px;
+
+        line-height: 24px;
+        letter-spacing: 0%;
+        text-align: right;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .document-page {
+    .card {
+      padding: 20px;
+
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-footer {
+        flex-direction: column;
+      }
+    }
+  }
+}
+.rejection-reason {
+  margin-top: 32px;
+  width: 100%;
+  min-height: 150px;
+  padding: 24px 16px;
+  border-top: 1px solid rgba(224, 234, 236, 1);
+  font-size: 16px;
+  flex-direction: column;
+  display: flex;
+  gap: 32px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+  .rejection-reason-header {
+    display: flex;
+    gap: 16px;
+    .badge {
+      width: fit-content;
+      height: 32px;
+      padding: 8px;
+      background-color: rgba(249, 250, 251, 1);
+      opacity: 1;
+      border: 1px solid rgba(229, 231, 235, 1);
+      border-width: 1px;
+      color: rgba(0, 31, 33, 1);
+      font-family: Font Family/font-family-text;
+      font-weight: 500;
+      font-style: Medium;
+      font-size: 16px;
+      letter-spacing: 0%;
+      text-align: center;
+      border-radius: 8px;
+    }
+    .title {
+      font-weight: 700;
+      font-style: Bold;
+      font-size: 24px;
+      color: #1f2937;
+      line-height: 24px;
+      letter-spacing: 2%;
+      text-align: right;
+    }
+  }
+  span {
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    color: rgba(93, 93, 93, 1);
+    line-height: 24px;
+    letter-spacing: 2%;
+    text-align: right;
+  }
+}
+.alert {
+  margin-bottom: 16px;
+}
+.sidebar {
+  height: 100%;
+  min-height: 100vh;
+  width: 249px;
+  background-color: rgba(255, 255, 255, 1);
+}

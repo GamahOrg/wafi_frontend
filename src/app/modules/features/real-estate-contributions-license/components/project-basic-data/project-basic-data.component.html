@@ -12,7 +12,6 @@
             <label class="form-label">{{localization.name}}</label>
             <input type="text"
                    id="control-name"
-                   placeholder="{{localization.name}}"
                    class="form-control"
                    formControlName="name">
             <mat-error
@@ -25,7 +24,7 @@
             <select class="form-select"  
                     id="control-categoryId"
                     formControlName="categoryId">
-              <option [label]="localization.categoryId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let category of categories"
                       [value]="category.id">{{category.categoryName}}</option>
             </select>
@@ -39,7 +38,7 @@
             <select class="form-select"  
                    id="control-subCategoryId"
                     formControlName="subCategoryId">
-              <option [label]="localization.subCategoryId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let subCategory of tempSubCategories"
                       [value]="subCategory.id">{{subCategory.subCategoryName}}</option>
             </select>
@@ -53,7 +52,7 @@
             <select class="form-select" 
                     id="control-typeId"
                     formControlName="typeId">
-              <option [label]="localization.typeId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let type of types"
                       [value]="type.id">{{type.name}}</option>
             </select>
@@ -140,7 +139,7 @@
             <label class="form-label">{{localization.licenseProjectScopeId}}</label>
             <select class="form-select" id="control-licenseProjectScopeId"
                     formControlName="licenseProjectScopeId">
-              <option [label]="localization.licenseProjectScopeId"></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let scope of licenseProjectScopes"
                       [value]="scope.id">{{scope.name}}</option>
             </select>

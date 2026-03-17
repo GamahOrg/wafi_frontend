@@ -113,6 +113,12 @@ export class SharedLicenseProjectService {
   getLicenseProjectIdStorage(): string | null {
     return localStorage.getItem('licenseProjectId');
   }
+  setLicenseProjectNameInLocalStorage(licenseProjectId: string): void {
+    localStorage.setItem('licenseProjectName', licenseProjectId);
+  }
+  getLicenseProjectNameStorage(): string | null {
+    return localStorage.getItem('licenseProjectName');
+  }
   setIsProfileCompletedInLocalStorage(isProfileCompleted: string): void {
     localStorage.setItem('isProfileCompleted', isProfileCompleted);
   }
@@ -121,6 +127,9 @@ export class SharedLicenseProjectService {
   }
   removeLicenseProjectIdfromLocalStorage(): void {
     localStorage.removeItem('licenseProjectId');
+  }
+  removeLicenseProjectNamefromLocalStorage(): void {
+    localStorage.removeItem('licenseProjectName');
   }
 
   setLicenseTypeCodeInLocalStorage(typeCode: string): void {
@@ -131,6 +140,13 @@ export class SharedLicenseProjectService {
   }
   removeLicenseTypeCodefromLocalStorage(): void {
     localStorage.removeItem('LicenseTypeCode');
+  }
+
+  setLicenseTypeNameInLocalStorage(name: string): void {
+    localStorage.setItem('LicenseTypeName', name);
+  }
+  getLicenseTypeNameStorage(): string | null {
+    return localStorage.getItem('LicenseTypeName');
   }
 
   setIsActiveTermsLocalStorage(licenseProjectId: string): void {

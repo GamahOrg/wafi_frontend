@@ -212,7 +212,7 @@ export class CorrectionUnitCodesFormComponent implements OnInit, OnDestroy {
     save: 'حفظ البيانات',
     projectModelId: 'نوع النموذج',
     savedSuccessfully: 'تم الحفظ',
-    dateValidator: 'يجب ان يكون تاريخ الرخصة اقل من تاريخ الحالي',
+    dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     MinValueError: 'قيمة الحقل يجب الا تقل عن صفر',
     PleaseAddAllRequiredFields: 'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
     space: 'المساحة الإجمالية للوحدة',

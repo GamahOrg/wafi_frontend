@@ -36,7 +36,7 @@ export class AddEditDetachedLicenseProjectUnitsComponent implements OnInit, OnDe
     subUnitsType: "اضاقة أنواع الوحدات ",
     subUnitCount: "عدد وحدات",
     actions: "إجراءات",
-    errorMsg: "لا يمكن اضافة او تعديل وحدات الآن",
+    errorMsg: "لا يمكن اضافة أو تعديل وحدات الآن",
     saveSuccessfully: "تم أضافة الوحدات بنجاح",
     PleaseAddAllRequiredFields:
     'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',

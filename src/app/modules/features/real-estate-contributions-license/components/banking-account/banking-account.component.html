@@ -14,7 +14,7 @@
                         <label class="form-label">{{localization.bankName}}</label>
                         <select class="form-select"
                                 formControlName="bankId" id="control-bankId">
-                            <option [label]="localization.selectBankName"></option>
+                            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
                             <option *ngFor="let bank of banks"
                                     [value]="bank.id">{{bank.name}}</option>
                         </select>
@@ -27,7 +27,6 @@
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.accountNumber}}</label>
                         <input type="text" id="control-accountNumber"
-                               placeholder="{{localization.accountNumber}}"
                                class="form-control"
                                formControlName="accountNumber">
                         <mat-error
@@ -38,7 +37,6 @@
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.bankAccountDelegatorName}}</label>
                         <input type="text" id="control-bankAccountDelegatorName"
-                               placeholder="{{localization.bankAccountDelegatorName}}"
                                class="form-control"
                                formControlName="bankAccountDelegatorName">
                         <mat-error
@@ -49,7 +47,6 @@
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.bankAccountDelegatorMobile}}</label>
                         <input type="text" id="control-bankAccountDelegatorMobile"
-                               placeholder="{{localization.bankAccountDelegatorMobile}}"
                                class="form-control"
                                formControlName="bankAccountDelegatorMobile">
                         <mat-error
@@ -63,7 +60,6 @@
                     <div class="form-group mb-4">
                         <label class="form-label">{{localization.bankAccountDelegatorEmail}}</label>
                         <input type="text" id="control-bankAccountDelegatorEmail"
-                               placeholder="{{localization.bankAccountDelegatorEmail}}"
                                class="form-control"
                                formControlName="bankAccountDelegatorEmail">
                         <mat-error

@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { LicenseProjectModelDesignFileDto, LicenseProjectModelDto } from '../../../dataModels/license-project-model.dto';
+import {
+  LicenseProjectModelDesignFileDto,
+  LicenseProjectModelDto,
+} from '../../../dataModels/license-project-model.dto';
 import { environment } from 'src/environments/environment';
 import { CorrectionProjectModelService } from '../../../services/correct-units/correction-project-model-service.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -13,21 +16,24 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 @Component({
   selector: 'app-correction-project-module-models-form',
   templateUrl: './correction-project-module-models-form.component.html',
-  styleUrls: ['./correction-project-module-models-form.component.scss']
+  styleUrls: ['./correction-project-module-models-form.component.scss'],
 })
-
-export class CorrectionProjectModuleModelsFormComponent implements OnInit, OnDestroy {
+export class CorrectionProjectModuleModelsFormComponent
+  implements OnInit, OnDestroy
+{
   subscriptions: Subscription[] = [];
   projectModel: LicenseProjectModelDto = new LicenseProjectModelDto();
   licenseProjectModelDesignFiles: LicenseProjectModelDesignFileDto[] = [];
   baseUrl = `${environment.baseURL}/`;
   showValidation: boolean = false;
 
-  constructor(private _projectModelService: CorrectionProjectModelService,
+  constructor(
+    private _projectModelService: CorrectionProjectModelService,
     private _formBuilder: FormBuilder,
     private _toastrService: ToastrService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _popupService: PopupService) { }
+    private _popupService: PopupService,
+  ) {}
 
   multipleFileUploaderData: FileUploader = {
     multiple: true,
@@ -39,8 +45,8 @@ export class CorrectionProjectModuleModelsFormComponent implements OnInit, OnDes
     //space: [0, [Validators.required, Validators.min(0)]],
     //buildingFlatSpace: [0, [Validators.required, Validators.min(0)]],
     properties: ['', [Validators.required]],
-    unitsCount: [0, [Validators.required, Validators.min(0)]],
-  })
+    unitsCount: [0, [Validators.required, Validators.min(1)]],
+  });
 
   get controls() {
     return this.projectModelForm.controls;
@@ -50,11 +56,13 @@ export class CorrectionProjectModuleModelsFormComponent implements OnInit, OnDes
     this.subscriptions.push(
       this._projectModelService.getSubjectObj().subscribe((subjectObj) => {
         this.projectModel = subjectObj;
-        if (!this.projectModel.id) this.projectModel.id = '00000000-0000-0000-0000-000000000000';
-        this.licenseProjectModelDesignFiles = this.projectModel.licenseProjectModelDesignFiles;
+        if (!this.projectModel.id)
+          this.projectModel.id = '00000000-0000-0000-0000-000000000000';
+        this.licenseProjectModelDesignFiles =
+          this.projectModel.licenseProjectModelDesignFiles;
         this.setResponseToForm(this.projectModel);
-      })
-    )
+      }),
+    );
     this.observeForm();
     this.observePopupEvents();
   }
@@ -83,10 +91,11 @@ export class CorrectionProjectModuleModelsFormComponent implements OnInit, OnDes
 
   observeForm(): void {
     this.subscriptions.push(
-      this.projectModelForm.valueChanges.subscribe(changes => {
-        this.projectModel = this.projectModelForm.value as LicenseProjectModelDto;
-      })
-    )
+      this.projectModelForm.valueChanges.subscribe((changes) => {
+        this.projectModel = this.projectModelForm
+          .value as LicenseProjectModelDto;
+      }),
+    );
   }
 
   ngOnDestroy() {
@@ -94,24 +103,24 @@ export class CorrectionProjectModuleModelsFormComponent implements OnInit, OnDes
   }
 
   observePopupEvents(): void {
-    this.observecancelAction()
-    this.observeconfirmAction()
+    this.observecancelAction();
+    this.observeconfirmAction();
   }
 
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         this._popupService.dismissDialog();
-      })
-    )
+      }),
+    );
   }
 
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.save();
-      })
-    )
+      }),
+    );
   }
 
   onFileUploaded(filesData: any) {
@@ -121,30 +130,38 @@ export class CorrectionProjectModuleModelsFormComponent implements OnInit, OnDes
         designFileId: data.id,
         modelId: this.projectModel.id,
         id: '00000000-0000-0000-0000-000000000000',
-        designFile: null
+        designFile: null,
       });
     });
   }
 
   save(): void {
-    if (!this.projectModel.id) this.projectModel.id = '00000000-0000-0000-0000-000000000000';
+    if (!this.projectModel.id)
+      this.projectModel.id = '00000000-0000-0000-0000-000000000000';
     this.controls.id.setValue(this.projectModel.id);
-    if (!this.projectModelForm.valid || !this.licenseProjectModelDesignFiles?.length) {
+    if (
+      !this.projectModelForm.valid ||
+      !this.licenseProjectModelDesignFiles?.length
+    ) {
       this.showValidation = true;
-      this._toastrNotificationService.showError(this.localization.PleaseAddAllRequiredFields);
+      this._toastrNotificationService.showError(
+        this.localization.PleaseAddAllRequiredFields,
+      );
       this.projectModelForm?.markAllAsTouched();
       return;
     }
-    this.projectModel.licenseProjectModelDesignFiles = this.licenseProjectModelDesignFiles;
+    this.projectModel.licenseProjectModelDesignFiles =
+      this.licenseProjectModelDesignFiles;
     this.subscriptions.push(
-      this._projectModelService.Save(this.projectModel).subscribe(res => {
+      this._projectModelService.Save(this.projectModel).subscribe((res) => {
         if (res.isDone) {
           this._toastrService.success(this.localization.savedSuccessfully);
-          this._projectModelService.SetSubjectListObjs(res.data as LicenseProjectModelDto[]);
+          this._projectModelService.SetSubjectListObjs(
+            res.data as LicenseProjectModelDto[],
+          );
           this._popupService.dismissDialog();
         }
-      })
-    )
+      }),
+    );
   }
-
 }

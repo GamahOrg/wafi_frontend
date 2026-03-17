@@ -1,5 +1,5 @@
 <ng-container *ngIf="projectRealStateDeveloper && projectRealStateDeveloper.id">
-  <form class="d-flex flex-column h-100" id="form-projectRealStateDeveloperForm" [formGroup]="projectRealStateDeveloperForm">
+  <form id="form-projectRealStateDeveloperForm" [formGroup]="projectRealStateDeveloperForm">
     <div class="tab-data-header">
       <i class="icon hgi hgi-stroke hgi-profile"></i>
       <h6 class="title">{{ localization.title }}</h6>
@@ -7,6 +7,7 @@
 
     <div class="tab-data-section" *ngIf="dataSection[tabCode.facilityInfo]">
       <h6 class="title">{{ localization.facilityData }}</h6>
+
       <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
           <div class="key">{{ localization.orderDate }}</div>
@@ -55,7 +56,6 @@
             {{ facilityFullData.telephone }}
           </div>
         </div>
-
         <div class="col-12 col-lg-6">
           <div class="key">{{ localization.identityNumberecommerceroom }}</div>
           <div class="value">
@@ -98,43 +98,43 @@
         </div>
       </div>
     </div>
+
     <div class="tab-data-section">
       <h6 class="title">الملاك</h6>
-      <div class="row row-gap-4">
-        <div class="col-12 col-lg-6">
-          <div class="table-responsive">
-            <table class="table table-light">
-              <thead>
-                <tr>
-                  <th>رقم الهوية</th>
-                  <th>اسم مالك</th>
-                  <th>نوع العلاقة</th>
-                  <th>الجنسية</th>
-                  <th>رقم التليفون</th>
-                  <th>الايميل</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="
+
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th>رقم الهوية</th>
+              <th>اسم مالك</th>
+              <th>نوع العلاقة</th>
+              <th>الجنسية</th>
+              <th>رقم التليفون</th>
+              <th>الايميل</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="
                   let owner of facilityFullData.facilityOwners;
                   let i = index
                 ">
-                  <td class="facility-owner-body">{{ owner.nidnumber }}</td>
-                  <td class="facility-owner-body">{{ owner.ownerName }}</td>
-                  <td class="facility-owner-body">{{ owner.relationType }}</td>
-                  <td class="facility-owner-body">{{ owner.ownerNationalityAR }}</td>
-                  <td class="facility-owner-body">{{ owner.mobile }}</td>
-                  <td class="facility-owner-body">{{ owner.email }}</td>
+              <td class="facility-owner-body">{{ owner.nidnumber }}</td>
+              <td class="facility-owner-body">{{ owner.ownerName }}</td>
+              <td class="facility-owner-body">{{ owner.relationType }}</td>
+              <td class="facility-owner-body">{{ owner.ownerNationalityAR }}</td>
+              <td class="facility-owner-body">{{ owner.mobile }}</td>
+              <td class="facility-owner-body">{{ owner.email }}</td>
 
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+
     <div class="tab-data-section" *ngIf="dataSection[tabCode.licenseProjectFacilityAddress]">
       <h6 class="title">{{ localization.facilityAddress }}</h6>
+
       <div class="row row-gap-4">
         <div class="col-12 col-lg-6" *ngIf="
             facilityFullData.qualificationNationalAddressDetails &&
@@ -167,6 +167,7 @@
 
     <div class="tab-data-section" *ngIf="dataSection[tabCode.customerInfo]">
       <h6 class="title">{{ localization.applicantData }}</h6>
+
       <div class="row row-gap-4">
         <div class="col-12 col-lg-6" *ngIf="customerDate && customerDate.fullName">
           <div class="key">{{ localization.applicantName }}</div>
@@ -202,14 +203,12 @@
     <div class="tab-data-section">
       <h6 class="title">{{ localization.delegator }}</h6>
 
-      <div class="row mb-3">
+      <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
+          <div class="form-group">
             <label class="form-label">{{ localization.selectDelegator }}</label>
             <select class="form-select" id="control-delegatorCustomerId" aria-label="Default select example" formControlName="delegatorCustomerId">
-              <option selected disabled>
-                {{ localization.selectDelegator }}
-              </option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let customer of subCustomerList" [ngValue]="customer.id">
                 {{ customer.fullName }}
               </option>
@@ -227,10 +226,10 @@
     <div class="tab-data-section" *ngIf="dataSection[tabCode.licenseProjectExecutiveDirector]">
       <h6 class="title">{{ localization.executiveDirectorData }}</h6>
 
-      <div class="row mb-3">
+      <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{ localization.name }}</label>
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.name }}</label>
             <input type="text" id="control-executiveDirectorName" class="form-control" formControlName="executiveDirectorName" />
             <mat-error *ngIf="
                 controls.executiveDirectorName?.hasError('required') &&
@@ -239,15 +238,15 @@
           </div>
         </div>
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{ localization.mobile }}</label>
-            <input type="text" id="control-executiveDirectorMobile"  class="form-control" formControlName="executiveDirectorMobile" />
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.mobile }}</label>
+            <input type="text" id="control-executiveDirectorMobile" class="form-control" formControlName="executiveDirectorMobile" />
             <mat-error *ngIf="
                 controls.executiveDirectorMobile?.hasError('required') &&
                 showValidation
               ">{{ localization.requiredErrorMsg }}</mat-error>
             <mat-error *ngIf="controls.executiveDirectorMobile?.hasError('pattern')">
-            {{ localization.phoneNumberPattern }}
+              {{ localization.phoneNumberPattern }}
             </mat-error>
             <!--<mat-error *ngIf="
                 controls.executiveDirectorMobile?.hasError('maxlength') ||
@@ -256,9 +255,9 @@
           </div>
         </div>
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{ localization.email }}</label>
-            <input type="text" id="control-executiveDirectorEmail"  class="form-control" formControlName="executiveDirectorEmail" />
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.email }}</label>
+            <input type="text" id="control-executiveDirectorEmail" class="form-control" formControlName="executiveDirectorEmail" />
             <mat-error *ngIf="
                 controls.executiveDirectorEmail?.hasError('required') &&
                 showValidation
@@ -271,11 +270,12 @@
 
     <div class="tab-data-section" *ngIf="dataSection[tabCode.licenseProjectContactOfficer]">
       <h6 class="title">{{ localization.contactOfficerData }}</h6>
-      <div class="row mb-3">
+
+      <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{ localization.name }}</label>
-            <input type="text" id="control-contactOfficerName"  class="form-control" formControlName="contactOfficerName" />
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.name }}</label>
+            <input type="text" id="control-contactOfficerName" class="form-control" formControlName="contactOfficerName" />
             <mat-error *ngIf="
                 controls.contactOfficerName?.hasError('required') &&
                 showValidation
@@ -283,21 +283,21 @@
           </div>
         </div>
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{ localization.mobile }}</label>
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.mobile }}</label>
             <input type="text" id="control-contactOfficerMobile" class="form-control" formControlName="contactOfficerMobile" />
             <mat-error *ngIf="
                 controls.contactOfficerMobile?.hasError('required') &&
                 showValidation
               ">{{ localization.requiredErrorMsg }}</mat-error>
             <mat-error *ngIf="controls.contactOfficerMobile?.hasError('pattern')">
-            {{ localization.phoneNumberPattern }}</mat-error>
+              {{ localization.phoneNumberPattern }}</mat-error>
           </div>
         </div>
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{ localization.email }}</label>
-            <input type="text" id="control-contactOfficerEmail"  class="form-control" formControlName="contactOfficerEmail" />
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.email }}</label>
+            <input type="text" id="control-contactOfficerEmail" class="form-control" formControlName="contactOfficerEmail" />
             <mat-error *ngIf="
                 controls.contactOfficerEmail?.hasError('required') &&
                 showValidation
@@ -307,28 +307,33 @@
         </div>
       </div>
     </div>
+
     <div class="tab-data-section">
       <h6 class="title">{{ localization.paymentReciept }}</h6>
-      <div class="col-12 col-lg-6">
-        <div class="form-group mb-4">
-          <span class="icon material-icons-outlined">content_copy</span>
-          <a *ngIf="paymentReceiptFile" [href]="baseUrl + paymentReceiptFile.filePath" target="_blank">
-            {{paymentReceiptFile.fileDescription }}
-          </a>
-          <app-file-uploader [data]="singleFileUploaderData" (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
-        </div>
 
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <div class="d-flex align-items-center gap-2 mb-3" *ngIf="paymentReceiptFile">
+              <span class="icon material-icons-outlined">content_copy</span>
+              <a [href]="baseUrl + paymentReceiptFile.filePath" target="_blank">
+                {{paymentReceiptFile.fileDescription }}
+              </a>
+            </div>
+            <app-file-uploader [data]="singleFileUploaderData" (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="tab-data-section" *ngIf="
-        dataSection[tabCode.licenseProjecFinalBeneficiaryContactInformation]
-      ">
+
+    <div class="tab-data-section" *ngIf="dataSection[tabCode.licenseProjecFinalBeneficiaryContactInformation]">
       <h6 class="title">{{ localization.finalBeneficiaryContactDetail }}</h6>
-      <div class="row mb-3">
+
+      <div class="row row-gap-4">
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{ localization.problemsEmail }}</label>
-            <input type="text" id="control-complaintEmail"  class="form-control" formControlName="complaintEmail" />
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.problemsEmail }}</label>
+            <input type="text" id="control-complaintEmail" class="form-control" formControlName="complaintEmail" />
             <mat-error *ngIf="controls.complaintEmail?.hasError('pattern')">{{
               localization.emailPattern
               }}</mat-error>
@@ -339,9 +344,9 @@
           </div>
         </div>
         <div class="col-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label class="form-label">{{ localization.salesEmail }}</label>
-            <input type="text" id="control-salesEmail"  class="form-control" formControlName="salesEmail" />
+          <div class="form-group">
+            <label class="form-label"><span class="required-star">*</span> {{ localization.salesEmail }}</label>
+            <input type="text" id="control-salesEmail" class="form-control" formControlName="salesEmail" />
             <mat-error *ngIf="controls.salesEmail?.hasError('pattern')">{{
               localization.emailPattern
               }}</mat-error>
@@ -353,6 +358,7 @@
         </div>
       </div>
     </div>
+
     <app-next-and-previus-buttons></app-next-and-previus-buttons>
   </form>
 </ng-container>

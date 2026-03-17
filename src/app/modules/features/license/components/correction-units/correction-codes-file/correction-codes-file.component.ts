@@ -49,6 +49,10 @@ export class CorrectionCodesFileComponent implements OnInit, OnDestroy {
     this.correctionUnitRequestHeaderId = this._sharedLicenseProjectService.getCorrectionUnitRequestIdFromLocalStorage();
   }
   onExcelFileUploaded(fileRemovedData: any) {
+    if (fileRemovedData.eventRes.data.length == 0) {
+      this.fileId = "";
+      return;
+    }
     this.fileId = fileRemovedData.eventRes.data[0].id;
   }
   save() {

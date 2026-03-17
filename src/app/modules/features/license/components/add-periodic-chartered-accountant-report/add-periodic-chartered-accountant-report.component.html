@@ -7,7 +7,7 @@
           <div class="form-group mb-4">
             <label class="form-label">نوع التقرير</label>
             <select class="form-select" formControlName="reportTypeId">
-              <option label="اختر نوع التقرير" disabled></option>
+              <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let type of reportTypes" [value]="type.id">
                 {{ type.name }}
               </option>
@@ -24,7 +24,7 @@
         <div class="form-group mb-4">
           <label class="form-label">تقرير الربع-في حالة نوع التقرير ربعي</label>
           <select class="form-select" formControlName="quarterTypeId">
-            <option label="اختر نوع الربع" disabled></option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let type of reportQuarterTypes" [value]="type.id">
               {{ type.name }}
             </option>
@@ -37,7 +37,7 @@
         <div class="form-group mb-4">
           <label class="form-label">الشهر في حالة التقرير شهري </label>
           <select class="form-select" formControlName="month">
-            <option label="اختر الشهر" disabled></option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let month of months" [value]="month.id">
               {{ month.name }}
             </option>
@@ -49,7 +49,7 @@
         <div class="form-group mb-4">
           <label class="form-label">العام</label>
           <select class="form-select" formControlName="year">
-            <option label="اختر العام" disabled></option>
+            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let item of years" [value]="item">
               {{ item }}
             </option>
@@ -234,7 +234,7 @@
             <div class="form-group mb-4">
               <label class="form-label">إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)</label>
               <input type="number" id="control-totalCost" class="form-control" formControlName="totalCost"
-                placeholder="إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)">
+                >
               <div class="invalid-feedback d-block" *ngIf="controls.totalCost?.hasError('required') && showValidation">
                 حقل مطلوب
               </div>
@@ -245,7 +245,7 @@
             <div class="form-group mb-4">
               <label class="form-label">هامش الربح المتوقع</label>
               <input type="number" id="control-expectedProfile" class="form-control" formControlName="expectedProfile"
-                placeholder="هامش الربح المتوقع">
+                >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.expectedProfile?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -547,7 +547,7 @@
             <div class="form-group mb-4">
               <label class="form-label">تكاليف انشائية</label>
               <input type="number" id="control-constructionCosts" class="form-control"
-                formControlName="constructionCosts" placeholder="تكاليف انشائية">
+                formControlName="constructionCosts" >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.constructionCosts?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -559,7 +559,7 @@
             <div class="form-group mb-4">
               <label class="form-label">مصاريف ادارية وتسويقية</label>
               <input type="number" id="control-administrativeMarketingExpenses" class="form-control"
-                formControlName="administrativeMarketingExpenses" placeholder="مصاريف ادارية وتسويقية">
+                formControlName="administrativeMarketingExpenses" >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.administrativeMarketingExpenses?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -571,7 +571,7 @@
             <div class="form-group mb-4">
               <label class="form-label">ايداعات عملاء مستردة</label>
               <input type="number" id="control-customerDepositRefunds" class="form-control"
-                formControlName="customerDepositRefunds" placeholder="ايداعات عملاء مستردة">
+                formControlName="customerDepositRefunds" >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.customerDepositRefunds?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -583,7 +583,7 @@
             <div class="form-group mb-4">
               <label class="form-label">عمولات بنكية</label>
               <input type="number" id="control-bankCommissions" class="form-control" formControlName="bankCommissions"
-                placeholder="عمولات بنكية">
+                >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.bankCommissions?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -595,7 +595,7 @@
             <div class="form-group mb-4">
               <label class="form-label">أخرى مدينة</label>
               <input type="number" id="control-otherDebts" class="form-control" formControlName="otherDebts"
-                placeholder="أخرى مدينة">
+                >
               <div class="invalid-feedback d-block" *ngIf="controls.otherDebts?.hasError('required') && showValidation">
                 حقل مطلوب
               </div>
@@ -606,7 +606,7 @@
             <div class="form-group mb-4">
               <label class="form-label">إجمالي العمليات المدينة</label>
               <input type="number" id="control-totalDebtOperations" class="form-control"
-                formControlName="totalDebtOperations" placeholder="إجمالي العمليات المدينة">
+                formControlName="totalDebtOperations" >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.totalDebtOperations?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -617,7 +617,7 @@
             <div class="form-group mb-4">
               <label class="form-label">تحصيل من العملاء</label>
               <input type="number" id="control-collectionsFromCustomers" class="form-control"
-                formControlName="collectionsFromCustomers" placeholder="تحصيل من العملاء">
+                formControlName="collectionsFromCustomers" >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.collectionsFromCustomers?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -629,7 +629,7 @@
             <div class="form-group mb-4">
               <label class="form-label">تمويل بنكى</label>
               <input type="number" id="control-bankFinancing" class="form-control" formControlName="bankFinancing"
-                placeholder="تمويل بنكى">
+                >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.bankFinancing?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -641,7 +641,7 @@
             <div class="form-group mb-4">
               <label class="form-label">تمويل ذاتى</label>
               <input type="number" id="control-selfFinancing" class="form-control" formControlName="selfFinancing"
-                placeholder="تمويل ذاتى">
+                >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.selfFinancing?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -653,7 +653,7 @@
             <div class="form-group mb-4">
               <label class="form-label">تمويل الوزارة</label>
               <input type="number" id="control-ministryFinancing" class="form-control"
-                formControlName="ministryFinancing" placeholder="تمويل الوزارة">
+                formControlName="ministryFinancing" >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.ministryFinancing?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -665,7 +665,7 @@
             <div class="form-group mb-4">
               <label class="form-label">أخرى دائنة</label>
               <input type="number" id="control-otherCredits" class="form-control" formControlName="otherCredits"
-                placeholder="أخرى دائنة">
+                >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.otherCredits?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -677,7 +677,7 @@
             <div class="form-group mb-4">
               <label class="form-label">إجمالي العمليات الدائنة</label>
               <input type="number" id="control-totalCreditOperations" class="form-control"
-                formControlName="totalCreditOperations" placeholder="إجمالي العمليات الدائنة">
+                formControlName="totalCreditOperations" >
               <div class="invalid-feedback d-block"
                 *ngIf="controls.totalCreditOperations?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -796,7 +796,7 @@
             <div class="form-group mb-4">
               <label class="form-label">رصيد افتتاح الفترة</label>
               <input type="number" id="control-periodOpeningBalance" class="form-control"
-                formControlName="periodOpeningBalance" placeholder="رصيد افتتاح الفترة">
+                formControlName="periodOpeningBalance" >
               <div class="invalid-feedback d-block"
                 *ngIf="!controls.periodOpeningBalance && !periodicCharteredAccountantReport.periodOpeningBalance && showValidation">
                 حقل مطلوب
@@ -808,7 +808,7 @@
             <div class="form-group mb-4">
               <label class="form-label">رصيد الاغلاق بناء على كشف الحساب البنكي</label>
               <input type="number" id="control-closingBalanceBasedOnBankStatement" class="form-control" (input)="calculateClosingBalance()"
-                formControlName="closingBalanceBasedOnBankStatement" placeholder="رصيد الاغلاق بناء على كشف الحساب البنكي">
+                formControlName="closingBalanceBasedOnBankStatement" >
               <div class="invalid-feedback d-block"
                 *ngIf="!controls.closingBalanceBasedOnBankStatement && !periodicCharteredAccountantReport.periodOpeningBalance && showValidation">
                 حقل مطلوب
@@ -954,7 +954,7 @@
                     <td>
                       <div class="form-group mb-4">
                         <select class="form-select" formControlName="sysDepositTypeId">
-                          <option label="اختر نوع الايداع" disabled></option>
+                          <option [ngValue]="0" disabled hidden>يرجى الاختيار</option>
                           <option *ngFor="let type of sysDepositTypeList" [value]="type.id">
                             {{ type.name }}
                           </option>
@@ -1020,7 +1020,7 @@
                     <td>
                       <div class="form-group mb-4">
                         <select class="form-select" formControlName="sysDepositTypeId">
-                          <option label="اختر نوع الايداع" disabled></option>
+                          <option [ngValue]="0" disabled hidden>يرجى الاختيار</option>
                           <option *ngFor="let type of sysDepositTypeList" [value]="type.id">
                             {{ type.name }}
                           </option>
@@ -1127,7 +1127,7 @@
           </div>
 
           <div class="col-12 col-lg-6">
-            <div class="key">هل نسبة تحصيل المبيعات وصلت الى 80% من إجمالي قيمة المبيعات</div>
+            <div class="key">هل نسبة تحصيل المبيعات وصلت إلى 80% من إجمالي قيمة المبيعات</div>
             <span
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.salesRateReached80Percentage==true">
               نعم
@@ -1147,7 +1147,7 @@
           </div>
 
           <div class="col-12 col-lg-6">
-            <div class="key">هل نسبة تحصيل المبيعات وصلت الى 90% من إجمالي قيمة المبيعات</div>
+            <div class="key">هل نسبة تحصيل المبيعات وصلت إلى 90% من إجمالي قيمة المبيعات</div>
             <span
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.salesRateReached90Percentage==true">
               نعم
@@ -1173,7 +1173,7 @@
             <div class="form-group mb-4">
               <label class="form-label">التوصيات والنتائج</label>
               <textarea type="number" id="control-resultsAndRecommendations" class="form-control"
-                formControlName="resultsAndRecommendations" placeholder="التوصيات والنتائج"></textarea>
+                formControlName="resultsAndRecommendations" ></textarea>
               <div class="invalid-feedback d-block"
                 *ngIf="controls.resultsAndRecommendations?.hasError('required')  && showValidation">
                 حقل مطلوب

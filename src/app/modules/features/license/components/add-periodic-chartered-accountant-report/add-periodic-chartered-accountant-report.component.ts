@@ -276,6 +276,10 @@ export class AddPeriodicCharteredAccountantReportComponent {
   }
 
   onExistFinancialCenterFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0) {
+      this.financialCenterFiles = [];
+      return;
+    }
     if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.financialCenterFiles=[];
     filesData.eventRes.data.forEach((data: any) => {
@@ -288,6 +292,11 @@ export class AddPeriodicCharteredAccountantReportComponent {
   } 
 
   onBankStatementFileUploaded(filesData: any) {
+    if (filesData.eventRes.data.length == 0){
+      this.bankStatementFileId = '';
+      return;
+    }
+    if (!filesData.eventRes.data || !filesData.eventRes.data.length) return;
     this.bankStatementFileId = filesData.eventRes.data[0].id;
   } 
  

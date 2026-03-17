@@ -90,6 +90,8 @@ export enum LiceneProjectBeneficiaryTypeEnum {
   CharteredAccountant = 4,
   //مشترى
   Buyer = 5,
+  //مورد
+  Supplier = 7,
   //أخرى
   Others,
 }

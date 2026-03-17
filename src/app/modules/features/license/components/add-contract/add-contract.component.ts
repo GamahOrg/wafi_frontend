@@ -68,6 +68,11 @@ export class AddContractComponent implements OnInit, OnDestroy {
      })
   }
   onFileUploaded(fileData: any) {
+    if (fileData.eventRes.data.length == 0) {
+      this.contractForm.get('delegatorFileId')?.setValue(null);
+      return;
+    }
+    if (!fileData.eventRes.data || !fileData.eventRes.data.length) return;
     if (fileData.eventRes && fileData.eventRes.data && fileData.eventRes.data.length > 0) {
       // Store the first uploaded file ID (backend expects single file)
       const fileId = fileData.eventRes.data[0].id;
@@ -98,7 +103,7 @@ export class AddContractComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required, Validators.minLength(2)]],
       nidNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       nationalNumber: [''],
-      nationalityName: [''],
+      nationalityName: [null],
       birthDate: [''],
       mobileNumber: ['', [Validators.pattern(/^05\d{8}$/)]],
       email: ['', [Validators.email]],
@@ -228,7 +233,7 @@ export class AddContractComponent implements OnInit, OnDestroy {
       staticMessage: 'هل أنت متأكد من إرسال العقد؟',
       dynamicMessage: '',
       acceptButtonText: 'إرسال العقد'
-    }, '550px', 'auto');
+    });
 
     // Subscribe to confirm action
     const confirmSub = this.popupService.confirmAction.subscribe(() => {
