@@ -164,6 +164,7 @@
                   step.stepId == stepType.SendAgreementsToDeedOwners &&
                   (step.stepStatusId == stepStatus.PendingApproval ||
                   step.stepStatusId == stepStatus.SomeOwnersRejected ||
+                  step.stepStatusId == stepStatus.OwnersAgreementsApproved ||
                     step.stepStatusId == stepStatus.Completed)
                 "
                 type="button"
@@ -177,6 +178,7 @@
                   step.stepId ==
                     stepType.SendAgreementsToAccountantAndConsultant &&
                   (step.stepStatusId == stepStatus.PendingApproval ||
+                  step.stepStatusId == stepStatus.AccountantAndConsultantAgreementsApproved ||
                   step.stepStatusId == stepStatus.OnePartyRejected ||
                     step.stepStatusId == stepStatus.Completed)
                 "

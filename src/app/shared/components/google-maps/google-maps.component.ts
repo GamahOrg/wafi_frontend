@@ -1,4 +1,3 @@
-import { MapsAPILoader } from '@agm/core';
 import { Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
@@ -14,6 +13,10 @@ export class GoogleMapsComponent implements OnInit {
   @Input() markers:marker[] =[]
   @Output() locationSelected = new EventEmitter<any>();
 
+  center!: google.maps.LatLngLiteral;
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  markerOptions: google.maps.marker.AdvancedMarkerElementOptions = { gmpDraggable: true };
+
   address: string='';
   private geoCoder:any;
   @ViewChild('search')
@@ -21,72 +24,71 @@ export class GoogleMapsComponent implements OnInit {
 
 
   constructor(
-    private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
   ) { }
-  
+
   ngOnInit() {
-    //load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      this.geoCoder = new google.maps.Geocoder;
-      if(this.useSearch)
-        this.setSearchLocation(this.latitude, this.longitude);
+    this.center = { lat: this.latitude, lng: this.longitude };
+    this.updateMarkerPositions();
 
-      this.getAddress(this.latitude, this.longitude);
+    this.geoCoder = new google.maps.Geocoder();
+    if(this.useSearch)
+      this.setSearchLocation(this.latitude, this.longitude);
 
+    this.getAddress(this.latitude, this.longitude);
+
+    if (this.useSearch && this.searchElementRef) {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
-          //get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-          //verify result
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
 
-          this.setSearchLocation(place.geometry.location.lat(),place.geometry.location.lng());
+          this.setSearchLocation(place.geometry.location!.lat(), place.geometry.location!.lng());
         });
       });
-    });
+    }
   }
+
+  private updateMarkerPositions() {
+    this.markerPositions = this.markers.map(m => ({ lat: m.lat, lng: m.lng }));
+  }
+
   setSearchLocation(lat:number, lng:number){
     if(this.useSearch){
-      //set latitude, longitude and zoom
       this.latitude = lat;
       this.longitude = lng;
+      this.center = { lat: this.latitude, lng: this.longitude };
       if(!this.markers || !this.markers.length) this.markers = [];
       this.markers[0] = {
         lat:this.latitude,
         lng:this.longitude,
         label:''
       }
+      this.updateMarkerPositions();
     }
     this.locationSelected.emit(this.markers[0]);
   }
-  // Get Current Location Coordinates
+
   private setCurrentLocation() {
-    // if ('geolocation' in navigator) {
-    //   navigator.geolocation.getCurrentPosition((position) => {
-    //     this.latitude = position.coords.latitude;
-    //     this.longitude = position.coords.longitude;
-    //     this.zoom = 8;
-    //     this.getAddress(this.latitude, this.longitude);
-    //   });
-    // }
-    
   }
 
-  mapClicked(event:any){
-    if(event && event.coords){
-      this.setSearchLocation(event.coords.lat ,event.coords.lng)
+  mapClicked(event: google.maps.MapMouseEvent){
+    if(event && event.latLng){
+      this.setSearchLocation(event.latLng.lat(), event.latLng.lng());
     }
   }
 
-  markerDragEnd($event: any) {
-    this.latitude = $event.coords.lat;
-    this.longitude = $event.coords.lng;
-    this.getAddress(this.latitude, this.longitude);
+  markerDragEnd(event: google.maps.MapMouseEvent) {
+    if (event.latLng) {
+      this.latitude = event.latLng.lat();
+      this.longitude = event.latLng.lng();
+      this.center = { lat: this.latitude, lng: this.longitude };
+      this.getAddress(this.latitude, this.longitude);
+    }
   }
 
   getAddress(latitude:any, longitude:any) {

@@ -2,6 +2,6 @@
   <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
 </ng-container>
 
-<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="mapClicked($event)">
-  <agm-marker *ngFor="let m of markers; let i = index" [latitude]="m.lat" [longitude]="m.lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
-</agm-map>
+<google-map [center]="center" [zoom]="zoom" height="300px" width="100%" (mapClick)="mapClicked($event)">
+  <map-marker *ngFor="let pos of markerPositions" [position]="pos" [options]="markerOptions" (mapDragend)="markerDragEnd($event)"></map-marker>
+</google-map>

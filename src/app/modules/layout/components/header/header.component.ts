@@ -128,6 +128,7 @@ export class HeaderComponent {
         ratingValue: PopupData.ratingValue,
         notes: PopupData.notes,
         browserType: PopupData.browserType,
+        facilityId: this.userData?.facilities?.[0]?.id,
       })
       .subscribe((res) => {
         this._toastrNotificationService.showSuccess('تم إرسال تقييمك بنجاح!');

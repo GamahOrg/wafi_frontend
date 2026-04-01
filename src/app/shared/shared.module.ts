@@ -49,7 +49,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { RouterModule } from '@angular/router';
 import { VerticalTabsComponent } from './components/vertical-tabs/vertical-tabs.component';
 import { GoogleMapsComponent } from './components/google-maps/google-maps.component';
-import { AgmCoreModule } from '@agm/core';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { NgxPrintModule } from 'ngx-print';
 import { EditorRequestNotesComponent } from './components/editor-request-notes/editor-request-notes.component';
 import { RequestNotesService } from './services/requestNotes/request-notes.service';
@@ -157,10 +157,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
 
     NgOtpInputModule,
     AccordionModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyANrSZmh9Dzui1tXkC9H6R72Jv_03JxGcE',
-      libraries: ['places'],
-    }),
+    GoogleMapsModule,
     NgxPrintModule,
     NgCircleProgressModule.forRoot(),
   ],
