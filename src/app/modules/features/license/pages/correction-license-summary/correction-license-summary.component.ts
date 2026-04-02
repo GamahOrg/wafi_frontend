@@ -194,7 +194,7 @@ this.allowCompile= this._sharedLicenseProjectService.getAllowCorrectionCompileFr
       popupType: 'primary',
       id: 'sendCorrectionRequest',
       title: '',
-      staticMessage: 'بالضغط على زر «تأكيد»، أقرّ بصحة جميع البيانات والمعلومات المدخلة',
+      staticMessage: 'سيقوم النظام بحذف جميع الرخص الانشائية الغير مرتبطة بصك  <br> بالضغط على زر «تأكيد»، أقرّ بصحة جميع البيانات والمعلومات المدخلة',
       dynamicMessage: '',
       acceptButtonText: 'تأكيد'
     };
