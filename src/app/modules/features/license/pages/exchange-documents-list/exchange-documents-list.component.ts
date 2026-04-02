@@ -33,6 +33,8 @@ export class ExchangeDocumentsListComponent implements OnInit {
 
   // Filter properties
   searchText: string = '';
+  selectedStatusId: number | null = null;
+  statusList: { id: number; name: string }[] = [];
   private searchSubject = new Subject<string>();
   subscriptions: Subscription[] = [];
   newPageNo: number = 1;
@@ -50,17 +52,21 @@ export class ExchangeDocumentsListComponent implements OnInit {
     [LicenseProjectExchangeDocumentStatusEnum.Rejected]: 'مرفوض',
     [LicenseProjectExchangeDocumentStatusEnum.IssuedDocument]:
       'تم إصدار وثيقة الصرف',
-    [LicenseProjectExchangeDocumentStatusEnum.UnderEscrowAccountsReview]: 'قيد مراجعة إدارة حسابات الضمان',
-
+    [LicenseProjectExchangeDocumentStatusEnum.UnderEscrowAccountsReview]:
+      'قيد مراجعة إدارة حسابات الضمان',
   };
 
   getStatusClass(status: LicenseProjectExchangeDocumentStatusEnum | null) {
     return {
       orange:
         status === LicenseProjectExchangeDocumentStatusEnum.PendingApproval,
-      green: status === LicenseProjectExchangeDocumentStatusEnum.Approved,
+      green:
+        status === LicenseProjectExchangeDocumentStatusEnum.Approved ||
+        status === LicenseProjectExchangeDocumentStatusEnum.IssuedDocument,
       red: status === LicenseProjectExchangeDocumentStatusEnum.Rejected,
-      blue: status === LicenseProjectExchangeDocumentStatusEnum.IssuedDocument,
+      blue:
+        status ===
+        LicenseProjectExchangeDocumentStatusEnum.UnderEscrowAccountsReview,
     };
   }
 
@@ -76,6 +82,7 @@ export class ExchangeDocumentsListComponent implements OnInit {
     this.observeExchangeDocumentsList();
     this.watchPaginationActions();
     this.setupSearchDebounce();
+    this.loadStatusList();
   }
 
   private getLicenseProjectIdStorage(): void {
@@ -92,6 +99,20 @@ export class ExchangeDocumentsListComponent implements OnInit {
     );
   }
 
+  private loadStatusList(): void {
+    this.subscriptions.push(
+      this._exchangeDocumentService
+        .getLiceneProjectExchangeDocumentStatusList()
+        .subscribe((res) => {
+          if (res) {
+            this.statusList = res.filter(
+              (s) => s.id !== LicenseProjectExchangeDocumentStatusEnum.Approved,
+            );
+          }
+        }),
+    );
+  }
+
   observeExchangeDocumentsList(): void {
     const request: GetExchangeDocumentListFilterRequest = {
       pageIndex: this.pagintationData.currentPage,
@@ -101,6 +122,7 @@ export class ExchangeDocumentsListComponent implements OnInit {
         this.searchText && this.searchText.trim()
           ? this.searchText.trim()
           : null,
+      statusId: this.selectedStatusId ?? undefined,
     };
 
     this.subscriptions.push(
@@ -217,7 +239,8 @@ export class ExchangeDocumentsListComponent implements OnInit {
     });
   }
   viewDetails(document: LicenseProjectExchangeDocumentsOnProjectPagingDto) {
-
-    this._router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.exchangeDocumentsDetails}/${CustomerTypeEnum.DeveloperDelegator}/${document.id}`])
+    this._router.navigate([
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.exchangeDocumentsDetails}/${CustomerTypeEnum.DeveloperDelegator}/${document.id}`,
+    ]);
   }
 }

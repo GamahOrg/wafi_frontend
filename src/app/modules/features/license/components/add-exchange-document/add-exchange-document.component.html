@@ -119,54 +119,33 @@
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
-
             <label class="form-label">
               <span class="required-star">*</span>
               رقم الحساب الرئيسي
             </label>
-            <div class="form-control-plaintext">
-              <span>
-                {{ licenseProject?.accountNumber }}
-              </span>
-            </div>
+            <input type="text" class="form-control" [value]="licenseProject?.accountNumber" readonly />
           </div>
         </div>
         <div class="col-12 col-lg-6" *ngIf="controls.mainItemId.value != null">
           <div class="form-group mb-4">
-           
             <label class="form-label">
               <span class="required-star">*</span>
               رقم الحساب الفرعي
-
             </label>
-            <div class="form-control-plaintext"
-                 [ngSwitch]="controls.mainItemId.value">
-
-              <span *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.ConstructionCostCalculation">
-                {{ licenseProjectAccounts?.constructionCostsAccountNumber }}
-              </span>
-
-              <span *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.AdministrativeMarketingCostCalculation">
-                {{ licenseProjectAccounts?.administrativeAndMarketingAccountNumber }}
-              </span>
-
-              <span *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.MaintenanceCostCalculation">
-                {{ licenseProjectAccounts?.custodyAccountNumber }}
-              </span>
-
-              <span *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.MinisteriaIncentive">
-                {{ licenseProjectAccounts?.incentivesSubIBAN }}
-              </span>
-
-              <span *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.BankFinancing">
-                {{ licenseProjectAccounts?.financingSubIBAN }}
-              </span>
-              <span *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.SelfFinancing">
-                {{ licenseProjectAccounts?.financingSubIBAN }}
-              </span>
-
-            </div>
-
+            <ng-container [ngSwitch]="controls.mainItemId.value">
+              <input *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.ConstructionCostCalculation"
+                     type="text" class="form-control" [value]="licenseProjectAccounts?.constructionCostsAccountNumber" readonly />
+              <input *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.AdministrativeMarketingCostCalculation"
+                     type="text" class="form-control" [value]="licenseProjectAccounts?.administrativeAndMarketingAccountNumber" readonly />
+              <input *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.MaintenanceCostCalculation"
+                     type="text" class="form-control" [value]="licenseProjectAccounts?.custodyAccountNumber" readonly />
+              <input *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.MinisteriaIncentive"
+                     type="text" class="form-control" [value]="licenseProjectAccounts?.incentivesSubIBAN" readonly />
+              <input *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.BankFinancing"
+                     type="text" class="form-control" [value]="licenseProjectAccounts?.financingSubIBAN" readonly />
+              <input *ngSwitchCase="licenseProjectExchangeDocumentMainItemEnum.SelfFinancing"
+                     type="text" class="form-control" [value]="licenseProjectAccounts?.financingSubIBAN" readonly />
+            </ng-container>
           </div>
         </div>
 

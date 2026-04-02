@@ -18,6 +18,9 @@ export interface UserRatingCreateDto {
 
   /** نوع محفز التقييم (للرخصة الفورية) */
   triggerType?: RatingTriggerTypeEnum;
+
+  /** معرف المنشأة */
+  facilityId?: string;
 }
 export interface RatingDismissDto {
   /** نوع التقييم */

@@ -1,27 +1,44 @@
 <div class="page">
-  <!-- Filter Section -->
-  <div class="col-12">
-    <div class="filter">
-      <div class="row g-3 align-items-center">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3 align-items-center">
+      <div class="col-12 col-lg-6 col-xl">
         <!-- Page Title -->
-        <div class="col-8">
-          <div class="page-title mb-0">
-            <h5 class="title">قائمة وثائق الصرف</h5>
+        <div class="page-title mb-0">
+          <h5 class="title">قائمة وثائق الصرف</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6 col-xl-auto">
+        <!-- Filter Section -->
+        <div class="filter">
+          <div class="row g-2 align-items-center">
+            <!-- Search Input -->
+            <div class="col-12 col-lg-auto">
+              <button *ngIf="showAddExchangeDocumentButton" type="button" class="btn btn-primary" (click)="addExchangeDocument()"><span class="material-icons">add</span> انشاء وثيقة صرف </button>
+            </div>
+
+            <div class="col-12 col-lg-6 col-xl">
+              <div class="input-group">
+                <span class="input-group-text"><span class="material-icons">search</span></span>
+                <input type="text" class="form-control" placeholder="بحث" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()" />
+              </div>
+            </div>
+
+            <!-- Status Filter Dropdown -->
+            <div class="col-12 col-lg-6 col-xl-3">
+              <select class="form-select" [(ngModel)]="selectedStatusId" (ngModelChange)="onFilterChange()">
+                <option [ngValue]="null">حالة الوثيقة</option>
+                <option *ngFor="let status of statusList" [ngValue]="status.id">{{ status.name }}</option>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="col-4">
-
-            <button *ngIf="showAddExchangeDocumentButton" type="button" class="btn btn-primary" (click)="addExchangeDocument()" style="float:left">انشاء وثيقة صرف </button>
-        </div>
-
       </div>
     </div>
   </div>
 
-  <ng-container
-    *ngIf="documentsList?.results && documentsList.results.length > 0"
-  >
-    <div class="table-responsive mt-4">
+  <ng-container *ngIf="documentsList?.results && documentsList.results.length > 0">
+    <div class="table-responsive mb-3">
       <table class="table table-light">
         <thead>
           <tr>
@@ -31,7 +48,7 @@
             <th scope="col">البند الرئيسي</th>
             <th scope="col">البند الفرعي</th>
             <th scope="col">حالة وثيقة الصرف</th>
-            <th scope="col">الاجراءات</th>
+            <th scope="col" class="w-0">الاجراءات</th>
           </tr>
         </thead>
         <tbody>
@@ -51,18 +68,13 @@
             <td>
               {{ document.subItem }}
             </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <span
-                  class="status-pill"
-                  [ngClass]="getStatusClass(document.statusId)"
-                >
-                  {{ document.statusId ? statusMap[document.statusId] : "-" }}
-                </span>
-              </div>
+            <td class="text-nowrap">
+              <span class="status-pill" [ngClass]="getStatusClass(document.statusId)">
+                {{ document.statusId ? statusMap[document.statusId] : "-" }}
+              </span>
             </td>
 
-            <td>
+            <td class="text-nowrap">
               <div class="d-flex align-items-center">
                 <button class="btn btn-outline-primary" (click)="viewDetails(document)">عرض التفاصيل</button>
               </div>
@@ -78,11 +90,7 @@
   <!-- Empty State -->
   <ng-container *ngIf="documentsList?.results?.length === 0">
     <div class="mt-4">
-      <app-no-data
-        [showCompleteBtn]="false"
-        [showText]="true"
-        [text]="'لا توجد وثائق متاحة'"
-      ></app-no-data>
+      <app-no-data [showCompleteBtn]="false" [showText]="true" [text]="'لا توجد وثائق متاحة'"></app-no-data>
     </div>
   </ng-container>
 </div>

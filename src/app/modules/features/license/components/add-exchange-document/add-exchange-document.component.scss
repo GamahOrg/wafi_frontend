@@ -6,3 +6,7 @@
     display: block;
     height: 100%;
 }
+
+input[readonly] {
+    color: #000 !important;
+}
