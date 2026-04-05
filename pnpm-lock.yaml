@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@agm/core':
-        specifier: ^1.1.0
-        version: 1.1.0(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))
       '@angular/animations':
         specifier: ^15.2.1
         version: 15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))
@@ -29,6 +26,9 @@ importers:
       '@angular/forms':
         specifier: ^15.1.0
         version: 15.1.5(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(@angular/platform-browser@15.1.5(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(rxjs@7.8.0)
+      '@angular/google-maps':
+        specifier: ^15.2.9
+        version: 15.2.9(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0)
       '@angular/material':
         specifier: ^15.1.5
         version: 15.1.5(f2ortfo4dh5oiyujp2vtsjjqpm)
@@ -114,9 +114,6 @@ importers:
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
-      '@types/googlemaps':
-        specifier: ^3.39.13
-        version: 3.39.13
       '@types/jasmine':
         specifier: ~4.3.0
         version: 4.3.1
@@ -146,12 +143,6 @@ importers:
         version: 4.9.5
 
 packages:
-
-  '@agm/core@1.1.0':
-    resolution: {integrity: sha512-cMvmm3+3/uuVFurLv1FKhE0/6ssIlDvYBjQFCi8ELg7h0OY2MkIU1MXWr7z+f/xZ08E936I4eeddni6k4yUTIA==}
-    peerDependencies:
-      '@angular/common': ^6.0.0 || ^7.0.0 || ^8.0.0
-      '@angular/core': ^6.0.0 || ^7.0.0 || ^8.0.0
 
   '@ampproject/remapping@2.2.0':
     resolution: {integrity: sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w==}
@@ -266,6 +257,13 @@ packages:
       '@angular/common': 15.1.5
       '@angular/core': 15.1.5
       '@angular/platform-browser': 15.1.5
+      rxjs: ^6.5.3 || ^7.4.0
+
+  '@angular/google-maps@15.2.9':
+    resolution: {integrity: sha512-TViEM0b5LxFCZ2rnpDjJCZzz5CLBaO+x9Lzb/OfNNuAfQ2sr/ExjT5pOBc93KhG5c04URc2YLqh5Yq2+YUFYgA==}
+    peerDependencies:
+      '@angular/common': ^15.0.0 || ^16.0.0
+      '@angular/core': ^15.0.0 || ^16.0.0
       rxjs: ^6.5.3 || ^7.4.0
 
   '@angular/material@15.1.5':
@@ -1389,9 +1387,8 @@ packages:
   '@types/file-saver@2.0.7':
     resolution: {integrity: sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A==}
 
-  '@types/googlemaps@3.39.13':
-    resolution: {integrity: sha512-R/k5WKe8zQHo9oFRINuX/1haKYRkKEfItnBGrSjspbXXITakRdsj6daQIdL1+Pt84lnzduWurxNA5k0fgPMQUg==}
-    deprecated: 'Types for the Google Maps browser API have moved to @types/google.maps. Note: these types are not for the googlemaps npm package, which is a Node API.'
+  '@types/google.maps@3.58.1':
+    resolution: {integrity: sha512-X9QTSvGJ0nCfMzYOnaVs/k6/4L+7F5uCS+4iUmkLEls6J9S/Phv+m/i3mDeyc49ZBgwab3EFO1HEoBY7k98EGQ==}
 
   '@types/http-proxy@1.17.9':
     resolution: {integrity: sha512-QsbSjA/fSk7xB+UXlCT3wHBy5ai9wOcNDWwZAtud+jXhwOM3l+EYZh8Lng4+/6n8uar0J7xILzqftJdJ/Wdfkw==}
@@ -3992,12 +3989,6 @@ packages:
 
 snapshots:
 
-  '@agm/core@1.1.0(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))':
-    dependencies:
-      '@angular/common': 15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0)
-      '@angular/core': 15.1.5(rxjs@7.8.0)(zone.js@0.12.0)
-      tslib: 1.14.1
-
   '@ampproject/remapping@2.2.0':
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
@@ -4199,6 +4190,14 @@ snapshots:
       '@angular/common': 15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0)
       '@angular/core': 15.1.5(rxjs@7.8.0)(zone.js@0.12.0)
       '@angular/platform-browser': 15.1.5(@angular/animations@15.2.1(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))
+      rxjs: 7.8.0
+      tslib: 2.5.0
+
+  '@angular/google-maps@15.2.9(@angular/common@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0))(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0)':
+    dependencies:
+      '@angular/common': 15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0)
+      '@angular/core': 15.1.5(rxjs@7.8.0)(zone.js@0.12.0)
+      '@types/google.maps': 3.58.1
       rxjs: 7.8.0
       tslib: 2.5.0
 
@@ -5913,7 +5912,7 @@ snapshots:
 
   '@types/file-saver@2.0.7': {}
 
-  '@types/googlemaps@3.39.13': {}
+  '@types/google.maps@3.58.1': {}
 
   '@types/http-proxy@1.17.9':
     dependencies:
