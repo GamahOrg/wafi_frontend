@@ -1,20 +1,8 @@
 @import "/src/assets/styles/custom-variables";
 
 .user-data {
-    .title {
-        margin-bottom: 1.5rem;
-        color: #4B5E56;
-    }
-
-    .key {
-        font-size: $font-size-sm;
-        color: $greengray;
-        opacity: .5;
-    }
-
-    .value {
-        font-size: $font-size-sm;
-        font-weight: bold;
-        color: #4B5E56;
-    }
+  .title {
+    margin-bottom: 1.5rem;
+    color: #4B5E56;
+  }
 }

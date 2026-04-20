@@ -17,6 +17,8 @@ import { Tabs, tabsComponent } from 'src/app/shared/models/tabs.model';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { RequestValidation, TabsError } from 'src/app/core/models/request-validation.model';
 import { RequestValidationService } from 'src/app/core/services/request-validation/request-validation.service';
+import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
+import { customerResponse, FacilityTypeCategory } from 'src/app/shared/models/customer.model';
 
 @Component({
   selector: 'app-facility-data',
@@ -146,11 +148,34 @@ export class FacilityDataComponent implements OnInit, OnDestroy {
 
   constructor(
     private _requestValidationService: RequestValidationService,
-    private _tabsService: TabsService
+    private _tabsService: TabsService,
+    private _userDataService: UserDataService
   ) { }
 
   ngOnInit(): void {
     this.observeValidationError();
+    this.observeFacilityTypeForTabTitle();
+  }
+
+  private observeFacilityTypeForTabTitle(): void {
+    this.subscriptions.push(
+      this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
+        if (res && res.facilities && res.facilities.length > 0) {
+          const facilityTypeCategory = res.facilities[0].facilityTypeCategory;
+          let certifiedTabTitle = 'مهندسين الشركة المعتمدين';
+          if (facilityTypeCategory === FacilityTypeCategory.Accountant) {
+             certifiedTabTitle = 'محاسبي المكتب المعتمدين';
+           } else if (facilityTypeCategory === FacilityTypeCategory.Engineering) {
+              certifiedTabTitle = 'مهندسين المكتب المعتمدين';
+           }
+          const certifiedTab = this.tabContent.tabsComponentList.find(t => t.tabCode === 'CertifiedFacilityEngineers');
+          if (certifiedTab) {
+            certifiedTab.title = certifiedTabTitle;
+          }
+          this.updateVerticalTabContent();
+        }
+      })
+    );
   }
   private updateVerticalTabContent() {
     console.log("update vertical tabs", "this.tabContent", this.tabContent)

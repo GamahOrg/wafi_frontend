@@ -225,7 +225,7 @@ export class CorrectionUnitCodesFormComponent implements OnInit, OnDestroy {
     supportedPrice: 'السعر المدعوم',
     unitStatus: 'حالة الوحدة',
     notSold: 'غير مباعة',
-    soldOutsidePlatform: 'مباعة خارج المنصة',
+    soldOutsidePlatform: 'مباعة خارج النظام',
   };
   UnitStatusOptions = [
     {

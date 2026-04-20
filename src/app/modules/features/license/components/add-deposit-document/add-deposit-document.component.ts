@@ -81,7 +81,7 @@ export class AddDepositDocumentComponent implements OnInit {
     constructionCostsAmount: [0, Validators.required],
     licenseProjectBuyerId: [null],
     bankId: [null],
-    paymentTypeId: [0],
+    paymentTypeId: [null as number | null],
     installmentId: [null],
   });
 

@@ -69,7 +69,7 @@ export class QualificationFacilityCertificationComponent {
 
   openDialog(): void {
     let Data = {
-      title: "شهادة تأهيل حصلت علىها المنشأه",
+      title: "شهادة تأهيل حصلت علىها المنشأة",
       component: QualificationFacilityCertificationFormComponent
     } as PopupData;
     let dialogRef = this._popupService.updatePopupData(Data);

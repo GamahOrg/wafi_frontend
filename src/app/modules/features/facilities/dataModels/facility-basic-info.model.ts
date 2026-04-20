@@ -8,11 +8,16 @@ export interface FacilityBasicInfo {
   entity700Number:string,
   previouslyQualifiedFacilityEntity700Number:string,
   isIssuesExist: boolean;
+  availabilityToUpdate: boolean;
   capitalNumber: null | string;
   commercialRegisterStartDate: Date;
   saudiAuthorityOfEngineersLicenseNumber: string;
+  saudiAuthorityOfEngineersLicenseFileId: string;
+  saudiAuthorityOfEngineersLicenseFile: null | SysFileManagerCreateUpdateDto;
   companyEstablishingContractFileId: string;
   saudiAuthorityForAuditorsAndAccountants: null | string;
+  saudiAuthorityForAuditorsAndAccountantsFileId: string;
+  saudiAuthorityForAuditorsAndAccountantsFile: null | SysFileManagerCreateUpdateDto;
   commercialRegisterEndDate: Date;
   facilityName: string;
   crNationalNumber: string;
@@ -167,6 +172,23 @@ export interface qualificationFacilityServiceProvidersCertificateNumbersDTO {
   id: string,
   facilityId: string
 }
+/**
+ * Slim request DTO matching UpdateFacilityBasicInfoDto on the backend.
+ * Contains only the fields present in the Edit Facility Basic Info form.
+ */
+export interface UpdateFacilityBasicInfoRequest {
+  id: string;
+  entity700Number?: string;
+  socialInsuranceCertificateNumber?: string;
+  website?: string;
+  telephone?: string;
+  fax?: string;
+  postalCode?: string;
+  email?: string;
+  poBox?: string;
+  cooperativeSocietyLicensingFileId?: string;
+}
+
 export interface qualificationFacilityServiceProvidersCertificateNumbers {
   certificationNumber: string,
   description: string,

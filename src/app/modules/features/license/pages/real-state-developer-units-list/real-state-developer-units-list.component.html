@@ -1,7 +1,7 @@
 <div class="page">
-  <div class="page-title">
+  <!-- <div class="page-title">
     <h2 class="title">{{projects.results[0]?.licenseProjectName}}</h2>
-  </div>
+  </div> -->
 
   <div class="page-content">
     <div class="filter">
@@ -89,10 +89,10 @@
                 </td>
                 <td>
                   <span class="status-pill" [ngClass]="{
-                    'blue': project.unitStatus === 'متاحة',
-                    'orange': project.unitStatus === 'محجوزة',
-                    'green': project.unitStatus === 'مباعة',
-                    'black': project.unitStatus !== 'متاحة' && project.unitStatus !== 'محجوزة' && project.unitStatus !== 'مباعة'
+                    'blue': project.unitStatusId === LicenseProjectUnitCodeStatus.SoldOutsidePlatform,
+                    'orange': project.unitStatusId === LicenseProjectUnitCodeStatus.NotSold,
+                    'green': project.unitStatusId === LicenseProjectUnitCodeStatus.Sold,
+                    'black': project.unitStatusId === LicenseProjectUnitCodeStatus.CharteredAccountantReview || project.unitStatusId === LicenseProjectUnitCodeStatus.PendingBuyerApproval
                   }">
                   
                     {{ project.unitStatus }}

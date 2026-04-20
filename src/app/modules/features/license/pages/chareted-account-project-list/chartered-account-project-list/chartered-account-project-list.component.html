@@ -38,7 +38,7 @@
   </div>
 
   <ng-container *ngIf="projectList?.results && projectList.results.length > 0">
-    <div class="table-responsive">
+    <div class="table-responsive mb-3">
       <table class="table table-light">
         <thead>
           <tr>
@@ -110,6 +110,13 @@
                     <i class="hgi hgi-stroke hgi-delete-03"></i>
                     <span>الاجماليات</span>
                   </button>
+                  <button *ngIf="request.showUnits"
+                class="menu-edit-btn"
+                mat-menu-item
+                (click)="showUnitList(request.licenseProjectId)"
+              >
+                وحدات المشروع
+              </button>
                 </mat-menu>
               </div>
 

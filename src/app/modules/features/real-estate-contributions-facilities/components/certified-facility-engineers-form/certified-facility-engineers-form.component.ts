@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
-import { customerResponse } from 'src/app/shared/models/customer.model';
+import { customerResponse, FacilityTypeCategory } from 'src/app/shared/models/customer.model';
 import { SocialInsuranceEmployeeLockUpList } from 'src/app/shared/models/social-insurance-employee-lock-up-list';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { QualificationCertifiedEngineerCreateUpdateDto } from '../../dataModels/qualification-certified-engineer-create-update-dto';
@@ -25,10 +25,8 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
   qualificationCertifiedEngineerDto: QualificationCertifiedEngineerCreateUpdateDto = new QualificationCertifiedEngineerCreateUpdateDto();
   socialInsuranceEmployeeList: SocialInsuranceEmployeeLockUpList[] = [];
   qualificationCertifiedEngineersForm = this._formBuilder.group({
-    engineerName: ['', [Validators.required]],
     identityNumber: ['', [Validators.required]],
-    professionalLicenseNumber: ['', [Validators.required]],
-    qualificationEngineerType:[null,[Validators.required]]
+    hasCourses: [false],
   });
   showValidation = false;
   /**
@@ -47,9 +45,7 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
 
   ngOnInit(): void {
     this.obseveCustomerData();
-    this.observeCertifiedEngineersForm();
     this.observeCertifiedEngineerObj();
-    // this.GetLockUpEmps();
     this.observePopupEvents()
   }
   // popup
@@ -70,8 +66,6 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.save()
-
-
       })
     )
   }
@@ -96,13 +90,6 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
       })
     )
   }
-  observeCertifiedEngineersForm(): void {
-    this.subscriptions.push(
-      this.qualificationCertifiedEngineersForm.valueChanges.subscribe(changes => {
-        this.qualificationCertifiedEngineerDto.professionalLicenseNumber = this.controls.professionalLicenseNumber.value as string;
-      })
-    )
-  }
   observeCertifiedEngineerObj(): void {
     this.subscriptions.push(
       this.certifiedEngineerService.getCertifiedEngineerObj().subscribe((Engineer) => {
@@ -121,15 +108,34 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
       })
     )
   }
+
+  private getQualificationEngineerType(): number {
+    const facilityTypeCategory = this.userData?.facilities[0]?.facilityTypeCategory;
+    // Accountant facility type → QualificationEngineerType.Accountant = 2
+    // Engineering/Developer → QualificationEngineerType.Engineering = 1
+    if (facilityTypeCategory === FacilityTypeCategory.Accountant) {
+      return 2;
+    }else if (facilityTypeCategory === FacilityTypeCategory.Developer) {
+      return 3;
+    }
+    return 1;
+  }
+
+    isDeveloper(): boolean {
+  const facilityTypeCategory = this.userData?.facilities[0]?.facilityTypeCategory;
+  return facilityTypeCategory === FacilityTypeCategory.Developer;
+}
+
   save(): void {
     if (!this.qualificationCertifiedEngineersForm.valid) {
       this.toastService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
       this.showValidation = true;
       return;
     }
-    this.qualificationCertifiedEngineerDto.identityNumber = this.qualificationCertifiedEngineersForm.value.identityNumber as string;
-    this.qualificationCertifiedEngineerDto.engineerName = this.qualificationCertifiedEngineersForm.value.engineerName as string;
-    this.qualificationCertifiedEngineerDto.qualificationEngineerType = +this.qualificationCertifiedEngineersForm.value.qualificationEngineerType! as number;
+    const formValues = this.qualificationCertifiedEngineersForm.getRawValue();
+    this.qualificationCertifiedEngineerDto.identityNumber = formValues.identityNumber as string;
+    this.qualificationCertifiedEngineerDto.hasCourses = formValues.hasCourses as boolean;
+    this.qualificationCertifiedEngineerDto.qualificationEngineerType = this.getQualificationEngineerType();
     this.qualificationCertifiedEngineerDto.facilityId = this.userData?.facilities[0].id as string;
     this.qualificationCertifiedEngineerDto.id = this.qualificationCertifiedEngineerDto.id ? this.qualificationCertifiedEngineerDto.id : "00000000-0000-0000-0000-000000000000";
     this.subscriptions.push(

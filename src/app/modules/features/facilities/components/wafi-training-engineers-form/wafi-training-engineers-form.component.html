@@ -1,0 +1,89 @@
+<form [formGroup]="qualificationCertifiedEngineersForm" id="form-wafiTrainingEngineersForm">
+
+    <div class="row row-gap-3 mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label for="" class="form-label">رقم الهوية <span class="required-star">*</span></label>
+          <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber" maxlength="10" minlength="10" />
+          <div class="text-danger" *ngIf="controls.identityNumber.errors?.['required'] && showValidation">حقل مطلوب</div>
+          <div class="text-danger" *ngIf="controls.identityNumber.errors?.['pattern'] && showValidation">يجب أن يكون رقم الهوية 10 أرقام</div>
+        </div>
+      </div>
+      <!-- <div class="col-12 col-lg-6 d-flex align-items-center">
+        <div class="form-group w-100">
+          <label for="" class="form-label">النوع <span class="required-star">*</span></label>
+          <div class="d-flex gap-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="engineerType"
+                [value]="QualificationEngineerTypeEnum.Employee"
+                id="typeEmployee"
+              >
+              <label class="form-check-label" for="typeEmployee">
+                موظف
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="engineerType"
+                [value]="QualificationEngineerTypeEnum.Engineering"
+                id="typeEngineer"
+              >
+              <label class="form-check-label" for="typeEngineer">
+                مهندس
+              </label>
+            </div>
+          </div>
+          <div class="text-danger" *ngIf="controls.engineerType.errors?.['required'] && showValidation">
+            حقل مطلوب
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="mb-3">
+      <button type="button" class="btn btn-outline-primary" (click)="save()">حفظ واضافة جديد</button>
+    </div>
+
+    <!-- error message -->
+  <div *ngIf="isRequiredCourseNotCompleted"  class="alert alert-danger mt-5" role="alert">
+    <span class="icon">
+      <i class="hgi hgi-stroke hgi-help-circle"></i>
+    </span>
+    <span>عذرًا، لا يمكن إضافة هذا الموظف إلى قائمة الحاصلين على التدريب؛ لعدم اجتياز الدورة التدريبية المطلوبة لدى المعهد العقاري.</span>
+  </div>
+
+
+      <div class="table-responsive mt-5" *ngIf="models && models.length > 0;">
+        <table class="table table-light" >
+          <thead>
+            <tr>
+                <th>اسم الموظف</th>
+                <th>رقم الهوية</th>
+                <th>المهنة</th>
+                <th class="w-25"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let eng of models">
+              <td>{{eng.engineerName}}</td>
+              <td>{{eng.identityNumber}}</td>
+              <td>{{ eng.qualificationEngineerType === 1 ? 'مهندس' : 'موظف' }}</td>
+              <td>
+                <div class="d-flex align-items-center justify-content-end column-gap-2">    
+                  <button type="button" class="btn-icon btn btn-danger" (click)="delete(eng.id)">
+                <i class="hgi hgi-stroke hgi-delete-03"></i>
+              </button>
+
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>       
+      </div>
+
+</form>

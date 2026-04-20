@@ -1,0 +1,120 @@
+<div class="details-page">
+  <div class="page-header">
+    <div class="d-flex justify-content-between align-items-center gap-3">
+      <div class="page-title">
+        <div class="d-flex justify-content-between align-items-center gap-3">
+          <h1 class="title">تفاصيل الوحدة</h1>
+
+          <span class="status-pill" [ngClass]="{
+              'blue': unitDetails?.unitStatusId === unitStatus.SoldOutsidePlatform,
+              'orange': unitDetails?.unitStatusId === unitStatus.NotSold,
+              'black': unitDetails?.unitStatusId === unitStatus.CharteredAccountantReview || unitDetails?.unitStatusId === unitStatus.PendingBuyerApproval,
+              'green': unitDetails?.unitStatusId === unitStatus.Sold
+            }">
+            <span>{{ unitDetails?.unitStatus }}</span>
+          </span>
+        </div>
+      </div>
+
+      <button *ngIf="unitDetails?.unitStatusId != unitStatus.Sold && unitDetails?.unitStatusId != unitStatus.PendingBuyerApproval" class="btn btn-primary" (click)="openConfirmationPopup()">تعديل حالة الوحدة</button>
+    </div>
+  </div>
+
+  <div class="row row-gap-4">
+    <div class="col-xl-6">
+      <div class="page-section">
+        <div class="row row-gap-4">
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">اسم المشروع</div>
+              <div class="value">{{ unitDetails?.projectName }}</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">المدينة</div>
+              <div class="value">{{ unitDetails?.city }}</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">كود الوحدة</div>
+              <div class="value">{{ unitDetails?.unitCode }}</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">نوع الوحدة</div>
+              <div class="value">{{ unitDetails?.unitType }}</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">اسم النموذج</div>
+              <div class="value">{{ unitDetails?.modelName }}</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">رقم المبنى</div>
+              <div class="value">{{ unitDetails?.blockBuildCode }}</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">رقم الطابق</div>
+              <div class="value">{{ unitDetails?.floor }}</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">المساحة الإجمالية للوحدة</div>
+              <div class="value">{{ unitDetails?.unitSpace }}</div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="unitDetails && unitDetails.contracts && unitDetails.contracts.length>0 as hasContracts">
+            <div class="col-12 col-lg-6">
+              <div class="key-value horiz">
+                <div class="key">رقم العقد</div>
+                <div class="value">{{ hasContracts ? unitDetails?.contracts?.[0]?.contractNumber : '-' }}</div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="key-value horiz">
+                <div class="key">تاريخ العقد</div>
+                <div class="value">{{ hasContracts ? (unitDetails?.contracts?.[0]?.creationDate | date:'dd/MM/yyyy') : '-' }}</div>
+              </div>
+            </div>
+          </ng-container>
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">السعر</div>
+              <div class="value">
+                <span>{{ unitDetails?.price | number }}</span>
+                <img src="assets/images/general/riyal-icon.svg" alt="ریال" class="riyal-icon">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="key-value horiz">
+              <div class="key">تاريخ تسليم الوحدة</div>
+              <div class="value">{{ unitDetails?.deliveryOn | date : "dd/MM/yyyy" }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

@@ -48,6 +48,14 @@ export class CertifiedEngineerService {
       })
     )
   }
+
+  GetFacilityByIdWithCourses(facilityId: string): Observable<CertifiedEngineerDto[]> {
+    return this._httpClient.get(`${Configuration.APIs.QualificationCertifiedEngineer.GetFacilityByIdWithCourses}/${facilityId}`).pipe(
+      map((res: any) => {
+        return res.data as CertifiedEngineerDto[];
+      })
+    )
+  }
    GetById(id: string) : Observable<QualificationCertifiedEngineerCreateUpdateDto | null>{
     return this._httpClient.get<CoreResponseDTO<QualificationCertifiedEngineerCreateUpdateDto>>
     (`${Configuration.APIs.QualificationCertifiedEngineer.GetById}?id=${id}`).pipe(
@@ -79,14 +87,20 @@ export class CertifiedEngineerService {
     return this._httpClient.post<CoreResponseDTO<QualificationCertifiedEngineerCreateUpdateDto>>
       (Configuration.APIs.QualificationCertifiedEngineer.Save,model).pipe(
       map((res: any) => {
-        if(res.data){
-          return res;
-        }else{
-          return null
-        }
+        return res;
       })
     )
   }
+  SaveWithCourses(model: QualificationCertifiedEngineerCreateUpdateDto): Observable<CoreResponseDTO<CertifiedEngineerDto[] | null>> {
+    if(!model.id) model.id = '00000000-0000-0000-0000-000000000000';
+    return this._httpClient.post<CoreResponseDTO<QualificationCertifiedEngineerCreateUpdateDto>>
+      (Configuration.APIs.QualificationCertifiedEngineer.SaveWithCourses, model).pipe(
+      map((res: any) => {
+        return res;
+      })
+    )
+  }
+
   GetQualificationCertifiedEngineerCourse(qualificationCertifiedEngineerId: string): Observable<QualificationCertifiedEngineerCourseDto[]> {
     return this._httpClient.get(`${Configuration.APIs.QualificationCertifiedEngineer.GetQualificationCertifiedEngineerCourse}/${qualificationCertifiedEngineerId}`).pipe(
       map((res: any) => {

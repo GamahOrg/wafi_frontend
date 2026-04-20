@@ -90,7 +90,6 @@ export class CreateLincenseComponent {
       this._sharedLicenseProjectService.getLicenseProjectIdStorage() as string;
   }
   private getFacilityId(): void {
-    debugger;
     this.facilityId =
       this._sharedLicenseProjectService.getFacilityIdFromLocalStorage() as string;
   }
@@ -160,7 +159,7 @@ export class CreateLincenseComponent {
           if (res) {
             this.licenseRequestType = res;
             console.log('licenseRequestType', this.licenseRequestType);
-            debugger;
+
             this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(
               this.requestTypeCode as string,
             );
@@ -194,7 +193,6 @@ export class CreateLincenseComponent {
         this.licenseRequestType.typeCode ==
         LicenseRequestTypeTypeCodeEnum.Fawria
       ) {
-        debugger;
         if (
           this.facilityId == '00000000-0000-0000-0000-000000000000' ||
           this.facilityId == null ||
@@ -371,8 +369,12 @@ export class CreateLincenseComponent {
     this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
       projectId,
     );
-    this._sharedLicenseProjectService.setLicenseTypeCodeInLocalStorage(this.requestTypeCode);
-    this._sharedLicenseProjectService.setLicenseTypeNameInLocalStorage(this.licenseRequestType?.name as string);
+    this._sharedLicenseProjectService.setLicenseTypeCodeInLocalStorage(
+      this.requestTypeCode,
+    );
+    this._sharedLicenseProjectService.setLicenseTypeNameInLocalStorage(
+      this.licenseRequestType?.name as string,
+    );
   }
 
   changePriod(data: any) {

@@ -9,6 +9,7 @@ import { AdditionTechnicalCapabilitiesRequirementsDto } from '../../dataModels/a
 import { AdditionTechnicalCapabilitiesRequirementsService } from '../../services/additionTechnicalCapabilitiesRequirements/addition-technical-capabilities-requirements.service';
 import { DistinctiveAdditionalTechnicalCapabilitiesFormComponent } from '../distinctive-additional-technical-capabilities-form/distinctive-additional-technical-capabilities-form.component';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { FacilityProfileService } from '../../services/facilityProfile/facility-profile.service';
 
 @Component({
   selector: 'app-distinctive-additional-technical-capabilities',
@@ -20,15 +21,20 @@ export class DistinctiveAdditionalTechnicalCapabilitiesComponent implements OnIn
   baseUrl = `${environment.baseURL}/`;
   additionTechnicalCapability: AdditionTechnicalCapabilitiesRequirementsDto = new AdditionTechnicalCapabilitiesRequirementsDto();
   userData: customerResponse | null = null;
+  canUpdate: boolean = true;
 
   constructor(private additionTechnicalCapabilitiesRequirementsService: AdditionTechnicalCapabilitiesRequirementsService,
     private _userDataService: UserDataService, private _popupService: PopupService,
-    private _filemangementService: FileManagementService) { }
+    private _filemangementService: FileManagementService,
+    private _facilityProfileService: FacilityProfileService) { }
 
 
   ngOnInit() {
     this.obseveCustomerData();
     this.observeAdditionTechnicalCapabilityObj();
+    this.subscriptions.push(
+      this._facilityProfileService.getAvailabilityToUpdate().subscribe(val => this.canUpdate = val)
+    );
   }
 
   obseveCustomerData(): void {

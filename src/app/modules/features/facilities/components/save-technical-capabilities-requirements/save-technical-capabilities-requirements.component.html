@@ -7,7 +7,7 @@
                    formControlName="isPreviousExperienceExist" />
         </div>
     </div> -->
-    <div class="form-block mb-3">
+    <!--<div class="form-block mb-3">
         <h6 class="title">أرقام شهادات تصنيف مقدمي خدمات المدن المنفذين للمشاريع</h6>
         <div formArrayName="addedQualificationFacilityServiceProvidersCertificateNumbers">
             <div class="row row-gap-3 mb-3" *ngFor="let certificate of addedQualificationFacilityServiceProvidersCertificateNumbers.controls; let i = index" [formGroupName]="i">
@@ -29,21 +29,19 @@
     
             <a class="add-array" id="btn-addServiceProvidersCertificateNumbersForm" (click)="addServiceProvidersCertificateNumbersForm(undefined)">+ اضافة شهادة</a>
         </div>
-    </div>
+    </div>-->
 
     <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
+        <!--<div class="col-12 col-lg-6">
             <label for="" class="form-label">شهادات تأهيل أو تصنيف حصلت علىها المنشأة</label>
             <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onFacilityCertificationsFilesUploaded($event)"></app-file-uploader>
-        </div>
-        <div class="col-12">
+        </div>-->
+        <div class="col-12 d-flex align-items-center gap-3">
             <label for="prevExpert"
-                   class="form-label">هل لديك خبرات سابقة </label>
-        </div>
-        <div class="col-12">
-            <div class="form-check form-check-inline">
+                   class="form-label mb-0">هل لديك خبرات سابقة </label>
+            <div class="form-check form-check-inline mb-0">
                 <input class="form-check-input"
-                       type="radio" id="control-prevExpert"
+                       type="radio"
                        name="prevExpert"
                        id="yes"
                        value="1"
@@ -51,9 +49,9 @@
                 <label class="form-check-label"
                        for="yes">نعم</label>
             </div>
-            <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline mb-0">
                 <input class="form-check-input"
-                       type="radio" id="control-prevExpert"
+                       type="radio"
                        name="prevExpert"
                        id="no"
                        value="0"

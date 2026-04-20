@@ -1,0 +1,60 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3 align-items-center">
+      <div class="col-12 col-lg-6">
+        <div class="page-title mb-0">
+          <h5 class="title">
+            <i class="hgi hgi-stroke hgi-money-send-02"></i>
+            رسوم الاشراف والمتابعة
+          </h5>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary" (click)="navigateToAddFee()">
+            تعريف رسوم جديدة
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="feesList && feesList.totalCount > 0">
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">نوع وحدات المشروع</th>
+            <th scope="col">تكرار الرسوم</th>
+            <th scope="col">دورة التكرار</th>
+            <th scope="col">قيمة الرسوم على المحصل</th>
+            <th scope="col">تعديل الرسوم الحالية</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fee of feesList.results">
+            <td>{{ fee.projectUnitType }}</td>
+            <td>{{ fee.isRecurring ? 'نعم' : 'لا' }}</td>
+            <td>{{ fee.recurrenceCycle }}</td>
+            <td>{{ fee.collectorFeeValue }}</td>
+            <td>
+              <button type="button" class="btn btn-icon btn-secondary" (click)="editFee(fee)">
+                <i class="hgi hgi-stroke hgi-edit-02"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="feesList == null || feesList.totalCount === 0">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false" [title]="'لا توجد رسوم لعرضها'"></app-no-data>
+    </div>
+  </ng-container>
+</div>

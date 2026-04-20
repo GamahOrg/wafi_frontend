@@ -5,10 +5,10 @@
   --bs-card-border-radius: #{$border-radius};
   --bs-card-inner-border-radius: #{$border-radius};
 
-  --bs-card-title-spacer-y: 0;
   --bs-card-cap-padding-y: 2.5rem;
   --bs-card-cap-padding-x: 1rem;
   --bs-card-cap-bg: #{$card-bg};
+  --bs-card-title-spacer-y: 0;
   --bs-card-title-color: #{$headings-color};
 
   .card-header {
@@ -17,7 +17,7 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: .5rem;
     padding-bottom: 1rem;
 
     .icon {
@@ -30,7 +30,7 @@
 
     &.with-separator {
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         inset-inline: var(--bs-card-cap-padding-x);
         bottom: 0;
@@ -45,12 +45,12 @@
     position: relative;
     border-radius: $card-border-radius;
 
-    background-image: url("/assets/images/real-estate-contributions/content/qualification/card-bg.png");
+    background-image: url('/assets/images/real-estate-contributions/content/qualification/card-bg.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
 
-    transition: background-image 0.15s;
+    transition: background-image .15s;
 
     .icon {
       display: flex;
@@ -68,7 +68,7 @@
       border-start-start-radius: $card-border-radius;
       border-end-end-radius: $card-border-radius;
 
-      background-color: rgba($black, 0.3);
+      background-color: rgba($black, .3);
 
       [class^="material-icons"] {
         color: $white;
@@ -92,7 +92,7 @@
     }
 
     &:hover {
-      background-image: url("/assets/images/real-estate-contributions/content/qualification/card-bg-hover.png");
+      background-image: url('/assets/images/real-estate-contributions/content/qualification/card-bg-hover.png');
 
       .card-body {
         border-color: $theme-main;
@@ -181,11 +181,11 @@
       }
 
       .status-badge {
-        padding: 0.5rem;
+        padding: .5rem;
 
         &.orange {
-          color: #e39a0d;
-          background-color: #fcfaf5;
+          color: #E39A0D;
+          background-color: #FCFAF5;
         }
       }
     }
@@ -206,23 +206,15 @@
 
   &.brief-card {
     position: relative;
-    min-width: 22rem;
-    max-width: 25rem;
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
 
     border: 1px solid rgba(196, 196, 196, 0.2);
     border-top: 0.5rem solid $theme-main;
-    border-radius: $border-radius;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 4px rgba(181, 183, 185, 0.26);
 
-    box-shadow:
-      0px 11px 24px 0px rgba(#000, 0.102),
-      0px 44px 44px 0px rgba(#000, 0.09),
-      0px 98px 59px 0px rgba(#000, 0.051),
-      0px 175px 70px 0px rgba(#000, 0.012),
-      0px 273px 76px 0px #0000;
-
-    & + .brief-card {
+    &+.brief-card {
       margin-top: 3rem;
     }
 
@@ -232,9 +224,8 @@
       .item {
         display: flex;
         align-items: center;
-        gap: 1rem;
 
-        & + .item {
+        &+.item {
           margin-top: 1rem;
         }
 
@@ -244,15 +235,36 @@
           align-items: center;
           flex-shrink: 0;
 
-          width: 3rem;
-          height: 3rem;
+          width: 2.5rem;
+          height: 2.5rem;
+          margin-inline-end: 1rem;
 
-          border-radius: 50%;
-          background-color: rgba($theme-main, 0.3);
+          background-color: $theme-light;
+          border-radius: $border-radius-xs;
 
           [class^="material-icons"] {
             color: $theme-main;
           }
+        }
+
+        .data {
+          flex-grow: 1;
+          color: $black;
+        }
+
+        .form-label,
+        .key,
+        .value {
+          font-size: $font-size-xs;
+        }
+
+        .key {
+          margin-bottom: .5rem;
+          font-weight: bold;
+        }
+
+        .value {
+          color: #A2B2B3;
         }
       }
     }
@@ -261,7 +273,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 0.5rem;
+      gap: .5rem;
 
       position: absolute;
       left: 1rem;
@@ -270,10 +282,8 @@
       transform: translateY(50%);
 
       .btn {
-        --bs-btn-padding-x: 1rem;
-        --bs-btn-padding-y: 0.5rem;
-
-        gap: 0.5rem;
+        --bs-btn-padding-x: 1.75rem;
+        --bs-btn-padding-y: 1rem;
       }
 
       .p-button {
@@ -302,7 +312,7 @@
       display: flex;
       gap: 1rem;
 
-      & + .phase {
+      &+.phase {
         margin-top: 1.5rem;
       }
 
@@ -320,14 +330,14 @@
         position: relative;
 
         &::before {
-          content: "";
+          content: '';
           position: absolute;
           right: 50%;
           top: $number-size;
           bottom: $number-size * -1;
           transform: translateX(50%);
 
-          width: 0.25rem;
+          width: .25rem;
         }
 
         .number {
@@ -354,7 +364,7 @@
       .title {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: .5rem;
 
         font-weight: 600;
         color: $headings-color;
@@ -372,20 +382,20 @@
         align-items: center;
         gap: 1rem;
 
-        margin-top: 0.5rem;
+        margin-top: .5rem;
         font-size: $font-size-sm;
 
         .status {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: .5rem;
 
-          padding: 0.5rem;
+          padding: .5rem;
           font-weight: 500;
           border-radius: $border-radius-pill;
 
           &::before {
-            content: "";
+            content: '';
             width: 10px;
             height: 10px;
             border-radius: 50%;
@@ -396,9 +406,9 @@
         .date {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: .5rem;
 
-          color: #353b3b;
+          color: #353B3B;
         }
       }
 
@@ -443,7 +453,7 @@
           color: $white;
 
           &::before {
-            background-color: #f5f8f8;
+            background-color: #F5F8F8;
           }
 
           .number {
@@ -453,8 +463,8 @@
 
         .info {
           .status {
-            color: #1f2a37;
-            background-color: #f9fafb;
+            color: #1F2A37;
+            background-color: #F9FAFB;
           }
         }
       }
@@ -465,17 +475,116 @@
 
           &::before,
           .number {
-            background-color: #fef3f2;
+            background-color: #FEF3F2;
           }
         }
 
         .info {
           .status {
             color: #912018;
-            background-color: #fef3f2;
+            background-color: #FEF3F2;
           }
         }
       }
+    }
+  }
+
+  &.evaluation-card {
+    --bs-card-border-color: #{$darkgray};
+    --bs-card-border-radius: #{$border-radius-sm};
+    --bs-card-inner-border-radius: #{$border-radius-sm};
+
+    --bs-card-title-color: #000;
+    --bs-card-title-spacer-y: 1rem;
+
+    .card-title {
+      font-weight: 600;
+    }
+
+    .evaluation-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+
+      padding: 2rem 1rem;
+      border: 1px solid $lightergray;
+
+      &+.evaluation-item {
+        margin-top: 1rem;
+      }
+
+      .form-label {
+        flex: 1;
+        margin-bottom: 0;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: auto;
+      }
+
+      .pill,
+      .value {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: .25rem;
+
+        padding: .5rem 1.5rem;
+        font-weight: 600;
+        border: 1px solid transparent;
+      }
+
+      .pill {
+        color: $blue;
+        border-color: #B6D2E2;
+        border-radius: $border-radius;
+        background-color: #F8FBFD;
+      }
+
+      .value {
+        width: 3.75rem;
+        color: $darkgray;
+        border-color: $lightergray;
+        border-radius: $border-radius-xs;
+        background-color: #F3F4F6;
+      }
+    }
+  }
+
+  &.choice-card {
+    --bs-card-border-color: transparent;
+
+    box-shadow: 0px 3px 6px 0px rgba(#000, .03),
+      0px 11px 11px 0px rgba(#000, .03),
+      0px 24px 14px 0px rgba(#000, .02),
+      0px 42px 17px 0px rgba(#000, 0),
+      0px 66px 18px 0px rgba(#000, 0);
+
+    .card-body {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      >.icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: 1.75rem;
+
+        border-radius: 50%;
+        background-color: rgba($theme-main, 0.3);
+      }
+    }
+
+    &.active {
+      --bs-card-border-color: #00848D;
+      --bs-card-bg: #F6FBFB;
     }
   }
 }

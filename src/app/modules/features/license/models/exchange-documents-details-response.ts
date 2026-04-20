@@ -48,21 +48,28 @@ export interface exchangeRequestDetails {
   documentFile: null;
   bankGuaranteeAttachmentId: null;
   bankGuaranteeAttachment: null;
-  withdrawalMethodId: null;
-  withdrawalMethod: null;
-  insurancePolicyNumber: null;
-  insuranceStartDate: null;
-  insuranceEndDate: null;
-  insuranceAttachmentId: null;
-  insuranceAttachment: null;
-  insuranceCompanyId: null;
-  insuranceCompany: null;
+  withdrawalMethodId: number | null;
+  withdrawalMethod: MainItem | null;
+  insurancePolicyNumber: string | null;
+  insuranceStartDate: string | null;
+  insuranceEndDate: string | null;
+  insuranceAttachmentId: string | null;
+  insuranceAttachment: ExchangeDocumentFileDto | null;
+  licenseProjectExchangeInsuranceDocumentFiles: LicenseProjectExchangeInsuranceDocumentFile[];
+  licenseProjectExchangeBankGuaranteeDocumentFiles: LicenseProjectExchangeBankGuaranteeDocumentFile[];
+  insuranceCompanyId: number | null;
+  insuranceCompany: MainItem | null;
+  releaseLetterId: string | null;
+  releaseLetter: ExchangeDocumentFileDto | null;
   customerType: number | null;
   canTakeAction: boolean;
   id: string;
   elementName: string | null;
   statement: string | null;
   licenseProjectExchangeDocumentRejectionBy?: LicenseProjectExchangeDocumentRejectionBy;
+  letterNumber: string | null;
+  letterDate: string | null;
+  projectProgressPercentage: number | null;
 }
 export enum LicenseProjectExchangeDocumentRejectionBy {
   //حسابات الضمان
@@ -77,11 +84,31 @@ interface LicenseProjectExchangeDocumentFile {
   id: string;
 }
 
+export interface LicenseProjectExchangeInsuranceDocumentFile {
+  fileId: string;
+  file: File;
+  licenseProjectExchangeDocumentId: string;
+  id: string;
+}
+export interface LicenseProjectExchangeBankGuaranteeDocumentFile {
+  fileId: string;
+  file: File;
+  licenseProjectExchangeDocumentId: string;
+  id: string;
+}
+
 interface File {
   fileDescription: string;
   filePath: string;
   fileType: string;
   id: string;
+}
+
+export interface ExchangeDocumentFileDto {
+  id: string;
+  filePath: string;
+  fileDescription: string;
+  fileType?: string;
 }
 
 interface MainItem {

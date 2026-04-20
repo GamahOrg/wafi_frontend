@@ -234,7 +234,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-auto-flow: dense;
-      gap: 20px 60px;
+      gap: 16px;
       direction: rtl;
 
       .form-group {
@@ -253,7 +253,6 @@
         }
 
         &:has(.form-value) {
-          gap: 0;
           flex-direction: row;
           align-items: center;
           justify-content: flex-start;
@@ -1292,8 +1291,7 @@ select.form-control {
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
-            gap: 0;
-
+            
             .form-label {
               width: auto;
               text-align: right;
@@ -1575,8 +1573,7 @@ select.form-control {
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
-            gap: 0;
-
+            
             .form-label {
               width: auto;
               text-align: right;
@@ -1768,8 +1765,7 @@ select.form-control {
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
-            gap: 0;
-
+            
             .form-label {
               width: auto;
               text-align: right;
@@ -1852,7 +1848,7 @@ select.form-control {
   }
 
   .form-row {
-    gap: 20px 80px;
+    gap: 16px;
   }
 }
 

@@ -73,6 +73,10 @@ export interface facilityDTO {
   previouslyQualifiedFacilityCommercialRegistrationNumber: null | string;
   companyCodeInFinancialMarket: null | string;
   saudiAuthorityOfEngineersLicenseNumber: string;
+  saudiAuthorityOfEngineersLicenseFileId: string;
+  saudiAuthorityOfEngineersLicenseFile: null | SysFileManagerCreateUpdateDto;
+  saudiAuthorityForAuditorsAndAccountantsFileId: string;
+  saudiAuthorityForAuditorsAndAccountantsFile: null | SysFileManagerCreateUpdateDto;
   qualificationSocialInsuranceEmployeeLists: qualificationSocialInsuranceEmployeeListsDTO[];
   qualificationQualificatedAccountants?: QualificationQualificatedAccountantDto[];
   qualificationQualificatedEngineers?: QualifiedEngineersDto[];
@@ -86,7 +90,10 @@ export interface facilityDTO {
   qualificationInstitutionalCapacityAndHrRequirements?: QualificationInstitutionalCapacityAndHrRequirementDto[];
   qualificationNationalAddressDetails: nationalAddressResponse[]
   socialInsuranceEmployeesListFileManager: null | SysFileManagerCreateUpdateDto;
-  socialInsuranceEmployeesListFileId:string;
+  logoFile: null | SysFileManagerCreateUpdateDto;
+  socialInsuranceEmployeesListFileId: string;
+  entity700Number?: string;
+  chamberOfCommerceCityName?: string;
 }
 export interface RequestDetails {
   requestCode: string;
@@ -118,6 +125,7 @@ export interface RequestDetails {
   id: string;
   workflowDetailRequestStatus: requestPhase[];
   isRenewal:boolean
+  canSendToFawtarahManually: boolean | null
   // requestStatusInternalStatus: status;
   // requestStatusExternalStatus: status;
 
@@ -132,6 +140,18 @@ export interface status {
   id: number;
   statusName: string
 }
+export interface QualificationInvoiceData {
+  id: string;
+  invoiceRequestId: string | null;
+  invoiceStatus: number | null;
+  price: number;
+  serviceID: number;
+  quantity: number;
+  typeOfInvoice: number;
+  type: number;
+  invDueDate: string;
+}
+
 export enum RequestPhaseTypes {
   done = 1,
   current = 2,

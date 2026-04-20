@@ -2,6 +2,9 @@ export const Configuration = {
   languages: ['ar', 'en'],
   defaultLang: 'ar',
   APIs: {
+    SupervisionFees:{
+      GetSupervisionFees:'/api/SupervisionFees/GetSupervisionFees'
+    },
     Rating: {
       GetUserRecommendationRatingStatus:
         '/api/Rating/GetUserRecommendationRatingStatus',
@@ -9,7 +12,11 @@ export const Configuration = {
       GetInstantLicenseRatingStatus:
         '/api/Rating/GetInstantLicenseRatingStatus',
       Create: '/api/Rating/Create',
-    },
+      GetDeveloperContractDocumentationRatingStatusForLogin: '/api/Rating/GetDeveloperContractDocumentationRatingStatusForLogin',
+        GetDeveloperContractDocumentationRatingStatus: '/api/Rating/GetDeveloperContractDocumentationRatingStatus',
+        GetBuyerContractDocumentationRatingStatusForLogin: '/api/Rating/GetBuyerContractDocumentationRatingStatusForLogin',
+        GetBuyerContractDocumentationRatingStatus: '/api/Rating/GetBuyerContractDocumentationRatingStatus',
+      },
     LicenseProjectRequestLog: {
       GetLicenseProjectRequestLogs:
         '/api/LicenseProjectRequestLog/GetLicenseProjectRequestLogs',
@@ -202,13 +209,21 @@ export const Configuration = {
       validate: '/api/Facility/Validate',
       validateCommercialRegister: '/api/Facility/ValidateCommercialRegister',
       Register: '/api/Facility/RegisterAsync',
+      GetFacilityData: '/api/Facility/GetFacilityDataAsync',
+      LinkCustomerToFacility: '/api/Facility/LinkCustomerToFacilityAsync',
       GetById: '/api/Facility/GetById',
       update: '/api/Facility/UpdateAsync',
+      updateBasicInfo: '/api/Facility/UpdateFacilityBasicInfo',
       getDraftRequestByFacilityId: '/api/Facility/GetDraftRequestByFacilityId',
       checkFacilityDataByCRNumber:
         '/api/Facility/CheckFacilityDataByEmployeeByCRNumber',
       createFacility: '/api/Facility/CreateFacilityByEmployee',
       GetFacilityName: '/api/Facility/GetFacilityName',
+      getFacilityTypeCategory: '/api/Facility/GetFacilityTypeCategory',
+      GetFacilityBusinessesAndCategoryTypes: '/api/Facility/GetFacilityBusinessesAndCategoryTypes',
+      UpdateFacilityTypeCategory: '/api/Facility/UpdateFacilityTypeCategory',
+      UpdateFacilityBasicDataInfoAllTypes: '/api/Facility/UpdateFacilityBasicDataInfoAllTypes',
+
     },
     Customer: {
       Register: '/api/Customer/Register',
@@ -266,10 +281,13 @@ export const Configuration = {
       GetFacilityById: '/api/QualificationCertifiedEngineer/GetFacilityById',
       GetAllFacilityById:
         '/api/QualificationCertifiedEngineer/GetAllFacilityById',
+      GetFacilityByIdWithCourses:
+        '/api/QualificationCertifiedEngineer/GetFacilityByIdWithCourses',
       Create: '/api/QualificationCertifiedEngineer/Create',
       Update: '/api/QualificationCertifiedEngineer/Update',
       GetById: '/api/QualificationCertifiedEngineer/GetById',
       Save: '/api/QualificationCertifiedEngineer/Save',
+      SaveWithCourses: '/api/QualificationCertifiedEngineer/SaveWithCourses',
       Delete: '/api/QualificationCertifiedEngineer/Remove',
       GetQualificationCertifiedEngineerCourse: '/api/QualificationCertifiedEngineer/GetQualificationCertifiedEngineerCourse',
     },
@@ -354,6 +372,7 @@ export const Configuration = {
       GetByFacilityId:
         '/api/QualificationTechnicalCapabilitiesRequirement/GetByFacilityId',
       Save: '/api/QualificationTechnicalCapabilitiesRequirement/Save',
+      UpdatePreviousExperience: '/api/QualificationTechnicalCapabilitiesRequirement/UpdatePreviousExperience',
     },
     QualificationProject: {
       Save: '/api/QualificationProject/Save',
@@ -401,6 +420,8 @@ export const Configuration = {
         '/api/QualificationRequestHeader/GetFacilityByRequestId',
       getRequestByCode:
         '/api/QualificationRequestHeader/GetQualificationRequestByRequestCode',
+      SendToFawtarahManually:
+        '/api/QualificationRequestHeader/SendToFawtarahManually',
       GetQualificationDegree:
         '/api/QualificationRequestHeader/GetQualificationDegree',
       GetQualificationDegreeByLicenseProjectId:
@@ -1192,6 +1213,7 @@ export const Configuration = {
     Fawtarah: {
       InitiateInvoice: '/api/Fawtarah/InitiateInvoice',
       GetInvoice: '/api/Fawtarah/GetInvoice',
+      GetQualificationInvoice: '/api/Fawtarah/GetQualificationInvoice',
     },
     realestatecontributionslicense: {
       GetAllGroupingrealstateContributionLicense:
@@ -1410,6 +1432,7 @@ export const Configuration = {
         '/api/LicenseProjectSubUnitsListCode/GetUnitsCodesListByProjectUnitId',
       GetUnitsCodesListByProjectUnitIdPaginated:
         '/api/LicenseProjectSubUnitsListCode/GetUnitsCodesListByProjectUnitIdPaginated',
+      ChangeUnitsStatus: '/api/LicenseProjectSubUnitsListCode/ChangeUnitsStatus',
     },
     CorrectionLicenseProjectSubUnitsListCode: {
       createExcel: '/api/CorrectionLicenseProjectSubUnitsListCode/CreateExcel',
@@ -1647,6 +1670,7 @@ export const Configuration = {
       facilityProfileWithRenewRequest: 'facility-profile-with-renew-request',
       facilityDashboard: 'dashboard',
       Dashboard: 'Dashboard',
+      facilityTypeSetup: 'facility-type-setup',
     },
     //Qualifying
     qualifying: {
@@ -1659,6 +1683,7 @@ export const Configuration = {
       requestDetails: 'request-details',
       qualifyingCertificates: 'qualifying-certificates',
       renewQualifyingList: 'renew-qualifying-list',
+      upgradeDegree: 'upgrade-degree',
     },
     developer: {
       developerProjectList: 'developer-project-list',
@@ -1677,8 +1702,10 @@ export const Configuration = {
       charteredaccount: 'chartered-account-projects',
       charteredAccountProjectTotal: 'chartered-account-project-total',
       realStateDeveloperUnitsListComponent: 'real-state-developer-units-list',
+      realStateCharteredAccountantUnitsListComponent: 'real-state-chartered-accountant-units-list',
       unitDetails: 'unit-details',
       unitDetailsWithParam: 'unit-details/:unitCode',
+      accountantUnitDetailsWithParam: 'accountant-unit-details/:unitCode',
       contractRequestList: 'contract-request-list',
       contractRequestDetails: 'contract-request-details/:id',
       addContract: 'add-contract/',
@@ -1740,6 +1767,7 @@ export const Configuration = {
       developerExchangeDocumentsDetails: 'developer-exchange-documents-details',
       accountantExchangeDocumentsDetails: 'accountant-exchange-documents-details',
       engineeringExchangeDocumentsDetails: 'engineering-exchange-documents-details',
+      supervisionFees: 'supervision-fees',
     },
     licenseProjectRequests: {
       createLicenseProjectRequestList: 'create-license-project-request',

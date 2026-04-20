@@ -32,8 +32,8 @@ export class AddFacilityComponent implements OnInit, OnDestroy{
     endDateLabel: "تاريخ إنتهاء السجل التجاري",
     facilityData: "بيانات المنشأة ",
     facilityType: "نوع المنشأة",
-    facilityName: "اسم المنشأه",
-    facilityActivities: "نشاط / انشطة المنشأه",
+    facilityName: "اسم المنشأة",
+    facilityActivities: "نشاط / انشطة المنشأة",
     requiredErrorMsg: 'حقل مطلوب',
     maxLengthErrorMsg: "طول الارقام يجب الا يزيد عن 20 رقم",
     verification: "تحقق",
@@ -76,7 +76,7 @@ export class AddFacilityComponent implements OnInit, OnDestroy{
          
         }
         else
-        this. _toastrNotificationService.showError("لم يتم اضافة  تلك المنشأه  ");
+        this. _toastrNotificationService.showError("لم يتم اضافة  تلك المنشأة  ");
       })
     )
   }

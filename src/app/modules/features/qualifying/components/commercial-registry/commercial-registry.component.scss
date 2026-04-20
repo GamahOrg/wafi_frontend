@@ -1,20 +1,2 @@
 @import "/src/assets/styles/custom-variables";
-@import "/src/assets/styles/content/tab-content";
-.facility-owner-table th {
-    padding: 10px 15px;
-}
-
-.facility-owner-body{
-    padding: 10px 15px; 
-}
-.facility-owner-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  .facility-owner-table th,
-  .facility-owner-table td {
-    border: 1px solid #000; 
-    padding: 10px; 
-    text-align: center;
-}
+@import "/src/assets/styles/bootstrap-custom/tables";

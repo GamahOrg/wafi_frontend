@@ -5,4 +5,5 @@ export class QualificationCertifiedEngineerCreateUpdateDto {
   identityNumber: string = "";
   qualificationEngineerType: number = 0;
   professionalLicenseNumber: string = "";
+  hasCourses: boolean = false;
 }

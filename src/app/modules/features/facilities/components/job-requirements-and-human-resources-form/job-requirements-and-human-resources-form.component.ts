@@ -31,6 +31,7 @@ export class JobRequirementsAndHumanResourcesFormComponent
   } as FileUploader;
 
   userData: customerResponse | null = null;
+  showValidation: boolean = false;
 
   constructor(
     private _fileManagementService: FileManagementService,
@@ -107,6 +108,12 @@ export class JobRequirementsAndHumanResourcesFormComponent
   }
 
   save(): void {
+    this.showValidation = true;
+
+    if (!this.isValid()) {
+      return;
+    }
+
     // this.institutionalCapacityAndHrRequirements.facilityId
     this.institutionalCapacityAndHrRequirements.facilityId = this.userData
       ?.facilities[0].id as string;
@@ -196,6 +203,7 @@ export class JobRequirementsAndHumanResourcesFormComponent
       return;
     }
     if (!fileRemovedData.eventRes.data || !fileRemovedData.eventRes.data.length)
+      return;
     this.institutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFileId =
       fileRemovedData.eventRes.data[0].id;
   }
@@ -237,6 +245,16 @@ export class JobRequirementsAndHumanResourcesFormComponent
         }
       );
     });
+  }
+  private isValid(): boolean {
+    const model = this.institutionalCapacityAndHrRequirements;
+
+    return !!(
+      model.organizationalStructureFileId &&
+      model.laborRegulationCertificateFileId &&
+      model.occupationalSafetyAndHealthFileId &&
+      model.saudizationCertificateFileId 
+    );
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

@@ -15,7 +15,9 @@ export class VerticalTabsComponent {
 
   subscriptions: Subscription[] = [];
   tabContent: Tabs = new Tabs();
+  activeChildIndex: number = 0;
   private previousTabIndex: number = 0;
+  private previousChildIndex: number = 0;
   private isReverting: boolean = false;
 
   constructor(
@@ -67,8 +69,10 @@ export class VerticalTabsComponent {
           // User confirmed to leave, proceed with tab change
           this._tabsService.setUnsavedChanges(false);
           this.tabContent.activeTabIndex = index;
+          this.activeChildIndex = 0;
           this._tabsService.updateActiveVerticalTabIndex(index);
           this.previousTabIndex = index;
+          this.previousChildIndex = 0;
           this._tabsService.pendingTabIndex.next(null);
         } else {
           // User wants to stay, revert to previous tab
@@ -78,14 +82,63 @@ export class VerticalTabsComponent {
           // Use setTimeout to ensure the tab reverts after Angular's change detection
           setTimeout(() => {
             this.tabContent.activeTabIndex = this.previousTabIndex;
+            this.activeChildIndex = this.previousChildIndex;
           }, 0);
         }
       });
     } else {
       // No unsaved changes, proceed normally
       this.tabContent.activeTabIndex = index;
+      this.activeChildIndex = 0;
       this._tabsService.updateActiveVerticalTabIndex(index);
       this.previousTabIndex = index;
+      this.previousChildIndex = 0;
+    }
+  }
+
+  updateActiveChildIndex(parentIndex: number, childIndex: number) {
+    if (this.isReverting) {
+      this.isReverting = false;
+      return;
+    }
+
+    if (this._tabsService.getUnsavedChanges()) {
+      this._tabsService.pendingTabIndex.next(parentIndex);
+
+      const dialogRef = this.dialog.open(UnsavedChangesDialogComponent, {
+        width: '600px',
+        maxWidth: '90vw',
+        maxHeight: '90vh',
+        panelClass: 'confirmation-dialog',
+        disableClose: true,
+        hasBackdrop: true,
+        autoFocus: false,
+      });
+
+      dialogRef.afterClosed().subscribe((canLeave: boolean) => {
+        if (canLeave) {
+          this._tabsService.setUnsavedChanges(false);
+          this.tabContent.activeTabIndex = parentIndex;
+          this.activeChildIndex = childIndex;
+          this._tabsService.updateActiveVerticalTabIndex(parentIndex);
+          this.previousTabIndex = parentIndex;
+          this.previousChildIndex = childIndex;
+          this._tabsService.pendingTabIndex.next(null);
+        } else {
+          this._tabsService.pendingTabIndex.next(null);
+          this.isReverting = true;
+          setTimeout(() => {
+            this.tabContent.activeTabIndex = this.previousTabIndex;
+            this.activeChildIndex = this.previousChildIndex;
+          }, 0);
+        }
+      });
+    } else {
+      this.tabContent.activeTabIndex = parentIndex;
+      this.activeChildIndex = childIndex;
+      this._tabsService.updateActiveVerticalTabIndex(parentIndex);
+      this.previousTabIndex = parentIndex;
+      this.previousChildIndex = childIndex;
     }
   }
 

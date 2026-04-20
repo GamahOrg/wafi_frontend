@@ -4,10 +4,11 @@ accordion {
       margin-top: 1.5rem;
     }
 
-    .card {
+    >.card {
       --bs-card-border-radius: #{$border-radius-xs};
-      --bs-card-cap-padding-y: 1rem;
-      --bs-card-cap-bg: #F5F8F8;
+      --bs-card-cap-padding-x: 1rem;
+      --bs-card-cap-padding-y: 1.75rem;
+      --bs-card-cap-bg: #{$white};
 
       .card-header {
         .accordion-heading {
@@ -50,12 +51,14 @@ accordion {
 
   &:not(.simple) {
     accordion-group {
-      .card {
+      >.card {
         --bs-card-spacer-y: 2rem;
         --bs-card-spacer-x: 1rem;
-        --bs-card-border-width: 0;
+        --bs-card-border-color: #E7E9EA;
 
         .card-header {
+          border-bottom: 0;
+
           &:first-child {
             border-radius: $border-radius-sm;
           }
@@ -92,6 +95,12 @@ accordion {
           }
         }
       }
+
+      &.panel-open {
+        >.card {
+          --bs-card-border-color: #{$midgreen};
+        }
+      }
     }
   }
 
@@ -104,7 +113,7 @@ accordion {
         border-top: 1px solid rgba($bluegray, .5);
       }
 
-      .card {
+      >.card {
         border-radius: 0;
         box-shadow: none;
 
@@ -143,7 +152,7 @@ accordion {
           border-top: none;
         }
 
-        .card {
+        >.card {
           .card-header {
             padding: 1.25rem 2.5rem;
             border-radius: $border-radius-sm;
@@ -178,7 +187,7 @@ accordion {
           border-top: none;
         }
 
-        .card {
+        >.card {
           --bs-card-border-width: 0;
 
           .card-header {
@@ -213,7 +222,7 @@ accordion {
       }
 
       .panel-open {
-        .card {
+        >.card {
           .card-header {
             background-color: $theme-light;
 

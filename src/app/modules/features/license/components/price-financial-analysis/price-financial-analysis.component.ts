@@ -234,7 +234,7 @@ export class PriceFinancialAnalysisComponent implements OnInit, OnDestroy {
   }
 
   onExistProjectProposedScheduleFilesUploaded(filesData: any) {
-    if(filesData.eventRes.data.length === 0) {
+    if (filesData.eventRes.data.length === 0) {
       this.licenseProjectProposedScheduleFiles = [];
       return;
     }
@@ -253,7 +253,7 @@ export class PriceFinancialAnalysisComponent implements OnInit, OnDestroy {
     });
   }
   onExistLicenseProjectFeasibilityStudyFilesUploaded(filesData: any) {
-    if(filesData.eventRes.data.length === 0) {
+    if (filesData.eventRes.data.length === 0) {
       this.licenseProjectFeasibilityStudyFiles = [];
       return;
     }
@@ -272,7 +272,7 @@ export class PriceFinancialAnalysisComponent implements OnInit, OnDestroy {
     });
   }
   onExistProjectMarketingPlanFilesUploaded(filesData: any) {
-    if(filesData.eventRes.data.length === 0) {
+    if (filesData.eventRes.data.length === 0) {
       this.licenseProjectMarketingPlanFiles = [];
       return;
     }
@@ -299,7 +299,6 @@ export class PriceFinancialAnalysisComponent implements OnInit, OnDestroy {
         .DeleteFile(this.licenseProjectId as string, fileId)
         .subscribe({
           next: () => {
-            debugger;
             this._toastrService.success('تم حذف الملف بنجاح');
 
             this.licenseProjectFeasibilityStudyDto.licenseProjectProposedScheduleFiles =

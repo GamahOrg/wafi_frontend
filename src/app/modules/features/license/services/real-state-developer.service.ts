@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Configuration } from "src/app/core/configurations/shared.config";
-import { CancelContractRequestDto, ContractStatusDto, GenerateContractRequestDto, GenerateContractResponseDto, GetBuyerContractResponseDto, GetDeveloperProjectsResponseDto, GetProjectDetailsResponseDto, GetProjectUnitContractDetailsResponseDto, GetProjectUnitDetailsResponseDto, GetProjectUnitsListResponseDto, GetUnitCodeTaxesFeesDto, LicenseProjectBusinessPaymentResponseDto, LicenseProjectBuyerContractListDto, LicenseProjectBuyerPaymentTypeDto, LicenseProjectBuyerUnitListFilterDto, LicenseProjectUnitCodeStatus, SaveContractRequestDto, SaveContractResponseDto, SubUnitTypesDto, SysBuyerTypeDto, UnitCodeStatusDto, UpdateContractStatusRequestDto } from "../models/real-state-developer-dto";
+import { CancelContractRequestDto, ChangeUnitsStatusDto, ContractStatusDto, GenerateContractRequestDto, GenerateContractResponseDto, GetBuyerContractResponseDto, GetDeveloperProjectsResponseDto, GetProjectDetailsResponseDto, GetProjectUnitContractDetailsResponseDto, GetProjectUnitDetailsResponseDto, GetProjectUnitsListResponseDto, GetUnitCodeTaxesFeesDto, LicenseProjectBusinessPaymentResponseDto, LicenseProjectBuyerContractListDto, LicenseProjectBuyerPaymentTypeDto, LicenseProjectBuyerUnitListFilterDto, LicenseProjectUnitCodeStatus, SaveContractRequestDto, SaveContractResponseDto, SubUnitTypesDto, SysBuyerTypeDto, UnitCodeStatusDto, UpdateContractStatusRequestDto } from "../models/real-state-developer-dto";
 import { CoreResponseDTO } from "src/app/core/models/core.model";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Pagination } from "src/app/shared/models/pagination.model";
 import { LicenseProjectBuyerContractFilterDto } from "../../real-estate-contributions-license/models/license-project-buyer-contracts-dto";
 import { BaseResponse } from "src/app/shared/models/base-response";
@@ -11,6 +11,7 @@ import type { CustomerShortDto } from "../models/facility-short-dto";
 
 @Injectable()
 export class RealStateDeveloperService {
+
   setContractId(id:string): void {
     localStorage.setItem('contractId', id)
   }
@@ -225,6 +226,13 @@ export class RealStateDeveloperService {
     return this.http.post<CoreResponseDTO<any>>(
       `${Configuration.APIs.RealStateDeveloper.CancelContract}`,
       request
+    );
+  }
+
+  changeUnitsStatus(dto: ChangeUnitsStatusDto): Observable<CoreResponseDTO<any>> {
+    return this.http.post<CoreResponseDTO<any>>(
+      `${Configuration.APIs.LicenseProjectSubUnitsListCode.ChangeUnitsStatus}`,
+      dto
     );
   }
 }

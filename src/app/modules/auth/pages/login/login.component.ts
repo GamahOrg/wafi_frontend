@@ -122,7 +122,7 @@ export class LoginComponent {
       userType: UserType.client,
       loginUserType: +this.loginForm.value.loginUserType,
     };
-
+this._userDataService.removeFacilityTypeCategoryFromLocalStorage();
     if (this.isProduction) {
       this.loginService.LoginWithIAM(loginParams).subscribe((res) => {
         if (res.data) {

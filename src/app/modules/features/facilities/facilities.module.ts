@@ -18,6 +18,8 @@ import { FinancialCapabilitiesRequirementsComponent } from './components/financi
 import { JobRequirementsAndHumanResourcesComponent } from './components/job-requirements-and-human-resources/job-requirements-and-human-resources.component';
 import { TechnicalCapabilitiesRequirementsComponent } from './components/technical-capabilities-requirements/technical-capabilities-requirements.component';
 import { CertifiedFacilityEngineersComponent } from './components/certified-facility-engineers/certified-facility-engineers.component';
+import { WafiTrainingEngineersComponent } from './components/wafi-training-engineers/wafi-training-engineers.component';
+import { WafiTrainingEngineersFormComponent } from './components/wafi-training-engineers-form/wafi-training-engineers-form.component';
 import { InstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesComponent } from './components/institutional-capabilities-and-additional-discriminatory-human-resources/institutional-capabilities-and-additional-discriminatory-human-resources.component';
 import { DistinctiveAdditionalTechnicalCapabilitiesComponent } from './components/distinctive-additional-technical-capabilities/distinctive-additional-technical-capabilities.component';
 import { EngineersWithSufficientTrainingForTheEngineeringConsultantComponent } from './components/engineers-with-sufficient-training-for-the-engineering-consultant/engineers-with-sufficient-training-for-the-engineering-consultant.component';
@@ -59,6 +61,13 @@ import { LicenseListComponent } from './components/license-list/license-list.com
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DashboardService } from './services/dashboard.service';
 import { CertifiedEngineerCoursesPreviewComponent } from './components/certified-engineer-courses-preview/certified-engineer-courses-preview.component';
+import { FacilityTypeSetupComponent } from './pages/facility-type-setup/facility-type-setup.component';
+import { FacilityTypeSetupService } from './services/facilityTypeSetup/facility-type-setup.service';
+import { RealEstateDeveloperDataComponent } from './components/real-estate-developer-data/real-estate-developer-data.component';
+import { LegalAccountantDataComponent } from './components/legal-accountant-data/legal-accountant-data.component';
+import { EngineeringConsultantDataComponent } from './components/engineering-consultant-data/engineering-consultant-data.component';
+import { FacilityBasicDataInfoAllTypesComponent } from './components/facility-basic-data-info-all-types/facility-basic-data-info-all-types.component';
+import { EditFacilityBasicDataInfoAllTypesComponent } from './components/edit-facility-basic-data-info-all-types/edit-facility-basic-data-info-all-types.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +83,8 @@ import { CertifiedEngineerCoursesPreviewComponent } from './components/certified
     JobRequirementsAndHumanResourcesComponent,
     TechnicalCapabilitiesRequirementsComponent,
     CertifiedFacilityEngineersComponent,
+    WafiTrainingEngineersComponent,
+    WafiTrainingEngineersFormComponent,
     InstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesComponent,
     DistinctiveAdditionalTechnicalCapabilitiesComponent,
     EngineersWithSufficientTrainingForTheEngineeringConsultantComponent,
@@ -97,6 +108,12 @@ import { CertifiedEngineerCoursesPreviewComponent } from './components/certified
     LicenseListComponent,
     DashboardComponent,
     CertifiedEngineerCoursesPreviewComponent,
+    FacilityTypeSetupComponent,
+    RealEstateDeveloperDataComponent,
+    LegalAccountantDataComponent,
+    EngineeringConsultantDataComponent,
+    FacilityBasicDataInfoAllTypesComponent,
+    EditFacilityBasicDataInfoAllTypesComponent,
   ],
   providers: [
     SharedLicenseProjectService,
@@ -116,7 +133,8 @@ import { CertifiedEngineerCoursesPreviewComponent } from './components/certified
     QualificationFacilityCertificationService,
     WafiTrainingService,
     DatePipe,
-    DashboardService
+    DashboardService,
+    FacilityTypeSetupService
   ],
   imports: [
     CommonModule,
@@ -127,4 +145,4 @@ import { CertifiedEngineerCoursesPreviewComponent } from './components/certified
     RouterModule,
   ],
 })
-export class FacilitiesModule {}
+export class FacilitiesModule { }

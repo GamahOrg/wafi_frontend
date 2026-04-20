@@ -84,25 +84,31 @@
           <div class="col-xl-6">
             <div class="key-value horiz">
               <span class="key">بند الصرف من جدول الكميات </span>
-              <span class="value">{{
+              <span class="value">
+                {{
                 requestDetails?.sysLicenseRelativeWeight?.elementName ?? "--"
-                }}</span>
+                }}
+              </span>
             </div>
           </div>
           <div class="col-xl-6">
             <div class="key-value horiz">
               <span class="key">رقم الحساب الرئيسي</span>
-              <span class="value">{{
+              <span class="value">
+                {{
                 requestDetails?.mainAccountNumber ?? "--"
-                }}</span>
+                }}
+              </span>
             </div>
           </div>
           <div class="col-xl-6">
             <div class="key-value horiz">
               <span class="key">رقم الحساب الفرعي</span>
-              <span class="value">{{
+              <span class="value">
+                {{
                 requestDetails?.subAccountNumber ?? "--"
-                }}</span>
+                }}
+              </span>
             </div>
           </div>
         </div>
@@ -115,15 +121,18 @@
             <div class="key-value horiz">
               <span class="key"> المستفيد</span>
               <span class="value">
-                {{ requestDetails?.liceneProjectBeneficiaryType?.name ?? "--" }}</span>
+                {{ requestDetails?.liceneProjectBeneficiaryType?.name ?? "--" }}
+              </span>
             </div>
           </div>
           <div class="col-xl-6">
             <div class="key-value horiz">
               <span class="key">وصف المستفيد</span>
-              <span class="value">{{
+              <span class="value">
+                {{
                 requestDetails?.beneficiaryDescription ?? "--"
-                }}</span>
+                }}
+              </span>
             </div>
           </div>
         </div>
@@ -141,22 +150,142 @@
           <div class="col-xl-6">
             <div class="key-value horiz">
               <span class="key">المبلغ المتبقي في الحساب بعد الصرف</span>
-              <span class="value">{{
+              <span class="value">
+                {{
                 requestDetails?.remainingAmountAfterExchange ?? "--"
-                }}</span>
+                }}
+              </span>
             </div>
           </div>
           <div class="col-xl-6">
             <div class="key-value horiz">
               <span class="key">المبلغ المتوفر في الحساب قبل الصرف</span>
-              <span class="value">{{
+              <span class="value">
+                {{
                 requestDetails?.availableAmountBeforeExchange ?? "--"
-                }}</span>
+                }}
+              </span>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="page-section" *ngIf="requestDetails?.withdrawalMethodId == withdrawalMethodEnum.Insurance">
+        <h3 class="title">سحب مبلغ الحفظ : تأمين</h3>
+        <div class="row row-gap-4">
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">رقم بوليصة التأمين</span>
+              <span class="value">{{ requestDetails?.insurancePolicyNumber ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">تاريخ بدء التأمين</span>
+              <span class="value">{{ (requestDetails?.insuranceStartDate | date: "dd-MM-yyyy") ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">تاريخ نهاية التأمين</span>
+              <span class="value">{{ (requestDetails?.insuranceEndDate | date: "dd-MM-yyyy") ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">شركة التأمين</span>
+              <span class="value">{{ requestDetails?.insuranceCompany?.name ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6" *ngIf="(requestDetails?.licenseProjectExchangeInsuranceDocumentFiles?.length ?? 0) > 0">
+            <div class="key-value horiz flex-column align-items-start gap-2">
+              <span class="key">المستندات الداعمة</span>
+              <div class="d-flex flex-column gap-2">
+                <span class="value" *ngFor="let item of requestDetails?.licenseProjectExchangeInsuranceDocumentFiles">
+                  <i class="icon hgi hgi-stroke hgi-file-attachment"></i>
+                  <a [href]="baseUrl + item.file?.filePath" target="_blank">
+                    {{ item.file?.fileDescription ?? "مرفق التأمين" }}
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">خطاب المطور</span>
+              <span class="value">{{ requestDetails?.letterNumber ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">تاريخ الخطاب</span>
+              <span class="value">{{ requestDetails?.letterDate ?? "--" | date: "dd-MM-yyyy"}}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">نسبة انجاز المشروع</span>
+              <span class="value">{{ requestDetails?.projectProgressPercentage ?? "--" }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-section" *ngIf="requestDetails?.withdrawalMethodId == withdrawalMethodEnum.BankGuarantee">
+        <h3 class="title">سحب مبلغ الحفظ : ضمان بنكي</h3>
+        <div class="row row-gap-4">
+          <div class="col-xl-6" *ngIf="(requestDetails?.licenseProjectExchangeBankGuaranteeDocumentFiles?.length ?? 0) > 0">
+            <div class="key-value horiz flex-column align-items-start gap-2">
+              <span class="key">المستندات الداعمة</span>
+              <div class="d-flex flex-column gap-2">
+                <span class="value" *ngFor="let item of requestDetails?.licenseProjectExchangeBankGuaranteeDocumentFiles">
+                  <i class="icon hgi hgi-stroke hgi-file-attachment"></i>
+                  <a [href]="baseUrl + item.file?.filePath" target="_blank">
+                    {{ item.file?.fileDescription ?? "مرفق الضمان البنكي" }}
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">خطاب المطور</span>
+              <span class="value">{{ requestDetails?.letterNumber ?? "--" }}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">تاريخ الخطاب</span>
+              <span class="value">{{ requestDetails?.letterDate ?? "--" | date: "dd-MM-yyyy"}}</span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">نسبة انجاز المشروع</span>
+              <span class="value">{{ requestDetails?.projectProgressPercentage ?? "--" }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-section" *ngIf="requestDetails?.releaseLetter">
+        <h3 class="title">خطاب الإفراج</h3>
+        <div class="row row-gap-4">
+          <div class="col-xl-12">
+            <div class="key-value horiz">
+              <span class="value">
+                <i class="icon hgi hgi-stroke hgi-file-attachment"></i>
+                <a [href]="baseUrl + requestDetails?.releaseLetter?.filePath" target="_blank">
+                  {{ requestDetails?.releaseLetter?.fileDescription ?? "خطاب الإفراج" }}
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
+  
+    
   </div>
 
   <div class="page-actions" *ngIf="requestDetails?.canTakeAction">

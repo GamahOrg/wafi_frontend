@@ -11,6 +11,7 @@ import { LoginUserTypeEnum } from 'src/app/modules/auth/models/login.model';
 import { LicenseProjectBuyerService } from 'src/app/modules/features/license/services/license-project-buyer.service';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { QualificationType } from 'src/app/modules/features/qualifying/dataModels/enum/qualification-request-type';
+import { FacilityTypeCategory } from 'src/app/shared/models/customer.model';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UnsavedChangesDialogComponent } from 'src/app/core/guards/unsaved-changes-guard/unsaved-changes-dialog/unsaved-changes-dialog.component';
@@ -30,6 +31,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isAccountant: boolean = false;
   isEngineer: boolean = false;
   isDeveloper: boolean = false;
+  isFacilityTypeCategoryDeveloper: boolean = false;
   currentUrl: string = '';
   subscriptions: Subscription[] = [];
   panelOpenState = false;
@@ -83,6 +85,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     recommendationLogsList: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}/${Configuration.pages.license.recommendationLogsList}`,
     contractRequestList: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.contractRequestList}`,
     searchExchangeDocumentsList: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.searchExchangeDocumentsList}`,
+    supervisionFees: `/${Configuration.pages.license.supervisionFees}`,
 
   };
 
@@ -115,8 +118,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
         .getCustomerData()
         .subscribe((res: customerResponse | null) => {
           this.userData = res;
-          if (this.userData && this.userData.facilities && this.userData.facilities.length > 0)
-            this.checkIfAccountantFacility(this.userData.facilities[0].id)
+          if (this.userData && this.userData.facilities && this.userData.facilities.length > 0) {
+            this.isFacilityTypeCategoryDeveloper =
+              this.userData.facilities[0].facilityTypeCategory === FacilityTypeCategory.Developer;
+            this.checkIfAccountantFacility(this.userData.facilities[0].id);
+          }
         })
     );
   }

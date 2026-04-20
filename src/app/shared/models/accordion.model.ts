@@ -1,16 +1,16 @@
 export interface accordionComponent {
-  icon: string; // index = 0
+  icon?: string; // index = 0
   title: string;
   component: any;
   disabled: boolean;
   isVisible: boolean;
-  isViewed: boolean;
+  isViewed?: boolean;
   isRendered: boolean;
   id?: string;
   errNum?: number;
   accordionCode?: string;
   isOpen?: boolean;
-  isDeletebtn: boolean;
+  isDeletebtn?: boolean;
   deleteDynamicMsg?: string;
   // accordionErrors?: tabError[],
 }

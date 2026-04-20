@@ -43,6 +43,7 @@ import { EngineeringCertificateComponent } from './components/engineering-certif
 import { AccountantCertificateComponent } from './components/accountant-certificate/accountant-certificate.component';
 import { DeveloperCertificateComponent } from './components/developer-certificate/developer-certificate.component';
 import { ContributionDeveloperCertificateComponent } from './components/contribution-developer-certificate/contribution-developer-certificate.component';
+import { QualificationInvoiceViewComponent } from './components/qualification-invoice-view/qualification-invoice-view.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { ContributionDeveloperCertificateComponent } from './components/contribu
     EngineeringCertificateComponent,
     AccountantCertificateComponent,
     DeveloperCertificateComponent,
-    ContributionDeveloperCertificateComponent
+    ContributionDeveloperCertificateComponent,
+    QualificationInvoiceViewComponent
   ],
   providers: [
     QualificationTypeService,

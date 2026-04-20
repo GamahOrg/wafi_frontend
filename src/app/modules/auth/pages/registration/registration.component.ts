@@ -104,10 +104,11 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this._registrationService.registrationStatus.subscribe(
         (status: RegistrationStatus | null) => {
           if (status) {
+            this.steps = [];
             switch (status) {
               case this.RegistrationStatus.existIdWithoutFacility:
                 this.steps.push({
-                  title: 'إضافة الرقم الوطني للسجل التجاري ',
+                  title: 'ربط المنشاة',
                   Component: AddingCommercialRegisterNumberComponent,
                   state: '',
                   completed: true,
@@ -147,7 +148,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                     hasError: false,
                   },
                   {
-                    title: 'إضافة الرقم الوطني للسجل التجاري ',
+                    title: 'ربط المنشاة',
                     Component: AddingCommercialRegisterNumberComponent,
                     state: '',
                     completed: false,
@@ -227,14 +228,20 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           let loginUserTypeEnum = Number(loginUserType) as LoginUserTypeEnum;
 
           if (res && (res.facilities == null || res.facilities.length == 0) && loginUserTypeEnum == LoginUserTypeEnum.wafiPartner) {
-            this.steps.push({
-              title: 'إضافة الرقم الوطني للسجل التجاري ',
-              Component: AddingCommercialRegisterNumberComponent,
-              state: '',
-              completed: true,
-              isEditable: true,
-              hasError: false,
-            });
+            const alreadyExists = this.steps.some(
+              (s) => s.Component === AddingCommercialRegisterNumberComponent
+            );
+            if (!alreadyExists) {
+              this.steps.push({
+                title: 'ربط المنشاة',
+                Component: AddingCommercialRegisterNumberComponent,
+                state: '',
+                completed: true,
+                isEditable: true,
+                hasError: false,
+              });
+              this.updateStepper();
+            }
           }
         })
     );

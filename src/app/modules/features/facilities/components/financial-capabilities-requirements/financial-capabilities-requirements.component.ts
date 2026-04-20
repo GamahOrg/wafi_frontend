@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { FinancialCapabilitiesService } from '../../services/financialCapabilities/financial-capabilities.service';
 import { FinancialCapabilitiesRequirementsFormComponent } from '../financial-capabilities-requirements-form/financial-capabilities-requirements-form.component';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { FacilityProfileService } from '../../services/facilityProfile/facility-profile.service';
 
 @Component({
   selector: 'app-financial-capabilities-requirements',
@@ -21,14 +22,22 @@ export class FinancialCapabilitiesRequirementsComponent implements OnInit, OnDes
   financialCapability: financialCapabilityResponseFE = new financialCapabilityResponseFE(new financialCapabilityResponseBE());
   userData: customerResponse | null = null;
   baseUrl = `${environment.baseURL}/`;
+  isCRLessThanOneYear: boolean = false;
+  canUpdate: boolean = true;
 
   constructor(private financialCapabilitiesService: FinancialCapabilitiesService,
     private _userDataService: UserDataService, private _popupService: PopupService,
-    private _filemangementService: FileManagementService) { }
+    private _filemangementService: FileManagementService,
+    private _facilityProfileService: FacilityProfileService) { }
 
   ngOnInit() {
     this.obseveCustomerData();
     this.observeFinancialCapabilityObj();
+    this.subscriptions.push(
+      this._facilityProfileService.getAvailabilityToUpdate().subscribe((res: boolean) => {
+        this.canUpdate = res;
+      })
+    );
     // this.getFinancialCapabilities();
   }
 
@@ -38,9 +47,19 @@ export class FinancialCapabilitiesRequirementsComponent implements OnInit, OnDes
         this.userData = res
         if (this.userData) {
           this.getFinancialCapabilities();
+          this.calculateCRAge();
         }
       })
     )
+  }
+
+  calculateCRAge(): void {
+    if (this.userData && this.userData.facilities.length > 0) {
+      const crStartDate = new Date(this.userData.facilities[0].commercialRegisterStartDate);
+      const now = new Date();
+      const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+      this.isCRLessThanOneYear = crStartDate > oneYearAgo;
+    }
   }
 
   deletFile(id: string) {

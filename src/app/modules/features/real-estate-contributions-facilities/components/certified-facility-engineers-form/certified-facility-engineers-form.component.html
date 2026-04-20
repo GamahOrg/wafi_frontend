@@ -1,49 +1,59 @@
 <form [formGroup]="qualificationCertifiedEngineersForm" id="form-qualificationCertifiedEngineersForm">
-  <div class="row row-gap-3 mb-3">
-    <div class="col-12 col-lg-6">
+  <!-- For Developer: Full width identity number -->
+  <div class="row row-gap-3 mb-3" *ngIf="isDeveloper(); else nonDeveloperLayout">
+    <div class="col-12">
       <div class="form-group">
-        <label for="" class="form-label">الاسم</label>
-        <input type="text" class="form-control" formControlName="engineerName" id="control-engineerName" />
-
-        <mat-error *ngIf="controls.engineerName.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="" class="form-label">رقم الهوية </label>
+        <label for="" class="form-label">رقم الهوية <span class="required-star">*</span></label>
         <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber" />
-
         <mat-error *ngIf="controls.identityNumber.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
       </div>
     </div>
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="" class="form-label">رقم الرخصة المهنية</label>
-        <input type="text" class="form-control" formControlName="professionalLicenseNumber"
-          id="control-professionalLicenseNumber" />
-
-        <mat-error *ngIf="controls.professionalLicenseNumber.errors?.['required'] && showValidation">حقل
-          مطلوب</mat-error>
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="" class="form-label">المهنة</label>
-        <select class="form-select" formControlName="qualificationEngineerType">
-          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
-          <option  [ngValue]="1" label="استشارى هندسى"></option>
-          <option  [ngValue]="2" label="محاسب قانونى"></option>
-
-        </select>
-      </div>
-      <mat-error *ngIf="controls.qualificationEngineerType.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
-    </div>
   </div>
 
-  <!-- <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-12">
-            <label for="" class="form-label"> شهادة التدريب</label>
-            <app-file-uploader (fileRemoved)="onTrainingCertificateFileRemoved($event)" (fileUploaded)="onTrainingCertificateFileUploaded($event)"></app-file-uploader>
+  <!-- For non-Developer (Accountant/Engineering): Split layout with training field -->
+  <ng-template #nonDeveloperLayout>
+    <div class="row row-gap-3 mb-3">
+      <div class="col-12 col-lg-8">
+        <div class="form-group">
+          <label for="" class="form-label">رقم الهوية <span class="required-star">*</span></label>
+          <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber" />
+          <mat-error *ngIf="controls.identityNumber.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
         </div>
-    </div> -->
+      </div>
+      <div class="col-12 col-lg-4 d-flex align-items-center">
+        <div class="form-group w-100">
+          <label for="" class="form-label"> حاصل على تدريب <span class="required-star">*</span></label>
+          <div class="d-flex gap-4">
+            <div class="form-check">
+              <input 
+                class="form-check-input" 
+                type="radio" 
+                formControlName="hasCourses" 
+                [value]="true" 
+                id="trainingYes"
+              >
+              <label class="form-check-label" for="trainingYes">
+                نعم
+              </label>
+            </div>
+            <div class="form-check">
+              <input 
+                class="form-check-input" 
+                type="radio" 
+                formControlName="hasCourses" 
+                [value]="false" 
+                id="trainingNo"
+              >
+              <label class="form-check-label" for="trainingNo">
+                لا
+              </label>
+            </div>
+          </div>
+          <mat-error *ngIf="controls.hasCourses.errors?.['required'] && showValidation">
+            حقل مطلوب
+          </mat-error>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </form>

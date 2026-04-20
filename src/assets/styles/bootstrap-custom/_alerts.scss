@@ -1,6 +1,5 @@
 .alert {
   display: flex;
-  align-items: center;
   gap: 1.25rem;
   border-radius: $card-border-radius;
 
@@ -10,7 +9,7 @@
   .icon {
     display: inline-flex;
     justify-content: center;
-    align-items: center;
+    line-height: 1;
     font-size: $body-font-size * 1.25;
   }
 
@@ -32,6 +31,10 @@
 
   &.alert-danger {
     border-inline-start-color: $red;
+  }
+
+  .btn-link {
+    --bs-btn-color: #{$dark};
   }
 }
 

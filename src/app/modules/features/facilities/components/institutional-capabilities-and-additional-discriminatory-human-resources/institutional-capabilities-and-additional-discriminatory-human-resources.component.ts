@@ -9,6 +9,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { InstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesFormComponent } from '../institutional-capabilities-and-additional-discriminatory-human-resources-form/institutional-capabilities-and-additional-discriminatory-human-resources-form.component';
 import { environment } from 'src/environments/environment';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { FacilityProfileService } from '../../services/facilityProfile/facility-profile.service';
 
 @Component({
   selector:
@@ -24,18 +25,25 @@ export class InstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesC
   subscriptions: Subscription[] = [];
   baseUrl = `${environment.baseURL}/`;
   model: QualificationAdditionInstitutionalCapacityAndHrRequirementDto = new QualificationAdditionInstitutionalCapacityAndHrRequirementDto();
+  canUpdate: boolean = true;
 
   constructor(
     private _userDataService: UserDataService,
     private _additionInstitutionalCapacityAndHrService: AdditionInstitutionalCapacityAndHrService,
     private _popupService: PopupService,
-    private _filemangementService: FileManagementService
+    private _filemangementService: FileManagementService,
+    private _facilityProfileService: FacilityProfileService
   ) { }
 
   ngOnInit(): void {
     this.obseveCustomerData();
     // this.GetByFacilityId();
     this.observeHRObj();
+    this.subscriptions.push(
+      this._facilityProfileService.getAvailabilityToUpdate().subscribe((res: boolean) => {
+        this.canUpdate = res;
+      })
+    );
   }
 
   obseveCustomerData(): void {

@@ -60,7 +60,9 @@ export enum LicenseProjectUnitCodeStatus
     NotSold = 1,
   Sold = 2,
   PendingBuyerApproval = 3,
-  SoldOutsidePlatform = 4
+  SoldOutsidePlatform = 4,
+  CharteredAccountantReview = 5
+
 }
 export enum LicenseProjectUnitType
 {   All = 0,
@@ -289,6 +291,12 @@ export interface ApproveCancellationRequestDto {
 export interface RejectCancellationRequestDto {
   cancellationRequestId: number;
   rejectReason: string;
+}
+
+export interface ChangeUnitsStatusDto {
+  unitsId: string[];
+  status: LicenseProjectUnitCodeStatus;
+  licenseProjectId: string;
 }
 
 export interface LicenseProjectBuyerCancellationRequestFilterDto {

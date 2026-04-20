@@ -32,7 +32,7 @@
     outline: 0;
     box-shadow: none;
 
-    &,
+    &:not([type="radio"]),
     &+.input-group-text {
       border-color: $input-border-color !important;
     }
@@ -52,17 +52,13 @@
 
   &:disabled,
   &:read-only {
-    color: $dark;
 
     &,
     &:focus,
     &+.input-group-text {
-      color: #9DA4AE;
-      border-color: $lightgray !important;
-    }
-
-    &+.input-group-text {
-      background-color: #E5E7EB;
+      color: #5D5D5D;
+      border-color: $darkgray !important;
+      background-color: $lightergray;
     }
   }
 
@@ -90,8 +86,8 @@
 
     &,
     &+.input-group-text {
-      color: #9DA4AE;
-      border-color: $lightgray;
+      color: #5D5D5D;
+      border-color: $darkgray !important;
     }
   }
 
@@ -172,10 +168,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  
+
   padding: 0;
   cursor: pointer;
-  
+
   &:not(.form-check-normal) {
     display: flex;
     justify-content: center;
@@ -193,6 +189,7 @@
   .form-check-input {
     float: none;
     margin-top: 0;
+    flex-shrink: 0;
   }
 
   .multi-select & {
@@ -223,9 +220,5 @@
     &~.form-check-label {
       color: $theme-main;
     }
-  }
-
-  &:focus[type="radio"] {
-    border-color: $white !important;
   }
 }

@@ -50,13 +50,21 @@ export class ContractDocumentationListComponent implements OnInit, OnDestroy {
 
   statusEnum = LicenseProjectBuyerStatusEnum;
 
+  // statusColors: { [key: number]: string } = {
+  //   [LicenseProjectBuyerStatusEnum.All]: 'status-other',
+  //   [LicenseProjectBuyerStatusEnum.New]: 'status-pending',
+  //   [LicenseProjectBuyerStatusEnum.PendingCancellation]: 'status-pending',
+  //   [LicenseProjectBuyerStatusEnum.Cerified]: 'status-approved',
+  //   [LicenseProjectBuyerStatusEnum.Refused]: 'status-rejected',
+  //   [LicenseProjectBuyerStatusEnum.Cancelled]: 'status-rejected',
+  // };
   statusColors: { [key: number]: string } = {
-    [LicenseProjectBuyerStatusEnum.All]: 'status-other',
-    [LicenseProjectBuyerStatusEnum.New]: 'status-pending',
-    [LicenseProjectBuyerStatusEnum.PendingCancellation]: 'status-pending',
-    [LicenseProjectBuyerStatusEnum.Cerified]: 'status-approved',
-    [LicenseProjectBuyerStatusEnum.Refused]: 'status-rejected',
-    [LicenseProjectBuyerStatusEnum.Cancelled]: 'status-rejected',
+    [LicenseProjectBuyerStatusEnum.All]: 'black',
+    [LicenseProjectBuyerStatusEnum.New]: 'orange',
+    [LicenseProjectBuyerStatusEnum.PendingCancellation]: 'orange',
+    [LicenseProjectBuyerStatusEnum.Cerified]: 'green',
+    [LicenseProjectBuyerStatusEnum.Refused]: 'red',
+    [LicenseProjectBuyerStatusEnum.Cancelled]: 'red',
   };
 
   // statusOptions = [

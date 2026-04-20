@@ -16,6 +16,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   requestSummeryLink: string = `/${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requestSummary}` as string;
   renewRequestSummaryLink: string = `/${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.renewRequestSummary}` as string;
   requestTypeCode: string = '';
+  isUpgradeDegree: boolean = false;
   userData: customerResponse | null = null;
   subscriptions: Subscription[] = [];
   createRequstForm = this._formBuilder.group({
@@ -43,7 +44,9 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._activatedRoute.params.subscribe(params => {
         this.requestTypeCode = params['code'];
-        this.renewRequest = this._activatedRoute.snapshot.url[0].path == Configuration.pages.qualifying.renewRequest;
+        const urlSegments = this._activatedRoute.snapshot.url;
+        this.renewRequest = urlSegments[0].path == Configuration.pages.qualifying.renewRequest;
+        this.isUpgradeDegree = urlSegments.some(s => s.path === Configuration.pages.qualifying.upgradeDegree);
       })
     )
   }
@@ -56,10 +59,14 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   navigate() {
     if (this.controls.priod.value) {
+      const segments: any[] = [this.requestTypeCode, this.controls.priod.value];
+      if (this.isUpgradeDegree) {
+        segments.push(Configuration.pages.qualifying.upgradeDegree);
+      }
       if (this.renewRequest) {
-        this._router.navigate([this.renewRequestSummaryLink, this.requestTypeCode, this.controls.priod.value]);
+        this._router.navigate([this.renewRequestSummaryLink, ...segments]);
       } else {
-        this._router.navigate([this.requestSummeryLink, this.requestTypeCode, this.controls.priod.value]);
+        this._router.navigate([this.requestSummeryLink, ...segments]);
       }
     }
     else {

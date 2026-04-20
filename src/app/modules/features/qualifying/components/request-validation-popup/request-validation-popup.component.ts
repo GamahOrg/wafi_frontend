@@ -73,7 +73,7 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
     },
     {
       icon: '',
-      title: 'موظفين الشركة المعتمدين',
+      title: 'الموظفين الحاصلين على التدريب',
       id: 'CertifiedFacilityEngineersComponent',
       disabled: false,
       errNum: 0,
@@ -104,8 +104,7 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
     },
     {
       icon: '',
-      title:
-        'مهندسي الشركة الحاصلين على برنامج تدريب الهيئة العامة للعقار للبيع على الخارطة للاستشاري الهندسي',
+      title:'مهندسين المكتب المعتمدين',
       id: 'EngineersWithSufficientTrainingForTheEngineeringConsultantComponent',
       disabled: false,
       errNum: 0,
@@ -115,8 +114,7 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
     },
     {
       icon: '',
-      title:
-        'محاسبي الشركة الحاصلين على برنامج تدريب الهيئة العامة للعقار للإشراف المحاسبي',
+      title:'محاسبي المكتب المعتمدين',
       id: 'AccountantsCompletedWafiTrainingProgramForAccountingSupervisionComponent',
       disabled: false,
       errNum: 0,
@@ -268,6 +266,13 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
     }
 
     return tabErrorsMsg;
+  }
+  getVisibleTabs(): tabsComponent[] {
+    if (!this.validationError?.tabs) return [];
+    const responseTabCodes = this.validationError.tabs.map((t: TabsError) => t.tabCode);
+    return this.tabsComponentList.filter((tab: tabsComponent) =>
+      responseTabCodes.includes(tab.tabCode as string)
+    );
   }
   getGeneralErrorTab() {
     if (

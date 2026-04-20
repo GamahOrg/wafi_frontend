@@ -41,6 +41,7 @@ import { LiftingTheMarkOnThePropertyTitleDeedRequestSummaryComponent } from './p
 import { CreateLiftingTheMarkOnThePropertyTitleDeedRequestComponent } from './pages/create-lifting-the-mark-on-the-property-title-deed-request/create-lifting-the-mark-on-the-property-title-deed-request.component';
 import { CreateRequestTemplateComponent } from './pages/create-request-template/create-request-template/create-request-template.component';
 import { RequestTemplateMainSummaryComponent } from './pages/request-template-main-summary/request-template-main-summary.component';
+import { CreateComponent } from '../qualifying/pages/create/create.component';
 const routes: Routes = [ 
   {
     path: Configuration.pages.licenseProjectRequests.licenseProjectRequests,
@@ -222,6 +223,11 @@ const routes: Routes = [
   component: CreateRemovingDelegatorRequestComponent,
   data: { breadcrumb: 'إنشاء طلب إزالة المفوض المعتمد بالتوقيع على وثيقة الصرف من حساب الضمان' },
 },
+  // {
+  //   path: `${Configuration.pages.qualifying.createRequest}/:code/${Configuration.pages.qualifying.upgradeDegree}`,
+  //   component: CreateComponent,
+  //   data: { breadcrumb: 'تغيير درجة التأهيل' },
+  // },
 {
   path: Configuration.pages.licenseProjectRequests.removingdelegatorsummary,
   component: RemovingDelegatorSummaryComponent,

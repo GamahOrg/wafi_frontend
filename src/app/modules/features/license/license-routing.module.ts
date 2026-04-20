@@ -65,6 +65,9 @@ import { AddExchangeDocumentComponent } from './components/add-exchange-document
 import { ViewExchangeRequestDetailsComponent } from './pages/view-exchange-request-details/view-exchange-request-details.component';
 import { SharedLicenseProjectService } from './services/sharedLicenseProject/shared-license-project.service';
 import { CustomerTypeEnum } from './models/search-exchange-document-list-response-dto';
+import { RealStateCharteredAccountantUnitsListComponent } from './pages/real-state-chartered-accountant-units-list/real-state-chartered-accountant-units-list.component';
+import { ContractAccountantUnitDetailsComponent } from './pages/contracts/contract-accountant-unit-details/contract-accountant-unit-details.component';
+import { SupervisionFeesComponent } from './pages/supervision-fees/supervision-fees.component';
 
 const licenseTypeBreadcrumbResolver: ResolveFn<string> = () => {
   const sharedLicenseProjectService = inject(SharedLicenseProjectService);
@@ -252,8 +255,18 @@ const routes: Routes = [
     data: { breadcrumb: 'قائمة وحدات المشروع' },
   },
   {
+    path: Configuration.pages.license.realStateCharteredAccountantUnitsListComponent,
+    component: RealStateCharteredAccountantUnitsListComponent,
+    data: { breadcrumb: 'قائمة وحدات المشروع' },
+  },
+  {
     path: Configuration.pages.license.unitDetailsWithParam,
     component: ContractUnitDetailsComponent,
+    data: { breadcrumb: 'تفاصيل الوحدة' },
+  },
+  {
+    path: Configuration.pages.license.accountantUnitDetailsWithParam,
+    component: ContractAccountantUnitDetailsComponent,
     data: { breadcrumb: 'تفاصيل الوحدة' },
   },
   {
@@ -401,6 +414,11 @@ const routes: Routes = [
     path: Configuration.pages.license.engineeringExchangeDocumentsDetails+'/:id',
     component: ViewExchangeRequestDetailsComponent,
     data: { breadcrumb: 'تفاصيل وثائق الصرف', customerType: CustomerTypeEnum.ConsultantDelegator },
+  },
+  {
+    path: Configuration.pages.license.supervisionFees,
+    component: SupervisionFeesComponent,
+    data: { breadcrumb: 'رسوم الاشراف والمتابعة' },
   },
 ];
 //

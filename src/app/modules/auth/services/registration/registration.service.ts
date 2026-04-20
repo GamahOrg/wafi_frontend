@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { RegisterationCustomerResponseDto, RegistrationResponse, RegistrationStatus, customerResponse, facilityResponse, registration } from 'src/app/shared/models/customer.model';
+import { RegisterationCustomerResponseDto, RegistrationResponse, RegistrationStatus, customerResponse, facilityResponse, registration, FacilityPreviewResponse, LinkCustomerToFacilityRequest } from 'src/app/shared/models/customer.model';
 import { contactFE } from '../../models/registration.model';
 @Injectable()
 export class RegistrationService {
@@ -31,6 +31,19 @@ export class RegistrationService {
         return res.data ? res.data : null
       })
     )
+  }
+
+  GetFacilityData(CommercialRegisterNumber: string, customerId: string): Observable<CoreResponseDTO<FacilityPreviewResponse>> {
+    return this._httpClient.get<CoreResponseDTO<FacilityPreviewResponse>>(
+      `${Configuration.APIs.facility.GetFacilityData}/${CommercialRegisterNumber}/${customerId}`
+    );
+  }
+
+  LinkCustomerToFacility(input: LinkCustomerToFacilityRequest): Observable<CoreResponseDTO<facilityResponse>> {
+    return this._httpClient.post<CoreResponseDTO<facilityResponse>>(
+      Configuration.APIs.facility.LinkCustomerToFacility,
+      input
+    );
   }
 
   // Contact

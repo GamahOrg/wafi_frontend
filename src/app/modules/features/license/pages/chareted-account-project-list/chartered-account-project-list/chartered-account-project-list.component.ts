@@ -30,7 +30,6 @@ export class CharteredAccountProjectListComponent implements OnInit {
   searchText: string = '';
   selectedNatureTypeId: string | null = null;
   private searchSubject = new Subject<string>();
-
   subscriptions: Subscription[] = [];
   facilityId: string | null = '';
   newPageNo: number = 1;
@@ -58,6 +57,9 @@ export class CharteredAccountProjectListComponent implements OnInit {
     this.getLicenseNatureType();
     this.setupSearchDebounce();
   }
+
+
+ 
 
   /**
    * Setup search debounce to avoid excessive API calls
@@ -263,5 +265,14 @@ export class CharteredAccountProjectListComponent implements OnInit {
     this.subscriptions.forEach((subscription: Subscription) => {
       subscription.unsubscribe();
     });
+  }
+
+  showUnitList(licenseProjectId: string): void {
+    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      licenseProjectId,
+    );
+    this._router.navigateByUrl(
+      `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.realStateCharteredAccountantUnitsListComponent}`,
+    );
   }
 }

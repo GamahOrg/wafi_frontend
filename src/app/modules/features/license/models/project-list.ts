@@ -8,6 +8,7 @@ export interface ProjectListDto {
   projectTypeName: string;
   unitsCount: number;
   licenseProjectNatureType: LicenseProjectNatureTypeDto;
+  showUnits: boolean;
 }
 
 export interface LicenseProjectNatureTypeDto {

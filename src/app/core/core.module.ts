@@ -20,6 +20,7 @@ import { RefreshTokenInterceptor } from './interceptors/refresh-handler/refresh-
 import { SignalRService } from './services/signalR/signal-r.service';
 import { AuthGuard } from './guards/auth-guard/auth.guard';
 import { TokenGuard } from './guards/token-guard/token.guard';
+import { FacilityTypeCategoryGuard } from './guards/facility-type-category-guard/facility-type-category.guard';
 import { MailConfirmationComponent } from './pages/mail-confirmation/mail-confirmation.component';
 import { MailConfirmationService } from './services/mail-confirmation/mail-confirmation.service';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -44,6 +45,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MailConfirmationService,
     AuthGuard,
     TokenGuard,
+    FacilityTypeCategoryGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderHandlerInterceptor,

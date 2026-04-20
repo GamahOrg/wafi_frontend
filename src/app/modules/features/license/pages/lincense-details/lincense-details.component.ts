@@ -1186,7 +1186,6 @@ export class LincenseDetailsComponent {
       this._unitCorrectionService
         .CheckCorrectingUnitAvailability(requestId as string)
         .subscribe((res) => {
-          debugger;
           if (res) {
             if (res.isDone) {
               this._sharedLicenseProjectService.setCorrectionUnitRequestIdInLocalStorage(

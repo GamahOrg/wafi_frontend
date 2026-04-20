@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import {
   RequestDetails,
   facilityDTO,
+  QualificationInvoiceData,
 } from '../../dataModels/request-details.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FacilityBasicInfo } from '../../../facilities/dataModels/facility-basic-info.model';
@@ -180,6 +181,24 @@ export class RequestService {
         return res.isDone as boolean;
       })
     );
+  }
+
+  SendToFawtarahManually(requestId: string): Observable<boolean> {
+    return this._httpClient.post<CoreResponseDTO<any>>(`${Configuration.APIs.QualificationRequestHeader.SendToFawtarahManually}/${requestId}`, {}).pipe(
+      map((res: CoreResponseDTO<any>) => {
+        return res.isDone as boolean;
+      })
+    );
+  }
+
+  GetQualificationInvoice(qualificationRequestHeaderId: string): Observable<CoreResponseDTO<QualificationInvoiceData>> {
+    return this._httpClient
+      .get<CoreResponseDTO<QualificationInvoiceData>>(`${Configuration.APIs.Fawtarah.GetQualificationInvoice}/${qualificationRequestHeaderId}`)
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      );
   }
 
   GetSysqualificationType(): Observable<QualificationRequestType[] | null> {

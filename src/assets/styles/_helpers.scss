@@ -12,25 +12,6 @@
   transform: scaleX(-1);
 }
 
-// $icons: "home",
-// "manage_accounts",
-// "assessment",
-// "email",
-// "info",
-// "assignment_turned_in",
-// "campaign",
-// "help",
-// "language",
-// "arrow_drop_down"; // Add each icon string separated by a comma
-
-// @each $icon in $icons {
-//     .icon-#{$icon} {
-//         &::after {
-//             content: $icon;
-//         }
-//     }
-// }
-
 .dashed-block {
   padding: 1.5rem;
   border: 2px dashed $lightgray;
@@ -46,6 +27,37 @@
   .btn-light {
     --bs-btn-color: $headings-color;
     --bs-btn-bg: #F3F4F6;
+  }
+}
+
+.heading-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.5rem;
+  border-radius: $border-radius-sm;
+
+  .title,
+  .value {
+    font-size: 1.25rem;
+  }
+
+  .title {
+    font-weight: 600;
+  }
+
+  .valeu {
+    font-weight: 500;
+  }
+
+  &.primary {
+    background-color: #327478;
+
+    .title,
+    .value {
+      color: #FFFAFA;
+    }
   }
 }
 
@@ -68,29 +80,21 @@
   }
 
   .value {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+
     font-weight: 500;
     color: #5D5D5D;
 
-    img,
-    .icon {
-      display: inline-block;
-      vertical-align: middle;
-
-      &:first-child {
-        margin-inline-end: .25rem;
-      }
-
-      &:last-child {
-        margin-inline-start: .25rem;
-      }
-    }
-
     img {
-      height: 1.5rem;
+      height: 1.25rem;
       border-radius: 50%;
     }
 
     .icon {
+      line-height: 1;
+      font-size: 1.25rem;
       color: $dark;
     }
 
@@ -126,6 +130,12 @@
     color: #1849A9;
     border-color: #B2DDFF;
     background-color: #EFF8FF;
+  }
+
+  &.tag-success {
+    color: #085D3A;
+    border-color: $lightgreen;
+    background-color: $lightblue;
   }
 }
 
@@ -195,4 +205,36 @@
     --bs-btn-padding-y: 0;
     --bs-btn-font-size: 1.25rem;
   }
+}
+
+.list-styled {
+  padding-inline-start: 1rem;
+
+  &,
+  &.disc {
+    list-style: disc;
+  }
+
+  &.circle {
+    list-style: circle;
+  }
+
+  &.square {
+    list-style: square;
+  }
+
+  li::marker {
+    font-size: $font-size-xs;
+  }
+}
+
+.action-btns-bar {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1.5rem 2rem;
+  border-radius: $border-radius;
+  background-color: $white;
 }

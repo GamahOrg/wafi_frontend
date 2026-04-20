@@ -1,0 +1,87 @@
+<ng-container *ngIf="facilityData">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
+    <h6 class="title">بيانات المحاسب القانوني</h6>
+  </div>
+
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
+        <div class="key">اسم المنشأة</div>
+        <div class="value">{{ facilityData.facilityName }}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">رقم السجل التجاري</div>
+        <div class="value">{{ facilityData.commercialRegisterNumber }}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">الرقم الموحد</div>
+        <div class="value">{{ facilityData.crNationalNumber }}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">رقم ترخيص الهيئة السعودية للمراجعين والمحاسبين</div>
+        <div class="value">{{ facilityData.saudiAuthorityForAuditorsAndAccountants }}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">رقم اشتراك التأمينات الاجتماعية للمنشأة</div>
+        <div class="value">{{ facilityData.socialInsuranceCertificateNumber }}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">رأس مال المنشأة</div>
+        <div class="value">{{ facilityData.capitalNumber }}</div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">الموقع الإلكتروني</div>
+        <div class="value" *ngIf="facilityData.website">
+          {{ facilityData.website }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">رقم الجوال</div>
+        <div class="value" *ngIf="facilityData.telephone">
+          {{ facilityData.telephone }}
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key">البريد الإلكتروني</div>
+        <div class="value" *ngIf="facilityData.email">
+          {{ facilityData.email }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-data-section">
+    <h6 class="title">الملاك</h6>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-12">
+        <div class="table-responsive">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th>رقم الهوية</th>
+                <th>اسم مالك</th>
+                <th>نوع العلاقة</th>
+                <th>الجنسية</th>
+                <th>رقم التليفون</th>
+                <th>الايميل</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let owner of facilityData.facilityOwners; let i = index">
+                <td>{{ owner.nidnumber }}</td>
+                <td>{{ owner.ownerName }}</td>
+                <td>{{ owner.relationType }}</td>
+                <td>{{ owner.ownerNationalityAR }}</td>
+                <td>{{ owner.mobile }}</td>
+                <td>{{ owner.email }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<app-no-data *ngIf="!facilityData"></app-no-data>

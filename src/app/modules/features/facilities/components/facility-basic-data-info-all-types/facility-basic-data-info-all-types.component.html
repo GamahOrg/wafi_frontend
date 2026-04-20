@@ -1,0 +1,266 @@
+<ng-container *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Developer">
+  <div class="tab-data-header">
+    <h6 class="title">بيانات المطوري العقاري</h6>
+
+    <div class="opposite-title">
+      <button class="btn btn-outline-primary" (click)="openDialog()" *ngIf="facilityData.availabilityToUpdate !== false">
+        <i class="icon hgi hgi-stroke hgi-edit-02"></i> تعديل
+      </button>
+    </div>
+  </div>
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">هل يوجد بيان بالقضايا أم لا</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-calendar-04"></i></span>
+            <span>{{ facilityData.isIssuesExist ? "نعم" : "لا" }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="facilityData.isIssuesExist">
+        <div class="key-value">
+          <div class="key">مرفقات القضايا</div>
+          <ng-container *ngIf="facilityData.qualificationIssuesDocuments && facilityData.qualificationIssuesDocuments.length > 0">
+            <div class="value" *ngFor="let qualificationIssuesDocument of facilityData.qualificationIssuesDocuments">
+              <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+              <a download [href]="baseUrl + qualificationIssuesDocument.fileManager?.filePath" class="d-block" target="_blank">
+                {{ qualificationIssuesDocument.fileManager?.fileDescription }}
+              </a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">رقم عضوية الغرفة التجارية</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.chamberOfCommerceMembershipNumber }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key-value">
+          <div class="key">مدينة إصدار عضوية الغرفة التجارية</div>
+          <div class="value" *ngIf="facilityData.city">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.city?.cityName }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key-value">
+          <div class="key">عقد تأسيس الشركة</div>
+          <div class="value" *ngIf="facilityData.companyEstablishingContractFileManager">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download [href]="baseUrl + facilityData.companyEstablishingContractFileManager.filePath" target="_blank">
+              {{ facilityData.companyEstablishingContractFileManager.fileDescription }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key-value">
+          <div class="key"> قائمة المشتركين على رأس العمل صادرة من التأمينات الاجتماعية</div>
+          <div class="value" *ngIf="facilityData.socialInsuranceEmployeesListFileManager">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download [href]="baseUrl + facilityData.socialInsuranceEmployeesListFileManager.filePath">
+              {{ facilityData.socialInsuranceEmployeesListFileManager.fileDescription }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key-value">
+          <div class="key">الشعار</div>
+          <div class="value" *ngIf="facilityData.logoFile">
+            <img [src]="baseUrl + facilityData.logoFile.filePath" alt="Logo" width="100" height="100" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Accountant">
+  <div class="tab-data-header">
+    <h6 class="title">بيانات المحاسب القانوني</h6>
+
+    <div class="opposite-title">
+      <button class="btn btn-outline-primary" (click)="openDialog()" *ngIf="facilityData.availabilityToUpdate !== false">
+        <i class="icon hgi hgi-stroke hgi-edit-02"></i> تعديل
+      </button>
+    </div>
+  </div>
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">رقم ترخيص الهيئة السعودية للمراجعين والمحاسبين</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.saudiAuthorityForAuditorsAndAccountants }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="facilityData.saudiAuthorityForAuditorsAndAccountantsFile">
+        <div class="key-value">
+          <div class="key">شهادة ترخيص الهيئة السعودية للمراجعين والمحاسبين</div>
+          <div class="value">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download [href]="baseUrl + facilityData.saudiAuthorityForAuditorsAndAccountantsFile.filePath" target="_blank">
+              {{ facilityData.saudiAuthorityForAuditorsAndAccountantsFile.fileDescription || 'ملف مرفق' }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">رقم عضوية الغرفة التجارية</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.chamberOfCommerceMembershipNumber }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="facilityData.city">
+        <div class="key-value">
+          <div class="key">مدينة إصدار عضوية الغرفة التجارية</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.city?.cityName }}</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">رقم السجل التجاري للشركة المؤهلة سابقا</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.previouslyQualifiedFacilityCommercialRegistrationNumber }}</span>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-12 col-lg-6" >
+        <div class="key-value">
+          <div class="key">عقد تأسيس الشركة</div>
+          <div class="value" *ngIf="facilityData.companyEstablishingContractFileManager" >
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download [href]="baseUrl + facilityData.companyEstablishingContractFileManager.filePath" target="_blank">
+              {{ facilityData.companyEstablishingContractFileManager.fileDescription }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6"  >
+        <div class="key-value">
+          <div class="key"> قائمة المشتركين على رأس العمل صادرة من التأمينات الاجتماعية</div>
+          <div class="value" *ngIf="facilityData.socialInsuranceEmployeesListFileManager">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download *ngIf="facilityData.socialInsuranceEmployeesListFileManager" [href]="baseUrl + facilityData.socialInsuranceEmployeesListFileManager.filePath">
+              {{ facilityData.socialInsuranceEmployeesListFileManager.fileDescription }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key-value">
+          <div class="key">الشعار</div>
+          <div class="value" *ngIf="facilityData.logoFile">
+            <img [src]="baseUrl + facilityData.logoFile.filePath" alt="Logo" width="100" height="100" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
+    <h6 class="title">بيانات الاستشاري الهندسي</h6>
+
+    <div class="opposite-title">
+      <button class="btn btn-outline-primary" (click)="openDialog()" *ngIf="facilityData.availabilityToUpdate !== false">
+        <i class="icon hgi hgi-stroke hgi-edit-02"></i> تعديل
+      </button>
+    </div>
+  </div>
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">رقم ترخيص الهيئة السعودية للمهندسين</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.saudiAuthorityOfEngineersLicenseNumber }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="facilityData.saudiAuthorityOfEngineersLicenseFile">
+        <div class="key-value">
+          <div class="key">شهادة ترخيص الهيئة السعودية للمهندسين</div>
+          <div class="value">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download [href]="baseUrl + facilityData.saudiAuthorityOfEngineersLicenseFile.filePath" target="_blank">
+              {{ facilityData.saudiAuthorityOfEngineersLicenseFile.fileDescription || 'ملف مرفق' }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">رقم عضوية الغرفة التجارية</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.chamberOfCommerceMembershipNumber }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="facilityData.city">
+        <div class="key-value">
+          <div class="key">مدينة إصدار عضوية الغرفة التجارية</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.city?.cityName }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key-value">
+          <div class="key">عقد تأسيس الشركة</div>
+          <div class="value" *ngIf="facilityData.companyEstablishingContractFileManager">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download [href]="baseUrl + facilityData.companyEstablishingContractFileManager.filePath" target="_blank">
+              {{ facilityData.companyEstablishingContractFileManager.fileDescription }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" >
+        <div class="key-value">
+          <div class="key">مرفق قائمة المشتركين على رأس العمل </div>
+          <div class="value" *ngIf="facilityData.socialInsuranceEmployeesListFileManager">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download *ngIf="facilityData.socialInsuranceEmployeesListFileManager" [href]="baseUrl + facilityData.socialInsuranceEmployeesListFileManager.filePath">
+              {{ facilityData.socialInsuranceEmployeesListFileManager?.fileDescription }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering && facilityData?.qualificationFacilityCertifications?.length">
+        <div class="key-value">
+          <div class="key">شهادة تصنيف مقدمي خدمات المدن بالتكامل مع منصة بلدي</div>
+          <div class="value">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download [href]="baseUrl + facilityData.qualificationFacilityCertifications[0].certificationFile?.filePath" target="_blank">
+              {{ facilityData.qualificationFacilityCertifications[0].certificationFile?.fileDescription || 'ملف مرفق' }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

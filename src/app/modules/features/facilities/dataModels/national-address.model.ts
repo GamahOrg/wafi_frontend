@@ -49,8 +49,8 @@ export class nationalAddressResponseBE {
         this.brokerDocumentTypeId = _nationalAddressResponseBE.brokerDocumentTypeId;
         this.documentNumber = _nationalAddressResponseBE.documentNumber;
        this.brokerDocumentType=_nationalAddressResponseBE.brokerDocumentType;
-        this.Area = new areaResponseFE(_nationalAddressResponseBE.areas);
-        this.City = new cityResponseFE(_nationalAddressResponseBE.sysCity);
+        this.Area = _nationalAddressResponseBE.areas ? new areaResponseFE(_nationalAddressResponseBE.areas) : new areaResponseFE(new areaResponseBE());
+        this.City = _nationalAddressResponseBE.sysCity ? new cityResponseFE(_nationalAddressResponseBE.sysCity) : new cityResponseFE(new cityResponseBE());
     }
     Id: string = "";
     BuildingNumber: string = "";

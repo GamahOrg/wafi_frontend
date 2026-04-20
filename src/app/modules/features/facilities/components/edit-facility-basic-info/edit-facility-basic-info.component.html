@@ -1,40 +1,72 @@
 <form [formGroup]="basicInfoForm" id="form-basicInfoForm">
-  <div class="row align-items-end row-gap-3 mb-3">
-    <div class="col-12 col-lg-6"
-      *ngIf="userData && userData.facilities.length>0 && userData.facilities[0].facilityType == 'جمعية'">
+  <!-- <div class="row align-items-end row-gap-3 mb-3">
+    <div
+      class="col-12 col-lg-6"
+      *ngIf="
+        userData &&
+        userData.facilities.length > 0 &&
+        userData.facilities[0].facilityType == 'جمعية'
+      "
+    >
       <label for="" class="form-label"> الترخيص للجمعية التعاونية</label>
-      <app-file-uploader [data]="singleFileUploaderData"
-        (fileUploaded)="onUploadCooperativeSocietyLicensingFile($event)"></app-file-uploader>
+      <app-file-uploader
+        [data]="singleFileUploaderData"
+        (fileUploaded)="onUploadCooperativeSocietyLicensingFile($event)"
+      ></app-file-uploader>
     </div>
-  </div>
+  </div> -->
   <div class="tab-data-section">
-    <h6 class="title">بيانات عامة</h6>
+    <!-- <h6 class="title">بيانات عامة</h6> -->
 
     <div class="row row-gap-3 mb-3">
       <div class="col-12 col-lg-6">
-        <label for="" class="form-label">الرقم الوطنى للسجل التجارى</label>
+        <label for="" class="form-label">الرقم الموحد</label>
         <ng-container *ngIf="hasEntity700Number">
-          <input type="text" class="form-control" id="control-entity700Number"
-          formControlName="entity700Number" readonly>
+          <input
+            type="text"
+            class="form-control"
+            id="control-entity700Number"
+            formControlName="entity700Number"
+            readonly
+          />
         </ng-container>
         <ng-container *ngIf="!hasEntity700Number">
-          <input type="text" class="form-control" id="control-entity700Number"
-          formControlName="entity700Number">
-          <div class="invalid-feedback d-block" *ngIf="controls.entity700Number.errors?.['required']">
+          <input
+            type="text"
+            class="form-control"
+            id="control-entity700Number"
+            formControlName="entity700Number"
+          />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="controls.entity700Number.errors?.['required']"
+          >
             هذا الحقل مطلوب
           </div>
         </ng-container>
-
       </div>
 
-      <div class="col-12 col-lg-6">
-        <label for="" class="form-label">الرقم الوطنى للسجل التجارى للشركة المؤهلة سابقا</label>
-        <input type="text" class="form-control" id="control-previouslyQualifiedFacilityentity700Number"
-          formControlName="previouslyQualifiedFacilityEntity700Number">
-          <div class="invalid-feedback d-block" *ngIf="controls.previouslyQualifiedFacilityEntity700Number.errors?.['required']">
-            هذا الحقل مطلوب
-          </div>
-      </div>
+      <!-- <div class="col-12 col-lg-6">
+        <label for="" class="form-label"
+          >الرقم الوطنى للسجل التجارى للشركة المؤهلة سابقا</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="control-previouslyQualifiedFacilityentity700Number"
+          formControlName="previouslyQualifiedFacilityEntity700Number"
+        />
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            controls.previouslyQualifiedFacilityEntity700Number.errors?.[
+              'required'
+            ]
+          "
+        >
+          هذا الحقل مطلوب
+        </div>
+      </div> -->
 
       <!-- <div class="col-12 col-lg-6">
         <label for="" class="form-label">رقم السجل التجاري للشركة المؤهلة سابقا</label>
@@ -48,99 +80,132 @@
         </div>
       </div> -->
       <div class="col-12 col-lg-6">
-        <label for="" class="form-label">رقم اشتراك التأمينات الاجتماعية للمنشأة
+        <label for="" class="form-label"><span class="required-star">*</span> رقم اشتراك التأمينات الاجتماعية للمنشأة
         </label>
-        <input type="text" class="form-control" id="control-socialInsuranceCertificateNumber"
-          formControlName="socialInsuranceCertificateNumber">
-        <div class="invalid-feedback d-block" *ngIf="socialInsuranceCertificateNumber.errors?.['required']">
+        <input
+          type="text"
+          class="form-control"
+          id="control-socialInsuranceCertificateNumber"
+          formControlName="socialInsuranceCertificateNumber"
+        />
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="socialInsuranceCertificateNumber.errors?.['required'] && socialInsuranceCertificateNumber.touched"
+        >
           هذا الحقل مطلوب
         </div>
       </div>
       <div class="col-12 col-lg-6">
-        <label for="" class="form-label"> الموقع الإلكتروني
-        </label>
-        <input type="text" class="form-control" id="control-website" formControlName="website">
-
+        <label for="" class="form-label"> الموقع الإلكتروني </label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-website"
+          formControlName="website"
+        />
       </div>
       <div class="col-12 col-lg-6">
-        <label for="" class="form-label"> رقم الهاتف
-        </label>
-        <input type="text" class="form-control" id="control-telephone" formControlName="telephone">
-
-      </div>
-      <div class="col-12 col-lg-6">
-        <label for="" class="form-label"> فاكس
-        </label>
-        <input type="text" class="form-control" id="control-fax" formControlName="fax">
-
-      </div>
-      <div class="col-12 col-lg-6">
-        <label for="" class="form-label"> رمز البريد
-        </label>
-        <input type="text" class="form-control" id="control-postalCode" formControlName="postalCode">
-
-      </div>
-      <div class="col-12 col-lg-6">
-        <label for="" class="form-label"> البريد الإلكتروني
-        </label>
-        <input type="text" class="form-control" id="control-email" formControlName="email">
-
-      </div>
-      <div class="col-12 col-lg-12">
-        <label for="" class="form-label"> صندوق البريد
-        </label>
-        <input type="text" class="form-control" id="control-poBox" formControlName="poBox">
-
-      </div>
-
-      <div class="col-12 col-lg-6">
-        <label for="" class="form-label">ملف رخصة فال</label>
-        <div class="value" *ngIf="facilityData.qualificationValFileManagerId">
-          <span class="delete" (click)="deletFile(facilityData.qualificationValFileManager?.id)"><i
-              class="material-icons text-danger">close</i></span>
-          <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + facilityData.qualificationValFileManager?.filePath" target="_blank">
-            {{facilityData.qualificationValFileManager?.fileDescription}}
-          </a>
+        <label for="" class="form-label"><span class="required-star">*</span> رقم الجوال </label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-telephone"
+          formControlName="telephone"
+        />
+        <div class="invalid-feedback d-block" *ngIf="basicInfoForm.get('telephone')?.hasError('required') && basicInfoForm.get('telephone')?.touched">
+          هذا الحقل مطلوب
         </div>
-        <app-file-uploader [data]="singleFileUploaderData"
-          (fileUploaded)="onUploadQualificationValFile($event)"></app-file-uploader>
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label"> فاكس </label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-fax"
+          formControlName="fax"
+        />
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label"> الرمز البريدي </label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-postalCode"
+          formControlName="postalCode"
+        />
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label"> البريد الإلكتروني </label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-email"
+          formControlName="email"
+        />
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="" class="form-label"> صندوق البريد </label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-poBox"
+          formControlName="poBox"
+        />
       </div>
 
-      <div class="col-12 col-lg-6">
+      <!-- <div class="col-12 col-lg-6">
         <label for="" class="form-label">الشعار</label>
         <div class="value" *ngIf="facilityData.logoFileId">
-          <span class="delete" (click)="deletFile(facilityData.logoFile?.id)"><i
-              class="material-icons text-danger">close</i></span>
+          <span class="delete" (click)="deletFile(facilityData.logoFile?.id)"
+            ><i class="material-icons text-danger">close</i></span
+          >
           <span class="icon material-icons-outlined">content_copy</span>
           <a [href]="baseUrl + facilityData.logoFile?.filePath" target="_blank">
-            {{facilityData.logoFile?.fileDescription}}
+            {{ facilityData.logoFile?.fileDescription }}
           </a>
         </div>
-        <app-file-uploader [data]="logoFileUploaderData"
-          (fileUploaded)="onUploadLogoFile($event)"></app-file-uploader>
-      </div>
+        <app-file-uploader
+          [data]="logoFileUploaderData"
+          (fileUploaded)="onUploadLogoFile($event)"
+        ></app-file-uploader>
+      </div> -->
     </div>
   </div>
 
-  <div class="tab-data-section">
-    <h6 class="title">بيانات أساسية (مطور عقاري مستقل)</h6>
+  <!-- <div class="tab-data-section">
+    <h6 class="title">بيانات أساسية (مطور عقاري)</h6>
 
     <div class="row row-gap-3 mb-3">
       <div class="col-12 col-lg-6">
         <div class="row row-gap-3 mb-3">
           <div class="col-12 col-lg-6">
-            <label for="prevExpert" class="form-label"> هل يوجد بيان بالقضايا أم لا</label>
+            <label for="prevExpert" class="form-label">
+              هل يوجد بيان بالقضايا أم لا</label
+            >
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-check form-check-inline">
-              <input class="form-check-input" id="control-prevExpert" type="radio" name="prevExpert" id="yes" value="1"
-                (change)="updateIssuesIsExist(true)">
+              <input
+                class="form-check-input"
+                id="control-prevExpert"
+                type="radio"
+                name="prevExpert"
+                id="yes"
+                value="1"
+                (change)="updateIssuesIsExist(true)"
+              />
               <label class="form-check-label" for="yes">نعم</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" id="control-prevExpert" name="prevExpert" id="no" value="0"
-                (change)="updateIssuesIsExist(false)">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="control-prevExpert"
+                name="prevExpert"
+                id="no"
+                value="0"
+                (change)="updateIssuesIsExist(false)"
+              />
               <label class="form-check-label" for="no">لا</label>
             </div>
           </div>
@@ -148,113 +213,180 @@
       </div>
       <div class="col-12 col-lg-6" *ngIf="issuesIsExist">
         <label for="" class="form-label">مرفقات القضايا</label>
-        <app-file-uploader [data]="mueltiFilesUploaderData"
-          (fileUploaded)="onUploadQualificationIssuesDocumentCreateUpdateDtoFile($event)"></app-file-uploader>
+        <app-file-uploader
+          [data]="mueltiFilesUploaderData"
+          (fileUploaded)="
+            onUploadQualificationIssuesDocumentCreateUpdateDtoFile($event)
+          "
+        ></app-file-uploader>
       </div>
     </div>
     <div class="row row-gap-3 mb-3">
       <div class="col-12 col-lg-6">
         <label for="" class="form-label">رقم عضوية الغرفة التجارية</label>
-        <input type="text" class="form-control" id="control-chamberOfCommerceMembershipNumber"
-          formControlName="chamberOfCommerceMembershipNumber">
-        <div class="invalid-feedback d-block" *ngIf="chamberOfCommerceMembershipNumber.errors?.['required']">
+        <input
+          type="text"
+          class="form-control"
+          id="control-chamberOfCommerceMembershipNumber"
+          formControlName="chamberOfCommerceMembershipNumber"
+        />
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="chamberOfCommerceMembershipNumber.errors?.['required']"
+        >
           هذا الحقل مطلوب
         </div>
       </div>
 
       <div class="col-12 col-lg-6">
         <div class="form-group">
-          <label for="" class="form-label">مدينة إصدار عضوية الغرفة التجارية</label>
+          <label for="" class="form-label"
+            >مدينة إصدار عضوية الغرفة التجارية</label
+          >
           <select class="form-select" formControlName="cityId">
             <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
-            <option *ngFor="let item of cities" [value]="item.id">{{item.cityName}}
+            <option *ngFor="let item of cities" [value]="item.id">
+              {{ item.cityName }}
             </option>
           </select>
         </div>
       </div>
 
       <div class="col-12 col-lg-6">
-        <label for="" class="form-label">رمز الشركة في السوق المالية
-        </label>
-        <input type="text" class="form-control" id="control-companyCodeInFinancialMarket"
-          formControlName="companyCodeInFinancialMarket">
+        <label for="" class="form-label">رمز الشركة في السوق المالية </label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-companyCodeInFinancialMarket"
+          formControlName="companyCodeInFinancialMarket"
+        />
       </div>
-      <!-- <div class="col-12 col-lg-6">
+      <div class="col-12 col-lg-6">
                 <label for="" class="form-label"> ملفات شهادات تأهيل أو تصنيف حصلت علىها المنشأة
                 </label>
                 <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onUploadQualificationFacilityCertificationCreateUpdateFile($event)"></app-file-uploader>
-            </div> -->
+            </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="tab-data-section">
+  <!-- <div class="tab-data-section">
     <h6 class="title">بيانات أساسية (الاستشاري الهندسي)</h6>
 
     <div class="row row-gap-3 mb-3">
       <div class="col-12 col-lg-6">
-        <label for="" class="form-label">رقم ترخيص الهيئة السعودية للمهندسين
+        <label for="" class="form-label"
+          >رقم ترخيص الهيئة السعودية للمهندسين
         </label>
-        <input type="text" class="form-control" id="control-saudiAuthorityOfEngineersLicenseNumber"
-          formControlName="saudiAuthorityOfEngineersLicenseNumber">
+        <input
+          type="text"
+          class="form-control"
+          id="control-saudiAuthorityOfEngineersLicenseNumber"
+          formControlName="saudiAuthorityOfEngineersLicenseNumber"
+        />
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="tab-data-section">
+  <!-- <div class="tab-data-section">
     <h6 class="title">بيانات أساسية (المحاسب القانوني)</h6>
 
     <div class="row row-gap-3 mb-3">
       <div class="col-12 col-lg-6">
-        <label for="" class="form-label"> رقم ترخيص الهيئة السعودية للمراجعين والمحاسبين
+        <label for="" class="form-label">
+          رقم ترخيص الهيئة السعودية للمراجعين والمحاسبين
         </label>
-        <input type="text" class="form-control" id="control-saudiAuthorityForAuditorsAndAccountants"
-          formControlName="saudiAuthorityForAuditorsAndAccountants">
+        <input
+          type="text"
+          class="form-control"
+          id="control-saudiAuthorityForAuditorsAndAccountants"
+          formControlName="saudiAuthorityForAuditorsAndAccountants"
+        />
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="tab-data-section">
+  <!-- <div class="tab-data-section">
     <h6 class="title">بيانات أساسية (مطور عقاري مدرج في سوق المال)</h6>
 
     <div class="row row-gap-3 mb-3">
       <div class="col-12 col-lg-6">
-
         <label for="" class="form-label"> عقد تأسيس الشركة</label>
-        <div class="value" *ngIf="facilityData.companyEstablishingContractFileId">
-          <span class="delete" (click)="deletFile(facilityData.companyEstablishingContractFileManager?.id)"><i
-              class="material-icons text-danger">close</i></span>
+        <div
+          class="value"
+          *ngIf="facilityData.companyEstablishingContractFileId"
+        >
+          <span
+            class="delete"
+            (click)="
+              deletFile(facilityData.companyEstablishingContractFileManager?.id)
+            "
+            ><i class="material-icons text-danger">close</i></span
+          >
           <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + facilityData.companyEstablishingContractFileManager?.filePath" target="_blank">
-            {{facilityData.companyEstablishingContractFileManager?.fileDescription}}
+          <a
+            [href]="
+              baseUrl +
+              facilityData.companyEstablishingContractFileManager?.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.companyEstablishingContractFileManager
+                ?.fileDescription
+            }}
           </a>
         </div>
-        <app-file-uploader [data]="singleFileUploaderData"
-          (fileUploaded)="onUploadCompanyEstablishingContractFile($event)"></app-file-uploader>
+        <app-file-uploader
+          [data]="singleFileUploaderData"
+          (fileUploaded)="onUploadCompanyEstablishingContractFile($event)"
+        ></app-file-uploader>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="tab-data-section">
-    <h6 class="title">قائمة المشتركين على رأس العمل صادرة من التأمينات الاجتماعية</h6>
+  <!-- <div class="tab-data-section">
+    <h6 class="title">
+      قائمة المشتركين على رأس العمل صادرة من التأمينات الاجتماعية
+    </h6>
 
     <div class="row row-gap-3 mb-3">
       <div class="col-12 col-lg-6">
         <label for="" class="form-label"></label>
 
-        <div class="value" *ngIf="facilityData.socialInsuranceEmployeesListFileId">
-          <span class="delete"
-            (click)="deletSocialInsuranceFile(facilityData.socialInsuranceEmployeesListFileManager?.id)"><i
-              class="material-icons text-danger">close</i></span>
+        <div
+          class="value"
+          *ngIf="facilityData.socialInsuranceEmployeesListFileId"
+        >
+          <span
+            class="delete"
+            (click)="
+              deletSocialInsuranceFile(
+                facilityData.socialInsuranceEmployeesListFileManager?.id
+              )
+            "
+            ><i class="material-icons text-danger">close</i></span
+          >
           <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + facilityData.socialInsuranceEmployeesListFileManager?.filePath" target="_blank">
-            {{facilityData.socialInsuranceEmployeesListFileManager?.fileDescription}}
+          <a
+            [href]="
+              baseUrl +
+              facilityData.socialInsuranceEmployeesListFileManager?.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.socialInsuranceEmployeesListFileManager
+                ?.fileDescription
+            }}
           </a>
         </div>
-        <app-file-uploader [data]="singleFileUploaderData"
-          (fileUploaded)="onUploadSocialInsuranceEmployeesFile($event)"></app-file-uploader>
+        <app-file-uploader
+          [data]="singleFileUploaderData"
+          (fileUploaded)="onUploadSocialInsuranceEmployeesFile($event)"
+        ></app-file-uploader>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- <div class="form-block mb-3">
         <h6 class="title">بيانات أساسية (المسوق عقاري)</h6>
@@ -295,7 +427,6 @@
             </div>
         </div>
     </div> -->
-
 
   <!-- <div mat-dialog-actions align="end">
         <button type="button" mat-flat-button color="primary" (click)="submitBasicInfoForm()" [disabled]="basicInfoForm.invalid">حفظ البيانات</button>

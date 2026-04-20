@@ -1,85 +1,77 @@
 <form class="basicInfoFormIndependentRealEstateDeveloper" id="form-basicInfoFormIndependentRealEstateDeveloper" *ngIf="technicalCapabilities">
 
-    <div class="tab-data-header">
-        <i class="icon hgi hgi-stroke hgi-profile"></i>
-        <h6 class="title">متطلبات القدرات الفنية</h6>
+  <div class="tab-data-header">
+    <h6 class="title">المشروعات</h6>
+  </div>
 
-        <button type="button" id="btn-displaySaveTechnicalCapabilitiesRequirementsComponent" (click)="displaySaveTechnicalCapabilitiesRequirementsComponent()" class="opposite-title btn btn-link"><span class="material-icons">edit</span></button>
+  <div class="tab-data-section">
+    <div class="form-group">
+      <label class="form-label">هل لديك خبرات سابقة <span class="required-star">*</span></label>
+      <div class="row g-3">
+        <div class="col-xl-2">
+          <label class="form-check" for="yes">
+            <input class="form-check-input" type="radio" name="prevExpert" [value]="true" [checked]="technicalCapabilities?.isPreviousExperienceExist === true" (change)="onPreviousExperienceChange(true)" id="yes">
+            <label class="form-check-label" for="yes">نعم</label>
+          </label>
+        </div>
+        <div class="col-xl-2">
+          <label class="form-check" for="no">
+            <input class="form-check-input" type="radio" name="prevExpert" [value]="false" [checked]="technicalCapabilities?.isPreviousExperienceExist === false" (change)="onPreviousExperienceChange(false)" id="no">
+            <label class="form-check-label" for="no">لا</label>
+          </label>
+        </div>
+        <div class="col-xl-auto" *ngIf="technicalCapabilities.isPreviousExperienceExist">
+          <button type="button" mat-flat-button color="primary" *ngIf="canUpdate" (click)="displayAddQualificationProjectComponent()"> اضافة مشروع</button>
+        </div>
+      </div>
     </div>
 
-    <div class="tab-data-section">
-        <div class="row row-gap-4">
-             <div class="col-12 col-lg-6">
-                <div class="key">شهادات تأهيل أو تصنيف حصلت علىها المنشأة</div>
-                <div class="value" *ngFor="let certification of technicalCapabilities.qualificationFacilityCertifications">
-                    <span class="icon material-icons-outlined">content_copy</span>
-                    <a *ngIf="certification && certification.certificationFile" id="link-certificationFile"  [href]="baseUrl + certification.certificationFile.filePath" target="_blank">
-                        {{certification.certificationFile.fileDescription}}</a>
-                        <div class="value">
-                            <span class="delete" 
-                                (click)="deletFile(certification.certificationFile.id)"><i
-                                    class="material-icons text-danger">close</i></span>
-                        </div>
-                  
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="key">أرقام شهادات تصنيف مقدمي خدمات المدن المنفذين للمشاريع</div>
-                <div class="value" *ngFor="let serviceProviders of technicalCapabilities.qualificationFacilityServiceProvidersCertificateNumbers">
-                    {{serviceProviders.certificationNumber}}
-                    <span *ngIf="serviceProviders.description">
-                        ({{serviceProviders.description}})
-                    </span>
-                </div>
-            </div>
-            
-            <div class="col-12 col-md-12">
-                <div class="key">هل لدية خبرات سابقة</div>
-                <div class="value">{{ (technicalCapabilities.isPreviousExperienceExist) ? 'نعم' : 'لا' }}</div>
-            </div>
+    <hr class="my-4">
+
+    <div class="row row-gap-4">
+      <div class="col-12 col-md-12 col-lg-12" *ngIf="technicalCapabilities.isPreviousExperienceExist">
+        <div class="table-responsive">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th>اسم المشروع</th>
+                <th>مالك المشروع</th>
+                <th>التصنيف الأساسي</th>
+                <th>التصنيف الفرعي</th>
+                <th>وحدات المشروع</th>
+                <th>الاجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let project of technicalCapabilities.projects">
+                <td>{{ project.projectName }}</td>
+                <td>{{ project.projectOwner }}</td>
+                <td>{{ project.projectCategory?.categoryName }}</td>
+                <td>{{ project.projectSubCategory?.subCategoryName }}</td>
+                <td>
+                  <span *ngFor="let type of project.projectsProjectTypes; let last = last">
+                    {{ type.projectType.typeName }}<span *ngIf="!last"> , </span>
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center justify-content-end column-gap-2">
+                    <button class="btn-icon btn btn-secondary" *ngIf="canUpdate" (click)="displayEditQualificationProjectComponent(project)">
+                      <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                    </button>
+                    <button class="btn-icon btn btn-danger" *ngIf="canUpdate" (click)="deleteProject(project)">
+                      <i class="hgi hgi-stroke hgi-delete-03"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="technicalCapabilities.projects && technicalCapabilities.projects.length === 0">
+                <td colspan="5">لا يوجد بيانات</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <div class="row row-gap-4">
-            <!--     <div class="col-12 col-md-6 col-lg-4 m-3">
-                <label>هل لدية خبرات سابقة</label>
-                <p>{{ (technicalCapabilities.isPreviousExperienceExist) ? 'نعم' : 'لا' }}</p>
-            </div> -->
-
-            <div class="col-12 col-md-12 col-lg-12" *ngIf="technicalCapabilities.isPreviousExperienceExist">
-                <h6 class="title">المشروعات <button type="button" mat-flat-button color="primary" (click)="displayAddQualificationProjectComponent()">اضافة</button></h6>
-
-                <div class="table-responsive">
-                    <table class="table table-light">
-                        <thead>
-                            <tr>
-                                <th>الاسم</th>
-                                <th>المالك</th>
-                                <th>المقاول المنفذ</th>
-                                <th>تصنيف المقاول</th>
-                                <th>أجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let project of technicalCapabilities.projects">
-                                <td>{{ project.projectName }}</td>
-                                <td>{{ project.projectOwner }}</td>
-                                <td>{{ project.executingContractor }}</td>
-                                <td>{{ project.contractorClassification }}</td>
-                                <td>
-                                    <div >
-                                        <button type="button" mat-icon-button color="primary" (click)="displayEditQualificationProjectComponent(project)"><mat-icon>edit</mat-icon></button>
-                                        <button type="button" mat-icon-button color="warn" (click)="deleteProject(project)"><mat-icon>delete</mat-icon></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr *ngIf="technicalCapabilities.projects && technicalCapabilities.projects.length === 0">
-                                <td colspan="5">لا يوجد بيانات</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </form>
-<app-no-data (onNoDataButtonClicked)="displaySaveTechnicalCapabilitiesRequirementsComponent()" *ngIf="!technicalCapabilities"></app-no-data>
+<app-no-data (onNoDataButtonClicked)="displaySaveTechnicalCapabilitiesRequirementsComponent()" [showCompleteBtn]="canUpdate" *ngIf="!technicalCapabilities"></app-no-data>

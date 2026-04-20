@@ -1,6 +1,15 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { DeedHeaderProjectDataDto, LicenseProjectInstantDeedResponseDto } from '../../../../real-estate-contributions-license/dataModels/license-project-instant-deed-response-dto';
+import {
+  DeedHeaderProjectDataDto,
+  LicenseProjectInstantDeedResponseDto,
+} from '../../../../real-estate-contributions-license/dataModels/license-project-instant-deed-response-dto';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
@@ -10,7 +19,10 @@ import { ConnectedPosition } from '@angular/cdk/overlay';
 import { NextAndPreviusButtonsService } from '../../../services/next-and-previous-buttons/next-and-previus-buttons.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
-import { confirmationPopupData, PopupData } from 'src/app/shared/models/popup.model';
+import {
+  confirmationPopupData,
+  PopupData,
+} from 'src/app/shared/models/popup.model';
 import { LicenseRequestService } from '../../../services/license-request.service';
 import { CorrectionProjectInstantLicenseDeedService } from 'src/app/modules/features/real-estate-contributions-license/services/correction-project-instant-license-deed.service';
 
@@ -20,7 +32,8 @@ import { CorrectionProjectInstantLicenseDeedService } from 'src/app/modules/feat
   styleUrls: ['./correction-licenseproject-deeds-list.component.scss'],
 })
 export class CorrectionLicenseprojectDeedsListComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   @Output() changePage = new EventEmitter<Pagemode>();
   @Output() isIntegrationFlag = new EventEmitter<boolean | null>();
   @Output() isUnitFlag = new EventEmitter<boolean | null>();
@@ -62,16 +75,18 @@ export class CorrectionLicenseprojectDeedsListComponent
       originY: 'top',
       overlayX: 'center',
       overlayY: 'bottom',
-      offsetY: -8
-    }
+      offsetY: -8,
+    },
   ];
 
   localization = {
     appearanceQualification: 'درجة تأهيل المطور',
     projectConstructionArea: 'إجمالي مساحة المشروع حسب الصك',
-    projectConstructionAreaTooltip: 'مساحة التأهيل\nأقصى مساحة مسطح حسب درجة التأهيل للمشروع حسب الصك هي 300 م²',
+    projectConstructionAreaTooltip:
+      'مساحة التأهيل\nأقصى مساحة مسطح حسب درجة التأهيل للمشروع حسب الصك هي 300 م²',
     projectAreaAccordingToPermit: 'إجمالي مساحة مسطح البناء للمشروع',
-    projectAreaAccordingToPermitTooltip: 'مساحة التأهيل\nأقصى مساحة مسطح حسب درجة التأهيل للمشروع حسب الصك',
+    projectAreaAccordingToPermitTooltip:
+      'مساحة التأهيل\nأقصى مساحة مسطح حسب درجة التأهيل للمشروع حسب الصك',
     projectDetails: 'عنوان للمشروع',
     cityNameLabel: 'اسم المدينة',
     deedNameLabel: 'اسم الحى',
@@ -98,7 +113,7 @@ export class CorrectionLicenseprojectDeedsListComponent
     private _licenseRequestService: LicenseRequestService,
     private _nextAndPreviusButtonsService: NextAndPreviusButtonsService,
     private _toastrNotificationService: ToastrNotificatioService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
@@ -112,9 +127,10 @@ export class CorrectionLicenseprojectDeedsListComponent
   }
 
   private getLicenseProjectIdStorage(): void {
-    debugger
-    const licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    const correctionUnitRequestId = this._sharedLicenseProjectService.getCorrectionUnitRequestIdFromLocalStorage();
+    const licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage();
+    const correctionUnitRequestId =
+      this._sharedLicenseProjectService.getCorrectionUnitRequestIdFromLocalStorage();
     if (licenseProjectId && correctionUnitRequestId) {
       this.licenseProjectId = licenseProjectId;
       this.correctionUnitRequestId = correctionUnitRequestId;
@@ -132,7 +148,7 @@ export class CorrectionLicenseprojectDeedsListComponent
           if (res) {
             this.deedsList = res;
           }
-        })
+        }),
     );
   }
 
@@ -144,16 +160,14 @@ export class CorrectionLicenseprojectDeedsListComponent
         .subscribe((res: any) => {
           if (res.isDone) {
             this.isUnit = res.data;
-          }
-          else{
+          } else {
             this.enableAddDeedButton = false;
           }
-        })
+        }),
     );
   }
 
   GetDeedHeaderProjectData(): void {
-    debugger
     this.subscriptions.push(
       this._projectInstantDeedService
         .GetCorrectionDeedHeaderProjectData(this.correctionUnitRequestId)
@@ -161,40 +175,49 @@ export class CorrectionLicenseprojectDeedsListComponent
           if (res) {
             this.deedHeaderProjectDataDto = res;
           }
-        })
+        }),
     );
   }
 
   hasNonType1Deeds(): boolean {
     // بلدي
-    return this.deedsList.some(deed => deed.licenseProjectConstructionLicenseTypeId !== 1);
+    return this.deedsList.some(
+      (deed) => deed.licenseProjectConstructionLicenseTypeId !== 1,
+    );
   }
 
   hasAnyConstructionLicenseNumber(): boolean {
-    return this.deedsList.some(deed => deed.constructionLicenseNumber != null);
+    return this.deedsList.some(
+      (deed) => deed.constructionLicenseNumber != null,
+    );
   }
 
   addDeeds(): void {
-
     let isIntegration: boolean | null = null;
 
     if (this.deedsList && this.deedsList.length > 0) {
       // If any deed is type 2 or 3, return false; otherwise check for type 1
-      const hasNonBalady = this.deedsList.some(deed =>
-        deed.licenseProjectConstructionLicenseTypeId === 2 ||
-        deed.licenseProjectConstructionLicenseTypeId === 3
+      const hasNonBalady = this.deedsList.some(
+        (deed) =>
+          deed.licenseProjectConstructionLicenseTypeId === 2 ||
+          deed.licenseProjectConstructionLicenseTypeId === 3,
       );
 
       isIntegration = hasNonBalady
         ? false
-        : this.deedsList.some(deed => deed.licenseProjectConstructionLicenseTypeId === 1);
+        : this.deedsList.some(
+            (deed) => deed.licenseProjectConstructionLicenseTypeId === 1,
+          );
 
       // Find first deed with licenseProjectNatureTypeId = 1 or 2
-      const firstDeed = this.deedsList.find(deed =>
-        deed.licenseProjectNatureTypeId === 1 || deed.licenseProjectNatureTypeId === 2
+      const firstDeed = this.deedsList.find(
+        (deed) =>
+          deed.licenseProjectNatureTypeId === 1 ||
+          deed.licenseProjectNatureTypeId === 2,
       );
 
-      this.isUnit = firstDeed && firstDeed.licenseProjectNatureTypeId === 1 ? true : false;
+      this.isUnit =
+        firstDeed && firstDeed.licenseProjectNatureTypeId === 1 ? true : false;
     }
 
     this.isIntegrationFlag.emit(isIntegration);
@@ -216,8 +239,9 @@ export class CorrectionLicenseprojectDeedsListComponent
       deedDate: deed.deedDate,
       integrationTypeId: deed.integrationTypeId,
       constructionLicenseNumber: deed.constructionLicenseNumber,
-      licenseProjectConstructionLicenseTypeId: deed.licenseProjectConstructionLicenseTypeId,
-      isVerifiedByIntegration: deed.isVerifiedByIntegration
+      licenseProjectConstructionLicenseTypeId:
+        deed.licenseProjectConstructionLicenseTypeId,
+      isVerifiedByIntegration: deed.isVerifiedByIntegration,
     });
     this.isUnitFlag.emit(this.isUnit);
     this.changePage.emit(Pagemode.Update);
@@ -226,7 +250,8 @@ export class CorrectionLicenseprojectDeedsListComponent
   deleteDeed(id: string): void {
     let deleteConfirmation: confirmationPopupData = {
       popupType: 'danger',
-      title: 'عند اختيار (حذف الصك)، أتعهد بحذف الصك القديم نهائيًا وأقرّ بعدم ارتباطه بأي وحدات',
+      title:
+        'عند اختيار (حذف الصك)، أتعهد بحذف الصك القديم نهائيًا وأقرّ بعدم ارتباطه بأي وحدات',
       staticMessage: '',
       acceptButtonText: 'حذف الصك',
       dynamicMessage: '',
@@ -244,13 +269,12 @@ export class CorrectionLicenseprojectDeedsListComponent
     this._popupService.dismissDialog();
   }
 
-
   private performDelete(id: string): void {
     this.subscriptions.push(
       this._projectInstantDeedService.DeleteDeed(id).subscribe((res: any) => {
         if (res.isDone) {
           this._toastrService.success(this.localization.deletedSuccessfully);
-           this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
+          this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
           this.closeDialog();
           this.GetDeedHeaderProjectData();
           this.loadData();
@@ -258,7 +282,7 @@ export class CorrectionLicenseprojectDeedsListComponent
           this.closeDialog();
           // this._toastrService.error(res.message);
         }
-      })
+      }),
     );
   }
 
@@ -272,55 +296,62 @@ export class CorrectionLicenseprojectDeedsListComponent
   // TabsButtons
   private observeNextButtonIsCliced() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe((res: null) => {
-        // Validate that at least one deed is added
-        if (!this.deedsList || this.deedsList.length === 0) {
-          this._toastrNotificationService.showError(this.localization.noDeedsError);
-          return;
-        }
-        this.moveToNextTab()
-      })
-    )
+      this._nextAndPreviusButtonsService.nextButtonIsClicked.subscribe(
+        (res: null) => {
+          // Validate that at least one deed is added
+          if (!this.deedsList || this.deedsList.length === 0) {
+            this._toastrNotificationService.showError(
+              this.localization.noDeedsError,
+            );
+            return;
+          }
+          this.moveToNextTab();
+        },
+      ),
+    );
   }
 
   private observeSaveAsDraftIsClicked() {
     this.subscriptions.push(
-      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe((res: null) => {
-        // this.save()
-      })
-    )
+      this._nextAndPreviusButtonsService.saveAsDraftIsClicked.subscribe(
+        (res: null) => {
+          // this.save()
+        },
+      ),
+    );
   }
 
   private observeTabsButtons(): void {
     this.observeNextButtonIsCliced();
-    this.observeSaveAsDraftIsClicked()
+    this.observeSaveAsDraftIsClicked();
   }
 
   private updateSaveAsDraftBtnIsvisible(): void {
-    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false)
+    this._nextAndPreviusButtonsService.saveAsDraftBtnIsvisible.next(false);
     this._nextAndPreviusButtonsService.nextBtnIsVisible.next(true);
   }
 
   private moveToNextTab(): void {
-    this._nextAndPreviusButtonsService.moveToNextTab.emit()
+    this._nextAndPreviusButtonsService.moveToNextTab.emit();
   }
 
   openUpdateBuildingAreaDialog(isUnitData: boolean): void {
     let Data = {
-      title: isUnitData ? "عدد الوحدات" : "إجمالي مساحة مسطح البناء للمشروع",
+      title: isUnitData ? 'عدد الوحدات' : 'إجمالي مساحة مسطح البناء للمشروع',
       component: CorrectionUpdateBuildingFlatAreaComponent,
       id: 'CorrectionUpdateBuildingFlatAreaComponent',
-      data: { isUnit: isUnitData }
+      data: { isUnit: isUnitData },
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
 
   observeConfirmAction() {
     this.subscriptions.push(
-      this._projectInstantDeedService.closeDialog.subscribe((res: PopupData) => {
-        this.GetDeedHeaderProjectData();
-      })
+      this._projectInstantDeedService.closeDialog.subscribe(
+        (res: PopupData) => {
+          this.GetDeedHeaderProjectData();
+        },
+      ),
     );
   }
-
 }

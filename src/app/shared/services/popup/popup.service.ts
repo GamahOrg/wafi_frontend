@@ -28,8 +28,8 @@ export class PopupService {
 
   openDialog: EventEmitter<any> = new EventEmitter<any>();
   closeDialog: EventEmitter<any> = new EventEmitter<any>();
-  confirmAction: EventEmitter<PopupData | confirmationPopupData> =
-    new EventEmitter<PopupData | confirmationPopupData>();
+  confirmAction: EventEmitter<PopupData | confirmationPopupData | notePopupData> =
+    new EventEmitter<PopupData | confirmationPopupData | notePopupData>();
   cancelAction: EventEmitter<
     PopupData | confirmationPopupData | notePopupData
   > = new EventEmitter<PopupData | confirmationPopupData | notePopupData>();
@@ -123,7 +123,7 @@ export class PopupService {
     this.NotePopupData.next(noteData);
     const dialogRef = this.dialog.open(PopupNoteComponent, {
       width: '660px',
-      height: '380px',
+      height: 'auto',
       panelClass: noteData.panelClass,
       data: {
         popupType: noteData.popupType ?? 'primary',

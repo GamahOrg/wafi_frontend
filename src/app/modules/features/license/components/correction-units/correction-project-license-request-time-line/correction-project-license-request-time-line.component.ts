@@ -7,40 +7,38 @@ import { SharedLicenseProjectService } from '../../../services/sharedLicenseProj
 @Component({
   selector: 'app-correction-project-license-request-time-line',
   templateUrl: './correction-project-license-request-time-line.component.html',
-  styleUrls: ['./correction-project-license-request-time-line.component.scss']
+  styleUrls: ['./correction-project-license-request-time-line.component.scss'],
 })
 export class CorrectionProjectLicenseRequestTimeLineComponent {
-
   subscriptions: Subscription[] = [];
   requestLogs: null | LicenseProjectRequestLogDto[] = null;
   licenseProjectRequestId?: string;
 
   constructor(
     private _licenseProjectRequestLogService: CorrectionLicenseProjectRequestLogService,
-    private _sharedLicenseProjectService: SharedLicenseProjectService,) { }
+    private _sharedLicenseProjectService: SharedLicenseProjectService,
+  ) {}
   ngOnInit(): void {
     this.getSelectedRequestIdFromLocalStorage();
   }
   getSelectedRequestIdFromLocalStorage(): void {
-debugger
-    this.licenseProjectRequestId = this._sharedLicenseProjectService.getCorrectionUnitRequestIdFromLocalStorage() as string;
+    this.licenseProjectRequestId =
+      this._sharedLicenseProjectService.getCorrectionUnitRequestIdFromLocalStorage() as string;
     if (this.licenseProjectRequestId) this.GetRequestNotesByRequestId();
   }
 
   private GetRequestNotesByRequestId(): void {
-
     this.subscriptions.push(
-      this._licenseProjectRequestLogService.getLicenseProjectRequestLogs(this.licenseProjectRequestId as string).subscribe((res: LicenseProjectRequestLogDto[] | null) => {
-        if (res) {
-
-          this.requestLogs = res;
-        }
-      }),
-    )
+      this._licenseProjectRequestLogService
+        .getLicenseProjectRequestLogs(this.licenseProjectRequestId as string)
+        .subscribe((res: LicenseProjectRequestLogDto[] | null) => {
+          if (res) {
+            this.requestLogs = res;
+          }
+        }),
+    );
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
-
-
 }

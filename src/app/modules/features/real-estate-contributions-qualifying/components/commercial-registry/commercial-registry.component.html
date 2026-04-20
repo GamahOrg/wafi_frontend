@@ -14,13 +14,13 @@
           {{ facility.commercialRegisterStartDate | date : "MM/dd/yyyy" }}
         </div>
       </div>
-      <div class="col-12 col-lg-6" *ngIf="facility.commercialRegisterEndDate">
+      <!-- <div class="col-12 col-lg-6" *ngIf="facility.commercialRegisterEndDate">
         <div class="key">تاريخ انتهاء السجل التجاري</div>
         <div class="value">
           <span class="icon material-icons">calendar_today</span>
           {{ facility.commercialRegisterEndDate | date : "MM/dd/yyyy" }}
         </div>
-      </div>
+      </div> -->
       <div class="col-12 col-lg-6" *ngIf="facility.facilityName">
         <div class="key">اسم الشركة</div>
         <div class="value">
@@ -95,7 +95,7 @@
         </div>
       </div>
       <div class="col-12 col-lg-6" *ngIf=" facility.postalCode">
-        <div class="key"> رمز البريد </div>
+        <div class="key"> الرمز البريدي </div>
         <div class="value" *ngIf=" facility.postalCode">
           <span class="icon material-icons">language</span>
           {{ facility.postalCode }}
@@ -142,7 +142,7 @@
     </div>
   </div>
   <div class="tab-data-section">
-    <h6 class="title">بيانات أساسية (مطور عقاري مستقل)</h6>
+    <h6 class="title">بيانات أساسية (مطور عقاري)</h6>
 
     <div class="row row-gap-4">
       <div class="col-12 col-lg-6" *ngIf="facility.facilityType">

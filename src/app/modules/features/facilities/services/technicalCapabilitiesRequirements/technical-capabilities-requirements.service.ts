@@ -49,6 +49,18 @@ export class TechnicalCapabilitiesRequirementsService {
                 })
             )
     }
+    UpdatePreviousExperience(facilityId: string, isPreviousExperienceExist: boolean): Observable<CoreResponseDTO<QualificationTechnicalCapabilitiesRequirementFullDto>> {
+        return this._httpClient
+            .post<CoreResponseDTO<QualificationTechnicalCapabilitiesRequirementFullDto>>(
+                `${Configuration.APIs.QualificationTechnicalCapabilitiesRequirement.UpdatePreviousExperience}`,
+                { facilityId, isPreviousExperienceExist })
+            .pipe(
+                map((res: CoreResponseDTO<QualificationTechnicalCapabilitiesRequirementFullDto>) => {
+                    return res;
+                })
+            )
+    }
+
     GetProjectCategory(): Observable<ProjectCategoryDto[]> {
         return this._httpClient
             .get<CoreResponseDTO<ProjectCategoryDto[]>>(`${Configuration.APIs.ProjectCategory.Get}`)

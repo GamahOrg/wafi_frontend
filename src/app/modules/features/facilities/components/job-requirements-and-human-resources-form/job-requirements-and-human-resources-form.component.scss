@@ -1,3 +1,31 @@
 @import "/src/assets/styles/custom-variables";
 @import "/src/assets/styles/material-custom/dialog-content";
 @import "/src/assets/styles/content/form-conent";
+
+.upload-card {
+  // background-color: #f9fafb;
+  // border: 1px solid #e5e7eb;
+  // border-radius: 8px;
+  padding: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .form-label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    text-align: right;
+  }
+
+  .upload-hint {
+    font-size: 12px;
+    color: #6b7280;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  app-file-uploader {
+    margin-top: auto;
+  }
+}
