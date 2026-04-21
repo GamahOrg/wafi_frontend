@@ -1,4 +1,4 @@
-import { Type } from "@angular/core"
+import { Type } from '@angular/core';
 
 export class Tabs {
   verticalTabs: boolean = false;
@@ -7,17 +7,18 @@ export class Tabs {
   tabsComponentList: tabsComponent[] = [];
 }
 export interface tabsComponent {
-  icon?: string,
-  number?: number,
-  title: string,
-  Component?: Type<any> | null,
-  disabled: boolean,
-  isVisible: boolean
-  id?: string,
-  errNum?: number,
-  tabCode?: string
-  tabErrors?: tabError[],
-  isCompleted?:boolean,
+  icon?: string;
+  number?: number;
+  title: string;
+  Component?: Type<any> | null;
+  disabled: boolean;
+  isVisible: boolean;
+  id?: string;
+  errNum?: number;
+  tabCode?: string;
+  tabErrors?: tabError[];
+  isCompleted?: boolean;
+  children?: tabsComponent[];
 }
 export interface tabError {
   errorCode: string;

@@ -4,7 +4,7 @@ import { RequestDataComponent } from '../../components/request-data/request-data
 import { ResultOfRequestStudyComponent } from '../../components/result-of-request-study/result-of-request-study.component';
 import { RequestEventsLogComponent } from '../../components/request-events-log/request-events-log.component';
 import { Subscription } from 'rxjs';
-import { RequestDetails } from '../../dataModels/request-details.model';
+import { RequestDetails, QualificationInvoiceData } from '../../dataModels/request-details.model';
 import { internalStatusId } from "../../dataModels/enum/request-status";
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { Tabs } from 'src/app/shared/models/tabs.model';
@@ -18,6 +18,7 @@ import { PopupData } from 'src/app/shared/models/popup.model';
 import { RequestNotesService } from 'src/app/shared/services/requestNotes/request-notes.service';
 import { CircularProgressSetting } from 'src/app/shared/models/circular-progress-setting.model';
 import { EditorRequestNotesOnlyComponent } from 'src/app/shared/components/editor-request-notes-only/editor-request-notes-only.component';
+import { QualificationInvoiceViewComponent } from '../../components/qualification-invoice-view/qualification-invoice-view.component';
 @Component({
   selector: 'app-request-details',
   templateUrl: './request-details.component.html',
@@ -78,6 +79,11 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
     remainingDaysToTakeAnAction: "الوقت المتبقي لأخذ قرار"
   }
   StudyDaysProgressSetting: CircularProgressSetting = new CircularProgressSetting;
+  invoiceStatusIds: number[] = [8, 9,5];
+  get hasInvoice(): boolean {
+    return this.selectedRequest != null &&
+      this.invoiceStatusIds.includes(this.selectedRequest.internalStatusId);
+  }
   constructor(
     private _requestService: RequestService,
     private _tabsService: TabsService,
@@ -205,6 +211,45 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
 
   private showNotificationOFsentNotes() {
     this._toastrService.success("تم إرسال الملاحظات بنجاح!")
+  }
+
+  showInvoice(): void {
+    this.subscriptions.push(
+      this._requestService
+        .GetQualificationInvoice(this.selectedRequestID as string)
+        .subscribe((res) => {
+          if (res && res.data) {
+            this.openInvoiceViewDialog(res.data);
+          }
+        })
+    );
+  }
+
+  private openInvoiceViewDialog(invoiceData: QualificationInvoiceData): void {
+    const popupData: PopupData = {
+      title: 'بيانات الفاتورة',
+      component: QualificationInvoiceViewComponent,
+      id: 'QualificationInvoiceViewComponent',
+      buttons: [],
+      data: {
+        invoiceData: invoiceData,
+      },
+    };
+    this._popupService.updatePopupData(popupData);
+  }
+
+  sendToFawtarahManually(): void {
+    if (!this.selectedRequestID) return;
+    this.subscriptions.push(
+      this._requestService.SendToFawtarahManually(this.selectedRequestID).subscribe((res: boolean) => {
+        if (res) {
+          this._toastrService.success("تم إرسال الفاتورة بنجاح!");
+          this.getSelectedRequest();
+        } else {
+          this._toastrService.error("فشل إرسال الفاتورة!");
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {

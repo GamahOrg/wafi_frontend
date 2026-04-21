@@ -9,6 +9,7 @@ import { EditQualificationProjectComponent } from '../edit-qualification-project
 import { SaveTechnicalCapabilitiesRequirementsComponent } from '../save-technical-capabilities-requirements/save-technical-capabilities-requirements.component';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { FacilityProfileService } from '../../services/facilityProfile/facility-profile.service';
 
 @Component({
   selector: 'app-technical-capabilities-requirements',
@@ -21,18 +22,25 @@ export class TechnicalCapabilitiesRequirementsComponent implements OnInit, OnDes
   userData: customerResponse | null = null;
   technicalCapabilities: QualificationTechnicalCapabilitiesRequirementFullDto | undefined = undefined;
   baseUrl = `${environment.baseURL}/`;
+  canUpdate: boolean = true;
 
   constructor(
     private userDataService: UserDataService,
     private technicalCapabilitiesRequirementsService: TechnicalCapabilitiesRequirementsService,
     private popupService: PopupService,
     private _userDataService: UserDataService,
-    private _filemangementService: FileManagementService) {
+    private _filemangementService: FileManagementService,
+    private _facilityProfileService: FacilityProfileService) {
   }
 
   ngOnInit(): void {
     this.obseveCustomerData();
     this.observeTechnicalCapabilitiesRequirementsBehaviorSubject();
+    this.subscriptions.push(
+      this._facilityProfileService.getAvailabilityToUpdate().subscribe((res: boolean) => {
+        this.canUpdate = res;
+      })
+    );
   }
 
   obseveCustomerData(): void {
@@ -58,6 +66,8 @@ export class TechnicalCapabilitiesRequirementsComponent implements OnInit, OnDes
     this.subscriptions.push(
       this.technicalCapabilitiesRequirementsService.GetByFacilityId(this.userData?.facilities[0].id as string).subscribe(data => {
         this.technicalCapabilities = data;
+        this.technicalCapabilities.isPreviousExperienceExist =
+          this.technicalCapabilities.isPreviousExperienceExist ?? false;
         if (this.technicalCapabilities) {
           this.UpdateTechnicalCapabilitiesRequirementsBehaviorSubject(this.technicalCapabilities)
         }
@@ -97,6 +107,21 @@ export class TechnicalCapabilitiesRequirementsComponent implements OnInit, OnDes
 
         this.technicalCapabilitiesRequirementsService.UpdateTechnicalCapabilitiesRequirementsBehaviorSubject(this.technicalCapabilities!);
       }));
+  }
+  onPreviousExperienceChange(value: boolean) {
+    if (this.technicalCapabilities && this.userData) {
+      this.technicalCapabilities.isPreviousExperienceExist = value;
+      this.subscriptions.push(
+        this.technicalCapabilitiesRequirementsService
+          .UpdatePreviousExperience(this.userData.facilities[0].id as string, value)
+          .subscribe(res => {
+            if (res.isDone && res.data) {
+              this.technicalCapabilities = res.data;
+              this.UpdateTechnicalCapabilitiesRequirementsBehaviorSubject(res.data);
+            }
+          })
+      );
+    }
   }
 
   ngOnDestroy(): void {

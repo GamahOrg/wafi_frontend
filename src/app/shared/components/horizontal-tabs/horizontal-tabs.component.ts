@@ -10,12 +10,11 @@ import { UnsavedChangesDialogComponent } from 'src/app/core/guards/unsaved-chang
 @Component({
   selector: 'app-horizontal-tabs',
   templateUrl: './horizontal-tabs.component.html',
-  styleUrls: ['./horizontal-tabs.component.scss']
+  styleUrls: ['./horizontal-tabs.component.scss'],
 })
-export class HorizontalTabsComponent{
-
-@Input() tabClassName?: string = '';
-@ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
+export class HorizontalTabsComponent {
+  @Input() tabClassName?: string = '';
+  @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
 
   subscriptions: Subscription[] = [];
   tabContent: Tabs = new Tabs();
@@ -25,7 +24,7 @@ export class HorizontalTabsComponent{
   constructor(
     private _tabsService: TabsService,
     private requestTimelineService: RequestTimelineService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
   ngOnInit(): void {
     this.observeVerticalTabsContent();
@@ -36,10 +35,9 @@ export class HorizontalTabsComponent{
       this._tabsService
         .getVerticalTabContent()
         .subscribe((tabContent: Tabs) => {
-          debugger
           // console.log("observeVerticalTabsContent tabContent", tabContent)
           this.tabContent = tabContent;
-        })
+        }),
     );
   }
   updateActiveTabIndex(index: number) {
@@ -99,7 +97,7 @@ export class HorizontalTabsComponent{
         this.tabContent.activeTabIndex = res;
         this.previousTabIndex = res; // Keep previousTabIndex in sync
         this.requestTimelineService.updateRequestId(null);
-      })
+      }),
     );
   }
 

@@ -73,10 +73,12 @@ export interface ProjectSubCategoryDto {
 export interface ProjectTypesDto {
     id: string;
     projectTypeId?: string;
-    projectTypeTypeName?: string;
+  projectTypeTypeName?: string;
+  projectType: ProjectTypeFullDto
 }
 
 export interface ProjectTypeFullDto {
     id: string;
-    typeName?: string;
+  typeName?: string;
+  selected?: boolean;
 }

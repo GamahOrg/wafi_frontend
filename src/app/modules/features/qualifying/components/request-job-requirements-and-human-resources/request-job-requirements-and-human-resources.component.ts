@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { QualificationInstitutionalCapacityAndHrRequirementDto } from '../../../facilities/dataModels/qualificationInstitutionalCapacityAndHrRequirement.model';
 import { RequestService } from '../../services/requests/request-service.service';
 import { facilityDTO } from '../../dataModels/request-details.model';
+import { CertifiedEngineerDto } from '../../../facilities/dataModels/certified-engineer-dto';
 
 @Component({
   selector: 'app-request-job-requirements-and-human-resources',
@@ -15,11 +16,14 @@ export class RequestJobRequirementsAndHumanResourcesComponent implements OnInit,
   baseUrl = `${environment.baseURL}/`;
   qualificationInstitutionalCapacityAndHrRequirement: QualificationInstitutionalCapacityAndHrRequirementDto | null =
     null;
-
+  certifiedEngineers: CertifiedEngineerDto[] | null = null;
+  qualificationEngineers: CertifiedEngineerDto[] = [];
+  courseEngineers: CertifiedEngineerDto[] = [];
   constructor(private _requestService: RequestService) { }
 
   ngOnInit(): void {
     this.updateQualificationAdditionInstitutionalCapacityAndHrRequirement();
+    this.updateCertifiedFacilityEngineers();
   }
 
   updateQualificationAdditionInstitutionalCapacityAndHrRequirement() {
@@ -38,7 +42,24 @@ export class RequestJobRequirementsAndHumanResourcesComponent implements OnInit,
       })
     )
   }
+  updateCertifiedFacilityEngineers() {
 
+    this.subscriptions.push(
+      this._requestService.CertifiedFacilityEngineers$.subscribe((res: CertifiedEngineerDto[] | null) => {
+
+        this.certifiedEngineers = res ?? [];
+        // Engineers with qualificationEngineerType = 1
+        this.qualificationEngineers = this.certifiedEngineers.filter(
+          x => x.qualificationEngineerType === 1
+        );
+
+        // Engineers with courses
+        this.courseEngineers = this.certifiedEngineers.filter(
+          x => x.hasCourses === true
+        );
+      })
+    )
+  }
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

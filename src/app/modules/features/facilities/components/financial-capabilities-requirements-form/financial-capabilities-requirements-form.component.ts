@@ -11,7 +11,7 @@ import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
-import { DatePipe } from '@angular/common';
+
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
@@ -33,9 +33,9 @@ export class FinancialCapabilitiesRequirementsFormComponent implements OnInit, O
   } as FileUploader;
 
   financialCapabilitiesRequirementsForm = this._formBuilder.group({
-    cpalicenseNumber: ['', [Validators.required]],
-    cpaIdentityNumber: ['', [Validators.required]],
-    creditRecordIntegrityCertificateDate: [(new Date).toDateString(), [Validators.required]],
+    cpalicenseNumber: ['', []],
+    cpaIdentityNumber: ['', []],
+    creditRecordIntegrityCertificateDate: [null as Date | null, [Validators.required]],
     financialStatementDescription: ['', []],
   //  certificateOfZakatIncome: []
   })
@@ -49,7 +49,6 @@ export class FinancialCapabilitiesRequirementsFormComponent implements OnInit, O
     private _formBuilder: FormBuilder,
     private financialCapabilitiesService: FinancialCapabilitiesService,
     private _userDataService: UserDataService,
-    private datePipe: DatePipe,
     private _popupService: PopupService,
     private _filemangementService: FileManagementService,
     private _toastrNotificationService: ToastrNotificatioService,
@@ -127,8 +126,12 @@ export class FinancialCapabilitiesRequirementsFormComponent implements OnInit, O
         if (res) {
           this.financialCapability = res;
           console.log("this.financialCapability", this.financialCapability)
-          this.financialCapability.creditRecordIntegrityCertificateDate = this.datePipe.transform(this.financialCapability.creditRecordIntegrityCertificateDate, 'yyyy-MM-dd') as any;
-          this.financialCapabilitiesRequirementsForm.patchValue(this.financialCapability as any);
+          this.financialCapabilitiesRequirementsForm.patchValue({
+            ...this.financialCapability as any,
+            creditRecordIntegrityCertificateDate: this.financialCapability.creditRecordIntegrityCertificateDate
+              ? new Date(this.financialCapability.creditRecordIntegrityCertificateDate)
+              : null
+          });
         }
       })
     )

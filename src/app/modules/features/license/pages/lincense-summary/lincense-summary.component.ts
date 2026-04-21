@@ -513,7 +513,7 @@ export class LincenseSummaryComponent implements OnInit, OnDestroy {
       id: 'ApprovalComponent',
       disableClose: true,
       submitButtonTitle: 'إرسال الطلب',
-      cancelButtonPosition: 'left',
+      cancelButtonPosition: 'end',
     } as PopupData;
     this._popupService.updatePopupData(Data);
 

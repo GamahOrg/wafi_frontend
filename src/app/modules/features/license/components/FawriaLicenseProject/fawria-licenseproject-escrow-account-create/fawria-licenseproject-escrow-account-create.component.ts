@@ -28,7 +28,10 @@ import { LicenseRequestService } from '../../../services/license-request.service
 import { PopupData, notePopupData } from 'src/app/shared/models/popup.model';
 import { ProjectApprovalsService } from '../../../services/licenseProjects/project-approvals.service';
 import { ApprovalComponent } from '../../approval/approval.component';
-import { RequestSuccessResponse, RequestValidation } from '../../../dataModels/request-validation.model';
+import {
+  RequestSuccessResponse,
+  RequestValidation,
+} from '../../../dataModels/request-validation.model';
 import { LicenseRequestValidationPopupComponent } from '../../license-request-validation-popup/license-request-validation-popup.component';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 
@@ -132,7 +135,6 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent
   }
   requiredGuidValidator() {
     return (control: AbstractControl) => {
-      debugger;
       const emptyGuid = '00000000-0000-0000-0000-000000000000';
       return !control.value || control.value === emptyGuid
         ? { required: true }
@@ -194,7 +196,7 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent
       if (this.escrowAccountForm.dirty) {
         this._tabsService.setUnsavedChanges(true);
       }
-      debugger;
+
       const rawValue = this.escrowAccountForm.getRawValue();
       this.fawriaLicenseBankInfoDto = {
         ...this.fawriaLicenseBankInfoDto,
@@ -230,7 +232,6 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent
       next: ({ banksResponse, subCustomers }) => {
         this.banks = banksResponse.data as BankDto[];
 
-        debugger;
         //set default selected Bank if only one Bank
         if (this.banks.length == 1) {
           this.setSelectedBank(this.banks[0].id);
@@ -344,7 +345,7 @@ export class FawriaLicenseprojectEscrowAccountCreateComponent
       .subscribe((res) => {
         if (res.isDone) {
           this._licenseRequestService.updateCompletedTapCodesIsClicked.emit();
-this._toastrNotificationService.showSuccess('تم الحفظ بنجاح');
+          this._toastrNotificationService.showSuccess('تم الحفظ بنجاح');
           this.escrowAccountForm.patchValue({
             bankId: res.data.bankId,
             delegatorIds: res.data.delegatorCustomerIds ?? [],
@@ -490,7 +491,7 @@ this._toastrNotificationService.showSuccess('تم الحفظ بنجاح');
             id: 'ApprovalComponent',
             disableClose: true,
             submitButtonTitle: 'إرسال الطلب',
-            cancelButtonPosition: 'left',
+            cancelButtonPosition: 'end',
           } as PopupData;
           this._popupService.updatePopupData(Data);
         }

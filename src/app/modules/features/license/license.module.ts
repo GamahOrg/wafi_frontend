@@ -544,9 +544,14 @@ import { ExchangeDocumentService } from './services/exchange-document.service';
 import { ExchangeDocumentsListComponent } from './pages/exchange-documents-list/exchange-documents-list.component';
 import { ViewExchangeRequestDetailsComponent } from './pages/view-exchange-request-details/view-exchange-request-details.component';
 import { ExchangeDocumentsSelectDelegatorsComponent } from './pages/exchange-documents-select-delegators/exchange-documents-select-delegators.component';
+import { RealStateCharteredAccountantUnitsListComponent } from './pages/real-state-chartered-accountant-units-list/real-state-chartered-accountant-units-list.component';
+import { ChangeUnitStatusFormComponent } from './pages/real-state-chartered-accountant-units-list/change-unit-status-form/change-unit-status-form.component';
+import { ContractAccountantUnitDetailsComponent } from './pages/contracts/contract-accountant-unit-details/contract-accountant-unit-details.component';
+import { SupervisionFeesComponent } from './pages/supervision-fees/supervision-fees.component';
 
 @NgModule({
   declarations: [
+    SupervisionFeesComponent,
     CreateLincenseComponent,
     ExchangeDocumentsSelectDelegatorsComponent,
     LincenseSummaryComponent,
@@ -823,6 +828,8 @@ import { ExchangeDocumentsSelectDelegatorsComponent } from './pages/exchange-doc
     EditBusinessPaymentTemplatesComponent,
     BusinessPaymentTemplateFormComponent,
     RealStateDeveloperUnitsListComponent,
+    RealStateCharteredAccountantUnitsListComponent,
+    ChangeUnitStatusFormComponent,
     UnitDetailsComponent,
     AddContractComponent,
     CreateContractPopupComponent,
@@ -973,6 +980,7 @@ import { ExchangeDocumentsSelectDelegatorsComponent } from './pages/exchange-doc
     SearchExchangeDocumentsListComponent,
     ExchangeDocumentsListComponent,
     ExchangeDocumentsSelectDelegatorsComponent,
+    ContractAccountantUnitDetailsComponent,
   ],
   providers: [
     SharedLicenseProjectService,

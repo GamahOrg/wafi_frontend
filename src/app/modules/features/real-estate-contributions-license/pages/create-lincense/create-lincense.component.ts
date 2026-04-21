@@ -9,7 +9,10 @@ import { LicenseRequestService } from '../../services/license-request.service';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
-import { RequestSuccessResponse, RequestValidation } from '../../dataModels/request-validation.model';
+import {
+  RequestSuccessResponse,
+  RequestValidation,
+} from '../../dataModels/request-validation.model';
 import { PopupData, notePopupData } from 'src/app/shared/models/popup.model';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { LicenseRequestValidationPopupComponent } from '../../components/license-request-validation-popup/license-request-validation-popup.component';
@@ -18,27 +21,30 @@ import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 @Component({
   selector: 'app-create-lincense',
   templateUrl: './create-lincense.component.html',
-  styleUrls: ['./create-lincense.component.scss']
+  styleUrls: ['./create-lincense.component.scss'],
 })
 export class CreateLincenseComponent {
-  requestSummeryLink: string = `${Configuration.modules.realEstateContributions}/${Configuration.modules.realEstateContributionsLicense}/${Configuration.pages.realEstateContributionslicense.lincenseSummary}` as string;
+  requestSummeryLink: string =
+    `${Configuration.modules.realEstateContributions}/${Configuration.modules.realEstateContributionsLicense}/${Configuration.pages.realEstateContributionslicense.lincenseSummary}` as string;
   requestTypeCode: string = '';
   subscriptions: Subscription[] = [];
   createRequstForm = this._formBuilder.group({
-    priod: this._formBuilder.control<number | null>(null, [Validators.required]),
+    priod: this._formBuilder.control<number | null>(null, [
+      Validators.required,
+    ]),
   });
   showValidation: boolean = false;
   licenseRequestType: SysLicenseRequestTypeDto = new SysLicenseRequestTypeDto();
   price: Number = 0;
-  periodTypeId: string = "";
+  periodTypeId: string = '';
   userData: customerResponse | null = null;
-  typeCode: string = ''
+  typeCode: string = '';
   get controls() {
     return this.createRequstForm.controls;
   }
   renewLicense: boolean = false;
-  licenseProjectId: string = ""
-  facilityId: string = ""
+  licenseProjectId: string = '';
+  facilityId: string = '';
   constructor(
     private _formBuilder: FormBuilder,
     private _licenseRequestTypeService: LicenseRequestTypeService,
@@ -47,43 +53,55 @@ export class CreateLincenseComponent {
     private _licenseRequestService: LicenseRequestService,
     private _userDataService: UserDataService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
-    private _popupService: PopupService
-  ) { }
+    private _popupService: PopupService,
+  ) {}
 
   ngOnInit(): void {
     this.obseveCustomerData();
-    this.observeRouterParams()
+    this.observeRouterParams();
     this.getRequestTypeCode();
     this.getFacilityId();
   }
   private getLicenseProjectId(): void {
-    this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage() as string
+    this.licenseProjectId =
+      this._sharedLicenseProjectService.getLicenseProjectIdStorage() as string;
   }
   private getFacilityId(): void {
-    this.facilityId = this._sharedLicenseProjectService.getFacilityIdFromLocalStorage() as string
+    this.facilityId =
+      this._sharedLicenseProjectService.getFacilityIdFromLocalStorage() as string;
   }
   obseveCustomerData(): void {
     this.subscriptions.push(
-      this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-        this.userData = res
-      })
-    )
+      this._userDataService
+        .getCustomerData()
+        .subscribe((res: customerResponse | null) => {
+          this.userData = res;
+        }),
+    );
   }
 
   observeRouterParams() {
     this.subscriptions.push(
-      this._activatedRoute.params.subscribe(params => {
+      this._activatedRoute.params.subscribe((params) => {
         this.requestTypeCode = params['code'];
-        this.renewLicense = this._activatedRoute.snapshot.url[0].path == Configuration.pages.license.renewLincense;
-        console.log("this._activatedRoute.snapshot.url[0].path", this._activatedRoute.snapshot.url[0].path);
-        console.log("Configuration.pages.license.renewLincense", Configuration.pages.license.renewLincense);
-        console.log("this.renewLicense", this.renewLicense);
+        this.renewLicense =
+          this._activatedRoute.snapshot.url[0].path ==
+          Configuration.pages.license.renewLincense;
+        console.log(
+          'this._activatedRoute.snapshot.url[0].path',
+          this._activatedRoute.snapshot.url[0].path,
+        );
+        console.log(
+          'Configuration.pages.license.renewLincense',
+          Configuration.pages.license.renewLincense,
+        );
+        console.log('this.renewLicense', this.renewLicense);
         if (this.renewLicense) {
           this.getLicenseProjectId();
           this.getFacilityId();
         }
-      })
-    )
+      }),
+    );
   }
 
   getRequestTypeCode(): void {
@@ -101,42 +119,49 @@ export class CreateLincenseComponent {
       this._licenseRequestTypeService
         .GetByCode(this.requestTypeCode, this.renewLicense)
         .subscribe((res) => {
-
           if (res) this.licenseRequestType = res;
           console.log(this.licenseRequestType);
-        })
+        }),
     );
   }
   public CreateOrRenewLicense(): void {
     if (this.renewLicense) {
-      this.renew()
+      this.renew();
     } else {
-      this.Create()
+      this.Create();
     }
-
   }
   private renew(): void {
     if (this.controls.priod.value) {
       this.subscriptions.push(
         this._licenseRequestService
-          .renew(this.facilityId as string, this.requestTypeCode, this.controls.priod.value as number, this.periodTypeId as string, this.licenseProjectId)
-          .subscribe((res: RequestValidation | RequestSuccessResponse | null) => {
-            if (res) {
-              if ('id' in res && 'requestCode' in res) {
-                // this.requestSubmittedSuccessfully=true;
-                this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(res.id);
-                this.openConfirmaDialog(res.requestCode as string);
-                this._sharedLicenseProjectService.removeFacilityIdfromLocalStorage()
-                this._sharedLicenseProjectService.removeLicenseProjectIdfromLocalStorage()
-              } else {
-                this.updateRequestValidation(res as RequestValidation);
-                this.openValidationDialog();
+          .renew(
+            this.facilityId as string,
+            this.requestTypeCode,
+            this.controls.priod.value as number,
+            this.periodTypeId as string,
+            this.licenseProjectId,
+          )
+          .subscribe(
+            (res: RequestValidation | RequestSuccessResponse | null) => {
+              if (res) {
+                if ('id' in res && 'requestCode' in res) {
+                  // this.requestSubmittedSuccessfully=true;
+                  this._sharedLicenseProjectService.setLicenseRequestIdInLocalStorage(
+                    res.id,
+                  );
+                  this.openConfirmaDialog(res.requestCode as string);
+                  this._sharedLicenseProjectService.removeFacilityIdfromLocalStorage();
+                  this._sharedLicenseProjectService.removeLicenseProjectIdfromLocalStorage();
+                } else {
+                  this.updateRequestValidation(res as RequestValidation);
+                  this.openValidationDialog();
+                }
               }
-            }
-          })
+            },
+          ),
       );
-    }
-    else {
+    } else {
       this.showValidation = true;
     }
   }
@@ -158,86 +183,93 @@ export class CreateLincenseComponent {
   }
   openValidationDialog(): void {
     let Data = {
-      title:
-        `التحقق من بيانات المشروع`,
+      title: `التحقق من بيانات المشروع`,
       component: LicenseRequestValidationPopupComponent,
-      id: "LicenseRequestValidationPopupComponent",
+      id: 'LicenseRequestValidationPopupComponent',
       buttons: [
         {
-          icon: "",
-          title: "إلغاء",
+          icon: '',
+          title: 'إلغاء',
           actionType: ButtonType.cancel,
           isVisable: true,
           isDisables: false,
           // onclick: () => this.openNotesDialog()
         },
         {
-          icon: "",
-          title: "إستكمال البيانات",
+          icon: '',
+          title: 'إستكمال البيانات',
           actionType: ButtonType.confirm,
           isVisable: true,
           isDisables: false,
           // onclick: () => this.openAssignEmployeeDialog()
         },
-      ]
+      ],
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
   private updateRequestValidation(data: RequestValidation) {
     this._licenseRequestService.updateRequestValidation(
-      data as RequestValidation
+      data as RequestValidation,
     );
   }
   Create(): void {
-    
     if (this.controls.priod.value) {
-      let employeeFacilityId = this._sharedLicenseProjectService.getFacilityIdFromLocalStorage();
-      if (employeeFacilityId==null || employeeFacilityId == '00000000-0000-0000-0000-000000000000')
+      let employeeFacilityId =
+        this._sharedLicenseProjectService.getFacilityIdFromLocalStorage();
+      if (
+        employeeFacilityId == null ||
+        employeeFacilityId == '00000000-0000-0000-0000-000000000000'
+      )
         employeeFacilityId = this.userData?.facilities[0].id as string;
 
-      this.subscriptions.push(this._licenseRequestService.Create(employeeFacilityId as string, this.requestTypeCode, this.controls.priod.value as number, this.periodTypeId as string)
-        .subscribe((res) => {
-          if (res) {
-            
-            this.setProjectIdInlocalStorage(res)
-            this.navigate();
-          }
-        })
+      this.subscriptions.push(
+        this._licenseRequestService
+          .Create(
+            employeeFacilityId as string,
+            this.requestTypeCode,
+            this.controls.priod.value as number,
+            this.periodTypeId as string,
+          )
+          .subscribe((res) => {
+            if (res) {
+              this.setProjectIdInlocalStorage(res);
+              this.navigate();
+            }
+          }),
       );
 
-    //   this.subscriptions.push(this._licenseRequestService.CreateLicense(employeeFacilityId as string, this.requestTypeCode, this.controls.priod.value as number, this.periodTypeId as string,this.controls.startDate.value as Date)
-    //   .subscribe((res) => {
-    //     if (res) {
-          
-    //       this.setProjectIdInlocalStorage(res)
-    //       this.navigate();
-    //     }
-    //   })
-    // );
-    }
-    else {
+      //   this.subscriptions.push(this._licenseRequestService.CreateLicense(employeeFacilityId as string, this.requestTypeCode, this.controls.priod.value as number, this.periodTypeId as string,this.controls.startDate.value as Date)
+      //   .subscribe((res) => {
+      //     if (res) {
+
+      //       this.setProjectIdInlocalStorage(res)
+      //       this.navigate();
+      //     }
+      //   })
+      // );
+    } else {
       this.showValidation = true;
     }
   }
   private setProjectIdInlocalStorage(projectId: string): void {
-    debugger
-    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(projectId)
-    this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(this.requestTypeCode as string); 
+    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
+      projectId,
+    );
+    this._sharedLicenseProjectService.setQualificationTypeCodeInLocalStorage(
+      this.requestTypeCode as string,
+    );
   }
 
-
-
   changePriod(data: any) {
-
     if (data.target.value === '') {
       this.price = 0;
     } else {
       let priod = data.target.value;
       this.price = this.licenseRequestType.licenseRequestPeriods.filter(
-        (x) => x.period == priod
+        (x) => x.period == priod,
       )[0].price;
       this.periodTypeId = this.licenseRequestType?.licenseRequestPeriods.filter(
-        (x) => x.period == priod
+        (x) => x.period == priod,
       )[0].sysPeriodType?.id as string;
     }
   }

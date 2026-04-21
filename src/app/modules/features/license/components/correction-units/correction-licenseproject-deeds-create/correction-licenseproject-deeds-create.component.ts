@@ -27,7 +27,10 @@ import * as momentHijri from 'moment-hijri';
 import { Pagemode } from '../../../enums/pagemode.enum';
 import { ProjectInstantLicenseDeedService } from 'src/app/modules/features/real-estate-contributions-license/services/project-instant-license-deed.service';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
-import { PopupData, confirmationPopupData } from 'src/app/shared/models/popup.model';
+import {
+  PopupData,
+  confirmationPopupData,
+} from 'src/app/shared/models/popup.model';
 import { Subscription } from 'rxjs';
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { LicenseRequestService } from '../../../services/license-request.service';
@@ -42,7 +45,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./correction-licenseproject-deeds-create.component.scss'],
 })
 export class CorrectionLicenseprojectDeedsCreateComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() isIntegration: boolean | null = null;
   @Input() isUnit: boolean | null = null;
   @Output() changePage = new EventEmitter<Pagemode>();
@@ -73,7 +77,8 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   isEditMode: boolean = false;
 
   licenseProjectId: string = '00000000-0000-0000-0000-000000000000';
-  correctionUnitRequestHeaderId: string = '00000000-0000-0000-0000-000000000000';
+  correctionUnitRequestHeaderId: string =
+    '00000000-0000-0000-0000-000000000000';
 
   // Store existing approved plans files for display
   existingApprovedPlansFiles: { id: string }[] = [];
@@ -91,7 +96,6 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     savedSuccessfully: 'تم الحفظ',
     dateValidator: 'يجب أن يكون تاريخ الرخصة اقل من تاريخ الحالي',
     letterType: 'خطاب تعهد إتمام',
-
   };
 
   singleFileUploaderData: FileUploader = {
@@ -125,8 +129,8 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     private _licenseRequestService: LicenseRequestService,
     private _projectInstantDeedService: ProjectInstantLicenseDeedService,
     private _tabsService: TabsService,
-    private _constructionLicenseService: CorrectionConstructionLicenseService
-  ) { }
+    private _constructionLicenseService: CorrectionConstructionLicenseService,
+  ) {}
 
   ngOnInit(): void {
     this.observeconfirmAction();
@@ -134,7 +138,7 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     this.initializeForm();
     this.loadComponentData();
     this.initializeVerifyForm();
-        this.getNatureTypeIdByLicenseProjectId();
+    this.getNatureTypeIdByLicenseProjectId();
     this.trackFormChanges();
   }
 
@@ -145,7 +149,9 @@ export class CorrectionLicenseprojectDeedsCreateComponent
 
   private loadComponentData() {
     this._constructionLicenseService
-      .GetCorrectionLicenseConstructionNotTiedToDeed(this.correctionUnitRequestHeaderId as string)
+      .GetCorrectionLicenseConstructionNotTiedToDeed(
+        this.correctionUnitRequestHeaderId as string,
+      )
       .subscribe((results) => {
         if (results) {
           this.constructionLicenses = results as ConstructionLicenseDto[];
@@ -168,7 +174,9 @@ export class CorrectionLicenseprojectDeedsCreateComponent
 
   getNatureTypeIdByLicenseProjectId(): void {
     this._projectInstantDeedService
-      .GetNatureTypeIdByCorrectionRequestId(this.correctionUnitRequestHeaderId as string)
+      .GetNatureTypeIdByCorrectionRequestId(
+        this.correctionUnitRequestHeaderId as string,
+      )
       .subscribe((res: any) => {
         if (res) {
           this.isUnit = res.data;
@@ -186,11 +194,14 @@ export class CorrectionLicenseprojectDeedsCreateComponent
    */
   private setDefaultValuesForUnits(): void {
     if (this.isUnit) {
-      this.verifyForm.patchValue({
-        deedSource: DeedIntegrationTypeEnum.JusticeMinistry,
-        licenseType: 2, // اضافة رخصة جديدة
-        constructionLicenseType: ConstructionLicenseTypeEnum.Balady // رخصة بناء صادرة من بلدي
-      }, { emitEvent: false });
+      this.verifyForm.patchValue(
+        {
+          deedSource: DeedIntegrationTypeEnum.JusticeMinistry,
+          licenseType: 2, // اضافة رخصة جديدة
+          constructionLicenseType: ConstructionLicenseTypeEnum.Balady, // رخصة بناء صادرة من بلدي
+        },
+        { emitEvent: false },
+      );
 
       // Update validators after setting default values
       this.updateFormValidators();
@@ -216,7 +227,7 @@ export class CorrectionLicenseprojectDeedsCreateComponent
 
     if (changes['isIntegration'] && this.verifyForm) {
       const currentValue = this.verifyForm.get(
-        'constructionLicenseType'
+        'constructionLicenseType',
       )?.value;
 
       // No restrictions on construction license type selection
@@ -224,8 +235,10 @@ export class CorrectionLicenseprojectDeedsCreateComponent
   }
 
   private getLicenseProjectId() {
-    this.licenseProjectId = this._shareservice.getLicenseProjectIdStorage() as string;
-    this.correctionUnitRequestHeaderId = this._shareservice.getCorrectionUnitRequestIdFromLocalStorage() as string;
+    this.licenseProjectId =
+      this._shareservice.getLicenseProjectIdStorage() as string;
+    this.correctionUnitRequestHeaderId =
+      this._shareservice.getCorrectionUnitRequestIdFromLocalStorage() as string;
   }
 
   private initializeVerifyForm(): void {
@@ -257,13 +270,19 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     // Subscribe to specific fields that should trigger clearVerificationResponse
     // Exclude totalLandArea and totalUnit as they are filled after verification
     const fieldsToWatch = [
-      'deedSource', 'deedNumber', 'deedDate', 'fawriaRERNumber',
-      'licenseType', 'previousLicenseNumber',
-      'licenseNumber', 'riyadhAmanahLicenseNumber', 'constructionLicenseFileId',
-      'approvedPlansFileIds'
+      'deedSource',
+      'deedNumber',
+      'deedDate',
+      'fawriaRERNumber',
+      'licenseType',
+      'previousLicenseNumber',
+      'licenseNumber',
+      'riyadhAmanahLicenseNumber',
+      'constructionLicenseFileId',
+      'approvedPlansFileIds',
     ];
 
-    fieldsToWatch.forEach(fieldName => {
+    fieldsToWatch.forEach((fieldName) => {
       this.verifyForm.get(fieldName)?.valueChanges.subscribe(() => {
         this.clearVerificationResponse();
         this.updateFormValidators();
@@ -285,7 +304,6 @@ export class CorrectionLicenseprojectDeedsCreateComponent
       mortgageeMarginalizationFiles: this.fb.array([]),
     });
   }
-
 
   // get ownerBanks(): FormArray {
   //   return this.deedForm.get('ownerBanks') as FormArray;
@@ -325,7 +343,8 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     this.ownerAgreementFiles.clear();
     this.ownerMobileNumbers.clear();
     const owners =
-      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedOwners || [];
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+        ?.deedOwners || [];
     for (let i = 0; i < ownersCount; i++) {
       const owner = owners[i];
       const isRequired = owner?.isCustomer !== false;
@@ -339,14 +358,17 @@ export class CorrectionLicenseprojectDeedsCreateComponent
 
       // const isFileRequired = owner?.isCustomer === false;
       this.ownerAgreementFiles.push(
-        this.fb.control('', true ? [Validators.required] : [])
+        this.fb.control('', true ? [Validators.required] : []),
       );
       this.deedMarginalizationFiles.push(
-        this.fb.control('', true ? [Validators.required] : [])
+        this.fb.control('', true ? [Validators.required] : []),
       );
       // Mobile number with pattern: starts with 05 followed by 8 digits
       this.ownerMobileNumbers.push(
-        this.fb.control(owner?.mobileNo || '', [Validators.required, Validators.pattern(/^05\d{8}$/)])
+        this.fb.control(owner?.mobileNo || '', [
+          Validators.required,
+          Validators.pattern(/^05\d{8}$/),
+        ]),
       );
     }
   }
@@ -370,8 +392,11 @@ export class CorrectionLicenseprojectDeedsCreateComponent
       // );
     }
   }
-  
-  onOwnerUploaddeedMarginalizationFiles(fileData: any, ownerIndex: number): void {
+
+  onOwnerUploaddeedMarginalizationFiles(
+    fileData: any,
+    ownerIndex: number,
+  ): void {
     if (fileData.eventRes.data.length === 0) {
       this.deedMarginalizationFiles.at(ownerIndex).setValue(null);
       return;
@@ -396,26 +421,34 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     this.mortgageeFiles.clear();
     this.mortgageeMarginalizationFiles.clear();
     const mortgagees =
-      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList || [];
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+        ?.deedMortgageeList || [];
     for (let i = 0; i < mortgageesCount; i++) {
       const mortgagee = mortgagees[i];
       // Mobile number with pattern: starts with 05 followed by 8 digits
       this.mortgageeMobileNumbers.push(
-        this.fb.control(mortgagee?.mobile || '', [Validators.required, Validators.pattern(/^05\d{8}$/)])
+        this.fb.control(mortgagee?.mobile || '', [
+          Validators.required,
+          Validators.pattern(/^05\d{8}$/),
+        ]),
       );
       // Mortgagee file is required
       this.mortgageeFiles.push(
-        this.fb.control(mortgagee?.mortgageeFileId || '', [Validators.required])
+        this.fb.control(mortgagee?.mortgageeFileId || '', [
+          Validators.required,
+        ]),
       );
       // Marginalization letter file is required
       this.mortgageeMarginalizationFiles.push(
-        this.fb.control(mortgagee?.marginalizationLetterFileId || '', [Validators.required])
+        this.fb.control(mortgagee?.marginalizationLetterFileId || '', [
+          Validators.required,
+        ]),
       );
     }
   }
 
   onMortgageeFileUploaded(fileData: any, mortgageeIndex: number): void {
-    if(fileData.eventRes.data.length === 0) {
+    if (fileData.eventRes.data.length === 0) {
       this.mortgageeFiles.at(mortgageeIndex).setValue(null);
       return;
     }
@@ -434,13 +467,23 @@ export class CorrectionLicenseprojectDeedsCreateComponent
     this.mortgageeFiles.at(mortgageeIndex).setValue(null);
     this.mortgageeFiles.at(mortgageeIndex).setValidators([Validators.required]);
     this.mortgageeFiles.at(mortgageeIndex).updateValueAndValidity();
-    if (this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList?.[mortgageeIndex]) {
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList[mortgageeIndex].mortgageeFileId = null;
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList[mortgageeIndex].mortgageeFile = null;
+    if (
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+        ?.deedMortgageeList?.[mortgageeIndex]
+    ) {
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList[
+        mortgageeIndex
+      ].mortgageeFileId = null;
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList[
+        mortgageeIndex
+      ].mortgageeFile = null;
     }
   }
 
-  onMortgageeMarginalizationFileUploaded(fileData: any, mortgageeIndex: number): void {
+  onMortgageeMarginalizationFileUploaded(
+    fileData: any,
+    mortgageeIndex: number,
+  ): void {
     if (
       fileData &&
       fileData.eventRes &&
@@ -448,42 +491,72 @@ export class CorrectionLicenseprojectDeedsCreateComponent
       fileData.eventRes.data.length > 0
     ) {
       const uploadedFile = fileData.eventRes.data[0];
-      this.mortgageeMarginalizationFiles.at(mortgageeIndex).setValue(uploadedFile.id);
+      this.mortgageeMarginalizationFiles
+        .at(mortgageeIndex)
+        .setValue(uploadedFile.id);
     }
   }
 
   deleteMortgageeMarginalizationFile(mortgageeIndex: number): void {
     this.mortgageeMarginalizationFiles.at(mortgageeIndex).setValue(null);
-    this.mortgageeMarginalizationFiles.at(mortgageeIndex).setValidators([Validators.required]);
-    this.mortgageeMarginalizationFiles.at(mortgageeIndex).updateValueAndValidity();
-    if (this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList?.[mortgageeIndex]) {
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList[mortgageeIndex].marginalizationLetterFileId = null;
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList[mortgageeIndex].marginalizationLetterFile = null;
+    this.mortgageeMarginalizationFiles
+      .at(mortgageeIndex)
+      .setValidators([Validators.required]);
+    this.mortgageeMarginalizationFiles
+      .at(mortgageeIndex)
+      .updateValueAndValidity();
+    if (
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+        ?.deedMortgageeList?.[mortgageeIndex]
+    ) {
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList[
+        mortgageeIndex
+      ].marginalizationLetterFileId = null;
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList[
+        mortgageeIndex
+      ].marginalizationLetterFile = null;
     }
   }
 
   deleteOwnerAgreementFile(ownerIndex: number): void {
     this.ownerAgreementFiles.at(ownerIndex).setValue(null);
-    this.ownerAgreementFiles.at(ownerIndex).setValidators([Validators.required]);
+    this.ownerAgreementFiles
+      .at(ownerIndex)
+      .setValidators([Validators.required]);
     this.ownerAgreementFiles.at(ownerIndex).updateValueAndValidity();
-    if (this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedOwners?.[ownerIndex]) {
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners[ownerIndex].agreementFileId = '';
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners[ownerIndex].agreementFile = null;
+    if (
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+        ?.deedOwners?.[ownerIndex]
+    ) {
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners[
+        ownerIndex
+      ].agreementFileId = '';
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners[
+        ownerIndex
+      ].agreementFile = null;
     }
   }
 
   deleteOwnerMarginalizationFile(ownerIndex: number): void {
     this.deedMarginalizationFiles.at(ownerIndex).setValue(null);
-    this.deedMarginalizationFiles.at(ownerIndex).setValidators([Validators.required]);
+    this.deedMarginalizationFiles
+      .at(ownerIndex)
+      .setValidators([Validators.required]);
     this.deedMarginalizationFiles.at(ownerIndex).updateValueAndValidity();
-    if (this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedOwners?.[ownerIndex]) {
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners[ownerIndex].deedMarginalizationFileId = '';
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners[ownerIndex].deedMarginalizationFile = null;
+    if (
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+        ?.deedOwners?.[ownerIndex]
+    ) {
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners[
+        ownerIndex
+      ].deedMarginalizationFileId = '';
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners[
+        ownerIndex
+      ].deedMarginalizationFile = null;
     }
   }
 
   onVerify(): void {
-    debugger
     const formData = this.verifyForm.value;
     let isValid = true;
 
@@ -502,7 +575,10 @@ export class CorrectionLicenseprojectDeedsCreateComponent
       }
 
       // Check approvedPlansFileIds
-      if (!formData.approvedPlansFileIds || formData.approvedPlansFileIds.length === 0) {
+      if (
+        !formData.approvedPlansFileIds ||
+        formData.approvedPlansFileIds.length === 0
+      ) {
         isValid = false;
       }
     } else {
@@ -513,7 +589,10 @@ export class CorrectionLicenseprojectDeedsCreateComponent
       }
 
       // Check if constructionLicenseType is required (new license + isUnit) but not selected
-      if (formData.licenseType == 2 && formData.constructionLicenseType == null) {
+      if (
+        formData.licenseType == 2 &&
+        formData.constructionLicenseType == null
+      ) {
         isValid = false;
       }
 
@@ -529,11 +608,17 @@ export class CorrectionLicenseprojectDeedsCreateComponent
 
         // Only validate construction license fields for new license (licenseType == 2)
         if (formData.licenseType == 2) {
-          if (formData.constructionLicenseType === ConstructionLicenseTypeEnum.Balady) {
+          if (
+            formData.constructionLicenseType ===
+            ConstructionLicenseTypeEnum.Balady
+          ) {
             if (!formData.licenseNumber) {
               isValid = false;
             }
-          } else if (formData.constructionLicenseType === ConstructionLicenseTypeEnum.Itmam) {
+          } else if (
+            formData.constructionLicenseType ===
+            ConstructionLicenseTypeEnum.Itmam
+          ) {
             if (!formData.constructionLicenseFileId) {
               isValid = false;
             }
@@ -547,7 +632,8 @@ export class CorrectionLicenseprojectDeedsCreateComponent
         // Only validate construction license fields for new license (licenseType == 2)
         if (formData.licenseType == 2) {
           if (
-            formData.constructionLicenseType === ConstructionLicenseTypeEnum.Balady
+            formData.constructionLicenseType ===
+            ConstructionLicenseTypeEnum.Balady
           ) {
             if (!formData.licenseNumber) {
               isValid = false;
@@ -563,7 +649,8 @@ export class CorrectionLicenseprojectDeedsCreateComponent
               isValid = false;
             }
           } else if (
-            formData.constructionLicenseType === ConstructionLicenseTypeEnum.Itmam
+            formData.constructionLicenseType ===
+            ConstructionLicenseTypeEnum.Itmam
           ) {
             if (!formData.constructionLicenseFileId) {
               isValid = false;
@@ -593,13 +680,13 @@ export class CorrectionLicenseprojectDeedsCreateComponent
       const hijriMonth = (m as any).iMonth() + 1;
       const hijriYear = (m as any).iYear();
       hijriDateString = `${this.pad(hijriDay)}-${this.pad(
-        hijriMonth
+        hijriMonth,
       )}-${hijriYear}`;
     }
 
     // Check if رخصة سابقة (previous license) is selected
     const isAddedFromPreviousLicense = formData.licenseType == 1;
-debugger;
+
     if (formData.deedSource === DeedIntegrationTypeEnum.RER) {
       this.requestDto = {
         fawriaLicenseDeed: {
@@ -610,16 +697,16 @@ debugger;
         },
         constructionLicenseNumber:
           formData.constructionLicenseType ===
-            ConstructionLicenseTypeEnum.Balady
+          ConstructionLicenseTypeEnum.Balady
             ? formData.licenseNumber
             : formData.constructionLicenseType ===
-              ConstructionLicenseTypeEnum.RiyadhAmanah
+                ConstructionLicenseTypeEnum.RiyadhAmanah
               ? formData.riyadhAmanahLicenseNumber
               : null,
         constructionLicenseId: formData.previousLicenseNumber || null,
         constructionLicenseFileId:
           formData.constructionLicenseType ===
-            ConstructionLicenseTypeEnum.Balady
+          ConstructionLicenseTypeEnum.Balady
             ? null
             : formData.constructionLicenseFileId,
         licenseProjectConstructionLicenseTypeId:
@@ -642,30 +729,36 @@ debugger;
         },
         constructionLicenseNumber:
           formData.constructionLicenseType ===
-            ConstructionLicenseTypeEnum.Balady
-            ? formData.licenseNumber : null,
+          ConstructionLicenseTypeEnum.Balady
+            ? formData.licenseNumber
+            : null,
         constructionLicenseId: formData.previousLicenseNumber || null,
         constructionLicenseFileId:
           formData.constructionLicenseType === ConstructionLicenseTypeEnum.Itmam
-            ? formData.constructionLicenseFileId : null,
+            ? formData.constructionLicenseFileId
+            : null,
         licenseProjectConstructionLicenseTypeId:
           formData.constructionLicenseType == null
-            ? null : Number(formData.constructionLicenseType),
+            ? null
+            : Number(formData.constructionLicenseType),
         approvedPlansFileIds: this.isUnit
-          ? null : this.verifyForm.get('approvedPlansFileIds')?.value,
+          ? null
+          : this.verifyForm.get('approvedPlansFileIds')?.value,
         isUnit: !!this.isUnit,
         isAddedFromPreviousLicenses: isAddedFromPreviousLicense,
       };
     }
 
-    this.requestDto.correctionUnitRequestHeaderId = this.correctionUnitRequestHeaderId;
+    this.requestDto.correctionUnitRequestHeaderId =
+      this.correctionUnitRequestHeaderId;
     this._projectLandDeedService
       .FawriaLicenseValidateIntegration(this.requestDto)
       .subscribe({
         next: (response) => {
           if (response) {
             if (response.data) {
-              this.fawriaLicenseDeedAndConstructionLicenseResponse = response.data;
+              this.fawriaLicenseDeedAndConstructionLicenseResponse =
+                response.data;
               this.processResponseData();
             }
           }
@@ -674,7 +767,6 @@ debugger;
   }
 
   private processResponseData(): void {
-    debugger
     // this.totalLand =
     //   this.fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.reduce(
     //     (sum, info) => {
@@ -688,16 +780,22 @@ debugger;
     //   ) || 0;
 
     // Populate totalLandArea and totalUnit from licenseInfoList
-    const licenseInfo = this.fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0];
+    const licenseInfo =
+      this.fawriaLicenseDeedAndConstructionLicenseResponse
+        ?.licenseInfoList?.[0];
     if (licenseInfo) {
       if (licenseInfo.landTotalSpace) {
-        this.verifyForm.get('totalLandArea')?.setValue(licenseInfo.landTotalSpace);
+        this.verifyForm
+          .get('totalLandArea')
+          ?.setValue(licenseInfo.landTotalSpace);
       }
       if (licenseInfo.numberOfUnits) {
         this.verifyForm.get('totalUnit')?.setValue(licenseInfo.numberOfUnits);
       }
       if (licenseInfo.licenseProjectConstructionLicenseTypeId) {
-        this.verifyForm.get('constructionLicenseType')?.setValue(licenseInfo.licenseProjectConstructionLicenseTypeId);
+        this.verifyForm
+          .get('constructionLicenseType')
+          ?.setValue(licenseInfo.licenseProjectConstructionLicenseTypeId);
       }
     }
 
@@ -709,9 +807,13 @@ debugger;
     }
 
     // Initialize mortgagee forms if real estate is mortgaged
-    if (this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.isRealEstateMortgaged) {
+    if (
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+        ?.isRealEstateMortgaged
+    ) {
       const mortgageesCount =
-        this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData?.deedMortgageeList?.length || 0;
+        this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+          ?.deedMortgageeList?.length || 0;
       if (mortgageesCount > 0) {
         this.initializeMortgageeFormsForMortgagees(mortgageesCount);
       }
@@ -729,7 +831,7 @@ debugger;
         this.fawriaLicenseDeedAndConstructionLicenseResponse.errorCodes
           .filter(
             (code) =>
-              code.errorCode === this.deedIntegrationErrorCode.DeedNotValid
+              code.errorCode === this.deedIntegrationErrorCode.DeedNotValid,
           )
           .map((code) => code.message)
           .join(', ');
@@ -739,7 +841,7 @@ debugger;
           .filter(
             (code) =>
               code.errorCode ===
-              this.deedIntegrationErrorCode.ConstructionLicenseNotValid
+              this.deedIntegrationErrorCode.ConstructionLicenseNotValid,
           )
           .map((code) => code.message)
           .join(', ');
@@ -748,14 +850,14 @@ debugger;
         this.fawriaLicenseDeedAndConstructionLicenseResponse.errorCodes
           .filter(
             (code) =>
-              code.errorCode === this.deedIntegrationErrorCode.GeneralError
+              code.errorCode === this.deedIntegrationErrorCode.GeneralError,
           )
           .map((code) => code.message)
           .join(', ');
 
       this.isAiniDeed =
         this.fawriaLicenseDeedAndConstructionLicenseResponse.errorCodes.some(
-          (code) => code.errorCode === this.deedIntegrationErrorCode.AiniDeed
+          (code) => code.errorCode === this.deedIntegrationErrorCode.AiniDeed,
         );
 
       if (this.isAiniDeed) {
@@ -785,7 +887,7 @@ debugger;
     this._popupService.updateConfirmationPopupData(cancelConfirmationObj);
   }
   private closeDialog(): void {
-    this._popupService.dismissDialog()
+    this._popupService.dismissDialog();
   }
 
   private observeconfirmAction() {
@@ -793,7 +895,7 @@ debugger;
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.changePage.emit(Pagemode.List);
         this.closeDialog();
-      })
+      }),
     );
   }
 
@@ -840,7 +942,7 @@ debugger;
     arabicNumbers.forEach((arabic, index) => {
       numericValue = numericValue.replace(
         new RegExp(arabic, 'g'),
-        englishNumbers[index]
+        englishNumbers[index],
       );
     });
 
@@ -874,7 +976,7 @@ debugger;
   onConstructionLicenseFileUploaded(fileData: any): void {
     if (fileData.eventRes.data.length === 0) {
       this.verifyForm.get('constructionLicenseFileId')?.setValue(null);
-    return;
+      return;
     }
     if (
       fileData &&
@@ -892,7 +994,9 @@ debugger;
 
   deleteConstructionLicenseFile(): void {
     this.verifyForm.get('constructionLicenseFileId')?.setValue(null);
-    this.verifyForm.get('constructionLicenseFileId')?.setValidators([Validators.required]);
+    this.verifyForm
+      .get('constructionLicenseFileId')
+      ?.setValidators([Validators.required]);
     this.verifyForm.get('constructionLicenseFileId')?.updateValueAndValidity();
 
     // Clear response to hide deed data sections and show verify button
@@ -935,20 +1039,26 @@ debugger;
       const newFileIds = uploadedFiles.map((file: any) => file.id);
 
       // Get existing file IDs and add new ones
-      const existingIds = this.verifyForm.get('approvedPlansFileIds')?.value || [];
+      const existingIds =
+        this.verifyForm.get('approvedPlansFileIds')?.value || [];
       const allFileIds = [...existingIds, ...newFileIds];
 
       this.verifyForm.get('approvedPlansFileIds')?.setValue(allFileIds);
 
       // Add new files to existing files list for display
       const newFiles = newFileIds.map((id: string) => ({ id }));
-      this.existingApprovedPlansFiles = [...this.existingApprovedPlansFiles, ...newFiles];
+      this.existingApprovedPlansFiles = [
+        ...this.existingApprovedPlansFiles,
+        ...newFiles,
+      ];
     }
   }
 
   deleteApprovedPlanFile(fileId: string): void {
     // Remove from existingApprovedPlansFiles array
-    this.existingApprovedPlansFiles = this.existingApprovedPlansFiles.filter(file => file.id !== fileId);
+    this.existingApprovedPlansFiles = this.existingApprovedPlansFiles.filter(
+      (file) => file.id !== fileId,
+    );
 
     // Remove from form value
     const currentIds = this.verifyForm.get('approvedPlansFileIds')?.value || [];
@@ -1055,7 +1165,10 @@ debugger;
     }
 
     if (deedMarginalizationFilesErrors.length > 0) {
-      console.log('Owners with missing marginalization file:', deedMarginalizationFilesErrors);
+      console.log(
+        'Owners with missing marginalization file:',
+        deedMarginalizationFilesErrors,
+      );
     }
 
     if (this.deedForm.get('totalArea')?.invalid) {
@@ -1101,12 +1214,16 @@ debugger;
         // ) {
         //   errorDetails.push('رقم الآيبان');
         // }
-        if (this.ownerAgreementFiles.at(index).invalid &&
-          this.ownerAgreementFiles.at(index).touched) {
+        if (
+          this.ownerAgreementFiles.at(index).invalid &&
+          this.ownerAgreementFiles.at(index).touched
+        ) {
           errorDetails.push('الاتفاقية');
         }
-        if (this.deedMarginalizationFiles.at(index).invalid &&
-          this.deedMarginalizationFiles.at(index).touched) {
+        if (
+          this.deedMarginalizationFiles.at(index).invalid &&
+          this.deedMarginalizationFiles.at(index).touched
+        ) {
           errorDetails.push('ملف التهميش');
         }
 
@@ -1122,7 +1239,7 @@ debugger;
 
   getOwnerFieldError(
     index: number,
-    field: 'file' | 'deedMarginalizationFiles'
+    field: 'file' | 'deedMarginalizationFiles',
   ): string | null {
     let control;
     switch (field) {
@@ -1151,7 +1268,9 @@ debugger;
 
   getConstructionLicenseTypeName(): string {
     // First check if API returned a value
-    const apiValue = this.fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]?.licenseProjectConstructionLicenseType;
+    const apiValue =
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.licenseInfoList?.[0]
+        ?.licenseProjectConstructionLicenseType;
     if (apiValue && (apiValue as any).name) {
       return (apiValue as any).name;
     }
@@ -1178,7 +1297,9 @@ debugger;
 
     // Validate approvedPlansFileIds when isUnit is false
     if (!this.isUnit) {
-      const approvedPlansFileIds = this.verifyForm.get('approvedPlansFileIds')?.value;
+      const approvedPlansFileIds = this.verifyForm.get(
+        'approvedPlansFileIds',
+      )?.value;
       this.verifyForm.get('approvedPlansFileIds')?.markAsTouched();
 
       if (!approvedPlansFileIds || approvedPlansFileIds.length === 0) {
@@ -1189,7 +1310,9 @@ debugger;
 
     // Validate totalLandArea and totalUnit when required
     // Only required for Itmam or RiyadhAmanah (NOT for Balady - data comes from integration)
-    const constructionLicenseType = this.verifyForm.get('constructionLicenseType')?.value;
+    const constructionLicenseType = this.verifyForm.get(
+      'constructionLicenseType',
+    )?.value;
 
     const isFieldsRequired =
       constructionLicenseType === ConstructionLicenseTypeEnum.Itmam ||
@@ -1216,7 +1339,6 @@ debugger;
 
     const formData = this.deedForm.value;
 
-    debugger;
     this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.totalLandValue =
       formData.totalArea;
     this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseProjectId =
@@ -1244,40 +1366,67 @@ debugger;
       this.verifyForm.get('totalLandArea')?.value || null;
 
     // Map owner files for both isUnit = true and isUnit = false
-    if (this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners) {
+    if (
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners
+    ) {
       this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedOwners.forEach(
         (owner, index) => {
-          if (formData.ownerAgreementFiles && formData.ownerAgreementFiles[index]) {
+          if (
+            formData.ownerAgreementFiles &&
+            formData.ownerAgreementFiles[index]
+          ) {
             owner.agreementFileId = formData.ownerAgreementFiles[index];
           }
-          if (formData.deedMarginalizationFiles && formData.deedMarginalizationFiles[index]) {
-            owner.deedMarginalizationFileId = formData.deedMarginalizationFiles[index];
+          if (
+            formData.deedMarginalizationFiles &&
+            formData.deedMarginalizationFiles[index]
+          ) {
+            owner.deedMarginalizationFileId =
+              formData.deedMarginalizationFiles[index];
           }
-          if (formData.ownerMobileNumbers && formData.ownerMobileNumbers[index]) {
+          if (
+            formData.ownerMobileNumbers &&
+            formData.ownerMobileNumbers[index]
+          ) {
             owner.mobileNo = formData.ownerMobileNumbers[index];
           }
           if (this.isUnit) {
-            owner.owningAmount = +((this.landValue ?? 0) * (owner?.owningArea ?? 0)).toFixed(2);
+            owner.owningAmount = +(
+              (this.landValue ?? 0) * (owner?.owningArea ?? 0)
+            ).toFixed(2);
           }
-        }
+        },
       );
     }
 
     // Map mortgagee data if real estate is mortgaged
-    if (this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData?.isRealEstateMortgaged) {
-      if (this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList) {
+    if (
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData
+        ?.isRealEstateMortgaged
+    ) {
+      if (
+        this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData
+          .deedMortgageeList
+      ) {
         this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.deedMortgageeList.forEach(
           (mortgagee, index) => {
-            if (formData.mortgageeMobileNumbers && formData.mortgageeMobileNumbers[index]) {
+            if (
+              formData.mortgageeMobileNumbers &&
+              formData.mortgageeMobileNumbers[index]
+            ) {
               mortgagee.mobile = formData.mortgageeMobileNumbers[index];
             }
             if (formData.mortgageeFiles && formData.mortgageeFiles[index]) {
               mortgagee.mortgageeFileId = formData.mortgageeFiles[index];
             }
-            if (formData.mortgageeMarginalizationFiles && formData.mortgageeMarginalizationFiles[index]) {
-              mortgagee.marginalizationLetterFileId = formData.mortgageeMarginalizationFiles[index];
+            if (
+              formData.mortgageeMarginalizationFiles &&
+              formData.mortgageeMarginalizationFiles[index]
+            ) {
+              mortgagee.marginalizationLetterFileId =
+                formData.mortgageeMarginalizationFiles[index];
             }
-          }
+          },
         );
       }
     }
@@ -1297,18 +1446,19 @@ debugger;
         this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList[0].licenseFileId =
           this.verifyForm.get('constructionLicenseFileId')?.value;
         this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList[0].licenseProjectConstructionLicenseTypeId =
-          this.verifyForm.get('constructionLicenseType')?.value == null 
-          ? this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList[0].licenseProjectConstructionLicenseTypeId 
-          : this.verifyForm.get('constructionLicenseType')?.value;
+          this.verifyForm.get('constructionLicenseType')?.value == null
+            ? this.fawriaLicenseDeedAndConstructionLicenseResponse
+                .licenseInfoList[0].licenseProjectConstructionLicenseTypeId
+            : this.verifyForm.get('constructionLicenseType')?.value;
       } else {
         this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList.push(
           {
             licenseFileId: this.verifyForm.get('constructionLicenseFileId')
               ?.value,
             licenseProjectConstructionLicenseTypeId: this.verifyForm.get(
-              'constructionLicenseType'
+              'constructionLicenseType',
             )?.value,
-          } as LicenseInfoList
+          } as LicenseInfoList,
         );
       }
     }
@@ -1319,18 +1469,25 @@ debugger;
     this.fawriaLicenseDeedAndConstructionLicenseResponse.deedData.certifiedPlansFilesIds =
       this.verifyForm.get('approvedPlansFileIds')?.value;
 
-
-
-    if (this.verifyForm.get('constructionLicenseType')?.value === ConstructionLicenseTypeEnum.RiyadhAmanah && this.verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER) {
-      if (this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList == undefined) {
-        this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList = [];
+    if (
+      this.verifyForm.get('constructionLicenseType')?.value ===
+        ConstructionLicenseTypeEnum.RiyadhAmanah &&
+      this.verifyForm.get('deedSource')?.value === DeedIntegrationTypeEnum.RER
+    ) {
+      if (
+        this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList ==
+        undefined
+      ) {
+        this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList =
+          [];
       }
-      this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList[0].licenseNumber = this.verifyForm.get('riyadhAmanahLicenseNumber')?.value;
+      this.fawriaLicenseDeedAndConstructionLicenseResponse.licenseInfoList[0].licenseNumber =
+        this.verifyForm.get('riyadhAmanahLicenseNumber')?.value;
     }
 
     this._projectLandDeedService
       .SaveFawriaLicenseDeedAndConstructionLicense(
-        this.fawriaLicenseDeedAndConstructionLicenseResponse
+        this.fawriaLicenseDeedAndConstructionLicenseResponse,
       )
       .subscribe({
         next: (response) => {
@@ -1377,11 +1534,17 @@ debugger;
 
   onPreviousLicenseChange(): void {
     // Set constructionLicenseType based on the selected previous license
-    const selectedLicenseId = this.verifyForm.get('previousLicenseNumber')?.value;
+    const selectedLicenseId = this.verifyForm.get(
+      'previousLicenseNumber',
+    )?.value;
     if (selectedLicenseId) {
-      const selectedLicense = this.constructionLicenses.find(license => license.id === selectedLicenseId);
+      const selectedLicense = this.constructionLicenses.find(
+        (license) => license.id === selectedLicenseId,
+      );
       if (selectedLicense && selectedLicense.constructionLicenseType != null) {
-        this.verifyForm.get('constructionLicenseType')?.setValue(selectedLicense.constructionLicenseType);
+        this.verifyForm
+          .get('constructionLicenseType')
+          ?.setValue(selectedLicense.constructionLicenseType);
       }
     } else {
       // Clear constructionLicenseType if no license is selected
@@ -1414,39 +1577,61 @@ debugger;
    */
   private updateFormValidators(): void {
     const licenseType = this.verifyForm.get('licenseType')?.value;
-    const constructionLicenseType = this.verifyForm.get('constructionLicenseType')?.value;
+    const constructionLicenseType = this.verifyForm.get(
+      'constructionLicenseType',
+    )?.value;
     const deedSource = this.verifyForm.get('deedSource')?.value;
 
     // When isUnit is false, only validate deedSource, deedNumber/fawriaRERNumber, deedDate, and approvedPlansFileIds
     if (!this.isUnit) {
       // Clear all isUnit-specific validators
       this.verifyForm.get('licenseType')?.clearValidators();
-      this.verifyForm.get('licenseType')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('licenseType')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       this.verifyForm.get('previousLicenseNumber')?.clearValidators();
-      this.verifyForm.get('previousLicenseNumber')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('previousLicenseNumber')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       this.verifyForm.get('constructionLicenseType')?.clearValidators();
-      this.verifyForm.get('constructionLicenseType')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('constructionLicenseType')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       this.verifyForm.get('licenseNumber')?.clearValidators();
-      this.verifyForm.get('licenseNumber')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('licenseNumber')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       this.verifyForm.get('riyadhAmanahLicenseNumber')?.clearValidators();
-      this.verifyForm.get('riyadhAmanahLicenseNumber')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('riyadhAmanahLicenseNumber')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       this.verifyForm.get('constructionLicenseFileId')?.clearValidators();
-      this.verifyForm.get('constructionLicenseFileId')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('constructionLicenseFileId')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       this.verifyForm.get('totalLandArea')?.clearValidators();
-      this.verifyForm.get('totalLandArea')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('totalLandArea')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       this.verifyForm.get('totalUnit')?.clearValidators();
-      this.verifyForm.get('totalUnit')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('totalUnit')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       // approvedPlansFileIds - required when !isUnit
-      this.verifyForm.get('approvedPlansFileIds')?.setValidators([Validators.required]);
-      this.verifyForm.get('approvedPlansFileIds')?.updateValueAndValidity({ emitEvent: false });
+      this.verifyForm
+        .get('approvedPlansFileIds')
+        ?.setValidators([Validators.required]);
+      this.verifyForm
+        .get('approvedPlansFileIds')
+        ?.updateValueAndValidity({ emitEvent: false });
 
       return;
     }
@@ -1454,69 +1639,102 @@ debugger;
     // isUnit = true: Full form validation
     const isPreviousLicense = licenseType == 1;
     const isNewLicense = licenseType == 2;
-    const isBalady = constructionLicenseType === ConstructionLicenseTypeEnum.Balady;
-    const isItmam = constructionLicenseType === ConstructionLicenseTypeEnum.Itmam;
-    const isRiyadhAmanah = constructionLicenseType === ConstructionLicenseTypeEnum.RiyadhAmanah;
+    const isBalady =
+      constructionLicenseType === ConstructionLicenseTypeEnum.Balady;
+    const isItmam =
+      constructionLicenseType === ConstructionLicenseTypeEnum.Itmam;
+    const isRiyadhAmanah =
+      constructionLicenseType === ConstructionLicenseTypeEnum.RiyadhAmanah;
     const isRER = deedSource === DeedIntegrationTypeEnum.RER;
 
     // licenseType - required when isUnit
     this.verifyForm.get('licenseType')?.setValidators([Validators.required]);
-    this.verifyForm.get('licenseType')?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('licenseType')
+      ?.updateValueAndValidity({ emitEvent: false });
 
     // previousLicenseNumber - required only for previous license
     if (isPreviousLicense) {
-      this.verifyForm.get('previousLicenseNumber')?.setValidators([Validators.required]);
+      this.verifyForm
+        .get('previousLicenseNumber')
+        ?.setValidators([Validators.required]);
     } else {
       this.verifyForm.get('previousLicenseNumber')?.clearValidators();
     }
-    this.verifyForm.get('previousLicenseNumber')?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('previousLicenseNumber')
+      ?.updateValueAndValidity({ emitEvent: false });
 
     // constructionLicenseType - required for new license (اضافة رخصة جديدة)
     if (isNewLicense) {
-      this.verifyForm.get('constructionLicenseType')?.setValidators([Validators.required]);
+      this.verifyForm
+        .get('constructionLicenseType')
+        ?.setValidators([Validators.required]);
     } else {
       this.verifyForm.get('constructionLicenseType')?.clearValidators();
     }
-    this.verifyForm.get('constructionLicenseType')?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('constructionLicenseType')
+      ?.updateValueAndValidity({ emitEvent: false });
 
     // licenseNumber - required only for new license + Balady
     if (isNewLicense && isBalady) {
-      this.verifyForm.get('licenseNumber')?.setValidators([Validators.required]);
+      this.verifyForm
+        .get('licenseNumber')
+        ?.setValidators([Validators.required]);
     } else {
       this.verifyForm.get('licenseNumber')?.clearValidators();
     }
-    this.verifyForm.get('licenseNumber')?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('licenseNumber')
+      ?.updateValueAndValidity({ emitEvent: false });
 
     // riyadhAmanahLicenseNumber - required only for new license + Riyadh Amanah + RER
     if (isNewLicense && isRiyadhAmanah && isRER) {
-      this.verifyForm.get('riyadhAmanahLicenseNumber')?.setValidators([Validators.required]);
+      this.verifyForm
+        .get('riyadhAmanahLicenseNumber')
+        ?.setValidators([Validators.required]);
     } else {
       this.verifyForm.get('riyadhAmanahLicenseNumber')?.clearValidators();
     }
-    this.verifyForm.get('riyadhAmanahLicenseNumber')?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('riyadhAmanahLicenseNumber')
+      ?.updateValueAndValidity({ emitEvent: false });
 
     // constructionLicenseFileId - required only for new license + (Itmam or Riyadh Amanah)
     if (isNewLicense && (isItmam || isRiyadhAmanah)) {
-      this.verifyForm.get('constructionLicenseFileId')?.setValidators([Validators.required]);
+      this.verifyForm
+        .get('constructionLicenseFileId')
+        ?.setValidators([Validators.required]);
     } else {
       this.verifyForm.get('constructionLicenseFileId')?.clearValidators();
     }
-    this.verifyForm.get('constructionLicenseFileId')?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('constructionLicenseFileId')
+      ?.updateValueAndValidity({ emitEvent: false });
 
     // totalLandArea and totalUnit - required only for Itmam or Riyadh Amanah (NOT for Balady - data comes from integration)
     if (isItmam || isRiyadhAmanah) {
-      this.verifyForm.get('totalLandArea')?.setValidators([Validators.required]);
+      this.verifyForm
+        .get('totalLandArea')
+        ?.setValidators([Validators.required]);
       this.verifyForm.get('totalUnit')?.setValidators([Validators.required]);
     } else {
       this.verifyForm.get('totalLandArea')?.clearValidators();
       this.verifyForm.get('totalUnit')?.clearValidators();
     }
-    this.verifyForm.get('totalLandArea')?.updateValueAndValidity({ emitEvent: false });
-    this.verifyForm.get('totalUnit')?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('totalLandArea')
+      ?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('totalUnit')
+      ?.updateValueAndValidity({ emitEvent: false });
 
     // approvedPlansFileIds - not required when isUnit
     this.verifyForm.get('approvedPlansFileIds')?.clearValidators();
-    this.verifyForm.get('approvedPlansFileIds')?.updateValueAndValidity({ emitEvent: false });
+    this.verifyForm
+      .get('approvedPlansFileIds')
+      ?.updateValueAndValidity({ emitEvent: false });
   }
 
   onMarginalizationSpeechFileUploaded(fileData: any): void {
@@ -1533,5 +1751,4 @@ debugger;
       console.log('Marginalization speech file uploaded:', uploadedFile);
     }
   }
-
 }

@@ -1,50 +1,90 @@
 <form [formGroup]="qualificationCertifiedEngineersForm" id="form-qualificationCertifiedEngineersForm">
-  <div class="row row-gap-3 mb-3">
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="" class="form-label">الاسم</label>
-        <input type="text" class="form-control" formControlName="engineerName" id="control-engineerName" />
-
-        <mat-error *ngIf="controls.engineerName.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="" class="form-label">رقم الهوية </label>
-        <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber" />
-
-        <mat-error *ngIf="controls.identityNumber.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="" class="form-label">رقم الرخصة المهنية</label>
-        <input type="text" class="form-control" formControlName="professionalLicenseNumber"
-          id="control-professionalLicenseNumber" />
-
-        <mat-error *ngIf="controls.professionalLicenseNumber.errors?.['required'] && showValidation">حقل
-          مطلوب</mat-error>
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <div class="form-group">
-        <label for="" class="form-label">المهنة</label>
-        <select class="form-select" formControlName="qualificationEngineerType">
-          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
-          <option  [ngValue]="1" label="استشارى هندسى"></option>
-          <option  [ngValue]="2" label="محاسب قانونى"></option>
-
-        </select>
-      </div>
-      <mat-error *ngIf="controls.qualificationEngineerType.errors?.['required'] && showValidation">حقل مطلوب</mat-error>
-    </div>
-
+  <!-- For Developer: Full width identity number -->
+  <div class="form-group" *ngIf="isDeveloper(); else nonDeveloperLayout">
+    <label for="" class="form-label">رقم الهوية <span class="required-star">*</span></label>
+    <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber" maxlength="10" minlength="10" />
+    <div class="invalid-feedback d-block" *ngIf="controls.identityNumber.errors?.['required'] && showValidation">حقل مطلوب</div>
+    <div class="invalid-feedback d-block" *ngIf="controls.identityNumber.errors?.['pattern'] && showValidation">يجب أن يكون رقم الهوية 10 أرقام</div>
   </div>
 
-  <!-- <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-12">
-            <label for="" class="form-label"> شهادة التدريب</label>
-            <app-file-uploader (fileRemoved)="onTrainingCertificateFileRemoved($event)" (fileUploaded)="onTrainingCertificateFileUploaded($event)"></app-file-uploader>
+  <!-- For non-Developer (Accountant/Engineering): Split layout with training field -->
+  <ng-template #nonDeveloperLayout>
+    <div class="row row-gap-4">
+      <div class="col-xl">
+        <div class="form-group">
+          <label for="" class="form-label">رقم الهوية <span class="required-star">*</span></label>
+          <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber" maxlength="10" minlength="10" />
+          <div class="invalid-feedback d-block" *ngIf="controls.identityNumber.errors?.['required'] && showValidation">حقل مطلوب</div>
+          <div class="invalid-feedback d-block" *ngIf="controls.identityNumber.errors?.['pattern'] && showValidation">يجب أن يكون رقم الهوية 10 أرقام</div>
         </div>
-    </div> -->
+      </div>
+
+      <div class="col-xl-3">
+        <div class="form-group">
+          <label for="" class="form-label"> حاصل على تدريب <span class="required-star">*</span></label>
+          <div class="row row-gap-4">
+            <div class="col-xl-6">
+              <label class="form-check" for="trainingYes">
+                <input class="form-check-input" type="radio" formControlName="hasCourses" [value]="true" id="trainingYes">
+                <label class="form-check-label" for="trainingYes">
+                  نعم
+                </label>
+              </label>
+            </div>
+
+            <div class="col-xl-6">
+              <label class="form-check" for="trainingNo">
+                <input class="form-check-input" type="radio" formControlName="hasCourses" [value]="false" id="trainingNo">
+                <label class="form-check-label" for="trainingNo">
+                  لا
+                </label>
+              </label>
+            </div>
+          </div>
+          <div class="invalid-feedback d-block" *ngIf="controls.hasCourses.errors?.['required'] && showValidation">حقل مطلوب</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- error message -->
+  <div *ngIf="isRequiredCourseNotCompleted" class="alert alert-danger mt-5" role="alert">
+    <span class="icon">
+      <i class="hgi hgi-stroke hgi-help-circle"></i>
+    </span>
+    <span>عذرًا، لا يمكن إضافة هذا الموظف إلى قائمة الحاصلين على التدريب؛ لعدم اجتياز دورة {{trainingName}} لدى المعهد العقاري.</span>
+  </div>
+
+  <div class="d-flex justify-content-start mt-3">
+    <button class="btn btn-outline-primary" type="button" (click)="saveAndAddNew()">حفظ واضافة جديد</button>
+  </div>
+
+  <div class="table-responsive mt-5" *ngIf="models && models.length > 0">
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th>اسم الموظف</th>
+          <th>رقم الهوية</th>
+          <th>رقم العضوية</th>
+          <th>حاصل علي تدريب</th>
+          <th class="w-25"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let eng of models">
+          <td>{{eng.engineerName}}</td>
+          <td>{{eng.identityNumber}}</td>
+          <td>{{eng.membershipNumber}}</td>
+          <td>{{ eng.hasCourses ? 'نعم' : 'لا' }}</td>
+          <td>
+            <div class="d-flex align-items-center justify-content-end column-gap-2">
+              <button class="btn-icon btn btn-danger" (click)="delete(eng.id)">
+                <i class="hgi hgi-stroke hgi-delete-03"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </form>

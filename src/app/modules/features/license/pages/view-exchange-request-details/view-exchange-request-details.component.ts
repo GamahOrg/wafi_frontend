@@ -10,7 +10,10 @@ import { confirmationPopupData } from 'src/app/shared/models/popup.model';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { RequestNotesService } from 'src/app/shared/services/requestNotes/request-notes.service';
 import { Subscription } from 'rxjs';
-import { LicenseProjectExchangeDocumentStatusEnum } from '../../dataModels/license-project-exchange-document-paging-dto';
+import {
+  LicenseProjectExchangeDocumentStatusEnum,
+  LicenseProjectExchangeDocumentWithdrawalMethodEnum,
+} from '../../dataModels/license-project-exchange-document-paging-dto';
 import { CustomerTypeEnum } from '../../models/search-exchange-document-list-response-dto';
 
 @Component({
@@ -28,6 +31,7 @@ export class ViewExchangeRequestDetailsComponent implements OnInit {
   showSuccessAlertMsg: string = '';
   subscriptions: Subscription[] = [];
 licenseProjectExchangeDocumentStatus=LicenseProjectExchangeDocumentStatusEnum;
+  withdrawalMethodEnum = LicenseProjectExchangeDocumentWithdrawalMethodEnum;
   constructor(
     private route: ActivatedRoute,
     private _exchangeDocumentService: ExchangeDocumentService,

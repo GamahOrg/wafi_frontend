@@ -1,0 +1,17 @@
+<div class="form-group">
+  <label class="form-label"><span class="required-star">*</span> حالة الوحدة</label>
+  <div class="row g-2">
+    <div class="col-xl-6">
+      <label class="form-check" for="statusSoldOutside">
+        <input class="form-check-input" type="radio" name="unitStatus" id="statusSoldOutside" [value]="LicenseProjectUnitCodeStatus.SoldOutsidePlatform" [(ngModel)]="selectedStatus" />
+        <label class="form-check-label" for="statusSoldOutside">مباعة خارج النظام</label>
+      </label>
+    </div>
+    <div class="col-xl-6">
+      <label class="form-check" for="statusNotSold">
+        <input class="form-check-input" type="radio" name="unitStatus" id="statusNotSold" [value]="LicenseProjectUnitCodeStatus.NotSold" [(ngModel)]="selectedStatus" />
+        <label class="form-check-label" for="statusNotSold">غير مباعة</label>
+      </label>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="page">
+  <div class="page-title">
+    <h2 class="title">نوع المنشأة</h2>
+  </div>
+  <div class="alert alert-danger alert-dismissible fade show my-4" role="alert">
+    <span class="icon">
+      <i class="hgi hgi-stroke hgi-help-circle"></i>
+    </span>
+    <span>أنشطة السجل التجاري غير متوافقة مع متطلبات تأهيل المطور العقاري</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div class="page-content">
+    <h5 class="title mb-4">اختر نوع المنشأة</h5>
+
+    <!-- Business Types List -->
+    <div class="d-flex flex-column align-items-start gap-3">
+      <h6 class="title">أنشطة المنشأة</h6>
+
+      <ul class="list-styled disc">
+        <li *ngFor="let bt of displayedBusinessTypes">
+          <span class="small fw-medium">{{ bt.businessType }}</span>
+        </li>
+      </ul>
+
+      <button *ngIf="facilityBusinessTypes.length > 3" class="btn btn-sm btn-outline-dark" (click)="toggleShowAll()">
+        {{ showAllBusinessTypes ? "عرض أقل" : "عرض المزيد" }}
+        <i class="hgi hgi-stroke" [ngClass]="{'hgi-arrow-up-01': showAllBusinessTypes, 'hgi-arrow-down-01': !showAllBusinessTypes}"></i>
+      </button>
+    </div>
+
+    <!-- Category Cards -->
+    <div class="mt-5">
+      <div class="row row-gap-4">
+        <div class="col-xl-3" *ngFor="let category of facilityTypeCategories">
+          <div class="card choice-card h-100 cursor-pointer " [ngClass]="{'active': isCategorySelected(category)}" (click)="selectCategory(category)">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center gap-3">
+              <ng-container *ngIf="categoryIcons[category.enumValue]">
+                <span class="icon" [innerHTML]="categoryIcons[category.enumValue]"></span>
+              </ng-container>
+              <ng-container *ngIf="!categoryIcons[category.enumValue]">
+                <span class="icon"><i class="hgi hgi-stroke hgi-building-06"></i></span>
+              </ng-container>
+
+              <h5 class="card-title">{{ category.nameAr }}</h5>
+
+              <span class="tag tag-success" *ngIf="isCategorySelected(category) && category.isCompatible">
+                متوافق مع أنشطة المنشأة
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="action-btns-bar mt-4">
+    <button class="btn btn-primary px-xl-4" (click)="save()" [disabled]="isLoading || !selectedCategory">
+      <span *ngIf="isLoading" class="spinner-border spinner-border-sm ms-1"></span>
+      حفظ
+    </button>
+  </div>
+</div>

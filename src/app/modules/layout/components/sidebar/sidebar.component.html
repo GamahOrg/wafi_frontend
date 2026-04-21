@@ -142,25 +142,25 @@
               </div>
             </div>
 
-            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.licenseTypes)}"
+            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.licenseTypes)}"
                href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.licenseTypes, $event)">
               <span class="icon"><i class="material-icons-outlined">add_box</i></span>
               <span class="nav-link-text">إنشاء طلب جديد</span>
             </a>
 
-            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseList)}"
+            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseList)}"
                href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseList, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text">قائمة الطلبات</span>
             </a>
 
 
-            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseCertificates)}"
+            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseCertificates)}"
                href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseCertificates, $event)">
               <span class="icon"><i class="material-icons-outlined">local_police</i></span>
               <span class="nav-link-text">شهادات الترخيص</span>
             </a>
-            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.renewLicensesList)}"
+            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.renewLicensesList)}"
                href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.renewLicensesList, $event)">
               <span class="icon"><i class="material-icons-outlined">new_releases</i></span>
               <span class="nav-link-text">تجديد الرخص</span>
@@ -178,21 +178,21 @@
             </a>
 
 
-            <a *ngIf="isDeveloper" class="nav-link"
+            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link"
                [ngClass]="{'justify-content-center': hideSideBar, 'active': isLicensedProjectsMenuActive()}"
                href="javascript:void(0)" (click)="navigateWithCheck(links.recommendationLogsList, $event)">
               <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
               <span class="nav-link-text"> المشاريع المرخصة</span>
             </a>
 
-            <a *ngIf="isDeveloper" class="nav-link"
+            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link"
                [ngClass]="{'justify-content-center': hideSideBar, 'active': isContractRequestMenuActive()}"
                href="javascript:void(0)" (click)="navigateWithCheck(links.contractRequestList, $event)">
               <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
               <span class="nav-link-text">طلبات إلغاء العقود</span>
             </a>
 
-            <a *ngIf="isDeveloper" class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.developerProjects)}"
+            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.developerProjects)}"
                href="javascript:void(0)" (click)="navigateWithCheck(links.developerProjects, $event)">
               <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
               <span class="nav-link-text"> سجل التوصيات والإشعارات</span>
@@ -236,12 +236,18 @@
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text"> وثائق الصرف</span>
             </a>
+
+            <!-- <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.supervisionFees)}"
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.supervisionFees, $event)">
+              <span class="icon"><i class="material-icons-outlined">payments</i></span>
+              <span class="nav-link-text">رسوم الاشراف والمتابعة</span>
+            </a> -->
           </accordion-group>
         </ng-container>
       </accordion>
     </div>
 
-   
+
 
     <div *ngIf="
         !this.userData?.isEmployee && isDeveloper &&

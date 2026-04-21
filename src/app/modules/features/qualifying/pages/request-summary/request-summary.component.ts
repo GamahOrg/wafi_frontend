@@ -18,7 +18,7 @@ import { RequestValidationPopupComponent } from '../../components/request-valida
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { PopupData, notePopupData } from 'src/app/shared/models/popup.model';
 import { QualificationServiceRequestService } from '../../services/qualification-type/qualification-service-request.service';
-import { customerResponse } from 'src/app/shared/models/customer.model';
+import { FacilityTypeCategory, customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { RequestWafiTrainingComponent } from '../../components/request-wafi-training/request-wafi-training.component';
 import { RequestNationalAddressesComponent } from '../../components/request-national-addresses/request-national-addresses.component';
@@ -62,18 +62,20 @@ export class RequestSummaryComponent implements OnDestroy {
   confirmationicon = `../${Configuration.pages.qualifying.createRequest}/RED01`;
   subscriptions: Subscription[] = [];
   selectedRequest: null | RequestDetails = null;
+  facilityTypeCategory: FacilityTypeCategory | null = null;
+
   accordionContent: accordionContent = {
     oneAtATime: true,
     isAnimated: true,
     accordionComponentList: [
       {
         icon: '', // index = 0
-        title: 'بيانات السجل التجاري',
+        title: 'البيانات الأساسية',
         component: CommercialRegistryComponent,
         disabled: false,
         isVisible: false,
         id: 'CommercialRegistryComponent',
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 1
@@ -82,34 +84,34 @@ export class RequestSummaryComponent implements OnDestroy {
         id: 'RequestWafiTrainingComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 2
-        title: 'متطلبات القدرات المالية',
+        title: 'القدرات المالية',
         component: RequestFinancialCapabilitiesRequirementsComponent,
         id: 'RequestFinancialCapabilitiesRequirementsComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 3
-        title: ' متطلبات القدرات المؤسسية و الموارد البشرية',
+        title: 'القدرات المؤسسية و الموارد البشرية',
         component: RequestJobRequirementsAndHumanResourcesComponent,
         id: 'RequestJobRequirementsAndHumanResourcesComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 4
-        title: 'متطلبات القدرات الفنية',
+        title: 'القدرات الفنية',
         component: RequestTechnicalCapabilitiesRequirementsComponent,
         id: 'RequestTechnicalCapabilitiesRequirementsComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 5
@@ -118,7 +120,7 @@ export class RequestSummaryComponent implements OnDestroy {
         id: 'RequestCertifiedFacilityEngineersComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 6
@@ -128,7 +130,7 @@ export class RequestSummaryComponent implements OnDestroy {
         id: 'RequestInstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 7
@@ -137,29 +139,27 @@ export class RequestSummaryComponent implements OnDestroy {
         id: 'RequestDistinctiveAdditionalTechnicalCapabilitiesComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 8
-        title:
-          'مهندسي الشركة الحاصلين على برنامج تدريب الهيئة العامة للعقار للبيع على الخارطة للاستشاري الهندسي',
+        title:'مهندسين المكتب المعتمدين',
         component:
           RequestEngineersWithSufficientTrainingForTheEngineeringConsultantComponent,
         id: 'RequestEngineersWithSufficientTrainingForTheEngineeringConsultantComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 9
-        title:
-          'محاسبي الشركة الحاصلين على برنامج تدريب الهيئة العامة للعقار للإشراف المحاسبي',
+        title:'محاسبي المكتب المعتمدين ',
         component:
           RequestAccountantsCompletedWafiTrainingProgramForAccountingSupervisionComponent,
         id: 'RequestAccountantsCompletedWafiTrainingProgramForAccountingSupervisionComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
       {
         icon: '', // index = 10
@@ -168,7 +168,7 @@ export class RequestSummaryComponent implements OnDestroy {
         id: 'RequestNationalAddressesComponent',
         disabled: false,
         isVisible: false,
-        isViewed: false,
+        // isViewed: false,
       },
     ] as accordionComponent[],
   };
@@ -191,7 +191,7 @@ export class RequestSummaryComponent implements OnDestroy {
     private _popupService: PopupService,
     private _qualificationServiceRequestService: QualificationServiceRequestService,
     private _activatedRoute: ActivatedRoute,
-    private _toastrNotificatioService: ToastrNotificatioService
+    private _toastrNotificatioService: ToastrNotificatioService,
   ) {}
 
   ngOnInit(): void {
@@ -213,7 +213,7 @@ export class RequestSummaryComponent implements OnDestroy {
 
   private observecancelAction() {
     this.subscriptions.push(
-      this._popupService.cancelAction.subscribe((res: PopupData) => {})
+      this._popupService.cancelAction.subscribe((res: PopupData) => {}),
     );
   }
 
@@ -221,7 +221,7 @@ export class RequestSummaryComponent implements OnDestroy {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         this.navigateToFacilityProfile();
-      })
+      }),
     );
   }
   navigateToFacilityProfile(): void {
@@ -249,7 +249,7 @@ export class RequestSummaryComponent implements OnDestroy {
         // console.log("this._activatedRoute.snapshot.url[0].path", this._activatedRoute.snapshot.url[0].path);
         // console.log("Configuration.pages.qualifying.renewRequest", Configuration.pages.qualifying.renewRequestSummary);
         // console.log("this.renewRequest", this.renewRequest);
-      })
+      }),
     );
   }
   private updateAccordionContent() {
@@ -271,7 +271,7 @@ export class RequestSummaryComponent implements OnDestroy {
           if (this.userData && this.code) {
             this.getDraftRequest();
           }
-        })
+        }),
     );
   }
 
@@ -280,32 +280,173 @@ export class RequestSummaryComponent implements OnDestroy {
       this._requestService
         .GetDraftRequestByFacilityId(
           this.userData?.facilities[0].id as string,
-          this.code
+          this.code,
         )
         .subscribe((facilities: facilityDTO[]) => {
-          this.updateAllBehaviorSubject(facilities);
-        })
+
+          if (
+            this.userData &&
+            this.userData.facilities &&
+            this.userData.facilities.length > 0
+          ) {
+           
+            this.facilityTypeCategory =
+              this.userData.facilities[0].facilityTypeCategory ?? null;
+            if (this.facilityTypeCategory) {
+             // console.log("facilities=", facilities[0]);
+              if (this.facilityTypeCategory == FacilityTypeCategory.Developer) {
+                this.updateEmployeeFacilityBasicInfoComponent(facilities[0]);
+
+                // القدرات المالية - always visible for developer
+                this.accordionContent.accordionComponentList[2].isVisible = true;
+                if (facilities[0].qualificationFinancialCapabilityRequirements &&
+                  facilities[0].qualificationFinancialCapabilityRequirements.length > 0) {
+                  this.updateEmployeeFinancialCapabilitiesRequirementsComponent(
+                    facilities[0].qualificationFinancialCapabilityRequirements,
+                  );
+                }
+
+                // القدرات الفنية - always visible for developer
+                this.accordionContent.accordionComponentList[4].isVisible = true;
+                if (facilities[0].technicalCapabilitiesRequirements &&
+                  facilities[0].technicalCapabilitiesRequirements.length > 0) {
+                  this.updateEmployeeTechnicalCapabilitiesRequirementsComponent(
+                    facilities[0].technicalCapabilitiesRequirements,
+                  );
+                }
+
+                // القدرات المؤسسية و الموارد البشرية - always visible for developer
+                this.accordionContent.accordionComponentList[3].isVisible = true;
+                if (facilities[0].qualificationInstitutionalCapacityAndHrRequirements &&
+                  facilities[0].qualificationInstitutionalCapacityAndHrRequirements.length > 0) {
+                  this.updateEmployeeJobRequirementsAndHumanResourcesComponent(
+                    facilities[0].qualificationInstitutionalCapacityAndHrRequirements,
+                  );
+                  if (
+                    facilities[0].qualificationCertifiedEngineers &&
+                    facilities[0].qualificationCertifiedEngineers.length > 0
+                  )
+                  this._requestService.CertifiedFacilityEngineers$.next(
+                    facilities[0].qualificationCertifiedEngineers,
+                  );
+                }
+
+                // موظفين الشركة المعتمدين - always visible for developer
+                this.accordionContent.accordionComponentList[5].isVisible = true;
+                if (facilities[0].qualificationCertifiedEngineers &&
+                  facilities[0].qualificationCertifiedEngineers.length > 0) {
+                  this.updateEmployeeCertifiedFacilityEngineersComponent(
+                    facilities[0].qualificationCertifiedEngineers,
+                  );
+                }
+
+                // عنوان المنشأة - always visible for developer
+                this.accordionContent.accordionComponentList[10].isVisible = true;
+                if (facilities[0].qualificationNationalAddressDetails &&
+                  facilities[0].qualificationNationalAddressDetails.length > 0) {
+                  this.updateEmployeeNationalAddressesComponent(
+                    facilities[0].qualificationNationalAddressDetails,
+                  );
+                }
+              }
+              if (
+                this.facilityTypeCategory == FacilityTypeCategory.Accountant
+              ) {
+
+                this.updateEmployeeFacilityBasicInfoComponent(facilities[0]);
+
+                // محاسبي المكتب المعتمدين - always visible for accountant
+                this.accordionContent.accordionComponentList[5].isVisible = true;
+                this.accordionContent.accordionComponentList[5].title = 'محاسبي المكتب المعتمدين';
+                if (
+                  facilities[0].qualificationCertifiedEngineers &&
+                  facilities[0].qualificationCertifiedEngineers.length > 0
+                ) {
+                  this.updateEmployeeCertifiedFacilityEngineersComponent(
+                    facilities[0].qualificationCertifiedEngineers.filter(
+                      x => x.qualificationEngineerType === 2
+                    ),
+                  );
+                }
+
+                // عنوان المنشأة - always visible for accountant
+                this.accordionContent.accordionComponentList[10].isVisible = true;
+                if (facilities[0].qualificationNationalAddressDetails &&
+                  facilities[0].qualificationNationalAddressDetails.length > 0) {
+                  this.updateEmployeeNationalAddressesComponent(
+                    facilities[0].qualificationNationalAddressDetails,
+                  );
+                }
+
+              }
+              if (
+                this.facilityTypeCategory == FacilityTypeCategory.Engineering
+              ) {
+                this.updateEmployeeFacilityBasicInfoComponent(facilities[0]);
+
+                // مهندسين المكتب المعتمدين - always visible for Engineering
+                this.accordionContent.accordionComponentList[5].isVisible = true;
+                this.accordionContent.accordionComponentList[5].title = 'مهندسين المكتب المعتمدين';
+                if (
+                  facilities[0].qualificationCertifiedEngineers &&
+                  facilities[0].qualificationCertifiedEngineers.length > 0
+                ) {
+                  this.updateEmployeeCertifiedFacilityEngineersComponent(
+                    facilities[0].qualificationCertifiedEngineers.filter(
+                      x => x.qualificationEngineerType === 1
+                    ),
+                  );
+                }
+
+                // عنوان المنشأة - always visible for Engineering
+                this.accordionContent.accordionComponentList[10].isVisible = true;
+                if (facilities[0].qualificationNationalAddressDetails &&
+                  facilities[0].qualificationNationalAddressDetails.length > 0) {
+                  this.updateEmployeeNationalAddressesComponent(
+                    facilities[0].qualificationNationalAddressDetails,
+                  );
+                }
+
+              }
+              
+            }
+          }
+
+          //this.updateAllBehaviorSubject(facilities);
+        }),
     );
   }
   private updateAllBehaviorSubject(facilities: facilityDTO[]): void {
+    const isAccountant = this.code === 'Acc';
+    const isDeveloper = this.code === 'RED01' || this.code === 'RED02' || this.code === 'RED03';
+    const isEngineering = this.code === 'EC';
+
+    // index 0: بيانات السجل التجاري - visible for all
     if (facilities[0])
       this.updateEmployeeFacilityBasicInfoComponent(facilities[0]);
-    if (facilities[0].qualificationQualificatedAccountants)
+    // index 9: محاسبي الشركة - hidden for Developer and Engineering
+    if (!isDeveloper && !isEngineering && facilities[0].qualificationQualificatedAccountants)
       this.updateEmployeeAccountantsCompletedWafiTrainingProgramForAccountingSupervisionComponent(
-        facilities[0].qualificationQualificatedAccountants
+        facilities[0].qualificationQualificatedAccountants,
       );
-    if (facilities[0].qualificationQualificatedEngineers)
+    // index 8: مهندسي الشركة - hidden for Developer and Accountant
+    if (!isDeveloper && !isAccountant && facilities[0].qualificationQualificatedEngineers)
       this.updateEmployeeEngineersWithSufficientTrainingForTheEngineeringConsultantComponent(
-        facilities[0].qualificationQualificatedEngineers
+        facilities[0].qualificationQualificatedEngineers,
       );
+    // index 10: عنوان المنشأة - visible for all
     if (
       facilities[0].qualificationNationalAddressDetailDto &&
       facilities[0].qualificationNationalAddressDetailDto.length > 0
     )
       this.updateEmployeeNationalAddressesComponent(
-        facilities[0].qualificationNationalAddressDetailDto
+        facilities[0].qualificationNationalAddressDetailDto,
       );
+    // index 6: القدرات المؤسسية والموارد الإضافية - hidden for all types (Developer, Engineering, Accountant)
     if (
+      !isDeveloper &&
+      !isEngineering &&
+      !isAccountant &&
       facilities[0]
         .qualificationAdditionInstitutionalCapacityAndHrRequirements &&
       facilities[0].qualificationAdditionInstitutionalCapacityAndHrRequirements
@@ -313,50 +454,65 @@ export class RequestSummaryComponent implements OnDestroy {
     )
       this.updateEmployeeInstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesComponent(
         facilities[0]
-          .qualificationAdditionInstitutionalCapacityAndHrRequirements
+          .qualificationAdditionInstitutionalCapacityAndHrRequirements,
       );
+    // index 7: القدارت الفنية الإضافية - hidden for all types (Developer, Engineering, Accountant)
     if (
+      !isDeveloper &&
+      !isEngineering &&
+      !isAccountant &&
       facilities[0].additionTechnicalCapabilitiesRequirements &&
       facilities[0].additionTechnicalCapabilitiesRequirements.length > 0
     )
       this.updateEmployeeDistinctiveAdditionalTechnicalCapabilitiesComponent(
-        facilities[0].additionTechnicalCapabilitiesRequirements
+        facilities[0].additionTechnicalCapabilitiesRequirements,
       );
+    // index 5: موظفين الشركة المعتمدين - visible for all
     if (
       facilities[0].qualificationCertifiedEngineers &&
       facilities[0].qualificationCertifiedEngineers.length > 0
     )
       this.updateEmployeeCertifiedFacilityEngineersComponent(
-        facilities[0].qualificationCertifiedEngineers
+        facilities[0].qualificationCertifiedEngineers,
       );
+    // index 4: متطلبات القدرات الفنية - hidden for Accountant
     if (
+      !isAccountant &&
       facilities[0].technicalCapabilitiesRequirements &&
       facilities[0].technicalCapabilitiesRequirements.length > 0
     )
       this.updateEmployeeTechnicalCapabilitiesRequirementsComponent(
-        facilities[0].technicalCapabilitiesRequirements
+        facilities[0].technicalCapabilitiesRequirements,
       );
+    // index 1: تدريب الهيئة العامة للعقار - hidden for Accountant
     if (
+      !isAccountant &&
       facilities[0].qualificationWafiTrainings &&
       facilities[0].qualificationWafiTrainings.length > 0
     )
       this.updateEmployeeWafiTrainingComponent(
-        facilities[0].qualificationWafiTrainings
+        facilities[0].qualificationWafiTrainings,
       );
+    // index 2: متطلبات القدرات المالية - hidden for Accountant and Engineering
     if (
+      !isAccountant &&
+      !isEngineering &&
       facilities[0].qualificationFinancialCapabilityRequirements &&
       facilities[0].qualificationFinancialCapabilityRequirements.length > 0
     )
       this.updateEmployeeFinancialCapabilitiesRequirementsComponent(
-        facilities[0].qualificationFinancialCapabilityRequirements
+        facilities[0].qualificationFinancialCapabilityRequirements,
       );
+    // index 3: متطلبات القدرات المؤسسية والموارد البشرية - hidden for Accountant and Engineering
     if (
+      !isAccountant &&
+      !isEngineering &&
       facilities[0].qualificationInstitutionalCapacityAndHrRequirements &&
       facilities[0].qualificationInstitutionalCapacityAndHrRequirements.length >
         0
     )
       this.updateEmployeeJobRequirementsAndHumanResourcesComponent(
-        facilities[0].qualificationInstitutionalCapacityAndHrRequirements
+        facilities[0].qualificationInstitutionalCapacityAndHrRequirements,
       );
   }
   updateEmployeeFacilityBasicInfoComponent(facilities: facilityDTO): void {
@@ -368,79 +524,78 @@ export class RequestSummaryComponent implements OnDestroy {
     this.accordionContent.accordionComponentList[1].isVisible = true;
   }
   updateEmployeeFinancialCapabilitiesRequirementsComponent(
-    qualificationFinancialCapabilityRequirements: financialCapabilityResponse[]
+    qualificationFinancialCapabilityRequirements: financialCapabilityResponse[],
   ): void {
     this._requestService.FinancialCapabilitiesRequirements$.next(
-      qualificationFinancialCapabilityRequirements
+      qualificationFinancialCapabilityRequirements,
     );
     this.accordionContent.accordionComponentList[2].isVisible = true;
   }
   updateEmployeeJobRequirementsAndHumanResourcesComponent(
-    qualificationInstitutionalCapacityAndHrRequirements: QualificationInstitutionalCapacityAndHrRequirementDto[]
+    qualificationInstitutionalCapacityAndHrRequirements: QualificationInstitutionalCapacityAndHrRequirementDto[],
   ): void {
     this._requestService.JobRequirementsAndHumanResources$.next(
-      qualificationInstitutionalCapacityAndHrRequirements
+      qualificationInstitutionalCapacityAndHrRequirements,
     );
     this.accordionContent.accordionComponentList[3].isVisible = true;
   }
   updateEmployeeTechnicalCapabilitiesRequirementsComponent(
-    technicalCapabilitiesRequirements: QualificationTechnicalCapabilitiesRequirementFullDto[]
+    technicalCapabilitiesRequirements: QualificationTechnicalCapabilitiesRequirementFullDto[],
   ): void {
     this._requestService.TechnicalCapabilitiesRequirements$.next(
-      technicalCapabilitiesRequirements
+      technicalCapabilitiesRequirements,
     );
     this.accordionContent.accordionComponentList[4].isVisible = true;
   }
   updateEmployeeCertifiedFacilityEngineersComponent(
-    qualificationCertifiedEngineers: CertifiedEngineerDto[]
+    qualificationCertifiedEngineers: CertifiedEngineerDto[],
   ): void {
     this._requestService.CertifiedFacilityEngineers$.next(
-      qualificationCertifiedEngineers
+      qualificationCertifiedEngineers,
     );
     this.accordionContent.accordionComponentList[5].isVisible = true;
   }
   updateEmployeeInstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResourcesComponent(
-    qualificationAdditionInstitutionalCapacityAndHrRequirements: QualificationAdditionInstitutionalCapacityAndHrRequirementDto[]
+    qualificationAdditionInstitutionalCapacityAndHrRequirements: QualificationAdditionInstitutionalCapacityAndHrRequirementDto[],
   ): void {
     this._requestService.InstitutionalCapabilitiesAndAdditionalDiscriminatoryHumanResources$.next(
-      qualificationAdditionInstitutionalCapacityAndHrRequirements
+      qualificationAdditionInstitutionalCapacityAndHrRequirements,
     );
     this.accordionContent.accordionComponentList[6].isVisible = true;
   }
   updateEmployeeDistinctiveAdditionalTechnicalCapabilitiesComponent(
-    additionTechnicalCapabilitiesRequirements: AdditionTechnicalCapabilitiesRequirementsDto[]
+    additionTechnicalCapabilitiesRequirements: AdditionTechnicalCapabilitiesRequirementsDto[],
   ): void {
     this._requestService.DistinctiveAdditionalTechnicalCapabilities$.next(
-      additionTechnicalCapabilitiesRequirements
+      additionTechnicalCapabilitiesRequirements,
     );
     this.accordionContent.accordionComponentList[7].isVisible = true;
   }
   updateEmployeeEngineersWithSufficientTrainingForTheEngineeringConsultantComponent(
-    qualificationQualificatedEngineers: QualifiedEngineersDto[]
+    qualificationQualificatedEngineers: QualifiedEngineersDto[],
   ): void {
     this._requestService.EngineersWithSufficientTrainingForTheEngineeringConsultan$.next(
-      qualificationQualificatedEngineers
+      qualificationQualificatedEngineers,
     );
     this.accordionContent.accordionComponentList[8].isVisible = true;
   }
   updateEmployeeAccountantsCompletedWafiTrainingProgramForAccountingSupervisionComponent(
-    qualificationQualificatedAccountants: QualificationQualificatedAccountantDto[]
+    qualificationQualificatedAccountants: QualificationQualificatedAccountantDto[],
   ): void {
     this._requestService.AccountantsCompletedWafiTrainingProgramForAccountingSupervision$.next(
-      qualificationQualificatedAccountants
+      qualificationQualificatedAccountants,
     );
     this.accordionContent.accordionComponentList[9].isVisible = true;
   }
   updateEmployeeNationalAddressesComponent(
-    qualificationNationalAddressDetailDto: nationalAddressResponse[]
+    qualificationNationalAddressDetailDto: nationalAddressResponse[],
   ): void {
     this._requestService.NationalAddresses$.next(
-      qualificationNationalAddressDetailDto
+      qualificationNationalAddressDetailDto,
     );
     this.accordionContent.accordionComponentList[10].isVisible = true;
   }
   public createOrRenewRequest(): void {
-
     if (this.renewRequest) {
       this.Renew();
     } else {
@@ -454,7 +609,7 @@ export class RequestSummaryComponent implements OnDestroy {
         .Create(
           this.userData?.facilities[0].id as string,
           this.code,
-          this.period
+          this.period,
         )
         .subscribe((res) => {
           if (res.requestCode && res.id) {
@@ -465,17 +620,15 @@ export class RequestSummaryComponent implements OnDestroy {
             this.requestValidationData = res;
             this.checkGeneralErrorTabsIsExist();
           }
-        })
+        }),
     );
   }
   Renew(): void {
-
     this.requestValidationData = null;
     this.subscriptions.push(
       this._qualificationServiceRequestService
         .Renew(this.facilityId as string, this.code, this.period)
         .subscribe((res) => {
-
           if (res.requestCode && res.id) {
             this.setRequestIdInLocalStorage(res.id);
             this.openRenewConfirmaDialog(res.requestCode);
@@ -483,7 +636,7 @@ export class RequestSummaryComponent implements OnDestroy {
             this.requestValidationData = res;
             this.checkGeneralErrorTabsIsExist();
           }
-        })
+        }),
     );
   }
 
@@ -495,7 +648,7 @@ export class RequestSummaryComponent implements OnDestroy {
     ) {
       if (this.requestValidationData.tabs.find((x) => x.tabCode == 'General')) {
         this._toastrNotificatioService.showError(
-          this.requestValidationData.tabs[0].tabErrors[0].errorMessage
+          this.requestValidationData.tabs[0].tabErrors[0].errorMessage,
         );
       } else {
         this.updateRequestValidation(this.requestValidationData);
@@ -512,7 +665,7 @@ export class RequestSummaryComponent implements OnDestroy {
   }
   private updateRequestValidation(data: RequestValidation) {
     this._requestValidationService.updateRequestValidation(
-      data as RequestValidation
+      data as RequestValidation,
     );
   }
 
@@ -559,9 +712,9 @@ export class RequestSummaryComponent implements OnDestroy {
         Configuration.modules.qualifying +
         '/' +
         Configuration.pages.qualifying.requestDetails,
-        
-        surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
-        surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
+
+      surveyTitle: 'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
+      surveyLink: 'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d',
     } as notePopupData;
     this._popupService.updateNotePopupData(Data);
   }
@@ -578,8 +731,8 @@ export class RequestSummaryComponent implements OnDestroy {
         Configuration.modules.qualifying +
         '/' +
         Configuration.pages.qualifying.requestDetails,
-        surveyTitle:'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
-        surveyLink:'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d'
+      surveyTitle: 'نأمل منكم تقييم تجربتكم عبر الرابط التالي',
+      surveyLink: 'https://survey.rega.gov.sa/s/cma9hk9c3000ec1es1bwvq82d',
     } as notePopupData;
     this._popupService.updateNotePopupData(Data);
   }

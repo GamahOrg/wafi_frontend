@@ -1,106 +1,124 @@
 <div class="page">
   <div class="page-title">
-    <h2 class="title">الحساب الشخصى</h2>
+    <h2 class="title">ملف المنشأة</h2>
   </div>
 
-  <div class="page-content">
-    <div class="d-flex flex-column gap-3">
-      <div class="card profile-card">
-        <div class="card-body">
-          <div class="row row-gap-3">
-            <div class="col-12 col-lg">
-              <div class="d-flex align-items-center gap-2">
-                <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden">
-                  <span class="icon material-icons" *ngIf="userData?.profileImageFile === null">person</span>
-                  <img [src]="baseUrl + userData?.profileImageFile?.filePath" alt="" class="d-block" *ngIf="userData?.profileImageFile !== null">
-                </div>
-                <div class="d-flex flex-column gap-3">
+  <div class="d-flex flex-column gap-3 mt-3">
+    <div class="card profile-card">
+      <div class="card-body">
+        <div class="row row-gap-3">
+          <div class="col-12 col-xl-9">
+            <div class="d-flex align-items-center gap-2">
+              <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden">
+                <span class="icon material-icons" *ngIf="userData?.profileImageFile === null">person</span>
+                <img [src]="baseUrl + userData?.profileImageFile?.filePath" alt="" class="d-block" *ngIf="userData?.profileImageFile !== null">
+              </div>
+              <div class="d-flex flex-column gap-3 flex-fill">
+                <div class="d-flex align-items-center gap-2">
                   <h3 class="small">{{userData?.fullName}}</h3>
-                  <div class="d-flex flex-wrap align-items-center gap-2 gap-xl-5">
-                    <div class="key-value">
-                      <div class="key">{{localization.nationalId}}</div>
-                      <div class="value">{{userData?.nidnumber}}</div>
+                  <span class="fw-bold text-secondary">-</span>
+                  <span class="tag fs-6 fw-medium">{{facilityTypeCategoryLabel}}</span>
+                </div>
+                <div class="row row-gap-4">
+                  <div class="col-xl-4">
+                    <div class="row row-gap-4">
+                      <div class="col-xl-6">
+                        <div class="key-value">
+                          <div class="key">{{localization.nationalId}}</div>
+                          <div class="value">{{userData?.nidnumber}}</div>
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="key-value">
+                          <div class="key">{{localization.nationality}}</div>
+                          <div class="value">{{userData?.nationality}}</div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                  <div class="col-xl-4">
+                    <div class="key-value">
+                      <div class="key">{{localization.email}}</div>
+                      <div class="value">{{userData?.email}}</div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4">
                     <div class="key-value">
                       <div class="key">{{localization.phone}}</div>
                       <div class="value">{{userData?.mobile1}}</div>
-                    </div>
-                    <div class="key-value">
-                      <div class="key">{{localization.nationality}}</div>
-                      <div class="value">{{userData?.nationality}}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="col-12 col-lg-auto">
-              <div class="d-flex flex-column justify-content-between align-items-lg-end gap-3">
-                <button *ngIf="qualificationRequestData" class="btn btn-primary" (click)="navigateToRequestSummary()" type="button">
-                  استكمال الطلب
-                </button>
-                <!-- <div class="alert alert-success" role="alert">
+          <div class="col-12 col-xl-3">
+            <div class="d-flex flex-column justify-content-between align-items-lg-end gap-3">
+              <button *ngIf="qualificationRequestData && canUpdate" class="btn btn-primary" (click)="navigateToRequestSummary()" type="button">
+                استكمال الطلب
+              </button>
+              <!-- <div class="alert alert-success" role="alert">
                     <div class="icon">
                         <span class="material-icons">list_alt</span>
                     </div>
                     <span class="fw-bold">1</span> سجل تجاري أساسي - <span class="fw-bold">0</span> سجل تجاري فرعي
                 </div> -->
-                <!-- <div class="alert alert-success" role="alert">
+              <!-- <div class="alert alert-success" role="alert">
                     <div class="icon">
                         <span class="material-icons">list_alt</span>
                     </div>
                     <span class="fw-bold">1</span> سجل تجاري أساسي - <span class="fw-bold">0</span> سجل تجاري فرعي
                 </div> -->
-                <!-- <div class="data-row">
+              <!-- <div class="data-row">
                     <div class="row row-gap-2 row-gap-md-0">
                         <div class="key col-12 col-md-auto">تاريخ التفويض </div>
                         <div class="value col-12 col-md-auto"><span class="material-icons">calendar_month</span> 22 إبريل 2022</div>
                     </div>
                 </div> -->
-              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="card com-reg-card position-relative z-2">
-        <div class="card-body">
-          <div class="row row-gap-4">
-            <div class="col-xl-4">
-              <div class="d-flex align-items-center gap-2">
-                <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden">
-                  <img src="assets/images/general/logo-rega-wide-white.png" alt="">
-                </div>
-                <div class="key-value">
-                  <div class="key">{{localization.commercialRegistrationNumber}}</div>
-                  <div class="value">{{userData && userData.facilities && userData.facilities.length > 0 &&
-                    userData.facilities[0].commercialRegisterNumber? userData.facilities[0].commercialRegisterNumber:""}}</div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4">
-              <div class="key-value">
-                <div class="key">{{'تمت الاضافة بواسة'}}</div>
-                <div class="value">
-                  <img src="assets/images/general/static-person-1.jpeg" alt="">
-                  {{userData?.fullName}}
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4">
-              <div class="key-value">
-                <div class="key">{{'تاريخ الإضافة'}}</div>
-                <div class="value">
-                  <i class="icon material-icons">calendar_month</i>
-                  {{userData?.registrationDateTime |date:'dd-MM-yyyy'}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <app-tabs></app-tabs>
     </div>
+
+    <div class="card com-reg-card position-relative z-2">
+      <div class="card-body">
+        <div class="row row-gap-4">
+          <div class="col-xl-4">
+            <div class="d-flex align-items-center gap-2">
+              <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden">
+                <img src="assets/images/general/logo-rega-wide-white.png" alt="">
+              </div>
+              <div class="key-value">
+                <div class="key">{{localization.commercialRegistrationNumber}}</div>
+                <div class="value">{{userData && userData.facilities && userData.facilities.length > 0 &&
+                  userData.facilities[0].commercialRegisterNumber? userData.facilities[0].commercialRegisterNumber:""}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="key-value">
+              <div class="key">{{'تمت الاضافة بواسطة'}}</div>
+              <div class="value">
+                <img src="assets/images/general/static-person-1.jpeg" alt="">
+                {{userData?.fullName}}
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="key-value">
+              <div class="key">{{'تاريخ الإضافة'}}</div>
+              <div class="value">
+                <i class="icon material-icons">calendar_month</i>
+                {{userData?.registrationDateTime |date:'dd-MM-yyyy'}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-tabs></app-tabs>
   </div>
 </div>

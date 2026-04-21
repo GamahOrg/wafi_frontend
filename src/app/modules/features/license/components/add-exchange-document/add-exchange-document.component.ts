@@ -369,7 +369,9 @@ export class AddExchangeDocumentComponent {
   }
 
   save(): void {
-    this.showValidation = false;
+    
+
+     this.showValidation = false;
     if (!this.licenseProjectExchangeDocumentForm.valid || this.licenseProjectExchangeDocumentFile == null || this.licenseProjectExchangeDocumentFile.length == 0) {
       this.showValidation = true;
     }

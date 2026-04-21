@@ -5,7 +5,13 @@ export interface CertifiedEngineerDto {
     id: string;
     facilityId: string;
     professionalLicenseNumber: string;
-    engineerName : string;
-    identityNumber :string;
+    engineerName: string;
+    identityNumber: string;
     trainingCertificateFile: SysFileManagerCreateUpdateDto;
+    hasCourses: boolean;
+    membershipNumber: string;
+    membershipTypeName: string;
+    membershipIssueDate: string;
+    membershipExpireDate: string;
+    membershipStatus: string;
 }

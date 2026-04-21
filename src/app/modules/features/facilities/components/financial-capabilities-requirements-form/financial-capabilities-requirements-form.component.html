@@ -1,79 +1,73 @@
-<form [formGroup]="financialCapabilitiesRequirementsForm" id="form-financialCapabilitiesRequirementsForm">
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-md-4">
-            <label for=""
-                   class="form-label">رقم رخصة المحاسب القانوني المعتمد </label>
-            <input type="text"
-                   class="form-control" id="control-cpalicenseNumber"
-                   formControlName="cpalicenseNumber">
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls.cpalicenseNumber.errors?.['required']">
-                هذا الحقل مطلوب
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <label for=""
-                   class="form-label">رقم هوية المحاسب القانوني المعتمد </label>
-            <input type="text"
-                   class="form-control" id="control-cpaIdentityNumber"
-                   formControlName="cpaIdentityNumber">
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls.cpaIdentityNumber.errors?.['required']">
-                هذا الحقل مطلوب
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <label for=""
-                   class="form-label">تاريخ إصدار شهادة سلامة السجل الائتماني </label>
-            <input type="date" id="control-creditRecordIntegrityCertificateDate"
-                   class="form-control"
-                   formControlName="creditRecordIntegrityCertificateDate"
-                   value="{{ controls.creditRecordIntegrityCertificateDate.value | date:'yyyy-MM-dd' }}">
-            <div class="invalid-feedback d-block"
-                *ngIf="controls.creditRecordIntegrityCertificateDate.errors?.['required']">
-                هذا الحقل مطلوب
-            </div>
-        </div>
-        <!-- <div class="col-12 col-lg-6">
-                <mat-form-field appearance="fill">
-                    <mat-label>تاريخ إصدار شهادة سلامة السجل الائتماني </mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="creditRecordIntegrityCertificateDate">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="controls.creditRecordIntegrityCertificateDate.errors?.['required']">required</mat-error>
-                </mat-form-field>
-            </div> -->
-
-        <div class="row row-gap-3 mb-3">
-            <div class="col-12 col-lg-6">
-                <label for="" class="form-label">ملف شهادة السجل الائتماني </label>
-                <div class="value" *ngIf="financialCapability.creditRecordIntegrityCertificateFileId">
-                    <span class="delete"
-                        (click)="deletcreditRecordIntegrityCertificateFile(financialCapability.creditRecordIntegrityCertificateFileId)"><i
-                            class="material-icons text-danger">close</i></span>
-                </div>
-                <app-file-uploader [data]="singleFileUploaderData"
-                    (fileRemoved)="onCreditRecordIntegrityFileRemoved($event)"
-                    (fileUploaded)="onCreditRecordIntegrityFileUploaded($event)"></app-file-uploader>
-            </div>
-            <div class="col-12 col-lg-6">
-                <label for="" class="form-label">(اختياري)القوائم المالية للسنوات الميلادية السابقة </label>
-                <app-file-uploader [data]="mueltiFilesUploaderData"
-                    (fileUploaded)="onQualificationFinancialStatementFilesUploaded($event)"></app-file-uploader>
-            </div>
-        </div>
-     <!--    <div class="row row-gap-3 mb-3">
-            <div class="col-12 col-lg-6">
-                <label for="" class="form-label">رقم شهادة الزكاة والدخل </label>
-                <input type="text" id="control-certificateOfZakatIncome" class="form-control"
-                    formControlName="certificateOfZakatIncome">
-                <div class="invalid-feedback d-block" *ngIf="controls.certificateOfZakatIncome.errors?.['required']">
-                    هذا الحقل مطلوب
-                </div>
-            </div>
-        </div> -->
+<form
+  [formGroup]="financialCapabilitiesRequirementsForm"
+  id="form-financialCapabilitiesRequirementsForm"
+>
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12">
+      <label for="" class="form-label"
+        >تاريخ إصدار شهادة سلامة السجل الائتماني
+      </label>
+      <div class="input-group">
+        <input
+          bsDatepicker
+          type="text"
+          id="control-creditRecordIntegrityCertificateDate"
+          class="form-control"
+          formControlName="creditRecordIntegrityCertificateDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          placeholder="يرجى الاختيار"
+        />
+        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
+      </div>
+      <div id="Help" class="form-text" style="direction: rtl;">
+        <i class="hgi hgi-stroke hgi-help-circle"></i>
+        <p class="text">نص مساعد</p>
+      </div>
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          controls.creditRecordIntegrityCertificateDate.errors?.['required']
+        "
+      >
+        هذا الحقل مطلوب
+      </div>
     </div>
-    <!-- <div mat-dialog-actions align="end">
-        <button type="button" mat-flat-button color="primary" (click)="save()" [disabled]="financialCapabilitiesRequirementsForm.invalid">حفظ البيانات</button>
-    </div> -->
+  </div>
+
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6">
+      <label for="" class="form-label"><span class="required-star">*</span> ملف شهادة السجل الائتماني</label>
+      <app-file-uploader
+        [data]="singleFileUploaderData"
+        (fileRemoved)="onCreditRecordIntegrityFileRemoved($event)"
+        (fileUploaded)="onCreditRecordIntegrityFileUploaded($event)"
+      ></app-file-uploader>
+      <div
+        class="value"
+        *ngIf="financialCapability.creditRecordIntegrityCertificateFileId"
+      >
+        <span
+          class="delete"
+          (click)="
+            deletcreditRecordIntegrityCertificateFile(
+              financialCapability.creditRecordIntegrityCertificateFileId
+            )
+          "
+          ><i class="material-icons text-danger">close</i></span
+        >
+      </div>
+      <small class="form-text text-muted mt-2">شهادة السجل الائتماني يجب ألا يتجاوز تاريخ إصدارها ثلاثة أشهر من تاريخ تقديم طلب التأهيل.</small>
+    </div>
+    <div class="col-12 col-lg-6">
+      <label for="" class="form-label"
+        ><span class="required-star">*</span> القوائم المالية للسنوات الميلادية السابقة
+      </label>
+      <app-file-uploader
+        [data]="mueltiFilesUploaderData"
+        (fileUploaded)="
+          onQualificationFinancialStatementFilesUploaded($event)
+        "
+      ></app-file-uploader>
+    </div>
+  </div>
 </form>

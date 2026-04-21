@@ -44,7 +44,7 @@
                 <div class="key-value">
                   <div class="key">{{'تاريخ تقديم الطلب'}}</div>
                   <div class="value">
-                    <i class="icon material-icons">calendar_month</i> {{selectedRequest?.requestFrom | date : "dd MMMM yyyy"}}
+                    <i class="icon material-icons">calendar_month</i> {{selectedRequest?.requestFrom | date : "dd/MM/yyyy"}}
                   </div>
                 </div>
               </div>
@@ -67,6 +67,12 @@
                 {{ button.title }}
               </button>
             </ng-container>
+            <button *ngIf="hasInvoice" class="btn btn-outline-primary" (click)="showInvoice()" type="button">
+              بيانات الفاتورة
+            </button>
+            <button *ngIf="selectedRequest?.canSendToFawtarahManually" class="btn btn-primary" (click)="sendToFawtarahManually()" type="button">
+              اعادة ارسال الفاتورة
+            </button>
           </div>
         </div>
       </div>

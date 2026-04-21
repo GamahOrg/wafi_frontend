@@ -30,7 +30,8 @@
 
                 <div class="notification-item"
                      *ngFor="let notification of notificationList"
-                     [ngClass]="{'new': !notification.isViewed}">
+                     [ngClass]="{'new': !notification.isViewed}"
+                     [hidden]="!notification.message">
 
                     <div class="item-header">
                         <span class="icon"><i class="material-icons-outlined">notifications</i></span>
@@ -46,12 +47,12 @@
                     <div class="item-body">
                         <a class="notification-link"
                            (click)="onNotificationClicked(notification)">
-                            {{ notification.message.split('،', 2)[0] }}
+                            {{ (notification.message || '').split('،', 2)[0] }}
                         </a>
 
                         <p class="note"
-                           *ngIf="notification.message.split('،', 2)[1]">
-                            {{ notification.message.split('،', 2)[1] }}
+                           *ngIf="(notification.message || '').split('،', 2)[1]">
+                            {{ (notification.message || '').split('،', 2)[1] }}
                         </p>
                     </div>
                 </div>

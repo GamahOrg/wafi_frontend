@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
@@ -33,17 +33,17 @@ export class NationalAddressesFormComponent implements OnInit, OnDestroy {
   brokerDocumentTypeId: number = 0;
   nationalAddressesForm = this._formBuilder.group({
     id: [''],
-    buildingNumber: ['', [Validators.required]],
-    streetName: ['', [Validators.required]],
-    neighborhoodName: ['', [Validators.required]],
-    postalCode: ['', [Validators.required]],
-    unitNumber: ['', [Validators.required]],
+    buildingNumber: [''],
+    streetName: [''],
+    neighborhoodName: [''],
+    postalCode: [''],
+    unitNumber: [''],
     additionalNumber: [''],
     facilityId: [''],
     citiesId: [''],
     areasId: [''],
-    documentNumber: ['', [Validators.required]],
-    brokerDocumentTypeId: [0, [Validators.required]],
+    documentNumber: [''],
+    brokerDocumentTypeId: [0],
   })
 
   get controls() {
@@ -179,9 +179,17 @@ export class NationalAddressesFormComponent implements OnInit, OnDestroy {
       this.nationalAddressesForm?.markAllAsTouched();
       return;
     }
+    const { id, facilityId, brokerDocumentTypeId, ...fields } = this.nationalAddressesForm.value;
+    const hasAtLeastOneField = Object.values(fields).some(v => v && v.toString().trim() !== '');
+    if (!hasAtLeastOneField) {
+      this._toastrNotificationService.showError('يرجى إدخال بيانات في حقل واحد على الأقل');
+      return;
+    }
     this.nationalAddressDto = this.nationalAddressesForm.value as nationalAddressDto;
     this.nationalAddressDto.id = this.nationalAddressDto.id ? this.nationalAddressDto.id : "00000000-0000-0000-0000-000000000000";
     this.nationalAddressDto.facilityId = this.userData?.facilities[0].id as string;
+    if (!this.nationalAddressDto.citiesId) this.nationalAddressDto.citiesId = null as any;
+    if (!this.nationalAddressDto.areasId) this.nationalAddressDto.areasId = null as any;
     this.subscriptions.push(
       this._nationalAddressService.Save(this.nationalAddressDto).subscribe(res => {
         if (res) {

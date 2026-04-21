@@ -1,29 +1,26 @@
-<div class="tab-data-section">
-    <div class="table-responsive">
-        <table class="table table-light">
-            <thead>
-                <tr>
-                    <th>اسم المهندس</th>
-                    <th>رقم  الهوية</th>
-                    <th>رقم الرخصة المهنية</th>
-                    <th class="w-25"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngIf="certifiedEngineers && certifiedEngineers.length > 0">
-                    <tr *ngFor="let eng of certifiedEngineers">
-                        <td>{{ eng?.engineerName}}</td>
-                        <td>{{ eng?.identityNumber }}</td>
-                        <td>{{ eng?.professionalLicenseNumber }}</td>
-                        <td>
-                            <div class="d-flex align-items-center justify-content-end column-gap-2"></div>
-                        </td>
-                    </tr>
-                </ng-container>
-            </tbody>
-        </table>
-        <ng-container *ngIf="!certifiedEngineers">
-            <p class="text-danger text-center p-3">لا توجد بيانات</p>
-        </ng-container>
-    </div>
-</div>
+<ng-template #noData>
+  <app-no-data [showCompleteBtn]="false" [showTitle]="true" title="لا توجد بيانات" text="لا توجد بيانات محاسبي المكتب المعتمدين"></app-no-data>
+</ng-template>
+
+<ng-container *ngIf="certifiedEngineers && certifiedEngineers.length > 0; else noData">
+  <div class="table-responsive">
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>رقم الهوية</th>
+          <th>رقم العضوية</th>
+          <th>حاصل على تدريب</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let eng of certifiedEngineers">
+          <td>{{ eng?.engineerName}}</td>
+          <td>{{ eng?.identityNumber }}</td>
+          <td>{{ eng?.membershipNumber }}</td>
+          <td>{{ eng?.hasCourses ? 'نعم' : 'لا'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

@@ -11,7 +11,8 @@ export class RejectionReasonModalComponent {
   @Output() onClose = new EventEmitter<void>();
 
   rejectionReason: string = '';
-
+  rejectionReasonError: boolean = false;
+  
   /**
    * Handle submit button click
    */
@@ -19,6 +20,8 @@ export class RejectionReasonModalComponent {
     if (this.rejectionReason.trim()) {
       this.onSubmit.emit(this.rejectionReason.trim());
       this.rejectionReason = '';
+    }else{
+      this.rejectionReasonError = true;
     }
   }
 

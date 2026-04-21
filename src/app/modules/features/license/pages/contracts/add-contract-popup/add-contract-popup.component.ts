@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
-import { GetProjectUnitDetailsResponseDto, LicenseProjectBuyerPaymentTypeDto, LicenseProjectBusinessPaymentResponseDto } from '../../../models/real-state-developer-dto';
+import { GetProjectUnitDetailsResponseDto, LicenseProjectBuyerPaymentTypeDto, LicenseProjectBusinessPaymentResponseDto, LicenseProjectUnitCodeStatus } from '../../../models/real-state-developer-dto';
 import { BuyerTypeEnum } from '../../../enums/unit-status.enum';
 import { RealStateDeveloperService } from '../../../services/real-state-developer.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
@@ -32,6 +32,7 @@ export class AddContractPopupComponent implements OnInit {
   authorizationFile: any = null;
   showConfirmation: boolean = false;
   isSubmitting: boolean = false;
+  unitStatus = LicenseProjectUnitCodeStatus;
 
   // Verification loading states
   verifyingFacility: boolean = false;
@@ -149,11 +150,11 @@ export class AddContractPopupComponent implements OnInit {
       delegatorFileId: [''],
       licenseProjectDeedId: [null, Validators.required],
       isOldContract: [false],
-      contractFileId: ['',Validators.required],
-      deliveryDate:['',Validators.required],
-      paymentTypeId:[null, Validators.required],
-      paymentPlanId:['' ,Validators.required],
-      saleDate: ['',Validators.required]
+      contractFileId: [''],
+      deliveryDate:[''],
+      paymentTypeId:[null],
+      paymentPlanId:[''],
+      saleDate: ['']
     });
 
     // Subscribe to price changes
@@ -187,7 +188,7 @@ export class AddContractPopupComponent implements OnInit {
         this.filteredPaymentPlansList = [];
       }
       // Reset payment plan selection when payment type changes
-      this.contractForm.patchValue({ paymentPlanId: '' });
+      this.contractForm.patchValue({ paymentPlanId: null });
     });
   }
 
@@ -265,8 +266,10 @@ export class AddContractPopupComponent implements OnInit {
     this.isOldContract = isOld;
     this.contractForm.patchValue({ isOldContract: isOld });
 
-    if (isOld) {
-      // Add required validators when نعم is selected
+    const shouldRequire = isOld && this.unitDetails?.unitStatusId === this.unitStatus.SoldOutsidePlatform;
+
+    if (shouldRequire) {
+      // Add required validators only when old contract AND SoldOutsidePlatform
       this.contractForm.get('contractFileId')?.setValidators([Validators.required]);
       this.contractForm.get('saleDate')?.setValidators([Validators.required]);
       this.contractForm.get('deliveryDate')?.setValidators([Validators.required]);
@@ -380,6 +383,16 @@ export class AddContractPopupComponent implements OnInit {
       return;
     }
 
+    // Validate delivery date must be after sale date
+    if (this.isOldContract) {
+      const saleDate = this.contractForm.get('saleDate')?.value;
+      const deliveryDate = this.contractForm.get('deliveryDate')?.value;
+      if (saleDate && deliveryDate && new Date(deliveryDate) <= new Date(saleDate)) {
+        this.toasterService.showError('تاريخ التسليم يجب أن يكون بعد تاريخ أنشاء العقد');
+        return;
+      }
+    }
+
     // Validate form before showing confirmation dialog
     if (this.contractForm.valid) {
       // Show confirmation dialog only if form is valid
@@ -424,7 +437,7 @@ export class AddContractPopupComponent implements OnInit {
       formData.paymentPlanId = null;
       formData.paymentTypeId = null;
     }
-
+    formData.isOldContract = this.isOldContract && this.unitDetails?.unitStatusId === this.unitStatus.SoldOutsidePlatform;
     // Call API service to save contract
     this.realStateDeveloperService.saveContract(formData).subscribe({
       next: (response) => {

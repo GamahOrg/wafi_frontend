@@ -13,55 +13,58 @@ import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 
 @Injectable()
 export class DataVisibilityOfLicenseProjectService {
-  DataVisibilityOfLicenseProject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  tabCodesHasValidtionError: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  DataVisibilityOfLicenseProject: BehaviorSubject<string[]> =
+    new BehaviorSubject<string[]>([]);
+  tabCodesHasValidtionError: BehaviorSubject<string[]> = new BehaviorSubject<
+    string[]
+  >([]);
 
   constructor(
     private _httpClient: HttpClient,
     private _tabsService: TabsService,
-    private _accordionService: AccordionService
+    private _accordionService: AccordionService,
   ) {}
 
   GetLicenseRequestHeadersByLicenseProjectId(
-    projectId: string
+    projectId: string,
   ): Observable<string[]> {
     return this._httpClient
-      .get<CoreResponseDTO<string[]>>(
-        `${Configuration.APIs.LicenseRequestHeader.GetLicenseRequestHeadersByLicenseProjectId}/${projectId}`
-      )
+      .get<
+        CoreResponseDTO<string[]>
+      >(`${Configuration.APIs.LicenseRequestHeader.GetLicenseRequestHeadersByLicenseProjectId}/${projectId}`)
       .pipe(
         map((res: CoreResponseDTO<string[]>) => {
           return res.data as string[];
-        })
+        }),
       );
   }
 
   GetLicenseProjectProfileCompleteTap(
     projectId: string,
-    isProfileComplte:boolean
+    isProfileComplte: boolean,
   ): Observable<string[]> {
     return this._httpClient
-      .get<CoreResponseDTO<string[]>>(
-        `${Configuration.APIs.LicenseRequestHeader.GetLicenseProjectProfileCompleteTap}/${projectId}/${isProfileComplte}`
-      )
+      .get<
+        CoreResponseDTO<string[]>
+      >(`${Configuration.APIs.LicenseRequestHeader.GetLicenseProjectProfileCompleteTap}/${projectId}/${isProfileComplte}`)
       .pipe(
         map((res: CoreResponseDTO<string[]>) => {
           return res.data as string[];
-        })
+        }),
       );
   }
 
   GetCompletedLicenseProjectProfileTaps(
-    projectId: string
+    projectId: string,
   ): Observable<string[]> {
     return this._httpClient
-      .get<CoreResponseDTO<string[]>>(
-        `${Configuration.APIs.LicenseRequestHeader.GetCompletedLicenseProjectProfileTaps}/${projectId}`
-      )
+      .get<
+        CoreResponseDTO<string[]>
+      >(`${Configuration.APIs.LicenseRequestHeader.GetCompletedLicenseProjectProfileTaps}/${projectId}`)
       .pipe(
         map((res: CoreResponseDTO<string[]>) => {
           return res.data as string[];
-        })
+        }),
       );
   }
 
@@ -91,19 +94,17 @@ export class DataVisibilityOfLicenseProjectService {
     resetIndex: boolean,
     updateVirticalTab: boolean,
     service: null | any = null,
-    secondTap: boolean = false
+    secondTap: boolean = false,
   ): void {
-
     // var tabContent = new Tabs();
     // tabContent.tabsComponentList = mainTabsComponentList;
     // this.updateTabContent(tabContent, updateVirticalTab, service);
 
     subscriptions.push(
       this.getDataVisibilityOfLicenseProject().subscribe((res: string[]) => {
-
-        var tabContent = new Tabs;
-        tabContent.tabsComponentList = []
-        mainTabsComponentList.forEach(tab => {
+        var tabContent = new Tabs();
+        tabContent.tabsComponentList = [];
+        mainTabsComponentList.forEach((tab) => {
           if (res.includes(tab.tabCode as string)) {
             tabContent.tabsComponentList.push(tab);
           }
@@ -111,18 +112,16 @@ export class DataVisibilityOfLicenseProjectService {
 
         this.updateTabContent(tabContent, updateVirticalTab, service);
         if (resetIndex) {
-
-          this.resetTabsIndex(service,secondTap);
+          this.resetTabsIndex(service, secondTap);
         }
-
-      })
-    )
+      }),
+    );
   }
 
   getDataVisibilityOfLicenseProjectForCertainAccordion(
     subscriptions: Subscription[],
     mainAccordionComponentList: accordionComponent[],
-    accordionContent: accordionContent
+    accordionContent: accordionContent,
   ): void {
     subscriptions.push(
       this.getDataVisibilityOfLicenseProject().subscribe((res: string[]) => {
@@ -132,9 +131,9 @@ export class DataVisibilityOfLicenseProjectService {
           }
         });
         this._accordionService.updateAccordionContent(
-          accordionContent as accordionContent
+          accordionContent as accordionContent,
         );
-      })
+      }),
     );
   }
 
@@ -142,9 +141,8 @@ export class DataVisibilityOfLicenseProjectService {
     tabContent: Tabs,
     updateVirticalTab: boolean,
     service: null | any,
-    secondTap: boolean = false
+    secondTap: boolean = false,
   ): void {
-    debugger
     if (service) {
       if (updateVirticalTab) {
         service.updateVerticalTabContent(tabContent);
@@ -174,7 +172,7 @@ export class DataVisibilityOfLicenseProjectService {
 
   private resetTabsIndex(
     service: null | any,
-    secondTap: boolean = false
+    secondTap: boolean = false,
   ): void {
     if (service) {
       if (secondTap) {

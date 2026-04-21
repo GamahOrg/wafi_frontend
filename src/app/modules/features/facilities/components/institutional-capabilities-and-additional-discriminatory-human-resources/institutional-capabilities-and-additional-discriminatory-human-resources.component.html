@@ -1,4 +1,4 @@
-<app-no-data (onNoDataButtonClicked)="openDialog('')"
+<app-no-data (onNoDataButtonClicked)="openDialog('')" [showCompleteBtn]="canUpdate"
              *ngIf="!model || !model.id"></app-no-data>
 
 <ng-container *ngIf="model && model.id">
@@ -7,7 +7,7 @@
         <i class="icon hgi hgi-stroke hgi-profile"></i>
         <h6 class="title">القدرات المؤسسية والموارد الإضافية</h6>
 
-        <button class="opposite-title btn btn-link"
+        <button class="opposite-title btn btn-outline-primary" *ngIf="canUpdate"
                 (click)="openDialog(model.id)"><span class="material-icons">edit</span></button>
     </div>
 
@@ -21,8 +21,8 @@
                     <a [href]="baseUrl + model.accountingSupervisionForWafiSalesProjectsFile.filePath"
                        target="_blank">
                         {{model.accountingSupervisionForWafiSalesProjectsFile.fileDescription}}</a>
-                        <div class="value">
-                            <span class="delete" 
+                        <div class="value" *ngIf="canUpdate">
+                            <span class="delete"
                                 (click)="deletFile(model.accountingSupervisionForWafiSalesProjectsFile.id)"><i
                                     class="material-icons text-danger">close</i></span>
                         </div>
@@ -39,8 +39,8 @@
                     <a [href]="baseUrl + model.engineeringSupervisionForWafiSalesProjectsFile.filePath"
                        target="_blank">
                         {{model.engineeringSupervisionForWafiSalesProjectsFile.fileDescription}}</a>
-                        <div class="value">
-                            <span class="delete" 
+                        <div class="value" *ngIf="canUpdate">
+                            <span class="delete"
                                 (click)="deletFile(model.engineeringSupervisionForWafiSalesProjectsFile.id)"><i
                                     class="material-icons text-danger">close</i></span>
                         </div>
@@ -57,8 +57,8 @@
                        [href]="baseUrl + files.existSystemsApprovalCertificationFile.filePath"
                        target="_blank">
                         {{files.existSystemsApprovalCertificationFile.fileDescription}}</a>
-                        <div class="value">
-                            <span class="delete" 
+                        <div class="value" *ngIf="canUpdate">
+                            <span class="delete"
                                 (click)="deletFile(files.existSystemsApprovalCertificationFile.id)"><i
                                     class="material-icons text-danger">close</i></span>
                         </div>
@@ -75,8 +75,8 @@
                        [href]="baseUrl + files.localAndInternationalIssuedCertificationFile.filePath"
                        target="_blank">
                         {{files.localAndInternationalIssuedCertificationFile.fileDescription}}</a>
-                        <div class="value">
-                            <span class="delete" 
+                        <div class="value" *ngIf="canUpdate">
+                            <span class="delete"
                                 (click)="deletFile(files.localAndInternationalIssuedCertificationFile.id)"><i
                                     class="material-icons text-danger">close</i></span>
                         </div>

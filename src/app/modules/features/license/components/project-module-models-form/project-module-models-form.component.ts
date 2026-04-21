@@ -154,7 +154,6 @@ export class ProjectModuleModelsFormComponent implements OnInit, OnDestroy {
   }
 
   save(): void {
-    debugger;
     if (!this.projectModel.id)
       this.projectModel.id = '00000000-0000-0000-0000-000000000000';
     this.controls.id.setValue(this.projectModel.id);

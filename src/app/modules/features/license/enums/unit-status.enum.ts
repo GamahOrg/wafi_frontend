@@ -3,7 +3,7 @@ export enum LicenseProjectUnitCodeStatus {
   Sold = 2,
   PendingBuyerApproval = 3,
   SoldOutsidePlatform = 4,
-
+  CharteredAccountantReview = 5,
 }
 
 export enum BuyerTypeEnum {

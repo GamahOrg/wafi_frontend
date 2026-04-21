@@ -97,7 +97,7 @@ private loadNextPage(nextPage: number): void {
 assignSubCustomerOnFacility(facility:any): void {
   this._customerFacilitiesService.setFacilityObj(facility as FacilityShortDto);
   let Data = {
-    title: "تعين مفوضين على المنشأه",
+    title: "تعين مفوضين على المنشأة",
     component: RelatedCustomersComponent,
     id: "RelatedCustomersComponent"
   } as PopupData;

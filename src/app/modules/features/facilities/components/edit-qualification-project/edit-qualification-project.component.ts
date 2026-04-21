@@ -123,27 +123,51 @@ export class EditQualificationProjectComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(this.technicalCapabilitiesRequirementsService.GetProjectTypeDropDown().subscribe(data => {
       this.projectTypes = data;
+
+      this.projectTypes = this.projectTypes.map(project => ({
+        id: project.id,
+        typeName: project.typeName,
+        selected: false
+      }));
+      this.projectTypes = [
+        // { id: 0, name: 'لا يوجد', selected: false },
+        ...this.projectTypes
+      ];
+      
+      if (this.selectedProjectTypes && this.selectedProjectTypes.length > 0) {
+        this.projectTypes.forEach(f => {
+          f.selected = this.selectedProjectTypes.includes(f.id);
+        });
+        this.controls['projectTypeIdsList'].setValue(this.selectedProjectTypes);
+      }
+      //else if (this.code && this.code.id) {
+      //  // EDIT case: no facilities returned → select "لا يوجد" (id = 0) by default
+      //  this.facilitiesListLookup.forEach(f => {
+      //    f.selected = f.id === null;
+      //  });
+      //  this.controls['projectTypeIdsList'].setValue([0]);
+      //}
     }));
   }
 
   createEditForm(): void {
     this.editForm = this.fb.group({
-      projectCategoryId: [this.projectDto?.projectCategoryId ?? 0, [Validators.required]],
-      projectSubCategoryId: [this.projectDto?.projectSubCategoryId ?? 0, [Validators.required]],
+      projectCategoryId: [this.projectDto?.projectCategoryId ?? null, [Validators.required]],
+      projectSubCategoryId: [this.projectDto?.projectSubCategoryId ?? null, [Validators.required]],
       projectTypeIdsList: [this.selectedProjectTypes, [Validators.required]],
       projectName: [this.projectDto?.projectName, [Validators.required]],
       projectOwner: [this.projectDto?.projectOwner, [Validators.required]],
-      executingContractor: [this.projectDto?.executingContractor, [Validators.required]],
-      contractorClassification: [this.projectDto?.contractorClassification, [Validators.required]],
+      executingContractor: [this.projectDto?.executingContractor],
+      contractorClassification: [this.projectDto?.contractorClassification],
       projectLocation: [this.projectDto?.projectLocation, [Validators.required]],
       unitsCount: [this.projectDto?.unitsCount, [Validators.required]],
       projectArea: [this.projectDto?.projectArea, [Validators.required]],
       projectValue: [this.projectDto?.projectValue, [Validators.required]],
       startDate: [this.parseDate(this.projectDto?.startDate?.toString()), [Validators.required]],
       projectDuration: [this.projectDto?.projectDuration, [Validators.required]],
-      achievementRate: [this.projectDto?.achievementRate, [Validators.required]],
-      marketingStatus: [this.projectDto?.marketingStatus, [Validators.required]],
-      implementationMethodology: [this.projectDto?.implementationMethodology, [Validators.required]],
+     // achievementRate: [this.projectDto?.achievementRate, [Validators.required]],
+      //marketingStatus: [this.projectDto?.marketingStatus, [Validators.required]],
+     // implementationMethodology: [this.projectDto?.implementationMethodology, [Validators.required]],
     })
   }
 
@@ -151,15 +175,16 @@ export class EditQualificationProjectComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  parseDate(dateString: string | undefined): string | null {
+  parseDate(dateString: string | undefined): Date | null {
     if (dateString) {
-      return dateString.split('T')[0];
+      return new Date(dateString);
     }
     return null;
   }
 
   save(): void {
-    if (this.editForm?.invalid || !this.projectDto?.projectScheduleFileId || this.newUploadedProjectContractFiles.length == 0 && (!this.projectDto || !this.projectDto.projectContractFiles || !this.projectDto.projectContractFiles.length))  {
+    if (this.editForm?.invalid || !this.projectDto?.projectScheduleFileId
+      && (!this.projectDto)) {
       this.showValidation = true;
       this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
       this.editForm?.markAllAsTouched();
@@ -218,7 +243,63 @@ export class EditQualificationProjectComponent implements OnInit, OnDestroy {
     this.editForm.get('projectSubCategoryId')?.reset();
     this.projectSubCategoriesFiltered = this.projectSubCategories.filter(x => x.projectCategoryId == projectCategoryId);
   }
+  getSelectedprojectTypesText(): string {
+    const count = this.getSelectedprojectTypesCount();
+    if (count === 0) {
+      return 'يرجي الاختيار';
+    }
+    return 'يرجي الاختيار';
+  }
+  getSelectedprojectTypesCount(): number {
+    return this.projectTypes.filter(d => d.selected).length;
+  }
+  getSelectedprojectTypes(): ProjectTypeFullDto[] {
+    console.log("projectTypes=", this.projectTypes);
+    return this.projectTypes.filter(d => d.selected);
+  }
+  isProjectTypeDisabled(project: ProjectTypeFullDto): boolean {
+    // If "لا يوجد" (id = 0) is selected, disable all others
+    const noProjectSelected = this.projectTypes.some(f => f.id === null && f.selected);
+    if (noProjectSelected && project.id !== null) {
+      return true;
+    }
 
+    // If any other project is selected, disable "لا يوجد" (id = 0)
+    const anyOtherSelected = this.projectTypes.some(f => f.id !== null && f.selected);
+    if (anyOtherSelected && project.id === null) {
+      return true;
+    }
+
+    return false;
+  }
+  toggleProjectTypes(project: ProjectTypeFullDto): void {
+    project.selected = !project.selected;
+
+    // If selecting "لا يوجد" (id = 0), deselect all others
+    if (project.id === null && project.selected) {
+      this.projectTypes.forEach(f => {
+        if (f.id !== null) f.selected = false;
+      });
+    }
+    // If selecting any other facility, deselect "لا يوجد" (id = 0)
+    else if (project.id !== null && project.selected) {
+      const noFacility = this.projectTypes.find(f => f.id === null);
+      if (noFacility) noFacility.selected = false;
+    }
+
+    this.updateProjectTypesIds();
+  }
+  updateProjectTypesIds(): void {
+    const selectedIds = this.projectTypes
+      .filter(d => d.selected)
+      .map(d => d.id);
+    this.controls['projectTypeIdsList'].setValue(selectedIds);
+  }
+  removeProjectTypes(project: ProjectTypeFullDto, event: Event): void {
+    event.stopPropagation();
+    project.selected = false;
+    this.updateProjectTypesIds();
+  }
   deletFile(id: string) {
     this._fileManagementService.DeletFile(id).subscribe(res => {
       if (res.isDone) {

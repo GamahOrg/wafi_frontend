@@ -9,6 +9,7 @@ import { QualificationInstitutionalCapacityAndHrRequirementDto } from '../../dat
 import { QualificationInstitutionalCapacityAndHrRequirementsService } from '../../services/qualificationInstitutionalCapacityAndHrRequirements/qualification-institutional-capacity_Hr-requirements.service';
 import { JobRequirementsAndHumanResourcesFormComponent } from '../job-requirements-and-human-resources-form/job-requirements-and-human-resources-form.component';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
+import { FacilityProfileService } from '../../services/facilityProfile/facility-profile.service';
 
 @Component({
   selector: 'app-job-requirements-and-human-resources',
@@ -20,14 +21,21 @@ export class JobRequirementsAndHumanResourcesComponent implements OnInit, OnDest
   baseUrl = `${environment.baseURL}/`;
   institutionalCapacityAndHrRequirements: QualificationInstitutionalCapacityAndHrRequirementDto = new QualificationInstitutionalCapacityAndHrRequirementDto();
   userData: customerResponse | null = null;
+  canUpdate: boolean = true;
 
   constructor(private _service: QualificationInstitutionalCapacityAndHrRequirementsService,
     private _userDataService: UserDataService, private _popupService: PopupService,
-    private _filemangementService: FileManagementService) { }
+    private _filemangementService: FileManagementService,
+    private _facilityProfileService: FacilityProfileService) { }
 
   ngOnInit() {
     this.obseveCustomerData();
     this.observeCurrentObj();
+    this.subscriptions.push(
+      this._facilityProfileService.getAvailabilityToUpdate().subscribe((res: boolean) => {
+        this.canUpdate = res;
+      })
+    );
     // this.getInstitutionalCapacityAndHrRequirement();
   }
 

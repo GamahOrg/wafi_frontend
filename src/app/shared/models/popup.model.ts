@@ -3,7 +3,7 @@ import { Button } from './button.model';
 import { BeneficiaryContractFormAdditionalTermsDto } from 'src/app/modules/features/license/models/beneficiary-contract-form-additional-terms-dto';
 import { SafeHtml } from '@angular/platform-browser';
 
-export type CancelButtonPosition = 'left' | 'right';
+export type CancelButtonPosition = 'start' | 'end';
 
 export interface PopupData {
   iconClass?: string;
@@ -42,7 +42,8 @@ export interface confirmationPopupData {
   closeButtonText?: string;
   hideCancelButton?: boolean;
   alertText?:string,
-  alertClass?:string
+  alertClass?:string,
+  data?: any;
 }
 
 export interface notePopupData {
@@ -56,6 +57,10 @@ export interface notePopupData {
   dynamicMessage: string;
   secondeStaticMessage?: string;
   buttonText?: string;
+  buttonTextOpenNewPopup?: string;
+  openNewPopupComponent?: any;
+  openNewPopupData?: any;
+  openNewPopupId?: string;
   buttonLink?: string;
   surveyTitle?: string;
   surveyLink?: string;

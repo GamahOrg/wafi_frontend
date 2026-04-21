@@ -8,6 +8,7 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { ProjectRequestLocalStorageService } from '../../services/project-request-local-storage.service';
 import { SharedLicenseProjectService } from '../../../license/services/sharedLicenseProject/shared-license-project.service';
 import { LicenseProjectService } from '../../services/license-project.service';
+import { QualificationTypeCode } from 'src/app/core/enums/qualification-type-code';
 
 @Component({
   selector: 'app-requests',
@@ -124,12 +125,15 @@ export class RequestsComponent implements OnInit {
       case LicenseProjectRequestTypeEnum.LiftingTheMarkOnThePropertyTitleDeed:
         requestSummaryRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.createLiftingTheMarkOnThePropertyTitleDeedRequest}`;
         break;
+      case LicenseProjectRequestTypeEnum.UpgradeQualification:
+        requestSummaryRoute = `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.createRequest}/${QualificationTypeCode.DependantRealEstate}/${Configuration.pages.qualifying.upgradeDegree}`;
+        break;
       default:
         this.projectRequestLocalStorageService.setSelectedSelectedLicenseRequestTypeInLocalStorage(
           requestType.toString()
         );
         requestSummaryRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.createRequestTemplate}`;
-        break;
+        break; 
   
       }
     this.router.navigate([requestSummaryRoute]);

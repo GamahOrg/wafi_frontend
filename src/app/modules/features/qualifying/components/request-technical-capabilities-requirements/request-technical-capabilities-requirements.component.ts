@@ -33,7 +33,10 @@ export class RequestTechnicalCapabilitiesRequirementsComponent implements OnInit
     // );
     this.subscriptions.push(
       this._requestService.TechnicalCapabilitiesRequirements$.subscribe((res: QualificationTechnicalCapabilitiesRequirementFullDto[] | null) => {
-        if (res) this.technicalCapabilities = res[0];
+        if (res) {
+          this.technicalCapabilities = res[0];
+          console.log("this.technicalCapabilities=", this.technicalCapabilities);
+        } 
       })
     )
   }

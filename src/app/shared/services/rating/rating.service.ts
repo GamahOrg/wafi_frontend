@@ -53,4 +53,40 @@ export class RatingService {
       })
     );
   }
+  getDeveloperContractDocumentationRatingStatus(facilityId: string):Observable<RatingStatusDto|null|undefined> {
+    return this._httpClient.get<CoreResponseDTO<RatingStatusDto>>(
+      `${Configuration.APIs.Rating.GetDeveloperContractDocumentationRatingStatusForLogin}?facilityId=${facilityId}`,
+    ).pipe(
+      map((res: CoreResponseDTO<RatingStatusDto>) => {
+        return res.isDone ? res.data : null;
+      })
+    );
+  }
+  getDeveloperContractDocumentationRatingStatusWithoutFacilityId():Observable<RatingStatusDto|null|undefined> {
+    return this._httpClient.get<CoreResponseDTO<RatingStatusDto>>(
+      Configuration.APIs.Rating.GetDeveloperContractDocumentationRatingStatus,
+    ).pipe(
+      map((res: CoreResponseDTO<RatingStatusDto>) => {
+        return res.isDone ? res.data : null;
+      })
+    );
+  }
+  getBuyerContractDocumentationRatingStatusForLogin(isOldContract: boolean):Observable<RatingStatusDto|null|undefined> {
+    return this._httpClient.get<CoreResponseDTO<RatingStatusDto>>(
+      `${Configuration.APIs.Rating.GetBuyerContractDocumentationRatingStatusForLogin}?isOldContract=${isOldContract}`,
+    ).pipe(
+      map((res: CoreResponseDTO<RatingStatusDto>) => {
+        return res.isDone ? res.data : null;
+      })
+    );
+  }
+  getBuyerContractDocumentationRatingStatus(isOldContract: boolean):Observable<RatingStatusDto|null|undefined> {
+    return this._httpClient.get<CoreResponseDTO<RatingStatusDto>>(
+      `${Configuration.APIs.Rating.GetBuyerContractDocumentationRatingStatus}?isOldContract=${isOldContract}`,
+    ).pipe(
+      map((res: CoreResponseDTO<RatingStatusDto>) => {
+        return res.isDone ? res.data : null;
+      })
+    );
+  }
 }

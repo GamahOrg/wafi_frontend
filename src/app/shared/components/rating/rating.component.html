@@ -13,6 +13,12 @@
       إلى أي مدى توصي الآخرين بالاستفادة من خدمات منصة البيع والتأجير على
       الخارطة ؟
     </h6>
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.DeveloperContractDocumentation || ratingType === RatingTypeEnum.BuyerContractDocumentation">
+      ما مدي رضاك عن سهولة استخدام خدمة توثيق العقد الورقي؟
+    </h6>
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.BuyerUnifiedContractDocumentation">
+      ما مدي رضاك عن سهولة استخدام خدمة توثيق العقد الموحد؟
+    </h6>
     <p class="desc">
       هذا سوف يساعدنا على تحسين تجربتك وجعلها أكثر سلاسة وتخصيصًا لك
     </p>
@@ -23,7 +29,10 @@
     class="rating-stars"
     *ngIf="
       ratingType === RatingTypeEnum.PlatformUsability ||
-      ratingType === RatingTypeEnum.InstantLicenseServiceEaseOfUse
+      ratingType === RatingTypeEnum.InstantLicenseServiceEaseOfUse ||
+      ratingType === RatingTypeEnum.DeveloperContractDocumentation ||
+      ratingType === RatingTypeEnum.BuyerContractDocumentation ||
+      ratingType === RatingTypeEnum.BuyerUnifiedContractDocumentation
     "
   >
     <rating

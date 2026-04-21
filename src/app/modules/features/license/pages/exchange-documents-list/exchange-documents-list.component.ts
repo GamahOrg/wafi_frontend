@@ -59,14 +59,13 @@ export class ExchangeDocumentsListComponent implements OnInit {
   getStatusClass(status: LicenseProjectExchangeDocumentStatusEnum | null) {
     return {
       orange:
-        status === LicenseProjectExchangeDocumentStatusEnum.PendingApproval,
+        status === LicenseProjectExchangeDocumentStatusEnum.PendingApproval ||
+        status ===LicenseProjectExchangeDocumentStatusEnum.UnderEscrowAccountsReview,
       green:
         status === LicenseProjectExchangeDocumentStatusEnum.Approved ||
         status === LicenseProjectExchangeDocumentStatusEnum.IssuedDocument,
       red: status === LicenseProjectExchangeDocumentStatusEnum.Rejected,
-      blue:
-        status ===
-        LicenseProjectExchangeDocumentStatusEnum.UnderEscrowAccountsReview,
+      // blue:status ===LicenseProjectExchangeDocumentStatusEnum.UnderEscrowAccountsReview,
     };
   }
 

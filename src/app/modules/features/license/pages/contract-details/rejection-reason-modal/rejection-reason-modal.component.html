@@ -10,11 +10,17 @@
 
     <!-- Modal Body -->
     <div class="modal-body">
+      
       <textarea
-        class="rejection-textarea"
-        [(ngModel)]="rejectionReason"
-        rows="6"
+      class="rejection-textarea"
+      [(ngModel)]="rejectionReason"
+      rows="6"
       ></textarea>
+      <div *ngIf="rejectionReasonError" class="invalid-feedback d-block">
+                <div>
+                  حقل مطلوب*
+                </div>
+      </div>
     </div>
 
     <!-- Modal Footer -->
@@ -29,7 +35,6 @@
       <button
         class="btn-submit"
         (click)="handleSubmit()"
-        [disabled]="!rejectionReason.trim()"
         type="button"
       >
         إرسال سبب الرفض

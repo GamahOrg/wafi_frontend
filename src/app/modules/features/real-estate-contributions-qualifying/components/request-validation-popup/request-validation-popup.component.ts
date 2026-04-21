@@ -241,6 +241,13 @@ export class RequestValidationPopupComponent implements OnInit, OnDestroy {
 
     return tabErrorsMsg
   }
+  getVisibleTabs(): tabsComponent[] {
+    if (!this.validationError?.tabs) return [];
+    const responseTabCodes = this.validationError.tabs.map((t: TabsError) => t.tabCode);
+    return this.tabsComponentList.filter((tab: tabsComponent) =>
+      responseTabCodes.includes(tab.tabCode as string)
+    );
+  }
   getGeneralErrorTab() {
 
     if (this.validationError && this.validationError.tabs && this.validationError.tabs.length)

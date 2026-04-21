@@ -15,6 +15,7 @@ import { UserDataService } from 'src/app/core/services/user-data/user-data.servi
 import {
   FacilityBasicInfo,
   FacilityBasicUpdateInfo,
+  UpdateFacilityBasicInfoRequest,
   qualificationFacilityServiceProvidersCertificateNumbersDTO,
   qualificationIssuesDocumentCreateUpdate,
 } from '../../dataModels/facility-basic-info.model';
@@ -70,13 +71,13 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _filemangementService: FileManagementService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _cityService: CityService
-  ) {}
+    private _cityService: CityService,
+  ) { }
 
   basicInfoForm = this._formBuilder.group({
     // chamberOfCommerceMembershipNumber: [{ value: '', disabled: true }, Validators.required],
     entity700Number: ['', Validators.required],
-    previouslyQualifiedFacilityEntity700Number: [''],
+    // previouslyQualifiedFacilityEntity700Number: [''],
     chamberOfCommerceMembershipNumber: [''],
     cityId: [''],
     socialInsuranceCertificateNumber: ['', Validators.required],
@@ -85,7 +86,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
       [Validators.maxLength(10), Validators.minLength(10)],
     ],
     website: [''],
-    telephone: [''],
+    telephone: ['', [Validators.required]],
     fax: [''],
     email: [''],
     postalCode: [''],
@@ -136,7 +137,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
         .getListWithChambersOfCommerceCityCodeAsync()
         .subscribe((res) => {
           this.cities = res as CityWithChambersOfCommerceCityCodeDto[];
-        })
+        }),
     );
   }
 
@@ -162,7 +163,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
         console.log(res);
-      })
+      }),
     );
   }
 
@@ -171,7 +172,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
       this._popupService.confirmAction.subscribe((res: PopupData) => {
         console.log(res);
         this.submitBasicInfoForm();
-      })
+      }),
     );
   }
 
@@ -181,7 +182,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
 
   observeBasicInfoForm() {
     this.subscriptions.push(
-      this.basicInfoForm.valueChanges.subscribe((values) => {})
+      this.basicInfoForm.valueChanges.subscribe((values) => { }),
     );
   }
 
@@ -192,13 +193,13 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
         discription: '',
       });
     this.NoOfClassificationCertificatesOfCityServiceProvidersImplementingProjectsList.push(
-      NoOfClassificationCertificatesOfCityServiceProvidersImplementingProjectsFormGroup as FormGroup
+      NoOfClassificationCertificatesOfCityServiceProvidersImplementingProjectsFormGroup as FormGroup,
     );
   }
 
   deleteCertificate(index: number): void {
     this.NoOfClassificationCertificatesOfCityServiceProvidersImplementingProjectsList.removeAt(
-      index
+      index,
     );
   }
 
@@ -209,7 +210,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
         .subscribe((res: customerResponse | null) => {
           this.userData = res;
           console.log('this.userData', this.userData);
-        })
+        }),
     );
   }
 
@@ -228,7 +229,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
           }
           console.log('this.facilityData', this.facilityData);
           this.updateFormValues();
-        })
+        }),
     );
   }
 
@@ -247,7 +248,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
       $event.eventRes.data[0].id;
   }
   public onUploadQualificationValFile($event: any): void {
-        if ($event.eventRes.data.length == 0) {
+    if ($event.eventRes.data.length == 0) {
       this.FacilityBasicUpdateInfo.qualificationValFileManagerId = '';
       return;
     }
@@ -280,8 +281,9 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
 
   onUploadQualificationIssuesDocumentCreateUpdateDtoFile($event: any): void {
     if ($event.eventRes.data.length == 0) {
-      this.FacilityBasicUpdateInfo.qualificationIssuesDocumentCreateUpdateDtos = [];
-      return; 
+      this.FacilityBasicUpdateInfo.qualificationIssuesDocumentCreateUpdateDtos =
+        [];
+      return;
     }
     if (!$event.eventRes.data || !$event.eventRes.data.length) return;
     let issueFileDate = {
@@ -292,7 +294,7 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
     this.FacilityBasicUpdateInfo.qualificationIssuesDocumentCreateUpdateDtos =
       [];
     this.FacilityBasicUpdateInfo.qualificationIssuesDocumentCreateUpdateDtos.push(
-      issueFileDate
+      issueFileDate,
     );
   }
 
@@ -311,105 +313,41 @@ export class EditFacilityBasicInfoComponent implements OnInit, OnDestroy {
   }
 
   submitBasicInfoForm(): void {
-    if (this.basicInfoForm?.invalid) {
+    if (this.basicInfoForm.invalid) {
       this._toastrNotificationService.showError(
-        'نأمل ادخال كل الحقول اللازمة واعادة المحاولة'
+        'نأمل ادخال كل الحقول اللازمة واعادة المحاولة',
       );
-      this.basicInfoForm?.markAllAsTouched();
+      this.basicInfoForm.markAllAsTouched();
       return;
     }
-    if (this.basicInfoForm.valid) {
-      this.FacilityBasicUpdateInfo.id = this.userData?.facilities[0]
-        .id as string;
-      // this.FacilityBasicUpdateInfo.chamberOfCommerceMembershipNumber = this.basicInfoForm.getRawValue().chamberOfCommerceMembershipNumber as string
-      this.FacilityBasicUpdateInfo.entity700Number = this.basicInfoForm.value
-        .entity700Number as string;
-      this.FacilityBasicUpdateInfo.previouslyQualifiedFacilityEntity700Number =
-        this.basicInfoForm.value
-          .previouslyQualifiedFacilityEntity700Number as string;
-      this.FacilityBasicUpdateInfo.chamberOfCommerceMembershipNumber = this
-        .basicInfoForm.value.chamberOfCommerceMembershipNumber as string;
-      this.FacilityBasicUpdateInfo.cityId = this.basicInfoForm.value
-        .cityId as string;
-      this.FacilityBasicUpdateInfo.socialInsuranceCertificateNumber = this
-        .basicInfoForm.value.socialInsuranceCertificateNumber as string;
-      this.FacilityBasicUpdateInfo.previouslyQualifiedFacilityCommercialRegistrationNumber =
-        this.basicInfoForm.value
-          .previouslyQualifiedFacilityCommercialRegistrationNumber as string;
-      this.FacilityBasicUpdateInfo.companyCodeInFinancialMarket = this
-        .basicInfoForm.value.companyCodeInFinancialMarket as string;
-      this.FacilityBasicUpdateInfo.saudiAuthorityOfEngineersLicenseNumber = this
-        .basicInfoForm.value.saudiAuthorityOfEngineersLicenseNumber as string;
-      this.FacilityBasicUpdateInfo.saudiAuthorityForAuditorsAndAccountants =
-        this.basicInfoForm.value
-          .saudiAuthorityForAuditorsAndAccountants as string;
-      this.FacilityBasicUpdateInfo.website = this.basicInfoForm.value
-        .website as string;
-      this.FacilityBasicUpdateInfo.telephone = this.basicInfoForm.value
-        .telephone as string;
-      this.FacilityBasicUpdateInfo.email = this.basicInfoForm.value
-        .email as string;
-      this.FacilityBasicUpdateInfo.postalCode = this.basicInfoForm.value
-        .postalCode as string;
-      this.FacilityBasicUpdateInfo.fax = this.basicInfoForm.value.fax as string;
-      this.FacilityBasicUpdateInfo.poBox = this.basicInfoForm.value
-        .poBox as string;
-      this.FacilityBasicUpdateInfo.isIssuesExist = this.issuesIsExist;
 
-      if (this.facilityData.companyEstablishingContractFileId) {
-        this.FacilityBasicUpdateInfo.companyEstablishingContractFileId =
-          this.facilityData.companyEstablishingContractFileId;
-      }
-      if (this.facilityData.socialInsuranceEmployeesListFileId) {
-        this.FacilityBasicUpdateInfo.socialInsuranceEmployeesListFileId =
-          this.facilityData.socialInsuranceEmployeesListFileId;
-      }
-      this.FacilityBasicUpdateInfo.commercialRegisterNumber = this.userData
-        ?.facilities[0].commercialRegisterNumber as string;
+    const facilityId = this.userData?.facilities[0]?.id;
+    if (!facilityId) return;
 
-      this.FacilityBasicUpdateInfo.website = this.basicInfoForm.value
-        .website as string;
-      this.FacilityBasicUpdateInfo.telephone = this.basicInfoForm.value
-        .telephone as string;
-      this.FacilityBasicUpdateInfo.email = this.basicInfoForm.value
-        .email as string;
-      this.FacilityBasicUpdateInfo.postalCode = this.basicInfoForm.value
-        .postalCode as string;
-      this.FacilityBasicUpdateInfo.fax = this.basicInfoForm.value.fax as string;
-      this.FacilityBasicUpdateInfo.poBox = this.basicInfoForm.value
-        .poBox as string;
-      // this.FacilityBasicUpdateInfo.qualificationValFileManagerId = this.basicInfoForm.value.qualificationValFileManagerId as string
+    const dto: UpdateFacilityBasicInfoRequest = {
+      id: facilityId,
+      entity700Number: this.basicInfoForm.value.entity700Number ?? undefined,
+      socialInsuranceCertificateNumber: this.basicInfoForm.value.socialInsuranceCertificateNumber ?? undefined,
+      website: this.basicInfoForm.value.website ?? undefined,
+      telephone: this.basicInfoForm.value.telephone ?? undefined,
+      fax: this.basicInfoForm.value.fax ?? undefined,
+      postalCode: this.basicInfoForm.value.postalCode ?? undefined,
+      email: this.basicInfoForm.value.email ?? undefined,
+      poBox: this.basicInfoForm.value.poBox ?? undefined,
+      cooperativeSocietyLicensingFileId:
+        this.FacilityBasicUpdateInfo.cooperativeSocietyLicensingFileId || undefined,
+    };
 
-      this.FacilityBasicUpdateInfo.isIssuesExist = this.issuesIsExist;
-
-      if (this.facilityData.companyEstablishingContractFileId) {
-        this.FacilityBasicUpdateInfo.companyEstablishingContractFileId =
-          this.facilityData.companyEstablishingContractFileId;
-      }
-      this.basicInfoForm.value.NoOfClassificationCertificatesOfCityServiceProvidersImplementingProjectsList?.forEach(
-        (element: any) => {
-          let certificate = {
-            id: '00000000-0000-0000-0000-000000000000',
-            certificationNumber: element.certificationNumber,
-            description: element.discription,
-            facilityId: this.userData?.facilities[0].id,
-          };
-          this.FacilityBasicUpdateInfo.qualificationFacilityServiceProvidersCertificateNumbers.push(
-            certificate as qualificationFacilityServiceProvidersCertificateNumbersDTO
+    this._facilityProfileService
+      .updateFacilityBasicInfo(dto)
+      .subscribe((res) => {
+        if (res.isDone) {
+          this._facilityProfileService.updateFacilityBasicDataBS(
+            res.data as FacilityBasicInfo,
           );
+          this.closeDialog();
         }
-      );
-      this._facilityProfileService
-        .updatFacility(this.FacilityBasicUpdateInfo as FacilityBasicUpdateInfo)
-        .subscribe((res) => {
-          if (res.isDone) {
-            this._facilityProfileService.updateFacilityBasicDataBS(
-              res.data as FacilityBasicInfo
-            );
-            this.closeDialog();
-          }
-        });
-    }
+      });
   }
 
   ngOnDestroy(): void {

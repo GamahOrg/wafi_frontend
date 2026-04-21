@@ -4,7 +4,12 @@
       <div class="page-title">
         <div class="d-flex justify-content-between align-items-center gap-3">
           <h2 class="title">تفاصيل الوحدة</h2>
-          <span class="status-pill" [ngClass]="unitDetails?.unitStatusId === unitStatus.Sold? 'green': 'black'">
+          <span class="status-pill" [ngClass]="{
+            'blue': unitDetails?.unitStatusId === unitStatus.SoldOutsidePlatform,
+            'orange': unitDetails?.unitStatusId === unitStatus.NotSold,
+            'green': unitDetails?.unitStatusId === unitStatus.Sold,
+            'black': unitDetails?.unitStatusId === unitStatus.CharteredAccountantReview || unitDetails?.unitStatusId === unitStatus.PendingBuyerApproval
+          }">
             <span>{{ unitDetails?.unitStatus }}</span>
           </span>
         </div>
@@ -86,6 +91,7 @@
                     </div>
                   </div>
                 </ng-container>
+
                 <div class="col-12 col-lg-6">
                   <div class="key-value horiz">
                     <div class="key">السعر</div>
@@ -106,32 +112,41 @@
                 <!-- Action Button Section -->
                 <ng-container *ngIf="hasPaymentPlans && !paymentPlansError">
                   <div class="col-12 col-lg-12">
-                    <button class="btn btn-primary" *ngIf="unitDetails?.unitStatusId === unitStatus.NotSold" (click)="openAddContractPopup()" [disabled]="!hasPaymentPlans">انشاء عقد بيع</button>
+                    <button class="btn btn-primary" *ngIf="unitDetails?.unitStatusId === unitStatus.NotSold || unitDetails?.unitStatusId === unitStatus.SoldOutsidePlatform || unitDetails?.unitStatusId === unitStatus.CharteredAccountantReview" (click)="openAddContractPopup()" [disabled]="!hasPaymentPlans || unitDetails?.unitStatusId === unitStatus.CharteredAccountantReview">انشاء عقد بيع</button>
                   </div>
                 </ng-container>
               </div>
             </div>
           </div>
 
+          <!-- Verify Unit Status Error Message -->
+          <div class="alert alert-danger" role="alert" *ngIf="unitDetails?.unitStatusId === unitStatus.CharteredAccountantReview">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-help-circle"></i>
+            </span>
+            <span>عذرًا ، لا يمكنك إنشاء عقد البيع حتى يقوم المحاسب القانوني بتأكيد حالة الوحدة</span>
+          </div>
+
           <!-- Payment Plans Error Message -->
-          <div *ngIf="!hasPaymentPlans && paymentPlansError" class="alert alert-danger d-flex align-items-start mt-3" role="alert">
-            <i class="bi bi-info-circle-fill ms-2" style="font-size: 1.2rem"></i>
-            <div>
+          <div class="alert alert-danger" role="alert" *ngIf="!hasPaymentPlans && paymentPlansError">
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-help-circle"></i>
+            </span>
+            <div class="d-flex flex-column gap-3">
               <span>{{ paymentPlansError }}</span>
-              <br />
-              <a style="color: black;" (click)="navigateToPaymentTab()">أنشاء خطط دفع ></a>
-              <br />
-              <!-- <a href="javascript:void(0)" class="alert-link me-1" style="text-decoration: underline;">إنشاء خطط الدفع</a> -->
+              <button type="button" class="btn btn-sm btn-link" style="--bs-btn-color: #161616" (click)="navigateToPaymentTab()">
+                إنشاء خطط الدفع
+                <i class="hgi hgi-stroke hgi-arrow-{{true? 'left' : 'right'}}-01"></i>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <hr class="my-4">
-
     <!-- Records Table Section -->
     <ng-container *ngIf="unitDetails && unitDetails.contracts && unitDetails.contracts.length > 0">
+      <hr class="my-4">
       <div class="page-section">
         <div class="page-title">
           <h2 class="title">السجل</h2>
@@ -207,7 +222,7 @@
                     </ng-container>
                   </td>
                   <td>
-                    <div class="table-actions">
+                    <div class="table-actions d-flex gap-2">
                       <button class="btn btn-primary" (click)="viewContractDetails(contract)">عرض العقد</button>
                       <button class="btn btn-outline-danger" (click)="openCancelModal(contract)" *ngIf="contract.contractStatusId === contractStatus.New">إلغاء العقد</button>
                     </div>

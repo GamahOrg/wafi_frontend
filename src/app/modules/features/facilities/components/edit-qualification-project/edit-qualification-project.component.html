@@ -1,296 +1,355 @@
 <form [formGroup]="editForm"
       id="form-editForm">
 
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">التصنيف الاساسي</label>
-            <select class="form-select"
-                    id="control-projectCategoryId"
-                    formControlName="projectCategoryId"
-                    (change)="onProjectCategoryChange($event)">
-                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
-                <option *ngFor="let item of projectCategories"
-                        [value]="item.id">{{item.categoryName}}</option>
-            </select>
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectCategoryId'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">التصنيف الفرعي</label>
-            <select class="form-select"
-                    id="control-projectSubCategoryId"
-                    formControlName="projectSubCategoryId">
-                <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
-                <option *ngFor="let item of projectSubCategoriesFiltered"
-                        [value]="item.id">{{item.subCategoryName}}</option>
-            </select>
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectSubCategoryId'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"><span class="required-star">*</span> التصنيف الاساسي </label>
+      <select class="form-select"
+              id="control-projectCategoryId"
+              formControlName="projectCategoryId"
+              (change)="onProjectCategoryChange($event)">
+        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+        <option *ngFor="let item of projectCategories"
+                [value]="item.id">
+          {{item.categoryName}}
+        </option>
+      </select>
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['projectCategoryId'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
     </div>
-
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-12">
-            <label for="licNum"
-                   class="form-label">نوع المشروع</label>
-            <select class="form-select"
-                    id="control-projectTypeIdsList"
-                    formControlName="projectTypeIdsList"
-                    multiple>
-                <!-- <option label="-- اختار نوع المشروع --"></option> -->
-                <option *ngFor="let item of projectTypes"
-                        [value]="item.id">{{item.typeName}}</option>
-            </select>
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectTypeIdsList'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>التصنيف الفرعي</label>
+      <select class="form-select"
+              id="control-projectSubCategoryId"
+              formControlName="projectSubCategoryId">
+        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+        <option *ngFor="let item of projectSubCategoriesFiltered"
+                [value]="item.id">
+          {{item.subCategoryName}}
+        </option>
+      </select>
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['projectSubCategoryId'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
     </div>
-
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">اسم المشروع</label>
-            <input type="text"
-                   class="form-control"
-                   id="control-projectName"
-                   formControlName="projectName" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectName'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">مالك المشروع</label>
-            <input type="text"
-                   class="form-control"
-                   id="control-projectOwner"
-                   formControlName="projectOwner" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectOwner'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+  </div>
+  <!-------->
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>اسم المشروع   </label>
+      <input type="text"
+             class="form-control"
+             id="control-projectName"
+             formControlName="projectName" />
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['projectName'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
     </div>
-
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">المقاول المنفذ</label>
-            <input type="text"
-                   class="form-control"
-                   id="control-executingContractor"
-                   formControlName="executingContractor" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['executingContractor'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
+    <!-- Multiselect facilities Dropdown -->
+    <div class="col-12 col-xl-6">
+      <div class="form-group">
+        <label for="" class="form-label"><span class="required-star">*</span> نوع المشروع</label>
+        <div class="dropdown multi-select">
+          <div class="form-select dropdown-toggle" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            {{ getSelectedprojectTypesText() }}
+          </div>
+          <ul class="dropdown-menu">
+            <li *ngFor="let item of projectTypes">
+              <div class="dropdown-item form-check form-check-normal" [class.disabled]="isProjectTypeDisabled(item)">
+                <input class="form-check-input" type="checkbox" [id]="'dId-'+item.id" [checked]="item.selected"
+                       [disabled]="isProjectTypeDisabled(item)" (click)="$event.stopPropagation()" (change)="toggleProjectTypes(item)">
+                <label class="form-check-label" [for]="'dId-'+item.id">{{ item.typeName }}</label>
+              </div>
+            </li>
+          </ul>
         </div>
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">تصنيف المقاول</label>
-            <input type="text"
-                   class="form-control"
-                   id="control-contractorClassification"
-                   formControlName="contractorClassification" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['contractorClassification'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
+        <div class="d-flex flex-wrap align-items-center gap-2 mt-2" *ngIf="getSelectedprojectTypes().length > 0">
+          <div class="chip" *ngFor="let project of getSelectedprojectTypes()">
+            {{ project.typeName }}
+            <button type="button" class="btn-icon btn btn-dark" (click)="removeProjectTypes(project, $event)" aria-label="Remove">
+              <i class="hgi hgi-stroke hgi-cancel-01"></i>
+            </button>
+          </div>
         </div>
+        <div class="invalid-feedback d-block"
+             *ngIf="controls['projectTypeIdsList'].errors?.['required'] && showValidation">
+          حقل مطلوب
+        </div>
+      </div>
     </div>
+    <!-------->
+  </div>
 
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">موقع المشروع</label>
-            <input type="text"
-                   class="form-control"
-                   id="control-projectLocation"
-                   formControlName="projectLocation" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectLocation'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">عدد الوحدات</label>
-            <input type="number"
-                   class="form-control"
-                   id="control-unitsCount"
-                   formControlName="unitsCount" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['unitsCount'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+  <!--<div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-12">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>نوع المشروع</label>
+      <select class="form-select"
+              id="control-projectTypeIdsList"
+              formControlName="projectTypeIdsList"
+              multiple>-->
+        <!-- <option label="-- اختار نوع المشروع --"></option> -->
+        <!--<option *ngFor="let item of projectTypes"
+                [value]="item.id">
+          {{item.typeName}}
+        </option>
+      </select>
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['projectTypeIdsList'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
     </div>
+  </div>-->
 
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">مساحة المشروع بـ م٢</label>
-            <input type="number"
-                   class="form-control"
-                   id="control-projectArea"
-                   formControlName="projectArea" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectArea'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">قيمة المشروع</label>
-            <input type="number"
-                   class="form-control"
-                   id="control-projectValue"
-                   formControlName="projectValue" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectValue'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+<div class="row row-gap-3 mb-3">
+
+  <div class="col-12 col-lg-6">
+    <label for="licNum"
+           class="form-label"> <span class="required-star">*</span>مالك المشروع</label>
+    <input type="text"
+           class="form-control"
+           id="control-projectOwner"
+           formControlName="projectOwner" />
+    <div class="invalid-feedback d-block"
+         *ngIf="controls['projectOwner'].errors?.['required'] && showValidation">
+      حقل مطلوب
     </div>
-
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">تاريخ البدء</label>
-            <input type="date"
-                   class="form-control"
-                   id="control-startDate"
-                   formControlName="startDate" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['startDate'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">مدة المشروع بالأيام</label>
-            <input type="number"
-                   class="form-control"
-                   id="control-projectDuration"
-                   formControlName="projectDuration" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['projectDuration'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <label for="licNum"
+           class="form-label">  <span class="required-star">*</span>قيمة المشروع       </label>
+    <input type="number"
+           class="form-control"
+           id="control-projectValue"
+           formControlName="projectValue" />
+    <div class="invalid-feedback d-block"
+         *ngIf="controls['projectValue'].errors?.['required'] && showValidation">
+      حقل مطلوب
     </div>
+  </div>
+</div>
 
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">نسبة الإنجاز</label>
-            <input type="number"
-                   class="form-control"
-                   id="control-achievementRate"
-                   formControlName="achievementRate" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['achievementRate'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">حالة التسويق</label>
-            <input type="text"
-                   class="form-control"
-                   id="control-marketingStatus"
-                   formControlName="marketingStatus" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['marketingStatus'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label">المقاول المنفذ</label>
+      <input type="text"
+             class="form-control"
+             id="control-executingContractor"
+             formControlName="executingContractor" />
+      <!--<div class="invalid-feedback d-block"
+           *ngIf="controls['executingContractor'].errors?.['required'] && showValidation">
+          حقل مطلوب
+      </div>-->
     </div>
-
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6">
-            <label for="licNum"
-                   class="form-label">المنهج المتبع في التنفيذ</label>
-            <input type="text"
-                   class="form-control"
-                   id="control-implementationMethodology"
-                   formControlName="implementationMethodology" />
-            <div class="invalid-feedback d-block"
-                 *ngIf="controls['implementationMethodology'].errors?.['required'] && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label">تصنيف المقاول</label>
+      <input type="text"
+             class="form-control"
+             id="control-contractorClassification"
+             formControlName="contractorClassification" />
+      <!--<div class="invalid-feedback d-block"
+           *ngIf="controls['contractorClassification'].errors?.['required'] && showValidation">
+          حقل مطلوب
+      </div>-->
     </div>
+  </div>
 
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-12">
-            <label for="licNum"
-                   class="form-label">رفع الجدول الزمني للمشروع</label>
-            <app-file-uploader (fileUploaded)="onProjectScheduleFileUploaded($event)"></app-file-uploader>
-            <div class="invalid-feedback d-block"
-                 *ngIf="!this.projectDto?.projectScheduleFileId && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>موقع المشروع</label>
+      <input type="text"
+             class="form-control"
+             id="control-projectLocation"
+             formControlName="projectLocation" />
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['projectLocation'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
     </div>
-
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6"
-             *ngIf="projectDto && projectDto.projectScheduleFile">
-            <div class="key">عرض الجدول الزمني للمشروع</div>
-            <div class="value">
-                <span class="icon material-icons-outlined">content_copy</span>
-                <a [href]="baseUrl + projectDto.projectScheduleFile.filePath"
-                   target="_blank"
-                   id="link-projectScheduleFile">
-                    {{projectDto.projectScheduleFile.fileDescription}}</a>
-                    <div class="value">
-                        <span class="delete"
-                              (click)="deletFile(projectDto.projectScheduleFile.id)"><i
-                               class="material-icons text-danger">close</i></span>
-                    </div>
-                <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
-            </div>
-        </div>
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>مساحة المشروع بـ م٢</label>
+      <input type="number"
+             class="form-control"
+             id="control-projectArea"
+             formControlName="projectArea" />
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['projectArea'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
     </div>
+   
+  </div>
 
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-12">
-            <label for="licNum"
-                   class="form-label">رفع العقود للمشروع</label>
-            <app-file-uploader (fileUploaded)="onProjectContractFilesUploaded($event)"></app-file-uploader>
-            <div class="invalid-feedback d-block"
-                 *ngIf="this.newUploadedProjectContractFiles.length == 0  && (!projectDto || !projectDto.projectContractFiles || !projectDto.projectContractFiles.length) && showValidation">
-                حقل مطلوب
-            </div>
-        </div>
+  <div class="row row-gap-3 mb-3">
+   
+   
+  </div>
+
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>عدد الوحدات</label>
+      <input type="number"
+             class="form-control"
+             id="control-unitsCount"
+             formControlName="unitsCount" />
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['unitsCount'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
     </div>
-
-    <div class="row row-gap-3 mb-3">
-        <div class="col-12 col-lg-6"
-             *ngIf="projectDto && projectDto.projectContractFiles && projectDto.projectContractFiles.length > 0">
-            <div class="key">عرض العقود للمشروع</div>
-            <div class="value"
-                 *ngFor="let file of projectDto.projectContractFiles">
-                <span class="icon material-icons-outlined">content_copy</span>
-                <a [href]="baseUrl + file.sysFileManager?.filePath"
-                   target="_blank"
-                   id="link-projectContractFiles">
-                    {{file.sysFileManager?.fileDescription}}</a>
-            </div>
-        </div>
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>تاريخ البدء </label>
+      <div class="input-group">
+        <input
+          bsDatepicker
+          type="text"
+          id="control-startDate"
+          class="form-control"
+          formControlName="startDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          placeholder="يرجى الاختيار"
+        />
+        <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
+      </div>
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['startDate'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
     </div>
+   
+  </div>
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-12">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>مدة المشروع بالأيام</label>
+      <input type="number"
+             class="form-control"
+             id="control-projectDuration"
+             formControlName="projectDuration" />
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['projectDuration'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
+    </div>
+  </div>
 
-    <!--  <div mat-dialog-actions align="end">
-        <button type="button" mat-flat-button color="primary" (click)="save()" [disabled]="editForm.invalid || this.newUploadedProjectContractFiles.length == 0 || !this.projectDto?.projectScheduleFileId">حفظ البيانات</button>
-    </div> -->
+  <!--<div class="row row-gap-3 mb-3">
+      <div class="col-12 col-lg-6">
+          <label for="licNum"
+                 class="form-label">نسبة الإنجاز</label>
+          <input type="number"
+                 class="form-control"
+                 id="control-achievementRate"
+                 formControlName="achievementRate" />
+          <div class="invalid-feedback d-block"
+               *ngIf="controls['achievementRate'].errors?.['required'] && showValidation">
+              حقل مطلوب
+          </div>
+      </div>
+      <div class="col-12 col-lg-6">
+          <label for="licNum"
+                 class="form-label">حالة التسويق</label>
+          <input type="text"
+                 class="form-control"
+                 id="control-marketingStatus"
+                 formControlName="marketingStatus" />
+          <div class="invalid-feedback d-block"
+               *ngIf="controls['marketingStatus'].errors?.['required'] && showValidation">
+              حقل مطلوب
+          </div>
+      </div>
+  </div>-->
+  <!--<div class="row row-gap-3 mb-3">
+      <div class="col-12 col-lg-6">
+          <label for="licNum"
+                 class="form-label">المنهج المتبع في التنفيذ</label>
+          <input type="text"
+                 class="form-control"
+                 id="control-implementationMethodology"
+                 formControlName="implementationMethodology" />
+          <div class="invalid-feedback d-block"
+               *ngIf="controls['implementationMethodology'].errors?.['required'] && showValidation">
+              حقل مطلوب
+          </div>
+      </div>
+  </div>-->
+
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-12">
+      <label for="licNum"
+             class="form-label"> <span class="required-star">*</span>رفع المنهج المتبع للمشروع</label>
+      <app-file-uploader (fileUploaded)="onProjectScheduleFileUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block"
+           *ngIf="!this.projectDto?.projectScheduleFileId && showValidation">
+        حقل مطلوب
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6"
+         *ngIf="projectDto && projectDto.projectScheduleFile">
+      <div class="key">عرض المنهج المتبع للمشروع</div>
+      <div class="value">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a [href]="baseUrl + projectDto.projectScheduleFile.filePath"
+           target="_blank"
+           id="link-projectScheduleFile">
+          {{projectDto.projectScheduleFile.fileDescription}}
+        </a>
+        <div class="value">
+          <span class="delete"
+                (click)="deletFile(projectDto.projectScheduleFile.id)">
+            <i class="material-icons text-danger">close</i>
+          </span>
+        </div>
+        <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-12">
+      <label for="licNum"
+             class="form-label">إرفاق ما يثبت تنفيذ المشاريع</label>
+      <app-file-uploader (fileUploaded)="onProjectContractFilesUploaded($event)"></app-file-uploader>
+      <!--<div class="invalid-feedback d-block"
+           *ngIf="this.newUploadedProjectContractFiles.length == 0  && (!projectDto || !projectDto.projectContractFiles || !projectDto.projectContractFiles.length) && showValidation">
+          حقل مطلوب
+      </div>-->
+    </div>
+  </div>
+
+  <div class="row row-gap-3 mb-3">
+    <div class="col-12 col-lg-6"
+         *ngIf="projectDto && projectDto.projectContractFiles && projectDto.projectContractFiles.length > 0">
+      <div class="key">عرض ما يثبت تنفيذ المشاريع</div>
+      <div class="value"
+           *ngFor="let file of projectDto.projectContractFiles">
+        <span class="icon material-icons-outlined">content_copy</span>
+        <a [href]="baseUrl + file.sysFileManager?.filePath"
+           target="_blank"
+           id="link-projectContractFiles">
+          {{file.sysFileManager?.fileDescription}}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!--  <div mat-dialog-actions align="end">
+      <button type="button" mat-flat-button color="primary" (click)="save()" [disabled]="editForm.invalid || this.newUploadedProjectContractFiles.length == 0 || !this.projectDto?.projectScheduleFileId">حفظ البيانات</button>
+  </div> -->
 </form>

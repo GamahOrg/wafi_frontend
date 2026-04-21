@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
-import { customerResponse } from 'src/app/shared/models/customer.model';
+import { customerResponse, FacilityTypeCategory } from 'src/app/shared/models/customer.model';
 import { SocialInsuranceEmployeeLockUpList } from 'src/app/shared/models/social-insurance-employee-lock-up-list';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { QualificationCertifiedEngineerCreateUpdateDto } from '../../dataModels/qualification-certified-engineer-create-update-dto';
@@ -13,6 +11,8 @@ import { PopupData } from 'src/app/shared/models/popup.model';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { CertifiedEngineerDto } from '../../dataModels/certified-engineer-dto';
+import { ErrorCodes } from 'src/app/core/models/core.model';
+import { QualificationEngineerType } from '../../dataModels/qualification-engineer-type.model';
 
 @Component({
   selector: 'app-certified-facility-engineers-form',
@@ -21,14 +21,15 @@ import { CertifiedEngineerDto } from '../../dataModels/certified-engineer-dto';
 })
 export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestroy {
   userData: customerResponse | null = null;
+  models: CertifiedEngineerDto[] = [] as CertifiedEngineerDto[];
   subscriptions: Subscription[] = [];
+  facilityTypeCategory: FacilityTypeCategory | null = null;
+  readonly FacilityTypeCategoryEnum = FacilityTypeCategory;
   qualificationCertifiedEngineerDto: QualificationCertifiedEngineerCreateUpdateDto = new QualificationCertifiedEngineerCreateUpdateDto();
   socialInsuranceEmployeeList: SocialInsuranceEmployeeLockUpList[] = [];
   qualificationCertifiedEngineersForm = this._formBuilder.group({
-    engineerName: ['', [Validators.required]],
-    identityNumber: ['', [Validators.required]],
-    professionalLicenseNumber: ['', [Validators.required]],
-    qualificationEngineerType:[null,[Validators.required]]
+    identityNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+    hasCourses: [false],
   });
   showValidation = false;
   /**
@@ -46,10 +47,9 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
 
   ngOnInit(): void {
     this.obseveCustomerData();
-    this.observeCertifiedEngineersForm();
     this.observeCertifiedEngineerObj();
-    // this.GetLockUpEmps();
     this.observePopupEvents()
+    this.GetByFacilityId();
   }
 
   // popup
@@ -85,6 +85,9 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
         if (this.userData) {
           // this.GetByFacilityId();
           this.GetLockUpEmps()
+          if (this.userData.facilities && this.userData.facilities.length > 0) {
+            this.facilityTypeCategory = this.userData.facilities[0].facilityTypeCategory ?? null;
+          }
         }
       })
     )
@@ -94,14 +97,6 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     this.subscriptions.push(
       this.socialInsuranceEmployeeListService.getByFacilityId(this.userData?.facilities[0].id as string).subscribe((res) => {
         this.socialInsuranceEmployeeList = res;
-      })
-    )
-  }
-
-  observeCertifiedEngineersForm(): void {
-    this.subscriptions.push(
-      this.qualificationCertifiedEngineersForm.valueChanges.subscribe(changes => {
-        this.qualificationCertifiedEngineerDto.professionalLicenseNumber = this.controls.professionalLicenseNumber.value as string;
       })
     )
   }
@@ -126,16 +121,84 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     )
   }
 
+  delete(id: string) {
+    this.subscriptions.push(
+      this.certifiedEngineerService.Delete(id).subscribe(res => {
+        if (res.isDone) {
+          this.GetByFacilityId();
+          this.certifiedEngineerService.setCertifiedEngineerList(this.models.filter(m => m.id !== id));
+        }
+      })
+    )
+  }
+
+  GetByFacilityId() {
+    this.subscriptions.push(
+      this.certifiedEngineerService.GetAllFacilityById(this.userData?.facilities[0].id as string).subscribe(res => {
+        //this.models = res as CertifiedEngineerDto[];
+
+         const list = res as CertifiedEngineerDto[];
+                 switch (this.facilityTypeCategory) {
+                case FacilityTypeCategory.Accountant:
+                  this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Accountant);
+                  break;
+               case FacilityTypeCategory.Engineering:
+                  this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Engineering);
+                  break;
+                   case FacilityTypeCategory.Developer:
+                  this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Developer);
+                  break;
+                default:
+                  this.models = list
+                  break;
+                 }
+      })
+    )
+  }
+
+  private getQualificationEngineerType(): number {
+    const facilityTypeCategory = this.userData?.facilities[0]?.facilityTypeCategory;
+    // Accountant → QualificationEngineerType.Accountant = 2
+    // Engineering/Developer → QualificationEngineerType.Engineering = 1
+    if (facilityTypeCategory === FacilityTypeCategory.Accountant) {
+      return 2;
+    } else if (facilityTypeCategory === FacilityTypeCategory.Developer) {
+      return 3;
+    }
+    return 1;
+  }
+
+  isDeveloper(): boolean {
+    const facilityTypeCategory = this.userData?.facilities[0]?.facilityTypeCategory;
+    return facilityTypeCategory === FacilityTypeCategory.Developer;
+  }
+
+  get trainingName(): string {
+    switch (this.facilityTypeCategory) {
+      case FacilityTypeCategory.Developer:
+        return 'المطور العقاري لمشاريع البيع على الخارطة';
+      case FacilityTypeCategory.Accountant:
+        return 'المحاسب القانوني لمشاريع البيع على الخارطة';
+      case FacilityTypeCategory.Engineering:
+        return 'الاستشاري الهندسي لمشاريع البيع على الخارطة';
+      default:
+        return 'الدورة التدريبية المطلوبة';
+    }
+  }
+
+  isRequiredCourseNotCompleted = false;
   save(): void {
+    this.isRequiredCourseNotCompleted=false;
     if (this.qualificationCertifiedEngineersForm?.invalid) {
       this.showValidation = true;
       this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
       this.qualificationCertifiedEngineersForm?.markAllAsTouched();
       return;
     }
-    this.qualificationCertifiedEngineerDto.identityNumber = this.qualificationCertifiedEngineersForm.value.identityNumber as string;
-    this.qualificationCertifiedEngineerDto.engineerName = this.qualificationCertifiedEngineersForm.value.engineerName as string;
-    this.qualificationCertifiedEngineerDto.qualificationEngineerType = +this.qualificationCertifiedEngineersForm.value.qualificationEngineerType! as number;
+    const formValues = this.qualificationCertifiedEngineersForm.getRawValue();
+    this.qualificationCertifiedEngineerDto.identityNumber = formValues.identityNumber as string;
+    this.qualificationCertifiedEngineerDto.hasCourses = formValues.hasCourses as boolean;
+    this.qualificationCertifiedEngineerDto.qualificationEngineerType = this.getQualificationEngineerType();
     this.qualificationCertifiedEngineerDto.facilityId = this.userData?.facilities[0].id as string;
     this.qualificationCertifiedEngineerDto.id = this.qualificationCertifiedEngineerDto.id ? this.qualificationCertifiedEngineerDto.id : "00000000-0000-0000-0000-000000000000";
     this.subscriptions.push(
@@ -143,6 +206,39 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
         if (res.isDone) {
           this.certifiedEngineerService.setCertifiedEngineerList(res.data as CertifiedEngineerDto[]);
           this.closeDialog();
+        } else {
+          if(res.errorCode)
+          this.isRequiredCourseNotCompleted = res.errorCode == ErrorCodes.RequiredCourseNotCompleted;
+        }
+      })
+    )
+  }
+
+  saveAndAddNew(): void {
+    this.isRequiredCourseNotCompleted = false;
+    if (this.qualificationCertifiedEngineersForm?.invalid) {
+      this.showValidation = true;
+      this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
+      this.qualificationCertifiedEngineersForm?.markAllAsTouched();
+      return;
+    }
+    const formValues = this.qualificationCertifiedEngineersForm.getRawValue();
+    this.qualificationCertifiedEngineerDto.identityNumber = formValues.identityNumber as string;
+    this.qualificationCertifiedEngineerDto.hasCourses = formValues.hasCourses as boolean;
+    this.qualificationCertifiedEngineerDto.qualificationEngineerType = this.getQualificationEngineerType();
+    this.qualificationCertifiedEngineerDto.facilityId = this.userData?.facilities[0].id as string;
+    this.qualificationCertifiedEngineerDto.id = this.qualificationCertifiedEngineerDto.id ? this.qualificationCertifiedEngineerDto.id : "00000000-0000-0000-0000-000000000000";
+    this.subscriptions.push(
+      this.certifiedEngineerService.Save(this.qualificationCertifiedEngineerDto).subscribe(res => {
+        if (res.isDone) {
+          this.certifiedEngineerService.setCertifiedEngineerList(res.data as CertifiedEngineerDto[]);
+          this.GetByFacilityId();
+          this.qualificationCertifiedEngineerDto = new QualificationCertifiedEngineerCreateUpdateDto();
+          this.qualificationCertifiedEngineersForm.reset({ identityNumber: '', hasCourses: false });
+          this.showValidation = false;
+        } else {
+          if (res.errorCode)
+            this.isRequiredCourseNotCompleted = res.errorCode == ErrorCodes.RequiredCourseNotCompleted;
         }
       })
     )
@@ -157,3 +253,5 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 }
+
+

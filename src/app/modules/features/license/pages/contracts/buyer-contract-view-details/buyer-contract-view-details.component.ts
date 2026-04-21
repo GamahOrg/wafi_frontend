@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Subject, takeUntil, finalize, Subscription } from 'rxjs';
+import { Subject, takeUntil, finalize, Subscription, Observable, tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { RealStateDeveloperService } from '../../../services/real-state-developer.service';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
@@ -12,8 +12,14 @@ import {
   CreateCancellationRequestDto
 } from '../../../models/real-state-developer-dto';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
-import { confirmationPopupData } from 'src/app/shared/models/popup.model';
+import { confirmationPopupData, PopupData } from 'src/app/shared/models/popup.model';
 import { RequestNotesService } from 'src/app/shared/services/requestNotes/request-notes.service';
+import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
+import { RatingTypeEnum } from 'src/app/shared/models/enums/rating.enum';
+import { RatingStatusDto, UserRatingUpdateDto } from 'src/app/shared/models/rating-request.model';
+import { RatingService } from 'src/app/shared/services/rating/rating.service';
+import { RatingComponent } from 'src/app/shared/components/rating/rating.component';
+import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 
 @Component({
   selector: 'app-buyer-contract-view-details',
@@ -30,6 +36,8 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
   // IDs and references
   contractId: string = '';
   licenseProjectId: string = '';
+  contractDocumentationRatingStatus!: RatingStatusDto;
+  private contractRatingType: RatingTypeEnum = RatingTypeEnum.BuyerContractDocumentation;
 
   // UI state properties
   isLoading: boolean = false;
@@ -54,13 +62,132 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
     private cancellationRequestService: LicenseProjectBuyerCancellationRequestService,
     private toastr: ToastrService,
     private popupService: PopupService,
-    private requestNotesService: RequestNotesService
+    private requestNotesService: RequestNotesService,
+    private _ratingService: RatingService,
+    private _toastrNotificatioService: ToastrNotificatioService, 
+    
   ) { }
 
   ngOnInit(): void {
     this.initializeComponent();
     this.observePopupEvents();
+    this.observePopupConfirmAction();
   }
+
+      private checkRating(): Observable<any> {
+        const isOldContract = this.contractDetails?.isOldContract === true;
+        this.contractRatingType = isOldContract
+          ? RatingTypeEnum.BuyerContractDocumentation
+          : RatingTypeEnum.BuyerUnifiedContractDocumentation;
+
+        return this._ratingService.getBuyerContractDocumentationRatingStatus(isOldContract).pipe(
+          tap((licenseRes) => {
+            if (licenseRes)
+              this.contractDocumentationRatingStatus = licenseRes as RatingStatusDto;
+
+            if (this.contractDocumentationRatingStatus?.shouldShowRating) {
+              this.openRatingModal();
+            }
+          }),
+        );
+      }
+  openRatingModal(index?: number): void {
+      let Data = {
+        id: 'BuyerContractDocumentation' + index,
+        minWidth: '30vw',
+        iconClass: 'hgi hgi-stroke hgi-message-question',
+        title: `قيّم تجربتك معنا`,
+        component: RatingComponent,
+        data: {
+          ratingType: this.contractRatingType,
+        },
+        buttons: [
+          {
+            icon: '',
+            title: 'تخطي',
+            actionType: ButtonType.cancel,
+            isVisable: true,
+            isDisables: false,
+          },
+          {
+            icon: '',
+            title: 'ارسل التقييم',
+            actionType: ButtonType.confirm,
+            isVisable: true,
+            isDisables: false,
+          },
+        ],
+      } as PopupData;
+      this.popupService.updatePopupData(Data);
+    }
+  
+    observePopupConfirmAction(): void {
+      this.subscriptions.push(
+        this.popupService.cancelAction.subscribe((res) => {
+          const ratingData = this._ratingService.currentRatingData.value;
+  
+          if (!ratingData) return;
+          if (res && ratingData.id.includes('BuyerContractDocumentation'))
+            this.dismissRating(ratingData);
+        }),
+      );
+      this.subscriptions.push(
+        this.popupService.confirmAction.subscribe(() => {
+          debugger;
+          const ratingData = this._ratingService.currentRatingData.value;
+  
+          if (!ratingData) return;
+          if (
+            ratingData &&
+            ratingData.id.includes('BuyerContractDocumentation')
+          ) {
+            this.submitRating(ratingData);
+          }
+        }),
+      );
+    }
+  
+    private dismissRating(PopupData: any) {
+      this._ratingService
+        .dismissRating({
+          ratingType: this.contractRatingType,
+          licenseProjectId: this.contractDocumentationRatingStatus.licenseProjectId,
+          triggerType: this.contractDocumentationRatingStatus.triggerType,
+        })
+        .subscribe((res) => {
+          this._toastrNotificatioService.showInfo(
+            res.message || 'تم تخطي التقييم ',
+          );
+          this.popupService.dismissDialog();
+  
+          
+        });
+        this._ratingService.currentRatingData.next(null);
+    }
+  
+    submitRating(PopupData: UserRatingUpdateDto) {
+        this._ratingService
+          .createRating({
+            ratingType: this.contractRatingType,
+            ratingValue: PopupData.ratingValue,
+            notes: PopupData.notes,
+            browserType: PopupData.browserType,
+            licenseProjectId: this.contractDocumentationRatingStatus.licenseProjectId || undefined,
+            triggerType: this.contractDocumentationRatingStatus.triggerType,
+          })
+          .subscribe((res) => {
+            this._toastrNotificatioService.showSuccess(
+              res.message || 'تم إرسال التقييم بنجاح',
+            );
+            this.popupService.dismissDialog();
+    
+          });
+  
+        this._ratingService.currentRatingData.next(null);
+        }
+  
+
+
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -159,6 +286,7 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
             this.contractDetails = res.data;
             if (this.contractDetails) {
               this.loadContractPdf();
+              this.checkRating().subscribe();
             }
           } else {
             this.errorMessage = 'لم يتم العثور على بيانات العقد';

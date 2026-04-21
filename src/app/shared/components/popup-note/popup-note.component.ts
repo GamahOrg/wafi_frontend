@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { PopupService } from '../../services/popup/popup.service';
 import { notePopupData } from '../../models/popup.model';
 import { Router } from '@angular/router';
+import { PopupData } from "src/app/shared/models/popup.model";
 
 @Component({
   selector: 'app-popup-note',
@@ -50,6 +51,18 @@ export class PopupNoteComponent implements OnInit, OnDestroy {
   navigatAndClose(route: string | '') {
     this._router.navigate([route]);
     this.closeModal();
+  }
+
+  openAnotherPopup(component: any, data: any,title : string,id?: string){
+    this._popupService.dismissDialog();
+    this._popupService.updatePopupData({
+        id: id,
+        title: title,
+        component: component,
+        submitButtonTitle: 'تأكيد',
+        disableClose: true,
+        data: data,
+      } as PopupData);
   }
 
   ngOnDestroy(): void {

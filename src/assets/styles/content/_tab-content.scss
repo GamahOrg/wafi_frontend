@@ -150,6 +150,10 @@
   border-start-end-radius: $border-radius-lg;
   overflow: visible !important;
 
+  &:first-of-type {
+    border-top-width: 1px;
+  }
+
   &+.tab-data-header {
     margin-top: 1rem;
   }
@@ -188,57 +192,5 @@
   .subtitle {
     font-size: $font-size-sm;
     color: $darkgray;
-  }
-
-  .key,
-  .value {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    .icon {
-      font-size: 1.5rem;
-    }
-  }
-
-  .key {
-
-    &,
-    &label {
-      font-size: 1rem;
-      font-weight: 500;
-      color: #5d5d5d;
-    }
-
-    &+.value {
-      margin-top: 0.5rem;
-    }
-
-    &:has(.icon) {
-      &+.value {
-        margin-inline-start: 2rem;
-      }
-    }
-  }
-
-  .value {
-    font-weight: 600;
-
-    &,
-    a {
-      color: $headings-color;
-    }
-
-    &+.value {
-      margin-top: 0.5rem;
-    }
-
-    .delete {
-      cursor: pointer;
-
-      [class^="material-icons"] {
-        font-size: $font-size-sm;
-      }
-    }
   }
 }

@@ -1,0 +1,42 @@
+<div class="tab-data-header">
+  <h6 class="title">{{ pageTitle }}</h6>
+
+  <div class="opposite-title" *ngIf="canUpdate">
+    <button class="btn btn-outline-primary" (click)="openDialog('')">
+      <i class="icon hgi hgi-stroke hgi-add-01"></i> إضافة
+    </button>
+  </div>
+</div>
+
+<div class="tab-data-section">
+  <div class="table-responsive" *ngIf="models && models.length > 0">
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th>اسم الموظف</th>
+          <th>رقم الهوية</th>
+          <th>رقم العضوية</th>
+          <th>المهنة</th>
+          <th class="w-25"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let eng of models">
+          <td>{{eng.engineerName}}</td>
+          <td>{{eng.identityNumber}}</td>
+          <td>{{eng.membershipNumber}}</td>
+          <td>{{ eng.qualificationEngineerType === 1 ? 'مهندس' : 'موظف' }}</td>
+          <td>
+            <div class="d-flex align-items-center justify-content-end column-gap-2">
+              <button type="button" class="btn-icon btn btn-danger" *ngIf="canUpdate" (click)="delete(eng.id)">
+                <i class="hgi hgi-stroke hgi-delete-03"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-no-data [title]="'لا توجد بيانات'" [showText]="false" [showCompleteBtn]="false" *ngIf="!models || models.length === 0"></app-no-data>
+</div>

@@ -7,6 +7,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 import { NationalAddressService } from '../../services/facilityProfile/national-address-service/national-address.service';
 import { NationalAddressesFormComponent } from '../national-addresses-form/national-addresses-form.component';
+import { FacilityProfileService } from '../../services/facilityProfile/facility-profile.service';
 
 @Component({
   selector: 'app-national-addresses',
@@ -18,14 +19,21 @@ export class NationalAddressesComponent implements OnInit, OnDestroy {
   nationalAddress: nationalAddressResponseFE = new nationalAddressResponseFE(new nationalAddressResponseBE());
   subscriptions: Subscription[] = [];
   userData: customerResponse | null = null;
+  canUpdate: boolean = true;
 
   constructor(
     private _nationalAddressService: NationalAddressService, private _userDataService: UserDataService,
-    private _popupService: PopupService) { }
+    private _popupService: PopupService,
+    private _facilityProfileService: FacilityProfileService) { }
 
   ngOnInit() {
     this.obseveCustomerData();
     this.observeCurrentObj();
+    this.subscriptions.push(
+      this._facilityProfileService.getAvailabilityToUpdate().subscribe((res: boolean) => {
+        this.canUpdate = res;
+      })
+    );
   }
 
   obseveCustomerData(): void {
@@ -40,24 +48,42 @@ export class NationalAddressesComponent implements OnInit, OnDestroy {
   }
 
   GetFacilityById() {
+    const emptyAddress = new nationalAddressResponseFE(new nationalAddressResponseBE());
+    this.nationalAddress = emptyAddress;
+    this._nationalAddressService.SetSubjectObj(emptyAddress);
+
     this.subscriptions.push(
-      //this.userData?.Id as string
       this._nationalAddressService.GetFacilityById(this.userData?.facilities[0].id as string).subscribe(res => {
-        if (res) {
-          this.nationalAddress = res;
-          this._nationalAddressService.SetSubjectObj(this.nationalAddress);
-        }
+        const next = res ?? emptyAddress;
+        this.nationalAddress = next;
+        this._nationalAddressService.SetSubjectObj(next);
       })
     )
   }
 
   openDialog(): void {
     let Data = {
-      title: "عنوان المنشأة",
-      component: NationalAddressesFormComponent
+      title: "اضافة بيانات عنوان المنشأة ",
+      icon: "hgi hgi-stroke hgi-profile",
+      component: NationalAddressesFormComponent,
+      buttons: [
+        {
+          icon: '',
+          title: 'إلغاء',
+          actionType: 'cancel',
+          isVisable: true,
+          isDisables: false,
+        },
+        {
+          icon: '',
+          title: 'حفظ البيانات',
+          actionType: 'confirm',
+          isVisable: true,
+          isDisables: false,
+        },
+      ],
     } as PopupData;
-    let dialogRef = this._popupService.updatePopupData(Data);
-    // dialogRef.afterClosed().subscribe(_=> this.observeCurrentObj());
+    this._popupService.updatePopupData(Data);
   }
 
   observeCurrentObj(): void {

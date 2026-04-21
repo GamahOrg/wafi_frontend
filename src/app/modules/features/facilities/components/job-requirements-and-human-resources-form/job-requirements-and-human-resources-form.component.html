@@ -1,66 +1,68 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="row row-gap-3 mb-3">
-            <div class="col-12 col-lg-6">
-                <label for=""
-                       class="form-label">ملف الهيكل التنظيمي</label>
-                <app-file-uploader [data]="singleFileUploaderData"
-                                   (fileUploaded)="onCreditOrganizationalStructureFileUploaded($event)"></app-file-uploader>
-            </div>
-            <div class="col-12 col-lg-4 mt-5">
-                <div id="Help"
-                     class="form-text">
-                    <span class="icon">
-                        <i class="material-icons">fiber_manual_record</i>
-                    </span>
-                    <p class="text">
-                        يجب أن يكون الملف على مطبوعات الشركة ومختوم بختم الشركة
-                    </p>
-                </div>
-            </div>
+  <div class="row row-gap-4">
+    <!-- ملف الهيكل التنظيمي -->
+    <div class="col-12 col-lg-6">
+      <div class="upload-card">
+        <label class="form-label"><span class="required-star">*</span> ملف الهيكل التنظيمي</label>
+        
+        <app-file-uploader [data]="singleFileUploaderData"
+                           (fileUploaded)="onCreditOrganizationalStructureFileUploaded($event)"></app-file-uploader>
+        <div class="invalid-feedback d-block"
+             *ngIf="!institutionalCapacityAndHrRequirements?.organizationalStructureFileId && showValidation">
+          حقل مطلوب
         </div>
-        <div class="row row-gap-3 mb-3">
-            <div class="col-12 col-lg-6">
-                <label for=""
-                       class="form-label"> شهادة لائحة تنظيم العمل</label>
-                <app-file-uploader [data]="singleFileUploaderData"
-                                   (fileUploaded)="onCreditLaborRegulationCertificateFileUploaded($event)"></app-file-uploader>
-            </div>
-            <div class="col-12 col-lg-4 mt-5">
-                <div id="Help"
-                     class="form-text">
-                    <span class="icon">
-                        <i class="material-icons">fiber_manual_record</i>
-                    </span>
-                    <p class="text">
-                        شهادة اعتماد لائحة تنظيم العمل الصادرة بالرسوم الملكي رقم (م/51) وتاريخ ٢٣/٨/ ١٤٢٦هـ، تصدر من
-                        وزارة العمل
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="row row-gap-3 mb-3">
-            <div class="col-12 col-lg-6">
-                <label for=""
-                       class="form-label"> لائحة إدارة السلامة والصحة المهنية</label>
-                <app-file-uploader [data]="singleFileUploaderData"
-                                   (fileUploaded)="onCreditOccupationalSafetyAndHealthFileUploaded($event)"></app-file-uploader>
-            </div>
-            <div class="col-12 col-lg-6">
-                <label for=""
-                       class="form-label"> شهادة نطاق السعودة</label>
-                <app-file-uploader [data]="singleFileUploaderData"
-                                   (fileUploaded)="onCreditSaudizationCertificateFileUploaded($event)"></app-file-uploader>
-            </div>
-            <div class="col-12 col-lg-6">
-                <label for=""
-                       class="form-label">ملفات برامج المسؤولية الاجتماعية</label>
-                <app-file-uploader [data]="mueltiFilesUploaderData"
-                                   (fileUploaded)="onSocialResponsibilityProgramFilesUploaded($event)"></app-file-uploader>
-            </div>
-        </div>
+      </div>
     </div>
-    <!-- <div mat-dialog-actions align="end">
-        <button type="button" mat-flat-button color="primary" (click)="save()" [disabled]="false">حفظ البيانات</button>
-    </div> -->
+
+    <!-- شهادة لائحة تنظيم العمل -->
+    <div class="col-12 col-lg-6">
+      <div class="upload-card">
+        <label class="form-label"><span class="required-star">*</span> شهادة لائحة تنظيم العمل</label>
+        
+        <app-file-uploader [data]="singleFileUploaderData"
+                           (fileUploaded)="onCreditLaborRegulationCertificateFileUploaded($event)"></app-file-uploader>
+        <div class="invalid-feedback d-block"
+             *ngIf="!institutionalCapacityAndHrRequirements?.laborRegulationCertificateFileId && showValidation">
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
+    <!-- لائحة إدارة السلامة والصحة المهنية -->
+    <div class="col-12 col-lg-6">
+      <div class="upload-card">
+        <label class="form-label"><span class="required-star">*</span> لائحة إدارة السلامة والصحة المهنية</label>
+        
+        <app-file-uploader [data]="singleFileUploaderData"
+                           (fileUploaded)="onCreditOccupationalSafetyAndHealthFileUploaded($event)"></app-file-uploader>
+        <div class="invalid-feedback d-block"
+             *ngIf="!institutionalCapacityAndHrRequirements?.occupationalSafetyAndHealthFileId && showValidation">
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
+    <!-- شهادة نطاق السعودة -->
+    <div class="col-12 col-lg-6">
+      <div class="upload-card">
+        <label class="form-label"><span class="required-star">*</span> شهادة نطاق السعودة</label>
+        
+        <app-file-uploader [data]="singleFileUploaderData"
+                           (fileUploaded)="onCreditSaudizationCertificateFileUploaded($event)"></app-file-uploader>
+        <div class="invalid-feedback d-block"
+             *ngIf="!institutionalCapacityAndHrRequirements?.saudizationCertificateFileId && showValidation">
+          حقل مطلوب
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="upload-card">
+        <label class="form-label">ملفات برامج المسؤولية الاجتماعية</label>
+        
+        <app-file-uploader [data]="mueltiFilesUploaderData"
+                           (fileUploaded)="onSocialResponsibilityProgramFilesUploaded($event)"></app-file-uploader>
+      </div>
+    </div>
+  </div>
 </div>

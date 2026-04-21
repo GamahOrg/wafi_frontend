@@ -24,5 +24,7 @@ export enum LicenseProjectRequestTypeEnum {
     CancellationOfTheLicenseToSellTheLicensedRealEstateProject=23,
     CompletionOfPartOfTheRealEstateProject=24,
     CompleteRealEstateProject=25,
-    RequestToChangeThePathOfTheRealEstateProjectToTheThirdPath=26,  
+    RequestToChangeThePathOfTheRealEstateProjectToTheThirdPath=26,
+    UnitCorrection = 27,
+    UpgradeQualification=28  
 }

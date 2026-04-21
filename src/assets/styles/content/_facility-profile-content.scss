@@ -26,6 +26,18 @@
     background-color: $theme-light;
   }
 
+  .key-value {
+    .key {
+      font-size: $font-size-xs;
+      color: $darkgray;
+    }
+
+    .value {
+      font-size: $font-size-sm;
+      color: $headings-color;
+    }
+  }
+
   .alert {
     flex-wrap: wrap;
   }

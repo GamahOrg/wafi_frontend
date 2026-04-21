@@ -1,143 +1,206 @@
-<div
-  class="commercialRegistrationComponent"
-  id="form-commercialRegistrationComponent"
->
-  <form [formGroup]="facilityForm" id="form-facilityForm" *ngIf="!viewMode">
-    <div class="row row-gap-3">
-      <div class="col-12 col-lg-6">
-        <div class="form-group">
-          <label for="commercialRegistrationNo" class="form-label">{{
-            localization.commercialRegistrationNo
+<form [formGroup]="facilityForm" id="form-facilityForm" *ngIf="!viewMode">
+  <div class="row row-gap-3">
+    <div class="col-12 col-lg-6">
+      <div class="form-group">
+        <label for="commercialRegistrationNo" class="form-label">{{
+          localization.commercialRegistrationNo
           }}</label>
-          <input
-            type="text"
-            formControlName="commercialRegistrationNo"
-            class="form-control"
-            id="control-commercialRegistrationNo"
-            [ngClass]="{
+        <input type="text" formControlName="commercialRegistrationNo" class="form-control" id="control-commercialRegistrationNo" [ngClass]="{
               'is-invalid':
                 commercialRegistrationNo.touched &&
                 commercialRegistrationNo.errors
-            }"
-          />
-          <div *ngIf="commercialRegistrationNo.errors" class="invalid-feedback d-block">
-            <div *ngIf="commercialRegistrationNo.errors?.['required']">
-              {{ localization.requiredErrorMsg }}
-            </div>
-            <div *ngIf="commercialRegistrationNo.errors?.['pattern']">
-              {{ localization.pattern }}
-            </div>
-            <div
-              *ngIf="commercialRegistrationNo.errors?.['maxlength'] || commercialRegistrationNo.errors?.['minlength']"
-            >
-              {{ localization.maxLengthErrorMsg }}
-            </div>
+            }" />
+        <div *ngIf="commercialRegistrationNo.errors" class="invalid-feedback d-block">
+          <div *ngIf="commercialRegistrationNo.errors?.['required']">
+            {{ localization.requiredErrorMsg }}
+          </div>
+          <div *ngIf="commercialRegistrationNo.errors?.['pattern']">
+            {{ localization.pattern }}
+          </div>
+          <div *ngIf="commercialRegistrationNo.errors?.['maxlength'] || commercialRegistrationNo.errors?.['minlength']">
+            {{ localization.maxLengthErrorMsg }}
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="actions">
-      <button
-        class="btn btn-primary"
-        id="btn-onClickOnVerification"
-        (click)="onClickOnVerification()"
-        [disabled]="facilityForm.invalid"
-      >
-        {{ localization.verification }}
-      </button>
-    </div>
-  </form>
-
-  <div *ngIf="viewMode">
-    <div class="alert alert-success" role="alert">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example check_circle icon"
-        fontIcon="check_circle"
-      ></mat-icon>
-      <div class="px-1">
-        {{ localization.alert }}
-        {{ facilityData.entity700Number }}
-      </div>
-    </div>
-
-    <div class="tab-data-section mt-4">
-      <h6 class="title">{{ localization.title }}</h6>
-      <div class="row row-gap-4">
-        <div class="col-12 col-lg-6">
-          <div class="key">{{ localization.startDateLabel }}</div>
-          <div class="value">
-            <span class="icon material-icons">calendar_today</span>
-            {{ facilityData.commercialRegisterStartDate | date : "MMM d, y" }}
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="key">{{ localization.endDateLabel }}</div>
-          <div class="value">
-            <span class="icon material-icons">calendar_today</span>
-            {{ facilityData.commercialRegisterEndDate | date : "MMM d, y" }}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-data-section">
-      <h2 class="title mb-2">{{ localization.facilityData }}</h2>
-      <div class="row row-gap-4">
-        <div class="col-12 col-lg-6">
-          <div class="key">{{ localization.commercialRegisterNumber }}</div>
-          <div class="value">
-            <span class="icon material-icons">blinds</span>
-            {{ facilityData.commercialRegisterNumber }}
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="key">{{ localization.facilityName }}</div>
-          <div class="value">
-            <span class="icon material-icons">blinds</span>
-            {{ facilityData.facilityName }}
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="key">{{ localization.facilityType }}</div>
-          <div class="value">
-            <span class="icon material-icons">blinds</span>
-            {{ facilityData.facilityType }}
-          </div>
-        </div>
-        <div
-          class="col-12 col-lg-6"
-          *ngIf="facilityData.facilityBusinessTypes.length > 0"
-        >
-          <div class="key">{{ localization.facilityActivities }}</div>
-          <div
-            class="value"
-            *ngFor="let activity of facilityData.facilityBusinessTypes"
-          >
-            <span class="icon material-icons">blinds</span>
-            {{ activity.businessType }}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button
-        class="btn btn-outline-primary"
-        id="btn-onClickOnPrevious"
-        (click)="onClickOnPrevious()"
-      >
-        {{ localization.previous }}
-      </button>
-      <button
-        class="btn btn-primary"
-        id="btn-onClickOnNext"
-        color="primary"
-        (click)="onClickOnNext()"
-      >
-        {{ localization.next }}
-      </button>
     </div>
   </div>
-</div>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="btn-onClickOnVerification" (click)="onClickOnVerification()" [disabled]="facilityForm.invalid">
+      {{ localization.verification }}
+    </button>
+  </div>
+</form>
+
+<ng-container *ngIf="viewMode && facilityPreview">
+  <div class="alert alert-success" role="alert">
+    <mat-icon aria-hidden="false" aria-label="Example check_circle icon" fontIcon="check_circle"></mat-icon>
+    <div class="px-1">
+      {{ localization.alert }}
+      {{ facilityPreview.entity700Number }}
+    </div>
+  </div>
+
+  <h6 class="mt-4 mb-3">{{ localization.title }}</h6>
+  <!-- <div class="row row-gap-4">
+    <div class="col-12 col-lg-6">
+      <div class="key">{{ localization.startDateLabel }}</div>
+      <div class="value">
+        <span class="icon material-icons">calendar_today</span>
+        {{ facilityPreview.commercialRegisterStartDate | date : "MMM d, y" }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">{{ localization.endDateLabel }}</div>
+      <div class="value">
+        <span class="icon material-icons">calendar_today</span>
+        {{ facilityPreview.commercialRegisterEndDate | date : "MMM d, y" }}
+      </div>
+    </div>
+  </div> -->
+
+  <h6 class="mt-4 mb-3">{{ localization.facilityData }}</h6>
+  <div class="row row-gap-4">
+
+    <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">رقم السجل التجاري</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityPreview.commercialRegisterNumber }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">نوع المنشأة</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityPreview.facilityType }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">تاريخ إصدار السجل التجاري</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-calendar-04"></i></span>
+            <span>{{ facilityPreview.commercialRegisterStartDate | date: "MM/dd/yyyy" }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="key-value">
+          <div class="key">اسم المنشأة</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityPreview.facilityName }}</span>
+          </div>
+        </div>
+      </div>
+
+
+
+    <!-- <div class="col-12 col-lg-6">
+      <div class="key">{{ localization.commercialRegisterNumber }}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{ facilityPreview.commercialRegisterNumber }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">{{ localization.facilityName }}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{ facilityPreview.facilityName }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">{{ localization.facilityType }}</div>
+      <div class="value">
+        <span class="icon material-icons">blinds</span>
+        {{ facilityPreview.facilityType }}
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key">{{ localization.startDateLabel }}</div>
+      <div class="value">
+        <span class="icon material-icons">calendar_today</span>
+        {{ facilityPreview.commercialRegisterStartDate | date : "MMM d, y" }}
+      </div>
+    </div> -->
+  </div>
+
+  <!-- Facility Activities Section -->
+  <ng-container *ngIf="facilityPreview.facilityBusinessTypes.length > 0">
+    <div class="d-flex flex-column align-items-start gap-3 mt-4">
+      <h6>{{ localization.facilityActivities }}</h6>
+
+      <ul class="list-styled disc">
+        <li *ngFor="let activity of displayedBusinessTypes">
+          <span class="small fw-medium">{{ activity.businessType }}</span>
+        </li>
+      </ul>
+
+      <!-- <div class="row row-gap-4 mt-2">
+      <div class="col-xl-3 col-md-4 col-12" *ngFor="let activity of displayedBusinessTypes">
+        <div class="card choice-card h-100 cursor-pointer">
+          <div class="card-body d-flex flex-column justify-content-center align-items-center gap-3">
+            <span class="icon"><i class="hgi hgi-stroke hgi-building-06"></i></span>
+            <h5 class="card-title">{{ activity.businessType }}</h5>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+      <button *ngIf="facilityPreview.facilityBusinessTypes.length > 3" class="btn btn-sm btn-outline-dark" (click)="toggleShowAll()">
+        {{ showAllBusinessTypes ? localization.showLess : localization.showMore }}
+        <i class="hgi hgi-stroke" [ngClass]="{'hgi-arrow-up-01': showAllBusinessTypes, 'hgi-arrow-down-01': !showAllBusinessTypes}"></i>
+      </button>
+    </div>
+  </ng-container>
+
+  <!-- Choose Facility Type Category Section -->
+  <ng-container *ngIf="facilityPreview.facilityTypeCategories.length > 0">
+    <h6 class="mt-4 mb-3">{{ localization.chooseFacilityType }}</h6>
+    <div class="row row-gap-4">
+      <div class="col-xl-3" *ngFor="let category of sortedCategories">
+        <div class="card choice-card h-100 cursor-pointer" [class.active]="isCategorySelected(category)" [class.incompatible]="!category.isCompatible" (click)="selectCategory(category)">
+          <div class="card-body d-flex flex-column justify-content-center align-items-center gap-3">
+            <ng-container *ngIf="categoryIcons[category.enumValue]">
+              <span class="icon" [innerHTML]="categoryIcons[category.enumValue]"></span>
+            </ng-container>
+            <ng-container *ngIf="!categoryIcons[category.enumValue]">
+              <span class="icon"><i class="hgi hgi-stroke hgi-building-06"></i></span>
+            </ng-container>
+
+            <h5 class="card-title">{{ category.nameAr }}</h5>
+
+            <span class="tag tag-success" *ngIf="category.isCompatible">
+              {{ localization.compatible }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Incompatible Warning Banner -->
+    <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert" *ngIf="showIncompatibleWarning">
+      <span class="icon">
+        <i class="hgi hgi-stroke hgi-alert-02"></i>
+      </span>
+      <span>{{ localization.incompatibleWarning }}</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="selectedCategory = null"></button>
+    </div>
+  </ng-container>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="btn-onClickOnCreateAccount" (click)="onClickOnNext()" [disabled]="!selectedCategory || isLinking || !selectedCategory.isCompatible">
+      <span *ngIf="isLinking" class="spinner-border spinner-border-sm ms-1"></span>
+      {{ localization.createAccount }}
+    </button>
+  </div>
+</ng-container>

@@ -1,55 +1,47 @@
-<div class="page">
+<div class="details-page">
   <div class="page-header">
     <div class="page-title">
-      <h2 class="title">تأكيد بيانات طلب {{renewRequest?'تجديد':''}} {{RequestCode}} </h2>
+      <h1 class="title md">بيانات الحساب </h1>
+      <!-- <h1 class="title md">تأكيد بيانات طلب {{renewRequest?'تجديد':''}} {{RequestCode}} </h1>
+      <p class="small">مدة التأهيل الذي تريد الحصول عليها <span class="tag">{{periodString}}</span></p> -->
     </div>
-    <p class="text">مدة التأهيل الذي تريد الحصول عليها - {{periodString}}</p>
   </div>
 
   <div class="page-section">
-    <div class="page-title">
-      <h2 class="title">بيانات الحساب الشخصى</h2>
-    </div>
+    <app-accordion></app-accordion>
 
-    <div class="page-content mb-5">
-      <app-accordion></app-accordion>
-    </div>
-  </div>
+    <form [formGroup]="declarationForm" id="form-declarationForm">
+      <div class="d-flex flex-column gap-3 mt-4">
+        <h6>يجب الموافقة على جميع الاقرارات يتم ارسال الطلب</h6>
 
-  <div class="page-section mt-auto">
-    <div class="page-title">
-      <h2 class="title">اقرار بصحة البيانات وتحمل المسؤولية</h2>
-    </div>
-
-    <div class="page-content">
-      <form [formGroup]="declarationForm" id="form-declarationForm">
-        <div class="form-check">
+        <label class="form-check form-check-normal">
           <input class="form-check-input" id="control-data" type="checkbox" formControlName="data" />
           <label class="form-check-label" for="data">
-            أقر بصحة البيانات والمستندات المقدمة منّا لطلب التأهيل ومطابقتها للواقع
+            أقر بصحة البيانات والمستندات المقدمة منّا لطلب التأهيل ومطابقتها للواقع.
           </label>
-        </div>
-        <div class="form-check">
+        </label>
+
+        <label class="form-check form-check-normal">
           <input class="form-check-input" id="control-resposability" type="checkbox" formControlName="resposability" />
           <label class="form-check-label" for="resposability">
-            نتحمل كامل المسؤولية في حال عدم صحة المستندات ومطابقتها معايير وتعليمات
-            الهيئة العامة للعقار
+            نتحمل كامل المسؤولية في حال عدم صحة المستندات ومطابقتها معايير وتعليمات الهيئة العامة للعقار.
           </label>
-        </div>
-        <div class="form-check">
+        </label>
+
+        <label class="form-check form-check-normal">
           <input class="form-check-input" id="control-promise" type="checkbox" formControlName="promise" />
           <label class="form-check-label" for="promise">
-            نتعهد بإخطار الهيئة العامة للعقار عن أي تغيير يطرأ بعد ذلك في البيانات الخاصة
-            بالتأهيل"
+            نتعهد بإخطار الهيئة العامة للعقار عن أي تغيير يطرأ بعد ذلك في البيانات الخاصة بالتأهيل.
           </label>
-        </div>
-        <div class="form-actions position-static p-0 bg-transparent border-top-0">
-          <button class="btn btn-outline-primary" id="btn-cancelRequest" (click)="cancelRequest()">إلغاء</button>
+        </label>
+
+        <div class="d-flex justify-content-center align-items-center gap-3">
+          <button class="btn btn-outline-secondary" id="btn-cancelRequest" (click)="cancelRequest()">إلغاء</button>
           <button class="btn btn-primary" id="btn-creatRequest" [disabled]="!declarationForm.valid" (click)="createOrRenewRequest()">
             إرسال الطلب
           </button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>

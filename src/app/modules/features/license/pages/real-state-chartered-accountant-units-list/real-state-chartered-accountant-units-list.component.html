@@ -1,0 +1,132 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3 align-items-center">
+      <div class="col-12 col-lg-6 col-xl">
+        <!-- Page Title -->
+        <div class="page-title mb-0">
+          <h5 class="title">{{projects.results[0]?.licenseProjectName}}</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6 col-xl-auto">
+        <!-- Filter Section -->
+        <div class="filter">
+          <div class="row g-2 align-items-center">
+            <!-- Search -->
+            <div class="col-12 col-lg-6 col-xl">
+              <div class="input-group search-input-group">
+                <span class="input-group-text">
+                  <i class="hgi hgi-stroke hgi-search-01"></i>
+                </span>
+                <input type="text" id="control-search" class="form-control" [value]="searchTerm" (input)="onSearchChange($any($event.target).value)" placeholder="البحث كود أو نموذج الوحدة" />
+              </div>
+            </div>
+
+            <!-- Status Filter -->
+            <div class="col-12 col-lg-6 col-xl-auto">
+              <select class="form-select" [(ngModel)]="statusFilter" (change)="onStatusFilterChange()">
+                <option [ngValue]="LicenseProjectUnitCodeStatus.All" disabled hidden>حالة الوحدة</option>
+                <option *ngFor="let status of unitCodeStatuses" [value]="status.id">
+                  {{ status.name }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Unit Type Filter -->
+            <div class="col-12 col-lg-6 col-xl-auto">
+              <select class="form-select" [(ngModel)]="unitType" (change)="onStatusFilterChange()">
+                <option [ngValue]=" LicenseProjectUnitType.All" disabled hidden>نوع الوحدة</option>
+                <option *ngFor="let type of subUnitTypes" [value]="type.id">
+                  {{ type.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Table -->
+  <ng-container *ngIf="!error && projects">
+    <ng-container *ngIf="projects.totalCount > 0">
+      <div class="table-responsive mb-3">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                  <input type="checkbox" class="form-check-input flex-shrink-0 mt-0" [checked]="selectAllChecked" (change)="toggleSelectAll($event)" />
+                  <!-- Change Status Button -->
+                  <button class="btn btn-sm btn-primary py-0" (click)="openChangeStatusPopup()" *ngIf="selectedUnitIds.size > 0">تحديد حالة الوحدة</button>
+                </div>
+              </th>
+              <th>نوع الوحدة</th>
+              <th>كود الوحدة</th>
+              <th>المساحة</th>
+              <th>نموذج الوحدة</th>
+              <th>السعر</th>
+              <th>تاريخ التسليم</th>
+              <th>حالة الوحدة</th>
+              <th class="w-0">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let project of projects.results">
+              <td>
+                <input type="checkbox" class="form-check-input" [checked]="selectedUnitIds.has(project.id)" [disabled]="!isUnitSelectable(project)" [style.opacity]="isUnitSelectable(project) ? '1' : '0.3'" (change)="toggleUnitSelection(project.id, project)" />
+              </td>
+              <td>{{ project.unitType }}</td>
+              <td>{{ project.unitCode }}</td>
+              <td>
+                <span class="d-inline-flex align-items-center gap-1">
+                  <i class="bi bi-rulers text-muted"></i>
+                  <span class="area-text">{{ project.unitSpace }}</span>
+                  <span class="text-muted">م²</span>
+                </span>
+              </td>
+              <td>{{ project.unitModel }}</td>
+              <td>
+              <span class="d-inline-flex align-items-center gap-1">
+                <span class="price-text">{{ project.price | number:'1.0-0' }}</span>
+                <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon">
+              </span>
+            </td>
+              <td>{{ project.deliveryOn | date : "dd/MM/yyyy" }}
+              </td>
+              <td>
+                <span class="status-pill" [ngClass]="{
+                    'blue': project.unitStatusId === LicenseProjectUnitCodeStatus.SoldOutsidePlatform,
+                    'orange': project.unitStatusId === LicenseProjectUnitCodeStatus.NotSold,
+                    'black': project.unitStatusId === LicenseProjectUnitCodeStatus.CharteredAccountantReview || project.unitStatusId === LicenseProjectUnitCodeStatus.PendingBuyerApproval,
+                    'green': project.unitStatusId === LicenseProjectUnitCodeStatus.Sold 
+                  }">
+
+                  {{ project.unitStatus }}
+                </span>
+              </td>
+              <td class="text-nowrap">
+                <button class="btn btn-outline-primary" (click)="viewDetails(project.id)">
+                  عرض تفاصيل الوحدة
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-auto">
+        <app-pagination></app-pagination>
+      </div>
+    </ng-container>
+
+    <!-- No Data -->
+    <ng-container *ngIf="projects?.totalCount === 0">
+      <div class="mt-4">
+        <app-no-data [showCompleteBtn]="false"></app-no-data>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
