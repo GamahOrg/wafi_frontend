@@ -15,7 +15,7 @@
         <h6 class="title me-auto">
           <span class="icon"
                 *ngIf="accordion.icon"><i [ngClass]="accordion.icon"></i></span>
-          <span>{{accordion.title}}</span>
+          <span [innerHTML]="accordion.title"></span>
         </h6>
 
         <span *ngIf="accordion?.['isViewed'] !== undefined">

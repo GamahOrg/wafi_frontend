@@ -22,7 +22,7 @@
         </ng-template>
 
         <ng-container *ngIf="selectedFilesName.length > 0">
-          <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload()">{{data.uploadAllLabel? data.uploadAllLabel : 'رفع الكل'}}</button>
+          <button class="btn btn-primary" [disabled]="!selectedFiles" (click)="upload()">{{data.uploadAllLabel? data.uploadAllLabel : 'رفع الملفات'}}</button>
           <button class="btn btn-outline-secondary" [disabled]="!selectedFiles" (click)="deleteAll()">{{data.removeAllLabel?data.removeAllLabel:'مسح الكل'}}</button>
         </ng-container>
       </div>

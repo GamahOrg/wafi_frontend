@@ -26,7 +26,7 @@ export class AddContractComponent implements OnInit, OnDestroy {
     allowedExtensionsText: 'jpg, jpeg, png أو pdf',
     size: 5120, // 5MB in KB
     buttonText: 'تصفح الملفات',
-    uploadAllLabel: 'رفع الكل',
+    uploadAllLabel: 'رفع الملفات',
     removeAllLabel: 'مسح الكل'
   } as FileUploader;
   contractForm: FormGroup;
