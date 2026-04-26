@@ -15,7 +15,7 @@ export class FileUploader {
     buttonText?: string = "اختر ملف";
     attachmentsAreaText?: string = "فقط قم بسحب الملفات وإفلاتها هنا";
     removeAllLabel?: string = "مسح الكل";
-    uploadAllLabel?: string = "رفع الكل";
+    uploadAllLabel?: string = "رفع الملفات";
     size: number =5120;
     allowedExtensionsText:string = 'jpg, jpeg أو png';
     /** Allowed files extensions in lower case */
