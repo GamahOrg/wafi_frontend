@@ -74,7 +74,7 @@ const routes: Routes = [
       },
       {
         path: Configuration.modules.userManagement,
-        canActivate: [FacilityTypeCategoryGuard],
+        // canActivate: [FacilityTypeCategoryGuard],
         data: {breadcrumb : 'إدارة المنشأة '},
         loadChildren: () =>
           import('../features/user-management/user-management.module').then((m) => m.UserManagementModule),

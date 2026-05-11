@@ -11,6 +11,7 @@ import {
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
 import { LicenseProjectBuyerCancellationRequestService } from '../../../services/license-project-buyer-cancellation-request.service';
 import  { RealStateDeveloperService } from '../../../services/real-state-developer.service';
+import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
 
 @Component({
   selector: 'app-contract-request-list',
@@ -61,7 +62,8 @@ export class ContractRequestListComponent implements OnInit, OnDestroy {
     private _paginationService: PaginationService,
     private realEstateService: RealStateDeveloperService,
     private cancellationRequestService: LicenseProjectBuyerCancellationRequestService,
-    private router: Router
+    private router: Router,
+    private userDataService: UserDataService
   ) {
   }
 
@@ -94,11 +96,13 @@ export class ContractRequestListComponent implements OnInit, OnDestroy {
   }
 
   loadRequests(): void {
+    const facilityId = this.userDataService.getCustomerDataFromLocalStorage()?.facilities?.[0]?.id;
     const params: LicenseProjectBuyerCancellationRequestFilterDto = {
       pageNumber: this.pagintationData.currentPage,
       pageSize: this.pagintationData.pageSize,
       searchText: this.searchTerm || undefined,
       statusId: this.statusFilter,
+      facilityId: facilityId || undefined,
     };
 
     this.subscriptions.push(

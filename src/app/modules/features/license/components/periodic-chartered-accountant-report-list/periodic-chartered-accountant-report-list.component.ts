@@ -100,6 +100,7 @@ export class PeriodicCharteredAccountantReportListComponent {
   }
   private loadNextPage(nextPage: number): void {
     this.pagintationData.currentPage = nextPage;
+    this.getReportList();
   }
   addReport()
   {

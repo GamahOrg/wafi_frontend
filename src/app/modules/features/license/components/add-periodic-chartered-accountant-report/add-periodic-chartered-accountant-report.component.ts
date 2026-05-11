@@ -444,6 +444,43 @@ export class AddPeriodicCharteredAccountantReportComponent {
     this.periodicCharteredAccountantReportBatchesFormArr.removeAt(index);
   }
 
+  formatNumberWithCommas(event: any): void {
+    const input = event.target as HTMLInputElement;
+    const controlName = input.getAttribute('formControlName');
+    if (!controlName) return;
+
+    let numericValue = input.value.replace(/,/g, '').replace(/[^\d.]/g, '');
+    const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    arabicNumbers.forEach((arabic, index) => {
+      numericValue = numericValue.replace(new RegExp(arabic, 'g'), englishNumbers[index]);
+    });
+
+    if (numericValue) {
+      this.PeriodicCharteredAccountantReportForm.get(controlName)?.setValue(parseFloat(numericValue), { emitEvent: false });
+    } else {
+      this.PeriodicCharteredAccountantReportForm.get(controlName)?.setValue(null, { emitEvent: false });
+    }
+
+    const parts = numericValue.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    input.value = parts.join('.');
+  }
+
+  onNumberInputFocus(event: any): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/,/g, '');
+  }
+
+  onNumberInputBlur(event: any): void {
+    this.formatNumberWithCommas(event);
+  }
+
+  onClosingBalanceInput(event: any): void {
+    this.formatNumberWithCommas(event);
+    this.calculateClosingBalance();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
