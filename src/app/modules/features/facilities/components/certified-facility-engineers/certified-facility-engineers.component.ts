@@ -35,17 +35,17 @@ export class CertifiedFacilityEngineersComponent {
       })
     );
   }
-facilityTypeCategory:FacilityTypeCategory=FacilityTypeCategory.Developer;
-   updatePageTitle(): void {
+  facilityTypeCategory: FacilityTypeCategory = FacilityTypeCategory.Developer;
+  updatePageTitle(): void {
     if (this.userData && this.userData.facilities && this.userData.facilities.length > 0) {
-     if( this.userData.facilities[0].facilityTypeCategory)
-      this.facilityTypeCategory = this.userData.facilities[0].facilityTypeCategory;
-      
-      if ( this.facilityTypeCategory === FacilityTypeCategory.Accountant) {
+      if (this.userData.facilities[0].facilityTypeCategory)
+        this.facilityTypeCategory = this.userData.facilities[0].facilityTypeCategory;
+
+      if (this.facilityTypeCategory === FacilityTypeCategory.Accountant) {
         this.pageTitle = 'محاسبي المكتب المعتمدين';
-      } else if ( this.facilityTypeCategory === FacilityTypeCategory.Engineering) {
+      } else if (this.facilityTypeCategory === FacilityTypeCategory.Engineering) {
         this.pageTitle = 'مهندسين المكتب المعتمدين';
-      } else if ( this.facilityTypeCategory === FacilityTypeCategory.Developer) {
+      } else if (this.facilityTypeCategory === FacilityTypeCategory.Developer) {
         this.pageTitle = 'مهندسين الشركة المعتمدين';
       } else {
         this.pageTitle = 'موظفين الشركة المعتمدين'; // Default fallback
@@ -53,16 +53,15 @@ facilityTypeCategory:FacilityTypeCategory=FacilityTypeCategory.Developer;
     }
 
     this._certifiedEngineerService.getCertifiedEngineerlist().subscribe((list) => {
-      debugger
       switch (this.facilityTypeCategory) {
         case FacilityTypeCategory.Accountant:
-          this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Accountant);
+          this.models = list.filter(x => x.qualificationEngineerType == QualificationEngineerType.Accountant);
           break;
-       case FacilityTypeCategory.Engineering:
-          this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Engineering);
+        case FacilityTypeCategory.Engineering:
+          this.models = list.filter(x => x.qualificationEngineerType == QualificationEngineerType.Engineering);
           break;
-           case FacilityTypeCategory.Developer:
-          this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Developer);
+        case FacilityTypeCategory.Developer:
+          this.models = list.filter(x => x.qualificationEngineerType == QualificationEngineerType.Developer);
           break;
         default:
           this.models = list
@@ -88,21 +87,21 @@ facilityTypeCategory:FacilityTypeCategory=FacilityTypeCategory.Developer;
   GetByFacilityId() {
     this.subscriptions.push(
       this._certifiedEngineerService.GetAllFacilityById(this.userData?.facilities[0].id as string).subscribe(res => {
-       const list = res as CertifiedEngineerDto[];
-         switch (this.facilityTypeCategory) {
-        case FacilityTypeCategory.Accountant:
-          this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Accountant);
-          break;
-       case FacilityTypeCategory.Engineering:
-          this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Engineering);
-          break;
-           case FacilityTypeCategory.Developer:
-          this.models = list.filter(x=>x.qualificationEngineerType==QualificationEngineerType.Developer);
-          break;
-        default:
-          this.models = list
-          break;
-      }
+        const list = res as CertifiedEngineerDto[];
+        switch (this.facilityTypeCategory) {
+          case FacilityTypeCategory.Accountant:
+            this.models = list.filter(x => x.qualificationEngineerType == QualificationEngineerType.Accountant);
+            break;
+          case FacilityTypeCategory.Engineering:
+            this.models = list.filter(x => x.qualificationEngineerType == QualificationEngineerType.Engineering);
+            break;
+          case FacilityTypeCategory.Developer:
+            this.models = list.filter(x => x.qualificationEngineerType == QualificationEngineerType.Developer);
+            break;
+          default:
+            this.models = list
+            break;
+        }
 
       })
     )
@@ -118,39 +117,39 @@ facilityTypeCategory:FacilityTypeCategory=FacilityTypeCategory.Developer;
   }
 
   openDialog(id: string): void {
-  if (id) {
-    let eng = this.models.filter(x => x.id == id)[0] as CertifiedEngineerDto;
-    this._certifiedEngineerService.SetFCertifiedEngineerObj(eng);
-  }
-  
-  // Get facility type to determine the correct title
-  let dialogTitle = 'مهندس الشركة المعتمد'; // Default title
-  
-  this.subscriptions.push(
-    this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-      if (res && res.facilities && res.facilities.length > 0) {
-        const facilityTypeCategory = res.facilities[0].facilityTypeCategory;
-        
-        if (facilityTypeCategory === FacilityTypeCategory.Accountant) {
-          dialogTitle = 'اضافة محاسبي المكتب المعتمدين'; // Accountant title
-        } else if (facilityTypeCategory === FacilityTypeCategory.Engineering) {
-          dialogTitle = 'اضافة مهندسين المكتب المعتمدين'; // Engineering title
-        } else if (facilityTypeCategory === FacilityTypeCategory.Developer) {
-          dialogTitle = 'اضافة مهندسين الشركة المعتمدين';  // Developer title
+    if (id) {
+      let eng = this.models.filter(x => x.id == id)[0] as CertifiedEngineerDto;
+      this._certifiedEngineerService.SetFCertifiedEngineerObj(eng);
+    }
+
+    // Get facility type to determine the correct title
+    let dialogTitle = 'مهندس الشركة المعتمد'; // Default title
+
+    this.subscriptions.push(
+      this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
+        if (res && res.facilities && res.facilities.length > 0) {
+          const facilityTypeCategory = res.facilities[0].facilityTypeCategory;
+
+          if (facilityTypeCategory === FacilityTypeCategory.Accountant) {
+            dialogTitle = 'اضافة محاسبي المكتب المعتمدين'; // Accountant title
+          } else if (facilityTypeCategory === FacilityTypeCategory.Engineering) {
+            dialogTitle = 'اضافة مهندسين المكتب المعتمدين'; // Engineering title
+          } else if (facilityTypeCategory === FacilityTypeCategory.Developer) {
+            dialogTitle = 'اضافة مهندسين الشركة المعتمدين';  // Developer title
+          }
+          // Add other facility types as needed
         }
-        // Add other facility types as needed
-      }
-      
-      let Data = {
-        title: dialogTitle,
-        component: CertifiedFacilityEngineersFormComponent,
-        buttons:[]
-      } as PopupData;
-      
-      this._popupService.updatePopupData(Data);
-    })
-  );
-}
+
+        let Data = {
+          title: dialogTitle,
+          component: CertifiedFacilityEngineersFormComponent,
+          buttons: []
+        } as PopupData;
+
+        this._popupService.updatePopupData(Data);
+      })
+    );
+  }
 
   openCoursesDialog(id: string): void {
     let eng = this.models.filter(x => x.id == id)[0] as CertifiedEngineerDto;

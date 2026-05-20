@@ -47,11 +47,17 @@ export class FacilityTypeCategoryGuard implements CanActivate {
         const facilityTypeCategory =
           this._userDataService.getFacilityTypeCategoryFromLocalStorage();
 
-
+        const selectedFacilityId = this._userDataService.getSelectedFacilityIdFromLocalStorage();
         let userFacilityTypeCategory: FacilityTypeCategory | undefined;
         if (userData?.facilities && userData.facilities.length > 0) {
-          userFacilityTypeCategory =
-            userData.facilities[0].facilityTypeCategory;
+          if (selectedFacilityId) {
+            userFacilityTypeCategory =
+              userData.facilities.find(x => x.id == selectedFacilityId)?.facilityTypeCategory;
+          } else {
+
+            userFacilityTypeCategory =
+              userData.facilities[0].facilityTypeCategory;
+          }
         }
 
         if (facilityTypeCategory == null && userFacilityTypeCategory == null) {
@@ -63,6 +69,7 @@ export class FacilityTypeCategoryGuard implements CanActivate {
 
         if (facilityTypeCategory == null && userFacilityTypeCategory != null) {
           this._userDataService.setFacilityTypeCategoryInLocalStorage(userFacilityTypeCategory);
+          this._userDataService.removeSelectedFacilityIdFromLocalStorage();
         }
 
         return true;

@@ -149,6 +149,12 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
       return;
     }
 
+    const contractualStartDate = new Date(this.licenseProjectEngineeringSupervisionPlannedReportForm.value.contractualStartDate as string);
+    contractualStartDate.setMinutes(contractualStartDate.getMinutes() - contractualStartDate.getTimezoneOffset());
+
+    const contractualFinishDate = new Date(this.licenseProjectEngineeringSupervisionPlannedReportForm.value.contractualFinishDate as string);
+    contractualFinishDate.setMinutes(contractualFinishDate.getMinutes() - contractualFinishDate.getTimezoneOffset());
+
     let model = {
       id: this.licenseProjectId as string,
       contractor:
@@ -157,12 +163,8 @@ export class AddEditEngineeringSupervisionReportsProjectDetailsComponent {
       expectedConstructionCost:
         this.licenseProjectEngineeringSupervisionPlannedReportForm.value
           .expectedConstructionCost,
-      contractualStartDate:
-        this.licenseProjectEngineeringSupervisionPlannedReportForm.value
-          .contractualStartDate,
-      contractualFinishDate:
-        this.licenseProjectEngineeringSupervisionPlannedReportForm.value
-          .contractualFinishDate,
+      contractualStartDate: contractualStartDate,
+      contractualFinishDate: contractualFinishDate,
       licenseProjectEngineeringSupervisionPlannedReportAttachments: this
         .licenseProjectEngineeringSupervisionPlannedReportAttachmentFiles as LicenseProjectEngineeringSupervisionPlannedReportAttachmentCreateUpdateDto[],
     } as MasterLicenseProjectEngineeringSupervisionPlannedReportCreateUpdateDto;

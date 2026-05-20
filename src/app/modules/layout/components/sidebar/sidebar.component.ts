@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   baseImagePath: string = './assets/images/layout/sidebar/';
   userData: customerResponse | null = null;
   links = {
-    
+
     complaintsAndReport: `${Configuration.modules.wafi}/${Configuration.modules.complaintsAndReport}`,
     complaintsReports: `/${Configuration.pages.complaintsAndReport.complaintsReports}`,
     charteredaccountprojectlist: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.charteredaccount}`,
@@ -139,7 +139,24 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public updateDefaultFacility(facility: facilityResponse, index: number) {
     this.userData?.facilities.splice(index, 1);
     this.userData?.facilities.unshift(facility);
-    this._userDataService.updateCustomerData(this.userData as customerResponse)
+    if (facility.facilityTypeCategory === null) {
+      this._userDataService.updateCustomerData(this.userData as customerResponse)
+      this._userDataService.setSelectedFacilityIdInLocalStorage(facility.id);
+      this._userDataService.removeFacilityTypeCategoryFromLocalStorage();
+      this.redirectToFacilityCategoryTypeSetup();
+    }
+  }
+
+
+  public getFacilityCategoryType(facilityId: string) {
+    this._userDataService.getFacilityTypeCategory(facilityId).subscribe((res: FacilityTypeCategory | null) => {
+      this.isFacilityTypeCategoryDeveloper = res === FacilityTypeCategory.Developer;
+    })
+  }
+
+
+  public redirectToFacilityCategoryTypeSetup(): void {
+    this.router.navigate([`${Configuration.modules.wafi}/${Configuration.modules.facilities}/${Configuration.pages.facilities.facilityTypeSetup}`]);
   }
 
   /**
@@ -148,7 +165,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   isContractRequestMenuActive(): boolean {
     return this.currentUrl.includes('contract-request-details') ||
-           this.currentUrl.includes('contract-request-list');
+      this.currentUrl.includes('contract-request-list');
   }
 
   /**
@@ -157,8 +174,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   isLicensedProjectsMenuActive(): boolean {
     return this.currentUrl.includes('recommendations-logs-list') ||
-           this.currentUrl.includes('real-state-developer-units-list') ||
-           this.currentUrl.includes('unit-details');
+      this.currentUrl.includes('real-state-developer-units-list') ||
+      this.currentUrl.includes('unit-details');
   }
 
   /**

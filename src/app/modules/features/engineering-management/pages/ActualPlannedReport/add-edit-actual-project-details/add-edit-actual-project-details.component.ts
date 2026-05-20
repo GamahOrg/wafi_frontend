@@ -5,7 +5,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 
-import { formatDate } from '@angular/common';
 import { ActualValueReportPagingListDto } from '../../../models/actual-value-report-paging-list-dto';
 import { LicenseProjectEngineeringProjectZonesBlocksDetailActualDto, LicenseProjectEngineeringElectricityDto, LicenseProjectEngineeringWaterDto, type LicenseProjectEngineerSewageDto, LicenseProjectEngineerUnitsReadinessToUseDto, LicenseProjectUnitEngineeringSupervisionReportActualDto } from '../../../models/license-project-engineering-project-zones-blocks-detail-actual-dto';
 import { unitslist as unitList } from '../../../models/zonelist';
@@ -216,10 +215,17 @@ export class AddEditActualProjectDetailsComponent {
 
             if (this.licenseProjectEngineeringProjectZonesBlocksDetailActual.licenseProjectUnit) {
               //تاريخ النهاية المتوقعة
-              this.actualProjectDetailsForm.controls.forecastFinishDate.setValue(formatDate(this.licenseProjectEngineeringProjectZonesBlocksDetailActual.licenseProjectUnit.forecastFinishDate, 'yyyy-MM-dd', this.locale));
+              this.actualProjectDetailsForm.controls.forecastFinishDate.setValue(
+                new Date(this.licenseProjectEngineeringProjectZonesBlocksDetailActual.licenseProjectUnit.forecastFinishDate) as any
+              );
+            }
+
+            if (!this.actualProjectDetailsForm.controls.forecastFinishDate.value) {
+              this.actualProjectDetailsForm.controls.forecastFinishDate.setValue(new Date() as any);
             }
 
             this.observeUnitIdsChanges();
+            this.observeNoOfUnitsReadyForHandoverChanges();
           }
         }
       })
@@ -230,6 +236,7 @@ export class AddEditActualProjectDetailsComponent {
   save(): void {
     if (!this.actualProjectDetailsForm.valid) {
       this.showValidation = true;
+      this._toastrNotificationService.showError('برجاء استكمال الحقول المطلوبة');
       return;
     }
 
@@ -328,7 +335,9 @@ export class AddEditActualProjectDetailsComponent {
     //تاريخ النهاية المتوقعة
     this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate.licenseProjectUnit = {} as LicenseProjectUnitEngineeringSupervisionReportActualDto;
     this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate.licenseProjectUnit.id = this.licenseProjectEngineeringProjectZonesBlocksDetailActual?.licenseProjectUnit.id as string;
-    this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate.licenseProjectUnit.forecastFinishDate = new Date(this.actualProjectDetailsForm.controls.forecastFinishDate.value as string);
+    const forecastDate = new Date(this.actualProjectDetailsForm.controls.forecastFinishDate.value as string);
+    forecastDate.setMinutes(forecastDate.getMinutes() - forecastDate.getTimezoneOffset());
+    this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate.licenseProjectUnit.forecastFinishDate = forecastDate;
 
     this.subscriptions.push(
       this._engineeringSupervisionReportActualProjectDeteilsService.saveLicenseProjectEngineeringProjectZonesBlocksDetail(this.licenseProjectEngineeringProjectZonesBlocksDetailActualCreateUpdate).subscribe((res) => {
@@ -356,6 +365,25 @@ export class AddEditActualProjectDetailsComponent {
         this.updateSelectedUnitCodes();
       })
     );
+  }
+
+  private observeNoOfUnitsReadyForHandoverChanges() {
+    this.applyUnitIdsRequiredValidator(this.controls.noOfUnitsReadyForHandover.value);
+    this.subscriptions.push(
+      this.controls.noOfUnitsReadyForHandover.valueChanges.subscribe((value) => {
+        this.applyUnitIdsRequiredValidator(value);
+      })
+    );
+  }
+
+  private applyUnitIdsRequiredValidator(value: number | null): void {
+    const unitIdsControl = this.controls.unitIds;
+    if ((value ?? 0) === 0) {
+      unitIdsControl.clearValidators();
+    } else {
+      unitIdsControl.setValidators([Validators.required]);
+    }
+    unitIdsControl.updateValueAndValidity({ emitEvent: false });
   }
 
   // popup

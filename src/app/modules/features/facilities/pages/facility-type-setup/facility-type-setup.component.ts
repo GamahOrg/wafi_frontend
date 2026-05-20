@@ -52,7 +52,7 @@ export class FacilityTypeSetupComponent implements OnInit, OnDestroy {
     private _toastrNotificationService: ToastrNotificatioService,
     private _router: Router,
     private sanitizer: DomSanitizer,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.observeCustomerData();
