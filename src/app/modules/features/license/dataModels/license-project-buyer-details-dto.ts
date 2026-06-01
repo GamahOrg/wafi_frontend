@@ -26,4 +26,12 @@ export interface LicenseProjectBuyerLookUpDto {
 id:string;
 name :string;
 nidNumber :string;
+units: BuyerUnitsDto[];
+}
+
+export interface BuyerUnitsDto {
+    id:string;
+    unitCode :string;
+    blockCode :string;
+    contractNumber :string;
 }

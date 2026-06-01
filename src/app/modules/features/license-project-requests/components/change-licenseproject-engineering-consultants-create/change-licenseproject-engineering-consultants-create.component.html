@@ -1,0 +1,532 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-profile"></i>
+    <h6 class="title">
+      {{ localizations.NewEngineeringConsultantTitle }}
+    </h6>
+  </div>
+
+  <div class="tab-data-section">
+    <div class="row row-gap-4">
+      <div class="col-xl-6">
+        <div class="form-group">
+          <label for="commercialRegister" class="form-label">
+            <span class="required-star">*</span>
+            {{ localizations.EngineeringConsultant }}
+          </label>
+          <div class="input-group">
+            <input
+              id="commercialRegister"
+              name="commercialRegister"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': errorMessage }"
+              formControlName="commercialRegister"
+              (input)="onCommercialRegisterChange()"
+              [attr.readonly]="readOnly ? '' : null"
+            />
+            <button
+              *ngIf="!readOnly"
+              class="btn btn-primary"
+              type="button"
+              (click)="validate()"
+            >
+              {{ localizations.ValidateConsultant }}
+            </button>
+          </div>
+
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              controls['commercialRegister']?.hasError('required') &&
+              controls['commercialRegister']?.touched
+            "
+          >
+            {{ localizations.EngineeringConsultantRequired }}
+          </div>
+          <div class="form-text">
+            <span class="icon" [ngClass]="{ 'text-danger': errorMessage }">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <span class="text" *ngIf="errorMessage == null"
+              >يجب أن يكون الاستشاري الهندسي مسجَل في المنصة ومؤهل ليتم إضافته
+              للمشروع</span
+            >
+            <span
+              class="text"
+              [ngClass]="{ 'text-danger': errorMessage }"
+              *ngIf="errorMessage != null"
+              >{{ errorMessage }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="entity?.engineeringConsultant">
+    <div class="tab-data-section">
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">اسم الاستشاري الجديد</label>
+            <input
+              type="text"
+              class="form-control"
+              [value]="newFacilityData.facilityName"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">رقم الترخيص المهني </label>
+            <input
+              type="text"
+              class="form-control"
+              [value]="newFacilityData.saudiAuthorityOfEngineersLicenseNumber"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-data-section">
+      <div class="row row-gap-4">
+        <div class="col-12 col-lg-6">
+          <div class="key-value">
+            <div class="key">
+              <i class="icon hgi hgi-stroke hgi-building-06"></i>
+              اسم الشركة
+            </div>
+            <div class="value">
+              {{ newFacilityData.facilityName }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-data-section">
+      <h6 class="title">بيانات اتفاقية الاستشاري</h6>
+
+      <div class="row row-gap-4">
+        <!-- Monitoring Period -->
+        <div class="col-12 col-lg-6">
+          <label for="financialReportApprovalPeriodInDays" class="form-label">
+            <span class="required-star">*</span>
+            مهلة المصادقة على التقرير المالي
+          </label>
+          <input
+            id="financialReportApprovalPeriodInDays"
+            name="financialReportApprovalPeriodInDays"
+            type="number"
+            class="form-control"
+            formControlName="financialReportApprovalPeriodInDays"
+            min="1"
+            max="30"
+            [attr.readonly]="readOnly ? '' : null"
+          />
+
+          <div
+            class="form-text text-danger"
+            *ngIf="
+              controls['financialReportApprovalPeriodInDays']?.hasError(
+                'required'
+              ) && controls['financialReportApprovalPeriodInDays']?.touched
+            "
+          >
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <p>الحقل مطلوب</p>
+          </div>
+
+          <div
+            class="form-text text-danger"
+            *ngIf="
+              controls['financialReportApprovalPeriodInDays']?.hasError(
+                'min'
+              ) && controls['financialReportApprovalPeriodInDays']?.touched
+            "
+          >
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <p>يجب أن تكون القيمة أكبر من صفر</p>
+          </div>
+
+          <div
+            class="form-text"
+            [class.text-danger]="
+              controls['financialReportApprovalPeriodInDays']?.hasError('max')
+            "
+            *ngIf="
+              !controls['financialReportApprovalPeriodInDays']?.hasError(
+                'required'
+              ) &&
+              !controls['financialReportApprovalPeriodInDays']?.hasError('min')
+            "
+          >
+            <span class="icon">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <p>مدة المصادقة لا يجب أن تتعدى 30 يوماً</p>
+          </div>
+        </div>
+
+        <!-- Contract Value -->
+        <div class="col-12 col-lg-6">
+          <label for="contarctValue" class="form-label">
+            <span class="required-star">*</span>
+            قيمة العقد
+          </label>
+
+          <div class="input-group">
+            <input
+              id="contarctValue"
+              name="contarctValue"
+              type="text"
+              class="form-control"
+              formControlName="contarctValue"
+              (input)="formatContractValue($event)"
+              (blur)="formatContractValueOnBlur($event)"
+              (focus)="removeContractValueFormatting($event)"
+              [attr.readonly]="readOnly ? '' : null"
+            />
+            <span class="input-group-text">
+              <img
+                src="assets/images/general/riyal-icon.svg"
+                alt="ريال"
+                class="riyal-icon"
+              />
+            </span>
+          </div>
+
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              controls['contarctValue']?.hasError('required') &&
+              controls['contarctValue']?.touched
+            "
+          >
+            هذا الحقل مطلوب
+          </div>
+        </div>
+
+        <!-- Payment Monitoring -->
+        <div class="col-12 col-lg-6">
+          <label
+            for="paymentDeadline"
+            class="form-label d-flex align-items-center gap-1"
+          >
+            <span class="required-star">*</span>
+            مهلة السداد بالأيام
+            <span
+              class="ms-auto cursor-pointer"
+              [popover]="popTemplate"
+              triggers="mouseenter:mouseleave"
+            >
+              <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            </span>
+            <ng-template #popTemplate>
+              <div class="d-flex align-items-center gap-2">
+                <i class="hgi hgi-stroke hgi-help-circle"></i>
+                <span>مهلة السداد المطلوبة</span>
+              </div>
+            </ng-template>
+          </label>
+
+          <input
+            id="paymentDeadline"
+            name="paymentDeadline"
+            type="text"
+            class="form-control"
+            formControlName="paymentDeadline"
+            [attr.readonly]="readOnly ? '' : null"
+          />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              controls['paymentDeadline']?.hasError('required') &&
+              controls['paymentDeadline']?.touched
+            "
+          >
+            هذا الحقل مطلوب
+          </div>
+        </div>
+
+        <!-- Multiselect Delegators Dropdown -->
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span>
+              المفوضين  بالتوقيع على وثائق الصرف
+            </label>
+
+            <div class="dropdown multi-select">
+              <div
+                class="form-select dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+              >
+                {{ getSelectedDelegatorsText() }}
+              </div>
+
+              <ul class="dropdown-menu">
+                <li
+                  *ngFor="
+                    let delegator of licenseProjectDelegators;
+                    trackBy: trackById
+                  "
+                >
+                  <div class="dropdown-item form-check form-check-normal">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [id]="'dId-' + delegator.id"
+                      [checked]="isSelected(delegator.id)"
+                      (click)="$event.stopPropagation()"
+                      (change)="toggleDelegator(delegator)"
+                    />
+
+                    <label
+                      class="form-check-label"
+                      [for]="'dId-' + delegator.id"
+                    >
+                      {{ delegator.fullName }}
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Selected Chips -->
+            <div
+              class="d-flex flex-wrap align-items-center gap-2 mt-2"
+              *ngIf="getSelectedDelegators().length > 0"
+            >
+              <div
+                class="chip"
+                *ngFor="let delegator of getSelectedDelegators()"
+              >
+                {{ delegator.fullName }}
+                <button
+                  type="button"
+                  class="btn-icon btn btn-dark"
+                  (click)="removeDelegator(delegator, $event)"
+                  aria-label="Remove"
+                >
+                  <i class="hgi hgi-stroke hgi-cancel-01"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Validation -->
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                controls['delegatorIds']?.hasError('required') &&
+                controls['delegatorIds']?.touched
+              "
+            >
+              هذا الحقل مطلوب
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="alert alert-warning alert-dismissible fade show mt-4"
+        role="alert"
+        *ngIf="showMissingDateOfBirthAlert"
+      >
+        <span class="icon">
+          <i class="hgi hgi-stroke hgi-alert-02"></i>
+        </span>
+        <span
+          >الرجاء إعلام المفوض بإعادة تسجيل الدخول من جديد لإسترجاع تاريخ
+          الميلاد من منصة نفاذ</span
+        >
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+
+    <!-- Payment Data Section -->
+    <div class="tab-data-section">
+      <h6 class="title">{{ localizations.PaymentData }}</h6>
+
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th scope="col">البند</th>
+              <th scope="col">الكمية</th>
+              <th scope="col">السعر للوحدة</th>
+              <th scope="col">الوصف</th>
+              <th *ngIf="!readOnly" scope="col" class="text-center">
+                <button
+                  type="button"
+                  class="btn-icon btn btn-secondary"
+                  (click)="addPaymentRow()"
+                >
+                  <i class="hgi hgi-stroke hgi-add-circle"></i>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of paymentTableData; let i = index">
+              <td>
+                <div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [placeholder]="'البند'"
+                    [(ngModel)]="item.item"
+                    (ngModelChange)="clearPaymentError(i, 'item')"
+                    [ngModelOptions]="{ standalone: true }"
+                    [class.is-invalid]="paymentTableErrors[i]?.item"
+                    [attr.readonly]="readOnly ? '' : null"
+                  />
+                  <div
+                    *ngIf="paymentTableErrors[i]?.item"
+                    class="invalid-feedback d-block"
+                  >
+                    حقل مطلوب
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    [placeholder]="'الكمية'"
+                    [(ngModel)]="item.quantity"
+                    (ngModelChange)="clearPaymentError(i, 'quantity')"
+                    [ngModelOptions]="{ standalone: true }"
+                    [class.is-invalid]="paymentTableErrors[i]?.quantity"
+                    [attr.readonly]="readOnly ? '' : null"
+                  />
+                  <div
+                    *ngIf="paymentTableErrors[i]?.quantity"
+                    class="invalid-feedback d-block"
+                  >
+                    حقل مطلوب
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      [placeholder]="'السعر للوحدة'"
+                      [(ngModel)]="item.unitPrice"
+                      (ngModelChange)="clearPaymentError(i, 'unitPrice')"
+                      [ngModelOptions]="{ standalone: true }"
+                      [class.is-invalid]="paymentTableErrors[i]?.unitPrice"
+                      [attr.readonly]="readOnly ? '' : null"
+                    />
+                    <span class="input-group-text">
+                      <img
+                        src="assets/images/general/riyal-icon.svg"
+                        alt="ريال"
+                        class="riyal-icon"
+                      />
+                    </span>
+                  </div>
+                  <div
+                    *ngIf="paymentTableErrors[i]?.unitPrice"
+                    class="invalid-feedback d-block"
+                  >
+                    حقل مطلوب
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [placeholder]="'الوصف'"
+                    [(ngModel)]="item.description"
+                    (ngModelChange)="clearPaymentError(i, 'description')"
+                    [ngModelOptions]="{ standalone: true }"
+                    [class.is-invalid]="paymentTableErrors[i]?.description"
+                    [attr.readonly]="readOnly ? '' : null"
+                  />
+                  <div
+                    *ngIf="paymentTableErrors[i]?.description"
+                    class="invalid-feedback d-block"
+                  >
+                    حقل مطلوب
+                  </div>
+                </div>
+              </td>
+              <td *ngIf="!readOnly">
+                <div class="table-actions">
+                  <button
+                    type="button"
+                    class="btn-icon btn btn-danger"
+                    (click)="deletePaymentRow(i)"
+                    [disabled]="paymentTableData.length == 1"
+                  >
+                    <i class="hgi hgi-stroke hgi-delete-03"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<div class="mt-3" *ngIf="entity?.engineeringConsultant">
+  <app-change-license-project-parties-additional-terms
+    [termsPartType]="2"
+    [allowAdd]="!readOnly"
+  ></app-change-license-project-parties-additional-terms>
+</div>
+
+<!-- Action Buttons -->
+<div
+  class="tab-data-section d-flex justify-content-between align-items-center mt-3"
+  *ngIf="entity?.engineeringConsultant && !readOnly"
+>
+  <button
+    type="button"
+    class="btn btn-link"
+    style="color: #005257"
+    (click)="onCancel()"
+  >
+    رجوع
+  </button>
+  <div class="d-flex gap-2">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="saveDraft()"
+    >
+      حفظ كمسودة
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="background-color: #005257; border-color: #005257"
+      (click)="save()"
+    >
+      {{ localizations.Send }}
+    </button>
+  </div>
+</div>

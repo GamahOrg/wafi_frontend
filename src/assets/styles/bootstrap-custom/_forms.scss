@@ -222,3 +222,13 @@
     }
   }
 }
+
+typeahead-container {
+  &.dropdown-menu {
+    scrollbar-width: thin;
+  }
+
+  .position-relative & {
+    inset-inline: 0 !important;
+  }
+}

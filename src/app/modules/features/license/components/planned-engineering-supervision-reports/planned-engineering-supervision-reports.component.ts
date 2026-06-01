@@ -35,8 +35,7 @@ import { SysRequestApprovalActionTypeEnum, SysRequestApprovalTypeEnum } from 'sr
   templateUrl: './planned-engineering-supervision-reports.component.html',
   styleUrls: ['./planned-engineering-supervision-reports.component.scss'],
 })
-export class PlannedEngineeringSupervisionReportsComponent implements OnInit, OnDestroy
-{
+export class PlannedEngineeringSupervisionReportsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   isSuperstructureScope: boolean = false;
   sysLicenseProjectEngineeringRequestStatus: SysLicenseProjectEngineeringRequestStatusDto | null = null;
@@ -107,7 +106,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
     private _requestNotesService: RequestNotesService,
     private _projectBasicDataService: ProjectBasicDataService,
     private _sysRequestApprovalService: SysRequestApprovalService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getLicenseProjectIdStorage();
@@ -129,7 +128,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
     this.subscriptions.push(
       this._projectBasicDataService.GetMainDataByLicenseProjectId(this.licenseProjectId as string)
         .subscribe((res) => {
-          if (res && res.data){
+          if (res && res.data) {
             this.isSuperstructureScope = res.data.licenseProjectScope?.code == LicenseProjectScopeEnum.Superstructure;
             res.data.supervisionReportStatus == null ? this.sysLicenseProjectEngineeringRequestStatus = null : this.sysLicenseProjectEngineeringRequestStatus = res.data.supervisionReportStatus
           }
@@ -137,7 +136,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
     );
   }
 
-  isApprovalRequired(){
+  isApprovalRequired() {
     this.subscriptions.push(
       this._sysRequestApprovalService.isApprovalRequired.subscribe((isApprovalRequired) => {
         if (isApprovalRequired) {
@@ -151,13 +150,13 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
   public sendPlannedReport(): void {
     this.subscriptions.push(
       this._licenseProjectEngineeringSupervisionPlannedReportDetailService.SendPlannedReport(this.licenseProjectId as string).subscribe((res) => {
-          if (res && res.isDone) {
-            this._toastrNotificationService.showSuccess(
-              'تم إرسال القيم المخطط غير مسموح بالتعديل علىها الان'
-            );
-            this._licenseProjectEngineeringSupervisionPlannedReportDetailService.setEngineerinSupervisionPlannedReportAllowToEdit(false);
-          }
-        })
+        if (res && res.isDone) {
+          this._toastrNotificationService.showSuccess(
+            'تم إرسال القيم المخطط غير مسموح بالتعديل علىها الان'
+          );
+          this._licenseProjectEngineeringSupervisionPlannedReportDetailService.setEngineerinSupervisionPlannedReportAllowToEdit(false);
+        }
+      })
     );
   }
 
@@ -190,7 +189,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
               this.title =
                 'لقد مر تاريخ بداية الفترة التعاقدية للمشروع ويجب تسجيل تقرير استشاري الإشراف الهندسي المخطط ';
               break;
-            case this.licenseProjectEngineeringDataTapStatus?.hasTimeSchedule && 
+            case this.licenseProjectEngineeringDataTapStatus?.hasTimeSchedule &&
               this.licenseProjectEngineeringDataTapStatus?.hasSupervisionPlannedReport:
 
               this.noDataActions = [];
@@ -217,7 +216,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
   public openRequestApprovalComponentDialog(): void {
     this._sysRequestApprovalService.setRequestApproval(
       {
-        actionTypeId : SysRequestApprovalActionTypeEnum.SendRequest,
+        actionTypeId: SysRequestApprovalActionTypeEnum.SendRequest,
         requestTypeId: SysRequestApprovalTypeEnum.PlannedValues,
       }
     );
@@ -253,7 +252,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
       })
     );
   }
-  
+
   observeRequestNotes(): void {
     this.subscriptions.push(
       this._requestNotesService.RequestNotes$.subscribe(
@@ -287,7 +286,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
     this._popupService.dismissDialog();
   }
 
-  closeDialogWithData(){
+  closeDialogWithData() {
     this.subscriptions.push(
       this._popupService.closeDialog.subscribe((res: any) => {
         if (res && this.licenseProjectEngineeringDataTapStatus) {
@@ -309,7 +308,7 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
   }
 
   private updateTabContent(): void {
-    if(this.isSuperstructureScope)
+    if (this.isSuperstructureScope)
       this.tabContent.tabsComponentList = this.tabContent.tabsComponentList.filter(x => x.title !== this.localization.infraStructure);
 
     this._tabsService.updateVerticalTabContent(this.tabContent);

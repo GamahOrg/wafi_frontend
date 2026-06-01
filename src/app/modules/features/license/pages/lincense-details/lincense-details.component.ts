@@ -239,7 +239,7 @@ export class LincenseDetailsComponent {
     private _router: Router,
     private _projectListService: ProjectListService,
     private _unitCorrectionService: UnitCorrectionService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.updateTabContent();
@@ -883,7 +883,7 @@ export class LincenseDetailsComponent {
   public openCompileGuaranteeLetterActivationNotesDialog() {
     let Data = {
       id: ButtonType.allowCompileGuaranteeLetterActivation,
-      title: 'تسجيل نتيجة ملاحظات تٝعيل حساب الضمان',
+      title: 'تسجيل نتيجة ملاحظات تفعيل حساب الضمان',
       component: EditorRequestNotesComponent,
     } as PopupData;
     this.updateAndOpenData(Data);

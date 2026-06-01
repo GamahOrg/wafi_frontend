@@ -65,6 +65,7 @@ export class JobRequirementsAndHumanResourcesComponent implements OnInit, OnDest
         if (res) {
           this.institutionalCapacityAndHrRequirements = res;
           this._service.SetSubjectObj(this.institutionalCapacityAndHrRequirements);
+
         }
       })
     )

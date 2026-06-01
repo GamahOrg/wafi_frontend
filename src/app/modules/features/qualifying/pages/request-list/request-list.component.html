@@ -1,41 +1,48 @@
 <div class="page">
   <div class="page-header mb-3">
     <div class="row row-gap-3">
-      <div class="col-12 col-lg-6">
-        <div class="page-title mb-0">
-          <h5 class="title">الطلبات الجاري دراستها</h5>
+      <div class="row row-gap-3 align-items-center">
+        <div class="col-12 col-lg-6 col-xl">
+          <!-- Page Title -->
+          <div class="page-title mb-0">
+            <h5 class="title">قائمة طلبات التأهيل</h5>
+          </div>
         </div>
-      </div>
-      <ng-container *ngIf="reqList.totalCount > 0">
-        <div class="col-12 col-lg-6">
-          <div class="date-range"></div>
-        </div>
-        <div class="col-12">
+
+        <div class="col-12 col-lg-6 col-xl-auto">
+          <!-- Filter Section -->
           <div class="filter">
-            <div class="row">
-              <div class="col-4">
-                <div class="input-group">
-                  <span class="input-group-text"><i class="hgi hgi-stroke hgi-search-01"></i></span>
-                  <input type="text" id="control-search" class="form-control"  (input)="getSearchText($event)"  placeholder="بحث"/>
-                </div>
+            <div class="row g-2 align-items-center">
+              <!-- Search Input -->
+              <div class="col-12 col-lg-auto">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="addNewRequest()"
+                >
+                  <span class="material-icons">add</span> إنشاء طلب جديد
+                </button>
               </div>
-              <div class="col-2">
-                <div class="criteria-wrapper">
-                  <button type="button" id="btn-stopPropagation" class="toggle btn btn-outline-primary"
-                  (click)="search()">
-                    <span class="d-flex align-items-center column-gap-1">
-                      <i class="material-icons-outlined">filter_alt</i>
-                      بحث
-                    </span>
-                  </button>
-                 
+
+              <div class="col-12 col-lg-6 col-xl">
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><span class="material-icons">search</span></span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="بحث بنوع الطلب"
+                    [(ngModel)]="searchText"
+                    (click)="getSearchText($event)"
+                    (ngModelChange)="search()"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </ng-container>
-
+      </div>
 
       <ng-container *ngIf="reqList.totalCount > 0 && false">
         <div class="col-12 col-lg-6">
@@ -46,24 +53,43 @@
             <div class="row">
               <div class="col-4">
                 <div class="input-group">
-                  <span class="input-group-text"><i class="hgi hgi-stroke hgi-search-01"></i></span>
-                  <input type="text" id="control-search" class="form-control"  placeholder="بحث" />
+                  <span class="input-group-text"
+                    ><i class="hgi hgi-stroke hgi-search-01"></i
+                  ></span>
+                  <input
+                    type="text"
+                    id="control-search"
+                    class="form-control"
+                    placeholder="بحث"
+                  />
                 </div>
               </div>
               <div class="col-2">
                 <div class="criteria-wrapper">
-                  <button type="button" id="btn-stopPropagation" class="toggle btn btn-outline-primary"
-                    (click)="$event.stopPropagation(); showFilter = !showFilter">
+                  <button
+                    type="button"
+                    id="btn-stopPropagation"
+                    class="toggle btn btn-outline-primary"
+                    (click)="$event.stopPropagation(); showFilter = !showFilter"
+                  >
                     <span class="d-flex align-items-center column-gap-1">
                       <i class="material-icons-outlined">filter_alt</i>
                       بحث
                     </span>
                   </button>
-                  <div class="criteria" (click)="$event.stopPropagation()" id="control-stopPropagation"
-                    [hidden]="!showFilter">
+                  <div
+                    class="criteria"
+                    (click)="$event.stopPropagation()"
+                    id="control-stopPropagation"
+                    [hidden]="!showFilter"
+                  >
                     <h6 class="title">بحث</h6>
 
-                    <accordion [closeOthers]="false" [isAnimated]="true" class="simple">
+                    <accordion
+                      [closeOthers]="false"
+                      [isAnimated]="true"
+                      class="simple"
+                    >
                       <ng-container>
                         <accordion-group [isOpen]="true">
                           <div class="accordion-heading" accordion-heading>
@@ -75,13 +101,23 @@
                           </div>
 
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="control-chk1" value="" />
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="control-chk1"
+                              value=""
+                            />
                             <label class="form-check-label" for="chk1">
                               تحت الدراسة
                             </label>
                           </div>
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="control-chk2" value="" />
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="control-chk2"
+                              value=""
+                            />
                             <label class="form-check-label" for="chk2">
                               معالجة الملاحظات
                             </label>
@@ -89,46 +125,20 @@
 
                           <div class="date-range-result my-3">
                             <span class="icon">
-                              <i class="material-icons-outlined">calendar_today</i>
+                              <i class="material-icons-outlined"
+                                >calendar_today</i
+                              >
                             </span>
                             <span>من</span>
-                            {{ bsInlineRangeValue[0] | date : "dd MMMM" }}
+                            {{ bsInlineRangeValue[0] | date: "dd MMMM" }}
                             <span>إلى</span>
-                            {{ bsInlineRangeValue[1] | date : "dd MMMM" }}
+                            {{ bsInlineRangeValue[1] | date: "dd MMMM" }}
                           </div>
 
-                          <bs-daterangepicker-inline [bsValue]="bsInlineRangeValue"
-                            [bsConfig]="bsConfig"></bs-daterangepicker-inline>
-
-                          <!-- <mat-form-field appearance="fill">
-                                                    <mat-date-range-input [formGroup]="range"
-                                                                          [rangePicker]="rangePicker">
-                                                        <input matStartDate
-                                                               formControlName="start"
-                                                               placeholder="Start date">
-                                                        <input matEndDate
-                                                               formControlName="end"
-                                                               placeholder="End date">
-                                                    </mat-date-range-input>
-                                                    <mat-datepicker-toggle matIconSuffix
-                                                                           [for]="rangePicker"></mat-datepicker-toggle>
-                                                    <mat-date-range-picker #rangePicker>
-                                                        <mat-date-range-picker-actions>
-                                                            <button mat-button
-                                                                    matDateRangePickerCancel>Cancel</button>
-                                                            <button mat-raised-button
-                                                                    color="primary"
-                                                                    matDateRangePickerApply>Apply</button>
-                                                        </mat-date-range-picker-actions>
-                                                    </mat-date-range-picker>
-                                                </mat-form-field> -->
-
-                          <!-- <div class="mb-3"
-                                                     *ngIf="range.value.start">
-                                                    <span>من {{range.value.start | date:'dd MMMM'}}</span> إلى <span>{{range.value.end | date:'dd MMMM'}}</span>
-                                                </div> -->
-
-                          <!-- <bs-daterangepicker-inline [bsValue]="bsInlineRangeValue"></bs-daterangepicker-inline> -->
+                          <bs-daterangepicker-inline
+                            [bsValue]="bsInlineRangeValue"
+                            [bsConfig]="bsConfig"
+                          ></bs-daterangepicker-inline>
                         </accordion-group>
 
                         <accordion-group>
@@ -141,13 +151,23 @@
                           </div>
 
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="control-chk3" value="" />
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="control-chk3"
+                              value=""
+                            />
                             <label class="form-check-label" for="chk3">
                               تم رفض الطلب
                             </label>
                           </div>
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="control-chk4" value="" />
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="control-chk4"
+                              value=""
+                            />
                             <label class="form-check-label" for="chk4">
                               تم القبول وإصدار الشهادة
                             </label>
@@ -166,38 +186,6 @@
   </div>
 
   <ng-container *ngIf="reqList.totalCount > 0">
-    <!-- <ng-container> -->
-    <!-- <div class="row mb-3">
-            <div class="col-12 col-lg-6">
-                <h6>{{ reqList.results.length }} طلبات يتم عرضهم</h6>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="view-mode d-flex justify-content-end">
-                    <div class="form-check form-check-reverse form-check-inline">
-                        <input class="form-check-input"
-                               type="checkbox"
-                               value=""
-                               checked
-                               id="reverseCheck1" />
-                        <label class="form-check-label"
-                               for="reverseCheck1">
-                            عرض الطلبات التي تم تعيني علىها فقط
-                        </label>
-                    </div>
-                    <div class="form-check form-check-reverse form-check-inline">
-                        <input class="form-check-input"
-                               type="checkbox"
-                               value=""
-                               id="reverseCheck2" />
-                        <label class="form-check-label"
-                               for="reverseCheck2">
-                            عرض جميع الطلبات
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
     <div class="table-responsive mb-3">
       <table class="table table-light">
         <thead>
@@ -219,28 +207,30 @@
             <th scope="col">رقم السجل التجاري</th>
             <th scope="col">نوع الطلب</th>
             <th scope="col">حالة الطلب</th>
-
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let request of reqList.results">
             <td>
-              <a class="underline fw-bold text-primary" id="link-navigateToDetails"
-                (click)="navigateToDetails(request)">
+              <a
+                class="underline fw-bold text-primary"
+                id="link-navigateToDetails"
+                (click)="navigateToDetails(request)"
+              >
                 {{ request.requestCode }}
               </a>
             </td>
             <td>
               <div class="d-flex align-items-center column-gap-2">
-                <!-- <div class="image">
-                                    <span class="avatar material-icons">person</span> -->
-                <!-- <img src="/assets/images/general/static-person.jpeg" id="control-image"
-                                         alt=""
-                                         class="img-fluid" /> -->
-                <!-- </div> -->
                 <div class="image" *ngIf="request.customers?.profileImageFile">
-                  <img width="200" height="200" [src]="baseUrl + request.customers.profileImageFile?.filePath"
-                    class="d-block w-100 h-100" />
+                  <img
+                    width="200"
+                    height="200"
+                    [src]="
+                      baseUrl + request.customers.profileImageFile?.filePath
+                    "
+                    class="d-block w-100 h-100"
+                  />
                 </div>
                 <span class="username">{{ request.customers.fullName }}</span>
               </div>
@@ -250,40 +240,33 @@
             </td>
             <td>
               <span class="text-dark" dir="ltr">{{
-                request.requestOn | date : "dd MMMM yyyy"
-                }}</span>
+                request.requestOn | date: "dd MMMM yyyy"
+              }}</span>
             </td>
             <td>
               <span class="text-dark">{{
                 request.facilities.commercialRegisterNumber
-                }}</span>
+              }}</span>
             </td>
             <td>
-              {{request.isRenewal ? "تجديد": ""}}
+              {{ request.isRenewal ? "تجديد" : "" }}
               {{ request.qualificationRequestType.typeName }} -
-              {{request.qualificationRequestType.showForWafi?'لجنة البيع على الخارطة':'المساهمات عقارية'}}
-
+              {{
+                request.qualificationRequestType.showForWafi
+                  ? "لجنة البيع على الخارطة"
+                  : "المساهمات عقارية"
+              }}
             </td>
             <td>
               <div class="d-flex align-items-center">
-                <span class="status-pill" [ngClass]="externalStatusId[request.externalStatusId]"
-                  *ngIf="request.externalStatus">
-                  
+                <span
+                  class="status-pill"
+                  [ngClass]="getStatusClass(request.internalStatusId)"
+                >
                   {{ request.externalStatus }}
-                  <!-- {{internalStatusId[request.internalStatusId]}} -->
                 </span>
-                <!-- <i class="mx-auto"></i>
-                <app-tooltip
-                  type="icon"
-                  color="success"
-                  text="error_outline"
-                  tooltipText="الوقت المتبقي لمعالجة الطب {{
-                    request.period
-                  }} يوم"
-                ></app-tooltip> -->
               </div>
             </td>
-
           </tr>
         </tbody>
       </table>

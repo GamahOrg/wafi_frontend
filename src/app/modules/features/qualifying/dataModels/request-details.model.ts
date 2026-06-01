@@ -60,6 +60,7 @@ export interface facilityDTO {
   id: string;
   email: null | string;
   telephone: null | string;
+  mobile: null | string;
   fax: null | string;
   postalCode: null | string;
   poBox: null | string;
@@ -99,6 +100,7 @@ export interface facilityDTO {
 export interface RequestDetails {
   requestCode: string;
   customersId: string;
+  showInvoiceDetailsButton: boolean;
   qualificationRequestType: QualificationRequestType;
   qualificationRequestTypeId: string;
   sysEmployee: null;
@@ -125,17 +127,20 @@ export interface RequestDetails {
   lockReason: null | string;
   id: string;
   workflowDetailRequestStatus: requestPhase[];
-  isRenewal:boolean
+  isRenewal: boolean
+  isQualificationSuspension: boolean
   canSendToFawtarahManually: boolean | null
   // requestStatusInternalStatus: status;
   // requestStatusExternalStatus: status;
 
-// new for sla
-studyPeriod: number
-remainingStudyPeriod: number
-// allowCompileStudyPeriod: number
-// allowCompileRemainingStudyPeriod: number
+  // new for sla
+  studyPeriod: number
+  remainingStudyPeriod: number
+  // allowCompileStudyPeriod: number
+  // allowCompileRemainingStudyPeriod: number
 
+  previousQualificationDegree: number | null;
+  qualificationSuspensionRemainingDays: number;
 }
 export interface status {
   id: number;
@@ -166,3 +171,47 @@ export interface requestPhase {
 }
 
 
+export enum QualificationRequestStatusEnum {
+  ///<summary>تحت الدراسة</summary>
+  UnderStudy = 1,
+  ///<summary>إرسال الملاحظات</summary>
+  SendingNotes = 2,
+  ///<summary>معالجة الملاحظات</summary>
+  ProcessingNotes = 3,
+  ///<summary>تحت الدراسة بعد معالجة الملاحظات</summary>
+  UnderStudyAfterProcessingNotes = 4,
+  ///<summary>قبول الطلب وإصدار شهادة التأهيل</summary>
+  RequestApproved = 5,
+  ///<summary>رفض الطلب</summary>
+  RequestRejected = 6,
+  ///<summary>إلغاء الطلب </summary>
+  RequestCanceled = 7,
+  ///<summary>إصدار فاتورة سداد </summary>
+  IssuingPaymentInvoice = 8,
+  /// <summary>
+  /// تم سداد الفاتورة
+  /// </summary>
+  PaidInvoice = 9,
+  /// <summary>
+  /// ملغي لعدم السداد
+  /// </summary>
+  CancelledDueToNonPayment = 10,
+  /// <summary>
+  /// منتهية
+  /// </summary>
+  Expired = 11,
+
+  CancelledDueToNonProcessing = 12,
+  /// <summary>
+  ///قيد إصدار فاتورة
+  /// </summary>
+  PendingInvoiceIssuance = 13,
+  ///<summary>مشطوب</summary>
+  RequestRemoved = 14,
+  /// <summary>
+  ///معتمد
+  /// </summary>
+  Certified = 15,
+  ///<summary>تأهيل معلق</summary>
+  QualificationSuspended = 16,
+}

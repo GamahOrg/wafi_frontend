@@ -178,15 +178,12 @@ export class AddEditChangeEngineerSummaryComponent {
     this.changeLicenseProjectEngineeringRequestCreateUpdate.previousConsultingOfficeReportId = this.previousConsultingOfficeReportId as string;
     this.subscriptions.push(
       this._changeLicenseProjectEngineeringRequestService.save(this.changeLicenseProjectEngineeringRequestCreateUpdate).subscribe((res) => {
-
-        if (res) {
-          
-          this._changeLicenseProjectEngineeringRequestService.setLicenseProjectRequestChangeEngineer(res as ChangeLicenseProjectEngineeringRequestDto);
+        if (res.isDone && res.data) {
+          this._changeLicenseProjectEngineeringRequestService.setLicenseProjectRequestChangeEngineer(res.data as ChangeLicenseProjectEngineeringRequestDto);
           this._toastrNotificationService.showSuccess('تم تعديل الطلب بنجاح');
-          this.projectRequestLocalStorageService.setSelectedSelectedProjectLicenseRequestIdInLocalStorage(res?.licenseProjectRequestId!)
+          this.projectRequestLocalStorageService.setSelectedSelectedProjectLicenseRequestIdInLocalStorage(res.data.licenseProjectRequestId!);
           this.closeDialog();
         }
-
       })
     )
   }

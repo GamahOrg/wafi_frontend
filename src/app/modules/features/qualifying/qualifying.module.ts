@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 // import { TranslateModule } from '@ngx-translate/core';
@@ -44,6 +44,7 @@ import { AccountantCertificateComponent } from './components/accountant-certific
 import { DeveloperCertificateComponent } from './components/developer-certificate/developer-certificate.component';
 import { ContributionDeveloperCertificateComponent } from './components/contribution-developer-certificate/contribution-developer-certificate.component';
 import { QualificationInvoiceViewComponent } from './components/qualification-invoice-view/qualification-invoice-view.component';
+import { SuspensionNoteReplyComponent } from './components/suspension-note-reply/suspension-note-reply.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { QualificationInvoiceViewComponent } from './components/qualification-in
     AccountantCertificateComponent,
     DeveloperCertificateComponent,
     ContributionDeveloperCertificateComponent,
-    QualificationInvoiceViewComponent
+    QualificationInvoiceViewComponent,
+    SuspensionNoteReplyComponent,
   ],
   providers: [
     QualificationTypeService,
@@ -89,6 +91,7 @@ import { QualificationInvoiceViewComponent } from './components/qualification-in
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
+    FormsModule,
     // TranslateModule.forChild(),
     RouterModule,
     QualifyingRoutingModule,

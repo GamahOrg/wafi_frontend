@@ -10,7 +10,7 @@
   <div class="page-section">
     <app-accordion></app-accordion>
 
-    <form [formGroup]="declarationForm" id="form-declarationForm">
+    <form [formGroup]="declarationForm" id="form-declarationForm" *ngIf="code!='UP-DEGREE'">
       <div class="d-flex flex-column gap-3 mt-4">
         <h6>يجب الموافقة على جميع الاقرارات يتم ارسال الطلب</h6>
 
@@ -37,11 +37,21 @@
 
         <div class="d-flex justify-content-center align-items-center gap-3">
           <button class="btn btn-outline-secondary" id="btn-cancelRequest" (click)="cancelRequest()">إلغاء</button>
-          <button class="btn btn-primary" id="btn-creatRequest" [disabled]="!declarationForm.valid" (click)="createOrRenewRequest()">
+          <button class="btn btn-primary" id="btn-creatRequest" [disabled]="!declarationForm.valid"
+            (click)="createOrRenewRequest()">
             إرسال الطلب
           </button>
         </div>
       </div>
     </form>
+    <div class="d-flex flex-column gap-3 mt-4">
+      <div class="d-flex justify-content-center align-items-center gap-3" *ngIf="code=='UP-DEGREE'">
+        <button class="btn btn-outline-secondary" id="btn-cancelRequest" (click)="cancelRequest()">إلغاء</button>
+        <button class="btn btn-primary" id="btn-redirectt" (click)="redirectToProfile()">
+          تحديث البيانات
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>

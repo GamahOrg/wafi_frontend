@@ -201,6 +201,32 @@ export class RequestService {
       );
   }
 
+  getSuspensionNotesByRequestId(requestId: string): Observable<CoreResponseDTO<any[]>> {
+    return this._httpClient.get<CoreResponseDTO<any[]>>(
+      `${Configuration.APIs.QualificationRequestHeader.GetSuspensionNotesByRequestId}/${requestId}`
+    );
+  }
+
+  getStrikeFilesByRequestId(requestId: string): Observable<CoreResponseDTO<any[]>> {
+    return this._httpClient.get<CoreResponseDTO<any[]>>(
+      `${Configuration.APIs.QualificationRequestHeader.GetStrikeFilesByRequestId}/${requestId}`
+    );
+  }
+
+  suspendQualificationRequest(requestId: string, notes: string, fileIds: string[]): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.post<CoreResponseDTO<any>>(
+      `${Configuration.APIs.QualificationRequestHeader.SuspendQualificationRequest}/${requestId}`,
+      { notes, fileIds }
+    );
+  }
+
+  replyToSuspensionNote(qualificationRequestHeaderId: string, notes: string, fileIds: string[]): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.post<CoreResponseDTO<any>>(
+      `${Configuration.APIs.QualificationRequestHeader.ReplyToSuspensionNote}`,
+      { qualificationRequestHeaderId, notes, fileIds }
+    );
+  }
+
   GetSysqualificationType(): Observable<QualificationRequestType[] | null> {
     return this._httpClient.get<CoreResponseDTO<QualificationRequestType[]>>(`${Configuration.APIs.SysQualificationTypeInfo.GetForWafi}`).pipe(
       map((res: CoreResponseDTO<QualificationRequestType[]>) => {

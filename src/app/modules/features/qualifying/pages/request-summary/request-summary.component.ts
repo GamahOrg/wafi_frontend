@@ -741,6 +741,11 @@ export class RequestSummaryComponent implements OnDestroy {
       `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requests}`,
     ]);
   }
+  redirectToProfile(){
+        this._router.navigate([
+      `${Configuration.modules.wafi}/${Configuration.modules.facilities}/${Configuration.pages.facilities.facilityProfile}`,
+    ]);
+  }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

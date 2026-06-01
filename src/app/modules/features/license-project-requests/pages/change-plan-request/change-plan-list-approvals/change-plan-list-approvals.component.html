@@ -1,0 +1,130 @@
+<div class="page">
+  <!-- Header: title + search -->
+  <div class="page-header mb-3">
+    <div class="d-flex align-items-center justify-content-between gap-3">
+      <div class="page-title mb-0">
+        <h5 class="title">موافقات الاطراف</h5>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div class="search-box">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="hgi hgi-stroke hgi-search-01"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="البحث باسم الطلب او اسم المشروع"
+              (keyup)="onSearchKeyup($event)"
+            />
+          </div>
+        </div>
+        <div class="status-filter">
+          <select
+            class="form-select"
+            [(ngModel)]="selectedStatus"
+            (change)="onStatusFilterChange()"
+          >
+            <option [ngValue]="null" disabled hidden>حالة الطلب</option>
+            <option [ngValue]="null">الكل</option>
+            <option *ngFor="let s of statusOptions" [ngValue]="s.id">
+              {{ s.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container>
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <!-- <th scope="col">كود الطلب</th> -->
+            <th scope="col">اسم الطلب</th>
+            <th scope="col">اسم المشروع</th>
+            <th scope="col">حالة الطلب</th>
+            <th scope="col">تاريخ تقديم الطلب</th>
+            <th scope="col" *ngIf="showCompletionColumns">
+              حالة استكمال الطلب
+            </th>
+            <th scope="col" *ngIf="showCompletionColumns">المدة المتبقية</th>
+            <th scope="col">الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <!-- <td class="cell-text">{{ item.requestCode }}</td> -->
+            <td class="cell-text">{{ item.requestTypeName }}</td>
+            <td class="cell-text">{{ item.projectName }}</td>
+            <td>
+              <span
+                class="status-pill"
+                [ngClass]="getStatusPillClass(item.externalStatusId!)"
+                *ngIf="item.externalStatusName"
+                >{{ item.externalStatusName }}</span
+              >
+              <span *ngIf="!item.externalStatusName">-</span>
+            </td>
+            <td class="cell-text cell-date">
+              {{ item.createdOn | date: "dd-MM-yyyy" }}
+            </td>
+
+            <td *ngIf="showCompletionColumns">
+              <span
+                class="status-pill red"
+                *ngIf="item.externalStatusId === RequestStatusEnum.CancelledConsultantOrAccountantIncomplete"
+              >ملغي</span>
+              <ng-container *ngIf="item.externalStatusId !== RequestStatusEnum.CancelledConsultantOrAccountantIncomplete">
+                <span
+                  class="status-pill"
+                  [ngClass]="
+                    item.completionStatusId === CompletionStatusEnum.Approved || item.completionStatusId === CompletionStatusEnum.Completed
+                      ? 'green'
+                      : item.completionStatusId === CompletionStatusEnum.Rejected
+                        ? 'red'
+                        : 'orange'
+                  "
+                  *ngIf="item.completionStatusName"
+                >
+                  {{ item.completionStatusName }}
+                </span>
+                <span *ngIf="!item.completionStatusName">-</span>
+              </ng-container>
+            </td>
+            <td class="cell-text" *ngIf="showCompletionColumns">
+              <ng-container *ngIf="item.externalStatusId === RequestStatusEnum.CancelledConsultantOrAccountantIncomplete">-</ng-container>
+              <ng-container *ngIf="item.externalStatusId !== RequestStatusEnum.CancelledConsultantOrAccountantIncomplete">
+                {{
+                  (item.completionStatusId === CompletionStatusEnum.Approved || item.completionStatusId === CompletionStatusEnum.Completed || item.completionStatusId === CompletionStatusEnum.Rejected)
+                    ? '-'
+                    : (item.remainingDays !== null && item.remainingDays !== undefined ? item.remainingDays + " أيام" : "-")
+                }}
+              </ng-container>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-sm btn-details"
+                (click)="viewDetails(item)"
+              >
+                عرض التفاصيل
+              </button>
+            </td>
+          </tr>
+
+          <!-- EMPTY STATE INSIDE TABLE -->
+          <tr *ngIf="items.length === 0">
+            <td colspan="7" class="text-center py-4">
+              <app-no-data [showCompleteBtn]="false"></app-no-data>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+</div>

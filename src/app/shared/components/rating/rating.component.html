@@ -19,6 +19,24 @@
     <h6 class="title" *ngIf="ratingType === RatingTypeEnum.BuyerUnifiedContractDocumentation">
       ما مدي رضاك عن سهولة استخدام خدمة توثيق العقد الموحد؟
     </h6>
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.QualificationServiceExperience">
+      ما مدى رضاك عن تجربة خدمة التأهيل؟
+    </h6>
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.DegreeUpgradeApproval">
+      ما مدى رضاك عن تجربة طلب رفع درجة التأهيل؟
+    </h6>
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.ChangePlanRequestExperience">
+      ما مدى رضاك عن تجربة طلب تغيير خطة المشروع؟
+    </h6>
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.ChangeEngineeringConsultantRequestExperience">
+      ما مدى رضاك عن تجربة طلب تغيير الاستشاري الهندسي؟
+    </h6>
+    <h6 class="title" *ngIf="ratingType === RatingTypeEnum.ChangeCharteredAccountantRequestExperience">
+      ما مدى رضاك عن تجربة طلب تغيير المحاسب القانوني؟
+    </h6>
+     <h6 class="title" *ngIf="ratingType === RatingTypeEnum.DeveloperQualificationSuspensionCancellation">
+      ما مدى رضاك عن تجربة تعليق التأهيل؟
+    </h6>
     <p class="desc">
       هذا سوف يساعدنا على تحسين تجربتك وجعلها أكثر سلاسة وتخصيصًا لك
     </p>
@@ -32,7 +50,13 @@
       ratingType === RatingTypeEnum.InstantLicenseServiceEaseOfUse ||
       ratingType === RatingTypeEnum.DeveloperContractDocumentation ||
       ratingType === RatingTypeEnum.BuyerContractDocumentation ||
-      ratingType === RatingTypeEnum.BuyerUnifiedContractDocumentation
+      ratingType === RatingTypeEnum.BuyerUnifiedContractDocumentation ||
+      ratingType === RatingTypeEnum.QualificationServiceExperience ||
+      ratingType === RatingTypeEnum.DegreeUpgradeApproval ||
+      ratingType === RatingTypeEnum.ChangePlanRequestExperience ||
+      ratingType === RatingTypeEnum.ChangeEngineeringConsultantRequestExperience ||
+      ratingType === RatingTypeEnum.ChangeCharteredAccountantRequestExperience ||
+      ratingType === RatingTypeEnum.DeveloperQualificationSuspensionCancellation
     "
   >
     <rating

@@ -198,6 +198,16 @@ export class SharedLicenseProjectService {
     localStorage.removeItem('facilityId');
   }
 
+  setSelectedProjectIdToLocalStorage(licenseProjectId: string): void {
+    localStorage.setItem('selectedLicenseProjectId_fromCertifiedProjects', licenseProjectId);
+  }
+  getSelectedProjectIdFromLocalStorage(): string | null {
+    return localStorage.getItem('selectedLicenseProjectId_fromCertifiedProjects');
+  }
+  removeSelectedProjectIdFromLocalStorage(): void {
+    localStorage.removeItem('selectedLicenseProjectId_fromCertifiedProjects');
+  }
+
   setSelectedDeed(deed: LicenseProjectInstantDeedResponseDto): void {
     this.selectedDeed = deed;
   }

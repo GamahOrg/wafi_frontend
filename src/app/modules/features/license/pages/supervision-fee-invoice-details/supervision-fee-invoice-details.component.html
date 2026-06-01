@@ -1,0 +1,183 @@
+<div class="details-page" *ngIf="details && !isLoading">
+
+  <!-- Header: فاتورة رقم + الحالة -->
+  <div class="page-header">
+    <div class="page-title">
+      <h5 class="title">
+        <i class="hgi hgi-stroke hgi-invoice-03"></i>
+        فاتورة رقم {{ details.invoiceNumber || '—' }}
+      </h5>
+      <span class="status-pill" [ngClass]="getStatusClass(details.status)">
+        {{ details.statusText }}
+      </span>
+    </div>
+  </div>
+
+  <!-- اسم المشروع -->
+  <div class="page-section">
+    <div class="row">
+      <div class="col-12">
+        <div class="key-value">
+          <span class="key">اسم المشروع</span>
+          <span class="value">{{ details.projectName || '—' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- بيانات المبيعات -->
+  <div class="page-section">
+    <h6 class="title">بيانات المبيعات</h6>
+    <div class="row row-gap-4">
+      <div class="col-12 col-md-6">
+        <div class="key-value">
+          <span class="key">عدد {{ unitLabel }} المباعة</span>
+          <span class="value">{{ details.soldUnitsCount }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key-value">
+          <span class="key">قيمة {{ unitLabel }} المباعة</span>
+          <span class="value">{{ details.totalSalePrice | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- بيانات التحصيل (أراضي فقط) -->
+  <div class="page-section" *ngIf="isLand">
+    <h6 class="title">بيانات التحصيل</h6>
+    <div class="row row-gap-4">
+      <div class="col-12 col-md-6">
+        <div class="key-value">
+          <span class="key">إجمالي التحصيل التراكمي حتى نهاية الفترة</span>
+          <span class="value">{{ details.totalCumulativeCollection | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- بيانات احتساب الرسوم — أراضي (نسبة واحدة) -->
+  <div class="page-section" *ngIf="isLand">
+    <h6 class="title">بيانات احتساب الرسوم</h6>
+    <div class="row row-gap-4">
+      <div class="col-12 col-md-6">
+        <div class="key-value">
+          <span class="key">نسبة رسوم {{ unitLabel }}</span>
+          <span class="value">{{ details.feePercentage }}%</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="key-value">
+          <span class="key">قيمة رسوم {{ unitLabel }}</span>
+          <span class="value">{{ details.totalFeeAmount | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- بيانات احتساب الرسوم — وحدات سكنية (فئة واحدة) -->
+  <!-- <div class="page-section" *ngIf="!isLand && details.bracketDetails?.length <= 1">
+    <h6 class="title">بيانات احتساب الرسوم</h6>
+    <div class="row row-gap-4">
+      <div class="col-12 col-md-4">
+        <div class="key-value">
+          <span class="key">القيمة البيعية الخاضعة للاحتساب</span>
+          <span class="value">{{ details.bracketDetails[0]?.chargeableSalesValue | number:'1.2-2' }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="key-value">
+          <span class="key">نسبة الرسوم المطبقة</span>
+          <span class="value">{{ details.bracketDetails[0]?.applicableFeePercentage }}%</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="key-value">
+          <span class="key">قيمة رسوم {{ unitLabel }}</span>
+          <span class="value">{{ details.totalFeeAmount | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- بيانات احتساب الرسوم — وحدات سكنية (فئات سعرية متعددة) -->
+  <div class="page-section" *ngIf="!isLand && details.bracketDetails?.length > 0">
+    <h6 class="title">بيانات احتساب الرسوم</h6>
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead> 
+          <tr>
+            <th scope="col">نطاق الاسعار</th>
+            <th scope="col">عدد الوحدات</th>
+            <th scope="col">القيمة البيعية الخاضعة للاحتساب</th>
+            <th scope="col">نسبة الرسوم المطبقة</th>
+            <th scope="col">قيمة الرسوم الناتجة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bracket of details.bracketDetails">
+            <td>{{ bracket.priceFrom | number:'1.2-2' }} - {{ bracket.priceTo | number:'1.2-2' }}</td>
+            <td>{{ bracket.unitsCount }}</td>
+            <td>{{ bracket.chargeableSalesValue | number:'1.2-2' }}</td>
+            <td>{{ bracket.applicableFeePercentage }}%</td>
+            <td>{{ bracket.calculatedFeeAmount | number:'1.2-2' }}</td>
+          </tr>
+          <tr class="fw-bold">
+            <td>الإجمالي</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ details.totalFeeAmount | number:'1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- بيانات الفاتورة -->
+  <div class="page-section">
+    <h6 class="title">بيانات الفاتورة</h6>
+    <div class="row row-gap-4">
+      <div class="col-12 col-md-3">
+        <div class="key-value">
+          <span class="key">بداية فترة الاحتساب</span>
+          <span class="value">{{ details.periodStart | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="key-value">
+          <span class="key">نهاية فترة الاحتساب</span>
+          <span class="value">{{ details.periodEnd | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="key-value">
+          <span class="key">تاريخ إصدار الفاتورة</span>
+          <span class="value">{{ details.invoiceIssuanceDate ? (details.invoiceIssuanceDate | date:'dd/MM/yyyy') : '—' }}</span>
+        </div>
+      </div>
+      <!-- <div class="col-12 col-md-3">
+        <div class="key-value">
+          <span class="key">حالة الفاتورة</span>
+          <span class="status-pill" [ngClass]="getStatusClass(details.status)">
+            {{ details.statusText }}
+          </span>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+</div>
+
+<ng-container *ngIf="isLoading">
+  <div class="d-flex justify-content-center mt-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!isLoading && !details">
+  <div class="mt-4">
+    <app-no-data [showCompleteBtn]="false" [title]="'لم يتم العثور على بيانات الفاتورة'"></app-no-data>
+  </div>
+</ng-container>

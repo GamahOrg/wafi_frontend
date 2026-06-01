@@ -9,8 +9,25 @@
   .icon {
     display: inline-flex;
     justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+
+    width: 2.5rem;
+    height: 2.5rem;
     line-height: 1;
     font-size: $body-font-size * 1.25;
+    font-weight: 400;
+    border-radius: 50%;
+  }
+
+  .title {
+    color: currentColor;
+  }
+
+  .text {
+    font-size: $font-size-sm;
+    font-weight: 400;
+    color: #384250;
   }
 
   &.alert-info {
@@ -19,10 +36,18 @@
     --bs-alert-bg: #F5FAFF;
 
     border-inline-start-color: rgba(#1570EF, .7);
+
+    .icon {
+      background-color: #EFF8FF;
+    }
   }
 
   &.alert-success {
     border-inline-start-color: #079455;
+
+    .icon {
+      background-color: #ECFDF3;
+    }
   }
 
   &.alert-warning {
@@ -31,6 +56,10 @@
 
   &.alert-danger {
     border-inline-start-color: $red;
+
+    .icon {
+      background-color: #FEF3F2;
+    }
   }
 
   .btn-link {

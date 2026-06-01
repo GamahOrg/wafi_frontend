@@ -68,6 +68,8 @@ import { CustomerTypeEnum } from './models/search-exchange-document-list-respons
 import { RealStateCharteredAccountantUnitsListComponent } from './pages/real-state-chartered-accountant-units-list/real-state-chartered-accountant-units-list.component';
 import { ContractAccountantUnitDetailsComponent } from './pages/contracts/contract-accountant-unit-details/contract-accountant-unit-details.component';
 import { SupervisionFeesComponent } from './pages/supervision-fees/supervision-fees.component';
+import { SupervisionFeeInvoicesComponent } from './pages/supervision-fee-invoices/supervision-fee-invoices.component';
+import { SupervisionFeeInvoiceDetailsComponent } from './pages/supervision-fee-invoice-details/supervision-fee-invoice-details.component';
 
 const licenseTypeBreadcrumbResolver: ResolveFn<string> = () => {
   const sharedLicenseProjectService = inject(SharedLicenseProjectService);
@@ -419,6 +421,16 @@ const routes: Routes = [
     path: Configuration.pages.license.supervisionFees,
     component: SupervisionFeesComponent,
     data: { breadcrumb: 'رسوم الاشراف والمتابعة' },
+  },
+  {
+    path: Configuration.pages.license.supervisionFeeInvoices,
+    component: SupervisionFeeInvoicesComponent,
+    data: { breadcrumb: 'الفواتير' },
+  },
+  {
+    path: Configuration.pages.license.supervisionFeeInvoiceDetails,
+    component: SupervisionFeeInvoiceDetailsComponent,
+    data: { breadcrumb: 'تفاصيل الفاتورة' },
   },
 ];
 //

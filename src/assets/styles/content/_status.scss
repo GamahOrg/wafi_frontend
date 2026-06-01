@@ -10,7 +10,7 @@
   padding: .125rem .5rem;
   border-radius: 9999px;
 
-  &::before {
+  &:not(.no-icon)::before {
     content: "";
     display: inline-block;
     width: 10px;

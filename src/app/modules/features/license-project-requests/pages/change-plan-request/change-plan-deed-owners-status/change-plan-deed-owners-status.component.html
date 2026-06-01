@@ -1,0 +1,88 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3 align-items-center">
+      <div class="col-12 col-lg-6 col-xl">
+        <div class="page-title mb-0">
+          <h5 class="title">حالة الملاك</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6 col-xl-auto">
+        <div class="filter">
+          <div class="row g-2 align-items-center">
+            <div class="col-12 col-lg-6 col-xl">
+              <div class="input-group search-input-group">
+                <span class="input-group-text">
+                  <i class="hgi hgi-stroke hgi-search-01"></i>
+                </span>
+                <input
+                  type="text"
+                  id="control-search"
+                  class="form-control"
+                  [value]="searchText"
+                  (input)="onSearchChange($any($event.target).value)"
+                  placeholder="البحث"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="deedOwners.length > 0">
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>اسم المالك</th>
+            <th>الهوية</th>
+            <th>اجمالي المساحة المملوكة</th>
+            <th>موافقة المالك</th>
+            <th>سبب الرفض</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let owner of deedOwners">
+            <td>{{ owner.ownerName }}</td>
+            <td>{{ owner.idNumber }}</td>
+            <td>
+              <span class="d-inline-flex align-items-center gap-1">
+                {{ owner.owningArea }}
+                <span class="text-muted">م²</span>
+              </span>
+            </td>
+            <td>
+              <span
+                class="status-pill"
+                [ngClass]="{
+                  'green': owner.approvalStatus === approvalStatusEnum.Approved,
+                  'red': owner.approvalStatus === approvalStatusEnum.Rejected,
+                  'orange': owner.approvalStatus === approvalStatusEnum.PendingApproval
+                }"
+              >
+                {{ getStatusLabel(owner.approvalStatus) }}
+              </span>
+            </td>
+            <td>
+              <button
+                *ngIf="owner.approvalStatus === approvalStatusEnum.Rejected"
+                class="btn btn-outline-primary btn-sm"
+                (click)="showRejectionReason(owner.rejectionReason)"
+              >
+                سبب الرفض
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="deedOwners.length === 0 && !isLoading">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false"></app-no-data>
+    </div>
+  </ng-container>
+</div>

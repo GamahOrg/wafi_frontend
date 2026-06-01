@@ -35,6 +35,7 @@ export class CertifiedFacilityEngineersComponent {
       })
     );
   }
+  FacilityTypeCategoryEnum=FacilityTypeCategory;
   facilityTypeCategory: FacilityTypeCategory = FacilityTypeCategory.Developer;
   updatePageTitle(): void {
     if (this.userData && this.userData.facilities && this.userData.facilities.length > 0) {
@@ -83,7 +84,10 @@ export class CertifiedFacilityEngineersComponent {
       })
     )
   }
-
+  isEngineering(): boolean {
+    const facilityTypeCategory = this.userData?.facilities[0]?.facilityTypeCategory;
+    return facilityTypeCategory === FacilityTypeCategory.Engineering;
+  }
   GetByFacilityId() {
     this.subscriptions.push(
       this._certifiedEngineerService.GetAllFacilityById(this.userData?.facilities[0].id as string).subscribe(res => {

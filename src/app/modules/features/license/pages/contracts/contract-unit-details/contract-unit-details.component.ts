@@ -85,7 +85,7 @@ export class ContractUnitDetailsComponent implements OnInit, OnDestroy {
         tap((licenseRes) => {
           if (licenseRes)
             this.contractDocumentationRatingStatus = licenseRes as RatingStatusDto;
-          
+
         }),
       );
     }
@@ -157,7 +157,7 @@ openRatingModal(index?: number): void {
         );
         this.popupService.dismissDialog();
 
-        
+
       });
       this._ratingService.currentRatingData.next(null);
   }
@@ -177,7 +177,7 @@ openRatingModal(index?: number): void {
             res.message || 'تم إرسال التقييم بنجاح',
           );
           this.popupService.dismissDialog();
-  
+
         });
 
       this._ratingService.currentRatingData.next(null);
@@ -300,7 +300,6 @@ openRatingModal(index?: number): void {
       )
       .subscribe({
         next: (response) => {
-          debugger;
           if (response.isDone) {
             this.showPopup = true;
           } else {
@@ -318,10 +317,9 @@ openRatingModal(index?: number): void {
   }
 
   onContractSaved(): void {
-    debugger;
     // Close the popup
     this.showPopup = false;
-    
+
     if(this.contractDocumentationRatingStatus.shouldShowRating) {
       this.openRatingModal(0);
     }

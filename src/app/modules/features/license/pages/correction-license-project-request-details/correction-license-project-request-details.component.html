@@ -6,18 +6,25 @@
           <h6 class="card-title">
             {{ selectedRequest?.licenseProjectRequestType?.name }} -
             <span class="text-primary">{{ selectedRequest?.requestCode }}</span>
+            <span class="status-pill" [ngClass]="
+                getFarzStatusClass(
+                  selectedRequest.licenseProjectFarzRequestStatusId
+                )
+              " *ngIf="
+                selectedRequest?.licenseProjectFarzRequestStatusId !== null
+              ">
+              {{ selectedRequest.licenseProjectFarzRequestStatusName }}
+            </span>
           </h6>
           <div class="key-value horiz">
             <span class="key">تاريخ تقديم الطلب</span>
             <span class="value">{{
               selectedRequest?.createdOn | date: "dd MMMM yyyy"
-            }}</span>
+              }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-6">
-          <div
-            class="d-flex flex-wrap justify-content-center align-items-center gap-3"
-          >
+          <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
             <!-- <span
               class="status-pill orange"
               *ngIf="selectedRequest.licenseProjectFarzRequestStatusId"
@@ -25,78 +32,40 @@
               {{ selectedRequest.licenseProjectFarzRequestStatusName }}
             </span> -->
 
-            <div
-              class="status-pill orange"
-              *ngIf="
+            <div class="status-pill orange" *ngIf="
                 selectedRequest &&
                 selectedRequest.licenseProjectRequestEventStatus
                   ?.allowCompile &&
                 selectedRequest.licenseProjectRequestEventStatus
                   ?.allowCompilePeriod != -1
-              "
-            >
+              ">
               {{ localization.remainingDaysToStudy }}
               {{ StudyDaysProgressSetting.title }} {{ localization.day }}
             </div>
 
-            <span
-              class="status-pill"
-              [ngClass]="
-                getFarzStatusClass(
-                  selectedRequest.licenseProjectFarzRequestStatusId
-                )
-              "
-              *ngIf="
-                selectedRequest?.licenseProjectFarzRequestStatusId !== null
-              "
-            >
-              {{ selectedRequest.licenseProjectFarzRequestStatusName }}
-            </span>
 
-            <span
-              class="status-pill green"
-              *ngIf="selectedRequest.externalRequestStatus?.name"
-            >
+            <span class="status-pill green" *ngIf="selectedRequest.externalRequestStatus?.name">
               {{ selectedRequest.externalRequestStatus?.name }}
             </span>
           </div>
         </div>
         <div class="col-12 col-xl-3">
-          <div
-            class="d-flex flex-wrap justify-content-end align-items-center gap-3"
-          >
+          <div class="d-flex flex-wrap justify-content-end align-items-center gap-3">
             <ng-container *ngFor="let button of clientActionsButtons">
-              <button
-                *ngIf="button.isVisable"
-                [disabled]="button.isDisables"
-                class="btn d-flex align-items-center justify-content-between"
-                (click)="button.onclick()"
-                type="button"
-                [ngClass]="button.classes"
-              >
+              <button *ngIf="button.isVisable" [disabled]="button.isDisables" class="btn d-flex align-items-center justify-content-between" (click)="button.onclick()" type="button" [ngClass]="button.classes">
                 {{ button.title }}
               </button>
             </ng-container>
-            <button
-              *ngIf="
+            <button *ngIf="
                 selectedRequest?.licenseProjectRequestEventStatus?.allowCompile
-              "
-              class="btn d-flex align-items-center justify-content-between btn-primary"
-              (click)="editRequest()"
-              type="button"
-            >
+              " class="btn d-flex align-items-center justify-content-between btn-primary" (click)="editRequest()" type="button">
               {{ localization.editButtonTitle }}
             </button>
-            <button
-              *ngIf="
+            <button *ngIf="
                 selectedRequest &&
                 selectedRequest.licenseProjectFarzRequestStatusId ===
                   farzRequestStatusEnum.Rejected
-              "
-              class="btn d-flex align-items-center justify-content-between btn-primary"
-              (click)="handleFarzNotes()"
-              type="button"
-            >
+              " class="btn d-flex align-items-center justify-content-between btn-primary" (click)="handleFarzNotes()" type="button">
               {{ localization.farzStatus }}
             </button>
           </div>
@@ -110,8 +79,8 @@
             <span class="key">مقدم من</span>
             <span class="value">{{
               selectedRequest?.customer?.fullName ??
-                selectedRequest?.facility?.facilityName
-            }}</span>
+              selectedRequest?.facility?.facilityName
+              }}</span>
           </div>
         </div>
 
@@ -120,8 +89,8 @@
             <span class="key">رقم الهوية </span>
             <span class="value">{{
               selectedRequest?.customer?.nidnumber ??
-                selectedRequest?.facility?.commercialRegisterNumber
-            }}</span>
+              selectedRequest?.facility?.commercialRegisterNumber
+              }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-3 col-xxl">
@@ -129,7 +98,7 @@
             <span class="key">الجنسية </span>
             <span class="value">{{
               selectedRequest?.customer?.nationalityName
-            }}</span>
+              }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-3 col-xxl">

@@ -1,226 +1,549 @@
 <form [formGroup]="basicInfoForm" id="form-basicInfoForm">
-  <div class="tab-data-section">
-    <div class="row row-gap-3 mb-3">
-      <div class="col-12 col-lg-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering">
-        <label for="" class="form-label">
-          <span class="required-star">*</span>
-          رقم ترخيص الهيئة السعودية للمهندسين
-        </label>
-        <input type="text" class="form-control" id="control-saudiAuthorityOfEngineersLicenseNumber"
-          formControlName="saudiAuthorityOfEngineersLicenseNumber">
-        <div class="invalid-feedback d-block" *ngIf="basicInfoForm.get('saudiAuthorityOfEngineersLicenseNumber')?.hasError('required')
-            && basicInfoForm.get('saudiAuthorityOfEngineersLicenseNumber')?.touched">
-          هذا الحقل مطلوب
-        </div>
+  <div class="row row-gap-4">
+    <div
+      class="col-xl-6"
+      *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering"
+    >
+      <label for="" class="form-label"
+        ><span class="required-star">*</span> رقم ترخيص الهيئة السعودية
+        للمهندسين</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="control-saudiAuthorityOfEngineersLicenseNumber"
+        formControlName="saudiAuthorityOfEngineersLicenseNumber"
+             (keypress)="allowNumbersOnly($event)"
+      />
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          basicInfoForm
+            .get('saudiAuthorityOfEngineersLicenseNumber')
+            ?.hasError('required') &&
+          basicInfoForm.get('saudiAuthorityOfEngineersLicenseNumber')?.touched
+        "
+      >
+        هذا الحقل مطلوب
       </div>
-      <div class="col-12 col-lg-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering">
-        <label for="" class="form-label">
-          <span class="required-star">*</span>
-          شهادة ترخيص الهيئة السعودية للمهندسين
-        </label>
-        <div class="value" *ngIf="facilityData.saudiAuthorityOfEngineersLicenseFileId">
-          <span class="delete" (click)="deleteSaudiAuthorityOfEngineersLicenseFile(facilityData.saudiAuthorityOfEngineersLicenseFile?.id)">
-            <i class="material-icons text-danger">close</i>
-          </span>
-          <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + facilityData.saudiAuthorityOfEngineersLicenseFile?.filePath" target="_blank">
-            {{facilityData.saudiAuthorityOfEngineersLicenseFile?.fileDescription || 'ملف مرفق'}}
-          </a>
-        </div>
-        <app-file-uploader [data]="singleFileUploaderData"
-          (fileUploaded)="onUploadSaudiAuthorityOfEngineersLicenseFile($event)"></app-file-uploader>
-        <div class="invalid-feedback d-block" *ngIf="!facilityData.saudiAuthorityOfEngineersLicenseFileId
-            && !FacilityBasicUpdateInfo.saudiAuthorityOfEngineersLicenseFileId && showValidation">
-          هذا الحقل مطلوب
-        </div>
-      </div>
-      <div class="row">
-        <div class="row">
-          <div class="col-12 col-lg-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Accountant">
-            <label for="" class="form-label">
-              <span class="required-star">*</span>
-              رقم ترخيص الهيئة السعودية للمراجعين والمحاسبين
-            </label>
-            <input type="text" class="form-control" id="control-saudiAuthorityForAuditorsAndAccountants"
-              formControlName="saudiAuthorityForAuditorsAndAccountants">
-            <div class="invalid-feedback d-block" *ngIf="basicInfoForm.get('saudiAuthorityForAuditorsAndAccountants')?.hasError('required')
-            && basicInfoForm.get('saudiAuthorityForAuditorsAndAccountants')?.touched">
-              هذا الحقل مطلوب
-            </div>
-          </div>
-          <div class="col-12 col-lg-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Accountant">
-            <label for="" class="form-label">
-              <span class="required-star">*</span>
-              شهادة ترخيص الهيئة السعودية للمراجعين والمحاسبين
-            </label>
-            <div class="value" *ngIf="facilityData.saudiAuthorityForAuditorsAndAccountantsFileId">
-              <span class="delete" (click)="deleteSaudiAuthorityForAuditorsAndAccountantsFile(facilityData.saudiAuthorityForAuditorsAndAccountantsFile?.id)">
-                <i class="material-icons text-danger">close</i>
-              </span>
-              <span class="icon material-icons-outlined">content_copy</span>
-              <a [href]="baseUrl + facilityData.saudiAuthorityForAuditorsAndAccountantsFile?.filePath" target="_blank">
-                {{facilityData.saudiAuthorityForAuditorsAndAccountantsFile?.fileDescription || 'ملف مرفق'}}
-              </a>
-            </div>
-            <app-file-uploader [data]="singleFileUploaderData"
-              (fileUploaded)="onUploadSaudiAuthorityForAuditorsAndAccountantsFile($event)"></app-file-uploader>
-            <div class="invalid-feedback d-block" *ngIf="!facilityData.saudiAuthorityForAuditorsAndAccountantsFileId
-                && !FacilityBasicUpdateInfo.saudiAuthorityForAuditorsAndAccountantsFileId && showValidation">
-              هذا الحقل مطلوب
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-lg-6">
-        <label for="" class="form-label"> <span class="required-star">*</span>رقم عضوية الغرفة التجارية</label>
-        <input type="text" class="form-control" id="control-chamberOfCommerceMembershipNumber"
-          formControlName="chamberOfCommerceMembershipNumber">
-        <div class="invalid-feedback d-block" *ngIf="basicInfoForm.get('chamberOfCommerceMembershipNumber')?.hasError('required') 
-            && basicInfoForm.get('chamberOfCommerceMembershipNumber')?.touched">
-          هذا الحقل مطلوب
-        </div>
-      </div>
-
-      <div class="col-12 col-lg-6">
-        <div class="form-group">
-          <label for="" class="form-label"> <span class="required-star">*</span>مدينة إصدار عضوية الغرفة
-            التجارية</label>
-          <select class="form-select" formControlName="cityId">
-            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
-            <option *ngFor="let item of cities" [value]="item.id">
-              {{item.cityName}}
-            </option>
-          </select>
-          <div class="invalid-feedback d-block" *ngIf="controls.cityId.value == null && controls.cityId.touched">
-            حقل مطلوب
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-lg-6">
-
-        <label for="" class="form-label"> عقد تأسيس الشركة</label>
-        <div class="value" *ngIf="facilityData.companyEstablishingContractFileId">
-          <span class="delete" (click)="deletFile(facilityData.companyEstablishingContractFileManager?.id)">
-            <i class="material-icons text-danger">close</i>
-          </span>
-          <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + facilityData.companyEstablishingContractFileManager?.filePath" target="_blank">
-            {{facilityData.companyEstablishingContractFileManager?.fileDescription || 'ملف مرفق'}}
-          </a>
-        </div>
-        <app-file-uploader [data]="singleFileUploaderData"
-          (fileUploaded)="onUploadCompanyEstablishingContractFile($event)"></app-file-uploader>
-      </div>
-      <div class="col-12 col-lg-6">
-        <label for="" class="form-label">مرفق قائمة المشتركين على رأس العمل </label>
-
-        <div class="value" *ngIf="facilityData.socialInsuranceEmployeesListFileId">
-          <span class="delete"
-            (click)="deletSocialInsuranceFile(facilityData.socialInsuranceEmployeesListFileManager?.id)">
-            <i class="material-icons text-danger">close</i>
-          </span>
-          <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + facilityData.socialInsuranceEmployeesListFileManager?.filePath" target="_blank">
-            {{facilityData.socialInsuranceEmployeesListFileManager?.fileDescription || 'ملف مرفق'}}
-          </a>
-        </div>
-        <app-file-uploader [data]="singleFileUploaderData"
-          (fileUploaded)="onUploadSocialInsuranceEmployeesFile($event)"></app-file-uploader>
-      </div>
-      <div class="col-12 col-lg-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Developer
-           || facilityTypeCategory === FacilityTypeCategoryEnum.Accountant ">
-        <label for="" class="form-label">الشعار</label>
-        <div class="value" *ngIf="facilityData.logoFileId">
-          <span class="delete" (click)="deleteLogoFile(facilityData.logoFile?.id)">
-            <i class="material-icons text-danger">close</i>
-          </span>
-          <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + facilityData.logoFile?.filePath" target="_blank">
-            {{facilityData.logoFile?.fileDescription}}
-          </a>
-        </div>
-        <app-file-uploader [data]="logoFileUploaderData" (fileUploaded)="onUploadLogoFile($event)"></app-file-uploader>
-      </div>
-
-
-      <div class="col-12 col-lg-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering">
-        <label for="" class="form-label">شهادة تصنيف مقدمي خدمات المدن بالتكامل مع منصة بلدي</label>
-        <div class="value"
-          *ngIf="facilityData.qualificationFacilityCertifications && facilityData.qualificationFacilityCertifications.length > 0 && facilityData.qualificationFacilityCertifications[0].certificationFile">
-          <span class="delete" (click)="deleteCertificationFile()">
-            <i class="material-icons text-danger">close</i>
-          </span>
-          <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + facilityData.qualificationFacilityCertifications[0].certificationFile?.filePath"
-            target="_blank">
-            {{facilityData.qualificationFacilityCertifications[0].certificationFile?.fileDescription}}
-          </a>
-        </div>
-        <app-file-uploader [data]="singleFileUploaderData"
-          (fileUploaded)="onUploadCertificationFile($event)"></app-file-uploader>
-      </div>
-
     </div>
-    <div class="row row-gap-3 mb-3" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Developer">
-      <div class="col-12 col-lg-6">
-        <div class="row row-gap-3 mb-3">
-          <div class="col-12 col-lg-6">
-            <label for="prevExpert" class="form-label"><span class="required-star">*</span> هل يوجد بيان بالقضايا أم
-              لا</label>
-          </div>
-          <div class="col-12 col-lg-6">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="issuesIsExist" [value]="true" id="yes">
-              <label class="form-check-label" for="yes">نعم</label>
-            </div>
 
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="issuesIsExist" [value]="false" id="no">
-              <label class="form-check-label" for="no">لا</label>
-            </div>
-          </div>
-          <div class="invalid-feedback d-block" *ngIf="basicInfoForm.get('issuesIsExist')?.hasError('required')
-            && basicInfoForm.get('issuesIsExist')?.touched">
-            حقل مطلوب
-          </div>
+    <div
+      class="col-xl-6"
+      *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering"
+    >
+      <label for="" class="form-label"
+        ><span class="required-star">*</span> شهادة ترخيص الهيئة السعودية
+        للمهندسين</label
+      >
+      <div
+        class="file-bar"
+        *ngIf="facilityData.saudiAuthorityOfEngineersLicenseFileId"
+      >
+        <div class="details">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a
+            [href]="
+              baseUrl +
+              facilityData.saudiAuthorityOfEngineersLicenseFile?.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.saudiAuthorityOfEngineersLicenseFile
+                ?.fileDescription || "ملف مرفق"
+            }}
+          </a>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="btn btn-icon btn-danger"
+            (click)="
+              deleteSaudiAuthorityOfEngineersLicenseFile(
+                facilityData.saudiAuthorityOfEngineersLicenseFile?.id
+              )
+            "
+          >
+            <i class="material-icons">close</i>
+          </button>
         </div>
       </div>
-      <div class="col-12 col-lg-6" *ngIf="basicInfoForm.get('issuesIsExist')?.value">
-        <label for="" class="form-label"> <span class="required-star">*</span>مرفقات القضايا </label>
-        <ng-container *ngIf="
-                      facilityData.qualificationIssuesDocuments &&
-                      facilityData.qualificationIssuesDocuments.length>
-          0
-          ">
-          <div class="value" *ngFor="
-    let qualificationIssuesDocument of facilityData.qualificationIssuesDocuments
-  ">
-            <span class="delete"
-              (click)="deleteQualificationIssuesDocument(qualificationIssuesDocument.fileManager?.id)">
-              <i class="material-icons text-danger">close</i>
-            </span>
-            <span class="icon material-icons-outlined">content_copy</span>
-            <a download [href]="
-      baseUrl + qualificationIssuesDocument.fileManager?.filePath
-    " class="d-block" target="_blank">
-              {{ qualificationIssuesDocument.fileManager?.fileDescription }}
-            </a>
-          </div>
-        </ng-container>
-        <app-file-uploader [data]="mueltiFilesUploaderData"
-          (fileUploaded)="onUploadQualificationIssuesDocumentCreateUpdateDtoFile($event)"></app-file-uploader>
-        <div class="invalid-feedback d-block" *ngIf="
-  !hasIssueFiles &&
-  basicInfoForm.get('issuesIsExist')?.value &&
-  showValidation
-">
+      <app-file-uploader
+        [data]="singleFileUploaderData"
+        (fileUploaded)="onUploadSaudiAuthorityOfEngineersLicenseFile($event)"
+      ></app-file-uploader>
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          !facilityData.saudiAuthorityOfEngineersLicenseFileId &&
+          !FacilityBasicUpdateInfo.saudiAuthorityOfEngineersLicenseFileId &&
+          showValidation
+        "
+      >
+        هذا الحقل مطلوب
+      </div>
+    </div>
+
+    <div
+      class="col-xl-6"
+      *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Accountant"
+    >
+      <label for="" class="form-label"
+        ><span class="required-star">*</span> رقم ترخيص الهيئة السعودية
+        للمراجعين والمحاسبين</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="control-saudiAuthorityForAuditorsAndAccountants"
+        formControlName="saudiAuthorityForAuditorsAndAccountants"
+             (keypress)="allowNumbersOnly($event)"
+      />
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          basicInfoForm
+            .get('saudiAuthorityForAuditorsAndAccountants')
+            ?.hasError('required') &&
+          basicInfoForm.get('saudiAuthorityForAuditorsAndAccountants')?.touched
+        "
+      >
+        هذا الحقل مطلوب
+      </div>
+    </div>
+
+    <div
+      class="col-xl-6"
+      *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Accountant"
+    >
+      <label for="" class="form-label"
+        ><span class="required-star">*</span> شهادة ترخيص الهيئة السعودية
+        للمراجعين والمحاسبين</label
+      >
+      <div
+        class="file-bar"
+        *ngIf="facilityData.saudiAuthorityForAuditorsAndAccountantsFileId"
+      >
+        <div class="details">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a
+            [href]="
+              baseUrl +
+              facilityData.saudiAuthorityForAuditorsAndAccountantsFile?.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.saudiAuthorityForAuditorsAndAccountantsFile
+                ?.fileDescription || "ملف مرفق"
+            }}
+          </a>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="btn btn-icon btn-danger"
+            (click)="
+              deleteSaudiAuthorityForAuditorsAndAccountantsFile(
+                facilityData.saudiAuthorityForAuditorsAndAccountantsFile?.id
+              )
+            "
+          >
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+      <app-file-uploader
+        [data]="singleFileUploaderData"
+        (fileUploaded)="
+          onUploadSaudiAuthorityForAuditorsAndAccountantsFile($event)
+        "
+      ></app-file-uploader>
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          !facilityData.saudiAuthorityForAuditorsAndAccountantsFileId &&
+          !FacilityBasicUpdateInfo.saudiAuthorityForAuditorsAndAccountantsFileId &&
+          showValidation
+        "
+      >
+        هذا الحقل مطلوب
+      </div>
+    </div>
+
+    <div class="col-xl-6">
+      <label for="" class="form-label">
+        <span class="required-star">*</span>رقم عضوية الغرفة التجارية</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="control-chamberOfCommerceMembershipNumber"
+        formControlName="chamberOfCommerceMembershipNumber"
+             (keypress)="allowNumbersOnly($event)"
+      />
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          basicInfoForm
+            .get('chamberOfCommerceMembershipNumber')
+            ?.hasError('required') &&
+          basicInfoForm.get('chamberOfCommerceMembershipNumber')?.touched
+        "
+      >
+        هذا الحقل مطلوب
+      </div>
+    </div>
+
+    <div class="col-xl-6">
+      <div class="form-group">
+        <label for="" class="form-label">
+          <span class="required-star">*</span> مدينة إصدار عضوية الغرفة
+          التجارية</label
+        >
+        <select class="form-select" formControlName="cityId">
+          <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+          <option *ngFor="let item of cities" [value]="item.id">
+            {{ item.cityName }}
+          </option>
+        </select>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="controls.cityId.value == null && controls.cityId.touched"
+        >
           حقل مطلوب
         </div>
-
       </div>
+    </div>
+    <div class="row row-gap-4">
+      <ng-container
+        *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Developer"
+        class="col-xl-12"
+      >
+        <div class="col-xl-6">
+          <label for="prevExpert" class="form-label"
+            ><span class="required-star">*</span> هل يوجد بيان بالقضايا أم
+            لا</label
+          >
+          <div class="row g-2">
+            <div class="col-xl-6">
+              <label class="form-check" for="yes">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  formControlName="issuesIsExist"
+                  [value]="true"
+                  id="yes"
+                />
+                <label class="form-check-label" for="yes">نعم</label>
+              </label>
+            </div>
+            <div class="col-xl-6">
+              <label class="form-check" for="no">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  formControlName="issuesIsExist"
+                  [value]="false"
+                  id="no"
+                />
+                <label class="form-check-label" for="no">لا</label>
+              </label>
+            </div>
+          </div>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              basicInfoForm.get('issuesIsExist')?.hasError('required') &&
+              basicInfoForm.get('issuesIsExist')?.touched
+            "
+          >
+            حقل مطلوب
+          </div>
+        </div>
 
+        <div class="col-xl-6" *ngIf="basicInfoForm.get('issuesIsExist')?.value">
+          <label for="" class="form-label"
+            ><span class="required-star">*</span> مرفقات القضايا</label
+          >
+          <ng-container
+            *ngIf="
+              facilityData.qualificationIssuesDocuments &&
+              facilityData.qualificationIssuesDocuments.length > 0
+            "
+          >
+            <div
+              class="file-bar"
+              *ngFor="
+                let qualificationIssuesDocument of facilityData.qualificationIssuesDocuments
+              "
+            >
+              <div class="details">
+                <span class="icon material-icons-outlined">content_copy</span>
+                <a
+                  download
+                  [href]="
+                    baseUrl + qualificationIssuesDocument.fileManager?.filePath
+                  "
+                  class="d-block"
+                  target="_blank"
+                >
+                  {{ qualificationIssuesDocument.fileManager?.fileDescription }}
+                </a>
+              </div>
+              <div class="actions">
+                <button
+                  type="button"
+                  class="btn btn-icon btn-danger"
+                  (click)="
+                    deleteQualificationIssuesDocument(
+                      qualificationIssuesDocument.fileManager?.id
+                    )
+                  "
+                >
+                  <i class="material-icons">close</i>
+                </button>
+              </div>
+            </div>
+          </ng-container>
+          <app-file-uploader
+            [data]="mueltiFilesUploaderData"
+            (fileUploaded)="
+              onUploadQualificationIssuesDocumentCreateUpdateDtoFile($event)
+            "
+          ></app-file-uploader>
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              !hasIssueFiles &&
+              basicInfoForm.get('issuesIsExist')?.value &&
+              showValidation
+            "
+          >
+            حقل مطلوب
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="col-xl-6">
+      <label for="" class="form-label"
+        ><span class="required-star">*</span> عقد تأسيس الشركة</label
+      >
+      <div
+        class="file-bar"
+        *ngIf="facilityData.companyEstablishingContractFileId"
+      >
+        <div class="details">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a
+            [href]="
+              baseUrl +
+              facilityData.companyEstablishingContractFileManager?.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.companyEstablishingContractFileManager
+                ?.fileDescription || "ملف مرفق"
+            }}
+          </a>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="btn btn-icon btn-danger"
+            (click)="
+              deletFile(facilityData.companyEstablishingContractFileManager?.id)
+            "
+          >
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+      <app-file-uploader
+        [data]="singleFileUploaderData"
+        (fileUploaded)="onUploadCompanyEstablishingContractFile($event)"
+      ></app-file-uploader>
     </div>
 
-  </div>
+    <div class="col-xl-6">
+      <label for="" class="form-label"
+        ><span class="required-star">*</span> قائمة المشتركين على رأس العمل
+        (التأمينات الإجتماعية)</label
+      >
+      <div
+        class="file-bar"
+        *ngIf="facilityData.socialInsuranceEmployeesListFileId"
+      >
+        <div class="details">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a
+            [href]="
+              baseUrl +
+              facilityData.socialInsuranceEmployeesListFileManager?.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.socialInsuranceEmployeesListFileManager
+                ?.fileDescription || "ملف مرفق"
+            }}
+          </a>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="btn btn-icon btn-danger"
+            (click)="
+              deletSocialInsuranceFile(
+                facilityData.socialInsuranceEmployeesListFileManager?.id
+              )
+            "
+          >
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+      <app-file-uploader
+        [data]="singleFileUploaderData"
+        (fileUploaded)="onUploadSocialInsuranceEmployeesFile($event)"
+      ></app-file-uploader>
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          !facilityData.socialInsuranceEmployeesListFileId &&
+          !FacilityBasicUpdateInfo.socialInsuranceEmployeesListFileId &&
+          showValidation
+        "
+      >
+        هذا الحقل مطلوب
+      </div>
+    </div>
 
+    <div
+      class="col-xl-6"
+      *ngIf="
+        facilityTypeCategory === FacilityTypeCategoryEnum.Developer ||
+        facilityTypeCategory === FacilityTypeCategoryEnum.Accountant
+      "
+    >
+      <label for="" class="form-label"
+        ><!--<span class="required-star">*</span>-->
+        الشعار</label
+      >
+      <div class="file-bar" *ngIf="facilityData.logoFileId">
+        <div class="details">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + facilityData.logoFile?.filePath" target="_blank">
+            {{ facilityData.logoFile?.fileDescription }}
+          </a>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="btn btn-icon btn-danger"
+            (click)="deleteLogoFile(facilityData.logoFile?.id)"
+          >
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+      <app-file-uploader
+        [data]="logoFileUploaderData"
+        (fileUploaded)="onUploadLogoFile($event)"
+      ></app-file-uploader>
+    </div>
+
+    <div
+      class="col-xl-6"
+      *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering"
+    >
+     
+      <label for="" class="form-label"
+        ><span class="required-star">*</span> شهادة تصنيف مقدمي خدمات المدن بالتكامل مع منصة بلدي</label
+      >
+      <div
+        class="file-bar"
+        *ngIf="
+          facilityData.qualificationFacilityCertifications &&
+          facilityData.qualificationFacilityCertifications.length > 0 &&
+          facilityData.qualificationFacilityCertifications[0].certificationFile
+        "
+      >
+        <div class="details">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a
+            [href]="
+              baseUrl +
+              facilityData.qualificationFacilityCertifications[0]
+                .certificationFile?.filePath
+            "
+            target="_blank"
+          >
+            {{
+              facilityData.qualificationFacilityCertifications[0]
+                .certificationFile?.fileDescription
+            }}
+          </a>
+        </div>
+        <div class="actions">
+          <button
+            type="button"
+            class="btn btn-icon btn-danger"
+            (click)="deleteCertificationFile()"
+          >
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+      <app-file-uploader
+        [data]="singleFileUploaderData"
+        (fileUploaded)="onUploadCertificationFile($event)"
+      ></app-file-uploader>
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="
+          facilityData.qualificationFacilityCertifications.length === 0 &&
+          !FacilityBasicUpdateInfo.certificationFileId &&
+          showValidation
+        "
+      >
+        هذا الحقل مطلوب
+      </div>
+      
+      
+    </div>
+
+
+      <div
+        class="col-xl-6"
+        *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering"
+      >
+        <label for="" class="form-label"><span class="required-star">*</span> درجة التصنيف</label>
+        <select
+          (change)="onSelectCertificationDegree($event)"
+          class="form-select"
+        >
+          <option
+            *ngFor="let degree of certificationDegrees"
+            [value]="degree.id"
+            [selected]="degree.id === selectedCertificationDegreeId"
+          >
+            {{ degree.degree }}
+          </option>
+        </select>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            facilityData.qualificationFacilityCertifications.length === 0 &&
+            !FacilityBasicUpdateInfo.certificationDegreeId &&
+            showValidation
+          "
+        >
+          هذا الحقل مطلوب
+        </div>
+      </div>
+
+  </div>
 </form>

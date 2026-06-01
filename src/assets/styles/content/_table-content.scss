@@ -2,6 +2,10 @@
   .btn-icon {
     --bs-btn-font-weight: 400;
   }
+
+  .required-star {
+    color: $danger;
+  }
 }
 
 td {

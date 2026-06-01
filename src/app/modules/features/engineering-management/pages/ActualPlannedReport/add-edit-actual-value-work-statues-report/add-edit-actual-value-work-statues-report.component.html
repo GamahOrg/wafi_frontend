@@ -104,7 +104,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
 <div class="col-12 col-lg-6">
  <div class="form-group mb-4">
-   <label class="form-label">التمديد المعتمد (يوم)</label>
+   <label class="form-label"><span class="required-star">*</span> التمديد المعتمد (يوم)</label>
    <input type="number" id="control-approvedExtensionPerDay" class="form-control" formControlName="approvedExtensionPerDay"
      >
    <div class="invalid-feedback d-block" *ngIf="controls.approvedExtensionPerDay?.hasError('required') && showValidation">
@@ -129,7 +129,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
 <div class="col-12 col-lg-6">
   <div class="form-group mb-4">
-      <label class="form-label">تاريخ النهاية المتوقع من تحديث البرنامج الزمني </label>
+      <label class="form-label"><span class="required-star">*</span> تاريخ النهاية المتوقع من تحديث البرنامج الزمني</label>
       <div class="input-group">
           <input bsDatepicker
                  type="text" id="control-expectedEndDateFromTimelineUpdate"
@@ -164,7 +164,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
  <div class="col-12 col-lg-6">
   <div class="form-group mb-4">
-    <label class="form-label">نسبة الانجاز المخططة الفعلىة</label>
+    <label class="form-label"><span class="required-star">*</span> نسبة الانجاز المخططة الفعلىة</label>
     <input (change)="reEvaluateCPI();reEvaluateTimePerofamanceRate();" type="number" id="control-projectMonthlyActualCompletionRate" class="form-control" formControlName="projectMonthlyActualCompletionRate"
       >
     <div class="invalid-feedback d-block" *ngIf="controls.projectMonthlyActualCompletionRate?.hasError('required') && showValidation">
@@ -210,7 +210,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
  <div class="row mb-3">
  <div class="col-12 col-lg-6">
   <div class="form-group mb-4">
-    <label class="form-label">التكلفة الفعلية خلال الشهر (ريال سعودي)</label>
+    <label class="form-label"><span class="required-star">*</span> التكلفة الفعلية خلال الشهر (ريال سعودي)</label>
     <input type="number" (change)="reEvaluateCPI()" id="control-actualMonthCost" class="form-control" formControlName="actualMonthCost">
     <div class="invalid-feedback d-block" *ngIf="controls.actualMonthCost?.hasError('required') && showValidation">
       حقل مطلوب
@@ -278,7 +278,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
    </div> 
  <div class="col-12 col-lg-6">
   <div class="form-group mb-4">
-    <label class="form-label">متوسط عدد العمالة الفعلى للشهر</label>
+    <label class="form-label"><span class="required-star">*</span> متوسط عدد العمالة الفعلى للشهر</label>
     <input type="number" id="control-monthlyTotalActualEmployees" class="form-control" formControlName="monthlyTotalActualEmployees"
       >
     <div class="invalid-feedback d-block" *ngIf="controls.monthlyTotalActualEmployees?.hasError('required') && showValidation">
@@ -326,7 +326,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
  <div class="row mb-3">
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
-      <div class="key">صور المشروع</div>
+      <div class="key"><span class="required-star">*</span> صور المشروع</div>
       <div class="value"
         *ngFor="let imageFile of licenseProjectEngineeringSupervisionPlannedReportDetailImages">
         <span class="icon material-icons-outlined">content_copy</span>
@@ -345,7 +345,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
-      <div class="key">فيديو المشروع</div>
+      <div class="key"><span class="required-star">*</span> فيديو المشروع</div>
       <div class="value"
         *ngFor="let videoFile of licenseProjectEngineeringSupervisionPlannedReportDetailVideos">
         <span class="icon material-icons-outlined">content_copy</span>
@@ -365,7 +365,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
-      <div class="key">خريطة موقع عام</div>
+      <div class="key"><span class="required-star">*</span> خريطة موقع عام</div>
       <div class="value"
         *ngFor="let mapFile of licenseProjectEngineeringSupervisionPlannedReportDetailMaps">
         <span class="icon material-icons-outlined">content_copy</span>

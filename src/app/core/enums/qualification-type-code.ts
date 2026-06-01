@@ -6,4 +6,5 @@
   CharteredAccountant = "Acc",
   Marketer = "REM",
   DependantRealEstate = "RED01",
+  upgradeDegree = "UP-DEGREE",
 }

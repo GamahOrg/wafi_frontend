@@ -21,6 +21,12 @@ export interface UserRatingCreateDto {
 
   /** معرف المنشأة */
   facilityId?: string;
+
+  /** معرف طلب التأهيل (لتقييم خدمة التأهيل) */
+  qualificationRequestHeaderId?: string;
+
+  /** معرف طلب التغيير (خطة / استشاري / محاسب) */
+  licenseProjectRequestId?: string;
 }
 export interface RatingDismissDto {
   /** نوع التقييم */
@@ -31,6 +37,12 @@ export interface RatingDismissDto {
 
   /** نوع محفز التقييم (للرخصة الفورية) */
   triggerType?: RatingTriggerTypeEnum;
+
+  /** معرف طلب التأهيل (لتقييم خدمة التأهيل) */
+  qualificationRequestHeaderId?: string;
+
+  /** معرف طلب التغيير (خطة / استشاري / محاسب) */
+  licenseProjectRequestId?: string;
 }
 export interface UserRatingUpdateDto {
   ratingValue: number;
@@ -59,4 +71,16 @@ export interface RatingStatusDto {
 
   /** عدد مرات العرض المتبقية */
   remainingDisplayCount: number;
+
+  /** معرف طلب التأهيل (لتقييم خدمة التأهيل) */
+  qualificationRequestHeaderId?: string;
+
+  /** رقم طلب التأهيل */
+  qualificationRequestCode?: string;
+
+  /** معرف طلب التغيير (خطة / استشاري / محاسب) */
+  licenseProjectRequestId?: string;
+}
+export interface LoginRatingsDto {
+  ratings: RatingStatusDto[];
 }

@@ -1,5 +1,5 @@
 <div mat-dialog-title>
-  <i class="icon" [ngClass]="popupData.iconClass"></i>
+  <i class="icon" [ngClass]="popupData.iconClass" *ngIf="popupData.iconClass"></i>
   <h6 class="title">{{popupData.title}}</h6>
   <button *ngIf="!popupData.disableClose" class="btn btn-link p-0" mat-dialog-close tabindex="-1">
     <i class="material-icons">close</i>

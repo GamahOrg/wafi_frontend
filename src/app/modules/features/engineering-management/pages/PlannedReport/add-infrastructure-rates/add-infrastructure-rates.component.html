@@ -6,7 +6,7 @@
       
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">  مقاول البنية التحتية</label>
+          <label class="form-label"><span class="required-star">*</span> مقاول البنية التحتية</label>
           <input type="text" id="control-infrastructureContractor" class="form-control" formControlName="infrastructureContractor"
             >
           <div class="invalid-feedback d-block" *ngIf="controls.infrastructureContractor?.hasError('required') && showValidation">
@@ -17,7 +17,7 @@
 
       <div class="col-12 col-lg-6">
       <div class="form-group mb-4">
-        <label class="form-label">  استشاري أعمال البنية التحتية</label>
+        <label class="form-label"><span class="required-star">*</span> استشاري أعمال البنية التحتية</label>
         <input type="text" id="control-infrastructureConsultant" class="form-control" formControlName="infrastructureConsultant"
           >
         <div class="invalid-feedback d-block" *ngIf="controls.infrastructureConsultant?.hasError('required') && showValidation">
@@ -28,7 +28,7 @@
 
       <div class="col-12 col-lg-6">
       <div class="form-group mb-4">
-        <label class="form-label">تكلفة أعمال البنية التحتية </label>
+        <label class="form-label"><span class="required-star">*</span> تكلفة أعمال البنية التحتية</label>
         <input type="text" id="control-infrastructureCost" class="form-control" formControlName="infrastructureCost"
           >
         <div class="invalid-feedback d-block" *ngIf="controls.infrastructureCost?.hasError('required') && showValidation">

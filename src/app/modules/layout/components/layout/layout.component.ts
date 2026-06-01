@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { forkJoin, Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { LanguageService } from 'src/app/core/services/language/language.service';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
@@ -11,6 +11,7 @@ import { Title } from '@angular/platform-browser';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { LoginUserTypeEnum } from 'src/app/modules/auth/models/login.model';
 import {
+  LoginRatingsDto,
   RatingStatusDto,
   UserRatingUpdateDto,
 } from 'src/app/shared/models/rating-request.model';
@@ -66,71 +67,27 @@ facilityId: string | null = null;
     
   }
 
-
- 
-
-  startRatingFlowWithFacilityId(): void {
-    if (this._storageService.getIsFirstLoading() == 'true') {
-
-      forkJoin([
-        this._ratingService.getUserRecommendationRatingStatus(),
-        this._ratingService.getInstantLicenseRatingStatus(),
-        this._ratingService.getDeveloperContractDocumentationRatingStatus(this.facilityId!),
-        this._ratingService.getBuyerContractDocumentationRatingStatusForLogin(true),
-        this._ratingService.getBuyerContractDocumentationRatingStatusForLogin(false),
-      ]).subscribe(([recommendation, licenses, developerContract, buyerOldContract, buyerUnifiedContract]) => {
-        this.buildRatingQueue(recommendation!, licenses!, developerContract!, buyerOldContract!, buyerUnifiedContract!);
-        this.observeRatingActions();
-        this._storageService.setIsFirstLoading(false);
-        this.showNextRating();
-      });
-    }
-  }
-  startRatingFlowWithoutFacilityId(): void {
-    if (this._storageService.getIsFirstLoading() == 'true') {
-
-      forkJoin([
-        this._ratingService.getUserRecommendationRatingStatus(),
-        this._ratingService.getInstantLicenseRatingStatus(),
-        this._ratingService.getBuyerContractDocumentationRatingStatusForLogin(true),
-        this._ratingService.getBuyerContractDocumentationRatingStatusForLogin(false),
-      ]).subscribe(([recommendation, licenses, buyerOldContract, buyerUnifiedContract]) => {
-        this.buildRatingQueue(recommendation!, licenses!, null, buyerOldContract!, buyerUnifiedContract!);
-        this.observeRatingActions();
-        this._storageService.setIsFirstLoading(false);
-        this.showNextRating();
-      });
-    }
+  private startRatingFlow(): void {
+    if (this._storageService.getIsFirstLoading() !== 'true') return;
+    this._ratingService.getAllLoginRatings().subscribe(dto => {
+      this.buildRatingQueue(dto);
+      this.observeRatingActions();
+      this._storageService.setIsFirstLoading(false);
+      this.showNextRating();
+    });
   }
 
   // ─── Queue ────────────────────────────────────────────────────────────────
-
-  private buildRatingQueue(
-    recommendation: RatingStatusDto,
-    licenses: RatingStatusDto[],
-    developerContract: RatingStatusDto|null,
-    buyerOldContract: RatingStatusDto,
-    buyerUnifiedContract: RatingStatusDto,
-  ): void {
+  private buildRatingQueue(dto: LoginRatingsDto | null): void {
     this.ratingQueue = [];
     this.currentQueueIndex = 0;
+    if (!dto?.ratings?.length) return;
 
-    // To add a new rating type: push it here in the desired order
-    licenses?.filter((x) => x.shouldShowRating).forEach((status) => {
-      this.ratingQueue.push({ type: RatingTypeEnum.InstantLicenseServiceEaseOfUse, status });
+    dto.ratings.forEach(status => {
+      if (status.ratingType != null) {
+        this.ratingQueue.push({ type: status.ratingType, status });
+      }
     });
-
-    if (recommendation?.shouldShowRating)
-      this.ratingQueue.push({ type: RatingTypeEnum.UserRecommendation, status: recommendation });
-
-    if (developerContract?.shouldShowRating)
-      this.ratingQueue.push({ type: RatingTypeEnum.DeveloperContractDocumentation, status: developerContract });
-
-    if (buyerOldContract?.shouldShowRating)
-      this.ratingQueue.push({ type: RatingTypeEnum.BuyerContractDocumentation, status: buyerOldContract });
-
-    if (buyerUnifiedContract?.shouldShowRating)
-      this.ratingQueue.push({ type: RatingTypeEnum.BuyerUnifiedContractDocumentation, status: buyerUnifiedContract });
   }
 
   private showNextRating(): void {
@@ -164,7 +121,6 @@ facilityId: string | null = null;
   }
 
   // ─── Observers ────────────────────────────────────────────────────────────
-
   private observeRatingActions(): void {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res) => {
@@ -184,7 +140,6 @@ facilityId: string | null = null;
   }
 
   // ─── Submit / Dismiss ─────────────────────────────────────────────────────
-
   private handleRatingSubmit(ratingData: UserRatingUpdateDto): void {
     const item = this.ratingQueue[this.currentQueueIndex];
     if (!item) return;
@@ -196,6 +151,8 @@ facilityId: string | null = null;
         browserType: ratingData.browserType,
         licenseProjectId: item.status.licenseProjectId,
         triggerType: item.status.triggerType,
+        qualificationRequestHeaderId: item.status.qualificationRequestHeaderId,
+        licenseProjectRequestId: item.status.licenseProjectRequestId,
       })
       .subscribe((res) => {
         this._toastrNotificatioService.showSuccess(res.message || 'تم إرسال التقييم بنجاح');
@@ -214,6 +171,8 @@ facilityId: string | null = null;
         ratingType: item.type,
         licenseProjectId: item.status.licenseProjectId,
         triggerType: item.status.triggerType,
+        qualificationRequestHeaderId: item.status.qualificationRequestHeaderId,
+        licenseProjectRequestId: item.status.licenseProjectRequestId,
       })
       .subscribe((res) => {
         this._toastrNotificatioService.showInfo(res.message || 'تم تخطي التقييم');
@@ -225,7 +184,6 @@ facilityId: string | null = null;
   }
 
   // ─── User / Auth ──────────────────────────────────────────────────────────
-
   getLoginUserType(): void {
     this.loginUserType = this._storageService.getLoginUserType();
     this.loginUserTypeEnum = Number(this.loginUserType) as LoginUserTypeEnum;
@@ -268,10 +226,8 @@ facilityId: string | null = null;
             }
             if(this.userData?.facilities && this.userData?.facilities.length > 0){
               this.facilityId = this.userData?.facilities[0].id as string;
-              this.startRatingFlowWithFacilityId();
-            }else{
-              this.startRatingFlowWithoutFacilityId();
             }
+            this.startRatingFlow();
           }
         }),
     );

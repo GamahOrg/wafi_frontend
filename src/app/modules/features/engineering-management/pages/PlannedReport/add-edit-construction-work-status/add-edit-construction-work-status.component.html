@@ -1,7 +1,7 @@
 <form class="d-flex flex-column h-100" [formGroup]="constructionWorkStatusForm" id="form-monthlyEngineeringReportExternalExpensesForm">
 
   <div class="col-12 col-lg-6">
-    <label for="" class="form-label">الوزن النسبي</label>
+    <label for="" class="form-label"><span class="required-star">*</span> الوزن النسبي</label>
     <select class="form-select" formControlName="weightId">
         <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
         <option *ngFor="let weight of sysLicenseRelativeWeightList" [value]="weight.id">{{weight.elementName}}</option>

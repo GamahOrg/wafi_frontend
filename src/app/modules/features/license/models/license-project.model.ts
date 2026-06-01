@@ -144,7 +144,7 @@ export interface AccountKeeperDto {
   sysBank: SysBank;
 }
 export interface ProjectRealStateDeveloperDto {
-  //المدير التنٝيذي (اجباري)
+  //المدير التنفيذي (اجباري)
   executiveDirectorName: string;
   executiveDirectorEmail: string;
   executiveDirectorMobile: string;

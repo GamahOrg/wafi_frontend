@@ -14,6 +14,7 @@ export interface UpdateFacilityBasicDataInfoAllTypesDto  {
   logoFileId: string | null;
   qualificationIssuesDocumentCreateUpdateDtos: qualificationIssuesDocumentCreateUpdate[],
   certificationFileId: string | null,
+  certificationDegreeId: number | null,
   saudiAuthorityOfEngineersLicenseFileId: string | null,
   saudiAuthorityForAuditorsAndAccountantsFileId: string | null,
   id: string,

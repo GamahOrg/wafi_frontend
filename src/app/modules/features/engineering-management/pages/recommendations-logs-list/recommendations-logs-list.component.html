@@ -123,9 +123,16 @@
               <button
                 class="menu-edit-btn"
                 mat-menu-item
+                (click)="openChangePlanRequest(project)"
+              >
+                انشاء طلب جديد
+              </button>
+              <button
+                class="menu-edit-btn"
+                mat-menu-item
                 (click)="openDelegatorsSelectionPopup(project)"
               >
-               تعيين مفوضين وثائق الصرف
+                تعيين مفوضين وثائق الصرف
               </button>
             </mat-menu>
           </div>

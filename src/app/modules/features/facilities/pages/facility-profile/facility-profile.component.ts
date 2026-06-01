@@ -13,6 +13,9 @@ import { QualificationRequestData } from 'src/app/core/models/qualification-requ
 import { RequestValidationService } from 'src/app/core/services/request-validation/request-validation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Configuration } from 'src/app/core/configurations/shared.config';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { PopupData } from 'src/app/shared/models/popup.model';
+import { DeclarationPopupComponent } from '../../components/declaration-popup/declaration-popup.component';
 
 @Component({
   selector: 'app-facility-profile',
@@ -23,6 +26,11 @@ export class FacilityProfileComponent implements OnInit, OnDestroy {
   baseUrl = `${environment.baseURL}/`;
   userData: customerResponse | null = null;
   subscriptions: Subscription[] = [];
+  showError: boolean = false;
+  errorMessage: string = '';
+  isFacilityDeveloperType: boolean = false;
+
+
   localization = {
     nationalId: 'رقم الهوية ',
     phone: 'رقم الجوال',
@@ -79,7 +87,8 @@ export class FacilityProfileComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _facilityProfileService: FacilityProfileService,
-  ) {}
+    private _popupService: PopupService,
+  ) { }
   get facilityTypeCategoryLabel(): string {
     const category = this.userData?.facilities?.[0]?.facilityTypeCategory;
     return category != null ? this.facilityTypeCategoryLabels[category] : '';
@@ -93,6 +102,8 @@ export class FacilityProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._facilityProfileService.getAvailabilityToUpdate().subscribe(val => this.canUpdate = val)
     );
+    this.isFacilityDeveloperType = this._userDataService.getFacilityTypeCategoryFromLocalStorage() === FacilityTypeCategory.Developer;
+
   }
   observeRouter(): void {
     this.subscriptions.push(
@@ -100,15 +111,6 @@ export class FacilityProfileComponent implements OnInit, OnDestroy {
         this.renewRequest =
           this._activatedRoute.snapshot.url[0].path ==
           Configuration.pages.facilities.facilityProfileWithRenewRequest;
-        console.log(
-          'this._activatedRoute.snapshot.url[0].path',
-          this._activatedRoute.snapshot.url[0].path,
-        );
-        console.log(
-          'Configuration.pages.facilities.facilityProfileWithRenewRequest',
-          Configuration.pages.facilities.facilityProfileWithRenewRequest,
-        );
-        console.log('this.renewRequest', this.renewRequest);
       }),
     );
   }
@@ -149,6 +151,24 @@ export class FacilityProfileComponent implements OnInit, OnDestroy {
   private updateTabContent() {
     this._tabsService.updateTabContent(this.tabContent);
   }
+
+  showDeclarationPopup() {
+    const Data = {
+      title: 'يجب الموافقة على جميع الاقرارات يتم ارسال الطلب',
+      component: DeclarationPopupComponent,
+      buttons: [],
+    } as PopupData;
+
+    const dialogRef = this._popupService.updatePopupData(Data);
+
+    dialogRef.afterClosed().subscribe((result: { showError: boolean; errorMessage: string }) => {
+      if (result) {
+        this.showError = result.showError;
+        this.errorMessage = result.errorMessage;
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

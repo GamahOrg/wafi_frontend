@@ -1,0 +1,186 @@
+<div class="page" *ngIf="details">
+
+  <!-- Section Header: بيانات الطلب + status -->
+  <div class="section-container mb-3">
+    <div class="section-header">
+      <div class="d-flex align-items-center justify-content-start gap-3">
+        <div class="d-flex align-items-center gap-2">
+          <i class="material-icons-outlined section-icon">description</i>
+          <span class="section-title">بيانات الطلب</span>
+        </div>
+        <span class="status-pill orange" *ngIf="details.statusName">
+          {{ details.statusName }}
+        </span>
+      </div>
+    </div>
+
+    <!-- البيانات الأساسية للمشروع -->
+    <div class="sub-section-title">البيانات الأساسية للمشروع</div>
+
+    <div class="row row-gap-3 row-gap-xl-4">
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">رقم الطلب</span>
+          <span class="info-value">{{ details.requestCode }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">اسم المشروع</span>
+          <span class="info-value">{{ details.projectName }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">رقم الرخصة</span>
+          <span class="info-value">{{ details.licenseNumber }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">الرقم الموحد للمطور</span>
+          <span class="info-value">{{ details.commercialRegisterNumber }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">اسم المطور</span>
+          <span class="info-value">{{ details.facilityName }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">البريد الالكتروني للمطور</span>
+          <span class="info-value">{{ details.facilityEmail }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">رقم جوال المطور</span>
+          <span class="info-value">{{ details.facilityPhone }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">تاريخ انتهاء المشروع الحالي</span>
+          <span class="info-value">{{ details.previousProjectEndDate | date: 'd/M/yyyy' }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">تاريخ بداية المشروع</span>
+          <span class="info-value">{{ details.projectStartDate | date: 'd/M/yyyy' }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">إجمالي مدة التمديد التراكمية السابقة</span>
+          <span class="info-value">{{ details.totalCumulativePreviousExtensionDurationDisplay }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">عدد مرات تغيير خطة المشروع السابقة</span>
+          <span class="info-value">{{ details.previousChangeRequestCount }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">تاريخ انتهاء المشروع الجديد</span>
+          <span class="info-value">{{ details.projectEndDate | date: 'd/M/yyyy' }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-12">
+        <div class="info-item">
+          <span class="info-label">مبررات تغيير خطة المشروع</span>
+          <span class="info-value">{{ details.justificationsAndReasons }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">الفرق بين التاريخين</span>
+          <span class="info-value">{{ details.twoEndDatesDifferenceDisplay }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">إجمالي مدة التمديد التراكمية بعد الطلب</span>
+          <span class="info-value">{{ details.totalCumulativeAfterRequestExtensionDurationDisplay }}</span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="info-item">
+          <span class="info-label">هل يوجد ظرف قهري؟</span>
+          <span class="info-value">
+            {{ details.hasForceMajeure ? 'نعم' : 'لا' }}
+          </span>
+        </div>
+      </div>
+      <div class="col-12 col-md-6" *ngIf="details.hasForceMajeure">
+        <div class="info-item">
+          <span class="info-value" *ngIf="details.forceMajeureDocumentFile">
+            <a [href]="baseUrl + details.forceMajeureDocumentFile.filePath" target="_blank">
+              مستند إثبات الظرف القهري
+            </a>
+          </span>
+          <!-- <span class="info-value" *ngIf="!details.forceMajeureDocumentFile">
+            -
+          </span> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: قائمة الوحدات المباعة -->
+  <div class="section-container mb-3">
+    <div class="d-flex align-items-center justify-content-start gap-2 mb-3">
+      <i class="material-icons-outlined section-icon">list_alt</i>
+      <span class="section-title">قائمة الوحدات المباعة</span>
+    </div>
+    <ng-container *ngIf="soldUnits.length > 0">
+      <div class="table-responsive">
+        <table class="table table-light mb-0">
+          <thead>
+            <tr>
+              <th scope="col">كود الوحدة</th>
+              <th scope="col">اسم المشتري</th>
+              <th scope="col">تاريخ تسليم الوحدة المتعاقد عليه</th>
+              <th scope="col">تاريخ تسليم الوحدة الجديد</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let unit of soldUnits">
+              <td class="cell-text">{{ unit.unitCode }}</td>
+              <td class="cell-text">{{ unit.buyerName }}</td>
+              <td class="cell-text">{{ unit.contractedHandoverDate | date: 'd/M/yyyy' }}</td>
+              <td class="cell-text">{{ unit.newUnitHandoverDate | date: 'd/M/yyyy' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-pagination></app-pagination>
+    </ng-container>
+    <ng-container *ngIf="soldUnits.length === 0">
+      <app-no-data [showCompleteBtn]="false"></app-no-data>
+    </ng-container>
+  </div>
+
+ 
+ 
+
+  <!-- Action Buttons -->
+  <!-- Developer: موافقة + رفض -->
+  <div class="actions-container" *ngIf="showActionButtons">
+    <button type="button" class="btn btn-reject" (click)="onReject()">رفض</button>
+    <button type="button" class="btn btn-approve" (click)="onApprove()">موافقة</button>
+  </div>
+
+ 
+
+</div>
+
+<ng-container *ngIf="!details">
+  <div class="mt-4">
+    <app-no-data [showCompleteBtn]="false"></app-no-data>
+  </div>
+</ng-container>

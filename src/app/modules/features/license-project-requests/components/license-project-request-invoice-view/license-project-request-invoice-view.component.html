@@ -1,0 +1,40 @@
+<div class="row g-5" *ngIf="invoiceData">
+  <div class="col-12 col-lg-auto">
+    <div class="key">
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
+      رقم الفاتورة
+    </div>
+    <div class="value">{{ invoiceData.invoiceRequestId }}</div>
+  </div>
+
+  <div class="col-12 col-lg-auto">
+    <div class="key">
+      <i class="icon hgi hgi-stroke hgi-money-02"></i>
+      قيمة الفاتورة
+    </div>
+    <div class="value">
+      {{ invoiceData.price | number }}
+      <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon" />
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-auto">
+    <div class="key">
+      <i class="icon hgi hgi-stroke hgi-calendar-03"></i>
+      تاريخ انتهاء الفاتورة
+    </div>
+    <div class="value">{{ invoiceData.invDueDate | date: 'dd-MM-yyyy' }}</div>
+  </div>
+
+  <div class="col-12 col-lg-auto">
+    <div class="key">
+      <i class="icon hgi hgi-stroke hgi-invoice-02"></i>
+      حالة الفاتورة
+    </div>
+    <div class="value">
+      <span [class]="invoiceData.invoiceStatus === 1 ? 'text-success' : 'text-danger'">
+        {{ invoiceData.invoiceStatus === 1 ? 'مسددة' : 'غير مسددة' }}
+      </span>
+    </div>
+  </div>
+</div>

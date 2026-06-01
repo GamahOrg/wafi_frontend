@@ -1,18 +1,166 @@
 <div class="page">
-  <div class="page-title">
-    <h2 class="title">إنشاء طلب جديد</h2>
-  </div>
+  <h6 class="page-title">إنشاء طلب جديد</h6>
 
   <div class="page-content">
-    <div class="row g-4 row-cols-lg-5" *ngIf="requestTypes && requestTypes.length>0">
-      <div class="col-12 col-md-6 col-lg-4" *ngFor="let requestType of requestTypes">
-        <div class="card qualiication-card cursor-pointer">
-          <div class="icon"><span class="material-icons-outlined"></span></div>
-          <div class="card-body" (click)="navigateToCreateRequest(requestType.id)">
-            <h6 class="card-title">{{requestType.name}}</h6>
+    <div
+      class="row row-gap-4"
+      *ngIf="isFromCertifiedProjects && selectedProjectName"
+    >
+      <div class="col-xl-4">
+        <span>المشروع: <b>{{ selectedProjectName }}</b> </span>
+      </div>
+    </div>
+
+    <div class="row row-gap-4" *ngIf="!isFromCertifiedProjects">
+      <div class="col-xl-4">
+        <ul class="nav nav-tabs" role="tablist" aria-orientation="horizontal">
+          <li class="nav-item">
+            <button
+              type="button"
+              class="nav-link"
+              [ngClass]="{ active: activeFilter === ServiceCategoryEnum.All }"
+              role="tab"
+              [attr.aria-selected]="activeFilter === ServiceCategoryEnum.All"
+              (click)="onFilterChange(ServiceCategoryEnum.All)"
+            >
+              الكل
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              type="button"
+              class="nav-link"
+              [ngClass]="{active: activeFilter === ServiceCategoryEnum.ProjectServices}"
+              role="tab"
+              [attr.aria-selected]="
+                activeFilter === ServiceCategoryEnum.ProjectServices
+              "
+              (click)="onFilterChange(ServiceCategoryEnum.ProjectServices)"
+            >
+              خدمات على المشروع
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              type="button"
+              class="nav-link"
+              [ngClass]="{
+                active: activeFilter === ServiceCategoryEnum.GeneralServices
+              }"
+              role="tab"
+              [attr.aria-selected]="
+                activeFilter === ServiceCategoryEnum.GeneralServices
+              "
+              (click)="onFilterChange(ServiceCategoryEnum.GeneralServices)"
+            >
+              خدمات عامة
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Section 2: Licensed projects dropdown -->
+    <div class="mt-4" *ngIf="!isFromCertifiedProjects">
+      <div class="row row-gap-4">
+        <div class="col-xl-5">
+          <label class="form-label"
+            ><span class="required-star">*</span> المشاريع العقارية
+            المرخصة</label
+          >
+          <div class="position-relative">
+            <input
+              class="form-select"
+              placeholder="اختر المشروع"
+              [(ngModel)]="selectedProjectName"
+              [typeahead]="licenseProjects"
+              typeaheadOptionField="licenseProjectName"
+              (typeaheadOnSelect)="onProjectSelect($event)"
+              (focus)="onProjectInputFocus()"
+              [adaptivePosition]="true"
+              [typeaheadScrollable]="true"
+              [typeaheadMinLength]="0"
+              [typeaheadOptionsInScrollableView]="5"
+              [typeaheadSelectFirstItem]="false"
+              [typeaheadOptionsLimit]="licenseProjects.length"
+            />
           </div>
+          <!-- <select class="form-select" [(ngModel)]="selectedProjectId">
+            <option value="">اختر المشروع</option>
+            <option *ngFor="let project of licenseProjects" [value]="project.licenseProjectId">
+              {{project.licenseProjectName}}
+            </option>
+          </select> -->
         </div>
       </div>
     </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content mt-4">
+      <div class="tab-pane fade show active" role="tabpanel">
+        <div
+          class="row row-gap-4"
+          *ngIf="filteredRequestTypes && filteredRequestTypes.length > 0"
+        >
+          <div
+            class="col-xl-3"
+            *ngFor="let requestType of filteredRequestTypes"
+          >
+            <div
+              class="card service-card h-100 cursor-pointer"
+              [ngClass]="{ active: selectedServiceTypeId === requestType.id }"
+              (click)="onServiceSelect(requestType.id)"
+            >
+              <div class="card-body">
+                <div class="icon">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M3.50049 20.75C2.9482 20.75 2.50049 21.1977 2.50049 21.75C2.50049 22.3023 2.9482 22.75 3.50049 22.75L20.5005 22.75C21.0528 22.75 21.5005 22.3023 21.5005 21.75C21.5005 21.1977 21.0528 20.75 20.5005 20.75H19.7505L19.7505 6C19.7505 5.15644 19.7075 4.42823 19.5734 3.81795C19.4375 3.19917 19.1979 2.65476 18.7718 2.22867C18.3457 1.80257 17.8013 1.56303 17.1825 1.42709C16.5723 1.29303 15.8441 1.25 15.0005 1.25L9.00049 1.25C8.15692 1.25 7.42872 1.29303 6.81844 1.42709C6.19966 1.56303 5.65525 1.80257 5.22916 2.22867C4.80306 2.65476 4.56351 3.19917 4.42758 3.81795C4.29351 4.42823 4.25049 5.15644 4.25049 6L4.25049 20.75H3.50049ZM8.75049 20.75V18.75C8.75049 18.3231 8.76834 17.9372 8.82926 17.6044C8.89051 17.2698 9.00501 16.932 9.24057 16.6494C9.72967 16.0624 10.4913 16 11.1672 16H12.8338C13.5097 16 14.2713 16.0624 14.7604 16.6494C14.996 16.932 15.1105 17.2698 15.1717 17.6044C15.2326 17.9372 15.2505 18.3231 15.2505 18.75L15.2505 20.75H13.7505L13.7505 18.75C13.7505 18.3496 13.7324 18.0718 13.6962 17.8745C13.6604 17.6789 13.6168 17.6201 13.6081 17.6096C13.6045 17.6054 13.6001 17.6007 13.588 17.5937C13.5738 17.5853 13.5432 17.5704 13.4848 17.555C13.3582 17.5217 13.1586 17.5 12.8338 17.5H11.1672C10.8424 17.5 10.6427 17.5217 10.5162 17.555C10.4578 17.5704 10.4271 17.5853 10.413 17.5937C10.4009 17.6007 10.3965 17.6054 10.3929 17.6096C10.3842 17.6201 10.3405 17.6789 10.3047 17.8745C10.2686 18.0718 10.2505 18.3496 10.2505 18.75V20.75L8.75049 20.75ZM10.5005 5.25C10.0863 5.25 9.75049 5.58579 9.75049 6C9.75049 6.41421 10.0863 6.75 10.5005 6.75L13.5005 6.75C13.9147 6.75 14.2505 6.41421 14.2505 6C14.2505 5.58579 13.9147 5.25 13.5005 5.25L10.5005 5.25ZM10.5005 8.75C10.0863 8.75 9.75049 9.08579 9.75049 9.5C9.75049 9.91421 10.0863 10.25 10.5005 10.25L13.5005 10.25C13.9147 10.25 14.2505 9.91421 14.2505 9.5C14.2505 9.08579 13.9147 8.75 13.5005 8.75L10.5005 8.75ZM10.5005 12.25C10.0863 12.25 9.75049 12.5858 9.75049 13C9.75049 13.4142 10.0863 13.75 10.5005 13.75L13.5005 13.75C13.9147 13.75 14.2505 13.4142 14.2505 13C14.2505 12.5858 13.9147 12.25 13.5005 12.25L10.5005 12.25Z"
+                      fill="#005257"
+                    />
+                  </svg>
+                </div>
+
+                <div class="d-flex flex-column gap-2">
+                  <h5 class="card-title">{{ requestType.name }}</h5>
+                  <p class="card-text" *ngIf="requestType.description">
+                    {{ requestType.description }}
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn btn-primary mt-auto"
+                  (click)="
+                    onRequestTypeSubmit(requestType); $event.stopPropagation()
+                  "
+                >
+                  التقديم على طلب التغيير
+                  <i
+                    class="icon hgi hgi-stroke hgi-arrow-{{
+                      true ? 'left' : 'right'
+                    }}-02"
+                  ></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <app-no-data
+          [showText]="false"
+          [showCompleteBtn]="false"
+          *ngIf="!filteredRequestTypes || filteredRequestTypes.length === 0"
+        ></app-no-data>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -11,15 +11,15 @@ import { ProjectLandDeedService } from '../../services/project-land-deed.service
 })
 export class ShowOwnerListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  projectLandDeed:ProjectLandDeedDto= new ProjectLandDeedDto();
-  licenseProjectOwnerDeeds : LicenseProjectOwnerDeedDto[]=[];
+  projectLandDeed: ProjectLandDeedDto = new ProjectLandDeedDto();
+  licenseProjectOwnerDeeds: LicenseProjectOwnerDeedDto[] = [];
   baseUrl = `${environment.baseURL}/`;
-  showValidation:boolean=false;
+  showValidation: boolean = false;
   localization = {
-    title:'عرض ملاك الصك ',
-    deedData:'بيانات الصك',
+    title: 'عرض ملاك الصك ',
+    deedData: 'بيانات الصك',
     typeId: 'نوع مالك الأرض',
-    nationalId: 'رقم هوية مالك الصك / مالك منٝعتها',
+    nationalId: 'رقم هوية مالك الصك / مالك منفعتها',
     CRA: 'رقم السجل التجاري',
     name: 'اسم مالك الصك /مالك منفعتها',
     mobileNumber: 'رقم جوال مالك الصك /مالك منفعتها',
@@ -27,10 +27,10 @@ export class ShowOwnerListComponent implements OnInit, OnDestroy {
     deedMarginalizationFile: 'تهميش الصك',
   };
   constructor(
-    private _projectLandDeedService:ProjectLandDeedService) {
-     }
+    private _projectLandDeedService: ProjectLandDeedService) {
+  }
   ngOnDestroy(): void {
-        this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
+    this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
   }
 
 
@@ -40,8 +40,8 @@ export class ShowOwnerListComponent implements OnInit, OnDestroy {
   }
   private loadComponentData() {
     this.subscriptions.push(
-        this._projectLandDeedService.getSubjectObj().subscribe((subjectObj) => {
-          this.projectLandDeed = subjectObj;
-        }))
-      }
+      this._projectLandDeedService.getSubjectObj().subscribe((subjectObj) => {
+        this.projectLandDeed = subjectObj;
+      }))
+  }
 }

@@ -50,11 +50,11 @@
     </div>
 
     <!-- error message -->
-  <div *ngIf="isRequiredCourseNotCompleted"  class="alert alert-danger mt-5" role="alert">
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
     <span class="icon">
       <i class="hgi hgi-stroke hgi-help-circle"></i>
     </span>
-    <span>عذرًا، لا يمكن إضافة هذا الموظف إلى قائمة الحاصلين على التدريب؛ لعدم اجتياز الدورة التدريبية المطلوبة لدى المعهد العقاري.</span>
+    <span>{{ errorMessage }}</span>
   </div>
 
 

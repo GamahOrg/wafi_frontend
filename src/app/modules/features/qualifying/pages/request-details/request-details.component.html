@@ -1,16 +1,20 @@
 <div class="d-flex flex-column gap-3 h-100">
   <div class="card profile-card">
     <div class="card-body">
-
       <div class="row row-gap-3">
         <div class="col-12 col-lg">
           <div class="d-flex align-items-center gap-2">
-            <div class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden">
+            <div
+              class="image d-flex justify-content-center align-items-center flex-shrink-0 rounded-circle overflow-hidden"
+            >
               <span class="icon material-icons">person</span>
             </div>
             <div class="d-flex flex-column gap-3">
               <h3 class="small">
-                {{selectedRequest?.customers?.fullName}} - <span class="job">{{ selectedRequest?.qualificationRequestType?.typeName }}</span>
+                {{ selectedRequest?.customers?.fullName }} -
+                <span class="job">{{
+                  selectedRequest?.qualificationRequestType?.typeName
+                }}</span>
               </h3>
               <h4 class="small">
                 {{ selectedRequest?.isRenewal ? "تجديد" : "" }}
@@ -18,33 +22,75 @@
               </h4>
               <div class="d-flex flex-wrap align-items-center gap-2 gap-xl-5">
                 <div class="key-value">
-                  <div class="key">{{"رقم الهوية"}}</div>
-                  <div class="value">{{selectedRequest?.customers?.nidnumber}}</div>
-                </div>
-                <div class="key-value">
-                  <div class="key">{{"الجنسية"}}</div>
-                  <div class="value">{{selectedRequest?.customers?.nationality?.nationalityName}}</div>
-                </div>
-                <div class="key-value">
-                  <div class="key">{{"رسوم الخدمة"}}</div>
-                  <div class="value">{{selectedRequest?.price}}</div>
-                </div>
-                <div class="key-value">
-                  <div class="key">{{"مدة الطلب"}}</div>
-                  <div class="value">{{selectedRequest?.period == "1"? "سنة" : selectedRequest?.period == "2"? "سنتين" : selectedRequest?.period == "3"? "ثلاث سنوات" : ""}}</div>
-                </div>
-                <div class="key-value">
-                  <div class="key">{{"رقم الجوال"}}</div>
-                  <div class="value">{{selectedRequest?.customers?.mobile1}}</div>
-                </div>
-                <div class="key-value">
-                  <div class="key">{{"البريد الإلكتروني"}}</div>
-                  <div class="value">{{selectedRequest?.customers?.email}}</div>
-                </div>
-                <div class="key-value">
-                  <div class="key">{{'تاريخ تقديم الطلب'}}</div>
+                  <div class="key">{{ "رقم الهوية" }}</div>
                   <div class="value">
-                    <i class="icon material-icons">calendar_month</i> {{selectedRequest?.requestFrom | date : "dd/MM/yyyy"}}
+                    {{ selectedRequest?.customers?.nidnumber }}
+                  </div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{ "الجنسية" }}</div>
+                  <div class="value">
+                    {{
+                      selectedRequest?.customers?.nationality?.nationalityName
+                    }}
+                  </div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{ "رسوم الخدمة" }}</div>
+                  <div class="value">{{ selectedRequest?.price }}</div>
+                </div>
+                <div
+                  class="key-value"
+                  *ngIf="
+                    selectedRequest?.qualificationRequestType?.typeCode !=
+                    'UP-DEGREE'
+                  "
+                >
+                  <div class="key">{{ "مدة الطلب" }}</div>
+                  <div class="value">
+                    {{
+                      selectedRequest?.period == "1"
+                        ? "سنة"
+                        : selectedRequest?.period == "2"
+                          ? "سنتين"
+                          : selectedRequest?.period == "3"
+                            ? "ثلاث سنوات"
+                            : ""
+                    }}
+                  </div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{ "رقم الجوال" }}</div>
+                  <div class="value">
+                    {{ selectedRequest?.customers?.mobile1 }}
+                  </div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{ "البريد الإلكتروني" }}</div>
+                  <div class="value">
+                    {{ selectedRequest?.customers?.email }}
+                  </div>
+                </div>
+                <div class="key-value">
+                  <div class="key">{{ "تاريخ تقديم الطلب" }}</div>
+                  <div class="value">
+                    <i class="icon material-icons">calendar_month</i>
+                    {{ selectedRequest?.requestFrom | date: "dd/MM/yyyy" }}
+                  </div>
+                </div>
+                <div
+                  class="key-value"
+                  *ngIf="
+                    selectedRequest?.previousQualificationDegree &&
+                    (selectedRequest?.qualificationRequestType?.typeCode ===
+                      'RED01' ||
+                      selectedRequest?.qualificationRequestType?.typeCode ===
+                        'UP-DEGREE')
+                  "
+                >
+                  <div class="key">درجة التأهيل السابقة</div>
+                  <div class="value">
+                    {{ selectedRequest?.previousQualificationDegree }}
                   </div>
                 </div>
               </div>
@@ -53,30 +99,121 @@
         </div>
 
         <div class="col-12 col-lg-auto">
-          <div class="d-flex flex-column justify-content-between align-items-lg-end gap-3">
-            <div class="circularProgress" *ngIf="selectedRequest && !selectedRequest.isFinished">
+          <div
+            class="d-flex flex-column justify-content-between align-items-lg-end gap-3"
+          >
+            <div
+              class="circularProgress"
+              *ngIf="
+                selectedRequest &&
+                !selectedRequest.isFinished &&
+                selectedRequest?.internalStatusId !==
+                  qualificationRequestStatusEnum.RequestCanceled
+              "
+            >
               <p>{{ localization.remainingDaysToStudy }}</p>
-              <app-circular-progress [circularProgressSetting]="StudyDaysProgressSetting"></app-circular-progress>
+              <app-circular-progress
+                [circularProgressSetting]="StudyDaysProgressSetting"
+              ></app-circular-progress>
             </div>
-            <span class="status-pill" [class]="selectedRequest && selectedRequest.externalStatusId? internalStatusId[selectedRequest.externalStatusId]: ''">{{ selectedRequest?.externalStatus }}</span>
+
+            <div
+              class="circularProgress"
+              *ngIf="
+                selectedRequest &&
+                selectedRequest?.internalStatusId ===
+                  qualificationRequestStatusEnum.QualificationSuspended
+              "
+            >
+              <p>
+                {{ localization.qualificationSuspensionRemainingDays }}:
+                {{
+                  getRemainingDaysText(
+                    selectedRequest?.qualificationSuspensionRemainingDays
+                  )
+                }}
+              </p>
+            </div>
+            <span
+              class="status-pill"
+              [ngClass]="{
+                green:
+                  selectedRequest?.internalStatusId ===
+                  qualificationRequestStatusEnum.RequestApproved,
+                red:
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.Expired ||
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.RequestRemoved ||
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.RequestCanceled ||
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.RequestRejected,
+                orange:
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.QualificationSuspended ||
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.UnderStudy ||
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.SendingNotes ||
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.ProcessingNotes ||
+                  selectedRequest?.internalStatusId ===
+                    qualificationRequestStatusEnum.UnderStudyAfterProcessingNotes
+              }"
+            >
+              {{ selectedRequest?.internalStatus }}
+            </span>
+            <!--<span class="status-pill"
+                  [class]="selectedRequest && selectedRequest.externalStatusId? internalStatusId[selectedRequest.externalStatusId]: ''">
+              {{ selectedRequest?.externalStatus }}
+            </span>-->
             <ng-container *ngFor="let button of clientActionsButtons">
-              <button *ngIf="
-                      button.isVisable &&
-                      selectedRequest?.qualificationRequestHeaderEventStatus?.allowToCompile
-                    " [disabled]="button.isDisables" class="btn btn-primary" (click)="button.onclick()" type="button">
+              <button
+                *ngIf="
+                  button.isVisable &&
+                  selectedRequest?.qualificationRequestHeaderEventStatus
+                    ?.allowToCompile
+                "
+                [disabled]="button.isDisables"
+                class="btn btn-primary"
+                (click)="button.onclick()"
+                type="button"
+              >
                 {{ button.title }}
               </button>
             </ng-container>
-            <button *ngIf="hasInvoice" class="btn btn-outline-primary" (click)="showInvoice()" type="button">
+            <button
+              *ngIf="hasInvoice"
+              class="btn btn-outline-primary"
+              (click)="showInvoice()"
+              type="button"
+            >
               بيانات الفاتورة
             </button>
-            <button *ngIf="selectedRequest?.canSendToFawtarahManually" class="btn btn-primary" (click)="sendToFawtarahManually()" type="button">
+            <button
+              *ngIf="selectedRequest?.canSendToFawtarahManually"
+              class="btn btn-primary"
+              (click)="sendToFawtarahManually()"
+              type="button"
+            >
               اعادة ارسال الفاتورة
+            </button>
+            <button
+              *ngIf="
+                selectedRequest?.internalStatusId ==
+                  internalStatusId.QualificationSuspended &&
+                hasUnrepliedSuspensionNote
+              "
+              class="btn btn-primary"
+              (click)="openReplyDialog()"
+              type="button"
+            >
+              معالجة الملاحظات
             </button>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 

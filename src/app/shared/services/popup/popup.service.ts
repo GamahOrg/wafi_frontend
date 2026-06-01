@@ -16,25 +16,25 @@ import { PopupPropmtComponent } from '../../components/popup-propmt/popup-propmt
 @Injectable()
 export class PopupService {
   popupData: BehaviorSubject<PopupData> = new BehaviorSubject<PopupData>(
-    {} as PopupData
+    {} as PopupData,
   ); // title and component
   ConfirmpopupData: BehaviorSubject<confirmationPopupData> =
     new BehaviorSubject<confirmationPopupData>({} as confirmationPopupData); // title and component
   NotePopupData: BehaviorSubject<notePopupData> =
     new BehaviorSubject<notePopupData>({} as notePopupData);
-  promptPopupData: BehaviorSubject<PromptPopupData> = new BehaviorSubject<PromptPopupData>(
-    {} as PromptPopupData
-  );
+  promptPopupData: BehaviorSubject<PromptPopupData> =
+    new BehaviorSubject<PromptPopupData>({} as PromptPopupData);
 
   openDialog: EventEmitter<any> = new EventEmitter<any>();
   closeDialog: EventEmitter<any> = new EventEmitter<any>();
-  confirmAction: EventEmitter<PopupData | confirmationPopupData | notePopupData> =
-    new EventEmitter<PopupData | confirmationPopupData | notePopupData>();
+  confirmAction: EventEmitter<
+    PopupData | confirmationPopupData | notePopupData
+  > = new EventEmitter<PopupData | confirmationPopupData | notePopupData>();
   cancelAction: EventEmitter<
     PopupData | confirmationPopupData | notePopupData
   > = new EventEmitter<PopupData | confirmationPopupData | notePopupData>();
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) {}
 
   updatePopupData(data: PopupData) {
     this.popupData.next(data);
@@ -58,18 +58,19 @@ export class PopupService {
     return dialogRef;
   }
 
-  updateConfirmationPopupData(
-    confirmationData: confirmationPopupData,
-    disableClose: boolean = true
-  ) {
+  updateConfirmationPopupData(confirmationData: confirmationPopupData) {
     const dataWithDefaults = {
       ...confirmationData,
       popupType: confirmationData.popupType ?? 'primary',
     };
     this.ConfirmpopupData.next(dataWithDefaults);
     const dialogRef = this.dialog.open(ConfirmationPopupComponent, {
-      minWidth: window.innerWidth < 768 ? '90vw' : '660px',
+      minWidth: window.innerWidth < 768 ? '90vw' : (confirmationData.minWidth || '30vw'),
+      maxWidth: window.innerWidth < 768 ? '90vw' : (confirmationData.maxWidth || '80vw'),
       panelClass: 'confirmation-dialog',
+      disableClose: confirmationData.disableClose,
+      hasBackdrop: true,
+      autoFocus: true,
       data: {
         popupType: confirmationData.popupType ?? 'primary',
         id: confirmationData.id,
@@ -77,9 +78,6 @@ export class PopupService {
         dynamicMessage: confirmationData.dynamicMessage,
         secondeStaticMessage: confirmationData.secondeStaticMessage,
       },
-      disableClose: disableClose ?? true,
-      hasBackdrop: true,
-      autoFocus: true,
     });
 
     // Prevent backdrop click from closing the dialog
@@ -93,7 +91,7 @@ export class PopupService {
   updateRejectionConfirmationPopupData(
     confirmationData: confirmationPopupData,
     width: string = '600px',
-    height: string = 'auto'
+    height: string = 'auto',
   ) {
     this.ConfirmpopupData.next(confirmationData);
     const dialogRef = this.dialog.open(RejectionConfirmationPopupComponent, {
@@ -104,7 +102,7 @@ export class PopupService {
       panelClass: 'confirmation-dialog',
       data: {
         popupType: confirmationData.popupType ?? 'primary',
-        id: confirmationData.id
+        id: confirmationData.id,
       },
       disableClose: true,
       hasBackdrop: true,
@@ -135,7 +133,7 @@ export class PopupService {
         buttonText: noteData.buttonText,
         buttonLink: noteData.buttonLink,
         surveyTitle: noteData.surveyTitle,
-        surveyLink: noteData.surveyLink
+        surveyLink: noteData.surveyLink,
       },
       disableClose: true,
       hasBackdrop: true,

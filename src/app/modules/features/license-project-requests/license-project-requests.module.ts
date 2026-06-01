@@ -20,7 +20,7 @@ import { CancelLicenseEngineeringSummaryComponent } from './components/cancel-li
 import { DataVisibilityOfLicenseProjectService } from '../license/services/data-visibility-of-license-project/data-visibility-of-license-project.service';
 import { SharedLicenseProjectService } from '../license/services/sharedLicenseProject/shared-license-project.service';
 import { CancelLicenseMainDataSummaryComponent } from './components/cancel-license-main-data-summary/cancel-license-main-data-summary.component';
-import { ChangeplanLicenseRequestSummaryComponent } from './pages/changeplan-license-request-summary/changeplan-license-request-summary.component';
+import { ChangeplanLicenseRequestSummaryComponent } from './pages/change-plan-request/changeplan-license-request-summary/changeplan-license-request-summary.component';
 import { ReactivateLicenseRequestSummaryComponent } from './pages/reactivate-license-request-summary/reactivate-license-request-summary.component';
 import { ChangeplanLicenseRequestAccountantSummaryComponent } from './components/changeplan-license-request-accountant-summary/changeplan-license-request-accountant-summary.component';
 import { ChangeplanLicenseRequestEngineeringSummaryComponent } from './components/changeplan-license-request-engineering-summary/changeplan-license-request-engineering-summary.component';
@@ -58,12 +58,13 @@ import { LicenseProjectRequestProcessingLogService } from './services/license-pr
 import { LicenseProjectRequestLogService } from './services/license-project-request-log.service';
 import { CreateProjectLicenseRequestComponent } from './pages/create-project-license-request/create-project-license-request.component';
 import { RequestsComponent } from './pages/requests/requests.component';
-import { CreateChangePlanRequestComponent } from './pages/create-change-plan-request/create-change-plan-request.component';
+import { RequestTypeRequirementsComponent } from './pages/request-type-requirements/request-type-requirements.component';
+import { CreateChangePlanRequestComponent } from './pages/change-plan-request/create-change-plan-request/create-change-plan-request.component';
 import { CreateCancelLicenseRequestComponent } from './pages/create-cancel-license-request/create-cancel-license-request.component';
 import { CreateReactivateLicenseRequestComponent } from './pages/create-reactivate-license-request/create-reactivate-license-request.component';
 import { ChangeLicenseProjectEngineeringRequestService } from './services/change-license-project-engineering-request.service';
-import { CreateChangeEngineerComponent } from './pages/create-change-engineer/create-change-engineer.component';
-import { ChangeEngineerLicenseRequestSummaryComponent } from './pages/change-engineer-license-request-summary/change-engineer-license-request-summary.component';
+import { CreateChangeEngineerComponent } from './pages/change-engineering/create-change-engineer/create-change-engineer.component';
+import { ChangeEngineerLicenseRequestSummaryComponent } from './pages/change-engineering/change-engineer-license-request-summary/change-engineer-license-request-summary.component';
 import { ChangeEngineerMainDataSummaryComponent } from './components/change-engineer-main-data-summary/change-engineer-main-data-summary.component';
 import { AddEditChangeEngineerSummaryComponent } from './components/add-edit-change-engineer-summary/add-edit-change-engineer-summary.component';
 import { ChangeLicenseProjectSpaceOrUnitsRequestService } from './services/change-license-project-space-or-units-request.service';
@@ -108,9 +109,9 @@ import { ChangeLicenseProjectBuyerOrTenantContractRequestMainDataDetailsComponen
 import { AddingDelegatorMainDataDetailsComponent } from './components/adding-delegator-main-data-details/adding-delegator-main-data-details.component';
 import { RemovingDelegatorMainDataDetailsComponent } from './components/removing-delegator-main-data-details/removing-delegator-main-data-details.component';
 import { ChangeOrAddLicenseProjectUnitModelRequestMainDataDetailsComponent } from './components/change-or-add-license-project-unit-model-request-main-data-details/change-or-add-license-project-unit-model-request-main-data-details.component';
-import { AddChangeCharteredAccountantRequestComponent } from './pages/add-change-chartered-accountant-request/add-change-chartered-accountant-request.component';
+import { AddChangeCharteredAccountantRequestComponent } from './pages/change-accountant/add-change-chartered-accountant-request/add-change-chartered-accountant-request.component';
 import { ChangeCharteredAccountantRequestService } from './services/change-chartered-account-request';
-import { ChangeCharteredAccountantRequestSummaryComponent } from './pages/change-chartered-accountant-request-summary/change-chartered-accountant-request-summary.component';
+import { ChangeCharteredAccountantRequestSummaryComponent } from './pages/change-accountant/change-chartered-accountant-request-summary/change-chartered-accountant-request-summary.component';
 import { ChangeCharteredAccountantSummaryComponent } from './components/change-chartered-accountant-summary/change-chartered-accountant-summary.component';
 import { EditChangeCharteredAccountantComponent } from './components/edit-change-chartered-accountant/edit-change-chartered-accountant.component';
 import { ChangeCharteredAccountantDetailsComponent } from './components/change-chartered-accountant-details/change-chartered-accountant-details.component';
@@ -165,10 +166,52 @@ import { EditRequestTemplateComponent } from './components/edit-request-template
 import { RequestTemplateMainSummaryComponent } from './pages/request-template-main-summary/request-template-main-summary.component';
 import { RequestTemplateSummaryComponent } from './components/request-template-summary/request-template-summary.component';
 import { LicenseProjectService } from './services/license-project.service';
-import { ChangeCharteredAccountRequestDetailsComponent } from './pages/change-chartered-account-request-details/change-chartered-account-request-details.component';
+import { ChangeCharteredAccountRequestDetailsComponent } from './pages/change-accountant/change-chartered-account-request-details/change-chartered-account-request-details.component';
 import { SysBankService } from 'src/app/shared/services/sysBank/sys-bank.service';
 import { LiftingDeedReasonService } from './services/LiftingDeedReason/lifting-Deed-Reason.service';
 import { LicenseProjectDeedService, } from './services/LiftingDeeds/lifting-Deeds.service';
+import { ChangePlanListApprovalsComponent } from './pages/change-plan-request/change-plan-list-approvals/change-plan-list-approvals.component';
+import { ChangeAccountantListApprovalsComponent } from './pages/change-accountant/change-accountant-list-approvals/change-accountant-list-approvals.component';
+import { ChangeAccountantApprovalDetailsComponent } from './pages/change-accountant/change-accountant-approval-details/change-accountant-approval-details.component';
+import { ChangePlanApprovalDetailsComponent } from './pages/change-plan-request/change-plan-approval-details/change-plan-approval-details.component';
+import { ChangePlanDeedOwnerApprovalsComponent } from './pages/change-plan-request/change-plan-deed-owner-approvals/change-plan-deed-owner-approvals.component';
+import { ChangePlanApprovalService } from './services/change-plan-approval.service';
+import { CreateLicenseProjectChangePlanRequestComponent } from './pages/change-plan-request/create-license-project-change-plan-request/create-license-project-change-plan-request.component';
+import { LicenseProjectChangePlanRequestService } from './services/license-project-change-plan-request.service';
+import { ChangePlanDeedOwnersStatusComponent } from './pages/change-plan-request/change-plan-deed-owners-status/change-plan-deed-owners-status.component';
+import { ChangePlanRequestFullSummaryComponent } from './pages/change-plan-request/change-plan-request-full-summary/change-plan-request-full-summary.component';
+import { ChangePlanSummaryRedirectComponent } from './pages/change-plan-request/change-plan-summary-redirect/change-plan-summary-redirect.component';
+import { ChangePlanDataTabComponent } from './components/change-plan-data-tab/change-plan-data-tab.component';
+import { ChangePlanNotesTabComponent } from './components/change-plan-notes-tab/change-plan-notes-tab.component';
+import { ChangePlanEventsTabComponent } from './components/change-plan-events-tab/change-plan-events-tab.component';
+import { ChangeLicenseprojectEngineeringConsultantsContainerComponent } from './components/change-licenseproject-engineering-consultants-container/change-licenseproject-engineering-consultants-container.component';
+import { ChangeLicenseprojectEngineeringConsultantsCreateComponent } from './components/change-licenseproject-engineering-consultants-create/change-licenseproject-engineering-consultants-create.component';
+import { CreateChangeEngineerRequestDataComponent } from './components/create-change-engineer-request-data/create-change-engineer-request-data.component';
+import { ChangeLicenseProjectEngineeringConsultantService } from './services/change-license-project-engineering-consultant.service';
+import { LicenseModule } from '../license/license.module';
+import { CreateChangeLicenseProjectAccountantRequestComponent } from './pages/change-accountant/create-change-license-project-accountant-request/create-change-license-project-accountant-request.component';
+import { ChangeLicenseProjectAccountantRequestDataComponent } from './components/change-license-project-accountant-request-data/change-license-project-accountant-request-data.component';
+import { ChangeLicenseProjectAccountantAgreementDataComponent } from './components/change-license-project-accountant-agreement-data/change-license-project-accountant-agreement-data.component';
+import { ChangeLicenseProjectPartiesAdditionalTermsComponent } from './components/change-license-project-parties-additional-terms/change-license-project-parties-additional-terms.component';
+import { ChangeLicenseProjectPartiesAdditionalTermsFormComponent } from './components/change-license-project-parties-additional-terms-form/change-license-project-parties-additional-terms-form.component';
+import { ChangeLicenseProjectAccountantRequestService } from './services/change-license-project-accountant-request.service';
+import { LicenseProjectEngineeringConsultantService } from '../license/services/license-project-engineering-consultant.service';
+import { LicenseProjectDelegatorService } from '../license/services/license-project-delegator.service';
+import { ChangePlanUnitsBuyersApprovalListComponent } from './pages/change-plan-request/change-plan-units-buyers-approval-list/change-plan-units-buyers-approval-list.component';
+import { ChangePlanUnitsBuyersApprovalDetailsComponent } from './pages/change-plan-request/change-plan-units-buyers-approval-details/change-plan-units-buyers-approval-details.component';
+import { ChangeEngineeringPlanDetailsComponent } from './pages/change-engineering/change-engineering-plan-details/change-engineering-plan-details.component';
+import { ChangeEngineeringPlanService } from './services/change-engineering-plan.service';
+import { ChangeEngineeringDataTabComponent } from './components/change-engineering-data-tab/change-engineering-data-tab.component';
+import { ChangeEngineeringApprovalService } from './services/change-engineering-approval.service';
+import { ChangeEngineeringRequestDataSubtabComponent } from './components/change-engineering-request-data-subtab/change-engineering-request-data-subtab.component';
+import { ChangeEngineeringAgreementDataSubtabComponent } from './components/change-engineering-agreement-data-subtab/change-engineering-agreement-data-subtab.component';
+import { RequestEventsTabComponent } from './components/request-events-tab/request-events-tab.component';
+import { RequestNotesTabComponent } from './components/request-notes-tab/request-notes-tab.component';
+import { RequestDataTabComponent } from './components/request-data-tab/request-data-tab.component';
+import { RequestDetailsComponent } from './pages/request-details/request-details.component';
+import { ChangeAccountantDataTabComponent } from './components/change-accountant-data-tab/change-accountant-data-tab.component';
+import { ChangeEngineeringRequestTabComponent } from './components/change-engineering-request-tab/change-engineering-request-tab.component';
+import { LicenseProjectRequestInvoiceViewComponent } from './components/license-project-request-invoice-view/license-project-request-invoice-view.component';
 
 @NgModule({
   imports: [
@@ -176,10 +219,12 @@ import { LicenseProjectDeedService, } from './services/LiftingDeeds/lifting-Deed
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    LicenseProjectRequestsRoutingModule
+    LicenseProjectRequestsRoutingModule,
+    LicenseModule,
   ],
   declarations: [
     LincenseRequestListComponent,
+    ChangeEngineeringPlanDetailsComponent,
     AddProjectLicenseRequestComponentComponent,
     UpdateClearanceEngineeringComponent,
     UpdateClearanceAccountComponent,
@@ -230,6 +275,7 @@ import { LicenseProjectDeedService, } from './services/LiftingDeeds/lifting-Deed
     CreateReactivateLicenseRequestComponent,
     CreateProjectLicenseRequestComponent,
     RequestsComponent,
+    RequestTypeRequirementsComponent,
     CreateChangePlanRequestComponent,
 
     CreateCancelLicenseRequestComponent,
@@ -321,9 +367,46 @@ import { LicenseProjectDeedService, } from './services/LiftingDeeds/lifting-Deed
     RequestTemplateDetailComponent,
     EditRequestTemplateComponent,
     RequestTemplateMainSummaryComponent,
-    RequestTemplateSummaryComponent
+    RequestTemplateSummaryComponent,
+    ChangePlanListApprovalsComponent,
+    ChangeAccountantListApprovalsComponent,
+    ChangeAccountantApprovalDetailsComponent,
+    ChangePlanApprovalDetailsComponent,
+    ChangePlanDeedOwnerApprovalsComponent,
+    ChangePlanRequestFullSummaryComponent,
+    ChangePlanSummaryRedirectComponent,
+    ChangePlanDeedOwnersStatusComponent,
+    ChangePlanDataTabComponent,
+    ChangePlanNotesTabComponent,
+    ChangePlanEventsTabComponent,
+    CreateLicenseProjectChangePlanRequestComponent,
+
+    ChangePlanDeedOwnersStatusComponent,
+    ChangePlanUnitsBuyersApprovalListComponent,
+    ChangePlanUnitsBuyersApprovalDetailsComponent,
+    ChangePlanDeedOwnersStatusComponent,
+    ChangeLicenseprojectEngineeringConsultantsContainerComponent,
+    ChangeLicenseprojectEngineeringConsultantsCreateComponent,
+    CreateChangeEngineerRequestDataComponent,
+    ChangePlanDeedOwnersStatusComponent,
+    CreateChangeLicenseProjectAccountantRequestComponent,
+    ChangeLicenseProjectAccountantRequestDataComponent,
+    ChangeLicenseProjectAccountantAgreementDataComponent,
+    ChangeLicenseProjectPartiesAdditionalTermsComponent,
+    ChangeLicenseProjectPartiesAdditionalTermsFormComponent,
+    ChangeEngineeringDataTabComponent,
+    ChangeEngineeringRequestDataSubtabComponent,
+    ChangeEngineeringAgreementDataSubtabComponent,
+    RequestEventsTabComponent,
+    RequestNotesTabComponent,
+    RequestDataTabComponent,
+    RequestDetailsComponent,
+    ChangeAccountantDataTabComponent,
+    ChangeEngineeringRequestTabComponent,
+    LicenseProjectRequestInvoiceViewComponent,
   ],
   providers: [
+    ChangeEngineeringPlanService,
     WithdrawSurplusBeforeProjectEndRequestService,
     ChangeOrAddLicenseProjectUnitModelRequestService,
     ChangeLicenseProjectDelegatorRequestService,
@@ -352,7 +435,16 @@ import { LicenseProjectDeedService, } from './services/LiftingDeeds/lifting-Deed
     LicenseProjectService,
     SysBankService,
     LiftingDeedReasonService,
-    LicenseProjectDeedService
+    LicenseProjectDeedService,
+    ChangePlanApprovalService,
+    LicenseProjectChangePlanRequestService,
+    ChangeLicenseProjectEngineeringConsultantService,
+    LicenseProjectDelegatorService,
+    LicenseProjectChangePlanRequestService,
+    ChangeLicenseProjectAccountantRequestService,
+    LicenseProjectEngineeringConsultantService,
+    LicenseProjectDelegatorService,
+    ChangeEngineeringApprovalService,
   ]
 })
 export class LicenseProjectRequestsModule { }

@@ -80,12 +80,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
     lincenceProjectRequest: `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}`,
     lincenceProjectRequestList: `/${Configuration.pages.licenseProjectRequests.licenseProjectRequestList}`,
     createLincenceProjectRequestList: `/${Configuration.pages.licenseProjectRequests.licenseProjectRequests}`,
+    changePlanListApprovals: `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changePlanListApprovals}`,
+    changeAccountntListApprovals: `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changeAccountantListApprovals}`,
+    changePlanDeedOwnerApprovals: `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changePlanDeedOwnerApprovals}`,
 
     developerProjects: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}/${Configuration.pages.license.developerProjectList}`,
     recommendationLogsList: `${Configuration.modules.wafi}/${Configuration.modules.engineeringManagement}/${Configuration.pages.license.recommendationLogsList}`,
     contractRequestList: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.contractRequestList}`,
     searchExchangeDocumentsList: `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.searchExchangeDocumentsList}`,
     supervisionFees: `/${Configuration.pages.license.supervisionFees}`,
+    changePlanUnitsBuyersApprovalList: `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.changePlanUnitsBuyersApprovalList}`,
+    supervisionFeeInvoices: `/${Configuration.pages.license.supervisionFeeInvoices}`,
 
   };
 

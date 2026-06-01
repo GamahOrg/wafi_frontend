@@ -1,0 +1,509 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/bootstrap-custom/tables";
+@import "/src/assets/styles/content/page";
+@import "/src/assets/styles/content/table-content";
+@import "/src/assets/styles/content/status";
+
+// Section container - white card with border
+.section-container {
+  background: #fff;
+  border: 1px solid #e7eaea;
+  border-radius: 16px;
+  padding: 32px 16px;
+}
+
+// Section header
+.section-header {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #001f21;
+}
+
+.section-icon {
+  font-size: 24px;
+  color: #005257;
+}
+
+.sub-section-title {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #001f21;
+  text-align: right;
+  margin-bottom: 16px;
+}
+
+// 2-column info layout matching Figma
+// RTL: first child → RIGHT, second child → LEFT
+.info-columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.info-column {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start; // RTL: flex-start = RIGHT side
+  flex: 1;
+}
+
+// Each info item: label + value inline
+// RTL flex-row: first child (label) → RIGHT, second (value) → LEFT
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  letter-spacing: 0.32px;
+  font-size: 16px;
+  line-height: 24px;
+
+  .info-label {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 600;
+    color: #001f21;
+  }
+
+  .info-value {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 500;
+    color: #5d5d5d;
+  }
+}
+
+// Key/value data display (matching employee portal pattern)
+.key {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #001f21;
+  text-align: right;
+  margin-bottom: 8px;
+}
+
+.value {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-start;
+
+  .icon {
+    font-size: 18px;
+    color: #8a9393;
+  }
+
+  span, a {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 14px;
+    color: #5d5d5d;
+  }
+
+  a {
+    color: #005257;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// File link
+.file-link-label {
+  text-decoration: underline;
+  color: #161616 !important;
+}
+
+.file-link {
+  display: inline-flex;
+  align-items: center;
+  color: #005257;
+  text-decoration: none;
+
+  .file-icon {
+    font-size: 24px;
+  }
+}
+
+// Tables
+.table {
+  th {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 500;
+    color: #001f21;
+    background-color: #f4f6f6;
+    white-space: nowrap;
+  }
+
+  .cell-text {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+    color: #5d5d5d;
+  }
+}
+
+// Action buttons container
+.actions-container {
+  background: #fff;
+  border: 1px solid #e7eaea;
+  border-radius: 8px;
+  padding: 24px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.btn-approve {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  background-color: #005257;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 40px;
+  padding: 8px 16px;
+
+  &:hover {
+    background-color: darken(#005257, 5%);
+    color: #fff;
+  }
+}
+
+.btn-process {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  background-color: #005257;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 40px;
+  padding: 8px 16px;
+
+  &:hover {
+    background-color: darken(#005257, 5%);
+    color: #fff;
+  }
+}
+
+.btn-reject {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  background-color: transparent;
+  color: #b42318;
+  border: 1px solid #b42318;
+  border-radius: 4px;
+  padding: 8px 12px;
+
+  &:hover {
+    background-color: #b42318;
+    color: #fff;
+  }
+}
+
+// Developer label in deed owners table
+.developer-label {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #005257;
+  white-space: nowrap;
+}
+
+// Agreement link in deed owners table
+.agreement-link {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #005257;
+  text-decoration: underline;
+
+  &:hover {
+    color: darken(#005257, 10%);
+  }
+}
+
+// File uploader key/value pattern
+.form-group {
+  .key {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #001f21;
+    text-align: right;
+    margin-bottom: 8px;
+  }
+
+  .value {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: flex-start;
+    margin-bottom: 8px;
+
+    .icon {
+      font-size: 18px;
+      color: #8a9393;
+    }
+
+    a {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-size: 14px;
+      color: #005257;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Form styles for engineering/accountant sections
+.form-label {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #001f21;
+  text-align: right;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.required-label::after {
+  content: ' *';
+  color: #d92d20;
+}
+
+.form-control {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid #9da4ae;
+  border-radius: 4px;
+  text-align: right;
+  color: #5d5d5d;
+
+  &::placeholder {
+    color: #6c737f;
+  }
+
+  &:focus {
+    border-color: #005257;
+    box-shadow: none;
+  }
+}
+
+.readonly-input {
+  background-color: #e7eaea;
+  border-color: #8a9393;
+  cursor: default;
+}
+
+// Inline alert cards (engineering: الجدول الزمني + آخر تقرير)
+.inline-alert {
+  border-radius: 8px;
+  padding: 16px 24px;
+  position: relative;
+  overflow: hidden;
+
+  &.info {
+    background-color: #f5faff;
+    border: 1px solid #b2ddff;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      bottom: -1px;
+      right: -1px;
+      width: 8px;
+      background-color: #1570ef;
+      opacity: 0.7;
+    }
+  }
+
+  &.warning {
+    background-color: #fffcf5;
+    border: 1px solid #fedf89;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      bottom: -1px;
+      right: -1px;
+      width: 8px;
+      background-color: #f79009;
+      opacity: 0.7;
+    }
+  }
+
+  .warning-icon {
+    background: #fffaeb !important;
+
+    i {
+      color: #f79009 !important;
+    }
+  }
+
+  .warning-title {
+    color: #b54708 !important;
+  }
+
+  .alert-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+
+  .alert-icon {
+    background: #eff8ff;
+    border-radius: 9999px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    i {
+      font-size: 20px;
+      color: #1570ef;
+    }
+  }
+
+  .alert-text {
+    flex: 1;
+    text-align: right;
+  }
+
+  .alert-title {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #175cd3;
+    margin: 0 0 8px 0;
+  }
+
+  .alert-description {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #384250;
+    margin: 0;
+  }
+
+  .alert-actions {
+    padding-right: 40px;
+
+    .btn-outline-secondary {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: #161616;
+      border: 1px solid #d2d6db;
+      border-radius: 4px;
+      height: 32px;
+    }
+  }
+}
+
+// File upload section (accountant)
+.file-upload-section {
+  text-align: right;
+
+  .form-label {
+    font-size: 16px;
+    font-weight: 400;
+    color: #161616;
+  }
+
+  .file-upload-hint {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 12px;
+    line-height: 18px;
+    color: #6c737f;
+    margin-bottom: 16px;
+  }
+
+  .btn-upload {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: #005257;
+    color: #fff;
+    border-radius: 4px;
+    height: 32px;
+
+    &:hover {
+      background-color: darken(#005257, 5%);
+      color: #fff;
+    }
+  }
+}
+
+// Draft/cancel buttons for engineering/accountant
+.btn-outline-draft {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  background: transparent;
+  color: #005257;
+  border: 1px solid #005257;
+  border-radius: 4px;
+  height: 40px;
+  padding: 8px 16px;
+
+  &:hover {
+    background: #005257;
+    color: #fff;
+  }
+}
+
+.btn-outline-cancel {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  background: transparent;
+  color: #6c737f;
+  border: none;
+  height: 40px;
+  padding: 8px 16px;
+
+  &:hover {
+    color: #001f21;
+  }
+}
+
+// Validation error text
+.invalid-feedback {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 12px;
+  color: #b42318;
+  text-align: right;
+}

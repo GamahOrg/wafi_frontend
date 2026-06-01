@@ -1,0 +1,21 @@
+<div class="col-12" *ngIf="!availabilityToUpdate">
+  <div class="buttons-wrapper mb-3 d-flex justify-content-end">
+    <div>
+      <div>
+        <button
+          *ngIf="
+            request.externalRequestStatusId ==
+              licenseProjectRequestStatusEnum.UnderCreation"
+          type="button"
+          mat-flat-button
+          color="primary"
+          (click)="create()"
+        >
+          {{ localization.send }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-tabs></app-tabs>
+</div>

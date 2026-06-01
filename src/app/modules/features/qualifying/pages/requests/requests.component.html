@@ -4,69 +4,69 @@
   </div>
 
   <div class="page-content">
-    <div class="row g-4 row-cols-lg-5" *ngIf="qualificationRequestTypes && qualificationRequestTypes.length>0">
-      <div class="col-12 col-md-6 col-lg" *ngFor="let qualificationRequestType of qualificationRequestTypes">
-        <div class="card qualiication-card cursor-pointer">
-          <div class="icon"><span class="material-icons-outlined">{{getIconeName(qualificationRequestType.typeCode)}}</span></div>
-          <div class="card-body" (click)="navogateToCreateRequest(qualificationRequestType.typeCode)">
-            <h6 class="card-title">{{qualificationRequestType.typeName}}</h6>
+    <div class="content">
+      <div
+        class="row row-gap-4"
+        *ngIf="
+          qualificationRequestTypes && qualificationRequestTypes.length > 0
+        "
+      >
+        <div
+          class="col-12 col-xl-3"
+          *ngFor="let qualificationRequestType of qualificationRequestTypes"
+        >
+          <div class="card service-card h-100">
+            <div class="card-body">
+              <!-- <div class="icon"><span class="material-icons-outlined">{{getIconeName(qualificationRequestType.typeCode)}}</span></div> -->
+              <div class="icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M17.2712 1.40242C16.0706 1.24998 14.5342 1.24999 12.5833 1.25H11.4167C9.46585 1.24999 7.92941 1.24998 6.72885 1.40242C5.49987 1.55847 4.50965 1.88575 3.72552 2.62631C2.93534 3.37259 2.5806 4.32468 2.41255 5.50521C2.24997 6.64729 2.24998 8.1054 2.25 9.94067V14.0593C2.24998 15.8946 2.24997 17.3527 2.41255 18.4948C2.5806 19.6753 2.93534 20.6274 3.72552 21.3737C4.50965 22.1142 5.49987 22.4415 6.72885 22.5976C7.92941 22.75 9.46586 22.75 11.4167 22.75H12.5833C14.5342 22.75 16.0706 22.75 17.2712 22.5976C18.5001 22.4415 19.4904 22.1143 20.2745 21.3737C21.0647 20.6274 21.4194 19.6753 21.5875 18.4948C21.75 17.3527 21.75 15.8946 21.75 14.0593V9.94074C21.75 8.10547 21.75 6.64729 21.5875 5.50521C21.4194 4.32468 21.0647 3.37259 20.2745 2.62631C19.4904 1.88575 18.5001 1.55847 17.2712 1.40242ZM8 6C7.44772 6 7 6.44772 7 7C7 7.55228 7.44772 8 8 8H16C16.5523 8 17 7.55228 17 7C17 6.44772 16.5523 6 16 6H8ZM7 12C7 11.4477 7.44772 11 8 11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H8C7.44772 13 7 12.5523 7 12ZM8 16C7.44772 16 7 16.4477 7 17C7 17.5523 7.44772 18 8 18H12C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16H8Z"
+                    fill="#005257"
+                  />
+                </svg>
+              </div>
+              <div class="d-flex flex-column gap-2">
+                <h6 class="card-title">
+                  {{ qualificationRequestType.typeName }}
+                </h6>
+                <!--<p class="card-text">
+                  {{(qualificationRequestType.discerption | slice:0:50) + '...' }}
+                </p>-->
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary mt-auto"
+                (click)="
+                  navogateToCreateRequest(qualificationRequestType.typeCode)
+                "
+              >
+                التقديم على الطلب
+                <svg
+                  width="18"
+                  height="12"
+                  viewBox="0 0 18 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 5.75048C2.67838e-06 6.12404 0.165654 6.47061 0.322519 6.73083C0.491796 7.01165 0.719444 7.30158 0.969183 7.58426C1.47018 8.15133 2.12387 8.76031 2.75824 9.31118C3.39633 9.86528 4.03222 10.3755 4.50725 10.7463C4.74516 10.932 4.94364 11.0834 5.08304 11.1887C5.15276 11.2414 5.20776 11.2826 5.24558 11.3107L5.28915 11.3431L5.30071 11.3517L5.30472 11.3546C5.63822 11.6003 6.10816 11.5294 6.35382 11.1959C6.59947 10.8624 6.52828 10.3929 6.19482 10.1473L6.18209 10.1379L6.14204 10.1081C6.10662 10.0817 6.0542 10.0425 5.9872 9.99184C5.85317 9.89059 5.66103 9.74399 5.43019 9.56382C4.96772 9.20285 4.35363 8.70995 3.74173 8.1786C3.12611 7.64401 2.52981 7.08518 2.09331 6.59111C2.0657 6.55986 2.03899 6.52915 2.01316 6.499L16.75 6.49899C17.1642 6.49899 17.5 6.16321 17.5 5.74899C17.5 5.33478 17.1642 4.99899 16.75 4.99899L2.0157 4.999C2.04073 4.96979 2.06661 4.94006 2.09331 4.90984C2.52981 4.41577 3.12611 3.85694 3.74173 3.32235C4.35363 2.79099 4.96772 2.2981 5.43019 1.93713C5.66102 1.75695 5.85317 1.61036 5.9872 1.50911C6.05419 1.4585 6.10662 1.41925 6.14203 1.39285L6.18208 1.36308L6.19481 1.35367C6.52828 1.108 6.59947 0.638521 6.35382 0.305035C6.10815 -0.0284672 5.63822 -0.0993577 5.30472 0.146304L5.30071 0.149264L5.28915 0.157818L5.24558 0.190203C5.20776 0.218397 5.15276 0.259569 5.08304 0.312239C4.94363 0.41755 4.74516 0.568986 4.50725 0.754683C4.03222 1.12546 3.39633 1.63567 2.75823 2.18977C2.12387 2.74064 1.47018 3.34962 0.969183 3.91669C0.719444 4.19937 0.491796 4.4893 0.322519 4.77012C0.166597 5.02878 0.00199246 5.37276 1.71655e-05 5.74375"
+                    fill="white"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <!-- <div class="col-12 col-md-6 col-lg">
-            <div class="card qualiication-card cursor-pointer">
-                <div class="icon"><span class="material-icons-outlined">local_convenience_store</span></div>
-                <div class="card-body"
-                     (click)="navogateToCreateRequest('RED02')">
-                    <h6 class="card-title">مطور عقاري مدرج فى سوق المال</h6>
-                </div>
-            </div>
-        </div> -->
-      <!-- <div class="col-12 col-md-6 col-lg">
-            <div class="card qualiication-card cursor-pointer">
-                <div class="icon"><span class="material-icons-outlined">how_to_reg</span></div>
-                <div class="card-body"
-                     (click)="navogateToCreateRequest('RED03')">
-                    <h6 class="card-title">مطور عقاري متحالف مع شركه </h6>
-                </div>
-            </div>
-        </div> -->
-      <!-- <div class="col-12 col-md-6 col-lg">
-            <div class="card qualiication-card cursor-pointer">
-                <div class="icon"><span class="material-icons-outlined">local_convenience_store</span></div>
-                <div class="card-body"
-                     (click)="navogateToCreateRequest('REM')">
-                    <h6 class="card-title">مسوق عقاري</h6>
-                </div>
-            </div>
-        </div> -->
-      <!-- <div class="col-12 col-md-6 col-lg">
-            <div class="card qualiication-card cursor-pointer">
-                <div class="icon"><span class="material-icons-outlined">how_to_reg</span></div>
-                <div class="card-body"
-                     (click)="navogateToCreateRequest('REB')">
-                    <h6 class="card-title"> وسيط عقاري</h6>
-                </div>
-            </div>
-        </div> -->
-      <!-- <div class="col-12 col-md-6 col-lg">
-            <div class="card qualiication-card cursor-pointer">
-                <div class="icon"><span class="material-icons-outlined">store</span></div>
-                <div class="card-body"
-                     (click)="navogateToCreateRequest('EC')">
-                    <h6 class="card-title">استشاري هندسي</h6>
-                </div>
-            </div>
-        </div> -->
-      <!-- <div class="col-12 col-md-6 col-lg">
-            <div class="card qualiication-card cursor-pointer">
-                <div class="icon"><span class="material-icons-outlined">credit_score</span></div>
-                <div class="card-body"
-                     (click)="navogateToCreateRequest('Acc')">
-                    <h6 class="card-title">محاسب قانوني</h6>
-                </div>
-            </div>
-        </div> -->
     </div>
   </div>
 </div>

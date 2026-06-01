@@ -19,7 +19,7 @@ export class ShowOwnerListComponent implements OnInit, OnDestroy {
     title: 'عرض ملاك الصك ',
     deedData: 'بيانات الصك',
     typeId: 'نوع مالك الأرض',
-    nationalId: 'رقم هوية مالك الصك / مالك منٝعتها',
+    nationalId: 'رقم هوية مالك الصك / مالك منفعتها',
     CRA: 'رقم السجل التجاري',
     name: 'اسم مالك الصك /مالك منفعتها',
     mobileNumber: 'رقم جوال مالك الصك /مالك منفعتها',

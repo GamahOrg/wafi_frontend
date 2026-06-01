@@ -1,6 +1,7 @@
 
 import { CityWithChambersOfCommerceCityCodeDto } from "src/app/shared/models/lookups/city-dto";
 import { SysFileManagerCreateUpdateDto } from "src/app/shared/models/sys-file-manager-create-update-dto";
+import { SysCertificationDegreeDto } from "src/app/shared/models/SysCertificationDegreeDto";
 
 export interface FacilityBasicInfo {
   facilityCode: string;
@@ -33,6 +34,7 @@ export interface FacilityBasicInfo {
   poBox : string;
   postalCode : string;
   telephone : string;
+  mobile : string;
   registrationDateTime: Date;
   isActive: boolean;
   isLocked: null | boolean;
@@ -62,7 +64,9 @@ export interface FacilityBasicInfo {
 // fileManger
 export interface qualificationFacilityCertification {
   certificationFile: SysFileManagerCreateUpdateDto,
-  id: string
+  id: string,
+  certificationDegreeId?: number
+  certificationDegree?: SysCertificationDegreeDto
 }
 export interface facilityOwnerDto
 {
@@ -182,6 +186,7 @@ export interface UpdateFacilityBasicInfoRequest {
   socialInsuranceCertificateNumber?: string;
   website?: string;
   telephone?: string;
+  mobile?: string;
   fax?: string;
   postalCode?: string;
   email?: string;

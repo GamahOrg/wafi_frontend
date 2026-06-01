@@ -12,7 +12,14 @@ export enum RatingTriggerTypeEnum {
   /// <summary>
   /// المشتري - بعد توثيق عقد بيع الوحده بنجاح
   /// </summary>
-  BuyerAfterContractDocumented = 6
+  BuyerAfterContractDocumented = 6,
+  QualificationAfterInvoicePayment = 7,
+  QualificationAfterDegreeUpgradeApproval = 8,
+  ChangePlanRequestAfterApproval = 9,
+  ChangeEngineeringConsultantRequestAfterApproval = 10,
+  ChangeCharteredAccountantRequestAfterInvoicePayment = 11,
+  /// المطور العقاري - بعد إلغاء تعليق التأهيل
+  DeveloperQualificationSuspensionAfterCancellation = 12
 }
 export enum RatingTypeEnum {
   /// تقييم رضا المستخدم عن سهولة استخدام المنصة
@@ -22,4 +29,11 @@ export enum RatingTypeEnum {
   DeveloperContractDocumentation = 4, // تقييم رضا المطور عن خدمة توثيق العقود
   BuyerContractDocumentation = 5, // تقييم رضا المشتري عن خدمة توثيق العقد الورقي
   BuyerUnifiedContractDocumentation = 6, // تقييم رضا المشتري عن خدمة توثيق العقد الموحد
+  QualificationServiceExperience = 7, // تقييم تجربة خدمة التأهيل بعد سداد الفاتورة
+  DegreeUpgradeApproval = 8, // تقييم تجربة طلب رفع درجة التأهيل بعد الموافقة
+  ChangePlanRequestExperience = 9,
+  ChangeEngineeringConsultantRequestExperience = 10,
+  ChangeCharteredAccountantRequestExperience = 11,
+  /// تقييم تجربة إلغاء تعليق تأهيل المطور العقاري
+  DeveloperQualificationSuspensionCancellation = 12,
 }

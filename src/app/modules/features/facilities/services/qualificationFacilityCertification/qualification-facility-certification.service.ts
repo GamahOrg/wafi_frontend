@@ -62,4 +62,12 @@ export class QualificationFacilityCertificationService {
       )
   }
 
+  GetCertificationDegreesLookup(): Observable<CoreResponseDTO<any>> {
+    return this._httpClient.get<CoreResponseDTO<any>>(
+      Configuration.APIs.SysCertificationDegree.GetCertificationDegreesLookup
+    ).pipe(map(res => res));
+  }
+
+  
+
 }

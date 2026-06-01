@@ -14,7 +14,7 @@ import { ButtonType } from '../../models/enums/button-type.model';
 export class PopupComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   popupData = {} as PopupData;
-  @Input() submitButtonTitle: string = 'حفظ البيانات';
+  @Input() submitButtonTitle: string = 'حفظ ';
   popupActionsButtons: Button[] = []
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,

@@ -9,7 +9,7 @@ html.cdk-global-scrollblock {
 }
 
 .mat-mdc-dialog-container {
-  --mdc-dialog-container-shape: 1.5rem;
+  --mdc-dialog-container-shape: .75rem;
   --mdc-dialog-container-color: #F1F2F2;
 
   --mdc-dialog-subhead-font: "IBM_Plex_Sans_Arabic", sans-serif;
@@ -46,9 +46,20 @@ html.cdk-global-scrollblock {
     color: #E40A0A !important;
   }
 
-  .btn-link {
-    --bs-btn-color: #{$theme-main};
-    font-weight: 600;
+  .close-btn {
+    position: absolute;
+    top: 1.25rem;
+    inset-inline-end: 1.25rem;
+
+    &.btn {
+      --bs-btn-padding-x: 0;
+      --bs-btn-padding-y: 0;
+    }
+
+    &.btn-link {
+      --bs-btn-color: #{$theme-main};
+      font-weight: 600;
+    }
   }
 
   .btn-danger {

@@ -1,0 +1,37 @@
+<div class="row row-gap-4">
+  <div class="col-xl-4">
+    <!-- Tab navigation -->
+    <ul class="nav nav-tabs" role="tablist" aria-orientation="horizontal">
+      <li class="nav-item">
+        <button type="button" class="nav-link" [ngClass]="{'active': activeTab === 'request-data'}" role="tab" [attr.aria-selected]="activeTab === 'request-data'" (click)="activeTab = 'request-data'">
+          بيانات الطلب
+        </button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="nav-link" [ngClass]="{'active': activeTab === 'agreement-data'}" role="tab" [attr.aria-selected]="activeTab === 'agreement-data'" [disabled]="!agreementTabEnabled && showNextButton" (click)="activeTab = 'agreement-data'">
+          بيانات الاتفاقية
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Tab content -->
+<div class="tab-content mt-4">
+  <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'request-data'}" role="tabpanel">
+    <app-change-license-project-accountant-request-data [hidden]="activeTab !== 'request-data'" [showNotesPage]="showNotesPage">
+    </app-change-license-project-accountant-request-data>
+  </div>
+
+  <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'agreement-data'}" role="tabpanel">
+    <app-change-license-project-accountant-agreement-data [hidden]="activeTab !== 'agreement-data'" [showNotesPage]="showNotesPage" [hideDraftButton]="hideDraftButton" [showNextButton]="showNextButton" [handleNotes]="handleNotes">
+    </app-change-license-project-accountant-agreement-data>
+  </div>
+</div>
+
+<!-- Bottom action buttons (request-data tab only) -->
+<div class="action-btns-bar mt-4" *ngIf="activeTab === 'request-data' && !showNotesPage">
+  <button type="button" class="btn btn-link me-auto" (click)="onCancel()">إلغاء</button>
+  <button type="button" class="btn btn-outline-secondary" (click)="onSaveDraft()" *ngIf="!hideDraftButton">حفظ كمسودة</button>
+  <button type="button" class="btn btn-primary" (click)="onNext()" *ngIf="showNextButton">التالي</button>
+</div>

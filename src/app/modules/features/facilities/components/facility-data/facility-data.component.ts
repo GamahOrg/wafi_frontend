@@ -168,7 +168,7 @@ export class FacilityDataComponent implements OnInit, OnDestroy {
     private _requestValidationService: RequestValidationService,
     private _tabsService: TabsService,
     private _customerService: UserDataService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.updateVerticalTabContent();
@@ -189,7 +189,6 @@ export class FacilityDataComponent implements OnInit, OnDestroy {
           (tab: TabsError) => tab.tabCode === tabCode,
         )?.tabErrors.length ?? 0;
     }
-    console.log('errsNum', errsNum);
     return errsNum;
   }
 
@@ -206,7 +205,6 @@ export class FacilityDataComponent implements OnInit, OnDestroy {
         .subscribe((res: any | null) => {
           this.validationError = res;
           this.validateTabs();
-          console.log('this.tabContent', this.tabContent);
           this.updateVerticalTabContent();
         }),
     );
@@ -271,7 +269,7 @@ export class FacilityDataComponent implements OnInit, OnDestroy {
           {
             icon: '',
             title: 'بيانات المطور العقاري',
-             Component: FacilityBasicDataInfoAllTypesComponent,
+            Component: FacilityBasicDataInfoAllTypesComponent,
             id: 'RealEstateDeveloperDataComponent',
             disabled: false,
             errNum: 0,
@@ -368,7 +366,7 @@ export class FacilityDataComponent implements OnInit, OnDestroy {
           {
             icon: '',
             title: 'بيانات المحاسب القانوني',
-             Component: FacilityBasicDataInfoAllTypesComponent,
+            Component: FacilityBasicDataInfoAllTypesComponent,
             id: 'RealEstateDeveloperDataComponent',
             disabled: false,
             errNum: 0,
@@ -418,8 +416,8 @@ export class FacilityDataComponent implements OnInit, OnDestroy {
           },
           {
             icon: '',
-             title: 'بيانات الاستشاري الهندسي',
-             Component: FacilityBasicDataInfoAllTypesComponent,
+            title: 'بيانات الاستشاري الهندسي',
+            Component: FacilityBasicDataInfoAllTypesComponent,
             id: 'LegalAccountantDataComponent',
             disabled: false,
             errNum: 0,

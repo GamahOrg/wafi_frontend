@@ -6,11 +6,12 @@ import { customerResponse } from 'src/app/shared/models/customer.model';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { FileManagementService } from 'src/app/shared/services/fileManagement/file-management.service';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
-import { QualificationInstitutionalCapacityAndHrRequirementCreatUpdateDto } from '../../dataModels/qualificationInstitutionalCapacityAndHrRequirement.model';
+import { QualificationInstitutionalCapacityAndHrRequirementCreatUpdateDto, QualificationInstitutionalCapacityAndHrRequirementDto } from '../../dataModels/qualificationInstitutionalCapacityAndHrRequirement.model';
 // import { FileManagementService } from '../../../../../shared/services/fileManagement/file-management.service';
 import { QualificationInstitutionalCapacityAndHrRequirementsService } from '../../services/qualificationInstitutionalCapacityAndHrRequirements/qualification-institutional-capacity_Hr-requirements.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-job-requirements-and-human-resources-form',
@@ -18,11 +19,13 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
   styleUrls: ['./job-requirements-and-human-resources-form.component.scss'],
 })
 export class JobRequirementsAndHumanResourcesFormComponent
-  implements OnInit, OnDestroy
-{
+  implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   institutionalCapacityAndHrRequirements: QualificationInstitutionalCapacityAndHrRequirementCreatUpdateDto =
     new QualificationInstitutionalCapacityAndHrRequirementCreatUpdateDto();
+  existingInstitutionalCapacityAndHrRequirements: QualificationInstitutionalCapacityAndHrRequirementDto = new QualificationInstitutionalCapacityAndHrRequirementDto();
+
+
   singleFileUploaderData: FileUploader = {
     multiple: false,
   } as FileUploader;
@@ -32,6 +35,7 @@ export class JobRequirementsAndHumanResourcesFormComponent
 
   userData: customerResponse | null = null;
   showValidation: boolean = false;
+  baseUrl = `${environment.baseURL}/`;
 
   constructor(
     private _fileManagementService: FileManagementService,
@@ -39,7 +43,7 @@ export class JobRequirementsAndHumanResourcesFormComponent
     // public dialogRef: MatDialogRef<PopupComponent>,
     private _userDataService: UserDataService,
     private _popupService: PopupService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obseveCustomerData();
@@ -94,10 +98,30 @@ export class JobRequirementsAndHumanResourcesFormComponent
         .subscribe((institutionalCapacityAndHrRequirements) => {
           if (institutionalCapacityAndHrRequirements.id)
             this.GetById(institutionalCapacityAndHrRequirements.id);
+          this.existingInstitutionalCapacityAndHrRequirements = institutionalCapacityAndHrRequirements;
         })
     );
   }
 
+  deletFile(id: string) {
+    this._fileManagementService.DeletFile(id).subscribe(res => {
+      if (res.isDone) {
+        this.getInstitutionalCapacityAndHrRequirement();
+      }
+    })
+  }
+
+  getInstitutionalCapacityAndHrRequirement() {
+    this.subscriptions.push(
+      //this.userData?.Id as string
+      this._service.GetByFacilityId(this.userData?.facilities[0].id as string).subscribe(res => {
+        if (res) {
+          this.existingInstitutionalCapacityAndHrRequirements = res;
+          this._service.SetSubjectObj(this.existingInstitutionalCapacityAndHrRequirements);
+        }
+      })
+    )
+  }
   GetById(id: string) {
     this.subscriptions.push(
       this._service.GetById(id).subscribe((res) => {
@@ -176,7 +200,7 @@ export class JobRequirementsAndHumanResourcesFormComponent
     //     })
     //   )
     // }
-      if (fileRemovedData.eventRes.data.length == 0) {
+    if (fileRemovedData.eventRes.data.length == 0) {
       this.institutionalCapacityAndHrRequirements.laborRegulationCertificateFileId =
         '';
       return;
@@ -253,7 +277,7 @@ export class JobRequirementsAndHumanResourcesFormComponent
       model.organizationalStructureFileId &&
       model.laborRegulationCertificateFileId &&
       model.occupationalSafetyAndHealthFileId &&
-      model.saudizationCertificateFileId 
+      model.saudizationCertificateFileId
     );
   }
   ngOnDestroy(): void {

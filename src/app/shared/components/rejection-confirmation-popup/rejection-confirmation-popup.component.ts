@@ -80,7 +80,12 @@ export class RejectionConfirmationPopupComponent implements OnInit, OnDestroy {
     this._requestNotesService.RequestNotes$.next(
       this.rejectionForm.value as RequestNotesData
     );
-    this._popupService.confirmAction.emit(this.confirmationPopupData);
+    const payload = {
+      ...this.confirmationPopupData,
+      notes: this.rejectionForm.value.notes || '',
+    };
+    //console.log('[reject-popup] emitting', payload);
+    this._popupService.confirmAction.emit(payload as any);
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

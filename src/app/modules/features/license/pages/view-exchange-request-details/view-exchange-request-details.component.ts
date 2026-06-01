@@ -11,6 +11,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { RequestNotesService } from 'src/app/shared/services/requestNotes/request-notes.service';
 import { Subscription } from 'rxjs';
 import {
+  LicenseProjectExchangeDocumentMainItemEnum,
   LicenseProjectExchangeDocumentStatusEnum,
   LicenseProjectExchangeDocumentWithdrawalMethodEnum,
 } from '../../dataModels/license-project-exchange-document-paging-dto';
@@ -22,6 +23,7 @@ import { CustomerTypeEnum } from '../../models/search-exchange-document-list-res
   styleUrls: ['./view-exchange-request-details.component.scss'],
 })
 export class ViewExchangeRequestDetailsComponent implements OnInit {
+  showWorkDonePercentage:boolean = false;
   requestId!: string | null;
   customerType!: number;
   CustomerTypeEnum = CustomerTypeEnum;
@@ -62,6 +64,10 @@ licenseProjectExchangeDocumentStatus=LicenseProjectExchangeDocumentStatusEnum;
         .subscribe((res) => {
           if (res.isDone) {
             this.requestDetails = res.data;
+
+            if(this.requestDetails?.mainItemId == LicenseProjectExchangeDocumentMainItemEnum.MaintenanceCostCalculation){
+              this.showWorkDonePercentage = true;
+            }
           }
         }),
     );

@@ -17,5 +17,7 @@ export enum internalStatusId {
     ///<summary>تم الموافقة على الطلب</summary>
     RequTheRequestHasBeenApproved = 8,
     ///<summary>تم إصدار شهادة التأهيل</summary>
-    QualificationCertificateIssued = 9
+    QualificationCertificateIssued = 9,
+    ///<summary>تأهيل معلق</summary>
+    QualificationSuspended = 16
   }

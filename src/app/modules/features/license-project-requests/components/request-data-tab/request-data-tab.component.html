@@ -1,0 +1,7 @@
+<ng-container *ngIf="activeComponent; else noData">
+  <ng-container *ngComponentOutlet="activeComponent"></ng-container>
+</ng-container>
+
+<ng-template #noData>
+  <p class="text-muted mt-3">لا توجد بيانات متاحة لهذا النوع من الطلبات</p>
+</ng-template>

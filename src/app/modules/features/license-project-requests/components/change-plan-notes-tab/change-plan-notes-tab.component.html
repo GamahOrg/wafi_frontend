@@ -1,0 +1,122 @@
+<div class="page">
+  <div class="page-content">
+
+    <div class="content-title">
+      <div class="d-flex align-items-center justify-content-between gap-2">
+        <h2 class="title mb-0">
+          ملاحظات الطلب الحالية
+          <span *ngIf="notes.length > 0">({{ notes.length }})</span>
+        </h2>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- Notes list -->
+      <ng-container *ngIf="notes.length > 0">
+        <div class="card" *ngFor="let note of notes">
+
+          <div class="card-header with-separator">
+            <div class="d-flex align-items-center gap-2">
+              <i class="material-icons-outlined text-theme">assignment</i>
+              <span class="fw-bold">ملاحظة على الطلب</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="status-pill green" *ngIf="details?.remainingDays != null">
+                {{ details?.remainingDays }} عدد الأيام المتبقية للمعالجة
+              </span>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="text-muted">تاريخ تقديم الملاحظة</span>
+              <span class="fw-medium">{{ note.createdOn | date:'MM/dd/yyyy' }}</span>
+            </div>
+            <p class="mb-0 text-body">{{ note.notes }}</p>
+          </div>
+
+        </div>
+      </ng-container>
+
+      <p class="text-muted mt-3" *ngIf="notes.length === 0 && !isProcessingMode">لا يوجد ملاحظات على الطلب</p>
+
+      <!-- Processing form — Developer -->
+      <div class="card mt-3" *ngIf="isProcessingMode && details?.facilityTypeCategory === FacilityTypeCategoryEnum.Developer">
+        <div class="card-header with-separator">
+          <span class="fw-bold">معالجة الملاحظات</span>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="notesForm">
+            <div class="row row-gap-3">
+              <div class="col-12">
+                <label class="form-label">مبررات تغيير خطة المشروع</label>
+                <textarea class="form-control" rows="3" formControlName="justificationsAndReasons"></textarea>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">هل يوجد ظرف قهري ؟</label>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" formControlName="hasForceMajeure">
+                  <label class="form-check-label">{{ notesForm.get('hasForceMajeure')?.value ? 'نعم' : 'لا' }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+              <button type="button" class="btn btn-primary" (click)="saveProcessingNotes()" [disabled]="isSaving">
+                {{ isSaving ? 'جاري الحفظ...' : 'حفظ وإرسال' }}
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="cancelProcessingNotes()">إلغاء</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Processing form — Engineering -->
+      <div class="card mt-3" *ngIf="isProcessingMode && details?.facilityTypeCategory === FacilityTypeCategoryEnum.Engineering">
+        <div class="card-header with-separator">
+          <span class="fw-bold">معالجة ملاحظات الاستشاري</span>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="notesForm">
+            <div class="row row-gap-3">
+              <div class="col-12">
+                <label class="form-label">مبررات تغيير خطة المشروع من الناحية الفنية</label>
+                <textarea class="form-control" rows="4" formControlName="reasonsAndJustificationsForChangingProjectPlan"></textarea>
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+              <button type="button" class="btn btn-primary" (click)="saveProcessingNotes()" [disabled]="isSaving">
+                {{ isSaving ? 'جاري الحفظ...' : 'حفظ وإرسال' }}
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="cancelProcessingNotes()">إلغاء</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Processing form — Accountant -->
+      <div class="card mt-3" *ngIf="isProcessingMode && details?.facilityTypeCategory === FacilityTypeCategoryEnum.Accountant">
+        <div class="card-header with-separator">
+          <span class="fw-bold">معالجة ملاحظات المحاسب</span>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="notesForm">
+            <div class="row row-gap-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label">التكاليف الإجمالية للمشروع</label>
+                <input type="number" class="form-control" formControlName="totalProjectCosts">
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+              <button type="button" class="btn btn-primary" (click)="saveProcessingNotes()" [disabled]="isSaving">
+                {{ isSaving ? 'جاري الحفظ...' : 'حفظ وإرسال' }}
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="cancelProcessingNotes()">إلغاء</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

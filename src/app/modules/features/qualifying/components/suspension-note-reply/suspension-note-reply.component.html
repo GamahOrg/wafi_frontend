@@ -1,0 +1,29 @@
+<div class="suspension-reply-form">
+  <div class="mb-3">
+    <label class="form-label w-100">
+      <span class="text-danger">*</span>
+      الملاحظات
+    </label>
+    <textarea
+      class="form-control"
+      rows="5"
+      [(ngModel)]="notes"
+      [class.is-invalid]="showValidation && !notes?.trim()"
+      placeholder="أدخل ملاحظاتك">
+    </textarea>
+    <div class="invalid-feedback" *ngIf="showValidation && !notes?.trim()">
+      لا يمكن الإرسال لوجود بيانات إلزامية غير مكتملة أو غير صحيحة.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label w-100 fw-bold">
+      للمستندات الدالة على معالجة الملاحظات
+    </label>
+    <app-file-uploader
+      [data]="fileUploaderConfig"
+      (fileUploaded)="onFileUploaded($event)"
+      (fileRemoved)="onFileRemoved($event)">
+    </app-file-uploader>
+  </div>
+</div>

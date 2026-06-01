@@ -224,7 +224,7 @@ export class LincenseDetailsComponent {
     this._tabsService.updateActiveVerticalTabIndex(0);
   }
   private getSelectedRequestIdFromLocalStorage() {
-    
+
     this.selectedRequestID =
       this._sharedLicenseProjectService.getSelectedRequestIdFromLocalStorage();
     if (this.selectedRequestID) {
@@ -251,8 +251,8 @@ export class LincenseDetailsComponent {
       .subscribe(([requestDetails, requestProcessing]) => {
         let requestData = requestDetails as LicenseDetails;
         if (requestData && requestProcessing) {
-          requestData.workflowDetailRequestStatus = requestProcessing.workflowDetailRequestStatus; 
-          requestData.licenseRequestCustomerHeaderEventStatus = requestProcessing.licenseRequestCustomerHeaderEventStatus;    
+          requestData.workflowDetailRequestStatus = requestProcessing.workflowDetailRequestStatus;
+          requestData.licenseRequestCustomerHeaderEventStatus = requestProcessing.licenseRequestCustomerHeaderEventStatus;
           this._licenseDetailsService.selectRequest$.next(requestData);
         }
       })
@@ -265,7 +265,7 @@ export class LincenseDetailsComponent {
       this._licenseDetailsService.selectRequest$.subscribe((res: LicenseDetails | null) => {
         if (res && res.id) {
           this.selectedRequest = res;
-          this.licenseProjectId = res.licenseProjectId;          
+          this.licenseProjectId = res.licenseProjectId;
           this.GetLicenseRequestHeadersByLicenseProjectId()
           this.updateClientActionsButtons();
           // this.updateStudyDaysProgressSetting();
@@ -318,7 +318,7 @@ export class LincenseDetailsComponent {
   }
 
   private updateAllBehaviorSubject(requestDetails: LicenseDetails): void {
-    
+
     if (requestDetails.licenseProject.licenseProjectExternalAddresses) this.updateLicenseProjectExternalAddresses(requestDetails.licenseProject.licenseProjectExternalAddresses);
     if (requestDetails.licenseProject.licenseProjectAddresses) this.updateLicenseProjectAddresses(requestDetails.licenseProject.licenseProjectAddresses)
     if (requestDetails.licenseProject.licenseProjectCharteredAccountants) this.updateLicenseProjectCharteredAccountants(requestDetails.licenseProject.licenseProjectCharteredAccountants)
@@ -359,13 +359,11 @@ export class LincenseDetailsComponent {
     if (requestDetails.licenseProject.realEstateContribution) this.updateRealEstateContribution(requestDetails.licenseProject.realEstateContribution)
 
   }
-  updateRealEstateContribution(realEstateContribution:RealEstateContributionDto)
-  {
+  updateRealEstateContribution(realEstateContribution: RealEstateContributionDto) {
     this._licenseDetailsService.realEstateContribution$.next(realEstateContribution)
 
   }
-  updateMainContributionData(mainContributionData:FullContributionDataDto)
-  {
+  updateMainContributionData(mainContributionData: FullContributionDataDto) {
     this._licenseDetailsService.mainContributionData$.next(mainContributionData)
   }
   updateLicenseProjectPromissoryNotes(licenseProjectPromissoryNotes: LicenseProjectPromissoryNoteDto[]) {
@@ -568,7 +566,7 @@ export class LincenseDetailsComponent {
   public openCompileGuaranteeLetterActivationNotesDialog() {
     let Data = {
       id: ButtonType.allowCompileGuaranteeLetterActivation,
-      title: 'تسجيل نتيجة ملاحظات تٝعيل حساب الضمان',
+      title: 'تسجيل نتيجة ملاحظات تفعيل حساب الضمان',
       component: EditorRequestNotesComponent,
     } as PopupData;
     this.updateAndOpenData(Data);
@@ -763,13 +761,13 @@ export class LincenseDetailsComponent {
   /**
    * editRequest
  :  */
- public editRequest():void {
-  if(this.selectedRequest){
-    this._sharedLicenseProjectService.setLicenseAvailabilityToUpdateInLocalStorage(this.selectedRequest.licenseProject.availabilityToUpdate);
-    this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.selectedRequest.licenseProjectId);
-    this._router.navigate([this.requestDetailsRoute]);
+  public editRequest(): void {
+    if (this.selectedRequest) {
+      this._sharedLicenseProjectService.setLicenseAvailabilityToUpdateInLocalStorage(this.selectedRequest.licenseProject.availabilityToUpdate);
+      this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(this.selectedRequest.licenseProjectId);
+      this._router.navigate([this.requestDetailsRoute]);
+    }
   }
-}
   ngOnDestroy(): void {
     this.resetSelectRequest()
     this.resetDataVisibilityOfLicenseProject();

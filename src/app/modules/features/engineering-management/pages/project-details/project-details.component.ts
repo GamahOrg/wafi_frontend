@@ -98,6 +98,11 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    const storedTab = localStorage.getItem('projectDetailsActiveTab');
+    if (storedTab != null) {
+      this.tabContent.activeTabIndex = parseInt(storedTab, 10);
+      localStorage.removeItem('projectDetailsActiveTab');
+    }
     this.obseveCustomerData()
   }
 

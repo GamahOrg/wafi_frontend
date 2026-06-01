@@ -1,5 +1,8 @@
 <div class="tab-data-header">
   <h6 class="title">{{ pageTitle }}</h6>
+  <div class="upload-hints">
+    {{ hint }}
+  </div>
 
   <div class="opposite-title" *ngIf="canUpdate">
     <button class="btn btn-outline-primary" (click)="openDialog('')">
@@ -22,13 +25,20 @@
       </thead>
       <tbody>
         <tr *ngFor="let eng of models">
-          <td>{{eng.engineerName}}</td>
-          <td>{{eng.identityNumber}}</td>
-          <td>{{eng.membershipNumber}}</td>
-          <td>{{ eng.qualificationEngineerType === 1 ? 'مهندس' : 'موظف' }}</td>
+          <td>{{ eng.engineerName }}</td>
+          <td>{{ eng.identityNumber }}</td>
+          <td>{{ eng.membershipNumber }}</td>
+          <td>{{ eng.qualificationEngineerType === 1 ? "مهندس" : "موظف" }}</td>
           <td>
-            <div class="d-flex align-items-center justify-content-end column-gap-2">
-              <button type="button" class="btn-icon btn btn-danger" *ngIf="canUpdate" (click)="delete(eng.id)">
+            <div
+              class="d-flex align-items-center justify-content-end column-gap-2"
+            >
+              <button
+                type="button"
+                class="btn-icon btn btn-danger"
+                *ngIf="canUpdate"
+                (click)="delete(eng.id)"
+              >
                 <i class="hgi hgi-stroke hgi-delete-03"></i>
               </button>
             </div>
@@ -38,5 +48,10 @@
     </table>
   </div>
 
-  <app-no-data [title]="'لا توجد بيانات'" [showText]="false" [showCompleteBtn]="false" *ngIf="!models || models.length === 0"></app-no-data>
+  <app-no-data
+    [title]="'لا توجد بيانات'"
+    [showText]="false"
+    [showCompleteBtn]="false"
+    *ngIf="!models || models.length === 0"
+  ></app-no-data>
 </div>

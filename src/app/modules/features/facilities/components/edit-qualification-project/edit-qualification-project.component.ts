@@ -51,8 +51,8 @@ export class EditQualificationProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.createEditForm();
     this.initializeComponent();
+    this.createEditForm();
     this.observePopupEvents();
     this.observEditForm()
   }
@@ -160,12 +160,12 @@ export class EditQualificationProjectComponent implements OnInit, OnDestroy {
       executingContractor: [this.projectDto?.executingContractor],
       contractorClassification: [this.projectDto?.contractorClassification],
       projectLocation: [this.projectDto?.projectLocation, [Validators.required]],
-      unitsCount: [this.projectDto?.unitsCount, [Validators.required]],
+      unitsCount: [this.projectDto?.unitsCount, [Validators.required, Validators.min(10)]],
       projectArea: [this.projectDto?.projectArea, [Validators.required]],
       projectValue: [this.projectDto?.projectValue, [Validators.required]],
       startDate: [this.parseDate(this.projectDto?.startDate?.toString()), [Validators.required]],
       projectDuration: [this.projectDto?.projectDuration, [Validators.required]],
-     // achievementRate: [this.projectDto?.achievementRate, [Validators.required]],
+     achievementRate: [this.projectDto?.achievementRate, [Validators.required]],
       //marketingStatus: [this.projectDto?.marketingStatus, [Validators.required]],
      // implementationMethodology: [this.projectDto?.implementationMethodology, [Validators.required]],
     })
@@ -183,7 +183,7 @@ export class EditQualificationProjectComponent implements OnInit, OnDestroy {
   }
 
   save(): void {
-    if (this.editForm?.invalid || !this.projectDto?.projectScheduleFileId
+    if (this.editForm?.invalid || !this.projectDto?.projectScheduleFileId ||!this.newUploadedProjectContractFiles.length
       && (!this.projectDto)) {
       this.showValidation = true;
       this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');

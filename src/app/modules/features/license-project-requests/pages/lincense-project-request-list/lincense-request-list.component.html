@@ -1,18 +1,20 @@
 <div class="page">
   <div class="page-header mb-3">
-    <div class="row row-gap-3">
-      <div
-        class="col-12 col-lg-6 d-flex justify-content-between align-items-center"
-      >
-        <div class="page-title mb-0">
-          <h5 class="title">جميع الطلبات</h5>
-        </div>
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="page-title mb-0">
+        <h5 class="title">قائمة الطلبات</h5>
+      </div>
+      <div class="filter d-flex align-items-center gap-2">
+        <button class="btn btn-primary text-nowrap" (click)="navigateToCreateRequest()">
+          إنشاء طلب جديد
+        </button>
 
-        <!-- Button to open the dialog -->
-        <!-- <button class="opposite-title btn btn-outline-primary" (click)="openDialog()">
-          <span class="material-icons">add</span>
-          إضافة طلب
-        </button> -->
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="hgi hgi-stroke hgi-search-01"></i>
+          </span>
+          <input type="text" id="control-search" class="form-control" [(ngModel)]="searchText" (input)="onSearchChange()" placeholder="البحث باسم المشروع أو باسم الطلب" />
+        </div>
       </div>
     </div>
   </div>
@@ -23,50 +25,42 @@
         <thead>
           <tr>
             <th scope="col">رقم الطلب</th>
+            <th scope="col">اسم الطلب</th>
             <th scope="col">اسم المشروع</th>
-            <th scope="col">أسم المنشأة</th>
-            <th scope="col">
-              <div class="sortable">
-                تاريخ انشاء الطلب
-                <span class="icon material-icons">unfold_more</span>
-              </div>
-            </th>
-            <th scope="col">نوع الطلب</th>
+            <th scope="col">تاريخ تقديم الطلب</th>
             <th scope="col">حالة الطلب</th>
+            <th scope="col" class="w-0">الإجراءات</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let request of reqList.results"  (click)="redirectRequest(request.id,request.licenseProjectRequestTypeId,request.requestCode)">
+          <tr *ngFor="let request of reqList.results">
             <td>
-              <a             
-                class="text-dark"
-                style="cursor: pointer"
-              >
+              <a class="text-dark" style="cursor: pointer" (click)="
+                  redirectRequest(
+                    request.id,
+                    request.licenseProjectRequestTypeId,
+                    request.requestCode
+                  )
+                ">
                 {{ request.requestCode }}
               </a>
             </td>
+            <td>{{ request.licenseProjectRequestTypeName }}</td>
+            <td>{{ request.licenseProjectName }}</td>
             <td>
-              <div class="text-dark">
-                {{ request.licenseProjectName }}
-              </div>
+              <span dir="ltr">{{
+                request.createdOn | date: "dd-MM-yyyy"
+                }}</span>
             </td>
             <td>
-              <div class="text-dark">
-                {{ request.facility?.facilityName}}
-              </div>
+              <span class="status-pill" [ngClass]="getStatusPillClass(request.externalRequestStatusId)">
+                {{ request.externalRequestStatusName }}
+              </span>
             </td>
-            <td>
-              <span class="text-dark" dir="ltr">{{
-                request.createdOn | date : "dd MMMM yyyy"
-              }}</span>
-            </td>
-            <td>
-              <span class="text-dark">{{
-                request.licenseProjectRequestTypeName
-              }}</span>
-            </td>
-            <td>
-              {{ request.externalRequestStatusName }}
+            <td class="text-nowrap text-center">
+                <button type="button" class="btn btn-primary" *ngIf="request.externalRequestStatusId === LicenseProjectRequestStatusEnum.UnderCreation" (click)="navigateToCompleteChangeRequestByRequestType(request.id, request.licenseProjectRequestTypeId, false)">استكمال الطلب</button>
+
+                <button type="button" class="btn btn-outline-primary" *ngIf="request.externalRequestStatusId !== LicenseProjectRequestStatusEnum.UnderCreation" (click)="redirectRequest(request.id, request.licenseProjectRequestTypeId, request.requestCode)">عرض التفاصيل</button>
             </td>
           </tr>
         </tbody>
@@ -74,6 +68,12 @@
     </div>
     <div class="mt-auto">
       <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="reqList.totalCount === 0">
+    <div class="text-center py-5">
+      <p class="text-muted">لا توجد طلبات</p>
     </div>
   </ng-container>
 </div>
