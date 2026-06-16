@@ -18,6 +18,7 @@ import { RatingStatusDto, UserRatingUpdateDto } from 'src/app/shared/models/rati
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { RatingService } from 'src/app/shared/services/rating/rating.service';
 import { RatingComponent } from 'src/app/shared/components/rating/rating.component';
+import { Guid } from 'src/app/core/configurations/guid';
 
 @Component({
   selector: 'app-agreements-approval-list',
@@ -189,7 +190,7 @@ export class AgreementsApprovalListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._licenseRequestService
         .GetProjectAgreementsSummary(
-          this.userData?.facilities[0].id as string,
+           this.userData?.facilities[0]?.id ?? Guid.empty as string,
           this.paginationData.currentPage,
           this.paginationData.pageSize
         )

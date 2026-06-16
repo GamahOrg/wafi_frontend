@@ -302,6 +302,7 @@ export interface ChangeUnitsStatusDto {
 export interface LicenseProjectBuyerCancellationRequestFilterDto {
   searchText?: string;
   statusId?: CancelRequestStatusEnum;
+  facilityId?: string;
   pageNumber: number;
   pageSize: number;
 }

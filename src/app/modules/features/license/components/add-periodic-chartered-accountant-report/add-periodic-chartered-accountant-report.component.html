@@ -110,7 +110,7 @@
                 <td>{{exchangeDocument.approvalDate|date:'yyyy/MM/dd'}}</td>
                 <td>{{exchangeDocument.statment}}</td>
                 <td>{{exchangeDocument?.liceneProjectBeneficiaryType?.name}}</td>
-                <td>{{exchangeDocument.amount}}</td>
+                <td>{{exchangeDocument.amount | number}}</td>
                 <td>{{exchangeDocument?.mainItem?.name}}</td>
                 <td>{{exchangeDocument?.subItem?.name}}</td>
                 <td>{{exchangeDocument.exchangeDate|date:'yyyy/MM/dd'}}</td>
@@ -189,7 +189,7 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">سعر الارض</div>
-              <div *ngIf="periodicCharteredAccountantReport.landPrice">{{periodicCharteredAccountantReport.landPrice}}
+              <div *ngIf="periodicCharteredAccountantReport.landPrice">{{periodicCharteredAccountantReport.landPrice | number}}
               </div>
             </div>
           </div>
@@ -197,7 +197,7 @@
             <div class="form-group mb-4">
               <div class="key">إجمالي قيمة وحدات المشروع</div>
               <div *ngIf="periodicCharteredAccountantReport.totalUnitsAmount">
-                {{periodicCharteredAccountantReport.totalUnitsAmount}}</div>
+                {{periodicCharteredAccountantReport.totalUnitsAmount | number}}</div>
             </div>
           </div>
 
@@ -205,14 +205,14 @@
             <div class="form-group mb-4">
               <div class="key">اجمالي التكلفة الانشائية المتوقعة</div>
               <div *ngIf="periodicCharteredAccountantReport.customer?.email">
-                {{periodicCharteredAccountantReport?.expectedConstructionCost}}</div>
+                {{periodicCharteredAccountantReport?.expectedConstructionCost | number}}</div>
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <div class="key">اجمالي التكلفة الانشائية الفعلية</div>
               <div *ngIf="periodicCharteredAccountantReport.customer?.email">
-                {{periodicCharteredAccountantReport?.actualConstructionCost}}</div>
+                {{periodicCharteredAccountantReport?.actualConstructionCost | number}}</div>
             </div>
           </div>
 
@@ -233,8 +233,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)</label>
-              <input type="number" id="control-totalCost" class="form-control" formControlName="totalCost"
-                >
+              <input type="text" id="control-totalCost" class="form-control" formControlName="totalCost"
+                (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block" *ngIf="controls.totalCost?.hasError('required') && showValidation">
                 حقل مطلوب
               </div>
@@ -244,8 +244,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">هامش الربح المتوقع</label>
-              <input type="number" id="control-expectedProfile" class="form-control" formControlName="expectedProfile"
-                >
+              <input type="text" id="control-expectedProfile" class="form-control" formControlName="expectedProfile"
+                (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.expectedProfile?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -546,8 +546,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تكاليف انشائية</label>
-              <input type="number" id="control-constructionCosts" class="form-control"
-                formControlName="constructionCosts" >
+              <input type="text" id="control-constructionCosts" class="form-control"
+                formControlName="constructionCosts" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.constructionCosts?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -558,8 +558,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">مصاريف ادارية وتسويقية</label>
-              <input type="number" id="control-administrativeMarketingExpenses" class="form-control"
-                formControlName="administrativeMarketingExpenses" >
+              <input type="text" id="control-administrativeMarketingExpenses" class="form-control"
+                formControlName="administrativeMarketingExpenses" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.administrativeMarketingExpenses?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -570,8 +570,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">ايداعات عملاء مستردة</label>
-              <input type="number" id="control-customerDepositRefunds" class="form-control"
-                formControlName="customerDepositRefunds" >
+              <input type="text" id="control-customerDepositRefunds" class="form-control"
+                formControlName="customerDepositRefunds" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.customerDepositRefunds?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -582,8 +582,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">عمولات بنكية</label>
-              <input type="number" id="control-bankCommissions" class="form-control" formControlName="bankCommissions"
-                >
+              <input type="text" id="control-bankCommissions" class="form-control" formControlName="bankCommissions"
+                (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.bankCommissions?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -594,8 +594,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">أخرى مدينة</label>
-              <input type="number" id="control-otherDebts" class="form-control" formControlName="otherDebts"
-                >
+              <input type="text" id="control-otherDebts" class="form-control" formControlName="otherDebts"
+                (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block" *ngIf="controls.otherDebts?.hasError('required') && showValidation">
                 حقل مطلوب
               </div>
@@ -605,8 +605,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">إجمالي العمليات المدينة</label>
-              <input type="number" id="control-totalDebtOperations" class="form-control"
-                formControlName="totalDebtOperations" >
+              <input type="text" id="control-totalDebtOperations" class="form-control"
+                formControlName="totalDebtOperations" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.totalDebtOperations?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -616,8 +616,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تحصيل من العملاء</label>
-              <input type="number" id="control-collectionsFromCustomers" class="form-control"
-                formControlName="collectionsFromCustomers" >
+              <input type="text" id="control-collectionsFromCustomers" class="form-control"
+                formControlName="collectionsFromCustomers" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.collectionsFromCustomers?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -628,8 +628,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تمويل بنكى</label>
-              <input type="number" id="control-bankFinancing" class="form-control" formControlName="bankFinancing"
-                >
+              <input type="text" id="control-bankFinancing" class="form-control" formControlName="bankFinancing"
+                (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.bankFinancing?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -640,8 +640,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تمويل ذاتى</label>
-              <input type="number" id="control-selfFinancing" class="form-control" formControlName="selfFinancing"
-                >
+              <input type="text" id="control-selfFinancing" class="form-control" formControlName="selfFinancing"
+                (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.selfFinancing?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -652,8 +652,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">تمويل الوزارة</label>
-              <input type="number" id="control-ministryFinancing" class="form-control"
-                formControlName="ministryFinancing" >
+              <input type="text" id="control-ministryFinancing" class="form-control"
+                formControlName="ministryFinancing" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.ministryFinancing?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -664,8 +664,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">أخرى دائنة</label>
-              <input type="number" id="control-otherCredits" class="form-control" formControlName="otherCredits"
-                >
+              <input type="text" id="control-otherCredits" class="form-control" formControlName="otherCredits"
+                (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.otherCredits?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -676,8 +676,8 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-4">
               <label class="form-label">إجمالي العمليات الدائنة</label>
-              <input type="number" id="control-totalCreditOperations" class="form-control"
-                formControlName="totalCreditOperations" >
+              <input type="text" id="control-totalCreditOperations" class="form-control"
+                formControlName="totalCreditOperations" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="controls.totalCreditOperations?.hasError('required') && showValidation">
                 حقل مطلوب
@@ -782,12 +782,12 @@
           <div class="col-12 col-lg-6">
             <div class="key">إجمالي العمليات المدينة</div>
             <div *ngIf="periodicCharteredAccountantReport.totalDebtOperations">
-              {{periodicCharteredAccountantReport.totalDebtOperations}}</div>
+              {{periodicCharteredAccountantReport.totalDebtOperations | number}}</div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="key">إجمالي العمليات الدائنة</div>
             <div *ngIf="periodicCharteredAccountantReport.totalCreditOperations">
-              {{periodicCharteredAccountantReport.totalCreditOperations}}</div>
+              {{periodicCharteredAccountantReport.totalCreditOperations | number}}</div>
           </div>
         </div>
         <div class="tab-data-section" *ngIf="periodicCharteredAccountantReport">
@@ -795,8 +795,8 @@
           <div class="col-12 col-lg-6" *ngIf="!periodicCharteredAccountantReport.periodOpeningBalance">
             <div class="form-group mb-4">
               <label class="form-label">رصيد افتتاح الفترة</label>
-              <input type="number" id="control-periodOpeningBalance" class="form-control"
-                formControlName="periodOpeningBalance" >
+              <input type="text" id="control-periodOpeningBalance" class="form-control"
+                formControlName="periodOpeningBalance" (input)="formatNumberWithCommas($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="!controls.periodOpeningBalance && !periodicCharteredAccountantReport.periodOpeningBalance && showValidation">
                 حقل مطلوب
@@ -807,8 +807,9 @@
           <div class="col-12 col-lg-6" *ngIf="!periodicCharteredAccountantReport.periodOpeningBalance">
             <div class="form-group mb-4">
               <label class="form-label">رصيد الاغلاق بناء على كشف الحساب البنكي</label>
-              <input type="number" id="control-closingBalanceBasedOnBankStatement" class="form-control" (input)="calculateClosingBalance()"
-                formControlName="closingBalanceBasedOnBankStatement" >
+              <input type="text" id="control-closingBalanceBasedOnBankStatement" class="form-control"
+                formControlName="closingBalanceBasedOnBankStatement"
+                (input)="onClosingBalanceInput($event)" (focus)="onNumberInputFocus($event)" (blur)="onNumberInputBlur($event)">
               <div class="invalid-feedback d-block"
                 *ngIf="!controls.closingBalanceBasedOnBankStatement && !periodicCharteredAccountantReport.periodOpeningBalance && showValidation">
                 حقل مطلوب
@@ -835,7 +836,7 @@
             <div class="form-group mb-4">
               <div class="key">فروقات رصيد الاغلاق</div>
               <div>
-                {{calculateClosingBalanceResult}}
+                {{calculateClosingBalanceResult | number}}
               </div>
             </div>
           </div>
@@ -874,17 +875,17 @@
                 <td>{{analysis.unitsType}}</td>
                 <td>{{analysis.totalNumberLicenseProjectUnits}}</td>
                 <td>{{analysis.totalPercentageLicenseProjectUnits}}</td>
-                <td>{{analysis.totalValueLicenseProjectUnits}}</td>
+                <td>{{analysis.totalValueLicenseProjectUnits | number}}</td>
                 <td>{{analysis.totalNumberLicenseProjectUnitsSold}}</td>
                 <td>{{analysis.totalPercentageLicenseProjectUnitsSold}}</td>
-                <td>{{analysis.totalValueLicenseProjectUnitsSold}}</td>
+                <td>{{analysis.totalValueLicenseProjectUnitsSold | number}}</td>
                 <td>{{analysis.totalNumberLicenseProjectUnitsSoldFromBeginning}}</td>
-                <td>{{analysis.totalValueLicenseProjectUnitsFromBeginning}}</td>
+                <td>{{analysis.totalValueLicenseProjectUnitsFromBeginning | number}}</td>
                 <td>{{analysis.totalPercentageLicenseProjectUnitsSoldFromBeginning}}</td>
                 <td>{{analysis.totalRemainingUnits}}</td>
-                <td>{{analysis.totalValueRemainingUnits}}</td>
+                <td>{{analysis.totalValueRemainingUnits | number}}</td>
                 <td>{{analysis.totalPercentageRemainingUnits}}</td>
-                <td>{{analysis.totalAmountForUnitsSold}}</td>
+                <td>{{analysis.totalAmountForUnitsSold | number}}</td>
                 <td>{{analysis.percentageTotalValueOfUnitsSold}}</td>
               </tr>
             </tbody>
@@ -912,11 +913,11 @@
               <tr *ngFor="let payment of periodicCharteredAccountantReport.paymentsCollectedForCancelledUnitsSolds">
                 <td>{{payment.buyerName}}</td>
                 <td>{{payment.unitCode}}</td>
-                <td>{{payment.price}}</td>
+                <td>{{payment.price | number}}</td>
                 <td>{{payment.cancelledDate|date:'yyyy/MM/dd'}}</td>
-                <td>{{payment.paidDuringPeriod}}</td>
-                <td>{{payment.totalPayments}}</td>
-                <td>{{payment.remainingUnitPrice}}</td>
+                <td>{{payment.paidDuringPeriod | number}}</td>
+                <td>{{payment.totalPayments | number}}</td>
+                <td>{{payment.remainingUnitPrice | number}}</td>
 
 
               </tr>
@@ -1122,7 +1123,7 @@
             <div class="key">مبلغ الحافز</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.incentiveAmount">
-              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.incentiveAmount}}
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.incentiveAmount | number}}
             </div>
           </div>
 
@@ -1142,7 +1143,7 @@
             <div class="key">قيمة استرداد الدفعة الأولى</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.firstPaymentRefundValue">
-              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.firstPaymentRefundValue}}
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.firstPaymentRefundValue | number}}
             </div>
           </div>
 
@@ -1162,7 +1163,7 @@
             <div class="key">قيمة استرداد الدفعة الثانية</div>
             <div
               *ngIf="periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.secondPaymentRefundValue">
-              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.secondPaymentRefundValue}}
+              {{periodicCharteredAccountantReport.periodicCharteredAccountantReportFinancialConstraint.secondPaymentRefundValue | number}}
             </div>
           </div>
         </div>

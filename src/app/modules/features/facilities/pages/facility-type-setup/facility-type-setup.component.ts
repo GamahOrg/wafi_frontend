@@ -27,6 +27,7 @@ export class FacilityTypeSetupComponent implements OnInit, OnDestroy {
   facilityBusinessTypes: FacilityBusinessTypeDto[] = [];
   facilityTypeCategories: FacilityTypeCategoryDto[] = [];
   selectedCategory: FacilityTypeCategoryDto | null = null;
+  showIncompatibleAlert: boolean = false;
   showAllBusinessTypes: boolean = false;
   isLoading: boolean = false;
 
@@ -51,7 +52,7 @@ export class FacilityTypeSetupComponent implements OnInit, OnDestroy {
     private _toastrNotificationService: ToastrNotificatioService,
     private _router: Router,
     private sanitizer: DomSanitizer,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.observeCustomerData();
@@ -96,9 +97,10 @@ export class FacilityTypeSetupComponent implements OnInit, OnDestroy {
 
   selectCategory(category: FacilityTypeCategoryDto): void {
     if (!category.isCompatible) {
-      this._toastrNotificationService.showError('غير متوافق مع أنشطة المنشأة');
+      this.showIncompatibleAlert = true;
       return;
     }
+    this.showIncompatibleAlert = false;
     this.selectedCategory = category;
   }
 

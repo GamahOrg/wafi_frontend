@@ -64,8 +64,8 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
     private popupService: PopupService,
     private requestNotesService: RequestNotesService,
     private _ratingService: RatingService,
-    private _toastrNotificatioService: ToastrNotificatioService, 
-    
+    private _toastrNotificatioService: ToastrNotificatioService,
+
   ) { }
 
   ngOnInit(): void {
@@ -74,118 +74,117 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
     this.observePopupConfirmAction();
   }
 
-      private checkRating(): Observable<any> {
-        const isOldContract = this.contractDetails?.isOldContract === true;
-        this.contractRatingType = isOldContract
-          ? RatingTypeEnum.BuyerContractDocumentation
-          : RatingTypeEnum.BuyerUnifiedContractDocumentation;
+  private checkRating(): Observable<any> {
+    const isOldContract = this.contractDetails?.isOldContract === true;
+    this.contractRatingType = isOldContract
+      ? RatingTypeEnum.BuyerContractDocumentation
+      : RatingTypeEnum.BuyerUnifiedContractDocumentation;
 
-        return this._ratingService.getBuyerContractDocumentationRatingStatus(isOldContract).pipe(
-          tap((licenseRes) => {
-            if (licenseRes)
-              this.contractDocumentationRatingStatus = licenseRes as RatingStatusDto;
+    return this._ratingService.getBuyerContractDocumentationRatingStatus(isOldContract).pipe(
+      tap((licenseRes) => {
+        if (licenseRes)
+          this.contractDocumentationRatingStatus = licenseRes as RatingStatusDto;
 
-            if (this.contractDocumentationRatingStatus?.shouldShowRating) {
-              this.openRatingModal();
-            }
-          }),
-        );
-      }
-  openRatingModal(index?: number): void {
-      let Data = {
-        id: 'BuyerContractDocumentation' + index,
-        minWidth: '30vw',
-        iconClass: 'hgi hgi-stroke hgi-message-question',
-        title: `قيّم تجربتك معنا`,
-        component: RatingComponent,
-        data: {
-          ratingType: this.contractRatingType,
-        },
-        buttons: [
-          {
-            icon: '',
-            title: 'تخطي',
-            actionType: ButtonType.cancel,
-            isVisable: true,
-            isDisables: false,
-          },
-          {
-            icon: '',
-            title: 'ارسل التقييم',
-            actionType: ButtonType.confirm,
-            isVisable: true,
-            isDisables: false,
-          },
-        ],
-      } as PopupData;
-      this.popupService.updatePopupData(Data);
-    }
-  
-    observePopupConfirmAction(): void {
-      this.subscriptions.push(
-        this.popupService.cancelAction.subscribe((res) => {
-          const ratingData = this._ratingService.currentRatingData.value;
-  
-          if (!ratingData) return;
-          if (res && ratingData.id.includes('BuyerContractDocumentation'))
-            this.dismissRating(ratingData);
-        }),
-      );
-      this.subscriptions.push(
-        this.popupService.confirmAction.subscribe(() => {
-          debugger;
-          const ratingData = this._ratingService.currentRatingData.value;
-  
-          if (!ratingData) return;
-          if (
-            ratingData &&
-            ratingData.id.includes('BuyerContractDocumentation')
-          ) {
-            this.submitRating(ratingData);
-          }
-        }),
-      );
-    }
-  
-    private dismissRating(PopupData: any) {
-      this._ratingService
-        .dismissRating({
-          ratingType: this.contractRatingType,
-          licenseProjectId: this.contractDocumentationRatingStatus.licenseProjectId,
-          triggerType: this.contractDocumentationRatingStatus.triggerType,
-        })
-        .subscribe((res) => {
-          this._toastrNotificatioService.showInfo(
-            res.message || 'تم تخطي التقييم ',
-          );
-          this.popupService.dismissDialog();
-  
-          
-        });
-        this._ratingService.currentRatingData.next(null);
-    }
-  
-    submitRating(PopupData: UserRatingUpdateDto) {
-        this._ratingService
-          .createRating({
-            ratingType: this.contractRatingType,
-            ratingValue: PopupData.ratingValue,
-            notes: PopupData.notes,
-            browserType: PopupData.browserType,
-            licenseProjectId: this.contractDocumentationRatingStatus.licenseProjectId || undefined,
-            triggerType: this.contractDocumentationRatingStatus.triggerType,
-          })
-          .subscribe((res) => {
-            this._toastrNotificatioService.showSuccess(
-              res.message || 'تم إرسال التقييم بنجاح',
-            );
-            this.popupService.dismissDialog();
-    
-          });
-  
-        this._ratingService.currentRatingData.next(null);
+        if (this.contractDocumentationRatingStatus?.shouldShowRating) {
+          this.openRatingModal();
         }
-  
+      }),
+    );
+  }
+  openRatingModal(index?: number): void {
+    let Data = {
+      id: 'BuyerContractDocumentation' + index,
+      minWidth: '30vw',
+      iconClass: 'hgi hgi-stroke hgi-message-question',
+      title: `قيّم تجربتك معنا`,
+      component: RatingComponent,
+      data: {
+        ratingType: this.contractRatingType,
+      },
+      buttons: [
+        {
+          icon: '',
+          title: 'تخطي',
+          actionType: ButtonType.cancel,
+          isVisable: true,
+          isDisables: false,
+        },
+        {
+          icon: '',
+          title: 'ارسل التقييم',
+          actionType: ButtonType.confirm,
+          isVisable: true,
+          isDisables: false,
+        },
+      ],
+    } as PopupData;
+    this.popupService.updatePopupData(Data);
+  }
+
+  observePopupConfirmAction(): void {
+    this.subscriptions.push(
+      this.popupService.cancelAction.subscribe((res) => {
+        const ratingData = this._ratingService.currentRatingData.value;
+
+        if (!ratingData) return;
+        if (res && ratingData.id.includes('BuyerContractDocumentation'))
+          this.dismissRating(ratingData);
+      }),
+    );
+    this.subscriptions.push(
+      this.popupService.confirmAction.subscribe(() => {
+        const ratingData = this._ratingService.currentRatingData.value;
+
+        if (!ratingData) return;
+        if (
+          ratingData &&
+          ratingData.id.includes('BuyerContractDocumentation')
+        ) {
+          this.submitRating(ratingData);
+        }
+      }),
+    );
+  }
+
+  private dismissRating(PopupData: any) {
+    this._ratingService
+      .dismissRating({
+        ratingType: this.contractRatingType,
+        licenseProjectId: this.contractDocumentationRatingStatus.licenseProjectId,
+        triggerType: this.contractDocumentationRatingStatus.triggerType,
+      })
+      .subscribe((res) => {
+        this._toastrNotificatioService.showInfo(
+          res.message || 'تم تخطي التقييم ',
+        );
+        this.popupService.dismissDialog();
+
+
+      });
+    this._ratingService.currentRatingData.next(null);
+  }
+
+  submitRating(PopupData: UserRatingUpdateDto) {
+    this._ratingService
+      .createRating({
+        ratingType: this.contractRatingType,
+        ratingValue: PopupData.ratingValue,
+        notes: PopupData.notes,
+        browserType: PopupData.browserType,
+        licenseProjectId: this.contractDocumentationRatingStatus.licenseProjectId || undefined,
+        triggerType: this.contractDocumentationRatingStatus.triggerType,
+      })
+      .subscribe((res) => {
+        this._toastrNotificatioService.showSuccess(
+          res.message || 'تم إرسال التقييم بنجاح',
+        );
+        this.popupService.dismissDialog();
+
+      });
+
+    this._ratingService.currentRatingData.next(null);
+  }
+
 
 
 
@@ -196,7 +195,7 @@ export class BuyerContractViewDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-    getCumulativeRentPercentage(index: number): number {
+  getCumulativeRentPercentage(index: number): number {
     let sum = 0;
     for (let i = 0; i <= index; i++) {
       sum += this.contractDetails?.licenseProjectBuyerBusinessPayment?.paymentInstallments[i]?.rentPercentage || 0;

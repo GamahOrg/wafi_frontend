@@ -22,6 +22,7 @@ export interface qualificationRequestHeaderEventStatus {
   allowFeedBack: boolean;
   allowReject: boolean;
   allowApprove: boolean;
+  allowToCompile: boolean;
 
   allowAssignPeriod: number
   allowFeedBackPeriod: boolean,
