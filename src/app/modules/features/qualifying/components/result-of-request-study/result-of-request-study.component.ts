@@ -11,6 +11,7 @@ import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { PopupData } from 'src/app/shared/models/popup.model';
 import { SuspensionNoteReplyComponent } from '../suspension-note-reply/suspension-note-reply.component';
 import { internalStatusId } from '../../dataModels/enum/request-status';
+import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 
 @Component({
   selector: 'app-result-of-request-study',
@@ -116,6 +117,22 @@ export class ResultOfRequestStudyComponent {
     const data: PopupData = {
       id: 'suspensionNoteReply',
       title: 'الرد على الملاحظات',
+      buttons: [
+        {
+          icon: '',
+          title: 'إلغاء',
+          actionType: ButtonType.cancel,
+          isVisable: true,
+          isDisables: false,
+        },
+        {
+          icon: '',
+          title: 'ارسال',
+          actionType: ButtonType.confirm,
+          isVisable: true,
+          isDisables: false,
+        },
+      ],
       component: SuspensionNoteReplyComponent,
     };
     this._popupService.updatePopupData(data);

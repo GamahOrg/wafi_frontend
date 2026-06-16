@@ -9,7 +9,7 @@
       rows="5"
       [(ngModel)]="notes"
       [class.is-invalid]="showValidation && !notes?.trim()"
-      placeholder="أدخل ملاحظاتك">
+      placeholder="">
     </textarea>
     <div class="invalid-feedback" *ngIf="showValidation && !notes?.trim()">
       لا يمكن الإرسال لوجود بيانات إلزامية غير مكتملة أو غير صحيحة.

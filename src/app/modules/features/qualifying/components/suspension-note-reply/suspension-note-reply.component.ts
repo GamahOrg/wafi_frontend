@@ -24,13 +24,14 @@ export class SuspensionNoteReplyComponent implements OnInit, OnDestroy {
     size: 5120,
     allowedExtensions: ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'],
     allowedExtensionsText: 'pdf, doc, docx, jpg, jpeg أو png',
+    buttonText: 'تصفح الملفات',
   });
 
   constructor(
     private _requestService: RequestService,
     private _popupService: PopupService,
     private _toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.observeConfirmAction();

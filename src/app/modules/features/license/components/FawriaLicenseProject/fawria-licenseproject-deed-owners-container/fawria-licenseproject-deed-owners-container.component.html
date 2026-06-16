@@ -34,12 +34,15 @@
                 <!-- <img *ngIf="deebOwner?.isOwnerByDeveloper" src="assets/images/general/developer-tag.svg" alt="المطور العقاري" /> -->
               </td>
               <td>{{ deebOwner?.idNumber }}</td>
-              <td>{{ deebOwner?.owningArea }}م2</td>
+              <!--<td>{{ deebOwner?.owningArea }}م2</td>-->
+              <td>{{ deebOwner?.owningArea }} م<sup>2</sup></td>
               <td>
                 <span class="d-inline-flex align-items-center gap-1">
-                  <span class="price-text">{{
+                  <span class="price-text">
+                    {{
                     deebOwner?.owningAmount | number: "1.0-0"
-                    }}</span>
+                    }}
+                  </span>
                   <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon" />
                 </span>
               </td>
@@ -55,17 +58,17 @@
                     أتفاقية المالك
                   </a>
                   <!-- <button type="button" class="btn-icon btn btn-danger" (click)="(false)">
-                    <i class="hgi hgi-stroke hgi-delete-03"></i>
-                  </button> -->
+        <i class="hgi hgi-stroke hgi-delete-03"></i>
+      </button> -->
                 </div>
               </td>
               <!-- <td>
-                <div class="table-actions">
-                  <button type="button" class="btn btn-outline-danger" (click)="showDeleteConfirmation(deebOwner.id, parentIndex)">
-                    حذف
-                  </button>
-                </div>
-              </td> -->
+    <div class="table-actions">
+      <button type="button" class="btn btn-outline-danger" (click)="showDeleteConfirmation(deebOwner.id, parentIndex)">
+        حذف
+      </button>
+    </div>
+  </td> -->
             </tr>
           </ng-container>
         </tbody>

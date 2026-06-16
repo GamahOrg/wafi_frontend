@@ -293,6 +293,22 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
     const data: PopupData = {
       id: 'suspensionNoteReply',
       title: 'الرد على الملاحظات',
+      buttons: [
+        {
+          icon: '',
+          title: 'إلغاء',
+          actionType: ButtonType.cancel,
+          isVisable: true,
+          isDisables: false,
+        },
+        {
+          icon: '',
+          title: 'ارسال',
+          actionType: ButtonType.confirm,
+          isVisable: true,
+          isDisables: false,
+        },
+      ],
       component: SuspensionNoteReplyComponent,
     };
     this._popupService.updatePopupData(data);
