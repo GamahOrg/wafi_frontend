@@ -433,15 +433,19 @@ export class FawriaLicenseprojectDeedsCreateComponent
     const mortgagees =
       this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
         ?.deedMortgageeList || [];
+    const isRealEstateMortgaged =
+      this.fawriaLicenseDeedAndConstructionLicenseResponse?.deedData
+        ?.isRealEstateMortgaged;
 
     for (let i = 0; i < mortgageesCount; i++) {
       const mortgagee = mortgagees[i];
-      // File is required for each mortgagee
+      // File is required only when the property is actually mortgaged (isRealEstateMortgaged = true)
       // Initialize with existing file ID if available
       this.mortgageeFiles.push(
-        this.fb.control(mortgagee?.mortgageeFileId || '', [
-          Validators.required,
-        ]),
+        this.fb.control(
+          mortgagee?.mortgageeFileId || '',
+          isRealEstateMortgaged ? [Validators.required] : [],
+        ),
       );
 
       // Initialize file info (check if mortgagee already has a file from response)
@@ -1190,7 +1194,10 @@ export class FawriaLicenseprojectDeedsCreateComponent
       });
     }
 
+    
+    
     if (this.deedForm.invalid) {
+      console.log(this.deedForm);
       // Log which owner rows have errors for debugging
       this.logFormArrayErrors();
       console.error('Form is invalid. Please check all required fields.');
