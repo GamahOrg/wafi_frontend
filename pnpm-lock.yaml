@@ -114,6 +114,9 @@ importers:
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
+      '@types/google.maps':
+        specifier: ^3.65.2
+        version: 3.65.2
       '@types/jasmine':
         specifier: ~4.3.0
         version: 4.3.1
@@ -1387,8 +1390,8 @@ packages:
   '@types/file-saver@2.0.7':
     resolution: {integrity: sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A==}
 
-  '@types/google.maps@3.58.1':
-    resolution: {integrity: sha512-X9QTSvGJ0nCfMzYOnaVs/k6/4L+7F5uCS+4iUmkLEls6J9S/Phv+m/i3mDeyc49ZBgwab3EFO1HEoBY7k98EGQ==}
+  '@types/google.maps@3.65.2':
+    resolution: {integrity: sha512-e52bmOhGCQSNabFpL48iQlwJybq6rfns8NUVJ20MR7CdPlHQ2RmSCnPbJfrUYJfogrE4OiHQTZ4LXpop+eer1w==}
 
   '@types/http-proxy@1.17.9':
     resolution: {integrity: sha512-QsbSjA/fSk7xB+UXlCT3wHBy5ai9wOcNDWwZAtud+jXhwOM3l+EYZh8Lng4+/6n8uar0J7xILzqftJdJ/Wdfkw==}
@@ -4197,7 +4200,7 @@ snapshots:
     dependencies:
       '@angular/common': 15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0))(rxjs@7.8.0)
       '@angular/core': 15.1.5(rxjs@7.8.0)(zone.js@0.12.0)
-      '@types/google.maps': 3.58.1
+      '@types/google.maps': 3.65.2
       rxjs: 7.8.0
       tslib: 2.5.0
 
@@ -5912,7 +5915,7 @@ snapshots:
 
   '@types/file-saver@2.0.7': {}
 
-  '@types/google.maps@3.58.1': {}
+  '@types/google.maps@3.65.2': {}
 
   '@types/http-proxy@1.17.9':
     dependencies:
