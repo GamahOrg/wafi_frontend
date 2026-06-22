@@ -28,7 +28,7 @@ import { ProjectLandDeedDto } from "../dataModels/project-land-deed.dto";
 
 export interface LicenseProject {
 
-id:string;
+  id: string;
   //دراسة الجدوى
   licenseProjectFeasibilityStudies: LicenseProjectFeasibilityStudyFullDto[];
   licenseProjectCharteredAccountants: LicenseProjectCharteredAccountantFullDto[]
@@ -40,13 +40,13 @@ id:string;
   licenseProjectServices: any
   licenseProjectSubDevelopers: LicenseProjectSubDeveloperDto[]
   sysLicenseBeneficiary: SysLicenseBeneficiaryContractFormListDto;
-  licenseProjectBeneficiaryContractFormAdditionalTerms:BeneficiaryContractFormAdditionalTermsDto[];
+  licenseProjectBeneficiaryContractFormAdditionalTerms: BeneficiaryContractFormAdditionalTermsDto[];
   licenseProjectAddresses: licenseProjectAddresses[],
   licenseProjectExternalAddresses: LicenseProjectExternalAddressDto[],
   licenseProjectDeeds: ProjectLandDeedDto[],
   licenseProjectZones: licenseProjectZones[],
   licenseProjectConstructionLicenses: licenseProjectConstructionLicenses[],
-  licenseProjectDelegators:LicenseProjectDelegatorsDto[],
+  licenseProjectDelegators: LicenseProjectDelegatorsDto[],
   quantitiesTableAcknowledgment: boolean,
   availabilityToUpdate: boolean
   projectAccountKeeper: AccountKeeperDto;
@@ -60,18 +60,18 @@ id:string;
   licenseProjectRelativeWeights: LicenseProjectRelativeWeightDto[];
   financialGuaranteeOfProjectOwnershipFile: SysFileManagerCreateUpdateDto;
   licenseProjectZoneCaculations: licenseProjectZoneCaculations
-  licenseProjectMainRealStateDevelopers:LicenseProjectMainRealStateDeveloperDto[];
-  licenseProjectExhibitions:LicenseProjectExhibitionDto[];
-  licenseProjectVisitorEngineeringConsultants :VisitorEngineeringConsultantDto[];
-  licenseProjectDevelopers:LicenseProjectDeveloperDto[];
-  LicenseProjectRequestAttachments:LicenseProjectRequestAttachmentDto[];
+  licenseProjectMainRealStateDevelopers: LicenseProjectMainRealStateDeveloperDto[];
+  licenseProjectExhibitions: LicenseProjectExhibitionDto[];
+  licenseProjectVisitorEngineeringConsultants: VisitorEngineeringConsultantDto[];
+  licenseProjectDevelopers: LicenseProjectDeveloperDto[];
+  LicenseProjectRequestAttachments: LicenseProjectRequestAttachmentDto[];
   licenseProjectSubUnits: LicenseProjectDetachedUnitRequestDetails[]
-  licenseProjectFinancialStatements :LicenseProjectFinancialStatementDto[];
-  licenseProjectPromissoryNotes:LicenseProjectPromissoryNoteDto[];
+  licenseProjectFinancialStatements: LicenseProjectFinancialStatementDto[];
+  licenseProjectPromissoryNotes: LicenseProjectPromissoryNoteDto[];
   //بيانات عقد المستفيد الخاص بالمساهامه عقاريه
-  realEstateContribution:RealEstateContributionDto;
-   //بيانات المساهمه عقاريه
-   mainContributionData: FullContributionDataDto
+  realEstateContribution: RealEstateContributionDto;
+  //بيانات المساهمه عقاريه
+  mainContributionData: FullContributionDataDto
 
 }
 export interface SysBank {
@@ -131,12 +131,12 @@ export interface AccountKeeperDto {
   accountKeeperExtentionNumber: string
   accountKeeperAgreementFileId: string
   accountKeeperJobTitle: string
-  accountKeeperFax:string
+  accountKeeperFax: string
   accountKeeperAgreementFile: SysFileManagerCreateUpdateDto
   sysBank: SysBank
 }
 export interface ProjectRealStateDeveloperDto {
-  //المدير التنٝيذي (اجباري)
+  //المدير التنفيذي (اجباري)
   executiveDirectorName: string
   executiveDirectorEmail: string
   executiveDirectorMobile: string
@@ -145,7 +145,7 @@ export interface ProjectRealStateDeveloperDto {
   contactOfficerEmail: string
   contactOfficerMobile: string
   // المفوض
-    delegatorCustomer ?:CustomerShortDto
-    paymentReceiptFile:SysFileManagerCreateUpdateDto;
+  delegatorCustomer?: CustomerShortDto
+  paymentReceiptFile: SysFileManagerCreateUpdateDto;
 
 }

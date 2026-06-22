@@ -523,7 +523,6 @@ export class RequestDataComponent implements OnInit, OnDestroy {
     this.accordionContent.accordionComponentList[10].isVisible = true;
   }
   ngOnDestroy(): void {
-    this._requestService.seclectRequest$.next(null);
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 }

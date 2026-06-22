@@ -117,6 +117,18 @@
         </div>
       </div>
       <div class="col-12 col-lg-6">
+        <label for="" class="form-label"><span class="required-star">*</span> رقم الهاتف </label>
+        <input
+          type="text"
+          class="form-control"
+          id="control-mobile"
+          formControlName="mobile"
+        />
+        <div class="invalid-feedback d-block" *ngIf="basicInfoForm.get('mobile')?.hasError('required') && basicInfoForm.get('mobile')?.touched">
+          هذا الحقل مطلوب
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
         <label for="" class="form-label"> فاكس </label>
         <input
           type="text"

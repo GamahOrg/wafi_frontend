@@ -54,4 +54,15 @@ export class QualificationServiceRequestService {
   // getValidationErrorMsg(): Observable<any | null> {
   //   return this.validationErrorMsg$.asObservable();
   // }
+
+    ValidateExistingLicenseProjectUpgradeRequest(
+    facilityId: string,
+    requestTypeCode: string,
+    period: number
+  ): Observable<any | null> {
+    return this._httpClient
+      .get<CoreResponseDTO<any>>(
+        `${Configuration.APIs.QualificationServiceRequest.ValidateExistingLicenseProjectUpgradeRequest}/${facilityId}/${requestTypeCode}/${period}`
+      );
+  }
 }

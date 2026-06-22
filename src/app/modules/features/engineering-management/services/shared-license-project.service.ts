@@ -57,6 +57,13 @@ export class SharedLicenseProjectService {
   removeFacilityIdfromLocalStorage(): void {
     localStorage.removeItem('facilityId')
   }
-
-
+  setSelectedProjectIdToLocalStorage(licenseProjectId: string): void {
+    localStorage.setItem('selectedLicenseProjectId_fromCertifiedProjects', licenseProjectId);
+  }
+  getSelectedProjectIdFromLocalStorage(licenseProjectId: string): string | null {
+    return localStorage.getItem('selectedLicenseProjectId_fromCertifiedProjects');
+  }
+  removeSelectedProjectIdFromLocalStorage(): void {
+    localStorage.removeItem('selectedLicenseProjectId_fromCertifiedProjects');
+  }
 }

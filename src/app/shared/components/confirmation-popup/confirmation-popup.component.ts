@@ -14,6 +14,7 @@ export class ConfirmationPopupComponent implements OnInit, OnDestroy {
   // message = '';
   confirmationPopupData: confirmationPopupData = {} as confirmationPopupData;
   disableClose?: boolean;
+  isDeclarationChecked = false;
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmationPopupComponent>,

@@ -2,21 +2,22 @@ export const Configuration = {
   languages: ['ar', 'en'],
   defaultLang: 'ar',
   APIs: {
-    SupervisionFees:{
-      GetSupervisionFees:'/api/SupervisionFees/GetSupervisionFees'
+    SupervisionFees: {
+      GetSupervisionFees: '/api/SupervisionFees/GetSupervisionFees'
+    },
+    SupervisionFeeSettings: {
+      GetInvoices: '/api/SupervisionFeeSettings/GetInvoices',
+      GetInvoiceDetails: '/api/SupervisionFeeSettings/GetInvoiceDetails',
+      RetryInvoice: '/api/SupervisionFeeSettings/RetryInvoice',
     },
     Rating: {
-      GetUserRecommendationRatingStatus:
-        '/api/Rating/GetUserRecommendationRatingStatus',
       Dismiss: '/api/Rating/Dismiss',
-      GetInstantLicenseRatingStatus:
-        '/api/Rating/GetInstantLicenseRatingStatus',
+      GetInstantLicenseRatingStatus: '/api/Rating/GetInstantLicenseRatingStatus',
       Create: '/api/Rating/Create',
-      GetDeveloperContractDocumentationRatingStatusForLogin: '/api/Rating/GetDeveloperContractDocumentationRatingStatusForLogin',
-        GetDeveloperContractDocumentationRatingStatus: '/api/Rating/GetDeveloperContractDocumentationRatingStatus',
-        GetBuyerContractDocumentationRatingStatusForLogin: '/api/Rating/GetBuyerContractDocumentationRatingStatusForLogin',
-        GetBuyerContractDocumentationRatingStatus: '/api/Rating/GetBuyerContractDocumentationRatingStatus',
-      },
+      GetDeveloperContractDocumentationRatingStatus: '/api/Rating/GetDeveloperContractDocumentationRatingStatus',
+      GetBuyerContractDocumentationRatingStatus: '/api/Rating/GetBuyerContractDocumentationRatingStatus',
+      GetAllLoginRatings: '/api/Rating/GetAllLoginRatings',
+    },
     LicenseProjectRequestLog: {
       GetLicenseProjectRequestLogs:
         '/api/LicenseProjectRequestLog/GetLicenseProjectRequestLogs',
@@ -208,6 +209,7 @@ export const Configuration = {
     facility: {
       validate: '/api/Facility/Validate',
       validateCommercialRegister: '/api/Facility/ValidateCommercialRegister',
+      ValidateCommercialRegisterNumberForAddingChangeAccountantRequest: '/api/Facility/ValidateCommercialRegisterNumberForAddingChangeAccountantRequest',
       Register: '/api/Facility/RegisterAsync',
       GetFacilityData: '/api/Facility/GetFacilityDataAsync',
       LinkCustomerToFacility: '/api/Facility/LinkCustomerToFacilityAsync',
@@ -299,6 +301,9 @@ export const Configuration = {
       GetById: '/api/QualificationFacilityCertification/GetById',
       Save: '/api/QualificationFacilityCertification/Save',
       Delete: '/api/QualificationFacilityCertification/Remove',
+    },
+    SysCertificationDegree: {
+      GetCertificationDegreesLookup: '/api/SysCertificationDegree',
     },
     QualificationFinancialCapabilityRequirement: {
       GetByFacilityId:
@@ -399,6 +404,7 @@ export const Configuration = {
       Create: '/api/QualificationServiceRequest/Create',
       Renew: '/api/QualificationServiceRequest/Renew',
       Compile: '/api/QualificationServiceRequest/Compile',
+      ValidateExistingLicenseProjectUpgradeRequest: '/api/QualificationServiceRequest/ValidateExistingLicenseProjectUpgradeRequest',
     },
 
     SysQualificationType: {
@@ -426,6 +432,16 @@ export const Configuration = {
         '/api/QualificationRequestHeader/GetQualificationDegree',
       GetQualificationDegreeByLicenseProjectId:
         '/api/QualificationRequestHeader/GetQualificationDegreeByLicenseProjectId',
+      IsRemovedFacilityQualificationRequest:
+        '/api/QualificationRequestHeader/IsRemovedFacilityQualificationRequest',
+      GetSuspensionNotesByRequestId:
+        '/api/QualificationRequestHeader/GetSuspensionNotesByRequestId',
+      GetStrikeFilesByRequestId:
+        '/api/QualificationRequestHeader/GetStrikeFilesByRequestId',
+      SuspendQualificationRequest:
+        '/api/QualificationRequestHeader/SuspendQualificationRequest',
+      ReplyToSuspensionNote:
+        '/api/QualificationRequestHeader/ReplyToSuspensionNote',
     },
     QualificationRequestProcessingLog: {
       GetByRequestId: '/api/QualificationRequestProcessingLog/GetByRequestId',
@@ -755,6 +771,7 @@ export const Configuration = {
         '/api/LicenseProject/GetContributionDataByLicenseProjectId',
       SaveContributionData: '/api/LicenseProject/SaveContributionData',
       GetRequetType: '/api/LicenseProject/GetRequetType',
+      GetWorkDonePercentage: '/api/LicenseProject/GetWorkDonePercentage',
       GetLicenseProjectDetails: '/api/LicenseProject/GetLicenseProjectDetails',
       GetEscrowAccount: '/api/LicenseProject/GetEscrowAccount',
       GetSupervisionReportStatusByLicenseProjectId:
@@ -780,6 +797,7 @@ export const Configuration = {
         '/api/LicenseProject/ValidateProjectForContractCreationAsync',
     },
     LicenseProjectExchangeDocument: {
+      GetBeneficiaryName: '/api/LicenseProjectExchangeDocument/GetBeneficiaryName',
       GetExchangeDocumentOnProject:
         '/api/LicenseProjectExchangeDocument/GetExchangeDocumentOnProject',
       Save: '/api/LicenseProjectExchangeDocument/Save',
@@ -811,10 +829,10 @@ export const Configuration = {
         '/api/LicenseProjectExchangeDocument/GetLicenseProjectExchangeDocumentInsuranceCompanyList',
       GetLiceneProjectExchangeDocumentStatusList:
         '/api/LicenseProjectExchangeDocument/GetLiceneProjectExchangeDocumentStatusList',
-        GetExchangeDocumentDetailWithCustomerInfo:
+      GetExchangeDocumentDetailWithCustomerInfo:
         '/api/LicenseProjectExchangeDocument/GetExchangeDocumentDetailWithCustomerInfo',
-       ApproveRejectExchangeDocument :'/api/LicenseProjectExchangeDocument/ApproveReject',
-       GetExchangeDocumentDetail:'/api/LicenseProjectExchangeDocument/GetExchangeDocumentDetail',
+      ApproveRejectExchangeDocument: '/api/LicenseProjectExchangeDocument/ApproveReject',
+      GetExchangeDocumentDetail: '/api/LicenseProjectExchangeDocument/GetExchangeDocumentDetail',
 
     },
     PeriodicCharteredAccountantReport: {
@@ -1213,6 +1231,7 @@ export const Configuration = {
     Fawtarah: {
       InitiateInvoice: '/api/Fawtarah/InitiateInvoice',
       GetInvoice: '/api/Fawtarah/GetInvoice',
+      GetLicenseProjectRequestInvoice: '/api/Fawtarah/GetLicenseProjectRequestInvoice',
       GetQualificationInvoice: '/api/Fawtarah/GetQualificationInvoice',
     },
     realestatecontributionslicense: {
@@ -1344,6 +1363,11 @@ export const Configuration = {
       SendRequestForParties: '/api/LicenseProjectRequest/SendRequestForParties',
       GetLicenseProjectRequestPrice:
         '/api/LicenseProjectRequest/GetLicenseProjectRequestPrice',
+      ValidateRequest: '/api/LicenseProjectRequest/ValidateRequest',
+      GetRequestTypeDetails: '/api/LicenseProjectRequest/GetRequestTypeDetails',
+      GetLicenseProjectType: '/api/LicenseProjectRequest/GetLicenseProjectType',
+      CreateDraftRequest: '/api/LicenseProjectRequest/CreateDraftRequest',
+      GetRequestStatuses: '/api/LicenseProjectRequest/GetRequestStatuses',
     },
     LicenseActivateRequest: {
       GetLicenseActivationRequestDetails:
@@ -1419,6 +1443,43 @@ export const Configuration = {
       SaveChangeCharteredAccountantRequest:
         '/api/ChangeCharteredAccounatantRequest/SaveChangeCharteredAccountantRequest',
     },
+    ChangeAccountantLicenseRequest: {
+      GetRequestDataPage:
+        '/api/ChangeAccountantLicenseRequest/GetRequestDataPage',
+      UpdateRequestDataPage:
+        '/api/ChangeAccountantLicenseRequest/UpdateRequestDataPage',
+      UpdateAgreementDataPage:
+        '/api/ChangeAccountantLicenseRequest/UpdateAgreementDataPage',
+      GetRequestAgreementDataPage:
+        '/api/ChangeAccountantLicenseRequest/GetRequestAgreementDataPage',
+      GetRequestsListForNewAccountant:
+        '/api/ChangeAccountantLicenseRequest/GetRequestsListForNewAccountant',
+      GetRequestDetails:
+        '/api/ChangeAccountantLicenseRequest/GetRequestDetails',
+      ApproveRejectChangeAccountantRequest:
+        '/api/ChangeAccountantLicenseRequest/ApproveRejectChangeAccountantRequest',
+      GetRequestSteps:
+        '/api/ChangeAccountantLicenseRequest/GetRequestSteps',
+    },
+    ChangeLicenseProjectPartiesAdditionalTerms: {
+      SaveTermsData:
+        '/api/ChangeLicenseProjectPartiesAdditionalTerms/SaveTermsData',
+      GetAllAdditionalAsync:
+        '/api/ChangeLicenseProjectPartiesAdditionalTerms/GetAllAdditionalAsync',
+      DeleteAdditionalTermAsync:
+        '/api/ChangeLicenseProjectPartiesAdditionalTerms/DeleteAdditionalTermAsync',
+      GenerateDraftAgreements:
+        '/api/ChangeLicenseProjectPartiesAdditionalTerms/GenerateDraftAgreements',
+    },
+      ChangeEngineerLicenseRequest: {
+      GetRequestDataPage:
+        '/api/ChangeLicenseProjectEngineeringRequest/GetDetailsByRequestId',
+      ApproveRequest:
+        '/api/ChangeLicenseProjectEngineeringRequest/Approve',
+      RejectRequest:
+        '/api/ChangeLicenseProjectEngineeringRequest/Reject',
+ 
+    },
     LicenseProjectSubUnitsListCode: {
       createExcel: '/api/LicenseProjectSubUnitsListCode/CreateExcel',
       SaveFileData: '/api/LicenseProjectSubUnitsListCode/saveFileData',
@@ -1458,6 +1519,15 @@ export const Configuration = {
       GetChangeLicenseProjectEngineeringRequestDetail:
         '/api/ChangeLicenseProjectEngineeringRequest/GetChangeLicenseProjectEngineeringRequestDetail',
       Save: '/api/ChangeLicenseProjectEngineeringRequest/Save',
+      GetDraftById: '/api/ChangeLicenseProjectEngineeringRequest/GetDraftById',
+      UpdateDraft: '/api/ChangeLicenseProjectEngineeringRequest/UpdateDraft',
+      ConsultantCreate: '/api/ChangeLicenseProjectEngineeringRequest/ConsultantCreate',
+      ConsultantUpdate: '/api/ChangeLicenseProjectEngineeringRequest/ConsultantUpdate',
+      ConsultantGetByRequestId: '/api/ChangeLicenseProjectEngineeringRequest/ConsultantGetByRequestId',
+      UpdateConsultantRequestStatus: '/api/ChangeLicenseProjectEngineeringRequest/UpdateConsultantRequestStatus',
+      GetChangeEngineeringRequestStages: '/api/ChangeLicenseProjectEngineeringRequest/GetChangeEngineeringRequestStages',
+      GetChangeEngineeringRequestLogs: '/api/LicenseProjectRequestLog/GetLicenseProjectRequestLogs',
+      GetChangeEngineeringRequestNotes: '/api/LicenseProjectRequestNote/GetByLicenseProjectRequestId',
     },
     ChangeLicenseProjectBuyerOrTenantContractRequest: {
       GetChangeLicenseProjectBuyerOrTenantContractRequestDetail:
@@ -1495,6 +1565,32 @@ export const Configuration = {
         '/api/LicenseProjectRequestChangePlan/UpdateChangePlanForEngineeringConsultant',
       UpdateChangePlanForCharteredAccountant:
         '/api/LicenseProjectRequestChangePlan/UpdateChangePlanForCharteredAccountant',
+      GetDeedOwnersByRequestId:
+        '/api/LicenseProjectChangePlanRequest/GetDeedOwnersByRequestId',
+    },
+    LicenseProjectChangePlanRequest: {
+      GetApprovalsList: '/api/LicenseProjectChangePlanRequest/GetApprovalsList',
+      GetPartiesApprovalsList: '/api/LicenseProjectChangePlanRequest/GetPartiesApprovalsList',
+      GetApprovalDetails: '/api/LicenseProjectChangePlanRequest/GetApprovalDetails',
+      GetSoldUnitsPaged: '/api/LicenseProjectChangePlanRequest/GetSoldUnitsPaged',
+      UpdateDeedOwnerApprovalStatus: '/api/LicenseProjectChangePlanRequest/UpdateDeedOwnerApprovalStatus',
+      UpdateEngineeringRequirements: '/api/LicenseProjectChangePlanRequest/UpdateEngineeringRequirements',
+      UpdateAccountantRequirements: '/api/LicenseProjectChangePlanRequest/UpdateAccountantRequirements',
+      GetChangePlanFullDetails: '/api/LicenseProjectChangePlanRequest/GetChangePlanFullDetails',
+      GetChangePlanStages: '/api/LicenseProjectChangePlanRequest/GetChangePlanStages',
+      ProcessDeveloperNotes: '/api/LicenseProjectChangePlanRequest/ProcessDeveloperNotes',
+      ProcessConsultantNotes: '/api/LicenseProjectChangePlanRequest/ProcessConsultantNotes',
+      ProcessAccountantNotes: '/api/LicenseProjectChangePlanRequest/ProcessAccountantNotes',
+      GetChangePlanRequestLogs: '/api/LicenseProjectRequestLog/GetLicenseProjectRequestLogs',
+      GetChangePlanRequestNotes: '/api/LicenseProjectRequestNote/GetByLicenseProjectRequestId',
+      GetLicenseProjectDetails: '/api/LicenseProjectChangePlanRequest/GetLicenseProjectDetails',
+      GetDraftById: '/api/LicenseProjectChangePlanRequest/GetDraftById',
+      Save: '/api/LicenseProjectChangePlanRequest/Save',
+      Update: '/api/LicenseProjectChangePlanRequest/Update',
+      CreateInitialLicenseProjectChangePlanRequest: '/api/LicenseProjectChangePlanRequest/CreateInitialLicenseProjectChangePlanRequest',
+      GetUnitsBuyersApprovalsListAsync: '/api/LicenseProjectChangePlanRequest/GetUnitsBuyersApprovalsListAsync',
+      UpdateChangePlanSoldUnitsApprovalStatusAsync: '/api/LicenseProjectChangePlanRequest/UpdateChangePlanSoldUnitsApprovalStatusAsync',
+
     },
     LicenseAccountantRequest: {
       GetLicenseAccountDetails:
@@ -1621,6 +1717,7 @@ export const Configuration = {
     LicenseProjectAdditionalTermsVersion: {
       GetAllVersion: '/api/LicenseProjectAdditionalTermsVersion/GetAllVersion',
     },
+
   },
 
   modules: {
@@ -1768,6 +1865,8 @@ export const Configuration = {
       accountantExchangeDocumentsDetails: 'accountant-exchange-documents-details',
       engineeringExchangeDocumentsDetails: 'engineering-exchange-documents-details',
       supervisionFees: 'supervision-fees',
+      supervisionFeeInvoices: 'supervision-fee-invoices',
+      supervisionFeeInvoiceDetails: 'supervision-fee-invoice-details',
     },
     licenseProjectRequests: {
       createLicenseProjectRequestList: 'create-license-project-request',
@@ -1783,9 +1882,15 @@ export const Configuration = {
         'project-license-reactivateActive-request-summary',
       createreactivaiteLicense: 'create-reactivate-license-request',
       changePlanSummary: 'project-license-change-plan-request-summary',
+      changePlanDraftSummary: 'project-license-change-plan-draft-summary',
+      changeEngineeringPlanDetails: 'project-license-change-engineering-plan-details',
+      changePlanFullSummary: 'project-license-change-plan-full-summary',
       createchangePlanRequest: 'create-change-plan-request',
+      createLicenseProjectChangePlanRequest: 'create-license-project-change-plan-request',
+      changePlanDeedOwnersStatus: 'change-plan-deed-owners-status',
       createchangeengineer: 'create-change-engineer',
       changeEngineerSummary: 'project-license-change-engineer-request-summary',
+      changeEngineeringFullSummary: 'project-license-change-engineering-full-summary',
       changespaceorunitssummary: 'change-space-or-units-summary',
       createchangespaceorunits: 'create-change-space-or-units',
       createchangeprojectname: 'create-change-project-name',
@@ -1805,6 +1910,8 @@ export const Configuration = {
       withdrawsurplusbeforeprojectendsummary:
         'withdraw-surplus-before-project-end-summary',
       createCharteredAccountantRequest: 'create-chartered-accountant-request',
+      createChangeLicenseProjectAccountantRequest:
+        'create-change-license-project-accountant-request',
       charteredAccountantRequestSummary:
         'create-chartered-accountant-request-summary',
       accountKeeperRequestSummary: 'account-keeper-request-summary',
@@ -1825,6 +1932,15 @@ export const Configuration = {
         'lifting-the-mark-on-the-property-title-deed-summary',
       createRequestTemplate: 'create-request-template',
       requestTemplateSummary: 'request-template-summary',
+      changePlanListApprovals: 'change-plan-list-approvals',
+      changePlanDeedOwnerApprovals: 'change-plan-deed-owner-approvals',
+      changePlanApprovalDetails: 'change-plan-approval-details',
+      changeAccountantListApprovals: 'change-accountant-list-approvals',
+      changeAccountantApprovalDetails: 'change-accountant-approval-details',
+      requestTypeRequirements: 'request-type-requirements',
+      changePlanUnitsBuyersApprovalList: 'change-plan-units-buyers-approval-list',
+      changePlanUnitsBuyersApprovalDetails: 'change-plan-units-buyers-approval-details',
+      requestDetails: 'request-details',
     },
 
     training: {
@@ -1905,6 +2021,7 @@ export const Configuration = {
     numberOnly: '^[0-9]+$',
     decimal: '^[0-9][0-9]*[.]?[0-9]{0,2}$',
     noArabicLetters: '^[a-zA-Z0-9$@$!%*?&#^-_. +]+$',
+    saIBAN: '^SA[0-9]{2}[A-Z0-9]{20}$'
   },
   httpResponseStatusCode: {
     unknownError: 0,

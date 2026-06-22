@@ -4,6 +4,7 @@ export class FacilityShortDto {
   public id: string = "";
   public facilityCode: string = "";
   public commercialRegisterNumber: string = "";
+  public entity700Number: string = "";
   public facilityName: string = "";
   public certificateNumber: string = "";
   public facilityType: string = "";
@@ -12,14 +13,14 @@ export class FacilityShortDto {
   public saudiAuthorityForAuditorsAndAccountants: string = "";
   public facilityCity: string = "";
   public facilityArea: string = "";
-  public commercialRegisterStartDate:Date=new Date();
-  public commercialRegisterEndDate:Date=new Date();
+  public commercialRegisterStartDate: Date = new Date();
+  public commercialRegisterEndDate: Date = new Date();
 }
 
 export interface CustomerShortDto {
-  id:string;
+  id: string;
   customerCode: string;
-  fullName: string ;
+  fullName: string;
   jobTitle: string;
   mobile1: string;
   mobile2: string;
@@ -27,7 +28,7 @@ export interface CustomerShortDto {
   nidnumber: string;
   nationalityId: string;
   facility: FacilityShortDto;
-  nationality?:NationalityModel;
-  dateOfBirth?:Date;
-  isSelected?:boolean;
+  nationality?: NationalityModel;
+  dateOfBirth?: Date;
+  isSelected?: boolean;
 }

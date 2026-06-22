@@ -1,0 +1,78 @@
+<div class="row row-gap-3">
+
+  <!-- Right: tabs -->
+  <div class="col-lg-7 col-xl-8 col-xxl-9 order-1 order-lg-1">
+    <div class="tab-wrapper flex-fill">
+      <button *ngIf="showProcessingNotesBtn" type="button" class="btn-process-notes" (click)="openProcessingNotes()">
+        معالجة للاحظات
+      </button>
+      <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
+    </div>
+  </div>
+
+  <!-- Left: مراحل الطلب -->
+  <div class="col-lg-5 col-xl-4 col-xxl-3 order-2 order-lg-2">
+    <div class="card phases-card">
+      <div class="card-header">
+        <h6 class="card-title">مراحل الطلب</h6>
+      </div>
+      <div class="card-body">
+
+        <div class="phase" [ngClass]="{
+          'completed': stage.statusLabel === 'مكتمل',
+          'current': stage.statusLabel === 'قيد الدراسة',
+          'pending': stage.statusLabel === 'قيد الإنتظار',
+          'rejected': stage.statusLabel === 'مرفوض'
+            || stage.statusLabel === 'ملغي'
+            || (requestStatusId === CancelledConsultantOrAccountant && stage.stepOrder === 3)
+            || (requestStatusId === CancelledDeedOwnersTimeout && stage.stepOrder === 2)
+          }" *ngFor="let stage of stages;">
+          <div class="number-area">
+            <span class="number">{{ stage.stepOrder }}</span>
+          </div>
+
+          <div class="info-area">
+            <h6 class="title">{{ stage.stepName }}</h6>
+
+            <div class="info">
+              <span class="status">{{
+                (requestStatusId === CancelledConsultantOrAccountant && stage.stepOrder === 3) ||
+                (requestStatusId === CancelledDeedOwnersTimeout && stage.stepOrder === 2)
+                  ? 'ملغي'
+                  : stage.statusLabel
+              }}</span>
+              <div class="date">
+                <i class="hgi hgi-stroke hgi-calendar-03"></i>
+                <span>{{(stage.startDate | date: "dd/MM/yyyy") || "--/--/----"}}</span>
+              </div>
+            </div>
+
+            <button *ngIf="stage.showDeedOwnersButton" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="navigateToDeedOwnersStatus()">
+              عرض الفاتورة
+            </button>
+          </div>
+
+          <!-- <div class="stage-card">
+            <div class="stage-title">{{ stage.stepName }}</div>
+            <div class="stage-meta">
+              <div class="stage-status-dot" [ngClass]="stage.status">
+                <span class="dot"></span>
+                {{ stage.statusLabel }}
+              </div>
+              <div class="stage-date">
+                <i class="material-icons-outlined stage-date-icon">calendar_today</i>
+                <span *ngIf="stage.startDate">{{ stage.startDate | date:'d/M/yyyy' }}</span>
+                <span *ngIf="!stage.startDate" class="stage-dashes">----------</span>
+              </div>
+            </div>
+            <button *ngIf="stage.showDeedOwnersButton" type="button" class="btn-deed-owners mt-2" (click)="navigateToDeedOwnersStatus()">
+              حالة الملاك
+            </button>
+          </div> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

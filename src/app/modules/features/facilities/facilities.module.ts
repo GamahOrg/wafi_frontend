@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FacilitiesRoutingModule } from './facilities-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FacilityProfileService } from './services/facilityProfile/facility-profile.service';
@@ -68,6 +68,7 @@ import { LegalAccountantDataComponent } from './components/legal-accountant-data
 import { EngineeringConsultantDataComponent } from './components/engineering-consultant-data/engineering-consultant-data.component';
 import { FacilityBasicDataInfoAllTypesComponent } from './components/facility-basic-data-info-all-types/facility-basic-data-info-all-types.component';
 import { EditFacilityBasicDataInfoAllTypesComponent } from './components/edit-facility-basic-data-info-all-types/edit-facility-basic-data-info-all-types.component';
+import { DeclarationPopupComponent } from './components/declaration-popup/declaration-popup.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { EditFacilityBasicDataInfoAllTypesComponent } from './components/edit-fa
     EngineeringConsultantDataComponent,
     FacilityBasicDataInfoAllTypesComponent,
     EditFacilityBasicDataInfoAllTypesComponent,
+    DeclarationPopupComponent,
   ],
   providers: [
     SharedLicenseProjectService,
@@ -140,6 +142,7 @@ import { EditFacilityBasicDataInfoAllTypesComponent } from './components/edit-fa
     CommonModule,
     SharedModule,
     FacilitiesRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     // TranslateModule.forChild(),
     RouterModule,

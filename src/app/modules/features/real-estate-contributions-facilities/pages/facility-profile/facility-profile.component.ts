@@ -13,6 +13,9 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { QualificationRequestData } from 'src/app/core/models/qualification-request-data.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RequestValidationService } from 'src/app/core/services/request-validation/request-validation.service';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { PopupData } from 'src/app/shared/models/popup.model';
+import { DeclarationPopupComponent } from '../../../facilities/components/declaration-popup/declaration-popup.component';
 
 @Component({
   selector: 'app-facility-profile',
@@ -70,7 +73,8 @@ export class FacilityProfileComponent implements OnInit, OnDestroy {
     private _tabsService: TabsService,
     private _requestValidationService: RequestValidationService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,    
+    private _popupService: PopupService,
     ) { }
   ngOnInit(): void {
     this.updateTabContent()
@@ -115,6 +119,14 @@ export class FacilityProfileComponent implements OnInit, OnDestroy {
   private updateTabContent() {
     this._tabsService.updateTabContent(this.tabContent)
   }
+    showDeclarationPopup() {
+      const Data = {
+        title: 'يجب الموافقة على جميع الاقرارات يتم ارسال الطلب',
+        component: DeclarationPopupComponent,
+        buttons: [],
+      } as PopupData;
+      this._popupService.updatePopupData(Data);
+    }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }

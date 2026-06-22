@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
@@ -82,19 +82,23 @@ export class CertifiedEngineerService {
       })
     )
   }
+  //      (Configuration.APIs.QualificationCertifiedEngineer.Save, model, { headers: { 'X-Skip-Error-Toast': 'true' } }).pipe(
+
   Save(model: QualificationCertifiedEngineerCreateUpdateDto): Observable<CoreResponseDTO<CertifiedEngineerDto[] | null>> {
     if(!model.id) model.id = '00000000-0000-0000-0000-000000000000';
-    return this._httpClient.post<CoreResponseDTO<QualificationCertifiedEngineerCreateUpdateDto>>
-      (Configuration.APIs.QualificationCertifiedEngineer.Save,model).pipe(
-      map((res: any) => {
-        return res;
-      })
+    const headers = new HttpHeaders({ 'X-Skip-Error-Toast': 'true' });
+    return this._httpClient.post<CoreResponseDTO<CertifiedEngineerDto[] | null>>
+      (Configuration.APIs.QualificationCertifiedEngineer.Save, model, { headers }).pipe(
+      map((res) => res)
     )
   }
+  //      >(Configuration.APIs.QualificationCertifiedEngineer.SaveWithCourses, model, { headers: { 'X-Skip-Error-Toast': 'true' } })
+
   SaveWithCourses(model: QualificationCertifiedEngineerCreateUpdateDto): Observable<CoreResponseDTO<CertifiedEngineerDto[] | null>> {
     if(!model.id) model.id = '00000000-0000-0000-0000-000000000000';
+    const headers = new HttpHeaders({ 'X-Skip-Error-Toast': 'true' });
     return this._httpClient.post<CoreResponseDTO<QualificationCertifiedEngineerCreateUpdateDto>>
-      (Configuration.APIs.QualificationCertifiedEngineer.SaveWithCourses, model).pipe(
+      (Configuration.APIs.QualificationCertifiedEngineer.SaveWithCourses, model, { headers }).pipe(
       map((res: any) => {
         return res;
       })

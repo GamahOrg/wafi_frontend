@@ -1,0 +1,92 @@
+<div class="page">
+  <div class="page-header mb-3">
+    <div class="row row-gap-3">
+      <div class="col-12 col-lg-6">
+        <div class="page-title mb-0">
+          <h5 class="title">
+            <i class="hgi hgi-stroke hgi-invoice-03"></i>
+            الفواتير
+          </h5>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="filter">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <div class="input-group">
+                <span class="input-group-text"><i class="hgi hgi-stroke hgi-search-01"></i></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="بحث باسم المشروع أو رقم الفاتورة"
+                  [(ngModel)]="searchText"
+                  (keydown)="onSearchKeydown($event)"
+                />
+              </div>
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-outline-primary" (click)="onSearch()">
+                <span class="d-flex align-items-center column-gap-1">
+                  <i class="material-icons-outlined">filter_alt</i>
+                  بحث
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="invoicesList && invoicesList.totalCount > 0">
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">رقم الفاتورة</th>
+            <th scope="col">اسم المشروع</th>
+            <th scope="col">المبلغ</th>
+            <th scope="col">فترة الفوترة</th>
+            <th scope="col">تاريخ الانتهاء</th>
+            <th scope="col">الحالة</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let invoice of invoicesList.results">
+            <td>{{ invoice.invoiceNumber || '—' }}</td>
+            <td>{{ invoice.projectName || '—' }}</td>
+            <td>{{ invoice.amount | number:'1.2-2' }}</td>
+            <td>{{ invoice.billingPeriod || '—' }}</td>
+            <td>{{ invoice.dueDate ? (invoice.dueDate | date:'dd/MM/yyyy') : '—' }}</td>
+            <td>
+              <span class="status-pill" [ngClass]="getStatusClass(invoice.status)">
+                {{ invoice.statusText }}
+              </span>
+            </td>
+            <td class="d-flex gap-2">
+              <button *ngIf="!invoice.canRetry" type="button" class="btn btn-sm btn-outline-primary" (click)="viewDetails(invoice.id)">
+                عرض التفاصيل
+              </button>
+              <button *ngIf="invoice.canRetry" type="button" class="btn btn-sm btn-outline-primary" (click)="retryInvoice(invoice.id)">
+                <i class="material-icons-outlined" style="font-size: 16px; vertical-align: middle;">refresh</i>
+                إعادة محاولة إصدار الفاتورة
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!invoicesList || invoicesList.totalCount === 0">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false" [title]="'لا توجد فواتير لعرضها'"></app-no-data>
+    </div>
+  </ng-container>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { customerResponse } from 'src/app/shared/models/customer.model';
 import { UserDataService } from 'src/app/core/services/user-data/user-data.service';
@@ -35,13 +35,14 @@ export class NationalAddressesFormComponent implements OnInit, OnDestroy {
     id: [''],
     buildingNumber: [''],
     streetName: [''],
-    neighborhoodName: [''],
+    neighborhoodName:new FormControl('',[Validators.required]),
+
     postalCode: [''],
     unitNumber: [''],
     additionalNumber: [''],
     facilityId: [''],
-    citiesId: [''],
-    areasId: [''],
+    citiesId: new FormControl('',[Validators.required]),
+    areasId:new FormControl('',[Validators.required]),
     documentNumber: [''],
     brokerDocumentTypeId: [0],
   })

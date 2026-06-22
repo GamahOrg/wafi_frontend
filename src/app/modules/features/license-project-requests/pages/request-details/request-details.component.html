@@ -1,0 +1,56 @@
+<div class="row row-gap-3">
+
+  <!-- Right: tabs -->
+  <div class="col-lg-7 col-xl-8 col-xxl-9 order-1 order-lg-1">
+    <div class="mb-3 text-end">
+      <button *ngIf="showProcessingNotesBtn" type="button" class="btn btn-primary" (click)="openProcessingNotes()">
+        معالجة الملاحظات
+      </button>
+    </div>
+    <app-tabs [tabClassName]="'rounded-header'"></app-tabs>
+  </div>
+
+  <!-- Left: مراحل الطلب -->
+  <div class="col-lg-5 col-xl-4 col-xxl-3 order-2 order-lg-2">
+    <div class="card phases-card">
+      <div class="card-header">
+        <h6 class="card-title">مراحل الطلب</h6>
+      </div>
+      <div class="card-body">
+
+        <div class="phase" [ngClass]="{
+          'completed': stage.statusLabel === 'مكتمل',
+          'current': stage.statusLabel === 'قيد الدراسة',
+          'pending': stage.statusLabel === 'قيد الإنتظار' || stage.statusLabel === 'معالجة الملاحظات',
+          'rejected': stage.statusLabel === 'مرفوض'
+          }" *ngFor="let stage of stages;">
+          <div class="number-area">
+            <span class="number">{{ stage.stepOrder }}</span>
+          </div>
+
+          <div class="info-area">
+            <h6 class="title">{{ stage.stepName }}</h6>
+
+            <div class="info">
+              <span class="status">{{ stage.statusLabel }}</span>
+              <div class="date">
+                <i class="hgi hgi-stroke hgi-calendar-03"></i>
+                <span>{{(stage.startDate | date: "dd/MM/yyyy") || "--/--/----"}}</span>
+              </div>
+            </div>
+
+            <button *ngIf="stage.stepName === 'سداد الفاتورة' && invoiceData" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="openInvoicePopup()">
+              عرض الفاتورة
+            </button>
+
+            <button *ngIf="stage.showDeedOwnersButton" type="button" class="btn btn-sm btn-primary w-100 mt-2" (click)="navigateToDeedOwnersStatus()">
+              حالة الملاك
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

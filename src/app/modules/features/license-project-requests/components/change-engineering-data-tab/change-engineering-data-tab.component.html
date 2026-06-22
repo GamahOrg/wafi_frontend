@@ -1,0 +1,8 @@
+<ng-container [ngSwitch]="requestType">
+
+  <app-project-license-request-data *ngSwitchCase="licenseProjectRequestTypeEnum.ChangePlan"></app-project-license-request-data>
+
+  <ng-container *ngSwitchDefault>
+    <app-horizontal-tabs [tabClassName]="'rounded-header'"></app-horizontal-tabs>
+  </ng-container>
+</ng-container>

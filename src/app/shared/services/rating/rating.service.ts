@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import {
   RatingDismissDto,
   UserRatingCreateDto,
-  UserRatingUpdateDto,RatingStatusDto
+  UserRatingUpdateDto,
+  RatingStatusDto,
+  LoginRatingsDto
 } from '../../models/rating-request.model';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { BehaviorSubject, Observable ,map} from 'rxjs';
-import { RatingTypeEnum } from '../../models/enums/rating.enum';
 
 @Injectable()
 export class RatingService {
@@ -44,36 +45,9 @@ export class RatingService {
       })
     );
   }
-  getUserRecommendationRatingStatus():Observable<RatingStatusDto|null|undefined> {
-    return this._httpClient.get<CoreResponseDTO<RatingStatusDto>>(
-      `${Configuration.APIs.Rating.GetUserRecommendationRatingStatus}`,
-    ).pipe(
-      map((res: CoreResponseDTO<RatingStatusDto>) => {
-        return res.isDone ? res.data : null;
-      })
-    );
-  }
-  getDeveloperContractDocumentationRatingStatus(facilityId: string):Observable<RatingStatusDto|null|undefined> {
-    return this._httpClient.get<CoreResponseDTO<RatingStatusDto>>(
-      `${Configuration.APIs.Rating.GetDeveloperContractDocumentationRatingStatusForLogin}?facilityId=${facilityId}`,
-    ).pipe(
-      map((res: CoreResponseDTO<RatingStatusDto>) => {
-        return res.isDone ? res.data : null;
-      })
-    );
-  }
   getDeveloperContractDocumentationRatingStatusWithoutFacilityId():Observable<RatingStatusDto|null|undefined> {
     return this._httpClient.get<CoreResponseDTO<RatingStatusDto>>(
       Configuration.APIs.Rating.GetDeveloperContractDocumentationRatingStatus,
-    ).pipe(
-      map((res: CoreResponseDTO<RatingStatusDto>) => {
-        return res.isDone ? res.data : null;
-      })
-    );
-  }
-  getBuyerContractDocumentationRatingStatusForLogin(isOldContract: boolean):Observable<RatingStatusDto|null|undefined> {
-    return this._httpClient.get<CoreResponseDTO<RatingStatusDto>>(
-      `${Configuration.APIs.Rating.GetBuyerContractDocumentationRatingStatusForLogin}?isOldContract=${isOldContract}`,
     ).pipe(
       map((res: CoreResponseDTO<RatingStatusDto>) => {
         return res.isDone ? res.data : null;
@@ -87,6 +61,13 @@ export class RatingService {
       map((res: CoreResponseDTO<RatingStatusDto>) => {
         return res.isDone ? res.data : null;
       })
+    );
+  }
+  getAllLoginRatings(): Observable<LoginRatingsDto | null> {
+    return this._httpClient.get<CoreResponseDTO<LoginRatingsDto>>(
+      Configuration.APIs.Rating.GetAllLoginRatings,
+    ).pipe(
+      map((res: CoreResponseDTO<LoginRatingsDto>) => res?.isDone ? res.data ?? null : null)
     );
   }
 }

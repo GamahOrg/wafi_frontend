@@ -4,8 +4,8 @@ import { ChangeCharteredAccountantRequestService } from '../../services/change-c
 import { ChangeCharteredAccountantRequestDetailsDto } from '../../models/change-chartered-accountant-request-details-dto';
 import { AccordionService } from 'src/app/shared/services/accordion/accordion.service';
 import { accordionContent } from 'src/app/shared/models/accordion.model';
-import { ChangeCharteredAccountRequestDetailsComponent } from '../../pages/change-chartered-account-request-details/change-chartered-account-request-details.component';
 import { ProjectRequestLocalStorageService } from '../../services/project-request-local-storage.service';
+import { ChangeCharteredAccountRequestDetailsComponent } from '../../pages/change-accountant/change-chartered-account-request-details/change-chartered-account-request-details.component';
 
 @Component({
   selector: 'app-change-chartered-accountant-details',

@@ -63,6 +63,7 @@
 
 .upload-hints {
   font-size: $font-size-xs;
+  color: #6C737F;
 }
 
 .key-value {
@@ -75,8 +76,8 @@
   }
 
   .key {
-    font-weight: 600;
-    color: $headings-color;
+    font-weight: 500;
+    color: $darkgray;
   }
 
   .value {
@@ -84,8 +85,8 @@
     align-items: center;
     gap: .25rem;
 
-    font-weight: 500;
-    color: #5D5D5D;
+    font-weight: 600;
+    color: $headings-color;
 
     img {
       height: 1.25rem;
@@ -95,7 +96,7 @@
     .icon {
       line-height: 1;
       font-size: 1.25rem;
-      color: $dark;
+      color: $darkgray;
     }
 
     a {

@@ -1,13 +1,17 @@
 <div class="tab-data-header">
   <h6 class="title">{{ pageTitle }}</h6>
-
+  <div class="upload-hints" *ngIf="isEngineering() && facilityTypeCategory != FacilityTypeCategoryEnum.Developer">
+     يجب ألا يقل عدد المهندسين الحاصلين على التدريب عن (10%) من إجمالي مهندسي المكتب المعتمدين أو (5) مهندسين — أيهما أقل.
+  </div>
+  <div class="upload-hints" *ngIf="!isEngineering() && facilityTypeCategory != FacilityTypeCategoryEnum.Developer">
+     يجب ألا يقل عدد المحاسبين الحاصلين على التدريب عن (10%) من إجمالي محاسبي الشركة المعتمدين أو (4) محاسبين — أيهما أقل.
+  </div>
   <div class="opposite-title" *ngIf="canUpdate">
     <button class="btn btn-outline-primary" (click)="openDialog('')">
       <i class="icon hgi hgi-stroke hgi-add-01"></i> إضافة
     </button>
   </div>
 </div>
-
 <div class="tab-data-section">
   <div class="table-responsive" *ngIf="models && models.length > 0">
     <table class="table table-light">

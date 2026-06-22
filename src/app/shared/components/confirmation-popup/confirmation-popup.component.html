@@ -1,4 +1,4 @@
-<div mat-dialog-title class="text-center pt-4 pb-0">
+<div mat-dialog-title class="text-center">
   <div class="d-flex flex-column align-items-center gap-3">
     <span class="icon">
       <ng-container *ngIf="confirmationPopupData.popupType === 'primary'">
@@ -21,13 +21,13 @@
     <h6 class="title" *ngIf="confirmationPopupData.title" [innerHTML]="confirmationPopupData.title"></h6>
   </div>
 
-  <button class="btn btn-link p-0" (click)="onClickOnCancel()" mat-dialog-close tabindex="-1" aria-label="Close" *ngIf="!disableClose">
+  <button class="close-btn btn btn-link" mat-dialog-close tabindex="-1" aria-label="Close" *ngIf="!disableClose">
     <i class="material-icons">close</i>
   </button>
 </div>
 
-<div mat-dialog-content class="py-4">
-  <div class="d-flex flex-column justify-content-center align-items-center gap-4">
+<div mat-dialog-content>
+  <div class="d-flex flex-column justify-content-center align-items-center gap-3">
     <ng-container *ngIf="confirmationPopupData.staticMessage">
       <p class="text" [innerHTML]=" confirmationPopupData.staticMessage">
         <!-- {{ confirmationPopupData.staticMessage }} -->
@@ -53,13 +53,20 @@
       </p>
     </ng-container>
 
+    <ng-container *ngIf="confirmationPopupData.declarationText">
+      <label class="form-check form-check-normal" for="isDeclarationChecked">
+        <input type="checkbox" class="form-check-input" id="isDeclarationChecked" [(ngModel)]="isDeclarationChecked" />
+        <label for="isDeclarationChecked" class="form-check-label">{{ confirmationPopupData.declarationText }}</label>
+      </label>
+    </ng-container>
+
     <div class="d-flex justify-content-center align-items-center gap-3">
       <ng-container *ngIf="confirmationPopupData.showCloseButtonOnly; else defaultButtons">
         <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnCancel()">{{confirmationPopupData.closeButtonText ?? 'إغلاق'}}</button>
       </ng-container>
       <ng-template #defaultButtons>
-        <button class="btn btn-link px-xl-4" (click)="onClickOnCancel()" *ngIf="!confirmationPopupData.hideCancelButton">إلغاء</button>
-        <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnConfirm()">{{confirmationPopupData.acceptButtonText ?? 'حفظ '}}</button>
+        <button class="btn btn-link" (click)="onClickOnCancel()" *ngIf="!confirmationPopupData.hideCancelButton">{{confirmationPopupData.cancelButtonText ?? 'إلغاء'}}</button>
+        <button class="btn btn-{{confirmationPopupData.popupType}}" [disabled]="confirmationPopupData.declarationText && !isDeclarationChecked" (click)="onClickOnConfirm()">{{confirmationPopupData.acceptButtonText ?? 'حفظ '}}</button>
       </ng-template>
     </div>
   </div>

@@ -1,24 +1,114 @@
+<ng-container
+  *ngIf="selectedRequest && selectedRequest.licenseProjectRequestTypeId"
+  [ngSwitch]="selectedRequest.licenseProjectRequestTypeId"
+>
+  <app-cancel-license-main-data-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.CancelLicense"
+  ></app-cancel-license-main-data-details>
+  <app-reactivaite-license-main-data-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.ReActivateLicense"
+  ></app-reactivaite-license-main-data-details>
+  <app-changeplan-license-request-main-data-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.ChangePlan"
+  ></app-changeplan-license-request-main-data-details>
+  <app-change-engineer-main-data-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeEngineering"
+  ></app-change-engineer-main-data-details>
+  <app-withdraw-surplus-before-project-end-request-main-data-details
+    *ngSwitchCase="
+      licenseProjectRequestTypeEnum.WithdrawSurplusBeforeProjectEnd
+    "
+  ></app-withdraw-surplus-before-project-end-request-main-data-details>
+  <app-change-license-project-space-or-units-reques-main-data-details
+    *ngSwitchCase="
+      licenseProjectRequestTypeEnum.IncreaseOrDecreaseUnitsNumberOrProjectArea
+    "
+  ></app-change-license-project-space-or-units-reques-main-data-details>
+  <app-change-license-project-buyer-or-tenant-contract-request-main-data-details
+    *ngSwitchCase="
+      licenseProjectRequestTypeEnum.ChangeApprovedBuyerOrTenantContractsOfProject
+    "
+  ></app-change-license-project-buyer-or-tenant-contract-request-main-data-details>
+  <app-change-project-name-main-data-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeProjectName"
+  ></app-change-project-name-main-data-details>
+  <app-adding-delegator-main-data-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.AddingDelegator"
+  ></app-adding-delegator-main-data-details>
+  <app-removing-delegator-main-data-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.RemovingDelegator"
+  ></app-removing-delegator-main-data-details>
+  <app-change-or-add-license-project-unit-model-request-main-data-details
+    *ngSwitchCase="
+      licenseProjectRequestTypeEnum.ChangeOrAddLicenseProjectUnitModel
+    "
+  ></app-change-or-add-license-project-unit-model-request-main-data-details>
+  <!-- <app-change-chartered-accountant-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeAccountant"></app-change-chartered-accountant-details> -->
 
-<ng-container *ngIf="selectedRequest && selectedRequest.licenseProjectRequestTypeId" [ngSwitch]="selectedRequest.licenseProjectRequestTypeId">
-  
-  <app-cancel-license-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.CancelLicense"></app-cancel-license-main-data-details>
-  <app-reactivaite-license-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.ReActivateLicense"></app-reactivaite-license-main-data-details>
-  <app-changeplan-license-request-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangePlan"></app-changeplan-license-request-main-data-details>
-  <app-change-engineer-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeEngineering"></app-change-engineer-main-data-details>
-  <app-withdraw-surplus-before-project-end-request-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.WithdrawSurplusBeforeProjectEnd"></app-withdraw-surplus-before-project-end-request-main-data-details>
-  <app-change-license-project-space-or-units-reques-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.IncreaseOrDecreaseUnitsNumberOrProjectArea"></app-change-license-project-space-or-units-reques-main-data-details>
-  <app-change-license-project-buyer-or-tenant-contract-request-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeApprovedBuyerOrTenantContractsOfProject"></app-change-license-project-buyer-or-tenant-contract-request-main-data-details>
-  <app-change-project-name-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeProjectName"></app-change-project-name-main-data-details>
-  <app-adding-delegator-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.AddingDelegator"></app-adding-delegator-main-data-details>
-  <app-removing-delegator-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.RemovingDelegator"></app-removing-delegator-main-data-details>
-  <app-change-or-add-license-project-unit-model-request-main-data-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeOrAddLicenseProjectUnitModel"></app-change-or-add-license-project-unit-model-request-main-data-details>
-  <app-change-chartered-accountant-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeAccountant"></app-change-chartered-accountant-details>
-  <app-change-account-keeper-request-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeAccountKeeper"></app-change-account-keeper-request-details>
-  <app-change-parties-agreement-request-details *ngSwitchCase="licenseProjectRequestTypeEnum.ChangePartiesAgreement"></app-change-parties-agreement-request-details>
-  <app-transfer-amounts-between-subaccounts-in-escrow-account-details *ngSwitchCase="licenseProjectRequestTypeEnum.TransferAmountsBetweenSubAccountsInEscrowAccount"></app-transfer-amounts-between-subaccounts-in-escrow-account-details>
-  <app-objection-to-supervision-and-followup-costs-request-details *ngSwitchCase="licenseProjectRequestTypeEnum.ObjectionToSupervisionAndFollowUpCosts"></app-objection-to-supervision-and-followup-costs-request-details>
-  <app-lifting-the-mark-on-the-property-title-deed-request-details *ngSwitchCase="licenseProjectRequestTypeEnum.LiftingTheMarkOnThePropertyTitleDeed"></app-lifting-the-mark-on-the-property-title-deed-request-details>
+  <ng-container *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeAccountant">
+    <div class="row row-gap-4">
+      <div class="col-lg-7 col-xl-8 col-xxl-9 order-1 order-lg-1">
+        <app-create-change-license-project-accountant-request [showNotesPage]="true" [showNextButton]="false" [hideDraftButton]="true" ></app-create-change-license-project-accountant-request>
+      </div>
+      <div class="col-lg-5 col-xl-4 col-xxl-3 order-2 order-lg-2">
+        <div class="card phases-card">
+          <div class="card-header">
+          <h6 class="card-title">مراحل الطلب</h6>
+        </div>
+          <div class="card-body">
+            <div *ngFor="let step of requestSteps; let i = index; let last = last" class="phase"
+            [class.completed]="step.stepStatus === 'completed'"
+            [class.current]="step.stepStatus === 'active'"
+            [class.pending]="step.stepStatus === 'pending'"
+            
+              
+            [class.rejected]="step.stepStatus === 'rejected'">
+            <div class="number-area">
+              <span class="number">{{ i + 1 }}</span>
+            </div>
+              <div class="info-area">
+                <h6 class="title">{{ step.stepName }}</h6>
+                <div class="info">
+                  <span class="status">{{ step.stepStatus }}</span>
+                  <div class="date">
+                  <i class="hgi hgi-stroke hgi-calendar-03"></i>
+                  <span>{{
+                    (step.stepDate | date: "dd/MM/yyyy") || "--/--/----"
+                  }}</span>
+                </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <app-change-account-keeper-request-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeAccountKeeper"
+  ></app-change-account-keeper-request-details>
+  <app-change-parties-agreement-request-details
+    *ngSwitchCase="licenseProjectRequestTypeEnum.ChangePartiesAgreement"
+  ></app-change-parties-agreement-request-details>
+  <app-transfer-amounts-between-subaccounts-in-escrow-account-details
+    *ngSwitchCase="
+      licenseProjectRequestTypeEnum.TransferAmountsBetweenSubAccountsInEscrowAccount
+    "
+  ></app-transfer-amounts-between-subaccounts-in-escrow-account-details>
+  <app-objection-to-supervision-and-followup-costs-request-details
+    *ngSwitchCase="
+      licenseProjectRequestTypeEnum.ObjectionToSupervisionAndFollowUpCosts
+    "
+  ></app-objection-to-supervision-and-followup-costs-request-details>
+  <app-lifting-the-mark-on-the-property-title-deed-request-details
+    *ngSwitchCase="
+      licenseProjectRequestTypeEnum.LiftingTheMarkOnThePropertyTitleDeed
+    "
+  ></app-lifting-the-mark-on-the-property-title-deed-request-details>
   <app-request-template-details *ngSwitchDefault></app-request-template-details>
 
+  <app-change-engineering-data-tab
+    *ngSwitchCase="licenseProjectRequestTypeEnum.ChangeEngineering"
+  ></app-change-engineering-data-tab>
 </ng-container>
-  

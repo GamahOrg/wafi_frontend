@@ -14,6 +14,7 @@ import { FileManagementService } from '../../../../../shared/services/fileManage
 import { ToastrNotificatioService } from '../../../../../core/services/toastr-notification/toastr-notificatio.service';
 import { PopupData } from '../../../../../shared/models/popup.model';
 import { UpdateFacilityBasicDataInfoAllTypesDto } from '../../dataModels/update-facility-basic-data-info-all-types-dto';
+import { QualificationFacilityCertificationService } from '../../services/qualificationFacilityCertification/qualification-facility-certification.service';
 
 @Component({
   selector: 'app-edit-facility-basic-data-info-all-types',
@@ -54,6 +55,8 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
   brokerRentDocumentType: boolean = false;
   hasEntity700Number: boolean = false;
   showValidation = false;
+  certificationDegrees: any[] = [];
+  selectedCertificationDegreeId: number | undefined;
   constructor(
     private _facilityProfileService: FacilityProfileService,
     private _popupService: PopupService,
@@ -61,7 +64,9 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
     private _formBuilder: FormBuilder,
     private _filemangementService: FileManagementService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _cityService: CityService
+    private _cityService: CityService,
+    private _certificationService: QualificationFacilityCertificationService,
+    
   ) { }
 
   basicInfoForm = this._formBuilder.group({
@@ -73,6 +78,14 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
      
   });
 
+  allowNumbersOnly(event: KeyboardEvent): void {
+    const charCode = event.which ? event.which : event.keyCode;
+
+    // Allow only numbers 0-9
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  }
   get chamberOfCommerceMembershipNumber(): FormControl {
     return this.basicInfoForm.controls.chamberOfCommerceMembershipNumber;
   }
@@ -84,6 +97,7 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
     this.observeBasicInfoForm();
     this.observePopupEvents();
     this.getCityWithChambersOfCommerceCityCodeDto();
+    
   }
 
   // popup
@@ -210,7 +224,6 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
   private observecancelAction() {
     this.subscriptions.push(
       this._popupService.cancelAction.subscribe((res: PopupData) => {
-        console.log(res);
       })
     );
   }
@@ -218,7 +231,6 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
   private observeconfirmAction() {
     this.subscriptions.push(
       this._popupService.confirmAction.subscribe((res: PopupData) => {
-        console.log(res);
         this.submitBasicInfoForm();
       })
     );
@@ -241,7 +253,6 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
         .getCustomerData()
         .subscribe((res: customerResponse | null) => {
           this.userData = res;
-          console.log('this.userData', this.userData);
           if (
             this.userData &&
             this.userData.facilities &&
@@ -249,7 +260,9 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
           ) {
             this.facilityTypeCategory =
               this.userData.facilities[0].facilityTypeCategory ?? null;
-
+            if(this.facilityTypeCategory == FacilityTypeCategory.Engineering) {
+            this.loadCertificationDegrees();
+            }
           }
         })
     );
@@ -268,18 +281,24 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
           if (this.facilityData.entity700Number) {
             this.hasEntity700Number = true;
           }
-          console.log('this.facilityData', this.facilityData);
           this.updateFormValues();
         })
     );
   }
-  
+  loadCertificationDegrees(): void {
+    this.subscriptions.push(
+      this._certificationService.GetCertificationDegreesLookup()
+      .subscribe(degrees => {
+        this.certificationDegrees = degrees.data ?? [];
+      })
+    );
+  }
   //updateFormValues() {
   //  this.basicInfoForm.patchValue(this.facilityData);
    
   //}
   updateFormValues() {
-    
+
     this.basicInfoForm.patchValue({
       ...this.facilityData,
       issuesIsExist:
@@ -289,6 +308,11 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
             ? false
             : null,
     });
+
+    if (this.facilityData.qualificationFacilityCertifications?.length > 0) {
+      this.selectedCertificationDegreeId = this.facilityData.qualificationFacilityCertifications[0]?.certificationDegree?.id;
+      this.FacilityBasicUpdateInfo.certificationDegreeId = this.selectedCertificationDegreeId ?? null;
+    }
   }
  
  
@@ -338,9 +362,15 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
     if (!$event.eventRes.data || !$event.eventRes.data.length) return;
     this.FacilityBasicUpdateInfo.certificationFileId = $event.eventRes.data[0].id;
   }
+onSelectCertificationDegree(event: any): void {
+    const degreeId = +event.target.value; 
 
+  this.FacilityBasicUpdateInfo.certificationDegreeId = degreeId || null;
+}
   deleteCertificationFile(): void {
     this.FacilityBasicUpdateInfo.certificationFileId = '00000000-0000-0000-0000-000000000000';
+    this.selectedCertificationDegreeId = undefined;
+    this.FacilityBasicUpdateInfo.certificationDegreeId = null;
     if (this.facilityData.qualificationFacilityCertifications?.length > 0) {
       this.facilityData.qualificationFacilityCertifications = [];
     }
@@ -384,7 +414,6 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
     if (!$event.eventRes.data || !$event.eventRes.data.length) return;
     this.facilityData.companyEstablishingContractFileId =
       $event.eventRes.data[0].id;
-    console.log('$event.eventRes.data[0].id', $event.eventRes.data[0].id);
   }
 
   updateBrokerRentDocumentType(type: any) {
@@ -415,10 +444,27 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
       this._toastrNotificationService.showError('شهادة ترخيص الهيئة السعودية للمهندسين مطلوبة');
       return;
     }
+    if (this.facilityTypeCategory === FacilityTypeCategory.Engineering
+      && (this.facilityData.qualificationFacilityCertifications.length === 0 && !this.FacilityBasicUpdateInfo.certificationFileId || this.FacilityBasicUpdateInfo.certificationFileId === '00000000-0000-0000-0000-000000000000')) {
+      this._toastrNotificationService.showError('شهادة التصنيف مطلوبة');
+      return;
+    }
+    if (this.facilityTypeCategory === FacilityTypeCategory.Engineering
+      && (this.facilityData.qualificationFacilityCertifications.length > 0 || this.FacilityBasicUpdateInfo.certificationFileId != null || this.FacilityBasicUpdateInfo.certificationFileId != '00000000-0000-0000-0000-000000000000')
+      && this.FacilityBasicUpdateInfo.certificationDegreeId === null) {
+      this._toastrNotificationService.showError('درجة التصنيف مطلوبة');
+      return;
+    }
     if (this.facilityTypeCategory === FacilityTypeCategory.Accountant
       && !this.facilityData.saudiAuthorityForAuditorsAndAccountantsFileId
       && !this.FacilityBasicUpdateInfo.saudiAuthorityForAuditorsAndAccountantsFileId) {
       this._toastrNotificationService.showError('شهادة ترخيص الهيئة السعودية للمراجعين والمحاسبين مطلوبة');
+      return;
+    }
+      if (
+      !this.facilityData.socialInsuranceEmployeesListFileId
+      && !this.FacilityBasicUpdateInfo.socialInsuranceEmployeesListFileId) {
+      this._toastrNotificationService.showError('مرفق قائمة المشتركين على رأس العمل مطلوب');
       return;
     }
     if (this.basicInfoForm.valid) {
@@ -439,7 +485,7 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
         .issuesIsExist as boolean;
       this.FacilityBasicUpdateInfo.facilityTypeCategory = this.facilityTypeCategory;
       this.FacilityBasicUpdateInfo.facilityType = this.facilityData.facilityType;
-
+      
       if (this.facilityData.companyEstablishingContractFileId) {
         this.FacilityBasicUpdateInfo.companyEstablishingContractFileId =
           this.facilityData.companyEstablishingContractFileId;
@@ -480,6 +526,13 @@ export class EditFacilityBasicDataInfoAllTypesComponent {
         ...newFiles
       ].filter(x => x.fileManagerId);
    
+      if(!this.FacilityBasicUpdateInfo.certificationFileId){
+
+        this.FacilityBasicUpdateInfo.certificationFileId =  this.facilityData.qualificationFacilityCertifications?.length
+          ? this.facilityData.qualificationFacilityCertifications[0].certificationFile.id
+          : null;
+      }
+
       this._facilityProfileService
         .updateFacilityBasicDataInfoAllTypes(this.FacilityBasicUpdateInfo as UpdateFacilityBasicDataInfoAllTypesDto)
         .subscribe((res) => {

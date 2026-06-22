@@ -1,0 +1,105 @@
+@import "/src/assets/styles/custom-variables";
+@import "/src/assets/styles/bootstrap-custom/tables";
+@import "/src/assets/styles/content/page";
+@import "/src/assets/styles/content/table-content";
+@import "/src/assets/styles/content/status";
+
+.page-header {
+  .page-title .title {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #001f21;
+    margin: 0;
+  }
+
+  .search-box {
+    width: 395px;
+    max-width: 100%;
+
+    .input-group {
+      border: 1px solid #8a9393;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+
+      .input-group-text {
+        background: transparent;
+        border: none;
+        color: #8a9393;
+      }
+
+      .form-control {
+        border: none;
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        color: #001f21;
+        text-align: right;
+
+        &::placeholder {
+          color: #8a9393;
+        }
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.table {
+  th {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 500;
+    color: #001f21;
+    background-color: #f4f6f6;
+    white-space: nowrap;
+  }
+
+  .cell-text {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-weight: 400;
+    color: #8a9393;
+  }
+
+  .cell-date {
+    direction: ltr;
+    text-align: right;
+  }
+}
+
+.btn-details {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #005257;
+  border: 1px solid #005257;
+  border-radius: 4px;
+  background: transparent;
+  white-space: nowrap;
+
+  &:hover {
+    background: #005257;
+    color: #fff;
+  }
+}
+
+.btn-process {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  background: #005257;
+  white-space: nowrap;
+
+  &:hover {
+    background: #003b3e;
+  }
+}

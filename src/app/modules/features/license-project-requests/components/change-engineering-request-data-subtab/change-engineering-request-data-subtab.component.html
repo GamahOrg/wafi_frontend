@@ -1,0 +1,214 @@
+<div *ngIf="requestDetails">
+  <!-- <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-file-01"></i>
+    <h6 class="title">بيانات الطلب</h6>
+    <span
+      class="status-pill"
+      [ngClass]="getStatusClass(requestDetails.requestStatus)"
+      *ngIf="requestDetails.requestStatusName"
+    >
+      {{ requestDetails.requestStatusName }}
+    </span>
+  </div> -->
+
+  <div class="tab-data-section">
+    <h6 class="sub-title">البيانات الأساسية للمشروع</h6>
+    <div class="row row-gap-4">
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">رقم الطلب</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.requestNumber ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">اسم المشروع</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.projectName ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">رقم الرخصة</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.certificateNumber ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">مدينة المشروع</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.cityName ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">اسم المطور</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.developerName ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">رقم جوال المطور</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.developerMobile ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">الرقم الموحد للمطور</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.developerUnifiedNumber ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">تاريخ انتهاء الرخصة</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="
+              requestDetails.licenseEndOn
+                ? (requestDetails.licenseEndOn | date: 'd/M/yyyy')
+                : ''
+            "
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label">اسم الاستشاري الهندسي الجديد</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.engineeringFacilityName ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="form-group">
+          <label class="form-label"
+            >الرقم الموحد للاستشاري الهندسي الجديد</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            [value]="requestDetails.engineeringFacilityUnifiedNumber ?? ''"
+            readonly
+          />
+        </div>
+      </div>
+      <div
+        class="col-12"
+        *ngIf="requestDetails.previousConsultingOfficeReport?.filePath"
+      >
+        <label class="form-label">تقرير تسليم الأعمال</label>
+        <div>
+          <a
+            class="file-link"
+            [href]="
+              baseUrl + requestDetails.previousConsultingOfficeReport!.filePath
+            "
+            target="_blank"
+          >
+            <i class="icon hgi hgi-stroke hgi-attachment-01"></i>
+            {{
+              requestDetails.previousConsultingOfficeReport!.fileDescription ||
+                "تقرير تسليم الأعمال"
+            }}
+          </a>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label class="form-label">مبررات تغيير الاستشاري الهندسي</label>
+          <textarea
+            class="form-control"
+            rows="3"
+            [value]="requestDetails.reasons ?? ''"
+            readonly
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="tab-data-section"
+    *ngIf="requestDetails.units && requestDetails.units.length > 0"
+  >
+    <h6 class="sub-title">بيانات الوحدات</h6>
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>نوع الوحدة</th>
+            <th>عدد الوحدات</th>
+            <th>إجمالي عدد الوحدات المباعة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let unit of requestDetails.units">
+            <td>{{ unit.unitTypeName }}</td>
+            <td>{{ unit.subUnitCount }}</td>
+            <td>{{ unit.soldUnitsCount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h6 class="sub-title mt-4">نسبة الإنجاز</h6>
+    <p class="text-muted small mb-2">
+      نسبة إنجاز المشروع وفق آخر تقرير هندسي معتمد للربع السنوي السابق
+    </p>
+    <div class="d-flex align-items-center gap-3">
+      <span class="fw-semibold"
+        >{{ requestDetails.achievementRate ?? 0 }}%</span
+      >
+      <div class="progress flex-fill" style="height: 10px">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          [style.width.%]="requestDetails.achievementRate ?? 0"
+          style="background-color: #005257"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!requestDetails" class="d-flex justify-content-center py-5">
+  <div class="spinner-border text-primary" role="status"></div>
+</div>

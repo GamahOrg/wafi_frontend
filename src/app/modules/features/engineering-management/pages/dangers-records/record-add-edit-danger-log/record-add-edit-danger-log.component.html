@@ -35,7 +35,7 @@
       </div> -->
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label"> وصف الخطر</label>
+          <label class="form-label"><span class="required-star">*</span> وصف الخطر</label>
           <input type="text" id="control-description" class="form-control" formControlName="description"
             >
           <div class="invalid-feedback d-block" *ngIf="controls.description?.hasError('required') && showValidation">
@@ -47,7 +47,7 @@
 
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label"> نوع الخطر</label>
+          <label class="form-label"><span class="required-star">*</span> نوع الخطر</label>
           <select class="form-select" formControlName="riskTypeId">
             <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let type of licenseProjectRiskTypeList" [value]="type.id">
@@ -61,7 +61,7 @@
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">الأستمرارية</label>
+          <label class="form-label"><span class="required-star">*</span> الأستمرارية</label>
           <select class="form-select" formControlName="continuityId">
             <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let continuity of continuityList" [value]="continuity.id">
@@ -75,7 +75,7 @@
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">التأثير</label>
+          <label class="form-label"><span class="required-star">*</span> التأثير</label>
           <select class="form-select" formControlName="effect">
             <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let effect of effectList" [value]="effect">
@@ -89,7 +89,7 @@
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">الاحتمالية</label>
+          <label class="form-label"><span class="required-star">*</span> الاحتمالية</label>
           <select class="form-select" formControlName="probability">
             <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let probability of probabilityList" [value]="probability">
@@ -111,7 +111,7 @@
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label"> وصف التأثير</label>
+          <label class="form-label"><span class="required-star">*</span> وصف التأثير</label>
           <input type="text" id="control-effectDescription" class="form-control" formControlName="effectDescription"
             >
           <div class="invalid-feedback d-block"
@@ -123,7 +123,7 @@
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">خطة الاستجابة واستراتيجية الاحتواء</label>
+          <label class="form-label"><span class="required-star">*</span> خطة الاستجابة واستراتيجية الاحتواء</label>
           <input type="text" id="control-responsePlanContainmentStrategy" class="form-control"
             formControlName="responsePlanContainmentStrategy">
           <div class="invalid-feedback d-block"
@@ -136,7 +136,7 @@
 
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">مالك الحل</label>
+          <label class="form-label"><span class="required-star">*</span> مالك الحل</label>
           <select class="form-select" formControlName="solutionOwnerId">
             <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let owner of ownerTypeList" [value]="owner.id">
@@ -169,7 +169,7 @@
 
       <div class="col-12 col-lg-6">
         <div class="form-group mb-4">
-          <label class="form-label">الحالة</label>
+          <label class="form-label"><span class="required-star">*</span> الحالة</label>
           <select class="form-select" formControlName="riskStatusId">
             <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
             <option *ngFor="let riskStatus of riskStatusList" [value]="riskStatus.id">

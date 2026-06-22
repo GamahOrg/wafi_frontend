@@ -18,6 +18,8 @@ export interface exchangeRequestDetails {
   liceneProjectBeneficiaryType: MainItem;
   beneficiaryDescription: null;
   beneficiaryName: null;
+  bankName: string;
+  ibanNumber: string;
   documentNumber: string;
   availableAmountAfterExchange: null;
   licenseProjectBuyerId: string;
@@ -70,6 +72,7 @@ export interface exchangeRequestDetails {
   letterNumber: string | null;
   letterDate: string | null;
   projectProgressPercentage: number | null;
+  workDonePercentage: number | null;
 }
 export enum LicenseProjectExchangeDocumentRejectionBy {
   //حسابات الضمان

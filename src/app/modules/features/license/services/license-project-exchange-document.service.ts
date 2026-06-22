@@ -125,4 +125,17 @@ export class LicenseProjectExchangeDocumentService {
       })
     )
   }
+
+  GetBeneficiaryName(licenseProjectId: string, liceneProjectBeneficiaryTypeId: number): Observable<string | null> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("licenseProjectId", licenseProjectId);
+    queryParams = queryParams.append("beneficiaryType", liceneProjectBeneficiaryTypeId); 
+
+    return this._httpClient.get<CoreResponseDTO<string>>(`${Configuration.APIs.LicenseProjectExchangeDocument.GetBeneficiaryName}`, { params: queryParams }).pipe(
+      map((res: CoreResponseDTO<string>) => {
+        return res.data ? res.data as string : null
+      })
+    )
+
+  }
 }

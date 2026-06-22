@@ -68,6 +68,7 @@ export class facilityResponse {
   facilityCode: string = '';
   commercialRegisterNumber?: string = '';
   entity700Number?: string = '';
+  customersId: string = '';
   facilityName: string = '';
   commercialRegisterStartDate: Date = new Date();
   commercialRegisterEndDate: Date = new Date();
@@ -75,6 +76,8 @@ export class facilityResponse {
   facilityBusinessTypes: facilityBusinessType[] = [];
   token?: TokenResponse;
   facilityTypeCategory?: FacilityTypeCategory;
+  qualificationDegree?: number;
+  realEstateQualificationDegree?: number;
 }
 
 export enum FacilityTypeCategory {

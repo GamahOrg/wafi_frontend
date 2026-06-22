@@ -91,12 +91,12 @@ export class TechnicalCapabilitiesRequirementsComponent implements OnInit, OnDes
 
   displayEditQualificationProjectComponent(project: any): void {
     this.technicalCapabilitiesRequirementsService.projectTOEdit.next(project);
-    this.popupService.updatePopupData({ title: 'تعديل المشروع', component: EditQualificationProjectComponent });
+    this.popupService.updatePopupData({ title: 'تعديل بيانات القدرات الفنية', component: EditQualificationProjectComponent });
   }
 
   displayAddQualificationProjectComponent(): void {
     this.technicalCapabilitiesRequirementsService.projectTOEdit.next({ id: '00000000-0000-0000-0000-000000000000', technicalCapabilitiesRequirementsId: this.technicalCapabilities?.id });
-    this.popupService.updatePopupData({ title: 'إضافة المشروع', component: EditQualificationProjectComponent });
+    this.popupService.updatePopupData({ title: 'إضافة بيانات القدرات الفنية', component: EditQualificationProjectComponent });
   }
 
   deleteProject(project: any): void {

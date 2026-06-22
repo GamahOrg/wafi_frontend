@@ -14,6 +14,8 @@
 }
 
 .btn-outline-secondary {
+  --bs-btn-color: #{$dark};
+  --bs-btn-border-color: #{$lightgray};
   --bs-btn-hover-color: #{$white};
   --bs-btn-active-color: #{$white};
 }
@@ -49,7 +51,6 @@
 
 .btn-dark {
   --bs-btn-bg: #{$black};
-  --bs-btn-hover-color: #{$black};
 }
 
 .btn-link {

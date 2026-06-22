@@ -3,12 +3,59 @@
     <!-- ملف الهيكل التنظيمي -->
     <div class="col-12 col-lg-6">
       <div class="upload-card">
-        <label class="form-label"><span class="required-star">*</span> ملف الهيكل التنظيمي</label>
-        
-        <app-file-uploader [data]="singleFileUploaderData"
-                           (fileUploaded)="onCreditOrganizationalStructureFileUploaded($event)"></app-file-uploader>
-        <div class="invalid-feedback d-block"
-             *ngIf="!institutionalCapacityAndHrRequirements?.organizationalStructureFileId && showValidation">
+        <label class="form-label"
+          ><span class="required-star">*</span> ملف الهيكل التنظيمي</label
+        >
+
+        <div
+          class="file-bar"
+          *ngIf="
+            existingInstitutionalCapacityAndHrRequirements.organizationalStructureFile
+          "
+        >
+          <div class="details">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a
+              [href]="
+                baseUrl +
+                existingInstitutionalCapacityAndHrRequirements
+                  .organizationalStructureFile.filePath
+              "
+              target="_blank"
+            >
+              {{
+                existingInstitutionalCapacityAndHrRequirements
+                  .organizationalStructureFile?.fileDescription || "ملف مرفق"
+              }}
+            </a>
+          </div>
+          <div class="actions">
+            <button
+              type="button"
+              class="btn btn-icon btn-danger"
+              (click)="
+                deletFile(
+                  existingInstitutionalCapacityAndHrRequirements
+                    .organizationalStructureFile.id
+                )
+              "
+            >
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+        </div>
+
+        <app-file-uploader
+          [data]="singleFileUploaderData"
+          (fileUploaded)="onCreditOrganizationalStructureFileUploaded($event)"
+        ></app-file-uploader>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            !institutionalCapacityAndHrRequirements?.organizationalStructureFileId &&
+            showValidation
+          "
+        >
           حقل مطلوب
         </div>
       </div>
@@ -17,12 +64,61 @@
     <!-- شهادة لائحة تنظيم العمل -->
     <div class="col-12 col-lg-6">
       <div class="upload-card">
-        <label class="form-label"><span class="required-star">*</span> شهادة لائحة تنظيم العمل</label>
-        
-        <app-file-uploader [data]="singleFileUploaderData"
-                           (fileUploaded)="onCreditLaborRegulationCertificateFileUploaded($event)"></app-file-uploader>
-        <div class="invalid-feedback d-block"
-             *ngIf="!institutionalCapacityAndHrRequirements?.laborRegulationCertificateFileId && showValidation">
+        <label class="form-label"
+          ><span class="required-star">*</span> شهادة لائحة تنظيم العمل</label
+        >
+
+        <div
+          class="file-bar"
+          *ngIf="
+            existingInstitutionalCapacityAndHrRequirements.laborRegulationCertificateFile
+          "
+        >
+          <div class="details">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a
+              [href]="
+                baseUrl +
+                existingInstitutionalCapacityAndHrRequirements
+                  .laborRegulationCertificateFile.filePath
+              "
+              target="_blank"
+            >
+              {{
+                existingInstitutionalCapacityAndHrRequirements
+                  .laborRegulationCertificateFile?.fileDescription || "ملف مرفق"
+              }}
+            </a>
+          </div>
+          <div class="actions">
+            <button
+              type="button"
+              class="btn btn-icon btn-danger"
+              (click)="
+                deletFile(
+                  existingInstitutionalCapacityAndHrRequirements
+                    .laborRegulationCertificateFile.id
+                )
+              "
+            >
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+        </div>
+
+        <app-file-uploader
+          [data]="singleFileUploaderData"
+          (fileUploaded)="
+            onCreditLaborRegulationCertificateFileUploaded($event)
+          "
+        ></app-file-uploader>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            !institutionalCapacityAndHrRequirements?.laborRegulationCertificateFileId &&
+            showValidation
+          "
+        >
           حقل مطلوب
         </div>
       </div>
@@ -31,12 +127,63 @@
     <!-- لائحة إدارة السلامة والصحة المهنية -->
     <div class="col-12 col-lg-6">
       <div class="upload-card">
-        <label class="form-label"><span class="required-star">*</span> لائحة إدارة السلامة والصحة المهنية</label>
-        
-        <app-file-uploader [data]="singleFileUploaderData"
-                           (fileUploaded)="onCreditOccupationalSafetyAndHealthFileUploaded($event)"></app-file-uploader>
-        <div class="invalid-feedback d-block"
-             *ngIf="!institutionalCapacityAndHrRequirements?.occupationalSafetyAndHealthFileId && showValidation">
+        <label class="form-label"
+          ><span class="required-star">*</span> لائحة إدارة السلامة والصحة
+          المهنية أو شهادة ISO
+        </label>
+
+        <div
+          class="file-bar"
+          *ngIf="
+            existingInstitutionalCapacityAndHrRequirements.occupationalSafetyAndHealthFile
+          "
+        >
+          <div class="details">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a
+              [href]="
+                baseUrl +
+                existingInstitutionalCapacityAndHrRequirements
+                  .occupationalSafetyAndHealthFile.filePath
+              "
+              target="_blank"
+            >
+              {{
+                existingInstitutionalCapacityAndHrRequirements
+                  .occupationalSafetyAndHealthFile?.fileDescription ||
+                  "ملف مرفق"
+              }}
+            </a>
+          </div>
+          <div class="actions">
+            <button
+              type="button"
+              class="btn btn-icon btn-danger"
+              (click)="
+                deletFile(
+                  existingInstitutionalCapacityAndHrRequirements
+                    .occupationalSafetyAndHealthFile.id
+                )
+              "
+            >
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+        </div>
+
+        <app-file-uploader
+          [data]="singleFileUploaderData"
+          (fileUploaded)="
+            onCreditOccupationalSafetyAndHealthFileUploaded($event)
+          "
+        ></app-file-uploader>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            !institutionalCapacityAndHrRequirements?.occupationalSafetyAndHealthFileId &&
+            showValidation
+          "
+        >
           حقل مطلوب
         </div>
       </div>
@@ -45,23 +192,103 @@
     <!-- شهادة نطاق السعودة -->
     <div class="col-12 col-lg-6">
       <div class="upload-card">
-        <label class="form-label"><span class="required-star">*</span> شهادة نطاق السعودة</label>
-        
-        <app-file-uploader [data]="singleFileUploaderData"
-                           (fileUploaded)="onCreditSaudizationCertificateFileUploaded($event)"></app-file-uploader>
-        <div class="invalid-feedback d-block"
-             *ngIf="!institutionalCapacityAndHrRequirements?.saudizationCertificateFileId && showValidation">
+        <label class="form-label"
+          ><span class="required-star">*</span> شهادة نطاق السعودة</label
+        >
+        <span class="upload-hints">*يجب ان تكون الشهادة سارية المفعول</span>
+
+        <div
+          class="file-bar"
+          *ngIf="
+            existingInstitutionalCapacityAndHrRequirements.saudizationCertificateFile
+          "
+        >
+          <div class="details">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a
+              [href]="
+                baseUrl +
+                existingInstitutionalCapacityAndHrRequirements
+                  .saudizationCertificateFile.filePath
+              "
+              target="_blank"
+            >
+              {{
+                existingInstitutionalCapacityAndHrRequirements
+                  .saudizationCertificateFile?.fileDescription || "ملف مرفق"
+              }}
+            </a>
+          </div>
+          <div class="actions">
+            <button
+              type="button"
+              class="btn btn-icon btn-danger"
+              (click)="
+                deletFile(
+                  existingInstitutionalCapacityAndHrRequirements
+                    .saudizationCertificateFile.id
+                )
+              "
+            >
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+        </div>
+
+        <app-file-uploader
+          [data]="singleFileUploaderData"
+          (fileUploaded)="onCreditSaudizationCertificateFileUploaded($event)"
+        ></app-file-uploader>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            !institutionalCapacityAndHrRequirements?.saudizationCertificateFileId &&
+            showValidation
+          "
+        >
           حقل مطلوب
         </div>
       </div>
     </div>
 
+    <!-- ملفات برامج المسؤولية الاجتماعية -->
     <div class="col-12 col-lg-6">
       <div class="upload-card">
         <label class="form-label">ملفات برامج المسؤولية الاجتماعية</label>
-        
-        <app-file-uploader [data]="mueltiFilesUploaderData"
-                           (fileUploaded)="onSocialResponsibilityProgramFilesUploaded($event)"></app-file-uploader>
+
+        <div
+          class="file-bar"
+          *ngFor="
+            let file of existingInstitutionalCapacityAndHrRequirements.socialResponsibilityProgramsFiles
+          "
+        >
+          <div class="details">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a
+              [href]="baseUrl + file.socialResponsibilityProgramFile.filePath"
+              target="_blank"
+            >
+              {{
+                file.socialResponsibilityProgramFile?.fileDescription ||
+                  "ملف مرفق"
+              }}
+            </a>
+          </div>
+          <div class="actions">
+            <button
+              type="button"
+              class="btn btn-icon btn-danger"
+              (click)="deletFile(file.socialResponsibilityProgramFile.id)"
+            >
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+        </div>
+
+        <app-file-uploader
+          [data]="mueltiFilesUploaderData"
+          (fileUploaded)="onSocialResponsibilityProgramFilesUploaded($event)"
+        ></app-file-uploader>
       </div>
     </div>
   </div>

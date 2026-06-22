@@ -148,7 +148,7 @@
       <!-- <div class="row row-gap-4 mt-2">
       <div class="col-xl-3 col-md-4 col-12" *ngFor="let activity of displayedBusinessTypes">
         <div class="card choice-card h-100 cursor-pointer">
-          <div class="card-body d-flex flex-column justify-content-center align-items-center gap-3">
+          <div class="card-body">
             <span class="icon"><i class="hgi hgi-stroke hgi-building-06"></i></span>
             <h5 class="card-title">{{ activity.businessType }}</h5>
           </div>
@@ -169,7 +169,7 @@
     <div class="row row-gap-4">
       <div class="col-xl-3" *ngFor="let category of sortedCategories">
         <div class="card choice-card h-100 cursor-pointer" [class.active]="isCategorySelected(category)" [class.incompatible]="!category.isCompatible" (click)="selectCategory(category)">
-          <div class="card-body d-flex flex-column justify-content-center align-items-center gap-3">
+          <div class="card-body">
             <ng-container *ngIf="categoryIcons[category.enumValue]">
               <span class="icon" [innerHTML]="categoryIcons[category.enumValue]"></span>
             </ng-container>

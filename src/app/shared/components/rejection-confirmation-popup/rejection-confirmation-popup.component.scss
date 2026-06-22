@@ -5,3 +5,11 @@
 textarea {
   resize: none;
 }
+
+.form-label {
+  color: $darkgray;
+}
+
+.mdc-dialog__title {
+  padding-bottom: 0 !important;
+}

@@ -79,8 +79,8 @@
               "optimization": false,
               "vendorChunk": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
+              "sourceMap": false,
+              "namedChunks": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -135,11 +135,11 @@
             },
             "development": {
               "browserTarget": "Wafi:build:development",
-              "port": 4500
+              "port": 4400
             },
             "stage": {
               "browserTarget": "Wafi:build:stage",
-              "port": 4500
+              "port": 4400
             },
             "local": {
               "browserTarget": "Wafi:build:local",

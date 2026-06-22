@@ -7,159 +7,107 @@
             {{ selectedRequest?.isRenewal ? "تجديد " : "" }}
             {{ selectedRequest?.licenseRequestType?.name }} -
             <span class="text-primary">{{ selectedRequest?.requestCode }}</span>
+            <span class="status-pill green">{{selectedRequest?.externalStatus}}</span>
           </h6>
           <div class="key-value horiz">
             <span class="key">تاريخ تقديم الطلب</span>
             <span class="value">{{
               selectedRequest?.requestOn | date: "dd MMMM yyyy"
-            }}</span>
+              }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-6">
-          <div
-            class="d-flex flex-wrap justify-content-center align-items-center gap-3"
-          >
-            <div
-              class="status-pill orange"
-              *ngIf="
+          <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+            <div class="status-pill orange" *ngIf="
                 selectedRequest &&
                 !selectedRequest.licenseRequestVersions[0].isFinished
-              "
-            >
+              ">
               {{ localization.remainingDaysToStudy }}
               {{ StudyDaysProgressSetting.title }} {{ localization.day }}
             </div>
 
-            <div
-              class="status-pill orange"
-              *ngIf="
+            <div class="status-pill orange" *ngIf="
                 selectedRequest &&
                 selectedRequest.licenseRequestCustomerHeaderEventStatus
                   .allowCompileDeedMarginalizationPeriod != -1
-              "
-            >
+              ">
               {{ localization.remainingDaysToCompileDeedMarginalizationPeriod }}
               <span>{{
                 allowCompileDeedMarginalizationProgressSetting.title
-              }}</span>
+                }}</span>
             </div>
 
-            <div
-              class="status-pill orange"
-              *ngIf="
+            <div class="status-pill orange" *ngIf="
                 selectedRequest &&
                 selectedRequest.licenseRequestCustomerHeaderEventStatus
                   .allowCompileGuaranteeLetterActivationPeriod != -1
-              "
-            >
+              ">
               {{
-                localization.remainingDaysToCompileGuaranteeLetterActivationPeriod
+              localization.remainingDaysToCompileGuaranteeLetterActivationPeriod
               }}
               <span>{{
                 allowCompileGuaranteeLetterActivationProgressSetting.title
-              }}</span>
+                }}</span>
             </div>
 
-            <div
-              class="status-pill orange"
-              *ngIf="
+            <div class="status-pill orange" *ngIf="
                 selectedRequest &&
                 selectedRequest.licenseRequestCustomerHeaderEventStatus
                   .allowCompileQWTablePeriod != -1
-              "
-            >
+              ">
               {{ localization.remainingDaysToCompileQWTablePeriod }}
               <span>{{ allowCompileQWTableProgressSetting.title }}</span>
             </div>
 
-            <div
-              class="status-pill orange"
-              *ngIf="
+            <div class="status-pill orange" *ngIf="
                 selectedRequest &&
                 selectedRequest.licenseRequestCustomerHeaderEventStatus
                   .AllowCompileOpenBankAccountPeriod != -1
-              "
-            >
+              ">
               {{ localization.remainingDaysToCompileOpenBankAccountPeriod }}
               <span>{{
                 allowCompileOpenBankAccountProgressSetting.title
-              }}</span>
+                }}</span>
             </div>
 
-            <div
-              class="status-pill orange"
-              *ngIf="
+            <div class="status-pill orange" *ngIf="
                 selectedRequest &&
                 selectedRequest.licenseProjectFarzRequestStatus
-              "
-            >
+              ">
               {{ selectedRequest.licenseProjectFarzRequestStatus.name }}
               <span>{{
                 allowCompileOpenBankAccountProgressSetting.title
-              }}</span>
+                }}</span>
             </div>
-
-            <span class="status-pill green">{{
-              selectedRequest?.externalStatus
-            }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-3">
-          <div
-            class="d-flex flex-wrap justify-content-end align-items-center gap-3"
-          >
+          <div class="d-flex flex-wrap justify-content-end align-items-center gap-3">
             <ng-container *ngFor="let button of clientActionsButtons">
-              <button
-                *ngIf="button.isVisable"
-                [disabled]="button.isDisables"
-                class="btn d-flex align-items-center justify-content-between"
-                (click)="button.onclick()"
-                type="button"
-                [ngClass]="button.classes"
-              >
+              <button *ngIf="button.isVisable" [disabled]="button.isDisables" class="btn d-flex align-items-center justify-content-between" (click)="button.onclick()" type="button" [ngClass]="button.classes">
                 {{ button.title }}
               </button>
             </ng-container>
-            <button
-              *ngIf="selectedRequest?.licenseProject?.availabilityToUpdate"
-              class="btn d-flex align-items-center justify-content-between btn-primary"
-              (click)="editRequest()"
-              type="button"
-            >
+            <button *ngIf="selectedRequest?.licenseProject?.availabilityToUpdate" class="btn d-flex align-items-center justify-content-between btn-primary" (click)="editRequest()" type="button">
               {{ localization.editButtonTitle }}
             </button>
-            <button
-              *ngIf="
+            <button *ngIf="
                 selectedRequest &&
                 selectedRequest.licenseProjectFarzRequestStatus?.id ===
                   farzRequestStatusEnum.Rejected
-              "
-              class="btn d-flex align-items-center justify-content-between btn-primary"
-              (click)="editFarz()"
-              type="button"
-            >
+              " class="btn d-flex align-items-center justify-content-between btn-primary" (click)="editFarz()" type="button">
               {{ localization.farzStatus }}
             </button>
-            <button
-              *ngIf="selectedRequest && selectedRequest.externalStatusId === 18"
-              class="btn d-flex align-items-center justify-content-between btn-primary"
-              (click)="openPaymentTermsModal()"
-              type="button"
-            >
+            <button *ngIf="selectedRequest && selectedRequest.externalStatusId === 18" class="btn d-flex align-items-center justify-content-between btn-primary" (click)="openPaymentTermsModal()" type="button">
               {{ localization.editPaymentandAdditionalTermsTitle }}
             </button>
 
-            <button
-              *ngIf="
+            <button *ngIf="
                 selectedRequest &&
                 selectedRequest.externalStatusId === 18 &&
                 isRealEstateUnitsLicense() &&
                 selectedRequest?.licenseProject?.isCorrectionPrevented === false
-              "
-              class="btn d-flex align-items-center justify-content-between btn-primary"
-              (click)="openUnitsCorrection()"
-              type="button"
-            >
+              " class="btn d-flex align-items-center justify-content-between btn-primary" (click)="openUnitsCorrection()" type="button">
               {{ localization.unitsCorrection }}
             </button>
           </div>
@@ -173,8 +121,8 @@
             <span class="key">مقدم من</span>
             <span class="value">{{
               selectedRequest?.customer?.fullName ??
-                selectedRequest?.facility?.facilityName
-            }}</span>
+              selectedRequest?.facility?.facilityName
+              }}</span>
           </div>
         </div>
 
@@ -183,8 +131,8 @@
             <span class="key">رقم الهوية </span>
             <span class="value">{{
               selectedRequest?.customer?.nidnumber ??
-                selectedRequest?.facility?.commercialRegisterNumber
-            }}</span>
+              selectedRequest?.facility?.commercialRegisterNumber
+              }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-3 col-xxl">
@@ -192,7 +140,7 @@
             <span class="key">الجنسية </span>
             <span class="value">{{
               selectedRequest?.customer?.nationality?.nationalityName
-            }}</span>
+              }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-3 col-xxl">
@@ -221,7 +169,7 @@
             <span class="key">درجة التأهيل</span>
             <span class="value">{{
               selectedRequest?.qualificationDegree
-            }}</span>
+              }}</span>
           </div>
         </div>
         <div class="col-12 col-xl-3 col-xxl">

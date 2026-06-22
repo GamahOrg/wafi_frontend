@@ -101,7 +101,7 @@ export enum LiceneProjectBeneficiaryTypeEnum {
   //مشترى
   Buyer = 5,
   //أخرى
-  Others,
+  Others = 6,
   //مورد
   Supplier = 7,
 }

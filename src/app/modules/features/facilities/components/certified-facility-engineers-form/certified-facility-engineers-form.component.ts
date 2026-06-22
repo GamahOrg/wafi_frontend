@@ -11,7 +11,6 @@ import { PopupData } from 'src/app/shared/models/popup.model';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { CertifiedEngineerDto } from '../../dataModels/certified-engineer-dto';
-import { ErrorCodes } from 'src/app/core/models/core.model';
 import { QualificationEngineerType } from '../../dataModels/qualification-engineer-type.model';
 
 @Component({
@@ -23,6 +22,7 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
   userData: customerResponse | null = null;
   models: CertifiedEngineerDto[] = [] as CertifiedEngineerDto[];
   subscriptions: Subscription[] = [];
+
   facilityTypeCategory: FacilityTypeCategory | null = null;
   readonly FacilityTypeCategoryEnum = FacilityTypeCategory;
   qualificationCertifiedEngineerDto: QualificationCertifiedEngineerCreateUpdateDto = new QualificationCertifiedEngineerCreateUpdateDto();
@@ -172,23 +172,14 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     const facilityTypeCategory = this.userData?.facilities[0]?.facilityTypeCategory;
     return facilityTypeCategory === FacilityTypeCategory.Developer;
   }
-
-  get trainingName(): string {
-    switch (this.facilityTypeCategory) {
-      case FacilityTypeCategory.Developer:
-        return 'المطور العقاري لمشاريع البيع على الخارطة';
-      case FacilityTypeCategory.Accountant:
-        return 'المحاسب القانوني لمشاريع البيع على الخارطة';
-      case FacilityTypeCategory.Engineering:
-        return 'الاستشاري الهندسي لمشاريع البيع على الخارطة';
-      default:
-        return 'الدورة التدريبية المطلوبة';
-    }
+   isEngineering(): boolean {
+    const facilityTypeCategory = this.userData?.facilities[0]?.facilityTypeCategory;
+    return facilityTypeCategory === FacilityTypeCategory.Engineering;
   }
 
-  isRequiredCourseNotCompleted = false;
+  saveErrorMessage = '';
   save(): void {
-    this.isRequiredCourseNotCompleted=false;
+    this.saveErrorMessage = '';
     if (this.qualificationCertifiedEngineersForm?.invalid) {
       this.showValidation = true;
       this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
@@ -203,19 +194,18 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     this.qualificationCertifiedEngineerDto.id = this.qualificationCertifiedEngineerDto.id ? this.qualificationCertifiedEngineerDto.id : "00000000-0000-0000-0000-000000000000";
     this.subscriptions.push(
       this.certifiedEngineerService.Save(this.qualificationCertifiedEngineerDto).subscribe(res => {
-        if (res.isDone) {
+        if (res?.isDone) {
           this.certifiedEngineerService.setCertifiedEngineerList(res.data as CertifiedEngineerDto[]);
           this.closeDialog();
-        } else {
-          if(res.errorCode)
-          this.isRequiredCourseNotCompleted = res.errorCode == ErrorCodes.RequiredCourseNotCompleted;
+        } else if (res) {
+          this.saveErrorMessage = res.message?.trim() ?? '';
         }
       })
     )
   }
 
   saveAndAddNew(): void {
-    this.isRequiredCourseNotCompleted = false;
+    this.saveErrorMessage = '';
     if (this.qualificationCertifiedEngineersForm?.invalid) {
       this.showValidation = true;
       this._toastrNotificationService.showError('نأمل ادخال كل الحقول اللازمة واعادة المحاولة');
@@ -230,15 +220,14 @@ export class CertifiedFacilityEngineersFormComponent implements OnInit, OnDestro
     this.qualificationCertifiedEngineerDto.id = this.qualificationCertifiedEngineerDto.id ? this.qualificationCertifiedEngineerDto.id : "00000000-0000-0000-0000-000000000000";
     this.subscriptions.push(
       this.certifiedEngineerService.Save(this.qualificationCertifiedEngineerDto).subscribe(res => {
-        if (res.isDone) {
+        if (res?.isDone) {
           this.certifiedEngineerService.setCertifiedEngineerList(res.data as CertifiedEngineerDto[]);
           this.GetByFacilityId();
           this.qualificationCertifiedEngineerDto = new QualificationCertifiedEngineerCreateUpdateDto();
           this.qualificationCertifiedEngineersForm.reset({ identityNumber: '', hasCourses: false });
           this.showValidation = false;
-        } else {
-          if (res.errorCode)
-            this.isRequiredCourseNotCompleted = res.errorCode == ErrorCodes.RequiredCourseNotCompleted;
+        } else if (res) {
+          this.saveErrorMessage = res.message?.trim() ?? '';
         }
       })
     )

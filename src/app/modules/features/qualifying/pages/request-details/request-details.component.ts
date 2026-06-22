@@ -4,7 +4,7 @@ import { RequestDataComponent } from '../../components/request-data/request-data
 import { ResultOfRequestStudyComponent } from '../../components/result-of-request-study/result-of-request-study.component';
 import { RequestEventsLogComponent } from '../../components/request-events-log/request-events-log.component';
 import { Subscription } from 'rxjs';
-import { RequestDetails, QualificationInvoiceData } from '../../dataModels/request-details.model';
+import { RequestDetails, QualificationInvoiceData, QualificationRequestStatusEnum } from '../../dataModels/request-details.model';
 import { internalStatusId } from "../../dataModels/enum/request-status";
 import { TabsService } from 'src/app/shared/services/tabs/tabs.service';
 import { Tabs } from 'src/app/shared/models/tabs.model';
@@ -19,6 +19,7 @@ import { RequestNotesService } from 'src/app/shared/services/requestNotes/reques
 import { CircularProgressSetting } from 'src/app/shared/models/circular-progress-setting.model';
 import { EditorRequestNotesOnlyComponent } from 'src/app/shared/components/editor-request-notes-only/editor-request-notes-only.component';
 import { QualificationInvoiceViewComponent } from '../../components/qualification-invoice-view/qualification-invoice-view.component';
+import { SuspensionNoteReplyComponent } from '../../components/suspension-note-reply/suspension-note-reply.component';
 @Component({
   selector: 'app-request-details',
   templateUrl: './request-details.component.html',
@@ -62,8 +63,17 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
   get internalStatusId() {
     return internalStatusId
   };
+  get qualificationRequestStatusEnum() {
+    return QualificationRequestStatusEnum
+  };
 
   RequestNotes: RequestNotesData | null = null;
+  suspensionNotes: any[] = [];
+
+  get hasUnrepliedSuspensionNote(): boolean {
+    return this.suspensionNotes.some(n => n.repliedOn == null);
+  }
+
   clientActionsButtons: Button[] = [
     {
       icon: "",
@@ -76,13 +86,14 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
   ]
   localization = {
     remainingDaysToStudy: "الوقت المتبقي لدراسة الطلب",
-    remainingDaysToTakeAnAction: "الوقت المتبقي لأخذ قرار"
+    remainingDaysToTakeAnAction: "الوقت المتبقي لأخذ قرار",
+    qualificationSuspensionRemainingDays: "عدد الايام المتبقية للمعالجة لتعليق الطلب",
   }
+
   StudyDaysProgressSetting: CircularProgressSetting = new CircularProgressSetting;
-  invoiceStatusIds: number[] = [8, 9,5];
+  invoiceStatusIds: number[] = [8, 9, 5];
   get hasInvoice(): boolean {
-    return this.selectedRequest != null &&
-      this.invoiceStatusIds.includes(this.selectedRequest.internalStatusId);
+    return this.selectedRequest != null && this.selectedRequest.showInvoiceDetailsButton;
   }
   constructor(
     private _requestService: RequestService,
@@ -97,7 +108,8 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
     this.getSelectedRequestIdFromLocalStorage();
     this.ObserveSelectedRequest();
     this.observePopupEvents();
-    this.observeRequestNotes()
+    this.observeRequestNotes();
+    this.observeDataIsUpdated();
   }
 
   observeRequestNotes(): void {
@@ -123,7 +135,25 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._requestService.GetQualificationRequestHeaderByRequestId(this.selectedRequestID as string).subscribe(res => {
         this._requestService.seclectRequest$.next(res);
+        this.getSuspensionNotes();
       }))
+  }
+
+  private observeDataIsUpdated(): void {
+    this.subscriptions.push(
+      this._requestService.dataIsUpdate.subscribe(() => {
+        this.getSuspensionNotes();
+      })
+    );
+  }
+
+  private getSuspensionNotes(): void {
+    if (!this.selectedRequestID) return;
+    this.subscriptions.push(
+      this._requestService.getSuspensionNotesByRequestId(this.selectedRequestID).subscribe(res => {
+        if (res?.isDone) this.suspensionNotes = res.data ?? [];
+      })
+    );
   }
 
   ObserveSelectedRequest() {
@@ -145,7 +175,7 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
       this.StudyDaysProgressSetting.title = this.selectedRequest.remainingStudyPeriod.toString()
     }
   }
-  // hekper methods 
+  // hekper methods
   private openNotesDialog(): void {
     let Data = {
       id: ButtonType.allowCompile,
@@ -250,6 +280,62 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  openReplyDialog(): void {
+    // if (note?.id) {
+    //   localStorage.setItem('suspensionNoteId', note.id);
+    // } else {
+    //   // Fallback: use first note from suspensionNotes or skip
+    //   const firstNote = this.suspensionNotes[0];
+    //   if (firstNote?.id) localStorage.setItem('suspensionNoteId', firstNote.id);
+    // }
+    const data: PopupData = {
+      id: 'suspensionNoteReply',
+      title: 'الرد على الملاحظات',
+      buttons: [
+        {
+          icon: '',
+          title: 'إلغاء',
+          actionType: ButtonType.cancel,
+          isVisable: true,
+          isDisables: false,
+        },
+        {
+          icon: '',
+          title: 'ارسال',
+          actionType: ButtonType.confirm,
+          isVisable: true,
+          isDisables: false,
+        },
+      ],
+      component: SuspensionNoteReplyComponent,
+    };
+    this._popupService.updatePopupData(data);
+  };
+
+  getRemainingDaysText(days: number | null | undefined): string {
+    if (days == null) {
+      return '';
+    }
+
+    if (days === 0) {
+      return 'لا أيام متبقية';
+    }
+
+    if (days === 1) {
+      return 'يوم واحد';
+    }
+
+    if (days === 2) {
+      return 'يومان';
+    }
+
+    if (days >= 3 && days <= 10) {
+      return `${days} أيام`;
+    }
+
+    return `${days} يوماً`;
   }
 
   ngOnDestroy(): void {

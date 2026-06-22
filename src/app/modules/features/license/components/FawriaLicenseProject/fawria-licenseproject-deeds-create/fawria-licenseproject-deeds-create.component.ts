@@ -79,7 +79,8 @@ export class FawriaLicenseprojectDeedsCreateComponent
 
   singleFileUploaderData: FileUploader = {
     multiple: false,
-    size: 3072,
+    //size: 3072,
+    maxFileSizeMB : 30,
     allowedExtensions: ['.pdf'],
     allowedExtensionsText: '.pdf',
   } as FileUploader;

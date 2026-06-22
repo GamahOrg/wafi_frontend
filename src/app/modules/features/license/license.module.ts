@@ -548,10 +548,15 @@ import { RealStateCharteredAccountantUnitsListComponent } from './pages/real-sta
 import { ChangeUnitStatusFormComponent } from './pages/real-state-chartered-accountant-units-list/change-unit-status-form/change-unit-status-form.component';
 import { ContractAccountantUnitDetailsComponent } from './pages/contracts/contract-accountant-unit-details/contract-accountant-unit-details.component';
 import { SupervisionFeesComponent } from './pages/supervision-fees/supervision-fees.component';
+import { SupervisionFeeInvoicesComponent } from './pages/supervision-fee-invoices/supervision-fee-invoices.component';
+import { SupervisionFeeInvoiceDetailsComponent } from './pages/supervision-fee-invoice-details/supervision-fee-invoice-details.component';
+import { QualificationTypeService } from '../qualifying/services/qualification-type/qualification-type.service';
 
 @NgModule({
   declarations: [
     SupervisionFeesComponent,
+    SupervisionFeeInvoicesComponent,
+    SupervisionFeeInvoiceDetailsComponent,
     CreateLincenseComponent,
     ExchangeDocumentsSelectDelegatorsComponent,
     LincenseSummaryComponent,
@@ -1113,7 +1118,8 @@ import { SupervisionFeesComponent } from './pages/supervision-fees/supervision-f
     CorrectionLicenseProjectRequestProcessingLogService,
     CorrectionLicenseProjectRequestLogService,
     CorrectionLicenseProjectPlanAccordingApprovedStandardsFileService,
-    ExchangeDocumentService
+    ExchangeDocumentService,
+    QualificationTypeService
   ],
   imports: [
     CommonModule,
@@ -1126,5 +1132,8 @@ import { SupervisionFeesComponent } from './pages/supervision-fees/supervision-f
     DatePipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [
+    LicenseProjectPartiesAdditionalTermsComponent,
+  ],
 })
 export class LicenseModule {}

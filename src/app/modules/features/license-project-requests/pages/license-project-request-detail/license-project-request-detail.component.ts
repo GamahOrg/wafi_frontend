@@ -211,7 +211,7 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
         break;
 
         case LicenseProjectRequestTypeEnum.ChangeAccountant:
-          this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.charteredAccountantRequestSummary}`;
+          this.requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.licenseProjectRequests}/${Configuration.pages.licenseProjectRequests.createChangeLicenseProjectAccountantRequest}`;
         break;
 
         case LicenseProjectRequestTypeEnum.ChangeAccountKeeper:
@@ -220,7 +220,11 @@ export class LicenseProjectRequestDetailComponent implements OnInit {
 
 
     }
-    this._router.navigate([this.requestDetailsRoute]);
+    this._router.navigate([this.requestDetailsRoute],{
+      state: {
+        handleNotes: true,
+      }
+    });
   }
   private openCompilNotesDialog() {
     let Data = {

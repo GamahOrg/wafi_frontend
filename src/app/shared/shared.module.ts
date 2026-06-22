@@ -40,6 +40,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { PopupNoteComponent } from './components/popup-note/popup-note.component';
 import { OTPInputComponent } from './components/otp-input/otp-input.component';
@@ -154,6 +155,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
     RatingModule.forRoot(),
+    TypeaheadModule.forRoot(),
 
     NgOtpInputModule,
     AccordionModule,
@@ -197,6 +199,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     PopoverModule,
     TooltipModule,
     RatingModule,
+    TypeaheadModule,
 
     RealEstateContributionFooterComponent,
     PilotLaunchHintComponent,

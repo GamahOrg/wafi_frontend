@@ -23,7 +23,7 @@ import { SharedLicenseProjectService } from '../../../services/sharedLicenseProj
   styleUrls: ['./fawria-licenseproject-engineering-consultants-view-only.component.scss']
 })
 export class FawriaLicenseprojectEngineeringConsultantsViewOnlyComponent {
-baseUrl = `${environment.baseURL}/`;
+  baseUrl = `${environment.baseURL}/`;
 
   subscriptions: Subscription[] = [];
   facility: CustomerShortDto | null = null;
@@ -95,7 +95,7 @@ baseUrl = `${environment.baseURL}/`;
     private _licenseProjectDelegatorService: LicenseProjectDelegatorService,
     private _popupService: PopupService,
     private _licenseProjectPartiesAdditionalTermsService: LicenseProjectPartiesAdditionalTermsService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getLicenseProjectIdStorage();
@@ -114,7 +114,7 @@ baseUrl = `${environment.baseURL}/`;
 
   private getLicenseProjectIdStorage(): void {
     this.licenseProjectId = this._sharedLicenseProjectService.getLicenseProjectIdStorage();
-    if (this.licenseProjectId){
+    if (this.licenseProjectId) {
       this.onGet();
     }
   }
@@ -143,7 +143,7 @@ baseUrl = `${environment.baseURL}/`;
         .pipe(takeUntil(this.destroyed$))
         .subscribe((result) => {
           if (result && result.data) {
-            if(!this.entity || this.entity == undefined)
+            if (!this.entity || this.entity == undefined)
               this.entity = {} as LicenseProjectEngineeringConsultantDto;
 
             this.entity.engineeringConsultant = result.data.facility as FacilityShortDto;
@@ -163,15 +163,18 @@ baseUrl = `${environment.baseURL}/`;
 
   buildForm() {
     this.form = this.formGroup.group({
-      commercialRegister: ['', Validators.compose([Validators.required, Validators.min(0)]), ],
+      commercialRegister: ['', Validators.compose([Validators.required, Validators.min(0)]),],
+      entity700Number: ['', Validators.compose([Validators.required, Validators.min(0)]),],
       contarctValue: ['', Validators.compose([Validators.required, Validators.min(0)])],
       financialReportApprovalPeriodInDays: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(30)])],
       paymentDeadline: ['', Validators.compose([Validators.required])],
-      authorizedToSignDelegator: ['', Validators.compose([Validators.required])],
+      // authorizedToSignDelegator: ['', Validators.compose([Validators.required])],
+
+      authorizedToSignDelegatorIds: [[], Validators.required]
     });
   }
 
-  x:FacilityShortDto = new FacilityShortDto();
+  x: FacilityShortDto = new FacilityShortDto();
   setFacility($event: any) {
     this.x = $event;
     this.GetProjectDelegatorByFacilityId();
@@ -260,7 +263,7 @@ baseUrl = `${environment.baseURL}/`;
   onGet() {
     this._engineeringConsultantService.fawryLicenseGetAsync(this.licenseProjectId as string).subscribe((result) => {
       if (result.data) {
-        
+
         this.entity = result.data;
         // this.x = this.entity.engineeringConsultant.id as string;
         this.facility$.next(this.entity.engineeringConsultant);
@@ -268,12 +271,12 @@ baseUrl = `${environment.baseURL}/`;
         this.setFacility(this.entity.engineeringConsultant);
         this.form.patchValue({
           commercialRegister: this.entity.engineeringConsultant?.commercialRegisterNumber,
+          entity700Number: this.entity.engineeringConsultant?.entity700Number,
           contarctValue: this.entity.contarctValue,
           financialReportApprovalPeriodInDays: this.entity.financialReportApprovalPeriodInDays,
           paymentDeadline: this.entity.paymentDeadline,
-          authorizedToSignDelegator: this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators && this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators.length > 0
-            ? this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators[0].delegatorCustomerId
-            : ''
+          authorizedToSignDelegatorIds:
+            this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators?.map(d => d.delegatorCustomerId) || []
         });
         this.paymentTableData = this.entity.licenseProjectEngineeringConsultantPayments?.map(payment => ({
           item: payment.item,
@@ -302,31 +305,45 @@ baseUrl = `${environment.baseURL}/`;
       return;
     }
 
-    let object = this.form?.value as LicenseProjectEngineeringConsultantCreateUpdateDto;
+    const formValue = this.form.value;
+
+    const object = formValue as LicenseProjectEngineeringConsultantCreateUpdateDto;
+
     object.licenseProjectId = this.licenseProjectId;
-    object.engineeringConsultantId = this.x?.id as string as string;
+    object.engineeringConsultantId = this.x?.id as string;
     object.id = this.entity.id;
-    object.engineeringConsultantLicenseNumber = this.x?.saudiAuthorityOfEngineersLicenseNumber as string;
+    object.engineeringConsultantLicenseNumber =
+      this.x?.saudiAuthorityOfEngineersLicenseNumber as string;
     object.cityId = this.x.facilityCity as string;
-    // Populate licenseProjectEngineeringConsultantDelegators
-    const selectedDelegatorId = this.form?.value.authorizedToSignDelegator;
-    if (selectedDelegatorId) {
-      const delegatorDto = new LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto();
-      delegatorDto.id = this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators && this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators.length > 0
-        ? this.entity.licenseProjectEngineeringConsultantAuthorizedToSignDelegators[0].id
-        : '00000000-0000-0000-0000-000000000000';
-      delegatorDto.delegatorCustomerId = selectedDelegatorId;
-      delegatorDto.licenseProjectEngineeringConsultantId = this.x?.id as string
-      object.licenseProjectEngineeringConsultantAuthorizedToSignDelegators = [delegatorDto];
-    }
-    object.licenseProjectEngineeringConsultantPayments = this.paymentTableData.map(payment => ({
-      id: '00000000-0000-0000-0000-000000000000',
-      item: payment.item,
-      quantity: payment.quantity,
-      unitPrice: payment.unitPrice,
-      description: payment.description,
-      licenseProjectEngineeringConsultantId: this.x?.id as string
-    }));
+
+    const selectedIds: string[] = formValue.authorizedToSignDelegatorIds || [];
+
+    object.licenseProjectEngineeringConsultantAuthorizedToSignDelegators =
+      selectedIds.map((id: string) => {
+        const existing = this.entity
+          ?.licenseProjectEngineeringConsultantAuthorizedToSignDelegators
+          ?.find(d => d.delegatorCustomerId === id);
+
+        const dto = new LicenseProjectEngineeringConsultantDelegatorCreateUpdateDto();
+
+        dto.id = existing?.id || '00000000-0000-0000-0000-000000000000';
+
+        dto.delegatorCustomerId = id;
+        dto.licenseProjectEngineeringConsultantId = this.x?.id as string;
+
+        return dto;
+      });
+
+    object.licenseProjectEngineeringConsultantPayments =
+      this.paymentTableData.map(payment => ({
+        id: '00000000-0000-0000-0000-000000000000',
+        item: payment.item,
+        quantity: payment.quantity,
+        unitPrice: payment.unitPrice,
+        description: payment.description,
+        licenseProjectEngineeringConsultantId:
+          this.x?.id as string
+      }));
 
     if (this.entity.id !== Guid.empty && this.entity.id) {
       this.update(object, moveToNextTab);
@@ -361,5 +378,19 @@ baseUrl = `${environment.baseURL}/`;
         this.onGet()
       }
     });
+  }
+
+  getSelectedSignatories() {
+    const ids = this.form.get('authorizedToSignDelegatorIds')?.value || [];
+    return this.licenseProjectDelegators.filter(x => ids.includes(x.id));
+  }
+
+  getSelectedSignatoriesText(): string {
+    const selected = this.getSelectedSignatories();
+
+    if (!selected.length) return 'لا يوجد مفوضين';
+    if (selected.length === 1) return selected[0].fullName;
+
+    return `${selected.length} مفوضين`;
   }
 }

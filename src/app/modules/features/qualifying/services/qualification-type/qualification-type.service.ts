@@ -21,4 +21,13 @@ export class QualificationTypeService {
     )
   }
 
+  isRemovedFacilityQualificationRequest(
+    facilityId: string
+  ): Observable<CoreResponseDTO<boolean>> {
+    return this._httpClient.post<CoreResponseDTO<boolean>>(
+      `${Configuration.APIs.QualificationRequestHeader.IsRemovedFacilityQualificationRequest}/${facilityId}`,
+      {}
+    );
+  }
+
 }

@@ -5,7 +5,7 @@ import { Pagination, pagination } from 'src/app/shared/models/pagination.model';
 import { RequestService } from '../../../qualifying/services/requests/request-service.service';
 import { Router } from '@angular/router';
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
-import {Request,internalStatusId } from '../../../qualifying/dataModels/request-list.model';
+import { Request, internalStatusId } from '../../../qualifying/dataModels/request-list.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -23,7 +23,7 @@ export class QualificationRequestListComponent implements OnInit {
 
   showFilter: boolean = false;
   requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requestDetails}`;
-  @HostListener('document:click', ['$event']) onDocumentClick() {
+  @HostListener('document:click') onDocumentClick() {
     this.showFilter = false;
   }
   bsConfig = {
@@ -46,12 +46,10 @@ export class QualificationRequestListComponent implements OnInit {
     pageSize: 10,
     totalCount: 0,
   };
-searchText:string='';
+  searchText: string = '';
   reqList: Pagination<Request[]> = {} as Pagination<Request[]>;
   selectedRequest: Request = {} as Request;
-  get internalStatusId() {
-    return internalStatusId;
-  }
+
 
   constructor(
     private _requestService: RequestService,
@@ -66,6 +64,35 @@ searchText:string='';
     this.getQualificationRequests();
     this.watchPaginationActions();
   }
+
+  getStatusClass(statusId: number): string {
+    if (
+      statusId === internalStatusId.RequestApproved
+    ) {
+      return 'green';
+    }
+
+    if (
+      statusId === internalStatusId.Expired ||
+      statusId === internalStatusId.RequestRemoved ||
+      statusId === internalStatusId.RequestCanceled ||
+      statusId === internalStatusId.RequestRejected
+    ) {
+      return 'red';
+    }
+
+    if (
+      statusId === internalStatusId.QualificationSuspended ||
+      statusId === internalStatusId.UnderStudy ||
+      statusId === internalStatusId.SendingNotes ||
+      statusId === internalStatusId.ProcessingNotes ||
+      statusId === internalStatusId.UnderStudyAfterProcessingNotes
+    ) {
+      return 'orange';
+    }
+
+    return '';
+  }
   sortData(column: string) {
     if (this.currentSortColumn === column) {
       this.currentSortOrder = this.currentSortOrder === 'asc' ? 'desc' : 'asc';
@@ -77,10 +104,10 @@ searchText:string='';
   }
   getQualificationRequests() {
     this.subscriptions.push(
-      this._requestService.getQualificationRequests(this.pagintationData.currentPage, this.pagintationData.pageSize,this.searchText,this.currentSortColumn,this.currentSortOrder)
-      .subscribe((res: Pagination<Request[]>) => {
-        this.updateRequestList(res as Pagination<Request[]>)
-      })
+      this._requestService.getQualificationRequests(this.pagintationData.currentPage, this.pagintationData.pageSize, this.searchText, this.currentSortColumn, this.currentSortOrder)
+        .subscribe((res: Pagination<Request[]>) => {
+          this.updateRequestList(res as Pagination<Request[]>)
+        })
     )
   }
   //private methods

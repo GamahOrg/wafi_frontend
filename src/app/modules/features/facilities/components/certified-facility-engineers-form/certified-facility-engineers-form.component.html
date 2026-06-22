@@ -1,5 +1,8 @@
+
 <form [formGroup]="qualificationCertifiedEngineersForm" id="form-qualificationCertifiedEngineersForm">
   <!-- For Developer: Full width identity number -->
+
+
   <div class="form-group" *ngIf="isDeveloper(); else nonDeveloperLayout">
     <label for="" class="form-label">رقم الهوية <span class="required-star">*</span></label>
     <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber" maxlength="10" minlength="10" />
@@ -9,6 +12,12 @@
 
   <!-- For non-Developer (Accountant/Engineering): Split layout with training field -->
   <ng-template #nonDeveloperLayout>
+<div class="upload-hints" *ngIf="isEngineering() && facilityTypeCategory != FacilityTypeCategoryEnum.Developer">
+   يجب ألا يقل عدد المهندسين الحاصلين على التدريب عن (10%) من إجمالي مهندسي المكتب المعتمدين أو (5) مهندسين — أيهما أقل.
+</div>
+     <div class="upload-hints" *ngIf="!isEngineering() && facilityTypeCategory != FacilityTypeCategoryEnum.Developer">
+   يجب ألا يقل عدد المحاسبين الحاصلين على التدريب عن (10%) من إجمالي محاسبي الشركة المعتمدين أو (4) محاسبين — أيهما أقل.
+</div>
     <div class="row row-gap-4">
       <div class="col-xl">
         <div class="form-group">
@@ -48,11 +57,11 @@
   </ng-template>
 
   <!-- error message -->
-  <div *ngIf="isRequiredCourseNotCompleted" class="alert alert-danger mt-5" role="alert">
+  <div *ngIf="saveErrorMessage" class="alert alert-danger mt-5" role="alert">
     <span class="icon">
       <i class="hgi hgi-stroke hgi-help-circle"></i>
     </span>
-    <span>عذرًا، لا يمكن إضافة هذا الموظف إلى قائمة الحاصلين على التدريب؛ لعدم اجتياز دورة {{trainingName}} لدى المعهد العقاري.</span>
+    <span>{{saveErrorMessage}}</span>
   </div>
 
   <div class="d-flex justify-content-start mt-3">

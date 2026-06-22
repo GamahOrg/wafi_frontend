@@ -17,14 +17,16 @@ import { environment } from 'src/environments/environment';
 export class RequestListComponent implements OnInit {
   subscriptions: Subscription[] = [];
   baseUrl = `${environment.baseURL}/`;
-  searchText:string='';
+  searchText: string = '';
   showFilter: boolean = false;
   currentSortOrder: 'asc' | 'desc' | null = null;
   currentSortColumn: string = '';
   requestDetailsRoute = `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requestDetails}`;
-  @HostListener('document:click', ['$event']) onDocumentClick() {
+  newRequestRoute = `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requests}`;
+  @HostListener('document:click') onDocumentClick() {
     this.showFilter = false;
   }
+
   bsConfig = {
     containerClass: 'theme-default',
     isAnimated: true,
@@ -47,11 +49,9 @@ export class RequestListComponent implements OnInit {
   };
   reqList: Pagination<Request[]> = {} as Pagination<Request[]>;
   selectedRequest: Request = {} as Request;
-  
-  get externalStatusId() {
-    return internalStatusId;
-  }
-  
+
+
+
   constructor(
     private _requestService: RequestService,
     private _router: Router,
@@ -65,8 +65,40 @@ export class RequestListComponent implements OnInit {
     this.watchPaginationActions();
   }
 
+  addNewRequest() {
+    this._router.navigate([this.newRequestRoute]);
+  }
+  getStatusClass(statusId: number): string {
+
+    if (
+      statusId === internalStatusId.RequestApproved
+    ) {
+      return 'green';
+    }
+
+    if (
+      statusId === internalStatusId.Expired ||
+      statusId === internalStatusId.RequestRemoved ||
+      statusId === internalStatusId.RequestCanceled ||
+      statusId === internalStatusId.RequestRejected
+    ) {
+      return 'red';
+    }
+
+    if (
+      statusId === internalStatusId.QualificationSuspended ||
+      statusId === internalStatusId.UnderStudy ||
+      statusId === internalStatusId.SendingNotes ||
+      statusId === internalStatusId.ProcessingNotes ||
+      statusId === internalStatusId.UnderStudyAfterProcessingNotes
+    ) {
+      return 'orange';
+    }
+
+    return '';
+  }
   getSearchText(event: Event) {
-    this.searchText=(event.target as HTMLInputElement).value;
+    this.searchText = (event.target as HTMLInputElement).value;
   }
 
   sortData(column: string) {
@@ -79,19 +111,19 @@ export class RequestListComponent implements OnInit {
     this.getQualificationRequests();
   }
 
-  search(){
-   this.getQualificationRequests();
+  search() {
+    this.getQualificationRequests();
   }
 
   getQualificationRequests() {
     this.subscriptions.push(
-      this._requestService.getQualificationRequests(this.pagintationData.currentPage, this.pagintationData.pageSize,this.searchText,this.currentSortColumn , this.currentSortOrder)
-      .subscribe((res: Pagination<Request[]>) => {
-        this.updateRequestList(res as Pagination<Request[]>)
-      })
+      this._requestService.getQualificationRequests(this.pagintationData.currentPage, this.pagintationData.pageSize, this.searchText, this.currentSortColumn, this.currentSortOrder)
+        .subscribe((res: Pagination<Request[]>) => {
+          this.updateRequestList(res as Pagination<Request[]>)
+        })
     )
   }
-  
+
   //private methods
   private updateRequestList(TypeListView: Pagination<Request[]>): void {
     this.reqList = TypeListView;
@@ -151,6 +183,7 @@ export class RequestListComponent implements OnInit {
     this.pagintationData.currentPage = nextPage;
     this.getQualificationRequests()
   }
+
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

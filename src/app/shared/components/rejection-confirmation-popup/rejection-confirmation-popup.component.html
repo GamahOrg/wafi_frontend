@@ -1,4 +1,4 @@
-<div mat-dialog-title class="justify-content-between pb-2">
+<div mat-dialog-title class="justify-content-between">
   <h6 class="title" *ngIf="confirmationPopupData.title">{{confirmationPopupData.title}}</h6>
 
   <button class="btn btn-link p-0" (click)="onClickOnCancel()" mat-dialog-close tabindex="-1" aria-label="Close" *ngIf="!disableClose">
@@ -7,15 +7,19 @@
 </div>
 
 <div mat-dialog-content [formGroup]="rejectionForm">
-  <label class="form-label" *ngIf="confirmationPopupData.controlTitle" >  {{confirmationPopupData.controlTitle}}   <span class="required-star">*</span></label> 
+  <div class="d-flex flex-column gap-4 mt-4">
 
-  <textarea rows="5" class="form-control" formControlName="notes" res></textarea>
-  <div class="invalid-feedback d-block" *ngIf="rejectionForm.get('notes')?.touched && rejectionForm.get('notes')?.hasError('required')">
-    هذا الحقل مطلوب
-  </div>
+    <div class="form-group">
+      <label class="form-label" *ngIf="confirmationPopupData.controlTitle"><span class="required-star">*</span> {{confirmationPopupData.controlTitle}}</label>
+      <textarea rows="5" class="form-control" formControlName="notes" res></textarea>
+      <div class="invalid-feedback d-block" *ngIf="rejectionForm.get('notes')?.touched && rejectionForm.get('notes')?.hasError('required')">
+        هذا الحقل مطلوب
+      </div>
+    </div>
 
-  <div class="d-flex justify-content-end align-items-center gap-3 mt-4">
-    <button class="btn btn-link px-xl-4" (click)="onClickOnCancel()">إلغاء</button>
-    <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnConfirm()">{{confirmationPopupData.acceptButtonText ?? 'حفظ '}}</button>
+    <div class="d-flex justify-content-end gap-3">
+      <button class="btn btn-link px-xl-4" (click)="onClickOnCancel()">إلغاء</button>
+      <button class="btn btn-{{confirmationPopupData.popupType}}" (click)="onClickOnConfirm()">{{confirmationPopupData.acceptButtonText ?? 'حفظ '}}</button>
+    </div>
   </div>
 </div>

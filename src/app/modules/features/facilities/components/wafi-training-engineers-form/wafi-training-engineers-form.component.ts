@@ -31,7 +31,7 @@ export class WafiTrainingEngineersFormComponent implements OnInit, OnDestroy {
     engineerType: [QualificationEngineerType.Employee as number],
   });
   showValidation = false;
-  isRequiredCourseNotCompleted: boolean = false;
+  errorMessage: string | null = null;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -135,11 +135,14 @@ export class WafiTrainingEngineersFormComponent implements OnInit, OnDestroy {
             engineerType: QualificationEngineerType.Employee as number,
           });
           this.showValidation = false;
-          this.isRequiredCourseNotCompleted = false;
+          this.errorMessage = null;
 
         } else {
-          if (res.errorCode)
-            this.isRequiredCourseNotCompleted = res.errorCode == ErrorCodes.RequiredCourseNotCompleted;
+          this.errorMessage =
+            res.errorCode == ErrorCodes.RequiredCourseNotCompleted
+              ? 'عذرًا، لا يمكن إضافة هذا الموظف إلى قائمة الحاصلين على التدريب؛ لعدم اجتياز الدورة التدريبية المطلوبة لدى المعهد العقاري.'
+              : res.message?.trim() || 'حدث خطأ، يرجى المحاولة مرة أخرى';
+
         }
       })
     );

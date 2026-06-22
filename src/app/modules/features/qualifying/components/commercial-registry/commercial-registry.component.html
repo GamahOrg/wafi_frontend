@@ -81,6 +81,15 @@
         </div>
       </div>
     </div>
+    <div class="col-xl-6" *ngIf="facility.mobile">
+      <div class="key-value">
+        <div class="key">رقم الهاتف</div>
+        <div class="value">
+          <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+          {{ facility.mobile }}
+        </div>
+      </div>
+    </div>
     <div class="col-xl-6" *ngIf="facility.postalCode">
       <div class="key-value">
         <div class="key">الرمز البريدي</div>
@@ -126,11 +135,29 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering">
+    <div class="col-xl-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering 
+    && facility.technicalCapabilitiesRequirements && facility.technicalCapabilitiesRequirements.length > 0 
+    && facility.technicalCapabilitiesRequirements[0].qualificationFacilityCertifications
+    && facility.technicalCapabilitiesRequirements[0].qualificationFacilityCertifications.length > 0">
       <div class="key-value">
         <div class="key">شهادة تصنيف مقدمي خدمات المدن بالتكامل مع منصة بلدي</div>
         <div class="value">
+            <img src="/assets/images/icons/pdf-colored.svg" alt="PDF Icon">
+            <a download [href]="baseUrl + facility.technicalCapabilitiesRequirements[0].qualificationFacilityCertifications[0].certificationFile?.filePath" target="_blank">
+              {{ facility.technicalCapabilitiesRequirements[0].qualificationFacilityCertifications[0].certificationFile.fileDescription || 'ملف مرفق' }}
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering 
+    && facility.technicalCapabilitiesRequirements && facility.technicalCapabilitiesRequirements.length > 0 
+    && facility.technicalCapabilitiesRequirements[0].qualificationFacilityCertifications
+    && facility.technicalCapabilitiesRequirements[0].qualificationFacilityCertifications.length > 0">
+      <div class="key-value">
+        <div class="key">درجة التصنيف</div>
+        <div class="value">
           <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+          {{ facility.technicalCapabilitiesRequirements[0].qualificationFacilityCertifications[0].certificationDegree?.degree || 'غير محدد' }}
         </div>
       </div>
     </div>

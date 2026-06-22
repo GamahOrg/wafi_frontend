@@ -261,6 +261,15 @@
           </div>
         </div>
       </div>
+      <div class="col-12 col-lg-6" *ngIf="facilityTypeCategory === FacilityTypeCategoryEnum.Engineering && facilityData?.qualificationFacilityCertifications?.length">
+        <div class="key-value">
+          <div class="key">درجة التصنيف</div>
+          <div class="value">
+            <span class="icon"><i class="hgi hgi-stroke hgi-note"></i></span>
+            <span>{{ facilityData.qualificationFacilityCertifications[0].certificationDegree?.degree }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ng-container>

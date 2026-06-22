@@ -1,0 +1,86 @@
+<div class="page">
+  <!-- Header: title + search -->
+  <div class="page-header mb-3">
+    <div class="d-flex align-items-center justify-content-between gap-3">
+      <div class="page-title mb-0">
+        <h5 class="title"> قائمة الموافقات </h5>
+      </div>
+      <div class="search-box">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="hgi hgi-stroke hgi-search-01"></i>
+          </span>
+          <input type="text"
+                 class="form-control"
+                 placeholder="البحث باسم الطلب او اسم المشروع"
+                 (keyup)="onSearchKeyup($event)" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="paginationData.totalCount > 0">
+    <div class="table-responsive mb-3">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">اسم الطلب</th>
+            <th scope="col">اسم المشروع</th>
+            <th scope="col">تاريخ تقديم الطلب</th>
+
+            <th scope="col">حالة الطلب</th>
+            <th scope="col">حالة الموافقة</th>
+            <!-- <th scope="col">المدة المتبقية</th> -->
+            <th scope="col">الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td class="cell-text">{{ item.licenseProjectRequestTypeName }}</td>
+            <td class="cell-text">{{ item.projectName }}</td>
+            <td class="cell-text cell-date">{{ item.createdOn | date: 'dd-MM-yyyy' }}</td>
+
+            <td>
+              <span class="status-pill orange" *ngIf="item.requestStatusName">{{ item.requestStatusName }}</span>
+              <span *ngIf="!item.requestStatusName">-</span>
+            </td>
+            <td>
+              <!--<span class="status-pill"
+                    *ngIf="item.approvalStatus">
+                {{ item.approvalStatus }}
+              </span>-->
+              <span class="status-pill"
+                    [ngClass]="{
+        'orange': item.approvalStatus === 1,
+        'green': item.approvalStatus === 2,
+        'red': item.approvalStatus === 3
+      }"
+                    *ngIf="item.approvalStatus">
+                {{ getApprovalStatusText(item.approvalStatus) }}
+              </span>
+              <span *ngIf="!item.approvalStatus">-</span>
+            </td>
+            <!-- <td class="cell-text">
+              {{ item.remainingDays !== null && item.remainingDays !== undefined ? (item.remainingDays + ' أيام') : '-' }}
+            </td> -->
+            <td>
+              <button type="button"
+                      class="btn btn-sm btn-details" (click)="viewDetails(item)">
+                عرض التفاصيل
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="paginationData.totalCount === 0">
+    <div class="mt-4">
+      <app-no-data [showCompleteBtn]="false"></app-no-data>
+    </div>
+  </ng-container>
+</div>

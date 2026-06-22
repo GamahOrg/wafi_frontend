@@ -31,22 +31,12 @@ const routes: Routes = [
     data: { breadcrumb: 'انشاء طلب جديد' },
   },
   {
-    path: `${Configuration.pages.qualifying.createRequest}/:code/${Configuration.pages.qualifying.upgradeDegree}`,
-    component: CreateComponent,
-    data: { breadcrumb: 'تغيير درجة التأهيل' },
-  },
-  {
     path: `${Configuration.pages.qualifying.renewRequest}/:code`,
     component: CreateComponent,
     data: { breadcrumb: 'تجديد طلب جديد' },
   },
   {
     path: `${Configuration.pages.qualifying.requestSummary}/:code/:period`,
-    component: RequestSummaryComponent,
-    data: { breadcrumb: 'تأكيد بيانات الطلب' },
-  },
-  {
-    path: `${Configuration.pages.qualifying.requestSummary}/:code/:period/${Configuration.pages.qualifying.upgradeDegree}`,
     component: RequestSummaryComponent,
     data: { breadcrumb: 'تأكيد بيانات الطلب' },
   },

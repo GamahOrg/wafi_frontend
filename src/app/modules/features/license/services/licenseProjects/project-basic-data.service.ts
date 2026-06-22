@@ -127,5 +127,12 @@ export class ProjectBasicDataService {
         })
       )
     }  
+    GetWorkDonePercentage(licenseProjectId: string): Observable<any> {
+      return this._httpClient.get(`${Configuration.APIs.LicenseProject.GetWorkDonePercentage}/${licenseProjectId}`).pipe(
+        map((res: any) => {
+          return res.data as any;
+        })
+      )
+    }  
 
 }

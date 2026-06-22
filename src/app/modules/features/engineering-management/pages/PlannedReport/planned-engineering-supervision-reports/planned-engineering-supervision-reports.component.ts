@@ -31,7 +31,7 @@ import { LicenseProjectScopeEnum } from '../../../models/project-basic-data.dto'
   selector: 'app-planned-engineering-supervision-reports',
   templateUrl: './planned-engineering-supervision-reports.component.html',
   styleUrls: ['./planned-engineering-supervision-reports.component.scss'],
-  standalone:false
+  standalone: false
 })
 export class PlannedEngineeringSupervisionReportsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];

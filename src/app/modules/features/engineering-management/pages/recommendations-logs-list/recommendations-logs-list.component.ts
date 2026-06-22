@@ -69,7 +69,7 @@ export class RecommendationsLogsListComponent {
     private _router: Router,
     private _nationalAddressService: NationalAddressService,
     private _dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obseveCustomerData();
@@ -266,6 +266,17 @@ export class RecommendationsLogsListComponent {
       `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.exchangeDocumentsListOnProject}`,
     );
   }
+  openChangePlanRequest(project: any): void {
+    this._sharedLicenseProjectService.setSelectedProjectIdToLocalStorage(
+      project.licenseProjectId,
+    );
+
+    this._router.navigate([
+      Configuration.modules.wafi,
+      Configuration.modules.licenseProjectRequests,
+      Configuration.pages.licenseProjectRequests.licenseProjectRequests,
+    ]);
+  }
 
   openDelegatorsSelectionPopup(project: any): void {
     // this._sharedLicenseProjectService.setLicenseProjectIdInLocalStorage(
@@ -277,16 +288,16 @@ export class RecommendationsLogsListComponent {
     // });
 
     let Data = {
-          iconClass: 'hgi hgi-stroke hgi-profile-02',
-          title: 'إضافة مفوضين وثائق الصرف',
-          component: ExchangeDocumentsSelectDelegatorsComponent,
-          id: 'ExchangeDocumentsSelectDelegatorsComponent',
-          submitButtonTitle: 'ارسال',
-          data: {
-            licenseProjectId: project.licenseProjectId,
-          },
-        } as PopupData;
-        this._popupService.updatePopupData(Data);
+      iconClass: 'hgi hgi-stroke hgi-profile-02',
+      title: 'إضافة مفوضين وثائق الصرف',
+      component: ExchangeDocumentsSelectDelegatorsComponent,
+      id: 'ExchangeDocumentsSelectDelegatorsComponent',
+      submitButtonTitle: 'ارسال',
+      data: {
+        licenseProjectId: project.licenseProjectId,
+      },
+    } as PopupData;
+    this._popupService.updatePopupData(Data);
 
   }
 

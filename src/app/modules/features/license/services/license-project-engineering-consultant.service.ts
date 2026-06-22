@@ -53,6 +53,17 @@ export class LicenseProjectEngineeringConsultantService {
         return res;
       }))
   }
+  ValidateCommercialRegisterNumberForAddingChangeAccountantRequest(commercialRegister: string, typeCode: string, licenseProjectId: string | null, skipErrorToast: boolean = false): Observable<CoreResponseDTO<CustomerShortDto>> {
+    let url = `${Configuration.APIs.facility.ValidateCommercialRegisterNumberForAddingChangeAccountantRequest}`;
+    let headers = new HttpHeaders();
+    if (skipErrorToast) {
+      headers = headers.set('X-Skip-Error-Toast', 'true');
+    }
+    return this.httpClient.get(`${url}/${commercialRegister}/${typeCode}/${licenseProjectId}`, { headers }).pipe(
+      map((res: any) => {
+        return res;
+      }))
+  }
 
   updateAsync(model: LicenseProjectEngineeringConsultantCreateUpdateDto): Observable<CoreResponseDTO<LicenseProjectEngineeringConsultantDto>> {
     let url = `${this.baseUrl}${Configuration.APIs.LicenseProjectEngineeringConsultant.Update}`;

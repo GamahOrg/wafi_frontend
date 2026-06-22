@@ -204,9 +204,20 @@
              class="form-control"
              id="control-unitsCount"
              formControlName="unitsCount" />
+   
+      <div class="form-text">
+        <!--<span class="icon">
+          <i class="hgi hgi-stroke hgi-information-circle"></i>
+        </span>-->
+        <span class="text">الحد الأدني لعدد الوحدات لكل مشروع (10 وحدات)</span>
+      </div>
       <div class="invalid-feedback d-block"
            *ngIf="controls['unitsCount'].errors?.['required'] && showValidation">
         حقل مطلوب
+      </div>
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['unitsCount'].errors?.['min'] && showValidation">
+        عدد الوحدات يجب ان يكون اكبر من او يساوي 10
       </div>
     </div>
     <div class="col-12 col-lg-6">
@@ -232,7 +243,7 @@
    
   </div>
   <div class="row row-gap-3 mb-3">
-    <div class="col-12 col-lg-12">
+    <div class="col-12 col-lg-6">
       <label for="licNum"
              class="form-label"> <span class="required-star">*</span>مدة المشروع بالأيام</label>
       <input type="number"
@@ -244,22 +255,24 @@
         حقل مطلوب
       </div>
     </div>
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"><span class="required-star">*</span>نسبة الإنجاز</label>
+      <input type="number"
+             class="form-control"
+             id="control-achievementRate"
+             formControlName="achievementRate" />
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['achievementRate'].errors?.['required'] && showValidation">
+        حقل مطلوب
+      </div>
+    </div>
   </div>
 
-  <!--<div class="row row-gap-3 mb-3">
-      <div class="col-12 col-lg-6">
-          <label for="licNum"
-                 class="form-label">نسبة الإنجاز</label>
-          <input type="number"
-                 class="form-control"
-                 id="control-achievementRate"
-                 formControlName="achievementRate" />
-          <div class="invalid-feedback d-block"
-               *ngIf="controls['achievementRate'].errors?.['required'] && showValidation">
-              حقل مطلوب
-          </div>
-      </div>
-      <div class="col-12 col-lg-6">
+ <!--<div class="row row-gap-3 mb-3">
+      
+ </div>-->
+      <!-- <div class="col-12 col-lg-6">
           <label for="licNum"
                  class="form-label">حالة التسويق</label>
           <input type="text"
@@ -288,7 +301,7 @@
   </div>-->
 
   <div class="row row-gap-3 mb-3">
-    <div class="col-12 col-lg-12">
+    <div class="col-12 col-lg-6">
       <label for="licNum"
              class="form-label"> <span class="required-star">*</span>رفع المنهج المتبع للمشروع</label>
       <app-file-uploader (fileUploaded)="onProjectScheduleFileUploaded($event)"></app-file-uploader>
@@ -296,58 +309,70 @@
            *ngIf="!this.projectDto?.projectScheduleFileId && showValidation">
         حقل مطلوب
       </div>
-    </div>
-  </div>
-
-  <div class="row row-gap-3 mb-3">
-    <div class="col-12 col-lg-6"
-         *ngIf="projectDto && projectDto.projectScheduleFile">
-      <div class="key">عرض المنهج المتبع للمشروع</div>
-      <div class="value">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + projectDto.projectScheduleFile.filePath"
-           target="_blank"
-           id="link-projectScheduleFile">
-          {{projectDto.projectScheduleFile.fileDescription}}
-        </a>
+      <div class="col-12 col-lg-6"
+           *ngIf="projectDto && projectDto.projectScheduleFile">
+        <div class="key">عرض المنهج المتبع للمشروع</div>
         <div class="value">
-          <span class="delete"
-                (click)="deletFile(projectDto.projectScheduleFile.id)">
-            <i class="material-icons text-danger">close</i>
-          </span>
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + projectDto.projectScheduleFile.filePath"
+             target="_blank"
+             id="link-projectScheduleFile">
+            {{projectDto.projectScheduleFile.fileDescription}}
+          </a>
+          <div class="value">
+            <span class="delete"
+                  (click)="deletFile(projectDto.projectScheduleFile.id)">
+              <i class="material-icons text-danger">close</i>
+            </span>
+          </div>
+          <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
         </div>
-        <!-- <span class="delete"><i class="material-icons text-danger">close</i></span> -->
+      </div>
+    </div>
+    
+    <div class="col-12 col-lg-6">
+      <label for="licNum"
+             class="form-label"><span class="required-star">*</span>إرفاق ما يثبت تنفيذ المشاريع</label>
+      <app-file-uploader (fileUploaded)="onProjectContractFilesUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block"
+           *ngIf="this.newUploadedProjectContractFiles.length == 0  && (!projectDto || !projectDto.projectContractFiles || !projectDto.projectContractFiles.length) && showValidation">
+        حقل مطلوب
+      </div>
+      <div class="col-12 col-lg-6"
+           *ngIf="projectDto && projectDto.projectContractFiles && projectDto.projectContractFiles.length > 0">
+        <div class="key">عرض ما يثبت تنفيذ المشاريع</div>
+        <div class="value"
+             *ngFor="let file of projectDto.projectContractFiles">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + file.sysFileManager?.filePath"
+             target="_blank"
+             id="link-projectContractFiles">
+            {{file.sysFileManager?.fileDescription}}
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="row row-gap-3 mb-3">
+  <!--<div class="row row-gap-3 mb-3">
+    
+  </div>-->
+
+  <!--<div class="row row-gap-3 mb-3">
     <div class="col-12 col-lg-12">
       <label for="licNum"
-             class="form-label">إرفاق ما يثبت تنفيذ المشاريع</label>
+             class="form-label"><span class="required-star">*</span>إرفاق ما يثبت تنفيذ المشاريع</label>
       <app-file-uploader (fileUploaded)="onProjectContractFilesUploaded($event)"></app-file-uploader>
-      <!--<div class="invalid-feedback d-block"
+      <div class="invalid-feedback d-block"
            *ngIf="this.newUploadedProjectContractFiles.length == 0  && (!projectDto || !projectDto.projectContractFiles || !projectDto.projectContractFiles.length) && showValidation">
           حقل مطلوب
-      </div>-->
-    </div>
-  </div>
-
-  <div class="row row-gap-3 mb-3">
-    <div class="col-12 col-lg-6"
-         *ngIf="projectDto && projectDto.projectContractFiles && projectDto.projectContractFiles.length > 0">
-      <div class="key">عرض ما يثبت تنفيذ المشاريع</div>
-      <div class="value"
-           *ngFor="let file of projectDto.projectContractFiles">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + file.sysFileManager?.filePath"
-           target="_blank"
-           id="link-projectContractFiles">
-          {{file.sysFileManager?.fileDescription}}
-        </a>
       </div>
     </div>
-  </div>
+  </div>-->
+
+  <!--<div class="row row-gap-3 mb-3">
+   
+  </div>-->
 
   <!--  <div mat-dialog-actions align="end">
       <button type="button" mat-flat-button color="primary" (click)="save()" [disabled]="editForm.invalid || this.newUploadedProjectContractFiles.length == 0 || !this.projectDto?.projectScheduleFileId">حفظ البيانات</button>

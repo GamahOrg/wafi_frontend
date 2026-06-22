@@ -95,13 +95,6 @@
               </div>
             </div>
 
-            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.qualifyingReqs)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.qualifying + '/' + links.qualifyingReqs, $event)">
-              <span class="icon"><i class="material-icons-outlined">add_box</i></span>
-              <span class="nav-link-text">
-                إنشاء طلب جديد
-              </span>
-            </a>
 
             <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.qualifyingReqList)}"
               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.qualifying + '/' + links.qualifyingReqList, $event)">
@@ -237,11 +230,11 @@
               <span class="nav-link-text"> وثائق الصرف</span>
             </a>
 
-            <!-- <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.supervisionFees)}"
-               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.supervisionFees, $event)">
-              <span class="icon"><i class="material-icons-outlined">payments</i></span>
-              <span class="nav-link-text">رسوم الاشراف والمتابعة</span>
-            </a> -->
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.supervisionFeeInvoices)}"
+               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.supervisionFeeInvoices, $event)">
+              <span class="icon"><i class="material-icons-outlined">receipt_long</i></span>
+              <span class="nav-link-text">الفواتير</span>
+            </a>
           </accordion-group>
         </ng-container>
       </accordion>
@@ -250,7 +243,7 @@
 
 
     <div *ngIf="
-        !this.userData?.isEmployee && isDeveloper &&
+        !this.userData?.isEmployee && (isDeveloper || isAccountant || isEngineer) &&
         loginUserTypeEnum != LoginUserTypeEnum.finalBeneficiary
       " class="link-group">
       <accordion [closeOthers]="false" [isAnimated]="true" class="simple menu-accordion">
@@ -267,16 +260,32 @@
               </div>
             </div>
 
-            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.createLincenceProjectRequestList)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.lincenceProjectRequest + '/' + links.createLincenceProjectRequestList, $event)">
-              <span class="icon"><i class="material-icons-outlined">add_box</i></span>
-              <span class="nav-link-text">إنشاء طلب جديد</span>
-            </a>
-
-            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenceProjectRequestList)}"
+            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenceProjectRequestList)}"
               href="javascript:void(0)" (click)="navigateWithCheck('/' + links.lincenceProjectRequest + '/' + links.lincenceProjectRequestList, $event)">
               <span class="icon"><i class="material-icons-outlined">list_alt</i></span>
               <span class="nav-link-text">قائمة الطلبات</span>
+            </a>
+
+            <a *ngIf="isAccountant || isEngineer" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.changePlanListApprovals)}"
+              href="javascript:void(0)" (click)="navigateWithCheck(links.changePlanListApprovals, $event)">
+              <span class="icon"><i class="material-icons-outlined">approval</i></span>
+              <span class="nav-link-text">موافقات الاطراف</span>
+            </a>
+            <!-- <a *ngIf="isAccountant || isEngineer" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.changePlanListApprovals)}"
+              href="javascript:void(0)" (click)="navigateWithCheck(links.changeAccountntListApprovals, $event)">
+              <span class="icon"><i class="material-icons-outlined">approval</i></span>
+              <span class="nav-link-text">موافقات المحاسبين الجدد</span>
+            </a> -->
+
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.changePlanDeedOwnerApprovals)}"
+               href="javascript:void(0)" (click)="navigateWithCheck(links.changePlanDeedOwnerApprovals, $event)">
+              <span class="icon"><i class="material-icons-outlined">approval</i></span>
+              <span class="nav-link-text">موافقات الملاك</span>
+            </a>
+            <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.changePlanUnitsBuyersApprovalList)}"
+               href="javascript:void(0)" (click)="navigateWithCheck(links.changePlanUnitsBuyersApprovalList, $event)">
+              <span class="icon"><i class="material-icons-outlined">approval</i></span>
+              <span class="nav-link-text">موافقات المشتريين</span>
             </a>
           </accordion-group>
         </ng-container>
@@ -351,25 +360,36 @@
 
     <div *ngIf="loginUserTypeEnum == LoginUserTypeEnum.finalBeneficiary" class="link-group">
       <a [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.contractdocumentation)}"
-        href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.contractdocumentation, $event)"
-        class="nav-link">
+         href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.contractdocumentation, $event)"
+         class="nav-link">
         <span class="icon"><i class="material-icons-outlined">dashboard</i></span>
         <span class="nav-link-text"> عقود البيع</span>
 
       </a>
+      <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.changePlanDeedOwnerApprovals)}"
+         href="javascript:void(0)" (click)="navigateWithCheck(links.changePlanDeedOwnerApprovals, $event)">
+        <span class="icon"><i class="material-icons-outlined">approval</i></span>
+        <span class="nav-link-text">موافقات الملاك</span>
+      </a>
 
-      
-      <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.developerApprovalsList)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.developerApprovalsList, $event)">
-              <span class="icon"><i class="material-icons-outlined">handshake</i></span>
-              <span class="nav-link-text">اتفاقيات التطوير العقارى</span>
+       <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.changePlanUnitsBuyersApprovalList)}"
+               href="javascript:void(0)" (click)="navigateWithCheck(links.changePlanUnitsBuyersApprovalList, $event)">
+              <span class="icon"><i class="material-icons-outlined">approval</i></span>
+              <span class="nav-link-text">موافقات المشتريين</span>
             </a>
 
-       <!-- <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.lincenseRequestApprovals)}"
-              href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseRequestApprovals, $event)">
-              <span class="icon"><i class="material-icons-outlined">approval</i></span>
-              <span class="nav-link-text">الموافقات</span>
-            </a> -->
+
+      <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.developerApprovalsList)}"
+         href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.developerApprovalsList, $event)">
+        <span class="icon"><i class="material-icons-outlined">handshake</i></span>
+        <span class="nav-link-text">اتفاقيات التطوير العقارى</span>
+      </a>
+
+      <!-- <a class="nav-link" [ngClass]="{'justify-content-center': hideSideBar, 'active': currentUrl.includes(links.lincenseRequestApprovals)}"
+         href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseRequestApprovals, $event)">
+         <span class="icon"><i class="material-icons-outlined">approval</i></span>
+         <span class="nav-link-text">الموافقات</span>
+       </a> -->
     </div>
 
     <div *ngIf="

@@ -1,0 +1,71 @@
+<ng-container>
+  <form [formGroup]="form">
+    <h6 class="form-title">البند {{ toArabicIndic(maxItemNumber) }}</h6>
+
+    <div class="form-group mb-3">
+      <label class="form-label"><span class="required-star">*</span> عنوان البند</label>
+      <input type="text" class="form-control" formControlName="itemTitle" />
+      <div class="invalid-feedback d-block"
+        *ngIf="controls['itemTitle']?.hasError('required') && showValidation">
+        {{ localization.requiredErrorMsg }}
+      </div>
+      <div class="invalid-feedback d-block"
+        *ngIf="controls['itemTitle']?.hasError('maxlength') && showValidation">
+        {{ localization.maxLengthErrorMsg150 }}
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label class="form-label"><span class="required-star">*</span> نص البند الأساسي</label>
+      <textarea class="form-control" rows="3" maxlength="2000" formControlName="itemText"></textarea>
+      <div class="invalid-feedback d-block"
+        *ngIf="controls['itemText']?.hasError('required') && showValidation">
+        {{ localization.requiredErrorMsg }}
+      </div>
+      <div class="invalid-feedback d-block"
+        *ngIf="controls['itemText']?.hasError('maxlength') && showValidation">
+        {{ localization.maxLengthErrorMsg2000 }}
+      </div>
+    </div>
+
+    <!-- Sub-terms -->
+    <ng-container formArrayName="additionalTerms">
+      <ng-container *ngFor="let term of additionalTermsArray.controls; let i = index" [formGroupName]="i">
+        <div class="form-group mb-3">
+          <div class="d-flex justify-content-between align-items-center gap-2">
+            <label class="form-label">
+              <span class="required-star">*</span>
+              نص البند الاضافي
+              <bdo dir="rtl">{{ toArabicIndic(maxItemNumber) }}.{{ toArabicIndic(i + 1) }}</bdo>
+            </label>
+            <button type="button" class="btn-icon btn btn-danger" (click)="removeAdditionalTerm(i)">
+              <i class="hgi hgi-stroke hgi-delete-03"></i>
+            </button>
+          </div>
+          <textarea class="form-control" rows="3" maxlength="2000" formControlName="itemText"></textarea>
+          <div class="invalid-feedback d-block"
+            *ngIf="getAdditionalTermGroup(i).get('itemText')?.hasError('required') && showValidation">
+            {{ localization.requiredErrorMsg }}
+          </div>
+        </div>
+      </ng-container>
+
+      <button type="button"
+        class="btn btn-outline-success w-100 mb-4"
+        style="--bs-btn-border-radius: 10px; border-style: dashed;"
+        (click)="addAdditionalTerm()">
+        <i class="icon hgi hgi-stroke hgi-plus-sign"></i> اضافة بند فرعي
+      </button>
+    </ng-container>
+
+    <div class="form-check form-check-normal">
+      <input class="form-check-input" id="acknowledgment" type="checkbox"
+        formControlName="additionalTermsAcknowledgment" />
+      <label class="form-check-label" for="acknowledgment" [innerHTML]="acknowledgmentMessage"></label>
+    </div>
+    <div class="invalid-feedback d-block"
+      *ngIf="controls['additionalTermsAcknowledgment']?.hasError('required') && showValidation">
+      نأمل الموافقة على الاقرار حتى يتم تسجيل البند
+    </div>
+  </form>
+</ng-container>

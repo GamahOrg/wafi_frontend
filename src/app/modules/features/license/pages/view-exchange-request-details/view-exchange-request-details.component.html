@@ -69,6 +69,32 @@
               <span class="value">{{ requestDetails?.mainItem?.name ?? "--" }}</span>
             </div>
           </div>
+
+          <div *ngIf="this.showWorkDonePercentage" class="col-12 col-lg-6 tab-data-section">
+            <div class="row row-gap-4">
+              <div class="col-xl-4">
+                <label class="form-label"
+                  > نسبة إنجاز المشروع
+                </label>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="progress flex-fill" style="height: 8px">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      [style.width.%]="this.requestDetails?.workDonePercentage"
+                      [attr.aria-valuenow]="this.requestDetails?.workDonePercentage"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                  <span class="small">{{ this.requestDetails?.workDonePercentage }}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
           <div class="col-xl-6">
             <div class="key-value horiz">
               <span class="key">البند الفرعي</span>
@@ -131,6 +157,36 @@
               <span class="value">
                 {{
                 requestDetails?.beneficiaryDescription ?? "--"
+                }}
+              </span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">اسم المستفيد</span>
+              <span class="value">
+                {{
+                requestDetails?.beneficiaryName ?? "--"
+                }}
+              </span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">البنك</span>
+              <span class="value">
+                {{
+                requestDetails?.bankName ?? "--"
+                }}
+              </span>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="key-value horiz">
+              <span class="key">رقم IBAN</span>
+              <span class="value">
+                {{
+                requestDetails?.ibanNumber ?? "--"
                 }}
               </span>
             </div>

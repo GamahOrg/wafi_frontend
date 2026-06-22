@@ -1,0 +1,98 @@
+<div class="tab-data-header">
+  <i class="icon hgi hgi-stroke hgi-profile"></i>
+  <h6 class="title">{{ localization.title }}</h6>
+  <button *ngIf="getParentItems().length > 0 && allowAdd" class="btn btn-outline-primary ms-auto" (click)="addNewItem()">
+    <i class="icon hgi hgi-stroke hgi-add-square me-2"></i> {{ localization.addNew }}
+  </button>
+</div>
+
+<div class="tab-data-section">
+  <ng-container *ngIf="getParentItems().length === 0">
+    <app-no-data *ngIf="allowAdd; else noDataReadOnly" (onNoDataButtonClicked)="addNewItem()" [title]="'لا يوجد بنود إضافية بعد'" [showText]="false" [completeBtnTitle]="'إضافة بند'">
+    </app-no-data>
+    <ng-template #noDataReadOnly>
+      <p class="text-muted text-center py-3">لا يوجد بنود إضافية</p>
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="getParentItems().length > 0">
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>رقم البند الرئيسي</th>
+            <th class="w-10"></th>
+            <th>عنوان البند الرئيسي</th>
+            <th class="w-40">نص البند</th>
+            <th class="0" *ngIf="allowAdd"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let parent of getParentItems(); let i = index">
+            <tr>
+              <td colspan="2">
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <span class="tag">{{ getItemNumberDisplay(parent) }}</span>
+                  <button *ngIf="hasChildren(parent.id)" class="btn btn-icon" (click)="toggleExpand(parent.id)">
+                    <i class="hgi hgi-stroke hgi-arrow-{{ isExpanded(parent.id) ? 'up' : 'down' }}-01"></i>
+                  </button>
+                </div>
+              </td>
+              <td>{{ parent.itemTitle }}</td>
+              <td>
+                {{ parent.itemText && parent.itemText.length > 100
+                ? (parent.itemText | slice:0:100) + '...'
+                : parent.itemText }}
+              </td>
+              <td class="text-nowrap text-end" *ngIf="allowAdd">
+                <div class="table-actions">
+                  <div class="menu-trigger">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                  </div>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editItem(parent)" class="menu-edit-btn">
+                      <i class="hgi hgi-stroke hgi-pencil-edit-02"></i>
+                      <span>تعديل البند</span>
+                    </button>
+                    <button mat-menu-item (click)="showDeleteConfirmation(parent)" class="menu-delete-btn">
+                      <i class="hgi hgi-stroke hgi-delete-03"></i>
+                      <span>حذف البند</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </td>
+            </tr>
+
+            <ng-container *ngIf="isExpanded(parent.id)">
+              <tr class="child-row" *ngFor="let child of getChildItems(parent.id)">
+                <td colspan="2"><span class="tag">{{ getItemNumberDisplay(child) }}</span></td>
+                <td>{{ child.itemTitle ?? '-' }}</td>
+                <td colspan="2">
+                  {{ child.itemText && child.itemText.length > 100
+                  ? (child.itemText | slice:0:100) + '...'
+                  : child.itemText }}
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</div>
+
+<!-- عرض المسودة -->
+<ng-container *ngIf="allowAdd">
+  <div class="tab-data-header">
+    <i class="icon hgi hgi-stroke hgi-file-02"></i>
+    <h6 class="title">{{ localization.draftTitle }}</h6>
+  </div>
+  <div class="tab-data-section">
+    <div class="d-flex align-items-center gap-2">
+      <p class="fw-semibold" style="color: #1F2A37">{{ localization.draftDescription }}</p>
+      <button type="button" class="btn btn-primary" (click)="viewDraft()">عرض المسودة</button>
+    </div>
+  </div>
+</ng-container>

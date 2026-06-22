@@ -30,6 +30,8 @@ export interface BeneficiaryPopupData extends PopupData {
 
 type confirmationPopupType = 'primary' | 'warning' | 'danger' | 'success';
 export interface confirmationPopupData {
+  minWidth?: string;
+  maxWidth?: string;
   popupType?: confirmationPopupType;
   id?: string;
   title?: string;
@@ -41,8 +43,11 @@ export interface confirmationPopupData {
   showCloseButtonOnly?: boolean;
   closeButtonText?: string;
   hideCancelButton?: boolean;
+  cancelButtonText?: string;
+  declarationText?: string;
   alertText?:string,
   alertClass?:string,
+  disableClose?: boolean;
   data?: any;
 }
 

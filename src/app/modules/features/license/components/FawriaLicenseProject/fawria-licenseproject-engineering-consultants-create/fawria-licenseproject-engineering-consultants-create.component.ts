@@ -570,6 +570,43 @@ export class FawriaLicenseprojectEngineeringConsultantsCreateComponent {
       });
   }
 
+  // Format unit price with thousand separators
+  getFormattedUnitPrice(value: any): string {
+    if (value === null || value === undefined || value === '') return '';
+    const parts = value.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+  }
+
+  onUnitPriceInput(event: Event, item: any, index: number): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/[^0-9.]/g, '');
+
+    item.unitPrice = value ? parseFloat(value) : null;
+
+    if (value) {
+      const parts = value.split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      input.value = parts.join('.');
+    } else {
+      input.value = '';
+    }
+
+    this.clearPaymentError(index, 'unitPrice');
+  }
+
+  onUnitPriceBlur(event: Event, item: any): void {
+    const input = event.target as HTMLInputElement;
+    if (item.unitPrice !== null && item.unitPrice !== undefined) {
+      input.value = this.getFormattedUnitPrice(item.unitPrice);
+    }
+  }
+
+  onUnitPriceFocus(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/,/g, '');
+  }
+
   // Format contract value with thousand separators
   formatContractValue(event: Event): void {
     const input = event.target as HTMLInputElement;

@@ -1,0 +1,61 @@
+<form [formGroup]="declarationForm" id="form-declarationForm">
+  <div class="d-flex flex-column gap-3">
+    <!-- <h6>يجب الموافقة على جميع الاقرارات يتم ارسال الطلب</h6> -->
+
+    <label class="form-check form-check-normal">
+      <input
+        class="form-check-input"
+        id="control-data"
+        type="checkbox"
+        formControlName="data"
+      />
+      <label class="form-check-label" for="data">
+        أقر بصحة البيانات والمستندات المقدمة منّا لطلب التأهيل ومطابقتها للواقع.
+      </label>
+    </label>
+
+    <label class="form-check form-check-normal">
+      <input
+        class="form-check-input"
+        id="control-resposability"
+        type="checkbox"
+        formControlName="resposability"
+      />
+      <label class="form-check-label" for="resposability">
+        نتحمل كامل المسؤولية في حال عدم صحة المستندات ومطابقتها معايير وتعليمات
+        الهيئة العامة للعقار.
+      </label>
+    </label>
+
+    <label class="form-check form-check-normal">
+      <input
+        class="form-check-input"
+        id="control-promise"
+        type="checkbox"
+        formControlName="promise"
+      />
+      <label class="form-check-label" for="promise">
+        نتعهد بإخطار الهيئة العامة للعقار عن أي تغيير يطرأ بعد ذلك في البيانات
+        الخاصة بالتأهيل.
+      </label>
+    </label>
+
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <button
+        class="btn btn-outline-secondary"
+        id="btn-cancelRequest"
+        (click)="cancelRequest()"
+      >
+        إلغاء
+      </button>
+      <button
+        class="btn btn-primary"
+        id="btn-creatRequest"
+        [disabled]="!declarationForm.valid"
+        (click)="createOrRenewRequest()"
+      >
+        إرسال الطلب
+      </button>
+    </div>
+  </div>
+</form>

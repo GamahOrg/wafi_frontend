@@ -21,6 +21,7 @@ export class WafiTrainingEngineersComponent {
   models: CertifiedEngineerDto[] = [] as CertifiedEngineerDto[];
   baseUrl = `${environment.baseURL}/`;
   pageTitle: string = 'الموظفين الحاصلين على التدريب'; // Default title
+  hint: string = 'يجب أن يكون هناك موظف واحد على الأقل قد اجتاز دورة "المطور العقاري لمشاريع البيع على الخارطة"'
   canUpdate: boolean = true;
   constructor(private _userDataService: UserDataService, private _certifiedEngineerService: CertifiedEngineerService, private _popupService: PopupService, private _facilityProfileService: FacilityProfileService) { }
 
@@ -75,22 +76,22 @@ export class WafiTrainingEngineersComponent {
   }
 
   openDialog(id: string): void {
-  if (id) {
-    let eng = this.models.filter(x => x.id == id)[0] as CertifiedEngineerDto;
-    this._certifiedEngineerService.SetFCertifiedEngineerObj(eng);
-  }
+    if (id) {
+      let eng = this.models.filter(x => x.id == id)[0] as CertifiedEngineerDto;
+      this._certifiedEngineerService.SetFCertifiedEngineerObj(eng);
+    }
 
-  this.subscriptions.push(
-    this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
-      let Data = {
-        title: 'اضافة الموظفين الحاصلين على التدريب',
-        component: WafiTrainingEngineersFormComponent,
-        buttons: []
-      } as PopupData;
-      this._popupService.updatePopupData(Data);
-    })
-  );
-}
+    this.subscriptions.push(
+      this._userDataService.getCustomerData().subscribe((res: customerResponse | null) => {
+        let Data = {
+          title: 'اضافة الموظفين الحاصلين على التدريب',
+          component: WafiTrainingEngineersFormComponent,
+          buttons: []
+        } as PopupData;
+        this._popupService.updatePopupData(Data);
+      })
+    );
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())

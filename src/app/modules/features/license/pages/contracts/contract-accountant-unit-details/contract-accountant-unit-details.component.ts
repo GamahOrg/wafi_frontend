@@ -8,7 +8,7 @@ import { confirmationPopupData, PopupData } from 'src/app/shared/models/popup.mo
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { RequestNotesService } from 'src/app/shared/services/requestNotes/request-notes.service';
 import { environment } from 'src/environments/environment';
-import {  LicenseProjectBusinessPaymentResponseDto, LicenseProjectUnitCodeStatus, BuyerTypeEnum, CancelContractRequestDto, GetProjectUnitDetailsResponseDto } from '../../../models/real-state-developer-dto';
+import { LicenseProjectBusinessPaymentResponseDto, LicenseProjectUnitCodeStatus, BuyerTypeEnum, CancelContractRequestDto, GetProjectUnitDetailsResponseDto } from '../../../models/real-state-developer-dto';
 import { ContractNavigationService } from '../../../services/contract-navigation.service';
 import { LicenseProjectBuyerCancellationRequestService } from '../../../services/license-project-buyer-cancellation-request.service';
 import { RealStateDeveloperService } from '../../../services/real-state-developer.service';
@@ -22,7 +22,7 @@ import { ChangeUnitStatusConfirmationComponent } from '../../real-state-chartere
   styleUrls: ['./contract-accountant-unit-details.component.scss']
 })
 export class ContractAccountantUnitDetailsComponent {
-showPopup: boolean = false;
+  showPopup: boolean = false;
   @Input() unitCode: string = '';
   @Input() showAsModal: boolean = false;
   baseUrl = `${environment.baseURL}/`;
@@ -68,48 +68,48 @@ showPopup: boolean = false;
 
   openChangeStatusPopup(): void {
     this.popupService.updatePopupData({
-        title: 'يرجي تحديد حالة الوحدة',
-        component: ChangeUnitStatusFormComponent,
-        submitButtonTitle: 'تأكيد',
-        disableClose: true,
-        data: { unitIds: [this.unitCode] , licenseProjectId: this.unitDetails?.licenseProjectId },
-      } as PopupData);
+      title: 'يرجي تحديد حالة الوحدة',
+      component: ChangeUnitStatusFormComponent,
+      submitButtonTitle: 'تأكيد',
+      disableClose: true,
+      data: { unitIds: [this.unitCode], licenseProjectId: this.unitDetails?.licenseProjectId },
+    } as PopupData);
 
-      
-    }
 
-    openConfirmationPopup(): void {
-// this.popupService.updatePopupData({
-//         id:'changeStatusConfirmation',
-//         title: 'تأكيد تعديل حالة الوحدة',
-//         component: ChangeUnitStatusConfirmationComponent,
-//         submitButtonTitle: 'متابعة',
-//         disableClose: true,
-//         data: { unitIds: [this.unitCode] , licenseProjectId: this.unitDetails?.licenseProjectId },
-//       } as PopupData);
+  }
 
-      this.popupService.updateNotePopupData(
-        {
-          popupType: 'warning',
-          id:'confirmChangeStatus',
-          openNewPopupId:'changeStatusForm',
-          title:'تأكيد تعديل حالة الوحدة',
-          buttonTextOpenNewPopup:'متابعة',
-          openNewPopupComponent: ChangeUnitStatusFormComponent,
-          openNewPopupData: { unitIds: [this.unitCode] , licenseProjectId: this.unitDetails?.licenseProjectId , unitStatus: this.unitDetails?.unitStatusId },
-          dynamicMessage:'لم يتم العثور علي عقد بيع مسجل علي الوحدة, هل ترغب في المتابعة وتعديل حالة الوحدة ؟'
-        }
-      );
-    }
+  openConfirmationPopup(): void {
+    // this.popupService.updatePopupData({
+    //         id:'changeStatusConfirmation',
+    //         title: 'تأكيد تعديل حالة الوحدة',
+    //         component: ChangeUnitStatusConfirmationComponent,
+    //         submitButtonTitle: 'متابعة',
+    //         disableClose: true,
+    //         data: { unitIds: [this.unitCode] , licenseProjectId: this.unitDetails?.licenseProjectId },
+    //       } as PopupData);
+
+    this.popupService.updateNotePopupData(
+      {
+        popupType: 'warning',
+        id: 'confirmChangeStatus',
+        openNewPopupId: 'changeStatusForm',
+        title: 'تأكيد تعديل حالة الوحدة',
+        buttonTextOpenNewPopup: 'متابعة',
+        openNewPopupComponent: ChangeUnitStatusFormComponent,
+        openNewPopupData: { unitIds: [this.unitCode], licenseProjectId: this.unitDetails?.licenseProjectId, unitStatus: this.unitDetails?.unitStatusId },
+        dynamicMessage: 'لم يتم العثور علي عقد بيع مسجل علي الوحدة, هل ترغب في المتابعة وتعديل حالة الوحدة ؟'
+      }
+    );
+  }
 
   private observePopupEvents(): void {
 
     // Listen for cancel action
     // this.subscriptions.push(
     //   this.popupService.confirmAction.subscribe((popup) => {
-    //     debugger;
+    //
     //   if (popup?.id === 'confirmChangeStatus') {
-    //     this.popupService.closeDialog.emit(); 
+    //     this.popupService.closeDialog.emit();
     //     this.loadUnitDetails();
     //       }
     //   })
@@ -117,10 +117,7 @@ showPopup: boolean = false;
 
     this.subscriptions.push(
       this.popupService.closeDialog.subscribe((data) => {
-        debugger;
-      
-         this.loadUnitDetails();
-        
+        this.loadUnitDetails();
       })
     );
 
@@ -245,7 +242,7 @@ showPopup: boolean = false;
     // Reload unit details to get updated data
     this.loadUnitDetails();
   }
-  
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

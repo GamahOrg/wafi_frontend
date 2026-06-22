@@ -1,0 +1,379 @@
+<ng-container>
+  <form class="d-flex flex-column h-100" [formGroup]="form" *ngIf="requestData">
+    <!-- بيانات الطلب -->
+    <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-profile"></i>
+      <h6 class="title">بيانات الطلب</h6>
+    </div>
+
+    <!-- البيانات الأساسية للمشروع -->
+    <div class="tab-data-section">
+      <h6 class="fw-bold mb-3">البيانات الأساسية للمشروع</h6>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"
+              ><span class="required-star">*</span> رقم الرخصة</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [value]="requestData.licenseProjectNumber"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"
+              ><span class="required-star">*</span> اسم المشروع</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [value]="requestData.licenseProjectName"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"
+              ><span class="required-star">*</span> مدينة المشروع</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [value]="requestData.licenseProjectCity"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"
+              ><span class="required-star">*</span> نوع مسار الرخصة</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [value]="requestData.licenseProjectType"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"
+              ><span class="required-star">*</span> تاريخ انتهاء الرخصة</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [value]="requestData.licenseProjectEndDate | date: 'd/M/yyyy'"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">*</span> اسم المحاسب القانوني الحالي</label>
+            <input type="text" class="form-control" [value]="requestData.currentAccountantName" readonly />
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label class="form-label"><span class="required-star">*</span> رقم المحاسب القانوني الحالي</label>
+            <input type="text" class="form-control" [value]="requestData.currentAccountantNumber" readonly />
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- بيانات الوحدات -->
+    <div class="tab-data-section">
+      <h6 class="title">بيانات الوحدات</h6>
+      <div class="table-responsive">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th>نوع الوحدة</th>
+              <th>عدد الوحدة</th>
+              <th>إجمالي عدد الوحدات المباعة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let unit of requestData.licenseProjectSubUnits | keyvalue;
+                let i = index
+              "
+            >
+              <td>{{ unit.key }}</td>
+              <td>{{ unit.value }}</td>
+              <td *ngIf="i === 0">
+                {{ requestData.totalSoldUnits }}
+              </td>
+            </tr>
+            <tr *ngIf="!requestData.licenseProjectSubUnits">
+              <td colspan="3" class="text-center">لا توجد بيانات</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- نسبة الإنجاز -->
+    <div class="tab-data-section">
+      <h6 class="title">نسبة الإنجاز</h6>
+      <div class="row row-gap-4">
+        <div class="col-xl-4">
+          <label class="form-label"
+            ><span class="required-star">*</span> نسبة إنجاز المشروع وفق آخر
+            تقرير هندسي معتمد للربع السنوي السابق</label
+          >
+          <div class="d-flex align-items-center gap-3">
+            <div class="progress flex-fill" style="height: 8px">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                [style.width.%]="requestData.workDonePercentage"
+                [attr.aria-valuenow]="requestData.workDonePercentage"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <span class="small">{{ requestData.workDonePercentage }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- المبررات -->
+    <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-note"></i>
+      <h6 class="title">المبررات</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group mb-4">
+            <label class="form-label">
+              <span class="required-star">*</span> مبررات تغيير المحاسب القانوني
+            </label>
+            <textarea
+              [readonly]="showNotesPage"
+              class="form-control"
+              formControlName="justificationsAndReasons"
+              rows="4"
+              [class.is-invalid]="
+                controls.justificationsAndReasons?.hasError('required') &&
+                showValidation
+              "
+            >
+            </textarea>
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                controls.justificationsAndReasons?.hasError('required') &&
+                showValidation
+              "
+            >
+              حقل مطلوب
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- المستندات الداعمة -->
+    <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-file-attachment"></i>
+      <h6 class="title">المستندات الداعمة</h6>
+    </div>
+    <div class="tab-data-section">
+      <div class="row row-gap-4">
+        <!-- تقرير تسليم الأعمال -->
+        <div class="col-xl-6">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> تقرير تسليم الأعمال
+            </label>
+
+            <div
+              *ngIf="workDeliveryReportFile"
+              class="mb-2 d-flex align-items-center gap-2"
+            >
+              <a
+                [href]="baseUrl + workDeliveryReportFile.filePath"
+                target="_blank"
+                class="text-decoration-underline flex-fill"
+              >
+                {{ workDeliveryReportFile.fileDescription || "الملف المرفق" }}
+              </a>
+              <button
+                *ngIf="!showNotesPage"
+                type="button"
+                class="btn-icon btn btn-danger"
+                (click)="clearWorkDeliveryReportFile()"
+              >
+                <i class="hgi hgi-stroke hgi-cancel-circle"></i>
+              </button>
+            </div>
+
+            <app-file-uploader
+              *ngIf="!showNotesPage"
+              [data]="singleFileUploaderData"
+              (fileUploaded)="onWorkDeliveryReportFileUploaded($event)"
+            >
+            </app-file-uploader>
+
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="showValidation && this.workDeliveryReportFileId === null"
+            >
+              حقل مطلوب
+            </div>
+          </div>
+        </div>
+        <!-- هل يوجد محاسبة؟ -->
+        <div class="col-xl-12">
+          <div class="form-group">
+            <label class="form-label"
+              ><span class="required-star">*</span> هل يوجد مخالصة ؟</label
+            >
+            <div class="row g-2">
+              <div class="col-xl-6">
+                <label class="form-check" for="yes">
+                  <input
+                    [attr.disabled]="showNotesPage ? '' : null"
+                    class="form-check-input"
+                    type="radio"
+                    id="yes"
+                    name="isClearanceAccountantDone"
+                    [value]="true"
+                    formControlName="isClearanceAccountantDone"
+                  />
+                  <label for="yes" class="form-check-label">نعم</label>
+                </label>
+              </div>
+              <div class="col-xl-6">
+                <label class="form-check" for="no">
+                  <input
+                    [attr.disabled]="showNotesPage ? '' : null"
+                    class="form-check-input"
+                    type="radio"
+                    id="no"
+                    name="isClearanceAccountantDone"
+                    [value]="false"
+                    formControlName="isClearanceAccountantDone"
+                    (click)="toggleClearanceAccountantDone(false)"
+                  />
+                  <label for="no" class="form-check-label">لا</label>
+                </label>
+              </div>
+            </div>
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                showValidation &&
+                controls.isClearanceAccountantDone.value === null
+              "
+            >
+              حقل مطلوب
+            </div>
+          </div>
+        </div>
+        <!-- المخالصة النهائية (when نعم) -->
+        <div class="col-xl-6" *ngIf="isClearanceAccountantDone === true">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> المخالصة النهائية
+            </label>
+
+            <div
+              *ngIf="clearanceAccountantFile"
+              class="mb-2 d-flex align-items-center gap-2"
+            >
+              <a
+                [href]="baseUrl + clearanceAccountantFile.filePath"
+                target="_blank"
+                class="text-decoration-underline flex-fill"
+              >
+                {{ clearanceAccountantFile.fileDescription || "الملف المرفق" }}
+              </a>
+              <button
+                *ngIf="!showNotesPage"
+                type="button"
+                class="btn-icon btn btn-danger"
+                (click)="clearClearanceAccountantFile()"
+              >
+                <i class="hgi hgi-stroke hgi-cancel-circle"></i>
+              </button>
+            </div>
+
+            <app-file-uploader
+              *ngIf="!showNotesPage"
+              [data]="singleFileUploaderData"
+              (fileUploaded)="onClearanceFileUploaded($event)"
+            >
+            </app-file-uploader>
+
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="showValidation && !clearanceAccountantFileId"
+            >
+              حقل مطلوب
+            </div>
+          </div>
+        </div>
+        <!-- سبب عدم إرفاق المخالصة (when لا) -->
+        <div class="col-xl-6" *ngIf="isClearanceAccountantDone === false">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="required-star">*</span> سبب عدم إرفاق المخالصة
+            </label>
+            <textarea
+              [readonly]="showNotesPage"
+              class="form-control"
+              rows="4"
+              formControlName="ReasonsForNotFinalizingAccountantClearance"
+            >
+            </textarea>
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                showValidation &&
+                !isClearanceAccountantDone &&
+                !controls.ReasonsForNotFinalizingAccountantClearance.value
+              "
+            >
+              حقل مطلوب
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الاتفاقية -->
+    <div class="tab-data-header">
+      <i class="icon hgi hgi-stroke hgi-file-02"></i>
+      <h6 class="title">الاتفاقية</h6>
+    </div>
+    <div class="tab-data-section">
+      <p class="fw-semibold mb-0">
+        سيتم إنشاء الاتفاقية الموحدة تلقائياً لطرف الجديد بعد تقديم الطلب
+      </p>
+    </div>
+  </form>
+
+  <div class="d-flex justify-content-center py-4" *ngIf="!requestData">
+    <div class="spinner-border text-secondary" role="status">
+      <span class="visually-hidden">جاري التحميل...</span>
+    </div>
+  </div>
+</ng-container>

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
+  CreateDraftLicenseProjectRequestDto,
+  CreateInitialLicenseProjectChangePlanRequestDto,
+  LicenseProjectRequestTypeDetailsDto,
+  LicenseProjectRequestValidationResultDto,
   LicenseRequestTypes,
   LincenseProjectRequest,
 } from '../../license/models/lincense-request-project-dto';
@@ -30,12 +34,16 @@ export class LincenseRequestProjectService {
   getLicensesProjectRequestList(
     pageIndex: number,
     pageSize: number,
-    facilityId: string
+    facilityId: string,
+    searchText?: string
   ): Observable<Pagination<LincenseProjectRequest[]>> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('pageIndex', pageIndex);
     queryParams = queryParams.append('pageSize', pageSize);
     queryParams = queryParams.append('facilityId', facilityId);
+    if (searchText) {
+      queryParams = queryParams.append('searchText', searchText);
+    }
     return this._httpClient
       .get<CoreResponseDTO<Pagination<LincenseProjectRequest[]>>>(
         `${Configuration.APIs.LincenseProjectRequest.GetLincenseRequestProject}`,
@@ -184,6 +192,68 @@ export class LincenseRequestProjectService {
     );
   }
 
+  validateRequest(
+    projectId: string,
+    requestType: number
+  ): Observable<LicenseProjectRequestValidationResultDto> {
+    return this._httpClient
+      .post<CoreResponseDTO<LicenseProjectRequestValidationResultDto>>(
+        Configuration.APIs.LincenseProjectRequest.ValidateRequest,
+        { projectId, licenseProjectRequestType: requestType }
+      )
+      .pipe(
+        map((res) => res.data as LicenseProjectRequestValidationResultDto)
+      );
+  }
+
+  getRequestTypeDetails(
+    requestTypeId: number
+  ): Observable<LicenseProjectRequestTypeDetailsDto> {
+    return this._httpClient
+      .get<CoreResponseDTO<LicenseProjectRequestTypeDetailsDto>>(
+        `${Configuration.APIs.LincenseProjectRequest.GetRequestTypeDetails}?requestTypeId=${requestTypeId}`
+      )
+      .pipe(
+        map((res) => res.data as LicenseProjectRequestTypeDetailsDto)
+      );
+  }
+  GetLicenseProjectType(
+    licenseProjectId: string
+  ): Observable<string> {
+    return this._httpClient
+      .get<CoreResponseDTO<string>>(
+        `${Configuration.APIs.LincenseProjectRequest.GetLicenseProjectType}?licenseProjectId=${licenseProjectId}`
+      )
+      .pipe(
+        map((res) => res.data as string)
+      );
+  }
+
+  createDraftRequest(
+    payload: CreateDraftLicenseProjectRequestDto
+  ): Observable<string> {
+    return this._httpClient
+      .post<CoreResponseDTO<string>>(
+        Configuration.APIs.LincenseProjectRequest.CreateDraftRequest,
+        payload
+      )
+      .pipe(
+        map((res) => res.data as string)
+      );
+  }
+  createDraftRequestInitial(
+    payload: CreateInitialLicenseProjectChangePlanRequestDto
+  ): Observable<string> {
+    return this._httpClient
+      .post<CoreResponseDTO<string>>(
+        Configuration.APIs.LicenseProjectChangePlanRequest.CreateInitialLicenseProjectChangePlanRequest,
+        payload
+      )
+      .pipe(
+        map((res) => res.data as string)
+      );
+  }
+
   getSelectedActiveProjectRequestIdFromLocalStorage(): string | null {
     let projectDetails = localStorage.getItem('licenseProjectRequestId');
     return projectDetails;
@@ -205,7 +275,9 @@ export class LincenseRequestProjectService {
   setSelectedRequestIdInLocalStorage(id: string): void {
     localStorage.setItem('projectDetails', id);
   }
-
+  setUpDegreeSelectedRequestIdInLocalStorage(id: string): void {
+    localStorage.setItem('seclectRequest', id);
+  }
 
   
 }

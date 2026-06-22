@@ -26,6 +26,8 @@ import { LicenseRequestTypeTypeCodeEnum } from '../../enums/license-requestType-
 import { DomSanitizer } from '@angular/platform-browser';
 import { FacilityStatus } from '../../enums/facility-status.enum';
 import { RatingComponent } from 'src/app/shared/components/rating/rating.component';
+import { QualificationTypeService } from '../../../qualifying/services/qualification-type/qualification-type.service';
+import { ToastrNotificatioService } from '../../../../../core/services/toastr-notification/toastr-notificatio.service';
 
 @Component({
   selector: 'app-create-license',
@@ -68,6 +70,9 @@ export class CreateLincenseComponent {
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _popupService: PopupService,
     private sanitizer: DomSanitizer,
+    private _qualificationTypeService: QualificationTypeService,
+    private _toastrNotificationService: ToastrNotificatioService,
+
   ) {}
 
   ngOnInit(): void {
@@ -188,6 +193,40 @@ export class CreateLincenseComponent {
    */
   public CreateOrRenewLicense(): void {
     const formValue = this.createRequstForm.getRawValue();
+
+    if (!formValue.priod) {
+      this.showValidation = true;
+      return;
+    }
+    if (
+      this.facilityId == '00000000-0000-0000-0000-000000000000' ||
+      this.facilityId == null ||
+      this.facilityId == ''
+    ) {
+      this.facilityId = this.userData?.facilities[0].id as string;
+      //this.facilityId = 'A26C1DB3-38EF-4358-BC64-7A8AC1E2A714'; //removed
+    }
+
+  
+    this._qualificationTypeService
+      .isRemovedFacilityQualificationRequest(this.facilityId as string)
+      .subscribe({
+        next: (res) => {
+       
+          if (!res.isDone || res.data === true) {
+            this._toastrNotificationService.showError("لا يمكن إنشاء طلب جديد، لقد تم شطب تأهيل المطور");
+            return;
+          }
+
+          this.continueCreateOrRenewLicense();
+        },
+        error: () => {
+          this._toastrNotificationService.showError('Something went wrong');
+        }
+      });
+  }
+  public CreateOrRenewLicenseOld(): void {
+    const formValue = this.createRequstForm.getRawValue();
     if (formValue.priod) {
       if (
         this.licenseRequestType.typeCode ==
@@ -230,6 +269,40 @@ export class CreateLincenseComponent {
       }
     } else {
       this.showValidation = true;
+    }
+  }
+  private continueCreateOrRenewLicense(): void {
+    if (
+      this.licenseRequestType.typeCode ==
+      LicenseRequestTypeTypeCodeEnum.Fawria
+    ) {
+      this._licenseRequestTypeService
+        .CheckFacilityStatus(this.facilityId as string)
+        .subscribe((res) => {
+          switch (res) {
+            case FacilityStatus.Valid:
+              this.showSRSULicenseRequestTypeWarnings();
+              break;
+            case FacilityStatus.QualificationNotFound:
+              this.showQualificationNotFoundPopup();
+              break;
+            case FacilityStatus.QualificationExpired:
+              this.showQualificationExpiryPopup();
+              break;
+            case FacilityStatus.NotFawriaDeveloper:
+              this.showNotFawriaDeveloperPopup();
+              break;
+            default:
+              break;
+          }
+        });
+    } else if (
+      this.licenseRequestType.typeCode ==
+      LicenseRequestTypeTypeCodeEnum.SellRealEstateUnits
+    ) {
+      this.showSRSULicenseRequestTypeWarnings();
+    } else {
+      this.CheckCreateOrRenewLicense();
     }
   }
   CheckCreateOrRenewLicense() {

@@ -22,8 +22,8 @@ export class ChangeUnitStatusFormComponent implements OnInit, OnDestroy {
     private _popupService: PopupService,
     private _realstateService: RealStateDeveloperService,
     private _toastrService: ToastrService,
-    
-  ) {}
+
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -35,7 +35,7 @@ export class ChangeUnitStatusFormComponent implements OnInit, OnDestroy {
           this.licenseProjectId = data.data.licenseProjectId;
         }
         if (data?.data?.unitStatus) {
-          
+
           this.selectedStatus = data.data.unitStatus;
         }
       })
@@ -51,18 +51,18 @@ export class ChangeUnitStatusFormComponent implements OnInit, OnDestroy {
     this._realstateService.changeUnitsStatus({ unitsId: this.unitIds, status: this.selectedStatus, licenseProjectId: this.licenseProjectId })
       .subscribe((res) => {
         if (res.isDone) {
-          debugger;
+
           this._toastrService.success('تم تغيير حالة الوحدات بنجاح');
           this._popupService.dismissDialog();
           // window.location.reload();
-          
+
         }
       });
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
-          // window.location.reload();
+    // window.location.reload();
 
   }
 }

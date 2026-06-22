@@ -7,22 +7,25 @@
   </div>
 
   <div class="tab-data-section">
-    <div class="form-group">
-      <label for="commercialRegister" class="form-label">
-        {{ localizations.CharteredAccountant }}
-      </label>
-      <div class="input-group">
-        <input
-          id="commercialRegister"
-          name="commercialRegister"
-          type="text"
-          class="form-control"
-          [ngClass]="{ 'is-invalid': errorMessage }"
-          formControlName="commercialRegister"
-  
-          [disabled]="true"
-          [readonly]="true"
-        />
+    <div class="row row-gap-4">
+      <div class="col-xl-6">
+        <div class="form-group">
+          <label for="entity700Number" class="form-label">
+            {{ localizations.CharteredAccountant }}
+          </label>
+          <div class="input-group">
+            <input
+              id="entity700Number"
+              name="entity700Number"
+              type="text"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': errorMessage }"
+              formControlName="entity700Number"
+              [disabled]="true"
+              [readonly]="true"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -58,7 +61,6 @@
             class="form-control"
             formControlName="financialReportApprovalPeriodInDays"
             max="30"
-
             [disabled]="true"
             [readonly]="true"
           />
@@ -75,7 +77,6 @@
               type="number"
               class="form-control"
               formControlName="contarctValue"
-
               [disabled]="true"
               [readonly]="true"
             />
@@ -99,7 +100,6 @@
             type="text"
             class="form-control"
             formControlName="paymentDeadline"
-
             [disabled]="true"
             [readonly]="true"
           />
@@ -107,23 +107,37 @@
 
         <!-- Authorized Signatories -->
         <div class="col-12 col-lg-6">
-          <label for="authorizedSignatories" class="form-label">
-            المفوضين بالتوقيع على وثائق الصرف
-          </label>
-          <select
-            id="authorizedSignatories"
-            class="form-select"
-            formControlName="authorizedToSignDelegator"
-            [disabled]="true"
+          <label class="form-label"> المفوضين بالتوقيع على وثائق الصرف </label>
+
+          <div
+            class="form-control d-flex flex-wrap gap-1"
+            style="min-height: 38px"
           >
-            <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
-            <option
-              *ngFor="let signatory of licenseProjectDelegators"
-              [value]="signatory.id"
+            <ng-container
+              *ngIf="getSelectedSignatories().length; else noDelegators"
             >
-              {{ signatory?.fullName }}
-            </option>
-          </select>
+              <span
+                class="badge bg-light text-dark border"
+                *ngFor="let d of getSelectedSignatories()"
+              >
+                {{ d.fullName }}
+              </span>
+            </ng-container>
+
+            <ng-template #noDelegators>
+              <span class="text-muted">لا يوجد مفوضين</span>
+            </ng-template>
+          </div>
+
+          <!-- Chips -->
+          <div
+            class="d-flex flex-wrap align-items-center gap-2 mt-2"
+            *ngIf="getSelectedSignatories().length > 0"
+          >
+            <div class="chip" *ngFor="let s of getSelectedSignatories()">
+              {{ s.fullName }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -150,7 +164,6 @@
                   class="form-control table-input"
                   [(ngModel)]="item.item"
                   [ngModelOptions]="{ standalone: true }"
-            
                   [disabled]="true"
                   [readonly]="true"
                 />
@@ -161,7 +174,6 @@
                   class="form-control table-input"
                   [(ngModel)]="item.quantity"
                   [ngModelOptions]="{ standalone: true }"
-               
                   [disabled]="true"
                   [readonly]="true"
                 />
@@ -173,7 +185,6 @@
                     class="form-control table-input"
                     [(ngModel)]="item.unitPrice"
                     [ngModelOptions]="{ standalone: true }"
-              
                     [disabled]="true"
                     [readonly]="true"
                   />
@@ -192,7 +203,6 @@
                   class="form-control table-input"
                   [(ngModel)]="item.description"
                   [ngModelOptions]="{ standalone: true }"
-    
                   [disabled]="true"
                   [readonly]="true"
                 />

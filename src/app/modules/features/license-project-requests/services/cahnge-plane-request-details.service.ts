@@ -7,6 +7,7 @@ import { CreateUpdateChangePlanForRealEstateDeveloperDto, type CreateChangePlanF
 import { UpdateChangePlanForCharteredAccountantDto } from '../models/update-change-plan-for-chartered-accountant-dto';
 import { UpdateChangePlanForEngineeringConsultantDto } from '../models/update-change-plan-for-engineering-consultant-dto';
 import { LicenseProjectRequestChangePlanFullDto } from '../models/license-project-request-change-plan-full-dto';
+import { ChangePlanDeedOwnerDto } from '../models/change-plan-deed-owner.model';
 
 @Injectable()
 export class CahngePlaneRequestDetailsService {
@@ -61,5 +62,17 @@ getLicenseProjectDetailsById(licenseProjectRequestId : string) :Observable<Licen
           return res.isDone ? res: null
         })
       )
+  }
+
+  getDeedOwnersByRequestId(requestId: string, searchText?: string): Observable<ChangePlanDeedOwnerDto[]> {
+    let url = `${Configuration.APIs.LicenseProjectRequestChangePlan.GetDeedOwnersByRequestId}/${requestId}`;
+    if (searchText) {
+      url += `?searchText=${encodeURIComponent(searchText)}`;
+    }
+    return this._httpClient.get<CoreResponseDTO<ChangePlanDeedOwnerDto[]>>(url).pipe(
+      map((res: CoreResponseDTO<ChangePlanDeedOwnerDto[]>) => {
+        return res.isDone ? (res.data as ChangePlanDeedOwnerDto[]) : [];
+      })
+    );
   }
 }

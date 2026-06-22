@@ -5,7 +5,7 @@
 
   <form [formGroup]="replyForm" (ngSubmit)="onSubmit()" class="reply-form">
     <div class="form-group">
-      <label for="notes" class="form-label">{{ localization.notes }}</label>
+      <label for="notes" class="form-label"><span class="required-star">*</span> {{ localization.notes }}</label>
       <textarea
         id="notes"
         formControlName="notes"
