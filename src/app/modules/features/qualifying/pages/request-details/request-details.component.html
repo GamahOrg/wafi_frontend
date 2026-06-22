@@ -62,7 +62,7 @@
             <ng-container *ngFor="let button of clientActionsButtons">
               <button *ngIf="
                       button.isVisable &&
-                      selectedRequest?.facilities?.availabilityToUpdate
+                      selectedRequest?.qualificationRequestHeaderEventStatus?.allowToCompile
                     " [disabled]="button.isDisables" class="btn btn-primary" (click)="button.onclick()" type="button">
                 {{ button.title }}
               </button>

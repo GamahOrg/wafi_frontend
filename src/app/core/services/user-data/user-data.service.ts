@@ -16,7 +16,7 @@ import { UserTypeEnum } from 'src/app/modules/features/engineering-management/en
 export class UserDataService {
   customerData$: BehaviorSubject<customerResponse | null> =
     new BehaviorSubject<customerResponse | null>(null);
-  constructor(private _httpClient: HttpClient) {}
+  constructor(private _httpClient: HttpClient) { }
   // API
   GetCustomer(
     loginUserType: LoginUserTypeEnum,
@@ -79,6 +79,7 @@ export class UserDataService {
     // return this.EmployeeData$.asObservable()
   }
   updateCustomerData(customerData: customerResponse) {
+    console.log('Updating customer data in service:', customerData);
     this.customerData$.next(customerData);
   }
   getFacilityQualificationTypeCode(
@@ -103,6 +104,7 @@ export class UserDataService {
       >(`${Configuration.APIs.facility.getFacilityTypeCategory}/${facilityId}`)
       .pipe(
         map((res: CoreResponseDTO<FacilityTypeCategory>) => {
+          console.log('API response for FacilityTypeCategory:', res);
           return res.data ?? null;
         }),
       );
@@ -117,7 +119,19 @@ export class UserDataService {
     return value ? (Number(value) as FacilityTypeCategory) : null;
   }
 
-    removeFacilityTypeCategoryFromLocalStorage() {
-      localStorage.removeItem('facilityTypeCategory');
+  removeFacilityTypeCategoryFromLocalStorage() {
+    localStorage.removeItem('facilityTypeCategory');
+  }
+
+  setSelectedFacilityIdInLocalStorage(facilityId: string): void {
+    localStorage.setItem('selectedFacilityIdForCategory', facilityId);
+  }
+
+  getSelectedFacilityIdFromLocalStorage(): string | null {
+    return localStorage.getItem('selectedFacilityIdForCategory');
+  }
+
+  removeSelectedFacilityIdFromLocalStorage() {
+    localStorage.removeItem('selectedFacilityIdForCategory');
   }
 }
