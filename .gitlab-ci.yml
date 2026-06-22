@@ -33,7 +33,7 @@ cached_build:
     entrypoint: [""]
   stage: cached_build
   before_script:
-    - npm install -g pnpm
+    - npm install -g pnpm@9.6.0
   script: | # shell
     pnpm install
 
