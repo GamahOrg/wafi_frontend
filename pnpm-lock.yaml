@@ -111,6 +111,9 @@ importers:
       '@angular/compiler-cli':
         specifier: ^15.1.0
         version: 15.1.5(@angular/compiler@15.1.5(@angular/core@15.1.5(rxjs@7.8.0)(zone.js@0.12.0)))(typescript@4.9.5)
+      '@babel/runtime':
+        specifier: 7.20.7
+        version: 7.20.7
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
