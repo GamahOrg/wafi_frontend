@@ -23,13 +23,13 @@ export interface LicenseProjectEngineeringSupervisionPlannedReportDetailCreateUp
   licenseProjectId: String;
   monthDate: Date;
   //نسب الإنجاز المخططة الشهرية للمشروع
-  projectMonthlyPlannedCompletionRate: Number;
+  projectMonthlyPlannedCompletionRate: number;
 
   //إجمالي عدد العمالة المخطط للشهر
-  monthlyTotalPlannedEmployees: Number;
+  monthlyTotalPlannedEmployees: number;
 
   //نسبة الإنجاز المخططة الشهريةالخاصة بالبنيه التحتيه
-  infrastructureMonthlyPlannedCompletionRate: Number;
+  infrastructureMonthlyPlannedCompletionRate: number;
   //التكلفة الانشائية المتوقعة خلال الشهر
   projectMonthlyPlannedMonthCost: number;
 }

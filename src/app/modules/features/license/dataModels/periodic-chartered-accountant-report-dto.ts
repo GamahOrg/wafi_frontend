@@ -6,8 +6,18 @@ import {
   LiceneProjectBeneficiaryTypeDto,
   LicenseProjectExchangeDocumentMainItemDto,
   LicenseProjectExchangeDocumentSubItemDto,
+  LiceneProjectExchangeDocumentStatusDto,
+  LicenseProjectExchangeDocumentStatusEnum,
+  LicenseProjectExchangeDocumentWithdrawalMethodDto,
+  LicenseProjectExchangeDocumentWithdrawalMethodEnum,
+  LicenseProjectExchangeDocumentInsuranceCompanyDto,
 } from './license-project-exchange-document-paging-dto';
+import {
+  LicenseProjectExchangeInsuranceDocumentFile,
+  LicenseProjectExchangeBankGuaranteeDocumentFile,
+} from '../models/exchange-documents-details-response';
 import { LicenseProjectDto } from './license-project-risk-dto';
+import { LicenseProjectFeasibilityStudyFullDto } from '../models/LicenseProjectFeasibilityStudyFullDto';
 
 export interface PeriodicCharteredAccountantReportDto {
   id: string;
@@ -18,11 +28,21 @@ export interface PeriodicCharteredAccountantReportDto {
   year: number;
   fromDate: Date;
   toDate: Date;
+  //تاريخ انشاء التقرير
+  reportCreationDate?: Date;
+  //تاريخ اعتماد التقرير
+  approvedOn?: Date;
   //وثائق الصرف خلال فترة التقرير
   exchangeDocuments: PeriodicCharteredAccountantReportExchangeDocumentDto[];
 
   //اسم مكتب المحاسب القانونى
   charteredAccountantOfficeName: string;
+  //اسم المطور العقاري
+  developerName: string;
+  //اسم الاستشاري
+  engineeringConsultantName?: string;
+  //اسم البنك
+  bankName?: string;
 
   //نوع الوحدات
   unitType: string;
@@ -36,6 +56,10 @@ export interface PeriodicCharteredAccountantReportDto {
   //رقم ترخيص بيع وحدة على الخارطة
 
   certificateNumber: string;
+  //رقم الاتفاقية (يعرض بناءً على المشروع - للعرض فقط)
+  agreementNumber?: string;
+  //تاريخ الاتفاقية (يعرض بناءً على المشروع - للعرض فقط)
+  agreementDate?: Date;
   //بيانات معد التقرير
   customerId: string;
   customer: CustomerShortDto;
@@ -78,6 +102,10 @@ export interface PeriodicCharteredAccountantReportDto {
   projectUnitsPositionAnalysis: ProjectUnitsPositionAnalysisDto[];
 
   paymentsCollectedForCancelledUnitsSolds: PaymentsCollectedForCancelledUnitsSoldDto[];
+  //الدفعات المحصلة والخاصة بالوحدات المباعة خلال الفترة
+  paymentsCollectedForSoldUnitsDto: PaymentsCollectedForSoldUnitsDto[];
+  //الدفعات المحصلة والخاصة بالوحدات المباعة منذ بدأ المشروع
+  paymentsCollectedForSoldUnitsFromBeginningDto: PaymentsCollectedForSoldUnitsDto[];
 
   //جدول ادناه يوضح الإيداعات التي لم تظهر في حساب البنك حتى تاريخه “يستطيع إضافة أكثر من عنصر”
   periodicCharteredAccountantReportDeposits: PeriodicCharteredAccountantReportDepositDto[];
@@ -93,6 +121,21 @@ export interface PeriodicCharteredAccountantReportDto {
   LicenseProject: LicenseProjectDto;
   reportType: PeriodicCharteredAccountantReportTypeDto;
   quarterType: PeriodicCharteredAccountantReportQuarterTypeDto;
+
+  // تفاصيل الحسابات الفرعية في حساب الضمان
+  constructionCostsAccountNumber?: string;
+  constructionCostsAvailableAmount?: number;
+  administrativeAndMarketingAccountNumber?: string;
+  administrativeAndMarketingAvailableAmount?: number;
+  custodyAccountNumber?: string;
+  custodyAvailableAmount?: number;
+  incentivesSubIBAN?: string;
+  incentivesSubIBANAvailableAmount?: number;
+  financingSubIBAN?: string;
+  financingSubIBANAvailableAmount?: number;
+  licenseProjectFeasibilityStudies: LicenseProjectFeasibilityStudyFullDto[];
+  licenseTypeCode?: string;
+  rejectionCount: number;
 }
 export interface FinancialCenterFileDto {
   id: string;
@@ -184,6 +227,25 @@ export interface PeriodicCharteredAccountantReportDepositDto {
   depositDate: Date;
 }
 export interface PaymentsCollectedForCancelledUnitsSoldDto {
+  id: string;
+  periodicCharteredAccountantReportId: string;
+  //اسم المشترى
+  buyerName: string;
+  //رقم الوحدة
+  unitCode: string;
+  //سعر الوحدة
+  price: number;
+  //تاريخ الالغاء
+  cancelledDate: Date;
+  //ما تم دفعة خلال الفترة - الدفعات التى تم ارجاعها
+  paidDuringPeriod: number;
+  //إجمالي الدفعات
+  totalPayments: number;
+  //المتبقى
+  remainingUnitPrice: number;
+}
+
+export interface PaymentsCollectedForSoldUnitsDto {
   id: string;
   periodicCharteredAccountantReportId: string;
   //اسم المشترى
@@ -397,6 +459,44 @@ export interface PeriodicCharteredAccountantReportExchangeDocumentDto {
   mainItem: LicenseProjectExchangeDocumentMainItemDto;
   subItem: LicenseProjectExchangeDocumentSubItemDto;
   licenseProjectBuyer: LicenseProjectBuyerDto;
+
+  // حالة الوثيقة
+  statusId?: LicenseProjectExchangeDocumentStatusEnum;
+  status?: LiceneProjectExchangeDocumentStatusDto;
+
+  // اسم المستفيد (مشتري)
+  buyerName?: string;
+  // رقم الآيبان واسم البنك (في حال توفر بيانات التحويل البنكي - مرتبط بالباك إند)
+  beneficiaryIban?: string;
+  bankName?: string;
+
+  // بند الصرف من جدول الكميات
+  sysLicenseRelativeWeight?: { id?: string; elementName?: string };
+
+  // نسبة الإنجاز
+  projectProgressPercentage?: number;
+
+  // أرقام الحسابات والأرصدة
+  mainAccountNumber?: string;
+  subAccountNumber?: string;
+  availableAmountBeforeExchange?: number;
+  remainingAmountAfterExchange?: number;
+
+  // طريقة سحب مبلغ الحفظ
+  withdrawalMethodId?: LicenseProjectExchangeDocumentWithdrawalMethodEnum;
+  withdrawalMethod?: LicenseProjectExchangeDocumentWithdrawalMethodDto;
+
+  // بيانات التأمين
+  insurancePolicyNumber?: string;
+  insuranceStartDate?: Date;
+  insuranceEndDate?: Date;
+  insuranceCompany?: LicenseProjectExchangeDocumentInsuranceCompanyDto;
+  insuranceAttachment?: SysFileManagerCreateUpdateDto;
+  licenseProjectExchangeInsuranceDocumentFiles?: LicenseProjectExchangeInsuranceDocumentFile[];
+
+  // مرفق الضمان البنكي
+  bankGuaranteeAttachment?: SysFileManagerCreateUpdateDto;
+  licenseProjectExchangeBankGuaranteeDocumentFiles?: LicenseProjectExchangeBankGuaranteeDocumentFile[];
 }
 
 export interface PeriodicCharteredAccountantReportCreateUpdateDto {
@@ -408,6 +508,10 @@ export interface PeriodicCharteredAccountantReportCreateUpdateDto {
   year: number;
   fromDate: Date;
   toDate: Date;
+  //تاريخ انشاء التقرير
+  reportCreationDate?: Date;
+  //تاريخ اعتماد التقرير
+  approvedOn?: Date;
   //إجمالي قيمة وحدات المشروع
   totalUnitsAmount: number;
   //إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)

@@ -35,6 +35,7 @@ export class AddEditActualRelativeWeightComponent {
   showValidation: boolean = false;
   constructionWorkStatusActual?: ConstructionWorkStatusActualDto;
   licenseProjectEngineeringActualRelativeWeight?: LicenseProjectEngineeringActualRelativeWeightDto
+  monthlycontrastCompletionRate?: number = 0;
 
   constructor(
     private _engineeringSupervisionReportActualQualityAndBusinessService: EngineeringSupervisionReportActualQualityAndBusinessService,
@@ -88,7 +89,7 @@ export class AddEditActualRelativeWeightComponent {
     this.subscriptions.push(
       this._engineeringSupervisionReportActualQualityAndBusinessService.getLicenseProjectActualRelativeWeightDetails(this.licenseProjectId as string, this.licenseProjectEngineeringActualRelativeWeight?.licenseRelativeWeightId as string, this.monthDate as Date).subscribe(res => {
         if (res) {
-
+          this.monthlycontrastCompletionRate = res.contrastCompletionRate ?? 0;
           this.constructionWorkStatusActual = res as ConstructionWorkStatusActualDto;
           if (this.constructionWorkStatusActual && this.constructionWorkStatusActual.totalContrastCompletionRate < 0)
             this.totalContrastCompletionRateColor = 'red';
@@ -112,7 +113,7 @@ export class AddEditActualRelativeWeightComponent {
     this.constructionWorkStatusCreateUpdate = this.licenseProjectEngineeringConstructionWorkStatusForm.value as {} as ConstructionWorkStatusCreateUpdateDto;
     this.constructionWorkStatusCreateUpdate.id = this.constructionWorkStatusActual?.id as string;
     this.constructionWorkStatusCreateUpdate.licenseProjectEngineeringSupervisionPlannedReportDetailId = this.constructionWorkStatusActual?.licenseProjectEngineeringSupervisionPlannedReportDetailId as string;
-
+    
 
     this.subscriptions.push(
       this._engineeringSupervisionReportActualQualityAndBusinessService.savelicenseProjectAcualRelativeWeightRates(this.constructionWorkStatusCreateUpdate).subscribe((res) => {
@@ -158,6 +159,14 @@ export class AddEditActualRelativeWeightComponent {
   private closeDialog(): void {
     this._popupService.dismissDialog()
   }
+
+  onActualMonthlyPlannedCompletionPercentageChange(event: any): void {
+    debugger;
+    const actualMonthlyPlannedCompletionPercentage = event.target.value;
+    const monthlyPlannedCompletionPercentage = this.constructionWorkStatusActual?.monthlyPlannedCompletionPercentage ?? 0;
+    this.monthlycontrastCompletionRate = actualMonthlyPlannedCompletionPercentage - monthlyPlannedCompletionPercentage;
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe())
   }

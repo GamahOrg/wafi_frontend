@@ -530,7 +530,8 @@
                 (بدون ثمن الأرض)</label
               >
               <input
-                type="number"
+                type="text"
+                appNumberFormat
                 class="form-control"
                 min="0"
                 formControlName="totalProjectCosts"
@@ -551,7 +552,8 @@
             <div class="form-group">
               <label class="form-label">أرصدة حسابات الضمان</label>
               <input
-                type="number"
+                type="text"
+                appNumberFormat
                 class="form-control"
                 formControlName="constructionCostsAvailableAmount"
               />
@@ -562,7 +564,8 @@
             <div class="form-group">
               <label class="form-label">رصيد حساب التكاليف الإنشائية</label>
               <input
-                type="number"
+                type="text"
+                appNumberFormat
                 class="form-control"
                 formControlName="constructionCostsAvailableAmount"
               />
@@ -572,7 +575,8 @@
             <div class="form-group">
               <label class="form-label">رصيد حساب الإداري والتسويقي</label>
               <input
-                type="number"
+                type="text"
+                appNumberFormat
                 class="form-control"
                 formControlName="administrativeAndMarketingAvailableAmount"
               />
@@ -583,7 +587,8 @@
             <div class="form-group">
               <label class="form-label">رصيد حساب الحفظ</label>
               <input
-                type="number"
+                type="text"
+                appNumberFormat
                 class="form-control"
                 formControlName="custodyAvailableAmount"
               />
@@ -593,9 +598,9 @@
             <div class="form-group">
               <label class="form-label">إجمالي وثائق الصرف قيد الاعتماد</label>
               <input
-                type="number"
+                type="text"
                 class="form-control"
-                [value]="details.pendingExchangeDocumentsAmount"
+                [value]="details.pendingExchangeDocumentsAmount | number:'1.2-2'"
                 readonly
               />
             </div>

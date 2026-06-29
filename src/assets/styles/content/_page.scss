@@ -40,6 +40,17 @@
   }
 
   .filter {
+
+    .input-group {
+
+      .form-control,
+      .form-select {
+        &:not(:first-child) {
+          border-inline-start: none;
+        }
+      }
+    }
+
     .input-group-text {
       &:first-child {
         padding-inline-end: 0;
@@ -58,10 +69,6 @@
     .form-control,
     .form-select {
       color: $input-border-color;
-
-      &:not(:first-child) {
-        border-inline-start: none;
-      }
     }
 
     .form-select {

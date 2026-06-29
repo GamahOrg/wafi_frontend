@@ -1,3 +1,4 @@
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ProjectAddressService } from './services/licenseProjects/project-address.service';
 import { TechnicalCapabilitiesRequirementsService } from '../facilities/services/technicalCapabilitiesRequirements/technical-capabilities-requirements.service';
 import { ProjectBasicDataService } from './services/licenseProjects/project-basic-data.service';
@@ -317,6 +318,7 @@ import { SupervisionFollowUpCostsRatioService } from './services/supervision-fol
 import { PeriodicCharteredAccountantReportComponent } from './components/periodic-chartered-accountant-report/periodic-chartered-accountant-report.component';
 import { PeriodicCharteredAccountantReportDetailsComponent } from './components/periodic-chartered-accountant-report-details/periodic-chartered-accountant-report-details.component';
 import { PeriodicCharteredAccountantReportListComponent } from './components/periodic-chartered-accountant-report-list/periodic-chartered-accountant-report-list.component';
+import { ExchangeDocumentDetailsPopupComponent } from './components/exchange-document-details-popup/exchange-document-details-popup.component';
 import { LincenseProjectZonesComponent } from './components/Zones/lincense-project-zones/lincense-project-zones.component';
 import { LicenseProjectZoneUnitComponent } from './components/Zones/license-project-zone-unit/license-project-zone-unit.component';
 import { LicenseProjectZoneUnitSubunitComponent } from './components/Zones/license-project-zone-unit-subunit/license-project-zone-unit-subunit.component';
@@ -797,6 +799,7 @@ import { QualificationTypeService } from '../qualifying/services/qualification-t
     PeriodicCharteredAccountantReportComponent,
     PeriodicCharteredAccountantReportDetailsComponent,
     PeriodicCharteredAccountantReportListComponent,
+    ExchangeDocumentDetailsPopupComponent,
     AddEditActualQualityAndBusinessComponent,
     ProjectStatusUpdateComponent,
     AddEditActualQualityControlComponent,
@@ -1129,7 +1132,8 @@ import { QualificationTypeService } from '../qualifying/services/qualification-t
     ReactiveFormsModule,
     FormsModule,
     PdfViewerModule,
-    DatePipe
+    DatePipe,
+    PaginationModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [

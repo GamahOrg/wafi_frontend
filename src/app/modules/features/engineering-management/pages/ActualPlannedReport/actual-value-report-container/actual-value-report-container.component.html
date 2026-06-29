@@ -1,26 +1,21 @@
-
 <app-actual-value-report-paging-list *ngIf="!showDetails"></app-actual-value-report-paging-list>
 
-
-<div class="actual-value-report-container" *ngIf="showDetails && !showPdfExport">
-  <div class="report-actions mb-3">
-    <button type="button" class="btn btn-primary me-2" (click)="openRequestApprovalComponentDialog()" *ngIf="
+<div class="page" *ngIf="showDetails && !showPdfExport">
+  <div class="page-header d-flex justify-content-between align-items-center gap-3 mb-3">
+    <div class="page-title">
+      <h6 class="title">تفاصيل التقرير</h6>
+    </div>
+    <div class="d-flex align-items-center gap-2" *ngIf="showDetails && !showPdfExport">
+      <button type="button" class="btn btn-primary" (click)="openRequestApprovalComponentDialog()" *ngIf="
       actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
       actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New">إرسال التقرير الشهري للدراسة</button>
-    
-    <button type="button" class="btn btn-secondary me-2" (click)="showDetails = false">رجوع للقائمة</button>
 
-    <button type="button" class="btn btn-primary" (click)="openNotesDialog()" *ngIf="
+      <button type="button" class="btn btn-outline-primary" (click)="showDetails = false">رجوع للقائمة</button>
+
+      <button type="button" class="btn btn-primary" (click)="openNotesDialog()" *ngIf="
       actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback">تسجيل نتيجة الملاحظات</button>
+    </div>
   </div>
 
-  <div class="report-content">
-    <app-vertical-tabs></app-vertical-tabs>
-  </div>
-</div>
-
-<!-- PDF Export Component (hidden, rendered only when exporting) -->
-<div *ngIf="showPdfExport" >
-  <!-- && actualValueReport?.supervisionPlannedReportStatusId == licenseProjectEngineeringRequestStatusEnum.Certified -->
-
+  <app-vertical-tabs></app-vertical-tabs>
 </div>

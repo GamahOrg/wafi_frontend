@@ -37,11 +37,11 @@
                     <td>{{cash.landCostPayments}}</td>
                     <td>{{cash.pcPurchasePayments}}</td>
                     <td>{{cash.zakatPayments}}</td>  -->
-                <td>{{cash.loanPaidToOwnerOfTheProjectExpectedFinancingFees}}</td>
-                <td>{{cash.totalCashFlowPaid}}</td>
-                <td>{{cash.netIncreaseDecreaseInCash}}</td>
-                <td>{{cash.cashBalanceAtBeginningOfThePeriod}}</td>
-                <td>{{cash.balanceOfCashAndCashEquivalentsAtTheEndOfThePeriod}}</td>
+                <td>{{cash.loanPaidToOwnerOfTheProjectExpectedFinancingFees | number:'1.2-2'}}</td>
+                <td>{{cash.totalCashFlowPaid | number:'1.2-2'}}</td>
+                <td>{{cash.netIncreaseDecreaseInCash | number:'1.2-2'}}</td>
+                <td>{{cash.cashBalanceAtBeginningOfThePeriod | number:'1.2-2'}}</td>
+                <td>{{cash.balanceOfCashAndCashEquivalentsAtTheEndOfThePeriod | number:'1.2-2'}}</td>
             </tr>
         </tbody>
     </table>

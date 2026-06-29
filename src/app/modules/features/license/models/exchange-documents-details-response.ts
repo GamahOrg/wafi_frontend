@@ -21,7 +21,7 @@ export interface exchangeRequestDetails {
   bankName: string;
   ibanNumber: string;
   documentNumber: string;
-  availableAmountAfterExchange: null;
+  availableAmountAfterExchange: number | null;
   licenseProjectBuyerId: string;
   batchNumber: string;
   buyerName: string;
@@ -31,8 +31,8 @@ export interface exchangeRequestDetails {
   contractNumber: string;
   subAccountNumber: null;
   mainAccountNumber: string;
-  availableAmountBeforeExchange: null;
-  remainingAmountAfterExchange: null;
+  availableAmountBeforeExchange: number | null;
+  remainingAmountAfterExchange: number | null;
   statusId: number;
   status: MainItem;
   developerCustomerId: null;

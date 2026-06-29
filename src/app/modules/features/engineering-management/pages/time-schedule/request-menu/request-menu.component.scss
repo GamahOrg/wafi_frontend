@@ -1,29 +1,11 @@
-.listnum{
-    color: #0DA865;
-    background-color:#0DA8651A;
-    border-radius: 5px;
+@import '/src/assets/styles/custom-variables';
+@import '/src/assets/styles/bootstrap-custom/tables';
+@import '/src/assets/styles/content/table-content';
+@import '/src/assets/styles/content/details-page';
+@import '/src/assets/styles/content/status';
 
-}
-
-
-.statuesbtn , .hintbtn {
-    
-    border-radius: 66px;
-    border: none;
-    // color: #e00707;
-    font-size: 15px;
-
-}
-
-
-.red{
-    color:#E86F60;
-    background-color: #E86F601A
-    
-}
-
-.green{
-    color: #0DA865;
-    background-color:#0DA8651A;
-    
+.scrollable {
+  max-height: 50vh;
+  overflow-y: auto;
+  padding-inline-end: .5rem;
 }

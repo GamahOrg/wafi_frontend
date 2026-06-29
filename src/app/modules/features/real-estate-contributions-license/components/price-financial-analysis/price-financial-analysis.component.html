@@ -11,18 +11,20 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label"> المساحة الإجمالية للمشروع </label>
-                    <input type="number" id="control-landTotalSpace"
+                    <input type="text" id="control-landTotalSpace"
                            class="form-control"
                            formControlName="landTotalSpace"
+                           appNumberFormat
                            [disabled]="false"/>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مساحة الأرض </label>
-                    <input type="number" id="control-landSpace"
+                    <input type="text" id="control-landSpace"
                            class="form-control"
-                           formControlName="landSpace"/>
+                           formControlName="landSpace"
+                           appNumberFormat/>
                     <mat-error *ngIf="controls.landSpace?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.landSpace?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.landSpace?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -32,9 +34,10 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">مساحة أرض سكنية</label>
-                    <input type="number" id="control-residentialLandSpace"
+                    <input type="text" id="control-residentialLandSpace"
                            class="form-control"
-                           formControlName="residentialLandSpace"/>
+                           formControlName="residentialLandSpace"
+                           appNumberFormat/>
                     <mat-error *ngIf="controls.residentialLandSpace?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.residentialLandSpace?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.residentialLandSpace?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -46,9 +49,10 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">إجمالي قيمة المشروع</label>
-                    <input type="number" id="control-totalProjectValue"
+                    <input type="text" id="control-totalProjectValue"
                            class="form-control"
-                           formControlName="totalProjectValue"/>
+                           formControlName="totalProjectValue"
+                           appNumberFormat/>
                     <mat-error *ngIf="controls.totalProjectValue?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.totalProjectValue?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.totalProjectValue?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -58,9 +62,10 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">تكلفة البناء</label>
-                    <input type="number" id="control-constructionCost"
+                    <input type="text" id="control-constructionCost"
                            class="form-control"
-                           formControlName="constructionCost"/>
+                           formControlName="constructionCost"
+                           appNumberFormat/>
                         <mat-error *ngIf="controls.constructionCost?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         <mat-error *ngIf="controls.constructionCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                         <mat-error *ngIf="controls.constructionCost?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -70,9 +75,10 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">تكلفة استشاري</label>
-                    <input type="number" id="control-consultantCost"
+                    <input type="text" id="control-consultantCost"
                            class="form-control"
-                           formControlName="consultantCost"/>
+                           formControlName="consultantCost"
+                           appNumberFormat/>
                         <mat-error *ngIf="controls.consultantCost?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         <mat-error *ngIf="controls.consultantCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                         <mat-error *ngIf="controls.consultantCost?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -82,9 +88,10 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">سعر الأرض</label>
-                    <input type="number" id="control-landPrice"
+                    <input type="text" id="control-landPrice"
                            class="form-control"
-                           formControlName="landPrice"/>
+                           formControlName="landPrice"
+                           appNumberFormat/>
                     <mat-error *ngIf="controls.landPrice?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.landPrice?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.landPrice?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -94,9 +101,10 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">الرسوم الإدارية</label>
-                    <input type="number" id="control-administrativeFees"
+                    <input type="text" id="control-administrativeFees"
                            class="form-control"
-                           formControlName="administrativeFees"/>
+                           formControlName="administrativeFees"
+                           appNumberFormat/>
                         <mat-error *ngIf="controls.administrativeFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         <mat-error *ngIf="controls.administrativeFees?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                         <mat-error *ngIf="controls.administrativeFees?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -106,9 +114,10 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">رسوم التسويق</label>
-                    <input type="number" id="control-marketingFees"
+                    <input type="text" id="control-marketingFees"
                            class="form-control"
-                           formControlName="marketingFees"/>
+                           formControlName="marketingFees"
+                           appNumberFormat/>
                         <mat-error *ngIf="controls.marketingFees?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                         <mat-error *ngIf="controls.marketingFees?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                         <mat-error *ngIf="controls.marketingFees?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>
@@ -118,9 +127,10 @@
             <div class="col-12 col-lg-6">
                 <div class="form-group mb-4">
                     <label class="form-label">أرباح</label>
-                    <input type="number" id="control-profits"
+                    <input type="text" id="control-profits"
                            class="form-control"
-                           formControlName="profits"/>
+                           formControlName="profits"
+                           appNumberFormat/>
                     <mat-error *ngIf="controls.profits?.hasError('required') && showValidation">حقل مطلوب</mat-error>
                     <mat-error *ngIf="controls.constructionCost?.hasError('pattern')">لا يسمح الا برقمين بعد الفاصله العشريه</mat-error>
                     <mat-error *ngIf="controls.constructionCost?.hasError('min')">قيمة الحقل يجب الا تقل عن صفر</mat-error>

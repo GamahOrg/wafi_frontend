@@ -3,11 +3,7 @@
     <div class="upload-hints">
       <p>
         الصيغة {{ data.allowedExtensionsText }} و
-        {{
-          data.maxFileSizeMB
-            ? data.maxFileSizeMB + " ميجا بايت"
-            : data.size + " كيلو بايت"
-        }}
+        {{ (data.maxFileSizeMB ?? (data.size / 1024)) }} ميجابايت
         بحد أقصى
       </p>
     </div>
@@ -113,7 +109,7 @@
         </div>
       </div>
 
-      <p *ngIf="message" class="small text-success">
+      <p *ngIf="message" [class]="'small ' + (isError ? 'text-danger' : 'text-success')">
         {{ message }}
       </p>
 

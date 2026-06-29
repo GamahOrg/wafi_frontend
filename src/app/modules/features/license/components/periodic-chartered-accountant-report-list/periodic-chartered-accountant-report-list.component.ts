@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PeriodicCharteredAccountantReportPagingListDto, PeriodicCharteredAccountantReportTypeEnum } from '../../models/periodic-chartered-accountant-report-paging-list-dto';
+import { PeriodicCharteredAccountantReportPagingListDto, PeriodicCharteredAccountantReportStatusEnum, PeriodicCharteredAccountantReportTypeEnum } from '../../models/periodic-chartered-accountant-report-paging-list-dto';
 import { Pagination, pagination } from 'src/app/shared/models/pagination.model';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { PaginationService } from 'src/app/shared/services/pagination/pagination.service';
@@ -20,6 +20,7 @@ export class PeriodicCharteredAccountantReportListComponent {
   subscriptions: Subscription[] = [];
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
   reportTypeId = PeriodicCharteredAccountantReportTypeEnum;
+  reportStatusId = PeriodicCharteredAccountantReportStatusEnum;
   newPageNo: number = 1;
   pagintationData: pagination = {
     currentPage: 1,
@@ -28,6 +29,8 @@ export class PeriodicCharteredAccountantReportListComponent {
     totalCount: 0,
   };
   reqList: Pagination<PeriodicCharteredAccountantReportPagingListDto[]> = {} as Pagination<PeriodicCharteredAccountantReportPagingListDto[]>;
+  showDetails: boolean = false;
+  @Output() viewingDetails = new EventEmitter<boolean>();
   addPeriodiccharteredaccountantreport: string = `/${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.addPeriodiccharteredaccountantreport}` as string;
 
   constructor(
@@ -89,14 +92,13 @@ export class PeriodicCharteredAccountantReportListComponent {
     );
   }
   showDetailDialog(id: string): void {
-    this._periodicCharteredAccountantReportService.setLicenseProjectAccountReportIdInLocalStorage(id)
-    let Data = {
-      title: "تفاصيل تقارير المحاسب القانوني",
-      component: PeriodicCharteredAccountantReportDetailsComponent,
-      id: "ShowDetailAccountReportComponent",
-      buttons: []
-    } as PopupData;
-    this._popupService.updatePopupData(Data);
+    this._periodicCharteredAccountantReportService.setLicenseProjectAccountReportIdInLocalStorage(id);
+    this.showDetails = true;
+    this.viewingDetails.emit(true);
+  }
+  backToList(): void {
+    this.showDetails = false;
+    this.viewingDetails.emit(false);
   }
   private loadNextPage(nextPage: number): void {
     this.pagintationData.currentPage = nextPage;

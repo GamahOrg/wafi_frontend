@@ -13,11 +13,11 @@ export class SysQualificationStepCreateUpdateDto{
     id :string = '';
     qualificationTypeId :string='';
     discerption :string='';
-    order :Number=0;
+    order :number=0;
 }
 export class SysQualificationPeriodCreateUpdateDto{
     id :string = '';
     qualificationTypeId :string = '';
-    period :Number=0;
-    price :Number=0;
+    period :number=0;
+    price :number=0;
 }

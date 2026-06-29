@@ -76,14 +76,17 @@ export class AddEditDesignPhaseCreditsComponent {
   getLicenseProjectEngineeringStatusOfFundsRequiredFromEntities() {
     this.subscriptions.push(
       this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.getLicenseProjectEngineeringStatusOfFundsRequiredFromEntities().subscribe(res => {
+        debugger;
         if (res) {
           
           this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities = res as LicenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDto;
           if (this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities && this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.id && this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.id != "00000000-0000-0000-0000-000000000000") {
             this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.patchValue(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities as any)
-            this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.controls.firstSubmissionDate.setValue(formatDate(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.firstSubmissionDate, 'yyyy-MM-dd', this.locale));
-            this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.controls.lastSubmissionDate.setValue(formatDate(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.lastSubmissionDate, 'yyyy-MM-dd', this.locale));
-            this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.controls.finalApprovalDate.setValue(formatDate(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.finalApprovalDate, 'yyyy-MM-dd', this.locale));
+            this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.controls.firstSubmissionDate.setValue(new Date(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.firstSubmissionDate) as any);
+            this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.controls.lastSubmissionDate.setValue(new Date(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.lastSubmissionDate) as any);
+            if (this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.finalApprovalDate) {
+              this.licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesForm.controls.finalApprovalDate.setValue(new Date(this.licenseProjectEngineeringStatusOfFundsRequiredFromEntities.finalApprovalDate) as any);
+            }
           }
         }
       })

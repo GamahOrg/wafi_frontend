@@ -18,6 +18,7 @@ import { SharedLicenseProjectService } from '../../services/sharedLicenseProject
 import { LicenseProjectExchangeDocumentStatusEnum } from '../../dataModels/license-project-exchange-document-paging-dto';
 import { Configuration } from '../../../../../core/configurations/shared.config';
 import { CustomerTypeEnum } from '../../models/search-exchange-document-list-response-dto';
+import { LicenseProjectExchangeDocumentRejectionBy } from '../../models/exchange-documents-details-response';
 
 @Component({
   selector: 'app-exchange-documents-list',
@@ -237,6 +238,19 @@ export class ExchangeDocumentsListComponent implements OnInit {
       subscription.unsubscribe();
     });
   }
+  getRejectionOwner(rejectionBy: LicenseProjectExchangeDocumentRejectionBy | null): string {
+    switch (rejectionBy) {
+      case LicenseProjectExchangeDocumentRejectionBy.Employee:
+        return 'حسابات الضمان';
+      case LicenseProjectExchangeDocumentRejectionBy.Accountant:
+        return 'المحاسب القانوني';
+      case LicenseProjectExchangeDocumentRejectionBy.Consultant:
+        return 'الاستشاري الهندسي';
+      default:
+        return '-';
+    }
+  }
+
   viewDetails(document: LicenseProjectExchangeDocumentsOnProjectPagingDto) {
     this._router.navigate([
       `${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.exchangeDocumentsDetails}/${CustomerTypeEnum.DeveloperDelegator}/${document.id}`,

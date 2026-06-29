@@ -1,32 +1,62 @@
-<section *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList && licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList.length > 0">
-    <div class="card"
-         *ngFor="let notesData of licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList">
-        <div class="card-body">
-            <div class="results-wrapper">
-                <div class="results-info">
-                  
-                    <h6 class="title">
-                         <span class="name">{{notesData.ownerTypeId == ownerTypes.ProjectManager? 'ملاحظات مدير المشروع ' : 'ملاحظات المهندس المسئول' }}</span>
-                       
-                    </h6>
-                    <span class="date">
-                        <i class="material-icons">calendar_month</i>
-                        {{notesData.createdOn | date:"MM/dd/yyyy"}}
-                    </span>
-                </div>
+<!-- <section *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList && licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList.length > 0">
+  <div class="card" *ngFor="let notesData of licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList">
+    <div class="card-body">
+      <div class="results-wrapper">
+        <div class="results-info">
 
-                <div class="notes"
-                     >
-                    <div class="note"
-                         [innerHTML]="notesData.notes"></div>
-                </div>
-            </div>
+          <h6 class="title">
+            <span class="name">{{notesData.ownerTypeId == ownerTypes.ProjectManager? 'ملاحظات مدير المشروع ' : 'ملاحظات المهندس المسئول' }}</span>
+
+          </h6>
+          <span class="date">
+            <i class="material-icons">calendar_month</i>
+            {{notesData.createdOn | date:"MM/dd/yyyy"}}
+          </span>
         </div>
+
+        <div class="notes">
+          <div class="note" [innerHTML]="notesData.notes"></div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
-<section *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList?.length == 0" >
-    
-        <p class="text-success mt-3"
-           >لا يوجد ملاحظات على الطلب
-        </p>
- </section>
+<section *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList?.length == 0">
+
+  <p class="text-success mt-3">لا يوجد ملاحظات على الطلب
+  </p>
+</section> -->
+
+<div class="details-page">
+
+  <div class="page-header d-flex justify-content-between align-items-center gap-3">
+    <div class="page-title">
+      <h6 class="title">الملاحظات</h6>
+    </div>
+  </div>
+
+  <div class="page-section" *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList">
+    <div class="table-responsive" *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList.length > 0">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th class="w-0">النوع</th>
+            <th class="w-0">التاريخ</th>
+            <th>الملاحظات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let notesData of licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList">
+            <td class="text-nowrap">{{notesData.ownerTypeId == ownerTypes.ProjectManager? 'ملاحظات مدير المشروع ' : 'ملاحظات المهندس المسئول' }}</td>
+            <td class="text-nowrap">{{notesData.createdOn | date:"MM/dd/yyyy"}}</td>
+            <td>
+              <div [innerHTML]="notesData.notes"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <app-no-data [showCompleteBtn]="false" [showText]="false" *ngIf="licenseProjectEngineeringSupervisionPlannedMonthlyReportStudyNoteList.length === 0"></app-no-data>
+  </div>
+</div>

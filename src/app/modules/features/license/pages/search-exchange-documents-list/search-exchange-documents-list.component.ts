@@ -27,6 +27,7 @@ import {
 } from '../../dataModels/license-project-exchange-document-paging-dto';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LicenseProjectExchangeDocumentsOnProjectPagingDto } from '../../models/exchange-documents-list-response';
+import { LicenseProjectExchangeDocumentRejectionBy } from '../../models/exchange-documents-details-response';
 
 @Component({
   selector: 'app-search-exchange-documents-list',
@@ -219,6 +220,19 @@ export class SearchExchangeDocumentsListComponent implements OnInit {
         return 'orange';
     }
   }
+  getRejectionOwner(rejectionBy: LicenseProjectExchangeDocumentRejectionBy | null): string {
+    switch (rejectionBy) {
+      case LicenseProjectExchangeDocumentRejectionBy.Employee:
+        return 'حسابات الضمان';
+      case LicenseProjectExchangeDocumentRejectionBy.Accountant:
+        return 'المحاسب القانوني';
+      case LicenseProjectExchangeDocumentRejectionBy.Consultant:
+        return 'الاستشاري الهندسي';
+      default:
+        return '-';
+    }
+  }
+
   viewDetails(document: SearchExchangeDocumentListResponseDto) {
 
     this._router.navigate([

@@ -200,7 +200,7 @@
           <div class="col-xl-6">
             <div class="key-value horiz">
               <span class="key">المبلغ</span>
-              <span class="value">{{ requestDetails?.amount ?? "--" }}</span>
+              <span class="value">{{ (requestDetails?.amount | number:'1.2-2') ?? '--' }}</span>
             </div>
           </div>
           <div class="col-xl-6">
@@ -208,7 +208,7 @@
               <span class="key">المبلغ المتبقي في الحساب بعد الصرف</span>
               <span class="value">
                 {{
-                requestDetails?.remainingAmountAfterExchange ?? "--"
+                (requestDetails?.remainingAmountAfterExchange | number:'1.2-2') ?? '--'
                 }}
               </span>
             </div>
@@ -218,7 +218,7 @@
               <span class="key">المبلغ المتوفر في الحساب قبل الصرف</span>
               <span class="value">
                 {{
-                requestDetails?.availableAmountBeforeExchange ?? "--"
+                (requestDetails?.availableAmountBeforeExchange | number:'1.2-2') ?? '--'
                 }}
               </span>
             </div>

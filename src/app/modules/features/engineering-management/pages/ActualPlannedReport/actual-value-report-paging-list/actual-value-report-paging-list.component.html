@@ -1,51 +1,56 @@
+<div class="details-page">
+  <div class="page-header d-flex justify-content-between align-items-center gap-3">
+    <div class="page-title">
+      <h6 class="title">قائمة التقارير الشهرية</h6>
+    </div>
 
-<button type="button" class="btn btn-primary my-4 me-2" *ngIf="isRefreshReport" (click)="openAddActualMonthesDialog()">تحديث التقرير</button>
+    <div class="d-flex align-items-center gap-2">
+      <button type="button" class="btn btn-primary" *ngIf="isRefreshReport  && showActionButtons" (click)="openAddActualMonthesDialog()">تحديث التقرير</button>
 
-<button type="button" class="btn btn-success me-2" (click)="openExportReportDialog()">
-  <i class="fa fa-file-pdf-o"></i> تصدير PDF
-</button>
+      <button *ngIf="showActionButtons" type="button" class="btn btn-outline-primary" (click)="openExportReportDialog()">
+        <i class="fa fa-file-pdf-o"></i> تصدير PDF
+      </button>
+    </div>
+  </div>
 
-<div class="row row-gap-4">
+  <div class="page-section">
     <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">التاريخ</th>
-                    <th scope="col"> الشهر</th>
-                    <th scope="col"> الحالة</th>
-                    <th>العمليات</th>
-
-                   
-                </tr>
-            </thead>
-            <tbody *ngFor="let comdata of reqList.results;let i=index;">
-                <tr>
-                    <td>
-                        <span class="text-dark">{{comdata.monthDate | date:'yyyy-MM-dd'}}</span>
-                    </td>
-                    <td>
-                        <span class="text-dark">{{comdata.monthName}}</span>
-                    </td>
-                    <td>
-                        <span class="text-dark">{{comdata?.supervisionPlannedReportStatus?.name}}</span>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" (click)="getActualValueReportDetails(comdata)" >عرض التفاصيل</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">التاريخ</th>
+            <th scope="col"> الشهر</th>
+            <th scope="col"> الحالة</th>
+            <th scope="col" class="w-0">العمليات</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let comdata of reqList.results;let i=index;">
+          <tr>
+            <td>
+              <span class="text-dark">{{comdata.monthDate | date:'yyyy-MM-dd'}}</span>
+            </td>
+            <td>
+              <span class="text-dark">{{comdata.monthName}}</span>
+            </td>
+            <td>
+              <span class="text-dark">{{comdata?.supervisionPlannedReportStatus?.name}}</span>
+            </td>
+            <td class="text-nowrap">
+              <button type="button" class="btn btn-primary" (click)="getActualValueReportDetails(comdata)">عرض التفاصيل</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="mt-auto" *ngIf="reqList.totalCount > 0">
-        <app-pagination></app-pagination>
+      <app-pagination></app-pagination>
     </div>
+
     <ng-container *ngIf="reqList.totalCount === 0">
-        <div class="mt-4">
-            <app-no-data [showCompleteBtn]="false"></app-no-data>
-        </div>
+      <div class="mt-4">
+        <app-no-data [showCompleteBtn]="false"></app-no-data>
+      </div>
     </ng-container>
+  </div>
 </div>
-
-
-

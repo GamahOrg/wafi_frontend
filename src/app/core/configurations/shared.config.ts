@@ -774,6 +774,7 @@ export const Configuration = {
       GetWorkDonePercentage: '/api/LicenseProject/GetWorkDonePercentage',
       GetLicenseProjectDetails: '/api/LicenseProject/GetLicenseProjectDetails',
       GetEscrowAccount: '/api/LicenseProject/GetEscrowAccount',
+      UpdateEscrowAccount: '/api/LicenseProject/UpdateEscrowAccount',
       GetSupervisionReportStatusByLicenseProjectId:
         '/api/LicenseProject/GetSupervisionReportStatusByLicenseProjectId',
       GetRecommendationsLogsList:
@@ -1010,6 +1011,10 @@ export const Configuration = {
         '/api/PeriodCharteredAccountantReport/GetExchangeDocumentOnProject',
       GetPeriodicCharteredAccountantReportDetail:
         '/api/PeriodCharteredAccountantReport/GetPeriodicCharteredAccountantReportDetail',
+      GetReportExchangeDocumentsPaged:
+        '/api/PeriodCharteredAccountantReport/GetReportExchangeDocumentsPaged',
+      GetGeneratedExchangeDocumentsPaged:
+        '/api/PeriodCharteredAccountantReport/GetGeneratedExchangeDocumentsPaged',
       CreateExcel: '/api/PeriodCharteredAccountantReport/CreateExcel',
       GetSysDepositType:
         '/api/PeriodCharteredAccountantReport/GetSysDepositType',

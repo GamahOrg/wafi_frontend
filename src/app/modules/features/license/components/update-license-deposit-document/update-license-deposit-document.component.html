@@ -110,7 +110,7 @@
               <label for="amount" class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ constructionCostsAccountBeforeDepositing }}
+                  {{ constructionCostsAccountBeforeDepositing | number:'1.2-2' }}
                 </span>
               </div>
             </div>
@@ -155,7 +155,7 @@
               <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ administrativeAndMarketingAccountBeforeDepositing }}
+                  {{ administrativeAndMarketingAccountBeforeDepositing | number:'1.2-2' }}
                 </span>
               </div>
             </div>
@@ -201,7 +201,7 @@
               <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ custodyAccountBeforeDepositing }}
+                  {{ custodyAccountBeforeDepositing | number:'1.2-2' }}
                 </span>
               </div>
             </div>

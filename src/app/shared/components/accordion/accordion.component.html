@@ -6,12 +6,11 @@
                      [id]="accordion.id"
                      [isDisabled]="accordion.disabled"
                      [isOpen]="false"
-                     (isOpenChange)="onClickOnTitle($event, accordion)"
+                     (isOpenChange)="onToggle($event, i)"
                      *ngIf="accordion.isVisible">
 
       <div class="accordion-heading"
-           accordion-heading
-           (click)="[accordion.isViewed = true, updateisRendered(i)]">
+           accordion-heading>
         <h6 class="title me-auto">
           <span class="icon"
                 *ngIf="accordion.icon"><i [ngClass]="accordion.icon"></i></span>

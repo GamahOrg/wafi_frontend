@@ -1,23 +1,29 @@
-<div class="d-flex flex-column h-100">
-    <div class="tab-data-section">
-      <div class="table-responsive">
-        <table class="table table-light">
-          <thead>
-            <tr>
-              <th>الملاحظات</th>
-            
-            </tr>
-          </thead>
-          <tbody *ngIf="engineeringSupervisionPlannedReportStudyNoteList && engineeringSupervisionPlannedReportStudyNoteList.length">
-            <tr *ngFor="let engineeringSupervisionPlannedReportStudyNote of engineeringSupervisionPlannedReportStudyNoteList">
-              <td>
-                <div [innerHTML]="engineeringSupervisionPlannedReportStudyNote.notes"></div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+<div class="details-page">
+
+  <div class="page-header d-flex justify-content-between align-items-center gap-3">
+    <div class="page-title">
+      <h6 class="title">الملاحظات</h6>
     </div>
-  
   </div>
-  
+
+  <div class="page-section">
+    <div class="table-responsive" *ngIf="engineeringSupervisionPlannedReportStudyNoteList && engineeringSupervisionPlannedReportStudyNoteList.length > 0">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th>الملاحظات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let engineeringSupervisionPlannedReportStudyNote of engineeringSupervisionPlannedReportStudyNoteList">
+            <td>
+              <div [innerHTML]="engineeringSupervisionPlannedReportStudyNote.notes"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <app-no-data [showCompleteBtn]="false" [showText]="false" *ngIf="engineeringSupervisionPlannedReportStudyNoteList.length === 0"></app-no-data>
+  </div>
+</div>

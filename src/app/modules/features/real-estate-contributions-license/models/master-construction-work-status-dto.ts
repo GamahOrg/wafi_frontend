@@ -16,6 +16,6 @@ export interface ConstructionWorkStatusDto
        //نسبة الإنجاز المخطط الشهرية
         monthlyPlannedCompletionPercentage:number;
             //نسبه الانجاز المخططه التراكميه
-   cumulativeplannedcompletionpercentage:Number;
+   cumulativeplannedcompletionpercentage:number;
 
 }

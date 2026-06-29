@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { LanguageService } from 'src/app/core/services/language/language.service';
@@ -23,6 +23,7 @@ import { UnsavedChangesDialogComponent } from 'src/app/core/guards/unsaved-chang
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   hideSideBar: boolean = true;
+  @Output() sidebarToggled = new EventEmitter<void>();
 
   baseUrl = `${environment.baseURL}/`;
   loginUserType: string | null = '';
@@ -111,6 +112,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.currentUrl = event.url;
       }
     });
+  }
+
+  toggleSidebar(): void {
+    this.hideSideBar = !this.hideSideBar;
+    this.sidebarToggled.emit();
   }
   getLoginUserType(): void {
     this.loginUserType = this._storageService.getLoginUserType()

@@ -94,10 +94,10 @@
                     <td>{{exp.totalConstructionExpensesAndConstruction}}</td>
                     <td>{{exp.totalSupervisionExpenses}}</td>
                     <td>{{exp.totalAdministrativeExpensesAndGenerality}}</td> -->
-                <td>{{exp.totalProfit}}</td>
-                <td>{{exp.totalExpensesAndBurdensOther}}</td>
-                <td>{{exp.netProfitLossBeforeCalculatingZakatTax}}</td>
-                <td>{{exp.netProfitLossAfterCalculatingZakatTax}}</td>
+                <td>{{exp.totalProfit | number:'1.2-2'}}</td>
+                <td>{{exp.totalExpensesAndBurdensOther | number:'1.2-2'}}</td>
+                <td>{{exp.netProfitLossBeforeCalculatingZakatTax | number:'1.2-2'}}</td>
+                <td>{{exp.netProfitLossAfterCalculatingZakatTax | number:'1.2-2'}}</td>
             </tr>
         </tbody>
     </table>

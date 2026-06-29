@@ -20,7 +20,7 @@
           <tr *ngFor="let service of additionalServices">
             <td>{{service?.sysLicenseProjectService?.name}}</td>
             <td>{{service?.period}}</td>
-            <td>{{service?.price}}</td>
+            <td>{{service?.price | number:'1.2-2'}}</td>
 
             <td>
               <div class="d-flex align-items-center justify-content-end column-gap-2">

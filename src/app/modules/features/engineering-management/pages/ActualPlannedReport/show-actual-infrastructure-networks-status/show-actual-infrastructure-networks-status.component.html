@@ -1,54 +1,52 @@
-
-    <div class="card com-reg-card position-relative z-2">
-        <div class="card-body">
-            <div class="tab-data-section">
-                <div class="row mb-3">
-                    <div class="col-12 col-lg-6">
-                        <div class="key">النشاط</div>
-                        <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.elementName}}</div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="key">تكلفة النشاط</div>
-                        <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.itemCost}}</div>
-                    </div>
-                  
-                    <div class="col-12 col-lg-6">
-                        <div class="key">نسبة الإنجاز المخطط الشهرية</div>
-                        <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.monthlyPlannedCompletionPercentage}}</div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                      <div class="key">نسبة الإنجاز المخطط التراكمي</div>
-                      <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.cumulativeplannedcompletionpercentage}}</div>
-                  </div>
-                  <div class="col-12 col-lg-6">
-                    <div class="key">نسبة الإنجاز الفعلى الشهرية</div>
-                    <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.actualMonthlyPlannedCompletionPercentage}}</div>
-                </div>
-            
-                <div class="col-12 col-lg-6">
-                    <div class="key">نسبة الإنجاز الفعلي التراكمي</div>
-                    <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.cumulativeActualcompletionpercentage}}</div>
-                </div>
-
-                <div class="col-12 col-lg-6">
-                    <div class="key">التباين</div>
-                    <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.contrast}}</div>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <div class="key">الملاحظات</div>
-                    <div class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.notes}}</div>
-                </div>
-             
-              </div>
-              </div>
-        </div>
+<div class="row row-gap-4">
+  <div class="col-xl-6">
+    <div class="key-value">
+      <span class="key">النشاط</span>
+      <span class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.elementName}}</span>
     </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="key-value">
+      <span class="key">تكلفة النشاط</span>
+      <span class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.itemCost | number:'1.2-2' }}</span>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="key-value">
+      <span class="key">نسبة الإنجاز المخطط الشهرية</span>
+      <span class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.monthlyPlannedCompletionPercentage}}</span>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="key-value">
+      <span class="key">نسبة الإنجاز المخطط التراكمي</span>
+      <span class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.cumulativeplannedcompletionpercentage}}</span>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="key-value">
+      <span class="key">نسبة الإنجاز الفعلى الشهرية</span>
+      <span class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.actualMonthlyPlannedCompletionPercentage}}</span>
+    </div>
+  </div>
 
+  <div class="col-xl-6">
+    <div class="key-value">
+      <span class="key">نسبة الإنجاز الفعلي التراكمي</span>
+      <span class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.cumulativeActualcompletionpercentage}}</span>
+    </div>
+  </div>
 
-
-
-
-
-
-
-
+  <div class="col-xl-6">
+    <div class="key-value">
+      <span class="key">التباين</span>
+      <span class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.contrast}}</span>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="key-value">
+      <span class="key">الملاحظات</span>
+      <span class="value">{{actualLicenseProjectInfrastructureNetworksStatus?.notes}}</span>
+    </div>
+  </div>
+</div>

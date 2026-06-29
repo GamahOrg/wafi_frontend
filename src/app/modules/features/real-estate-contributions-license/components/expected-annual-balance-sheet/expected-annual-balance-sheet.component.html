@@ -48,11 +48,11 @@
                         <td>{{sheet.projectPropertyRights}}</td>
                         <td>{{sheet.capital}}</td>
                         <td>{{sheet.profitsLossesMade}}</td> -->
-                        <td>{{sheet.groupOfCurrentAssets}}</td>
-                        <td>{{sheet.totalCurrentAndNonCurrent}}</td>
-                        <td>{{sheet.totalAssets}}</td>
-                        <td>{{sheet.total}}</td>
-                        <td>{{sheet.totalLiabilitiesAndRightsProperty}}</td>
+                        <td>{{sheet.groupOfCurrentAssets | number:'1.2-2'}}</td>
+                        <td>{{sheet.totalCurrentAndNonCurrent | number:'1.2-2'}}</td>
+                        <td>{{sheet.totalAssets | number:'1.2-2'}}</td>
+                        <td>{{sheet.total | number:'1.2-2'}}</td>
+                        <td>{{sheet.totalLiabilitiesAndRightsProperty | number:'1.2-2'}}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-end column-gap-2">
                                 <button mat-icon-button color="warn" (click)="delete(sheet.id)"><mat-icon>delete</mat-icon></button>

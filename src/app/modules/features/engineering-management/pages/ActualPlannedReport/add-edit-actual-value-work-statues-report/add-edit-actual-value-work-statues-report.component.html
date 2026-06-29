@@ -50,7 +50,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
   </div>
   <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
     <div class="key">التكلفه الانشائية المتوقعة</div>
-    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.expectedConstructionCost}}</div>
+    <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.expectedConstructionCost | number:'1.2-2' }}</div>
   </div>
   <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportMonthDetails">
     <div class="key">القاول</div>
@@ -117,7 +117,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 
 <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj">
  <div class="key">تاريخ النهاية التعاقدي المعدل بناء على التمديد المعتمد</div>
- <div class="value">{{ licenseProjectEngineeringSupervisionActualMonthReportDetailObj.contractualEndDateAdjustedBasedOnApprovedExtension | date:'yyyy-MM-dd' }}</div>
+ <div class="value">{{ (licenseProjectEngineeringSupervisionActualMonthReportDetailObj.contractualEndDateAdjustedBasedOnApprovedExtension ) | date:'yyyy-MM-dd' }}</div>
 </div> 
 
 <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringSupervisionActualMonthReportDetailObj && licenseProjectEngineeringSupervisionActualMonthReportDetailObj.actualStartDate">
@@ -135,7 +135,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
                  type="text" id="control-expectedEndDateFromTimelineUpdate"
                  class="form-control"
                  formControlName="expectedEndDateFromTimelineUpdate"
-                 value="{{ controls.expectedEndDateFromTimelineUpdate.value | date:'yyyy-MM-dd' }}">
+                 value="{{ (controls.expectedEndDateFromTimelineUpdate.value || today) | date:'yyyy-MM-dd' }}">
           <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
       </div>
       <mat-error *ngIf="controls.expectedEndDateFromTimelineUpdate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -211,7 +211,7 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
  <div class="col-12 col-lg-6">
   <div class="form-group mb-4">
     <label class="form-label"><span class="required-star">*</span> التكلفة الفعلية خلال الشهر (ريال سعودي)</label>
-    <input type="number" (change)="reEvaluateCPI()" id="control-actualMonthCost" class="form-control" formControlName="actualMonthCost">
+    <input type="text" appNumberFormat (change)="reEvaluateCPI()" id="control-actualMonthCost" class="form-control" formControlName="actualMonthCost">
     <div class="invalid-feedback d-block" *ngIf="controls.actualMonthCost?.hasError('required') && showValidation">
       حقل مطلوب
     </div>
@@ -219,17 +219,17 @@ id="form-licenseProjectEngineeringSupervisionActualReportForm">
 </div>
 <div class="col-12 col-lg-6">
   <div class="key">التكلفة المتوقعة خلال الشهر (ريال سعودي)</div>
-  <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectEngineeringSupervisionActualMonthReportDetails.projectMonthlyPlannedMonthCost}}</div>
+  <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectEngineeringSupervisionActualMonthReportDetails.projectMonthlyPlannedMonthCost | number:'1.2-2' }}</div>
 </div>
 
  <div class="col-12 col-lg-6">
   <div class="key" >إجمالي التكلفة الفعلىة حتى تاريخه (ريال سعودي)</div>
-  <div class="value">{{totalActualCostToDate}}</div>
+  <div class="value">{{totalActualCostToDate | number:'1.2-2' }}</div>
  </div>
 
 <div class="col-12 col-lg-6">
   <div class="key" >إجمالي التكلفة الفعلىة حتى تاريخه (ريال سعودي)</div>
-  <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectEngineeringSupervisionActualMonthReportDetails.totalPlannedCostToDate}}</div>
+  <div class="value">{{licenseProjectEngineeringActualReportMonthDetails.licenseProjectEngineeringSupervisionActualMonthReportDetails.totalPlannedCostToDate | number:'1.2-2' }}</div>
  </div>
 
  </div>

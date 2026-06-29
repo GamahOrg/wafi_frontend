@@ -20,16 +20,16 @@ export class NumberFormatDirective implements ControlValueAccessor {
   @HostListener('input', ['$event'])
   onInput(event: any): void {
     const input = event.target;
-    let value = input.value.replace(/,/g, ''); // Remove existing commas
 
-    // Only allow numbers
-    value = value.replace(/[^0-9]/g, '');
+    // Format and display with commas (Arabic digits normalized, max 2 decimals)
+    const formatted = this.formatNumber(input.value);
+    input.value = formatted;
 
-    // Update model value (without commas)
-    this.onChange(value ? parseFloat(value) : null);
-
-    // Format and display with commas
-    input.value = this.formatNumber(value);
+    // Update model value from the formatted text so model and display stay in sync.
+    // Keep null while empty / lone dot.
+    const numericStr = formatted.replace(/,/g, '');
+    const numeric = numericStr === '' || numericStr === '.' ? null : parseFloat(numericStr);
+    this.onChange(numeric === null || Number.isNaN(numeric) ? null : numeric);
   }
 
   @HostListener('blur')
@@ -39,7 +39,7 @@ export class NumberFormatDirective implements ControlValueAccessor {
 
   writeValue(value: any): void {
     const element = this.el.nativeElement;
-    element.value = value ? this.formatNumber(value.toString()) : '';
+    element.value = value || value === 0 ? this.formatNumber(value.toString()) : '';
   }
 
   registerOnChange(fn: any): void {
@@ -54,15 +54,33 @@ export class NumberFormatDirective implements ControlValueAccessor {
     this.el.nativeElement.disabled = isDisabled;
   }
 
+  // Convert Arabic-Indic digits to English and keep only digits + a single decimal point
+  private normalize(value: string): string {
+    if (value === null || value === undefined) return '';
+    let v = value.toString();
+    const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    arabic.forEach((d, i) => (v = v.replace(new RegExp(d, 'g'), String(i))));
+    v = v.replace(/,/g, '').replace(/[^0-9.]/g, '');
+    // Collapse to a single decimal point (the first one)
+    const firstDot = v.indexOf('.');
+    if (firstDot !== -1) {
+      v = v.slice(0, firstDot + 1) + v.slice(firstDot + 1).replace(/\./g, '');
+    }
+    return v;
+  }
+
   private formatNumber(value: string): string {
-    if (!value) return '';
+    const v = this.normalize(value);
+    if (v === '' || v === '.') return v;
 
-    // Remove non-numeric characters
-    const numericValue = value.replace(/[^0-9]/g, '');
+    let [intPart, decPart] = v.split('.');
+    // Add thousand separators to the integer part
+    intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-    if (!numericValue) return '';
-
-    // Add thousand separators
-    return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    // Preserve up to 2 decimal places (keeps a trailing dot while the user is typing)
+    if (decPart !== undefined) {
+      return intPart + '.' + decPart.slice(0, 2);
+    }
+    return intPart;
   }
 }

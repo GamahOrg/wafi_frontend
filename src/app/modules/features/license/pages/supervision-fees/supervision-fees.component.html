@@ -36,7 +36,7 @@
             <td>{{ fee.projectUnitType }}</td>
             <td>{{ fee.isRecurring ? 'نعم' : 'لا' }}</td>
             <td>{{ fee.recurrenceCycle }}</td>
-            <td>{{ fee.collectorFeeValue }}</td>
+            <td>{{ fee.collectorFeeValue | number:'1.2-2' }}</td>
             <td>
               <button type="button" class="btn btn-icon btn-secondary" (click)="editFee(fee)">
                 <i class="hgi hgi-stroke hgi-edit-02"></i>

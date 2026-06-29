@@ -6,6 +6,7 @@ import {
   FinancialTransactionsDuringPeriodOutEscrowAccountDto,
   PeriodicCharteredAccountantReportCreateUpdateDto,
   PeriodicCharteredAccountantReportDto,
+  PeriodicCharteredAccountantReportExchangeDocumentDto,
   PeriodicCharteredAccountantReportQuarterTypeDto,
   PeriodicCharteredAccountantReportTypeDto,
   PeriodicCharteredAccountantReportTypeEnum,
@@ -25,6 +26,13 @@ import { SharedLicenseProjectService } from '../../services/sharedLicenseProject
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { Router } from '@angular/router';
 import { SysDepositTypeDto } from '../../models/periodic-chartered-accountant-report-details-dto';
+import { LicenseProjectExchangeDocumentWithdrawalMethodEnum } from '../../dataModels/license-project-exchange-document-paging-dto';
+import { environment } from 'src/environments/environment';
+import { PopupData } from 'src/app/shared/models/popup.model';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { ExchangeDocumentDetailsPopupComponent } from '../exchange-document-details-popup/exchange-document-details-popup.component';
+import { LicenseProjectFeasibilityStudyFullDto } from '../../models/LicenseProjectFeasibilityStudyFullDto';
+import { Pagination } from 'src/app/shared/models/pagination.model';
 
 @Component({
   selector: 'app-add-periodic-chartered-accountant-report',
@@ -36,6 +44,8 @@ export class AddPeriodicCharteredAccountantReportComponent {
     `/${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.periodiccharteredaccountantreportlist}` as string;
   @Output() dataEmitter = new EventEmitter<boolean>();
   subscriptions: Subscription[] = [];
+  baseUrl = `${environment.baseURL}/`;
+  withdrawalMethodEnum = LicenseProjectExchangeDocumentWithdrawalMethodEnum;
   filter?: FilterDto;
   periodicCharteredAccountantReportType =
     PeriodicCharteredAccountantReportTypeEnum;
@@ -47,6 +57,9 @@ export class AddPeriodicCharteredAccountantReportComponent {
   financialCenterFiles?: FinancialCenterFileCreateUpdateDto[];
   bankStatementFileId?: string;
   calculateClosingBalanceResult: number = 0;
+  today = new Date();
+  licenseProjectFeasibilityStudyFullDto: LicenseProjectFeasibilityStudyFullDto =
+    new LicenseProjectFeasibilityStudyFullDto();
 
   years: number[] = [new Date().getFullYear(), new Date().getFullYear() - 1];
   months: { name: string; id: number }[] = [
@@ -71,8 +84,10 @@ export class AddPeriodicCharteredAccountantReportComponent {
     quarterTypeId: this._formBuilder.control<number | null>(null),
     month: this._formBuilder.control<number | null>(null),
     year: this._formBuilder.control<number | null>(null),
-    fromDate: this._formBuilder.control<string | null>(null),
-    toDate: this._formBuilder.control<string | null>(null),
+    fromDate: this._formBuilder.control<Date | string | null>(this.today),
+    toDate: this._formBuilder.control<Date | string | null>(this.today),
+    //تاريخ انشاء التقرير
+    reportCreationDate: this._formBuilder.control<any>(new Date()),
     //إجمالي قيمة تكاليف المشروع المتوقعة (تكاليف انشائية وغير انشائية)
     totalCost: this._formBuilder.control<number | null>(null, [
       Validators.required,
@@ -107,10 +122,6 @@ export class AddPeriodicCharteredAccountantReportComponent {
     ),
     //ايداعات عملاء مستردة
     customerDepositRefunds: this._formBuilder.control<number | null>(null, [
-      Validators.required,
-    ]),
-    //عمولات بنكية
-    bankCommissions: this._formBuilder.control<number | null>(null, [
       Validators.required,
     ]),
     //أخرى مدينة
@@ -154,8 +165,54 @@ export class AddPeriodicCharteredAccountantReportComponent {
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   showValidation: boolean = false;
 
+  // Pagination for exchange documents table
+  exchangeDocumentsPageSize: number = 10;
+  exchangeDocumentsCurrentPage: number = 1;
+  exchangeDocumentsPaged: Pagination<PeriodicCharteredAccountantReportExchangeDocumentDto[]> = {
+    results: [],
+    currentPage: 1,
+    pageCount: 0,
+    pageSize: 10,
+    totalCount: 0,
+  };
+
   get controls() {
     return this.PeriodicCharteredAccountantReportForm.controls;
+  }
+
+  // إجمالي العمليات المدينة (من داخل + خارج حساب الضمان خلال الفترة)
+  get combinedTotalDebtOperations(): number {
+    return (
+      (this.periodicCharteredAccountantReport
+        ?.financialTransactionsDuringPeriodFromEscrowAccount
+        ?.totalDebtOperations ?? 0) +
+      (this.PeriodicCharteredAccountantReportForm.controls.totalDebtOperations
+        .value ?? 0)
+    );
+  }
+
+  // اجمالي المبالغ المتوفره في الحسابت الفرعية
+  get subAccountsTotalAvailableAmount(): number {
+    const r = this.periodicCharteredAccountantReport;
+    if (!r) return 0;
+    return (
+      (r.constructionCostsAvailableAmount ?? 0) +
+      (r.administrativeAndMarketingAvailableAmount ?? 0) +
+      (r.custodyAvailableAmount ?? 0) +
+      (r.incentivesSubIBANAvailableAmount ?? 0) +
+      (r.financingSubIBANAvailableAmount ?? 0)
+    );
+  }
+
+  // إجمالي العمليات الدائنة (من داخل + خارج حساب الضمان خلال الفترة)
+  get combinedTotalCreditOperations(): number {
+    return (
+      (this.periodicCharteredAccountantReport
+        ?.financialTransactionsDuringPeriodFromEscrowAccount
+        ?.totalCreditOperations ?? 0) +
+      (this.PeriodicCharteredAccountantReportForm.controls.totalCreditOperations
+        .value ?? 0)
+    );
   }
 
   get periodicCharteredAccountantReportDepositsFormArr(): FormArray {
@@ -184,6 +241,7 @@ export class AddPeriodicCharteredAccountantReportComponent {
     private _toastrNotificationService: ToastrNotificatioService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
     private _router: Router,
+    private _popupService: PopupService,
   ) {}
 
   ngOnInit(): void {
@@ -229,6 +287,8 @@ export class AddPeriodicCharteredAccountantReportComponent {
       .value as {} as PeriodicCharteredAccountantReportCreateUpdateDto;
     this.periodicCharteredAccountantReportCreateUpdate.licenseProjectId = this
       .licenseProjectId as string;
+    this.periodicCharteredAccountantReportCreateUpdate.reportCreationDate =
+      new Date() as any;
     this.periodicCharteredAccountantReportCreateUpdate.reportTypeId = Number(
       this.periodicCharteredAccountantReportCreateUpdate.reportTypeId,
     );
@@ -294,9 +354,6 @@ export class AddPeriodicCharteredAccountantReportComponent {
     financialTransactionsDuringPeriodOutEscrowAccount.customerDepositRefunds =
       this.PeriodicCharteredAccountantReportForm.controls.customerDepositRefunds
         .value as number;
-    financialTransactionsDuringPeriodOutEscrowAccount.bankCommissions = this
-      .PeriodicCharteredAccountantReportForm.controls.bankCommissions
-      .value as number;
     financialTransactionsDuringPeriodOutEscrowAccount.otherDebts = this
       .PeriodicCharteredAccountantReportForm.controls.otherDebts
       .value as number;
@@ -332,16 +389,8 @@ export class AddPeriodicCharteredAccountantReportComponent {
       return;
     }
 
-    if (
-      !this.periodicCharteredAccountantReport?.periodOpeningBalance &&
-      !this.periodicCharteredAccountantReportCreateUpdate
-        .periodOpeningBalance &&
-      this.periodicCharteredAccountantReportCreateUpdate
-        .periodOpeningBalance !== 0
-    ) {
-      this.showValidation = true;
-      return;
-    }
+    this.periodicCharteredAccountantReportCreateUpdate.periodOpeningBalance =
+      this.periodicCharteredAccountantReport?.periodOpeningBalance ?? 0;
 
     this.subscriptions.push(
       this._periodicCharteredAccountantReportService
@@ -370,9 +419,35 @@ export class AddPeriodicCharteredAccountantReportComponent {
           if (res) {
             this.periodicCharteredAccountantReport =
               res as PeriodicCharteredAccountantReportDto;
+            this.exchangeDocumentsCurrentPage = 1;
+            this.loadExchangeDocumentsPage();
           }
         }),
     );
+  }
+
+  loadExchangeDocumentsPage(): void {
+    if (!this.filter) return;
+    this.subscriptions.push(
+      this._periodicCharteredAccountantReportService
+        .GetGeneratedExchangeDocumentsPaged(
+          this.filter,
+          this.exchangeDocumentsCurrentPage,
+          this.exchangeDocumentsPageSize,
+        )
+        .subscribe((res) => {
+          if (res) {
+            this.exchangeDocumentsPaged = res;
+          }
+        }),
+    );
+  }
+
+  onExchangeDocumentsPageChanged(event: any): void {
+    if (event?.page && event.page !== this.exchangeDocumentsCurrentPage) {
+      this.exchangeDocumentsCurrentPage = event.page;
+      this.loadExchangeDocumentsPage();
+    }
   }
 
   onExistFinancialCenterFileUploaded(filesData: any) {
@@ -433,11 +508,10 @@ export class AddPeriodicCharteredAccountantReportComponent {
     const closingBalanceBasedOnBankStatement =
       this.PeriodicCharteredAccountantReportForm.controls
         .closingBalanceBasedOnBankStatement.value ?? 0;
-    const periodOpeningBalance =
+    const periodClosingBalance =
       this.periodicCharteredAccountantReport?.periodClosingBalance ?? 0;
-    // if (closingBalanceBasedOnBankStatement && periodOpeningBalance)
     this.calculateClosingBalanceResult =
-      periodOpeningBalance - closingBalanceBasedOnBankStatement;
+      periodClosingBalance - closingBalanceBasedOnBankStatement;
   }
 
   removePeriodicCharteredAccountantReportBatchesFormArr(index: number) {
@@ -479,6 +553,39 @@ export class AddPeriodicCharteredAccountantReportComponent {
   onClosingBalanceInput(event: any): void {
     this.formatNumberWithCommas(event);
     this.calculateClosingBalance();
+  }
+
+  onOutEscrowInput(event: any): void {
+    this.formatNumberWithCommas(event);
+    this.calculateOutEscrowTotals();
+  }
+
+  calculateOutEscrowTotals(): void {
+    const controls = this.PeriodicCharteredAccountantReportForm.controls;
+    const totalDebt =
+      (controls.constructionCosts.value ?? 0) +
+      (controls.administrativeMarketingExpenses.value ?? 0) +
+      (controls.customerDepositRefunds.value ?? 0) +
+      (controls.otherDebts.value ?? 0);
+    const totalCredit =
+      (controls.collectionsFromCustomers.value ?? 0) +
+      (controls.bankFinancing.value ?? 0) +
+      (controls.selfFinancing.value ?? 0) +
+      (controls.ministryFinancing.value ?? 0) +
+      (controls.otherCredits.value ?? 0);
+    controls.totalDebtOperations.setValue(totalDebt, { emitEvent: false });
+    controls.totalCreditOperations.setValue(totalCredit, { emitEvent: false });
+  }
+
+  openExchangeDocumentDetailsPopup(exchangeDocument: PeriodicCharteredAccountantReportExchangeDocumentDto): void {
+    const popupData: PopupData = {
+      iconClass: 'hgi hgi-stroke hgi-profile',
+      title: 'بيانات إضافية لتفاصيل وثائق الصرف',
+      component: ExchangeDocumentDetailsPopupComponent,
+      data: exchangeDocument,
+      buttons: [],
+    };
+    this._popupService.updatePopupData(popupData);
   }
 
   ngOnDestroy(): void {

@@ -79,6 +79,16 @@ export class BreadcrumbService {
       // Construct the route URL
       const routeUrl = parentUrl.concat(route.url.map((url) => url.path));
 
+      // If route declares a parent breadcrumb override, replace the immediately
+      // preceding breadcrumb in the trail with the provided label/url.
+      const parentOverride = route.data['replaceParentBreadcrumb'];
+      if (parentOverride && breadcrumbs.length > 0) {
+        breadcrumbs[breadcrumbs.length - 1] = {
+          label: parentOverride.label,
+          url: parentOverride.url,
+        };
+      }
+
       // Add an element for the current route part
       if (route.data['breadcrumb']) {
         const breadcrumb = {

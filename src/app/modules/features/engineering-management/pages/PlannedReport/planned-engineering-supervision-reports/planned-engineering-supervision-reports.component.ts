@@ -306,6 +306,13 @@ export class PlannedEngineeringSupervisionReportsComponent implements OnInit, On
       id: 'AddEditEngineeringSupervisionReportsProjectDetailsComponent',
     } as PopupData;
     this._popupService.updatePopupData(Data);
+
+    this._popupService.closeDialog.subscribe((res: any) => {
+      if (res) {
+        this.GetLicenseProjectEngineeringDataTapStatus();
+        this.getEngineeringConsultantProjectsList();
+      }
+    });
   }
 
   private updateTabContent(): void {

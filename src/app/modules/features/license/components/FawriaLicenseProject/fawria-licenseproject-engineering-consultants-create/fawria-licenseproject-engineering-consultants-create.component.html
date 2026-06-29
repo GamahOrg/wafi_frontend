@@ -232,7 +232,7 @@
               <td>
                 <div>
                   <div class="input-group">
-                    <input type="text" class="form-control" [placeholder]="'السعر للوحدة'" [value]="item.unitPrice != null ? getFormattedUnitPrice(item.unitPrice) : ''" (input)="onUnitPriceInput($event, item, i)" (blur)="onUnitPriceBlur($event, item)" (focus)="onUnitPriceFocus($event)" [class.is-invalid]="paymentTableErrors[i]?.unitPrice" />
+                    <input type="text" appNumberFormat class="form-control" [placeholder]="'السعر للوحدة'" [(ngModel)]="item.unitPrice" (ngModelChange)="clearPaymentError(i, 'unitPrice')" [ngModelOptions]="{ standalone: true }" [class.is-invalid]="paymentTableErrors[i]?.unitPrice" />
                     <span class="input-group-text">
                       <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon" />
                     </span>

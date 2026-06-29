@@ -90,6 +90,7 @@ export class PositionOfTheRequiredAppropriationsFromTheAuthoritiesComponent {
 
 
   openAddEditDesignPhaseCreditsDialog(data: any): void {
+    debugger;
     this._licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesService.
       setLicenseProjectEngineeringStatusOfFundsRequiredFromEntities(data);
     let Data = {

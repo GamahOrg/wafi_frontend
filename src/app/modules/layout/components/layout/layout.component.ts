@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LanguageService } from 'src/app/core/services/language/language.service';
 import { customerResponse } from 'src/app/shared/models/customer.model';
@@ -33,16 +33,20 @@ interface RatingQueueItem {
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })
-export default class LayoutComponent implements OnInit, OnDestroy {
+export default class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   bodyDirection: any = Direction.rtl;
   subscriptions: Subscription[] = [];
   userData: customerResponse | null = null;
   appTitle: string = 'الهيئة العامة للعقار ';
   loginUserType: string | null = '';
   loginUserTypeEnum: LoginUserTypeEnum | null = null;
-facilityId: string | null = null;
+  facilityId: string | null = null;
   private ratingQueue: RatingQueueItem[] = [];
   private currentQueueIndex: number = 0;
+  sidebarWidth: number = 0;
+  contentAreaWidth: string = '0px';
+  private sidebarElement: HTMLElement | null = null;
+  @ViewChild('sidebar', { read: ElementRef }) sidebarRef!: ElementRef;
 
   constructor(
     private _languageService: LanguageService,
@@ -60,11 +64,47 @@ facilityId: string | null = null;
     this.titleService.setTitle(this.appTitle);
   }
 
+  private setupSidebarTransitionListener(): void {
+    if (!this.sidebarElement) return;
+
+    const recalc = () => this.calculateContentAreaWidth();
+
+    this.sidebarElement.addEventListener('transitionend', recalc);
+    this.sidebarElement.addEventListener('animationend', recalc);
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.calculateContentAreaWidth();
+  }
+
+  private calculateContentAreaWidth(): void {
+    if (!this.sidebarElement) {
+      this.contentAreaWidth = `${window.innerWidth}px`;
+      return;
+    }
+
+    this.sidebarWidth = this.sidebarElement.offsetWidth;
+    const windowWidth = window.innerWidth;
+    const remainingWidth = windowWidth - this.sidebarWidth;
+    this.contentAreaWidth = `${remainingWidth}px`;
+  }
+
+  onSidebarToggle(): void {
+    this.calculateContentAreaWidth();
+    setTimeout(() => this.calculateContentAreaWidth(), 50);
+  }
+
   ngOnInit(): void {
     this.getLoginUserType();
     this.setAppTitle();
     this.observeDirectionChange();
-    
+  }
+
+  ngAfterViewInit(): void {
+    this.sidebarElement = this.sidebarRef.nativeElement;
+    this.setupSidebarTransitionListener();
+    this.calculateContentAreaWidth();
   }
 
   private startRatingFlow(): void {

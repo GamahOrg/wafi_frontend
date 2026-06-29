@@ -15,7 +15,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.landValue }}</label>
-            <input type="number" id="control-landValue" class="form-control" formControlName="landValue" />
+            <input type="text" id="control-landValue" class="form-control" formControlName="landValue" appNumberFormat />
             <div class="invalid-feedback d-block" *ngIf="controls.landValue?.hasError('required') && showValidation">{{
               localization.requiredErrorMsg }}</div>
             <div class="invalid-feedback d-block" *ngIf="controls.landValue?.hasError('min') && showValidation">{{ localization.MinValueError
@@ -25,7 +25,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.landTotalSpace }}</label>
-            <input type="number" id="control-landTotalSpace" class="form-control" formControlName="landTotalSpace" />
+            <input type="text" id="control-landTotalSpace" class="form-control" formControlName="landTotalSpace" appNumberFormat />
             <div class="invalid-feedback d-block" *ngIf="
                 controls.landTotalSpace?.hasError('required') && showValidation
               ">{{ localization.requiredErrorMsg }}</div>
@@ -38,7 +38,7 @@
             <label class="form-label"><span class="required-star">*</span> {{
               localization.buildingFlatArea
               }}</label>
-            <input type="number" id="control-buildingFlatArea" class="form-control" formControlName="buildingFlatArea" />
+            <input type="text" id="control-buildingFlatArea" class="form-control" formControlName="buildingFlatArea" appNumberFormat />
             <div class="invalid-feedback d-block" *ngIf="
                 controls.buildingFlatArea?.hasError('required') &&
                 showValidation
@@ -51,7 +51,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group">
             <label class="form-label"><span class="required-star">*</span> {{ localization.sellingSpace }}</label>
-            <input type="number" id="control-sellingSpace" class="form-control" formControlName="sellingSpace" />
+            <input type="text" id="control-sellingSpace" class="form-control" formControlName="sellingSpace" appNumberFormat />
             <div class="invalid-feedback d-block" *ngIf="
                 controls.sellingSpace?.hasError('required') && showValidation
               ">{{ localization.requiredErrorMsg }}</div>

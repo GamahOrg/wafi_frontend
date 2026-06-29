@@ -1,80 +1,57 @@
+<ng-container *ngIf="!showDetails">
+<div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
+  <table class="table table-light">
+    <thead>
+      <tr>
+        <th scope="col">اسم المشروع</th>
+        <th scope="col">اسم الشركة المطور عقاري</th>
+        <th scope="col">نوع تقرير</th>
+        <th scope="col">الربع</th>
+        <th scope="col">الشهر</th>
+        <th scope="col">العام</th>
+        <th scope="col">تاريخ التقرير من</th>
+        <th scope="col">تاريخ التقرير إلى</th>
+        <th scope="col">تاريخ التقرير</th>
+        <th scope="col">حالة التقرير</th>
+        <th scope="col" class="w-0">العمليات</th>
 
-<div class="row row-gap-4">
-  <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">اسم المشروع</th>
-          <th scope="col">اسم الشركة المطور عقاري</th>
-          <th scope="col">نوع تقرير</th>
-          <th scope="col" > تقرير الربع</th>
-          <th scope="col"> تقرير الشهري</th>
-          <th scope="col"> العام</th>
-          <th scope="col"> من تاريخ التقرير</th>
-          <th scope="col"> الي تاريخ التقرير</th>         
-          <th scope="col">تاريخ الإيداع</th>         
-          <th scope="col">تاريخ التقرير</th>
-          <th scope="col">حالة التقرير</th>
-          <th scope="col">العمليات</th>
-
-        </tr>
-      </thead>
-      <tbody *ngFor="let report of reqList.results; let i = index">
-        <tr>
-          <td>
-            <span class="text-dark">{{ report.licenseProjectName }}</span>
-          </td>
-          <td>
-            <span class="text-dark">{{ report.facilityName }}</span>
-          </td>
-          <td>
-            <span class="text-dark">{{ report.reportType.name }}</span>
-          </td>
-          <td>
-            <span class="text-dark">{{ report.quarterType?.name }}</span>
-          </td>
-          <td>
-            <span class="text-dark">{{ report.month }}</span>
-          </td>
-          <td>
-            <span class="text-dark">{{ report.year }}</span>
-          </td>
-          <td>
-            <span class="text-dark">{{ report.fromDate  | date: 'yyyy-MM-dd' }}</span>
-          </td>
-          <td>
-            <span class="text-dark">{{ report.toDate  | date: 'yyyy-MM-dd'}}</span>
-          </td>         
-          <td>
-            <span class="text-dark">{{ report.depositDate  | date: 'yyyy-MM-dd'}}</span>
-          </td>         
-          <td>
-            <span class="text-dark">{{ report.createdOn | date: 'yyyy-MM-dd'}}</span>
-          </td>
-          <td>
-            <span class="text-dark">{{ report.reportStatus.name }}</span>
-          </td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              (click)="showDetailDialog(report.id)"
-            >
-              التفاصيل
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="mt-auto" *ngIf="reqList.totalCount > 0">
-    <app-pagination></app-pagination>
-  </div>
-  <ng-container *ngIf="reqList.totalCount === 0">
-    <div class="mt-4">
-      <app-no-data [showCompleteBtn]="false"></app-no-data>
-    </div>
-  </ng-container>
+      </tr>
+    </thead>
+    <tbody *ngFor="let report of reqList.results; let i = index">
+      <tr>
+        <td>{{ report.licenseProjectName }}</td>
+        <td>{{ report.facilityName }}</td>
+        <td>{{ report.reportType.name }}</td>
+        <td>{{ report.reportTypeId != reportTypeId.Quarter ? '' : report.quarterType?.name }}</td>
+        <td>{{ report.reportTypeId != reportTypeId.Monthly ? '' : report.month }}</td>
+        <td>{{ (report.reportTypeId === reportTypeId.Monthly || report.reportTypeId === reportTypeId.Quarter) ? report.year : '' }}</td>
+        <td class="text-nowrap">{{ report.reportTypeId === reportTypeId.Period ? (report.fromDate | date: 'yyyy-MM-dd') : '' }}</td>
+        <td class="text-nowrap">{{ report.reportTypeId === reportTypeId.Period ? (report.toDate | date: 'yyyy-MM-dd') : '' }}</td>
+        <td class="text-nowrap">{{ report.createdOn | date: 'yyyy-MM-dd' }}</td>
+        <td class="text-nowrap">
+          <span class="status-pill"
+            [class.orange]="report.reportStatusId === reportStatusId.New"
+            [class.green]="report.reportStatusId === reportStatusId.Approve"
+            [class.red]="report.reportStatusId === reportStatusId.Reject">
+            {{ report.reportStatus.name }}
+          </span>
+        </td>
+        <td class="text-nowrap">
+          <button type="button" class="btn btn-outline-primary" (click)="showDetailDialog(report.id)">عرض التفاصيل</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
+<div class="mt-auto" *ngIf="reqList.totalCount > 0">
+  <app-pagination></app-pagination>
+</div>
+<ng-container *ngIf="reqList.totalCount === 0">
+  <div class="mt-4">
+    <app-no-data [showCompleteBtn]="false"></app-no-data>
+  </div>
+</ng-container>
+</ng-container>
+
+<app-periodic-chartered-accountant-report-details *ngIf="showDetails" (back)="backToList()"></app-periodic-chartered-accountant-report-details>

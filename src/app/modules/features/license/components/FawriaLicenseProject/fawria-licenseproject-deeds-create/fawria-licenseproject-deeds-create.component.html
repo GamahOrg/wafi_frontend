@@ -677,8 +677,8 @@
                 </td>
                 <td *ngIf="shouldShowTotalArea">
                   <div class="input-group">
-                    <input type="number" class="form-control" [value]="
-                        ((landValue ?? 0) * (owner?.owningArea ?? 0)).toFixed(2)
+                    <input type="text" class="form-control" [value]="
+                        (((landValue ?? 0) * (owner?.owningArea ?? 0)).toFixed(2)) | number:'1.2-2'
                       "  readonly="readonly" />
                     <span class="input-group-text">
                       <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon opacity-100" />

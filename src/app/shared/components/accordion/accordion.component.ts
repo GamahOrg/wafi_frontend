@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -28,7 +29,8 @@ export class AccordionComponent implements OnInit, OnDestroy {
   constructor(
     private _accordionService: AccordionService,
     private _toastrNotificationService: ToastrNotificatioService,
-    private _popupService: PopupService
+    private _popupService: PopupService,
+    private _cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -45,10 +47,13 @@ export class AccordionComponent implements OnInit, OnDestroy {
         })
     );
   }
-  public onClickOnTitle(opened: boolean, component: accordionComponent) {
-    if (component && opened) {
-      this._accordionService.clickOnAccordionHeader.emit(component);
-    }
+  public onToggle(opened: boolean, index: number): void {
+    if (!opened) return;
+    const accordion = this.AccordionContent.accordionComponentList[index];
+    accordion.isViewed = true;
+    this.updateisRendered(index);
+    this._accordionService.clickOnAccordionHeader.emit(accordion);
+    this._cdr.detectChanges();
   }
   public updateisRendered(index: number) {
     if (this.AccordionContent.oneAtATime) {

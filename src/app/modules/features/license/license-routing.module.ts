@@ -294,7 +294,13 @@ const routes: Routes = [
   {
     path: Configuration.pages.license.licenseProjectsAccountantDetails,
     component: LicenseProjectAccountantComponent,
-    data: { breadcrumb: 'تفاصيل مشاريع المحاسب القانوني' },
+    data: {
+      breadcrumb: 'تفاصيل مشاريع المحاسب القانوني',
+      replaceParentBreadcrumb: {
+        label: 'قائمة مشاريع المحاسب القانوني',
+        url: `/${Configuration.modules.wafi}/${Configuration.modules.license}/${Configuration.pages.license.charteredaccount}`,
+      },
+    },
   },
   {
     path: Configuration.pages.license.zones,

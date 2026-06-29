@@ -4,7 +4,18 @@ import {
   LiceneProjectBeneficiaryTypeEnum,
   LicenseProjectExchangeDocumentMainItemDto,
   LicenseProjectExchangeDocumentSubItemDto,
+  LiceneProjectExchangeDocumentStatusDto,
+  LicenseProjectExchangeDocumentStatusEnum,
+  LicenseProjectExchangeDocumentWithdrawalMethodDto,
+  LicenseProjectExchangeDocumentWithdrawalMethodEnum,
+  LicenseProjectExchangeDocumentInsuranceCompanyDto,
 } from '../dataModels/license-project-exchange-document-paging-dto';
+import { PaymentsCollectedForSoldUnitsDto } from '../dataModels/periodic-chartered-accountant-report-dto';
+import { LicenseProjectFeasibilityStudyFullDto } from './LicenseProjectFeasibilityStudyFullDto';
+import {
+  LicenseProjectExchangeInsuranceDocumentFile,
+  LicenseProjectExchangeBankGuaranteeDocumentFile,
+} from './exchange-documents-details-response';
 import { CustomerShortDto } from './facility-short-dto';
 import { SysFileManagerCreateUpdateDto } from './license-request-project-details-dto';
 import {
@@ -30,7 +41,19 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   fromDate: Date;
   toDate: Date;
   createdOn: Date;
+  //تاريخ انشاء التقرير
+  reportCreationDate?: Date;
+  //تاريخ اعتماد التقرير
+  approvedOn?: Date;
+  //تاريخ رفض التقرير
+  rejectedOn?: Date;
   exchangeDocuments: PeriodicCharteredAccountantReportExchangeDocumentDto[];
+  // اسم المطور العقاري
+  developerName: string;
+  //اسم الاستشاري
+  engineeringConsultantName?: string;
+  //اسم البنك
+  bankName?: string;
   //ملحق رقم 1 البيانات الاساسية
   charteredAccountantOfficeName: string;
   // نوع الوحدات
@@ -43,6 +66,10 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   accountNumber?: string;
   // رقم ترخيص بيع وحدة على الخارطة
   certificateNumber?: string;
+  // رقم الاتفاقية (يعرض بناءً على المشروع - للعرض فقط)
+  agreementNumber?: string;
+  // تاريخ الاتفاقية (يعرض بناءً على المشروع - للعرض فقط)
+  agreementDate?: Date;
   // بيانات معد التقرير
   customerId: string;
   customer: CustomerShortDto;
@@ -84,12 +111,18 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   periodClosingBalance?: number;
   closingBalanceBasedOnBankStatement?: number;
   bankStatementFile: SysFileManagerCreateUpdateDto;
-  
+
   // تحليل موقف وحدات المشروع
   projectUnitsPositionAnalysis: ProjectUnitsPositionAnalysisDto[];
 
   // الدفعات المحصلة والخاصة بالوحدات المباعة الملغية
   paymentsCollectedForCancelledUnitsSolds: PaymentsCollectedForCancelledUnitsSoldDto[];
+
+  // الدفعات المحصلة والخاصة بالوحدات المباعة خلال الفترة
+  paymentsCollectedForSoldUnitsDto: PaymentsCollectedForSoldUnitsDto[];
+
+  // الدفعات المحصلة والخاصة بالوحدات المباعة منذ بدأ المشروع
+  paymentsCollectedForSoldUnitsFromBeginningDto: PaymentsCollectedForSoldUnitsDto[];
 
   // الإيداعات والدفعات
   periodicCharteredAccountantReportDeposits: PeriodicCharteredAccountantReportDepositDto[];
@@ -110,6 +143,21 @@ export interface PeriodicCharteredAccountantReportDetailsDto {
   reportType: PeriodicCharteredAccountantReportTypeDto;
   quarterType: PeriodicCharteredAccountantReportQuarterTypeDto;
   reportStatus: PeriodicCharteredAccountantReportStatusDto;
+
+  // تفاصيل الحسابات الفرعية في حساب الضمان
+  constructionCostsAccountNumber?: string;
+  constructionCostsAvailableAmount?: number;
+  administrativeAndMarketingAccountNumber?: string;
+  administrativeAndMarketingAvailableAmount?: number;
+  custodyAccountNumber?: string;
+  custodyAvailableAmount?: number;
+  incentivesSubIBAN?: string;
+  incentivesSubIBANAvailableAmount?: number;
+  financingSubIBAN?: string;
+  financingSubIBANAvailableAmount?: number;
+  licenseProjectFeasibilityStudies?: LicenseProjectFeasibilityStudyFullDto[];
+  licenseTypeCode?: string;
+  rejectionCount: number;
 }
 //وثائق الصرف خلال فترة التقرير
 export interface PeriodicCharteredAccountantReportExchangeDocumentDto {
@@ -126,6 +174,44 @@ export interface PeriodicCharteredAccountantReportExchangeDocumentDto {
   mainItem: LicenseProjectExchangeDocumentMainItemDto;
   subItem: LicenseProjectExchangeDocumentSubItemDto;
   licenseProjectBuyer: LicenseProjectBuyerDto;
+
+  // حالة الوثيقة
+  statusId?: LicenseProjectExchangeDocumentStatusEnum;
+  status?: LiceneProjectExchangeDocumentStatusDto;
+
+  // اسم المستفيد (مشتري)
+  buyerName?: string;
+  // رقم الآيبان واسم البنك (في حال توفر بيانات التحويل البنكي - مرتبط بالباك إند)
+  beneficiaryIban?: string;
+  bankName?: string;
+
+  // بند الصرف من جدول الكميات
+  sysLicenseRelativeWeight?: { id?: string; elementName?: string };
+
+  // نسبة الإنجاز
+  projectProgressPercentage?: number;
+
+  // أرقام الحسابات والأرصدة
+  mainAccountNumber?: string;
+  subAccountNumber?: string;
+  availableAmountBeforeExchange?: number;
+  remainingAmountAfterExchange?: number;
+
+  // طريقة سحب مبلغ الحفظ
+  withdrawalMethodId?: LicenseProjectExchangeDocumentWithdrawalMethodEnum;
+  withdrawalMethod?: LicenseProjectExchangeDocumentWithdrawalMethodDto;
+
+  // بيانات التأمين
+  insurancePolicyNumber?: string;
+  insuranceStartDate?: Date;
+  insuranceEndDate?: Date;
+  insuranceCompany?: LicenseProjectExchangeDocumentInsuranceCompanyDto;
+  insuranceAttachment?: SysFileManagerCreateUpdateDto;
+  licenseProjectExchangeInsuranceDocumentFiles?: LicenseProjectExchangeInsuranceDocumentFile[];
+
+  // مرفق الضمان البنكي
+  bankGuaranteeAttachment?: SysFileManagerCreateUpdateDto;
+  licenseProjectExchangeBankGuaranteeDocumentFiles?: LicenseProjectExchangeBankGuaranteeDocumentFile[];
 }
 
 export interface SysDepositTypeDto {
@@ -359,6 +445,9 @@ export interface PaymentsCollectedForCancelledUnitsSoldDto {
 
   // ما تم دفعة خلال الربع - الدفعات التى تم ارجاعها
   paidDuringQuarter?: number;
+
+  // ما تم دفعة خلال الفترة - الدفعات التى تم ارجاعها
+  paidDuringPeriod?: number;
 
   // إجمالي الدفعات
   totalPayments: number;

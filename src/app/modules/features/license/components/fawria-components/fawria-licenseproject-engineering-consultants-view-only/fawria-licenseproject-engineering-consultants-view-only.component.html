@@ -74,9 +74,10 @@
             <input
               id="contractValue"
               name="contractValue"
-              type="number"
+              type="text"
               class="form-control"
               formControlName="contarctValue"
+              appNumberFormat
               [disabled]="true"
               [readonly]="true"
             />
@@ -180,9 +181,10 @@
               <td>
                 <div class="input-group">
                   <input
-                    type="number"
+                    type="text"
                     class="form-control table-input"
                     [(ngModel)]="item.unitPrice"
+                    appNumberFormat
                     [ngModelOptions]="{ standalone: true }"
                     [disabled]="true"
                     [readonly]="true"

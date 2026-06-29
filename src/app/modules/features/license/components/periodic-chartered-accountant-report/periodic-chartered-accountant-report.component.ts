@@ -7,6 +7,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 })
 export class PeriodicCharteredAccountantReportComponent {
   @Input() showAddComponant: boolean = false;
+  isViewingDetails: boolean = false;
   addReport() {
     this.showAddComponant = true;
   }

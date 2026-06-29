@@ -18,7 +18,7 @@
                 <span class="input-group-text">
                   <i class="hgi hgi-stroke hgi-search-01"></i>
                 </span>
-                <input type="text" id="control-search" class="form-control" [(ngModel)]="searchText" (input)="onSearchChange()" placeholder="ابحث عن مشروع" />
+                <input type="text" id="control-search" class="form-control" [(ngModel)]="searchText" (input)="onSearchChange()" placeholder="ابحث عن مشروع أو مطور" />
               </div>
             </div>
 
@@ -43,6 +43,7 @@
         <thead>
           <tr>
             <th scope="col">اسم المشروع</th>
+            <th scope="col">اسم المطور</th>
             <th scope="col">نوع المشروع</th>
             <th scope="col">رقم الترخيص</th>
             <th scope="col">عدد الوحدات</th>
@@ -56,6 +57,11 @@
             <td>
               <!-- <div class="text-dark"> -->
               {{ request.name }}
+              <!-- </div> -->
+            </td>
+            <td>
+              <!-- <div class="text-dark"> -->
+              {{ request.developerName }}
               <!-- </div> -->
             </td>
             <td>
