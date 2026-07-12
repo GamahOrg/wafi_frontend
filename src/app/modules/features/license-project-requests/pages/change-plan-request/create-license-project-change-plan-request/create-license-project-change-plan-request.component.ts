@@ -164,6 +164,7 @@ export class CreateLicenseProjectChangePlanRequestComponent implements OnDestroy
   }
 
   onSave(isDraft: boolean): void {
+    debugger;
 
     if (this.controls.newProjectEndDate?.hasError('invalidDate')) {
       this._toastrNotificationService.showError(' يجب ان يكون تاريخ الانتهاء الجديد اكبر من التاريخ الحالي');
@@ -175,9 +176,14 @@ export class CreateLicenseProjectChangePlanRequestComponent implements OnDestroy
     const hasUnitDateErrors = this.soldUnitsListData.some((_, i) => !!this.getSoldUnitDateError(i));
     if (hasUnitDateErrors) return;
     if (this.controls.hasCoerciveCircumstance.value === true && !this.coerciveCircumstanceFileId) return;
-    const hasMissingOwnerFiles = this.deedOwnerApprovalFileIds.some(id => !id);
-    if (hasMissingOwnerFiles && this.shouldShowOwnerApproval()) return;
 
+    // console.log(this.deedOwnerApprovalFileIds);
+    // const hasMissingOwnerFiles = this.deedOwnerApprovalFileIds.some(id => !id);
+    // if (hasMissingOwnerFiles && this.shouldShowOwnerApproval()) return;
+
+    if (this.hasMissingOwnerApprovalFiles()) {
+      return;
+    }
     const payload: LicenseProjectChangePlanSaveDto = {
       requestId: this.requestId,
       facilityId: this.facilityId ?? '',
@@ -407,6 +413,14 @@ export class CreateLicenseProjectChangePlanRequestComponent implements OnDestroy
   shouldShowOwnerApproval(): boolean {
     return this.deedsOwnersListData?.some(
       owner => !owner.isCustomer && !owner.isOwnerByDeveloper
+    );
+  }
+
+  private hasMissingOwnerApprovalFiles(): boolean {
+    return this.deedsOwnersListData.some((owner, index) =>
+      !owner.isCustomer &&
+      !owner.isOwnerByDeveloper &&
+      !this.deedOwnerApprovalFileIds[index]
     );
   }
 

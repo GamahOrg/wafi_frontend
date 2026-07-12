@@ -553,6 +553,7 @@ import { SupervisionFeesComponent } from './pages/supervision-fees/supervision-f
 import { SupervisionFeeInvoicesComponent } from './pages/supervision-fee-invoices/supervision-fee-invoices.component';
 import { SupervisionFeeInvoiceDetailsComponent } from './pages/supervision-fee-invoice-details/supervision-fee-invoice-details.component';
 import { QualificationTypeService } from '../qualifying/services/qualification-type/qualification-type.service';
+import { SysExchangeDocumentTypeService } from './services/sys-exchange-document-type/sysExchangeDocumentTypeService.service';
 
 @NgModule({
   declarations: [
@@ -992,6 +993,7 @@ import { QualificationTypeService } from '../qualifying/services/qualification-t
   ],
   providers: [
     SharedLicenseProjectService,
+    SysExchangeDocumentTypeService,
     LicenseProjectService,
     ExchangeDocumentService,
     LicenseRequestHeaderProcessingStepService,

@@ -22,6 +22,8 @@ export interface LicenseProjectDetailsDto {
 
 export interface EscrowAccountDto {
   licenseProjectId: string;
+  // ملاحظات الموظف علي حساب الضمان
+  escrowAccountEmployeeNotes?: string;
   //حالة حساب الضمان
   escrowAccountStatus?: string;
   //تاريخ انشاء حساب الضمان

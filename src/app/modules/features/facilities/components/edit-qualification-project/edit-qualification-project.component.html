@@ -125,10 +125,11 @@
   <div class="col-12 col-lg-6">
     <label for="licNum"
            class="form-label">  <span class="required-star">*</span>قيمة المشروع       </label>
-    <input type="number"
+    <input type="text"
            class="form-control"
            id="control-projectValue"
-           formControlName="projectValue" />
+           formControlName="projectValue"
+           appNumberFormat />
     <div class="invalid-feedback d-block"
          *ngIf="controls['projectValue'].errors?.['required'] && showValidation">
       حقل مطلوب
@@ -265,6 +266,10 @@
       <div class="invalid-feedback d-block"
            *ngIf="controls['achievementRate'].errors?.['required'] && showValidation">
         حقل مطلوب
+      </div>
+      <div class="invalid-feedback d-block"
+           *ngIf="controls['achievementRate'].errors?.['max']">
+        يجب ألا تزيد نسبة الإنجاز عن 100
       </div>
     </div>
   </div>

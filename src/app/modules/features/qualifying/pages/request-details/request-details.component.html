@@ -57,6 +57,17 @@
               {{ localization.remainingDaysToStudy }}
               <span>{{StudyDaysProgressSetting.title}}</span>
             </div>
+            <div class="status-pill no-icon orange" *ngIf="
+                selectedRequest &&
+                selectedRequest?.internalStatusId ===
+                  qualificationRequestStatusEnum.ProcessingNotes &&
+                selectedRequest?.remainingNotesProcessingDays != null
+              ">
+              {{ localization.remainingNotesProcessingDays }}
+              <span class="mx-2">
+                {{ getRemainingDaysText(selectedRequest?.remainingNotesProcessingDays) }}
+              </span>
+            </div>
           </h6>
           <div class="key-value horiz">
             <span class="key">تاريخ تقديم الطلب</span>

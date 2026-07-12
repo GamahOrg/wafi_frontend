@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import { BankDto } from '../../dataModels/bank.dto';
 import { CoreResponseDTO } from 'src/app/core/models/core.model';
+import { SysExchangeDocumentTypeCreateUpdateDto } from '../../models/sys-exchange-document-type.model';
 
 @Injectable()
 export class SysBankService {
@@ -19,4 +20,5 @@ export class SysBankService {
     GetSysBankTermsCondition(bankId:string) {
       return this._httpClient.get<CoreResponseDTO<any[]>>(`${Configuration.APIs.Bank.GetSysBankTermsCondition}/${bankId}`)
     }
+
 }

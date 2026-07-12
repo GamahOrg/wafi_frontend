@@ -148,6 +148,14 @@ export class WafiTrainingEngineersFormComponent implements OnInit, OnDestroy {
     );
   }
 
+  onIdentityNumberInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const digitsOnly = input.value.replace(/\D/g, '');
+    if (input.value !== digitsOnly) {
+      this.controls.identityNumber.setValue(digitsOnly);
+    }
+  }
+
   get controls() {
     return this.qualificationCertifiedEngineersForm.controls;
   }

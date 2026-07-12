@@ -128,6 +128,9 @@ export const Configuration = {
       GetIntegrationBanks: '/api/SysBank/GetIntegrationBanks',
       GetSysBankTermsCondition: '/api/SysBank/GetSysBankTermsCondition',
     },
+    SysExchangeDocumentType:{
+      getTypes:'/api/SysExchangeDocumentType/Get'
+    },
     SysRequestApproval: {
       GetSysRequestApprovalList:
         '/api/SysRequestApproval/GetSysRequestApprovalList',
@@ -1273,6 +1276,8 @@ export const Configuration = {
       SendByProjectId: '/api/LicenseRequestService/SendByProjectId',
       SendFawriaLicenseByProjectId:
         '/api/LicenseRequestService/SendFawriaLicenseByProjectId',
+      ValidateFawriaLicenseByProjectId:
+        '/api/LicenseRequestService/ValidateFawriaLicenseByProjectId',
       Compile: '/api/LicenseRequestService/Compile',
       CompileConditionalApproval:
         '/api/LicenseRequestService/CompileConditionalApproval',

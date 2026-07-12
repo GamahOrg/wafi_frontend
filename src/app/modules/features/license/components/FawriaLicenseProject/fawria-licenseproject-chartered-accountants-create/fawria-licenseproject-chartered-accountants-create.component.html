@@ -143,7 +143,7 @@
             </ng-template>
           </label>
 
-          <input id="paymentDeadline" name="paymentDeadline" type="text" class="form-control" formControlName="paymentDeadline" />
+          <input id="paymentDeadline" name="paymentDeadline" type="number" class="form-control" formControlName="paymentDeadline" />
           <div class="invalid-feedback d-block" *ngIf="
               controls['paymentDeadline']?.hasError('required') &&
               controls['paymentDeadline']?.touched

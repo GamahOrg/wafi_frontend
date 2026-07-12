@@ -9,6 +9,13 @@ import { LicenseRequest } from '../../models/license-request-dto';
 import { LicenseRequestListService } from '../../services/license-request-list-service/license-request-list-service.service';
 import { FileUploader } from 'src/app/shared/models/file-uploader.model';
 import { environment } from 'src/environments/environment';
+import { LicenseRequestService } from '../../services/license-request.service';
+import { PopupService } from 'src/app/shared/services/popup/popup.service';
+import { PopupData } from 'src/app/shared/models/popup.model';
+import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
+import { TabCode } from '../../models/tab-code.model';
+import { RequestValidation } from '../../dataModels/request-validation.model';
+import { LicenseRequestValidationPopupComponent } from '../license-request-validation-popup/license-request-validation-popup.component';
 
 @Component({
   selector: 'app-fawria-escrow-account',
@@ -36,7 +43,9 @@ export class FawriaEscrowAccountComponent implements OnInit {
     private _requestListService: LicenseRequestListService,
     private _licenseProjectService: LicenseProjectService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _licenseRequestService: LicenseRequestService,
+    private _popupService: PopupService
   ) {
     this.escrowAccountForm = this.createForm();
   }
@@ -54,8 +63,8 @@ export class FawriaEscrowAccountComponent implements OnInit {
       constructionCostsAccountNumber: ['', [Validators.required, Validators.pattern(ibanPattern)]],
       administrativeAndMarketingAccountNumber: ['', [Validators.required, Validators.pattern(ibanPattern)]],
       custodyAccountNumber: ['', [Validators.required, Validators.pattern(ibanPattern)]],
-      incentivesSubIBAN:[null,Validators.pattern(ibanPattern)],
-      financingSubIBAN:[null,Validators.pattern(ibanPattern)]
+      incentivesSubIBAN: [null, Validators.pattern(ibanPattern)],
+      financingSubIBAN: [null, Validators.pattern(ibanPattern)]
     },
       { validators: this.accountsNotDuplicateValidator.bind(this) });
   }
@@ -83,7 +92,7 @@ export class FawriaEscrowAccountComponent implements OnInit {
       this.bankDocumentToActivateEscrowAccountsFileId = this.entity.bankDocumentToActivateEscrowAccountsFileId;
     }
   }
-  
+
 
   onFileUploaded(event: any): void {
     this.bankDocumentToActivateEscrowAccountsFileId = event?.eventRes?.data?.[0]?.id ?? null;
@@ -102,6 +111,27 @@ export class FawriaEscrowAccountComponent implements OnInit {
       return;
     }
 
+    // Validate all required Fawria tabs before saving (validation-only, no send side effects).
+    const licenseProjectId = this._requestListService.getLicenseProjectIdStorage();
+    if (!licenseProjectId) return;
+    this.subscriptions.push(
+      this._licenseRequestService.ValidateFawriaLicenseByProjectId(licenseProjectId, [
+        TabCode.fawriaProjectQuantitiesTable,
+        TabCode.fawriaEngineeringSupervisionStaff,
+        TabCode.fawriaUnifiedSalesModel,
+        TabCode.fawriaArchitecturalUnitsAndDesigns
+      ]).subscribe((validation: RequestValidation | null) => {
+        if (validation) {
+          this._licenseRequestService.updateRequestValidation(validation);
+          this.openValidationDialog();          // incomplete → show popup, stop
+        } else {
+          this.submitEscrowAccount();           // all tabs complete → proceed
+        }
+      })
+    );
+  }
+
+  private submitEscrowAccount(): void {
     this.entity.licenseProjectId = this.licenseProjectId as string;
     this.entity.administrativeAndMarketingAccountNumber = this.escrowAccountForm.get('administrativeAndMarketingAccountNumber')?.value;
     this.entity.constructionCostsAccountNumber = this.escrowAccountForm.get('constructionCostsAccountNumber')?.value;
@@ -110,8 +140,9 @@ export class FawriaEscrowAccountComponent implements OnInit {
     this.entity.incentivesSubIBAN = this.escrowAccountForm.get('incentivesSubIBAN')?.value;
     this.entity.bankDocumentToActivateEscrowAccountsFileId = this.bankDocumentToActivateEscrowAccountsFileId ?? undefined;
 
-    this.subscriptions.push( 
-      this._licenseProjectService.UpdateEscrowAccount(this.entity).subscribe({next: (response) => {
+    this.subscriptions.push(
+      this._licenseProjectService.UpdateEscrowAccount(this.entity).subscribe({
+        next: (response) => {
           if (response.isDone) {
             this.toastr.success('تم تحديث حساب الضمان بنجاح');
             this.fileSubmitAttempted = false;
@@ -120,9 +151,34 @@ export class FawriaEscrowAccountComponent implements OnInit {
             this.toastr.error(response.message);
           }
         },
-       
+
       })
     )
+  }
+
+  private openValidationDialog(): void {
+    let Data = {
+      title: `التحقق من بيانات المشروع`,
+      component: LicenseRequestValidationPopupComponent,
+      id: 'LicenseRequestValidationPopupComponent',
+      buttons: [
+        {
+          icon: '',
+          title: 'إلغاء',
+          actionType: ButtonType.cancel,
+          isVisable: true,
+          isDisables: false,
+        },
+        {
+          icon: '',
+          title: 'إستكمال البيانات',
+          actionType: ButtonType.confirm,
+          isVisable: true,
+          isDisables: false,
+        },
+      ],
+    } as PopupData;
+    this._popupService.updatePopupData(Data);
   }
 
 

@@ -186,6 +186,10 @@
                  *ngIf="controls['achievementRate'].errors?.['required'] && showValidation">
                 هذا الحقل مطلوب
             </div>
+            <div class="invalid-feedback d-block"
+                 *ngIf="controls['achievementRate'].errors?.['max']">
+                يجب ألا تزيد نسبة الإنجاز عن 100
+            </div>
         </div>
         <div class="col-12 col-lg-6">
             <label for="licNum"
