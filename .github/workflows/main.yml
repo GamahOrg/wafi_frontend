@@ -1,51 +1,38 @@
-name: Push Changes to GitLab
+name: Gitlab Sync
 
 on:
   push:
     branches:
-      - '**' # Trigger for all branches
-  workflow_dispatch: # Allow manual trigger
+      - development   # only trigger when pushing to these branches
+      - main
+      - staging
 
 jobs:
   sync:
+    name: Gitlab Sync
     runs-on: self-hosted
+
     steps:
-      # Checkout the current branch
-      - name: Checkout Source Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Ensure full commit history is available
-      - name: Install OpenSSH client
-        run: sudo apt-get update && sudo apt-get install -y openssh-client
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
 
-      # Set up SSH for GitLab
-      - name: Configure SSH for GitLab
+      - name: Push branch to GitLab
+        env:
+          GITLAB_URL: gitlab.rega.gov.sa/rega-softwares/wafi_frontend.git
+          GITLAB_USER: ${{ github.actor }}
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.GITLAB_TOKEN }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H gitlab.rega.gov.sa >> ~/.ssh/known_hosts
+          # Clean up any leftover remote from previous runs (self-hosted runner persists state)
+          git remote remove target 2>/dev/null || true
 
-      # Configure Git
-      - name: Configure Git
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
+          git remote add target "https://${GITLAB_USER}:${GITLAB_TOKEN}@${GITLAB_URL}"
 
-      # Add GitLab remote
-      - name: Add GitLab Remote
-        run: |
-          git remote add gitlab git@gitlab.rega.gov.sa:rega-softwares/wafi_frontend.git
-          git fetch gitlab
+          # Push ONLY the branch that triggered this workflow
+          git push --force target "HEAD:refs/heads/${BRANCH}"
 
-      # Push changes to GitLab
-      - name: Push to GitLab
-        run: |
-          set -e
-          # Ensure the current branch exists on the GitLab repo
-          git branch --set-upstream-to=gitlab/${GITHUB_REF##*/} || true
-          git push gitlab ${GITHUB_REF##*/} --force-with-lease
-
-      # Log success
-      - name: Log Success
-        run: echo "Successfully synced changes to GitLab."
+      - name: Cleanup credentials
+        if: always()
+        run: git remote remove target 2>/dev/null || true
