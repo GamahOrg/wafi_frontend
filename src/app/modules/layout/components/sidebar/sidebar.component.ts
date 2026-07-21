@@ -149,6 +149,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this._userDataService.setSelectedFacilityIdInLocalStorage(facility.id);
       this._userDataService.removeFacilityTypeCategoryFromLocalStorage();
       this.redirectToFacilityCategoryTypeSetup();
+    }else{
+      this._userDataService.removeFacilityTypeCategoryFromLocalStorage();
+      this._userDataService.updateCustomerData(this.userData as customerResponse)
+      this._userDataService.setSelectedFacilityIdInLocalStorage(facility.id);
+      this._userDataService.setFacilityTypeCategoryInLocalStorage(facility.facilityTypeCategory as FacilityTypeCategory);
     }
   }
 
