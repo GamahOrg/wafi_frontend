@@ -134,6 +134,11 @@
             <div class="key">
               ملف الإتفاقية
             </div>
+            <div class="value" *ngIf="approvalRole === aprovalRole.MainDeveloper">
+              <a class="file-link" *ngIf="approvalDetails?.mainRealStateDeveloperAgreementFile" [href]="baseUrl + approvalDetails?.mainRealStateDeveloperAgreementFile?.filePath" target="_blank">
+                عرض الملف
+              </a>
+			</div>
             <div class="value">
               <a class="file-link" *ngIf="approvalDetails?.agreementFile" [href]="baseUrl + approvalDetails?.agreementFile?.filePath" target="_blank">
                 عرض الملف
