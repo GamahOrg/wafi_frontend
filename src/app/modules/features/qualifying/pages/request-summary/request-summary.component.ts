@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, finalize } from 'rxjs';
 import { Configuration } from 'src/app/core/configurations/shared.config';
 import {
   RequestDetails,
@@ -61,6 +61,8 @@ export class RequestSummaryComponent implements OnDestroy {
   createRequest = `../${Configuration.pages.qualifying.createRequest}/RED01`;
   confirmationicon = `../${Configuration.pages.qualifying.createRequest}/RED01`;
   subscriptions: Subscription[] = [];
+  // Guards against duplicate requests: blocks re-submitting while a create/renew call is in flight.
+  isSubmittingRequest = false;
   selectedRequest: null | RequestDetails = null;
   facilityTypeCategory: FacilityTypeCategory | null = null;
 
@@ -596,6 +598,12 @@ export class RequestSummaryComponent implements OnDestroy {
     this.accordionContent.accordionComponentList[10].isVisible = true;
   }
   public createOrRenewRequest(): void {
+    // Prevent duplicate submissions: ignore extra clicks while a request is already in flight.
+    if (this.isSubmittingRequest) {
+      return;
+    }
+    this.isSubmittingRequest = true;
+
     if (this.renewRequest) {
       this.Renew();
     } else {
@@ -611,11 +619,17 @@ export class RequestSummaryComponent implements OnDestroy {
           this.code,
           this.period,
         )
+        .pipe(finalize(() => (this.isSubmittingRequest = false)))
         .subscribe((res) => {
           if (res.requestCode && res.id) {
             this.setRequestIdInLocalStorage(res.id);
             this.openConfirmaDialog(res.requestCode);
             this._requestService.clearFacilityIdFromLocalStorage();
+            // Return to the requests list after a successful create so the summary page
+            // (and its submit button) is left, preventing any further re-submission.
+            this._router.navigate([
+              `${Configuration.modules.wafi}/${Configuration.modules.qualifying}/${Configuration.pages.qualifying.requestList}`,
+            ]);
           } else {
             this.requestValidationData = res;
             this.checkGeneralErrorTabsIsExist();
@@ -628,6 +642,7 @@ export class RequestSummaryComponent implements OnDestroy {
     this.subscriptions.push(
       this._qualificationServiceRequestService
         .Renew(this.facilityId as string, this.code, this.period)
+        .pipe(finalize(() => (this.isSubmittingRequest = false)))
         .subscribe((res) => {
           if (res.requestCode && res.id) {
             this.setRequestIdInLocalStorage(res.id);

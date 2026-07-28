@@ -128,6 +128,7 @@ export class MainRealStateDeveloperComponent implements OnInit, OnDestroy {
       this._licenseProjectMainRealStateDeveloperService.Save(this.licenseProjectMainRealStateDeveloperCreateUpdateDto).subscribe(res => {
         if (res) {
           this.licenseProjectMainRealStateDeveloperDto = res[0] as LicenseProjectMainRealStateDeveloperDto;
+		  this._toastrNotificationService.showSuccess('تم الحفظ');
           if (moveToNextTab) this.moveToNextTab()
         }
       })

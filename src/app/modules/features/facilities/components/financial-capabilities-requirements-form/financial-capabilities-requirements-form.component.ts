@@ -16,6 +16,7 @@ import { PopupData } from 'src/app/shared/models/popup.model';
 import { PopupService } from 'src/app/shared/services/popup/popup.service';
 import { ToastrNotificatioService } from 'src/app/core/services/toastr-notification/toastr-notificatio.service';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-financial-capabilities-requirements-form',
   templateUrl: './financial-capabilities-requirements-form.component.html',
@@ -53,6 +54,7 @@ export class FinancialCapabilitiesRequirementsFormComponent implements OnInit, O
     private _filemangementService: FileManagementService,
     private _toastrNotificationService: ToastrNotificatioService,
     private _toastrService: ToastrService,
+	private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -105,8 +107,10 @@ export class FinancialCapabilitiesRequirementsFormComponent implements OnInit, O
       this.financialCapabilitiesRequirementsForm.valueChanges.subscribe(changes => {
         this.financialCapability.cpalicenseNumber = this.controls.cpalicenseNumber.value as string;
         this.financialCapability.cpaIdentityNumber = this.controls.cpaIdentityNumber.value as string;
-        this.financialCapability.creditRecordIntegrityCertificateDate = this.controls.creditRecordIntegrityCertificateDate.value as any;
-
+        const dateValue = this.controls.creditRecordIntegrityCertificateDate.value;
+        this.financialCapability.creditRecordIntegrityCertificateDate = dateValue
+          ? this.datePipe.transform(dateValue, 'yyyy-MM-dd') as any
+          : null as any;
        // this.financialCapability.certificateOfZakatIncome = this.controls.certificateOfZakatIncome.value as any;
       })
     )
