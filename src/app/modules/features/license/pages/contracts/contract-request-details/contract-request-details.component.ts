@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { RealStateDeveloperService } from '../../../services/real-state-developer.service';
 import { SharedLicenseProjectService } from '../../../services/sharedLicenseProject/shared-license-project.service';
 import { LicenseProjectBuyerCancellationRequestService } from '../../../services/license-project-buyer-cancellation-request.service';
+import { LicenseProjectBuyerStatusEnum } from '../../../enums/unit-status.enum';
 import {
   GetProjectUnitContractDetailsResponseDto,
   GetProjectUnitDetailsResponseDto,
@@ -49,6 +50,8 @@ export class ContractRequestDetailsComponent implements OnInit, OnDestroy {
   pdfLoadError: string = '';
   contractFileId: string = '';
   retryLoadContract = () => this.loadContractPdf();
+
+  contractStatusEnum = LicenseProjectBuyerStatusEnum;
 
   // Subscription management
   private destroy$ = new Subject<void>();

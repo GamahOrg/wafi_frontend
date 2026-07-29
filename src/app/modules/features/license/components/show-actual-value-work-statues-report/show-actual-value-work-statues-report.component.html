@@ -47,7 +47,7 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
 </div>
 <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
   <div class="key">التكلفه الانشائية المتوقعة</div>
-  <div class="value">{{licenseProjectEngineeringActualReportDetails.expectedConstructionCost}}</div>
+  <div class="value">{{licenseProjectEngineeringActualReportDetails.expectedConstructionCost | number:'1.2-2'}}</div>
 </div>
 <div class="col-12 col-lg-6" *ngIf="licenseProjectEngineeringActualReportDetails">
   <div class="key">القاول</div>
@@ -234,12 +234,12 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
               <th>  التكلفة الانشائية المتوقعة الشهرية : </th>
               <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
               let i=index;">
-              {{detail.projectMonthlyPlannedMonthCost}}</td>
+              {{detail.projectMonthlyPlannedMonthCost | number:'1.2-2'}}</td>
           </tr>
           <tr>
             <th> التكلفة الانشائية الفعلية الشهرية : </th>
             <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
-              {{detail.actualMonthCost}}
+              {{detail.actualMonthCost | number:'1.2-2'}}
             </td>
         </tr>
         <tr>
@@ -247,7 +247,7 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
           <td
           *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails
           let i=index;">
-          {{detail.actualMonthCost - detail.projectMonthlyPlannedMonthCost}}</td>
+          {{(detail.actualMonthCost - detail.projectMonthlyPlannedMonthCost) | number:'1.2-2'}}</td>
       </tr>
       
       </tbody>
@@ -274,20 +274,20 @@ licenseProjectEngineeringActualReportDetails.licenseProjectAddresses.length !=0 
           <tr>
               <th> التكلفة الانشائية التراكمية المتوقعة:</th>
               <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
-                {{detail.totalPlannedCostToDate}}
+                {{detail.totalPlannedCostToDate | number:'1.2-2'}}
               </td>
           </tr>
           
           <tr>
             <th> التكلفة الانشائية الفعلية التراكميه:</th>
             <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
-              {{detail.totalActualCostToDate}}
+              {{detail.totalActualCostToDate | number:'1.2-2'}}
             </td>
         </tr>
         <tr>
           <th>   التباين : </th>
           <td *ngFor="let detail of licenseProjectEngineeringActualReportDetails?.licenseProjectEngineeringSupervisionPlannedReportDetails let i=index;">
-            {{detail.totalActualCostToDate - detail.totalPlannedCostToDate}}
+            {{(detail.totalActualCostToDate - detail.totalPlannedCostToDate) | number:'1.2-2'}}
           </td>
       </tr> 
       </tbody>

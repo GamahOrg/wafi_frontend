@@ -1,15 +1,45 @@
-<button type="button" class="btn btn-primary my-4" (click)="backToList()">رجوع للقائمة</button>
+<div class="details-page">
 
-<section *ngIf="filesData.licenseProjectTimeScheduleVerificationElementValues">
-    <h5>نتيجة قائمة المتطلبات</h5>
-    <div class="d-flex justify-content-between flex-column text-right my-3" *ngFor="let note of filesData.licenseProjectTimeScheduleVerificationElementValues; let i = index">
-        <div class="d-flex justify-content-between">
-            <span class="listnum px-2 h-50">{{i+1}}</span>
-            <span class="mx-2">{{note.sysLicenseProjectTimeScheduleVerificationElement.name}}</span>
-            <span class="statuesbtn py-1 px-2 h-50" [ngClass]="{'red' : !note.elementStatus, 'green': note.elementStatus }" >{{note.elementStatus ? 'مقبول' : 'مرفوض'}}</span>
-        </div>
-        <div *ngIf="note.notes">
-            <textarea rows="4" readonly  class="form-control w-100">{{note.notes}}</textarea>
-        </div>
+  <div class="page-header d-flex justify-content-between align-items-center gap-3">
+    <div class="page-title">
+      <h6 class="title">نتيجة قائمة المتطلبات</h6>
     </div>
-</section>
+
+    <div class="d-flex align-items-center gap-2">
+      <button type="button" class="btn btn-outline-primary" (click)="backToList()">رجوع للقائمة</button>
+    </div>
+  </div>
+
+  <div class="page-section">
+    <div class="table-responsive" *ngIf="filesData.licenseProjectTimeScheduleVerificationElementValues">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">م</th>
+            <th scope="col" class="w-50">اسم المتطلب</th>
+            <th scope="col">الحالة</th>
+            <th scope="col" class="w-25">الملاحظات</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="scrollable">
+        <table class="table table-light">
+          <tbody>
+            <tr *ngFor="let note of filesData.licenseProjectTimeScheduleVerificationElementValues; let i = index">
+              <td>{{i+1}}</td>
+              <td class="w-50">{{note.sysLicenseProjectTimeScheduleVerificationElement.name}}</td>
+              <td>
+                <span class="status-pill" [ngClass]="{'red' : !note.elementStatus, 'green': note.elementStatus }">{{note.elementStatus ? 'مقبول' : 'مرفوض'}}</span>
+              </td>
+              <td class="w-25">{{note.notes ?? '-'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="mt-auto">
+      <app-pagination></app-pagination>
+    </div> -->
+  </div>
+</div>

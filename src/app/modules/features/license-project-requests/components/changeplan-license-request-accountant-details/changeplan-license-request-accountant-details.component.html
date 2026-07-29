@@ -5,14 +5,14 @@
     <div class="key">التكاليف الأجمالية للمشروع (غير شاملة ثمن الأرض) مُحدثة لتاريخ الطلب</div>
     <div class="value">
         <span class="icon material-icons">blinds</span>
-        {{licenseProjectRequestChangePlanFull?.totalProjectCosts}}
+        {{licenseProjectRequestChangePlanFull?.totalProjectCosts | number:'1.2-2'}}
     </div>
 </div>
 <div class="col-12 col-lg-6">
     <div class="key">رصيد حساب الضمان</div>
     <div class="value">
         <span class="icon material-icons">blinds</span>
-        {{licenseProjectRequestChangePlanFull?.escrowAccountBalance}}
+        {{licenseProjectRequestChangePlanFull?.escrowAccountBalance | number:'1.2-2'}}
     </div>
 </div>
 

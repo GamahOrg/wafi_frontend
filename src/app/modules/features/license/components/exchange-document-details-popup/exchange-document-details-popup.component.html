@@ -1,0 +1,135 @@
+<div class="exchange-document-detail" *ngIf="requestDetails">
+  <h6 class="fw-bold mb-3">وثيقة الصرف رقم {{ requestDetails?.documnetNumber }}</h6>
+  <div class="row row-gap-3">
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">اسم المستفيد</span>
+        <div class="value">{{ requestDetails?.beneficiaryName ?? requestDetails?.beneficiaryDescription ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">رقم الآيبان</span>
+        <div class="value">{{ requestDetails?.ibanNumber ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">اسم البنك</span>
+        <div class="value">{{ requestDetails?.bankName ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">بند الصرف من جدول الكميات</span>
+        <div class="value">{{ requestDetails?.sysLicenseRelativeWeight?.elementName ?? 'لا يوجد' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6" *ngIf="requestDetails?.mainItemId == mainItemEnum.MaintenanceCostCalculation">
+      <div class="key-value">
+        <span class="key">نسبة الإنجاز</span>
+        <div class="value">{{ requestDetails?.projectProgressPercentage ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">رقم الحساب الرئيسي</span>
+        <div class="value">{{ requestDetails?.mainAccountNumber ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">رقم الحساب الفرعي</span>
+        <div class="value">{{ requestDetails?.subAccountNumber ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">المبلغ المتوفر قبل الصرف</span>
+        <div class="value">{{ (requestDetails?.availableAmountBeforeExchange | number:'1.2-2') ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">المبلغ المتبقي بعد الصرف</span>
+        <div class="value">
+          {{ requestDetails?.remainingAmountAfterExchange != null
+            ? (requestDetails?.remainingAmountAfterExchange | number:'1.2-2')
+            : ((requestDetails?.availableAmountBeforeExchange ?? 0) - (requestDetails?.amount ?? 0) | number:'1.2-2') }}
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">طريقة سحب مبلغ الحفظ</span>
+        <div class="value">{{ requestDetails?.withdrawalMethod?.name ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">رقم بوليصة التأمين</span>
+        <div class="value">{{ requestDetails?.insurancePolicyNumber ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">شركة التأمين</span>
+        <div class="value">{{ requestDetails?.insuranceCompany?.name ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">تاريخ بداية التأمين</span>
+        <div class="value">{{ (requestDetails?.insuranceStartDate | date:'dd-MM-yyyy') ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">تاريخ نهاية التأمين</span>
+        <div class="value">{{ (requestDetails?.insuranceEndDate | date:'dd-MM-yyyy') ?? '--' }}</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">مرفق التأمين</span>
+        <div class="value">
+          <ng-container *ngIf="requestDetails?.licenseProjectExchangeInsuranceDocumentFiles?.length; else noFile">
+            <a *ngFor="let item of requestDetails?.licenseProjectExchangeInsuranceDocumentFiles"
+              [href]="baseUrl + item?.file?.filePath" target="_blank" class="d-block">
+              {{ item?.file?.fileDescription || 'مرفق التأمين' }}
+            </a>
+          </ng-container>
+          <ng-template #noFile>--</ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">مرفق الضمان البنكي</span>
+        <div class="value">
+          <ng-container *ngIf="requestDetails?.licenseProjectExchangeBankGuaranteeDocumentFiles?.length; else noGuarantee">
+            <a *ngFor="let item of requestDetails?.licenseProjectExchangeBankGuaranteeDocumentFiles"
+              [href]="baseUrl + item?.file?.filePath" target="_blank" class="d-block">
+              {{ item?.file?.fileDescription || 'مرفق الضمان البنكي' }}
+            </a>
+          </ng-container>
+          <ng-template #noGuarantee>--</ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="key-value">
+        <span class="key">المستندات الداعمة</span>
+        <div class="value">
+          <ng-container *ngIf="requestDetails?.licenseProjectExchangeDocumentFiles?.length; else noSupportingDocs">
+            <a *ngFor="let item of requestDetails?.licenseProjectExchangeDocumentFiles"
+              [href]="baseUrl + item?.file?.filePath" target="_blank" class="d-block">
+              {{ item?.file?.fileDescription || 'مستند داعم' }}
+            </a>
+          </ng-container>
+          <ng-template #noSupportingDocs>--</ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

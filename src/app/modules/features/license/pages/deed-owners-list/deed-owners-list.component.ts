@@ -19,6 +19,7 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { RatingComponent } from 'src/app/shared/components/rating/rating.component';
 import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 import { PopupData } from 'src/app/shared/models/popup.model';
+import { Guid } from 'src/app/core/configurations/guid';
 
 @Component({
   selector: 'app-deed-owners-list',
@@ -194,7 +195,7 @@ export class DeedOwnersListComponent implements OnInit, OnDestroy {
       this._licenseRequestApprovalsService
         .GetOwneerDeed(
           this.licenseProjectId as string,
-          this.userData?.facilities[0].id as string,
+          this.userData?.facilities[0]?.id ?? Guid.empty as string,
         )
         .subscribe((res: any[] | null) => {
           if (res) this.approvalList = res;

@@ -12,7 +12,7 @@ import { ToastrNotificatioService } from 'src/app/core/services/toastr-notificat
 import { SharedLicenseProjectService } from '../../services/sharedLicenseProject/shared-license-project.service';
 import { DatePipe } from '@angular/common';
 import { PopupData } from 'src/app/shared/models/popup.model';
-import { BuyerUnitsDto, LicenseProjectBuyerDetailsDto, LicenseProjectBuyerLookUpDto } from '../../dataModels/license-project-buyer-details-dto';
+import { BuyerInstallmentDto, BuyerUnitsDto, LicenseProjectBuyerDetailsDto, LicenseProjectBuyerLookUpDto } from '../../dataModels/license-project-buyer-details-dto';
 import { LicenseDepositDocumentService } from '../../services/license-deposit-document.service';
 import { LicenseProjectAccountsDto } from '../../dataModels/license-project-buyer-dto';
 import { SysLicenseInfrastructureElementDto } from '../../dataModels/sys-license-infrastructure-element-dto';
@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 import { SysBankService } from '../../services/sysBank/sys-bank.service';
 import { BankDto } from '../../dataModels/bank.dto';
 import { ProjectBasicDataService } from '../../services/licenseProjects/project-basic-data.service';
+import { SysExchangeDocumentTypeService } from '../../services/sys-exchange-document-type/sysExchangeDocumentTypeService.service';
 
 @Component({
   selector: 'app-add-exchange-document',
@@ -35,7 +36,7 @@ export class AddExchangeDocumentComponent {
   baseUrl = `${environment.baseURL}/`;
   licenseProjectExchangeDocumentCreateUpdate?: LicenseProjectExchangeDocumentCreateUpdateDto;
   licenseProjectExchangeDocument?: LicenseProjectExchangeDocumentDto;
-  licenseProject?:LicenseProjectDto
+  licenseProject?: LicenseProjectDto
   beneficiaryTypes?: LiceneProjectBeneficiaryTypeDto[];
   mainItems?: LicenseProjectExchangeDocumentMainItemDto[];
   subItems?: LicenseProjectExchangeDocumentSubItemDto[];
@@ -44,7 +45,7 @@ export class AddExchangeDocumentComponent {
   insuranceCompanyList?: LicenseProjectExchangeDocumentInsuranceCompanyDto[];
   minInsuranceEndDate?: Date;
   showManualBankNameInsertion: boolean = false;
-
+  remainingAmountAfterExchange: string = '0.00';
   licenseProjectExchangeDocumentForm = this._formBuilder.group({
     mainItemId: this._formBuilder.control<number | null>(null, [Validators.required]),
     subItemId: this._formBuilder.control<number | null>(null, [Validators.required]),
@@ -59,7 +60,7 @@ export class AddExchangeDocumentComponent {
     insuranceEndDate: this._formBuilder.control<string | null>(null),
     letterDate: this._formBuilder.control<string | null>(null),
     letterNumber: this._formBuilder.control<string | null>(null),
-    insurancePolicyNumber: this._formBuilder.control<string | null>(null,[Validators.maxLength(30)]),
+    insurancePolicyNumber: this._formBuilder.control<string | null>(null, [Validators.maxLength(30)]),
     amount: this._formBuilder.control<number | null>(null, [Validators.required]),
     //approvalDate: this._formBuilder.control<string | null>(null, [Validators.required]),
     statment: this._formBuilder.control<string | null>(null, [Validators.required]),
@@ -67,16 +68,17 @@ export class AddExchangeDocumentComponent {
     beneficiaryDescription: this._formBuilder.control<string | null>(null),
     exchangePurpose: this._formBuilder.control<string | null>(null),
     otherInsuranceCompanyName: this._formBuilder.control<string | null>(null),
-    nidNumber:this._formBuilder.control<string | null>(null),
+    nidNumber: this._formBuilder.control<string | null>(null),
     licenseProjectBuyerId: this._formBuilder.control<string | null>(null),
     batchNumber: this._formBuilder.control<string | null>(null, [Validators.required]),
     beneficiaryName: this._formBuilder.control<string | null>(null, [Validators.required]),
     bankId: this._formBuilder.control<string | null>(null, [Validators.required]),
     iBANNumber: this._formBuilder.control<string | null>(null, [Validators.required, Validators.pattern(Configuration.validators.saIBAN)]),
     bankName: this._formBuilder.control<string | null>(null),
+    exchangeDocumentTypeId: this._formBuilder.control<number | null>(null),
   });
-  workDonePercentage!:number;
-  showWorkDonePercentage:boolean = false;
+  workDonePercentage!: number;
+  showWorkDonePercentage: boolean = false;
   licenseProjectId: string | null = "00000000-0000-0000-0000-000000000000";
   licenseProjectName: string | null = "";
   licenseProjectExchangeDocumentId: string | null = "00000000-0000-0000-0000-000000000000";
@@ -86,13 +88,14 @@ export class AddExchangeDocumentComponent {
   licenseProjectExchangeDocumentWithdrawalMethodEnum = LicenseProjectExchangeDocumentWithdrawalMethodEnum;
   licenseProjectExchangeDocumentInsuranceCompanyEnum = LicenseProjectExchangeDocumentInsuranceCompanyEnum;
   showValidation: boolean = false;
-  buyers?:LicenseProjectBuyerLookUpDto[]
-  buyer?:LicenseProjectBuyerLookUpDto;
-  licenseProjectBuyerDetails?:LicenseProjectBuyerDetailsDto[]
-  buyerRecord?:LicenseProjectBuyerDetailsDto;
+  buyers?: LicenseProjectBuyerLookUpDto[]
+  buyer?: LicenseProjectBuyerLookUpDto;
+  licenseProjectBuyerDetails?: LicenseProjectBuyerDetailsDto[]
+  buyerRecord?: LicenseProjectBuyerDetailsDto;
   licenseProjectAccounts: LicenseProjectAccountsDto = {} as LicenseProjectAccountsDto;
   licenseInfrastructureElementList: SysLicenseInfrastructureElementDto[] = [];
   unitsList: BuyerUnitsDto[] = [];
+  installmentList: BuyerInstallmentDto[] = [];
   selectedUnitBlockCode: string = "";
   selectedUnitContractNumber: string = "";
   licenseProjectExchangeDocumentFile: LicenseProjectExchangeDocumentFileDto[] = [];
@@ -101,9 +104,10 @@ export class AddExchangeDocumentComponent {
   multiFilesUploaderData: FileUploader = {
     multiple: true,
     maxFileSizeMB: 5,
-    allowedExtensionsText: 'pdf,jpg,jpeg,png,xlsx,bmp'
+    allowedExtensionsText: 'pdf,jpg,jpeg,png,xlsx,bmp',
+    allowedExtensions: ['.pdf', '.jpg', '.jpeg', '.png', '.xlsx', '.bmp'],
   } as FileUploader;
-
+  exchangeDocumentTypes: any[] = [];
   singleFilesUploaderData: FileUploader = {
     multiple: false,
   } as FileUploader;
@@ -126,21 +130,21 @@ export class AddExchangeDocumentComponent {
     private _router: Router,
     private _sysBank: SysBankService,
     private _projectBasicDataService: ProjectBasicDataService,
-    
+    private _sysExchangeDocumentTypeService : SysExchangeDocumentTypeService
   ) { }
 
   ngOnInit(): void {
     this.observePopupEvents();
     this.getLicenseProjectIdStorage();
     this.getBanks();
-
+    this.getWorkDonePercentage();
     this.controls.mainItemId.valueChanges
       .pipe(filter((id): id is number => id !== null))
       .subscribe(mainItemId => {
 
         this.licenseProjectExchangeDocumentForm.patchValue({
           subItemId: null, withdrawalMethodId: null, insurancePolicyNumber: null,
-          insuranceStartDate: null, insuranceEndDate: null, insuranceCompanyId: null, otherInsuranceCompanyName:null,
+          insuranceStartDate: null, insuranceEndDate: null, insuranceCompanyId: null, otherInsuranceCompanyName: null,
         });
         this.mainSubItems = [];
         this.licenseProjectExchangeInsuranceDocumentFiles = [];
@@ -181,14 +185,23 @@ export class AddExchangeDocumentComponent {
       });
   }
 
+  private getWorkDonePercentage(): void {
+    this._projectBasicDataService.GetWorkDonePercentage(this.licenseProjectId as string).subscribe((res) => {
+      
+        this.workDonePercentage = res;
+        this.getExchangeDocumentTypes();
+
+    });
+  }
+
   private getBanks() {
-      this._sysBank.GetBankDropDown().subscribe((res) => {
-        if (res.isDone) {
-          this.banksDto = res.data as BankDto[];
-          this.banksDto.push({ id: '00000000-0000-0000-0000-000000000000', name: 'أخرى' } as BankDto);
-        }
-      });
-    }
+    this._sysBank.GetBankDropDown().subscribe((res) => {
+      if (res.isDone) {
+        this.banksDto = res.data as BankDto[];
+        this.banksDto.push({ id: '00000000-0000-0000-0000-000000000000', name: 'أخرى' } as BankDto);
+      }
+    });
+  }
 
 
   private getLicenseProjectIdStorage(): void {
@@ -214,7 +227,7 @@ export class AddExchangeDocumentComponent {
   private getAccountNumber(): void {
     this.subscriptions.push(
       this._licenseDepositDocument.GetAccountNumber(this.licenseProjectId as string).subscribe((result) => {
-      this.licenseProjectAccounts = result as LicenseProjectAccountsDto
+        this.licenseProjectAccounts = result as LicenseProjectAccountsDto
       })
     )
   }
@@ -260,31 +273,30 @@ export class AddExchangeDocumentComponent {
   getLicenseProjectBuyersDetails() {
     this._licenseProjectExchangeDocumentService.getLicenseProjectExchangeDocumentDetail(this.licenseProjectExchangeDocumentId as string).subscribe(results => {
       this.licenseProjectExchangeDocument = results as LicenseProjectExchangeDocumentDto;
-      if(results?.licenseProjectExchangeDocumentFiles && results.licenseProjectExchangeDocumentFiles.length > 0)
+      if (results?.licenseProjectExchangeDocumentFiles && results.licenseProjectExchangeDocumentFiles.length > 0)
         this.licenseProjectExchangeDocumentFile = results.licenseProjectExchangeDocumentFiles
 
       if (this.licenseProjectExchangeDocument) {
-        if(this.licenseProjectExchangeDocument.liceneProjectBeneficiaryTypeId==this.liceneProjectBeneficiaryTypeEnum.Buyer){
+        if (this.licenseProjectExchangeDocument.liceneProjectBeneficiaryTypeId == this.liceneProjectBeneficiaryTypeEnum.Buyer) {
           this._licenseProjectBuyerService.GetBuyersBylicenseProjectId(this.licenseProjectId as string).subscribe(res => {
-            if(res)
-            this.buyers = res as LicenseProjectBuyerLookUpDto[];
+            if (res)
+              this.buyers = res as LicenseProjectBuyerLookUpDto[];
           })
         }
-        if(this.licenseProjectExchangeDocument?.licenseProjectBuyer?.nidNumber){
-          this._licenseProjectBuyerService.GetBuyersDetailByNIDNumber(this.licenseProjectExchangeDocument.licenseProjectBuyer.nidNumber,this.licenseProjectId as string).subscribe(res => {
-          if(res){
-            this.licenseProjectBuyerDetails=res as LicenseProjectBuyerDetailsDto[];
-            if(this.licenseProjectBuyerDetails && this.licenseProjectBuyerDetails.length > 0)
-              {
+        if (this.licenseProjectExchangeDocument?.licenseProjectBuyer?.nidNumber) {
+          this._licenseProjectBuyerService.GetBuyersDetailByNIDNumber(this.licenseProjectExchangeDocument.licenseProjectBuyer.nidNumber, this.licenseProjectId as string).subscribe(res => {
+            if (res) {
+              this.licenseProjectBuyerDetails = res as LicenseProjectBuyerDetailsDto[];
+              if (this.licenseProjectBuyerDetails && this.licenseProjectBuyerDetails.length > 0) {
                 this.licenseProjectBuyerDetails.forEach(item => {
-              if(item.unitCode)
-               item.unitCodeFullName=item.unitCode+"-"+item.licenseProjectBuyerType.name;
-            else
-              item.unitCodeFullName=item.blockCode+"-"+item.licenseProjectBuyerType.name;
+                  if (item.unitCode)
+                    item.unitCodeFullName = item.unitCode + "-" + item.licenseProjectBuyerType.name;
+                  else
+                    item.unitCodeFullName = item.blockCode + "-" + item.licenseProjectBuyerType.name;
                 });
               }
-              this.buyerRecord=this.licenseProjectBuyerDetails?.filter(x=> x.id==this.licenseProjectExchangeDocument?.licenseProjectBuyerId)[0];
-          }
+              this.buyerRecord = this.licenseProjectBuyerDetails?.filter(x => x.id == this.licenseProjectExchangeDocument?.licenseProjectBuyerId)[0];
+            }
           })
         }
 
@@ -292,7 +304,7 @@ export class AddExchangeDocumentComponent {
         this.licenseProjectExchangeDocument.approvalDate = this.datePipe.transform(this.licenseProjectExchangeDocument.approvalDate, 'yyyy-MM-dd') as any;
         this.licenseProjectExchangeDocumentForm.patchValue(this.licenseProjectExchangeDocument as any);
         this.licenseProjectExchangeDocumentForm.controls.exchangeDate.setValue(this.licenseProjectExchangeDocument.exchangeDate as any);
-       // this.licenseProjectExchangeDocumentForm.controls.approvalDate.setValue(this.licenseProjectExchangeDocument.approvalDate as any);
+        // this.licenseProjectExchangeDocumentForm.controls.approvalDate.setValue(this.licenseProjectExchangeDocument.approvalDate as any);
         this.licenseProjectExchangeDocumentForm.controls.nidNumber.setValue(this.licenseProjectExchangeDocument.licenseProjectBuyer.nidNumber as any);
       }
     })
@@ -344,7 +356,7 @@ export class AddExchangeDocumentComponent {
     }
     this.licenseProjectExchangeDocumentForm.controls['bankGuaranteeAttachmentId'].setValue(filesData.eventRes.data[0].id);
   }
-  public onSupportingDocumentsFilesUploaded(filesData: any) :void{
+  public onSupportingDocumentsFilesUploaded(filesData: any): void {
     if (filesData.eventRes.data.length == 0) {
       this.licenseProjectExchangeDocumentFile = [];
       return;
@@ -355,11 +367,11 @@ export class AddExchangeDocumentComponent {
       this.licenseProjectExchangeDocumentFile.push({
         fileId: data.id,
         id: '00000000-0000-0000-0000-000000000000',
-        licenseProjectExchangeDocumentId:'00000000-0000-0000-0000-000000000000',
+        licenseProjectExchangeDocumentId: '00000000-0000-0000-0000-000000000000',
       });
     });
   }
-  public onSupportingInsuranceDocumentsFilesUploaded(filesData: any) :void{
+  public onSupportingInsuranceDocumentsFilesUploaded(filesData: any): void {
     if (filesData.eventRes.data.length == 0) {
       this.licenseProjectExchangeInsuranceDocumentFiles = [];
       return;
@@ -370,11 +382,11 @@ export class AddExchangeDocumentComponent {
       this.licenseProjectExchangeInsuranceDocumentFiles.push({
         fileId: data.id,
         id: '00000000-0000-0000-0000-000000000000',
-        licenseProjectExchangeDocumentId:'00000000-0000-0000-0000-000000000000',
+        licenseProjectExchangeDocumentId: '00000000-0000-0000-0000-000000000000',
       });
     });
   }
-  public onSupportingBankGuaranteeDocumentsFilesUploaded(filesData: any) :void{
+  public onSupportingBankGuaranteeDocumentsFilesUploaded(filesData: any): void {
     if (filesData.eventRes.data.length == 0) {
       this.licenseProjectExchangeBankGuaranteeDocumentFiles = [];
       return;
@@ -385,19 +397,19 @@ export class AddExchangeDocumentComponent {
       this.licenseProjectExchangeBankGuaranteeDocumentFiles.push({
         fileId: data.id,
         id: '00000000-0000-0000-0000-000000000000',
-        licenseProjectExchangeDocumentId:'00000000-0000-0000-0000-000000000000',
+        licenseProjectExchangeDocumentId: '00000000-0000-0000-0000-000000000000',
       });
     });
   }
 
   save(): void {
 
-    if(this.licenseProjectExchangeDocumentForm.controls['mainItemId'].value == LicenseProjectExchangeDocumentMainItemEnum.MaintenanceCostCalculation && this.workDonePercentage !== 100){
+    if (this.licenseProjectExchangeDocumentForm.controls['mainItemId'].value == LicenseProjectExchangeDocumentMainItemEnum.MaintenanceCostCalculation && this.workDonePercentage !== 100) {
       this._toastrNotificationService.showError('لا يمكن الصرف من حساب الحفظ ال بعد  وصول نسبة انجاز المشروع 100%');
       return;
     }
 
-     this.showValidation = false;
+    this.showValidation = false;
     if (!this.licenseProjectExchangeDocumentForm.valid || this.licenseProjectExchangeDocumentFile == null || this.licenseProjectExchangeDocumentFile.length == 0) {
       this.showValidation = true;
     }
@@ -424,14 +436,14 @@ export class AddExchangeDocumentComponent {
         this.showValidation = true;
       }
     }
-    if(this.licenseProjectExchangeDocumentCreateUpdate.liceneProjectBeneficiaryTypeId==this.liceneProjectBeneficiaryTypeEnum.Others
-       && !this.licenseProjectExchangeDocumentCreateUpdate.beneficiaryDescription){
-        this.showValidation = true;
+    if (this.licenseProjectExchangeDocumentCreateUpdate.liceneProjectBeneficiaryTypeId == this.liceneProjectBeneficiaryTypeEnum.Others
+      && !this.licenseProjectExchangeDocumentCreateUpdate.beneficiaryDescription) {
+      this.showValidation = true;
     }
 
-    if(this.licenseProjectExchangeDocumentCreateUpdate.liceneProjectBeneficiaryTypeId==this.liceneProjectBeneficiaryTypeEnum.Buyer
-      && !this.licenseProjectExchangeDocumentCreateUpdate.licenseProjectBuyerId){
-       this.showValidation = true;
+    if (this.licenseProjectExchangeDocumentCreateUpdate.liceneProjectBeneficiaryTypeId == this.liceneProjectBeneficiaryTypeEnum.Buyer
+      && !this.licenseProjectExchangeDocumentCreateUpdate.licenseProjectBuyerId) {
+      this.showValidation = true;
     }
     if (this.licenseProjectExchangeDocumentCreateUpdate.withdrawalMethodId) {
       this.licenseProjectExchangeDocumentCreateUpdate.withdrawalMethodId = Number(this.licenseProjectExchangeDocumentCreateUpdate.withdrawalMethodId);
@@ -451,10 +463,10 @@ export class AddExchangeDocumentComponent {
       this.licenseProjectExchangeDocumentCreateUpdate.id = this.licenseProjectExchangeDocumentId as string;
     else
       this.licenseProjectExchangeDocumentCreateUpdate.id = '00000000-0000-0000-0000-000000000000'
-      this.licenseProjectExchangeDocumentCreateUpdate.mainItemId=Number(this.licenseProjectExchangeDocumentCreateUpdate.mainItemId);
-      this.licenseProjectExchangeDocumentCreateUpdate.liceneProjectBeneficiaryTypeId=Number(this.licenseProjectExchangeDocumentCreateUpdate.liceneProjectBeneficiaryTypeId);
-      if(this.licenseProjectExchangeDocumentCreateUpdate.subItemId)
-        this.licenseProjectExchangeDocumentCreateUpdate.subItemId=Number(this.licenseProjectExchangeDocumentCreateUpdate.subItemId);
+    this.licenseProjectExchangeDocumentCreateUpdate.mainItemId = Number(this.licenseProjectExchangeDocumentCreateUpdate.mainItemId);
+    this.licenseProjectExchangeDocumentCreateUpdate.liceneProjectBeneficiaryTypeId = Number(this.licenseProjectExchangeDocumentCreateUpdate.liceneProjectBeneficiaryTypeId);
+    if (this.licenseProjectExchangeDocumentCreateUpdate.subItemId)
+      this.licenseProjectExchangeDocumentCreateUpdate.subItemId = Number(this.licenseProjectExchangeDocumentCreateUpdate.subItemId);
 
 
     if (this.licenseProjectExchangeDocumentCreateUpdate.subItemId == this.licenseProjectExchangeDocumentSubItemEnum.Others
@@ -468,9 +480,9 @@ export class AddExchangeDocumentComponent {
     }
 
     this.licenseProjectExchangeDocumentCreateUpdate.projectProgressPercentage = this.workDonePercentage;
-    
 
-    if(this.licenseProjectExchangeDocumentForm.invalid || this.showValidation){
+
+    if (this.licenseProjectExchangeDocumentForm.invalid || this.showValidation) {
       console.log(this.licenseProjectExchangeDocumentForm.errors);
       this._toastrNotificationService.showError("يرجي إستكمال جميع الحقول الإلزامية قبل إرسال طلب وثيقة الصرف");
       return;
@@ -498,12 +510,12 @@ export class AddExchangeDocumentComponent {
 
   private validatePurposeExchange() {
 
-        const formValue = this.licenseProjectExchangeDocumentForm.getRawValue();
+    const formValue = this.licenseProjectExchangeDocumentForm.getRawValue();
     if (Number(formValue.subItemId) !==
-            this.licenseProjectExchangeDocumentSubItemEnum.Others) {
+      this.licenseProjectExchangeDocumentSubItemEnum.Others) {
 
-            this.licenseProjectExchangeDocumentForm.get('exchangePurpose')?.setValue(null);
-        }
+      this.licenseProjectExchangeDocumentForm.get('exchangePurpose')?.setValue(null);
+    }
   }
 
 
@@ -527,15 +539,15 @@ export class AddExchangeDocumentComponent {
 
       insuranceFields.forEach(field => {
         const control = this.licenseProjectExchangeDocumentForm.get(field);
-        
+
         control?.setValidators([Validators.required]);
-        
+
         control?.updateValueAndValidity({ emitEvent: false });
       });
     } else if (method == 2) {
       letterFields.forEach(field => {
         const control = this.licenseProjectExchangeDocumentForm.get(field);
-        
+
         control?.setValidators([Validators.required]);
         control?.updateValueAndValidity({ emitEvent: false });
       });
@@ -545,7 +557,7 @@ export class AddExchangeDocumentComponent {
       [...insuranceFields, letterFields, 'otherInsuranceCompanyName']
         .forEach(field => {
           const control = this.licenseProjectExchangeDocumentForm.get(field);
-          
+
           control?.clearValidators();
           control?.setValue(null, { emitEvent: false });
           control?.updateValueAndValidity({ emitEvent: false });
@@ -578,34 +590,34 @@ export class AddExchangeDocumentComponent {
 
 
 
-  liceneProjectBeneficiaryTypeIdChanges(){
-    let liceneProjectBeneficiaryTypeId=Number(this.licenseProjectExchangeDocumentForm.controls.liceneProjectBeneficiaryTypeId.value);
+  liceneProjectBeneficiaryTypeIdChanges() {
+    let liceneProjectBeneficiaryTypeId = Number(this.licenseProjectExchangeDocumentForm.controls.liceneProjectBeneficiaryTypeId.value);
 
-    if(liceneProjectBeneficiaryTypeId==this.liceneProjectBeneficiaryTypeEnum.Buyer){
+    if (liceneProjectBeneficiaryTypeId == this.liceneProjectBeneficiaryTypeEnum.Buyer) {
 
       this.controls.beneficiaryName.setValue(null);
       this.controls.beneficiaryName.clearValidators();
       this.controls.beneficiaryName.updateValueAndValidity();
-      this.unitsList=[];
-      this.selectedUnitBlockCode="";
-      this.selectedUnitContractNumber="";
+      this.unitsList = [];
+      this.selectedUnitBlockCode = "";
+      this.selectedUnitContractNumber = "";
       this.subscriptions.push(
-      this._licenseProjectBuyerService.GetBuyersBylicenseProjectId(this.licenseProjectId as string).subscribe(res => {
-      if(res)
-        this.buyers=res as LicenseProjectBuyerLookUpDto[];
+        this._licenseProjectBuyerService.GetBuyersBylicenseProjectId(this.licenseProjectId as string).subscribe(res => {
+          if (res)
+            this.buyers = res as LicenseProjectBuyerLookUpDto[];
 
-      })
+        })
       )
-    } else if(liceneProjectBeneficiaryTypeId==this.liceneProjectBeneficiaryTypeEnum.EngineeringConsultant || liceneProjectBeneficiaryTypeId==this.liceneProjectBeneficiaryTypeEnum.CharteredAccountant || liceneProjectBeneficiaryTypeId==this.liceneProjectBeneficiaryTypeEnum.Wafi){
-      this._licenseProjectExchangeDocumentService.GetBeneficiaryName(this.licenseProjectId as string, liceneProjectBeneficiaryTypeId).subscribe(res=>{
-        if(res)
-        this.controls.beneficiaryName.setValue(res as string);
+    } else if (liceneProjectBeneficiaryTypeId == this.liceneProjectBeneficiaryTypeEnum.EngineeringConsultant || liceneProjectBeneficiaryTypeId == this.liceneProjectBeneficiaryTypeEnum.CharteredAccountant || liceneProjectBeneficiaryTypeId == this.liceneProjectBeneficiaryTypeEnum.Wafi) {
+      this._licenseProjectExchangeDocumentService.GetBeneficiaryName(this.licenseProjectId as string, liceneProjectBeneficiaryTypeId).subscribe(res => {
+        if (res)
+          this.controls.beneficiaryName.setValue(res as string);
       })
-       this.controls.beneficiaryName.clearValidators();
-       this.controls.beneficiaryName.updateValueAndValidity();
-       this.updateBuyerValidators(liceneProjectBeneficiaryTypeId);
+      this.controls.beneficiaryName.clearValidators();
+      this.controls.beneficiaryName.updateValueAndValidity();
+      this.updateBuyerValidators(liceneProjectBeneficiaryTypeId);
     }
-     else {
+    else {
       this.controls.beneficiaryName.setValue(null);
       this.controls.beneficiaryName.setValidators([Validators.required]);
       this.controls.beneficiaryName.updateValueAndValidity();
@@ -627,37 +639,44 @@ export class AddExchangeDocumentComponent {
       control?.updateValueAndValidity({ emitEvent: false });
     });
   }
-  nidNumberChange(){
-    let nidNumber=this.licenseProjectExchangeDocumentForm.controls.nidNumber.value;
-    if(nidNumber){
-      this.unitsList= this.buyers?.filter(x=> x.nidNumber==nidNumber)[0].units as BuyerUnitsDto[];
 
-
-      // this.subscriptions.push(
-      //   this._licenseProjectBuyerService.GetBuyersDetailByNIDNumber(nidNumber,this.licenseProjectId as string).subscribe(res => {
-      //   if(res) {
-      //     this.licenseProjectBuyerDetails=res as LicenseProjectBuyerDetailsDto[];
-      //     if(this.licenseProjectBuyerDetails && this.licenseProjectBuyerDetails.length > 0){
-      //       this.licenseProjectBuyerDetails.forEach(item => {
-      //       if(item.unitCode)
-      //         item.unitCodeFullName=item.unitCode+"-"+item.licenseProjectBuyerType.name;
-      //       else
-      //         item.unitCodeFullName=item.blockCode+"-"+item.licenseProjectBuyerType.name;
-      //       });
-      //     }
-      //   }
-      //   })
-      // )
-
+  nidNumberChange() {
+    let nidNumber = this.licenseProjectExchangeDocumentForm.controls.nidNumber.value;
+    if (nidNumber) {
+      this.unitsList = this.buyers?.find(x => x.nidNumber == nidNumber)?.units as BuyerUnitsDto[];
+      this.controls.licenseProjectBuyerId.setValue(null);
+      this.controls.batchNumber.setValue(null);
+      this.installmentList = [];
+      this.selectedUnitBlockCode = "";
+      this.selectedUnitContractNumber = "";
     }
+
+
+    // this.subscriptions.push(
+    //   this._licenseProjectBuyerService.GetBuyersDetailByNIDNumber(nidNumber,this.licenseProjectId as string).subscribe(res => {
+    //   if(res) {
+    //     this.licenseProjectBuyerDetails=res as LicenseProjectBuyerDetailsDto[];
+    //     if(this.licenseProjectBuyerDetails && this.licenseProjectBuyerDetails.length > 0){
+    //       this.licenseProjectBuyerDetails.forEach(item => {
+    //       if(item.unitCode)
+    //         item.unitCodeFullName=item.unitCode+"-"+item.licenseProjectBuyerType.name;
+    //       else
+    //         item.unitCodeFullName=item.blockCode+"-"+item.licenseProjectBuyerType.name;
+    //       });
+    //     }
+    //   }
+    //   })
+    // )
+
+
   }
 
-  bankIdChange(){
-    if(this.controls.bankId.value == '00000000-0000-0000-0000-000000000000'){
+  bankIdChange() {
+    if (this.controls.bankId.value == '00000000-0000-0000-0000-000000000000') {
       this.showManualBankNameInsertion = true;
       this.controls.bankName.setValidators([Validators.required]);
       this.controls.bankName.updateValueAndValidity();
-    }else{
+    } else {
       this.showManualBankNameInsertion = false;
       this.controls.bankName.setValue(null);
       this.controls.bankName.clearValidators();
@@ -665,14 +684,18 @@ export class AddExchangeDocumentComponent {
     }
   }
 
-  licenseProjectBuyerIdChange(event: any){
+  licenseProjectBuyerIdChange(event: any) {
     debugger;
-    let licenseProjectBuyerUnitId= event.target.value;
-    if(licenseProjectBuyerUnitId){
+    let licenseProjectBuyerUnitId = event.target.value;
+    if (licenseProjectBuyerUnitId) {
       this.controls.licenseProjectBuyerId.setValue(licenseProjectBuyerUnitId);
       //  this.buyerRecord=this.licenseProjectBuyerDetails?.filter(x=> x.id==licenseProjectBuyerId)[0];
-      this.selectedUnitBlockCode = this.unitsList?.filter(x=> x.id==licenseProjectBuyerUnitId)[0].blockCode as string;
-      this.selectedUnitContractNumber = this.unitsList?.filter(x=> x.id==licenseProjectBuyerUnitId)[0].contractNumber as string;
+
+      const selectedUnit = this.unitsList?.find(x => x.id == licenseProjectBuyerUnitId);
+      this.selectedUnitBlockCode = selectedUnit?.blockCode as string;
+      this.selectedUnitContractNumber = selectedUnit?.contractNumber as string;
+      this.installmentList = selectedUnit?.installments ?? [];
+      this.controls.batchNumber.setValue(null);
     }
   }
 
@@ -703,15 +726,55 @@ export class AddExchangeDocumentComponent {
     this._popupService.dismissDialog()
   }
 
-  onMainItemChange(event: any): void {
-    const mainItemId = +event.target.value;
-    if(mainItemId === LicenseProjectExchangeDocumentMainItemEnum.MaintenanceCostCalculation){
-      this.showWorkDonePercentage = true;
-    this._projectBasicDataService.GetWorkDonePercentage(this.licenseProjectId as string).subscribe((res) => {
+  
+
+  private getExchangeDocumentTypes() {
+    debugger;
+    this._sysExchangeDocumentTypeService.GetTypesDropDown()
+    .subscribe((res) => {
+      debugger;
+      if(res.isDone){
+        this.exchangeDocumentTypes = res.data as any[];
+
+        debugger;
+        if (this.exchangeDocumentTypes.length > 0){
+          if(this.workDonePercentage === 0 || this.workDonePercentage === undefined){
+              this.licenseProjectExchangeDocumentForm.patchValue({
+              exchangeDocumentTypeId: this.exchangeDocumentTypes[0].id
+            });
+          }else if(this.workDonePercentage > 0 ){
+            this.licenseProjectExchangeDocumentForm.patchValue({
+              exchangeDocumentTypeId: this.exchangeDocumentTypes[1].id
+            });
+          }
+        } 
       
-        this.workDonePercentage = res;
+        
+      }
     });
   }
+
+  onAmountChange(){
+    debugger;
+    let amount = this.controls.amount.value || 0;
+    let availableAmount = this.licenseProjectAccounts.financingSubIBANAvailableAmount || 0;
+    if(amount > availableAmount){
+      this.remainingAmountAfterExchange = 'المبلغ المتاح غير كافي للصرف'
+    }else{
+      this.remainingAmountAfterExchange =  (availableAmount - amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+  
+  }
+
+  onMainItemChange(event: any): void {
+    const mainItemId = +event.target.value;
+    if (mainItemId === LicenseProjectExchangeDocumentMainItemEnum.MaintenanceCostCalculation) {
+      this.showWorkDonePercentage = true;
+      this._projectBasicDataService.GetWorkDonePercentage(this.licenseProjectId as string).subscribe((res) => {
+
+        this.workDonePercentage = res;
+      });
+    }
   }
 
   ngOnDestroy(): void {

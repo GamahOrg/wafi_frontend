@@ -31,15 +31,13 @@ export class FileUploaderComponent implements OnInit {
   progress = 0;
   isSuccessfulUpload: boolean = false;
   message = '';
+  isError = false;
   extensionErrorMessage = '';
   // fileInfos?: Observable<any>;
   selectedFilesName: string[] = [];
   constructor(private uploadService: FileManagementService) {}
   ngOnInit(): void {
-    console.log(this.data);
-    // this.fileInfos = this.uploadService.getFiles();
-    this.data.size = 30720;
-    if (!this.data.size) this.data.size = 30720;
+    if (!this.data.maxFileSizeMB && !this.data.size) this.data.maxFileSizeMB = 30;
     if (!this.data.allowedExtensionsText)
       this.data.allowedExtensionsText =
         'pdf, doc, docx, .xls, .xlsx, jpg, jpeg أو png';
@@ -56,14 +54,12 @@ export class FileUploaderComponent implements OnInit {
       ];
   }
   removeEvent(controlName: string, e: any): void {
-    // console.log("fileUploadRemoveEvents", controlName);
-    // console.log("fileUploadRemoveEvents", e);
+    
     this.fileRemoved.emit({ id: controlName, eventRes: e });
   }
 
   onUpload(controlName: string, e: any): void {
-    console.log('onUpload', controlName);
-    console.log('onUpload', e);
+   
     this.fileUploaded.emit({ id: controlName, eventRes: e });
   }
 
@@ -85,6 +81,7 @@ export class FileUploaderComponent implements OnInit {
   }
 
   upload(): void {
+    debugger;
     this.progress = 0;
     const maxSizeKB = this.data.maxFileSizeMB
       ? this.data.maxFileSizeMB * 1024
@@ -105,6 +102,7 @@ export class FileUploaderComponent implements OnInit {
             if ((element.size / 1024) > maxSizeKB) {
               const maxMB = this.data.maxFileSizeMB ?? (this.data.size / 1024);
 
+              this.isError = true;
               this.message =
                 `لا يمكن رفع الملف ${element.name} لأن حجمه أكبر من ${maxMB} ميجابايت`;
 
@@ -129,15 +127,15 @@ export class FileUploaderComponent implements OnInit {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round((100 * event.loaded) / event.total);
             } else if (event instanceof HttpResponse) {
+              this.isError = false;
               this.message = event.body.message;
               this.onUpload('', event.body);
-              console.log(event.body);
               this.isSuccessfulUpload = true;
             }
           },
           error: (err: any) => {
-            console.log(err);
             this.progress = 0;
+            this.isError = true;
             if (err.error && err.error.message) {
               this.message = err.error.message;
             } else {
@@ -156,6 +154,7 @@ export class FileUploaderComponent implements OnInit {
     this.isSuccessfulUpload = false;
     this.progress = 0;
     this.message = '';
+    this.isError = false;
     this.extensionErrorMessage = '';
     this.currentFile = undefined;
   }

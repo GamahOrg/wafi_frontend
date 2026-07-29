@@ -16,7 +16,7 @@
                 <tr *ngFor="let code of unit.licenseProjectSubUnitsListCodes">
                     <td>{{code.code}}</td>
                     <td>{{code.deliveryOn | date:'yyyy-MM-dd'}}</td>
-                    <td>{{code.price}}</td>
+                    <td>{{code.price | number:'1.2-2'}}</td>
                 </tr>
             </tbody>
         </table>

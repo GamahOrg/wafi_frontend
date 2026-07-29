@@ -24,7 +24,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   });
   showValidation:boolean=false;
   model: QualificationTypeDto = new QualificationTypeDto();
-  price: Number = 0;
+  price: number = 0;
   renewRequest: boolean = false;
   get controls() {
     return this.createRequstForm.controls;

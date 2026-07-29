@@ -19,9 +19,9 @@
       <!-- Header Actions -->
       <div class="header-actions">
         <span class="status-pill" [ngClass]="{
-          'status-approved': contractDetails.contractStatusId == 2,
-          'status-pending': contractDetails.contractStatusId == 1 || contractDetails.contractStatusId == 4,
-          'status-rejected': contractDetails.contractStatusId == 5 || contractDetails.contractStatusId == 3
+          'green': contractDetails.contractStatusId == contractStatusEnum.Cerified,
+          'orange': contractDetails.contractStatusId == contractStatusEnum.New || contractDetails.contractStatusId == contractStatusEnum.PendingCancellation,
+          'red': contractDetails.contractStatusId == contractStatusEnum.Cancelled || contractDetails.contractStatusId == contractStatusEnum.Refused
         }">
           {{ contractDetails.contractStatus }}
         </span>

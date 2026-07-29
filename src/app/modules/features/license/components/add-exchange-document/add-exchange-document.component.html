@@ -94,7 +94,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label for="" class="form-label"><span class="required-star">*</span> البند الرئيسي</label>
-            <select class="form-select" formControlName="mainItemId" (change)="onMainItemChange($event)">
+            <select class="form-select" formControlName="mainItemId" >
               <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
               <option *ngFor="let main of mainItems" [value]="main.id">
                 {{ main.name }}
@@ -105,7 +105,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="this.showWorkDonePercentage" class="col-12 col-lg-6 tab-data-section">
+        <div  class="col-12 col-lg-6 tab-data-section">
           <div class="row row-gap-4">
             <div class="col-xl-4">
               <label class="form-label"><span class="required-star">*</span>نسبة إنجاز المشروع</label>
@@ -118,6 +118,15 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <label class="form-label"><span class="required-star">*</span> نوع الوثيقة</label>
+        <mat-radio-group
+          formControlName="exchangeDocumentTypeId" >
+          
+            <mat-radio-button *ngFor="let type of exchangeDocumentTypes"  disabled [value]="type.id">{{type.name}}</mat-radio-button>
+         
+        </mat-radio-group>
         </div>
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
@@ -203,8 +212,7 @@
               </label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ ((licenseProjectAccounts.constructionCostsAvailableAmount) - (controls.amount.value || 0)) |
-                  number:'1.2-2' }}
+                  {{this.remainingAmountAfterExchange}}
                 </span>
               </div>
             </div>
@@ -247,8 +255,7 @@
                 الصرف</label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ (licenseProjectAccounts.administrativeAndMarketingAvailableAmount) - (controls.amount.value || 0) |
-                  number:'1.2-2'}}
+                  {{this.remainingAmountAfterExchange}}
                 </span>
               </div>
             </div>
@@ -287,8 +294,7 @@
                 الصرف</label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ ((licenseProjectAccounts.custodyAvailableAmount) - (controls.amount.value || 0)) | number:'1.2-2'
-                  }}
+                  {{this.remainingAmountAfterExchange}}
                 </span>
               </div>
             </div>
@@ -327,8 +333,7 @@
                 الصرف</label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ ((licenseProjectAccounts.incentivesSubIBANAvailableAmount) - (controls.amount.value || 0)) |
-                  number:'1.2-2' }}
+                  {{this.remainingAmountAfterExchange}}
                 </span>
               </div>
             </div>
@@ -367,8 +372,7 @@
                 الصرف</label>
               <div class="form-control-plaintext">
                 <span>
-                  {{ ((licenseProjectAccounts.financingSubIBANAvailableAmount) - (controls.amount.value || 0)) |
-                  number:'1.2-2' }}
+                  {{this.remainingAmountAfterExchange}}
                 </span>
               </div>
             </div>
@@ -691,7 +695,7 @@
         <div class="col-12 col-lg-6">
           <div class="form-group mb-4">
             <label class="form-label"><span class="required-star">*</span> المبلغ </label>
-            <input type="number" id="control-amount" class="form-control" formControlName="amount" />
+            <input (input)="onAmountChange()" type="text" id="control-amount" class="form-control" appNumberFormat formControlName="amount" />
             <mat-error *ngIf="controls.amount?.hasError('required') && showValidation">حقل مطلوب</mat-error>
           </div>
         </div>
@@ -844,6 +848,7 @@
             </div>
           </div>
 
+
           <div class="col-12 col-lg-6"
             *ngIf="controls.liceneProjectBeneficiaryTypeId.value == liceneProjectBeneficiaryTypeEnum.Buyer">
             <div class="form-group mb-4">
@@ -864,15 +869,30 @@
                 [placeholder]="this.selectedUnitContractNumber" readonly />
             </div>
           </div>
-          <div class="col-12 col-lg-6"
-            *ngIf="controls.liceneProjectBeneficiaryTypeId.value == liceneProjectBeneficiaryTypeEnum.Buyer">
-            <div class="form-group mb-4">
-              <label class="form-label"><span class="required-star">*</span>رقم الدفعة</label>
-              <input type="text" id="control-batchNumber" class="form-control" formControlName="batchNumber" />
-              <mat-error *ngIf="controls.liceneProjectBeneficiaryTypeId.value == liceneProjectBeneficiaryTypeEnum.Buyer &&
-            controls.batchNumber.value == null && showValidation">حقل مطلوب</mat-error>
-            </div>
-          </div>
+
+
+     <div class="col-12 col-lg-6"
+  *ngIf="controls.liceneProjectBeneficiaryTypeId.value == liceneProjectBeneficiaryTypeEnum.Buyer">
+  <div class="form-group mb-4">
+    <label class="form-label"><span class="required-star">*</span>رقم الدفعة</label>
+
+    <!-- dropdown when the unit has installments -->
+    <select *ngIf="installmentList && installmentList.length > 0"
+      class="form-select" formControlName="batchNumber">
+      <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+      <option *ngFor="let inst of installmentList" [value]="inst.installmentNumber">
+        {{ inst.description }}
+      </option>
+    </select>
+
+    <!-- free input when no installments -->
+    <input *ngIf="!installmentList || installmentList.length == 0"
+      type="text" id="control-batchNumber" class="form-control" formControlName="batchNumber" />
+
+    <mat-error *ngIf="controls.liceneProjectBeneficiaryTypeId.value == liceneProjectBeneficiaryTypeEnum.Buyer
+      && controls.batchNumber.value == null && showValidation">حقل مطلوب</mat-error>
+  </div>
+</div>
 
         </div>
       </div>
@@ -906,16 +926,6 @@
           </mat-error>
         </div>
       </div>-->
-
-
-
-
-
-
-
-
-
-
 
 
       </div>

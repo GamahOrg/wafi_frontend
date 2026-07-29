@@ -215,8 +215,8 @@
             <th scope="col">رقم السجل التجاري</th>
             <th scope="col">نوع الطلب</th>
             <!-- <th scope="col">مدة الترخيص</th> -->
-            <th scope="col">حالة الطلب</th>
-            <th scope="col">العمليات</th>
+            <th scope="col" class="w-0">حالة الطلب</th>
+            <th scope="col" class="w-0">العمليات</th>
           </tr>
         </thead>
         <tbody>
@@ -243,11 +243,11 @@
               </div>
             </td>
 
-            <td (click)="navigateToDetails(request)">
+            <td class="w-20" (click)="navigateToDetails(request)">
               {{ request.facility.facilityName }}
             </td>
 
-            <td style="width: 150px; white-space: normal; word-wrap: break-word;" (click)="navigateToDetails(request)">
+            <td class="w-10" (click)="navigateToDetails(request)">
               {{ request.licenseProject?.name??'' }}
             </td>
 
@@ -259,7 +259,7 @@
               {{request.facility.commercialRegisterNumber}}
             </td>
 
-            <td class="text-nowrap" (click)="navigateToDetails(request)">
+            <td class="w-10" (click)="navigateToDetails(request)">
               {{request.isRenewal? "تجديد ":""}} {{ request.licenseRequestType.name }}
             </td>
 
@@ -271,7 +271,7 @@
               </div>
             </td>
 
-            <td>
+            <td class="text-nowrap"s>
               <div class="d-flex align-items-center justify-content-end">
                 <button mat-icon-button [matMenuTriggerFor]="tableActionsMenu">
                   <mat-icon>more_vert</mat-icon>

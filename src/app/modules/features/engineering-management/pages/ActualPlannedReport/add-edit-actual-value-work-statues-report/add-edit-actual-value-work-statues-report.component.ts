@@ -27,6 +27,7 @@ import { SharedLicenseProjectService } from '../../../services/shared-license-pr
   styleUrls: ['./add-edit-actual-value-work-statues-report.component.scss'],
 })
 export class AddEditActualValueWorkStatuesReportComponent {
+  today = new Date();
   baseUrl = `${environment.baseURL}/`;
   subscriptions: Subscription[] = [];
   actualValueReport?: ActualValueReportPagingListDto;

@@ -1,12 +1,12 @@
 <div class="layout d-flex" [dir]="bodyDirection">
   <app-pilot-launch-hint></app-pilot-launch-hint>
 
-  <app-sidebar></app-sidebar>
+  <app-sidebar #sidebar (sidebarToggled)="onSidebarToggle()"></app-sidebar>
 
   <main class="d-flex flex-column justify-content-between flex-grow-1">
     <app-header></app-header>
 
-    <section class="content-area h-100 p-4">
+    <section class="content-area h-100 p-4" [style.width]="contentAreaWidth">
       <!-- <div class="breadcrumb-wrapper">
         <app-breadcrumb></app-breadcrumb> -->
       <!-- </div> -->

@@ -33,7 +33,7 @@
     
       <div class="col-12 col-lg-6">
           <div class="key">تكلفة أعمال البنية التحتية (ر.س.) </div>
-          <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.infrastructureCost}}</div>
+          <div class="value">{{engineeringSupervisionPlannedReportActualInfrastructureDto?.infrastructureCost | number:'1.2-2'}}</div>
       </div>
       <div class="col-12 col-lg-6">
         <div class="key">تاريخ بداية الأعمال التعاقدي </div>
@@ -239,7 +239,7 @@
                             </span>
                         </td>
                         <td >
-                            <span class="text-dark">{{actual.itemCost}}
+                            <span class="text-dark">{{actual.itemCost | number:'1.2-2'}}
                             </span>
                         </td>
                         <td >

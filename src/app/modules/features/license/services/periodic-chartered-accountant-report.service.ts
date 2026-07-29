@@ -6,7 +6,7 @@ import { CoreResponseDTO } from 'src/app/core/models/core.model';
 import { PeriodicCharteredAccountantReportPagingListDto, PeriodicCharteredAccountantReportQuarterTypeDto, PeriodicCharteredAccountantReportTypeDto } from '../models/periodic-chartered-accountant-report-paging-list-dto';
 import { Pagination } from 'src/app/shared/models/pagination.model';
 import { PeriodicCharteredAccountantReportDetailsDto, SysDepositTypeDto } from '../models/periodic-chartered-accountant-report-details-dto';
-import { FilterDto, PeriodicCharteredAccountantReportCreateUpdateDto, PeriodicCharteredAccountantReportDto } from '../dataModels/periodic-chartered-accountant-report-dto';
+import { FilterDto, PeriodicCharteredAccountantReportCreateUpdateDto, PeriodicCharteredAccountantReportDto, PeriodicCharteredAccountantReportExchangeDocumentDto } from '../dataModels/periodic-chartered-accountant-report-dto';
 
 @Injectable()
 export class PeriodicCharteredAccountantReportService {
@@ -36,6 +36,50 @@ export class PeriodicCharteredAccountantReportService {
           return res.data as Pagination<PeriodicCharteredAccountantReportPagingListDto[]>
         })
       )
+  }
+
+  GetReportExchangeDocumentsPaged(
+    reportId: string,
+    pageIndex: number,
+    pageSize: number
+  ): Observable<Pagination<PeriodicCharteredAccountantReportExchangeDocumentDto[]>> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('reportId', reportId);
+    queryParams = queryParams.append('pageIndex', pageIndex);
+    queryParams = queryParams.append('pageSize', pageSize);
+    return this._httpClient
+      .get<CoreResponseDTO<Pagination<PeriodicCharteredAccountantReportExchangeDocumentDto[]>>>(
+        `${Configuration.APIs.PeriodCharteredAccountantReport.GetReportExchangeDocumentsPaged}`,
+        { params: queryParams }
+      )
+      .pipe(
+        map(
+          (res) =>
+            res.data as Pagination<PeriodicCharteredAccountantReportExchangeDocumentDto[]>
+        )
+      );
+  }
+
+  GetGeneratedExchangeDocumentsPaged(
+    filter: FilterDto,
+    pageIndex: number,
+    pageSize: number
+  ): Observable<Pagination<PeriodicCharteredAccountantReportExchangeDocumentDto[]>> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('pageIndex', pageIndex);
+    queryParams = queryParams.append('pageSize', pageSize);
+    return this._httpClient
+      .post<CoreResponseDTO<Pagination<PeriodicCharteredAccountantReportExchangeDocumentDto[]>>>(
+        `${Configuration.APIs.PeriodCharteredAccountantReport.GetGeneratedExchangeDocumentsPaged}`,
+        filter,
+        { params: queryParams }
+      )
+      .pipe(
+        map(
+          (res) =>
+            res.data as Pagination<PeriodicCharteredAccountantReportExchangeDocumentDto[]>
+        )
+      );
   }
 
   GetPeriodicCharteredAccountantReportDetail(id: string): Observable<PeriodicCharteredAccountantReportDetailsDto> {

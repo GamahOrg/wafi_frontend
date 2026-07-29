@@ -101,15 +101,15 @@
                         <td>{{exp.emergencyAllowance}}</td>
                         <td>{{exp.zakatFees}}</td>
                         <td>{{exp.taxFees}}</td> -->
-                       <td>{{exp.netRevenue}}</td>
-                        <td>{{exp.totalConstructionCostsAndConstruction}}</td>
-                        <td>{{exp.totalConstructionExpensesAndConstruction}}</td>
-                        <td>{{exp.totalSupervisionExpenses}}</td>
-                        <td>{{exp.totalAdministrativeExpensesAndGenerality}}</td> 
-                        <td>{{exp.totalProfit}}</td>
-                        <td>{{exp.totalExpensesAndBurdensOther}}</td>
-                        <td>{{exp.netProfitLossBeforeCalculatingZakatTax}}</td>
-                        <td>{{exp.netProfitLossAfterCalculatingZakatTax}}</td>
+                       <td>{{exp.netRevenue | number:'1.2-2'}}</td>
+                        <td>{{exp.totalConstructionCostsAndConstruction | number:'1.2-2'}}</td>
+                        <td>{{exp.totalConstructionExpensesAndConstruction | number:'1.2-2'}}</td>
+                        <td>{{exp.totalSupervisionExpenses | number:'1.2-2'}}</td>
+                        <td>{{exp.totalAdministrativeExpensesAndGenerality | number:'1.2-2'}}</td>
+                        <td>{{exp.totalProfit | number:'1.2-2'}}</td>
+                        <td>{{exp.totalExpensesAndBurdensOther | number:'1.2-2'}}</td>
+                        <td>{{exp.netProfitLossBeforeCalculatingZakatTax | number:'1.2-2'}}</td>
+                        <td>{{exp.netProfitLossAfterCalculatingZakatTax | number:'1.2-2'}}</td>
     
                         <td>
                             <div class="d-flex align-items-center justify-content-end column-gap-2">

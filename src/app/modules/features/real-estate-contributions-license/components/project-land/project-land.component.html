@@ -22,10 +22,11 @@
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.landValue }}</label>
             <input
-              type="number"
+              type="text"
               id="control-landValue"
               class="form-control"
               formControlName="landValue"
+              appNumberFormat
             />
             <mat-error
               *ngIf="controls.landValue?.hasError('required') && showValidation"
@@ -41,10 +42,11 @@
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.landTotalSpace }}</label>
             <input
-              type="number"
+              type="text"
               id="control-landTotalSpace"
               class="form-control"
               formControlName="landTotalSpace"
+              appNumberFormat
             />
             <mat-error
               *ngIf="
@@ -64,10 +66,11 @@
               localization.buildingFlatArea
             }}</label>
             <input
-              type="number"
+              type="text"
               id="control-buildingFlatArea"
               class="form-control"
               formControlName="buildingFlatArea"
+              appNumberFormat
             />
             <mat-error
               *ngIf="
@@ -88,10 +91,11 @@
           <div class="form-group mb-4">
             <label class="form-label">{{ localization.sellingSpace }}</label>
             <input
-              type="number"
+              type="text"
               id="control-sellingSpace"
               class="form-control"
               formControlName="sellingSpace"
+              appNumberFormat
             />
             <mat-error
               *ngIf="

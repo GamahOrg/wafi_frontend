@@ -35,7 +35,7 @@ export class CreateLincenseComponent {
   });
   showValidation: boolean = false;
   licenseRequestType: SysLicenseRequestTypeDto = new SysLicenseRequestTypeDto();
-  price: Number = 0;
+  price: number = 0;
   periodTypeId: string = '';
   userData: customerResponse | null = null;
   typeCode: string = '';

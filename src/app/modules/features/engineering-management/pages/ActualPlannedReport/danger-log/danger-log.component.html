@@ -1,94 +1,87 @@
+<div class="details-page">
+  <div class="page-header d-flex justify-content-between align-items-center gap-3">
+    <div class="page-title">
+      <h6 class="title">سجل المخاطر</h6>
+    </div>
+  </div>
 
+  <div class="page-section" *ngIf="licenseProjectRiskCounts">
+    <h3 class="title">{{'معلومات سجل المخاطر'}}</h3>
 
-<h5 class="title fw-normal text-center my-4" *ngIf="licenseProjectRiskCounts">{{'معلومات سجل المخاطر '}}</h5>
-
-<table class="table" *ngIf="licenseProjectRiskCounts">
-    <thead>
-        <tr class="text-center">
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
             <th scope="col"> عدد المخاطر المغلقة </th>
             <th scope="col"> عدد المخاطر المتوقعة</th>
             <th scope="col">عدد المخاطر المتحولة لمشكلة</th>
-            <th scope="col">عدد المخاطر  الكلي</th>           
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="text-center">
+            <th scope="col">عدد المخاطر الكلي</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
             <td>{{licenseProjectRiskCounts.closedRisksNumber}}</td>
             <td>{{licenseProjectRiskCounts.expectedRisksNumber}}</td>
-            <td>{{licenseProjectRiskCounts.turningIntoProblemRisksNumber}}</td>        
+            <td>{{licenseProjectRiskCounts.turningIntoProblemRisksNumber}}</td>
             <td>{{licenseProjectRiskCounts.turningIntoProblemRisksNumber + licenseProjectRiskCounts.expectedRisksNumber + licenseProjectRiskCounts.closedRisksNumber}}</td>
-        </tr>
-    </tbody>
-</table>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<button type="button" class="btn btn-primary my-4"*ngIf="
-actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
- actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
- || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"  (click)="openEditDangerLogDialog('')">إضافة خطر </button>
+  <div class="page-section">
+    <div class="d-flex align-items-center gap-2">
+      <h3 class="title">{{'سجل المخاطر'}}</h3>
 
-<div class="row row-gap-4">
+      <button type="button" class="btn btn-primary" (click)="openEditDangerLogDialog('')" *ngIf="actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback">إضافة خطر </button>
+    </div>
+
     <div class="table-responsive mb-3" *ngIf="reqList.totalCount > 0">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">رقم الخطر</th>
-                    <th scope="col"> النوع</th>
-                    <th scope="col">الأستمرارية</th>
-                    <th scope="col">التأثير</th>
-                    <th scope="col">الاحتمال</th>
-                    <th scope="col">الأولوية</th>
-                    <th scope="col">الحالة</th>
-                    <th scope="col">العمليات</th>
-                   
-                </tr>
-            </thead>
-            <tbody *ngFor="let comdata of reqList.results;let i=index;">
-                <tr>
-                    <td>
-                        <div class="d-flex align-items-center column-gap-2">
-                            {{comdata.riskNumber}}
-                        </div>
-                    </td>
-                    <td>
-                        <span class="text-dark">{{comdata.riskType.name}}
-                        </span>
-                    </td>
-                    <td>
-                        <span class="text-dark">{{comdata.continuity.name}}</span>
-                    </td>
-                    <td>
-                        <span class="text-dark">{{comdata.effect}}</span>
-                    </td>
-                    <td>
-                        <span class="text-dark">{{comdata.probability}}</span>
-                    </td>
-                    <td [ngClass]="comdata.priorityClassValue">
-                        <span class="text-dark">{{comdata.probability * comdata.effect}}</span>
-                    </td>
-                    <td [ngClass]="comdata.statusClassValue">
-                        <span class="text-dark">{{comdata.riskStatus.name}}</span>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-outline-primary mx-4" *ngIf="
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">رقم الخطر</th>
+            <th scope="col">النوع</th>
+            <th scope="col">الأستمرارية</th>
+            <th scope="col">التأثير</th>
+            <th scope="col">الاحتمال</th>
+            <th scope="col">الأولوية</th>
+            <th scope="col">الحالة</th>
+            <th scope="col" class="w-0">العمليات</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let comdata of reqList.results;let i=index;">
+          <tr>
+            <td>{{comdata.riskNumber}}</td>
+            <td>>{{comdata.riskType.name}}</td>
+            <td>>{{comdata.continuity.name}}</td>
+            <td>>{{comdata.effect}}</td>
+            <td>>{{comdata.probability}}</td>
+            <td [ngClass]="comdata.priorityClassValue">>{{comdata.probability * comdata.effect}}</td>
+            <td [ngClass]="comdata.statusClassValue">>{{comdata.riskStatus.name}}</td>
+            <td class="text-nowrap">
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-outline-primary" *ngIf="
                         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
                          actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
                          || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="openEditDangerLogDialog(comdata.id)">تعديل </button>
-                        <button type="button" class="btn btn-outline-primary" (click)="openShowDangerLogDialog(comdata.id)">عرض </button>
-                       
-                     </td>
-                </tr>
-            </tbody>
-        </table>
+                <button type="button" class="btn btn-outline-primary" (click)="openShowDangerLogDialog(comdata.id)">عرض </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="mt-auto" *ngIf="reqList.totalCount > 0">
-        <app-pagination></app-pagination>
+      <app-pagination></app-pagination>
     </div>
+    
     <ng-container *ngIf="reqList.totalCount === 0">
-        <div class="mt-4">
-            <app-no-data [showCompleteBtn]="false"></app-no-data>
-        </div>
+      <div class="mt-4">
+        <app-no-data [showCompleteBtn]="false" [showText]="false"></app-no-data>
+      </div>
     </ng-container>
+  </div>
 </div>
-
-

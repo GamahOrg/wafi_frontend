@@ -19,6 +19,7 @@ import { ButtonType } from 'src/app/shared/models/enums/button-type.model';
 export class ActualValueReportPagingListComponent {
   subscriptions: Subscription[] = [];
   isRefreshReport: boolean = false;
+  showActionButtons: boolean = false;
   licenseProjectId: string | null = '00000000-0000-0000-0000-000000000000';
   newPageNo: number = 1;
   pagintationData: pagination = {
@@ -29,6 +30,7 @@ export class ActualValueReportPagingListComponent {
   };
 
   reqList: Pagination<ActualValueReportPagingListDto[]> = {} as Pagination<ActualValueReportPagingListDto[]>;
+
   constructor(
     private _actualValueReportService: ActualValueReportService,
     private _sharedLicenseProjectService: SharedLicenseProjectService,
@@ -72,6 +74,7 @@ export class ActualValueReportPagingListComponent {
   private getSupervisionReportStatusByLicenseProjectId() {
     this.subscriptions.push(
       this._actualValueReportService.GetSupervisionReportStatusByLicenseProjectId(this.licenseProjectId as string).subscribe((res) => {
+        this.showActionButtons = res?.data?.id == LicenseProjectEngineeringRequestStatusEnum.Certified;
         if (res && (res.data?.id != LicenseProjectEngineeringRequestStatusEnum.Draft || LicenseProjectEngineeringRequestStatusEnum.UnderStudy))
           this.isRefreshReport = true;
       })
@@ -136,7 +139,7 @@ export class ActualValueReportPagingListComponent {
     } as PopupData;
     this._popupService.updatePopupData(Data);
   }
-  
+
   openExportReportDialog(): void {
     let Data = {
       title: "تصدير التقرير",

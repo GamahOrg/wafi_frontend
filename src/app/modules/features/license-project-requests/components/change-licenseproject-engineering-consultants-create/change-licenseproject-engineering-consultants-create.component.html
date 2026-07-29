@@ -240,7 +240,7 @@
           <input
             id="paymentDeadline"
             name="paymentDeadline"
-            type="text"
+            type="number"
             class="form-control"
             formControlName="paymentDeadline"
             [attr.readonly]="readOnly ? '' : null"
@@ -427,7 +427,8 @@
                 <div>
                   <div class="input-group">
                     <input
-                      type="number"
+                      type="text"
+                      appNumberFormat
                       class="form-control"
                       [placeholder]="'السعر للوحدة'"
                       [(ngModel)]="item.unitPrice"

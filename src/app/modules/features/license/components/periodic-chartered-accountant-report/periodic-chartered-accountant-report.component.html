@@ -1,9 +1,13 @@
-<button type="button" class="btn btn-primary"  (click)="addReport()" *ngIf="!showAddComponant">إضافة</button>
+<div class="page" *ngIf="!showAddComponant">
+  <div class="page-header mb-3" *ngIf="!isViewingDetails">
+    <div class="page-title justify-content-between">
+      <h6 class="title">قائمة التقارير</h6>
+      <button type="button" class="btn btn-primary" (click)="addReport()">إضافة تقرير</button>
+    </div>
+  </div>
+  <app-periodic-chartered-accountant-report-list (viewingDetails)="isViewingDetails = $event"></app-periodic-chartered-accountant-report-list>
+</div>
 
-
-<app-periodic-chartered-accountant-report-list *ngIf="!showAddComponant">
-
-</app-periodic-chartered-accountant-report-list>
- <app-add-periodic-chartered-accountant-report *ngIf="showAddComponant"  (dataEmitter)="receiveData($event)">
-
-</app-add-periodic-chartered-accountant-report> 
+<ng-container *ngIf="showAddComponant">
+  <app-add-periodic-chartered-accountant-report (dataEmitter)="receiveData($event)"></app-add-periodic-chartered-accountant-report>
+</ng-container>

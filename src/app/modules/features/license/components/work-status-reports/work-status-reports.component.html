@@ -54,7 +54,7 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
 </div>
 <div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
   <div class="key">التكلفه الانشائيه</div>
-  <div class="value">{{masterLicenseProjectEngineeringSupervisionPlannedReport.expectedConstructionCost}}</div>
+  <div class="value">{{masterLicenseProjectEngineeringSupervisionPlannedReport.expectedConstructionCost | number:'1.2-2'}}</div>
 </div>
 <div class="col-12 col-lg-6" *ngIf="masterLicenseProjectEngineeringSupervisionPlannedReport">
   <div class="key">تاريخ بداية الأعمال التعاقدي </div>
@@ -206,14 +206,14 @@ masterLicenseProjectEngineeringSupervisionPlannedReport.licenseProjectEngineerin
               <td
               *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailDtoList
               let i=index;">
-              {{detail.projectMonthlyPlannedMonthCost}}</td>
+              {{detail.projectMonthlyPlannedMonthCost | number:'1.2-2'}}</td>
           </tr>
           <tr>
           <th>التكلفة الانشائية التراكميه:</th>
               <td
               *ngFor="let detail of licenseProjectEngineeringSupervisionPlannedReportDetailDtoList
               let i=index;">
-              {{detail.expectedConstructionCostDuringMonth}}</td>
+              {{detail.expectedConstructionCostDuringMonth | number:'1.2-2'}}</td>
           </tr>
       </tbody>
   </table> 

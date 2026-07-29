@@ -244,7 +244,7 @@
                     </td>
                     <td>
                         <div class="d-flex align-items-center column-gap-2">
-                            {{weight.weightCost}}
+                            {{weight.weightCost | number:'1.2-2'}}
                         </div>
                     </td>
                     <td>
@@ -303,7 +303,7 @@
                         <td>{{request.subItem.name}}</td>
                         <td>{{request.documnetNumber}}</td>
                         <td>{{request.exchangeDate | date:'dd-MM-yyyy'}}</td>
-                        <td>{{request.amount}}</td>
+                        <td>{{request.amount | number:'1.2-2'}}</td>
                         <td>{{request.approvalDate | date:'dd-MM-yyyy'}}</td>
                         <td>{{request.accountNumber}}</td>
                         <td></td>
@@ -345,7 +345,7 @@
                 <tbody *ngFor="let item of monthlyEngineeringReportExternalExpensesList?.results">
                     <tr *ngIf="item">
                         <td>{{item.expenseDate | date:'dd-MM-yyyy'}}</td>
-                        <td>{{item.amount}}</td>
+                        <td>{{item.amount | number:'1.2-2'}}</td>
                         <td>{{item.description}}</td>
                         <td>
                             <div *ngFor="let attachment of item.licenseProjectEngineeringSupervisionPlannedReportDetailExternalExpenseAttachments">

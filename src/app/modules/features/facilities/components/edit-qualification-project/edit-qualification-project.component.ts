@@ -165,7 +165,7 @@ export class EditQualificationProjectComponent implements OnInit, OnDestroy {
       projectValue: [this.projectDto?.projectValue, [Validators.required]],
       startDate: [this.parseDate(this.projectDto?.startDate?.toString()), [Validators.required]],
       projectDuration: [this.projectDto?.projectDuration, [Validators.required]],
-     achievementRate: [this.projectDto?.achievementRate, [Validators.required]],
+     achievementRate: [this.projectDto?.achievementRate, [Validators.required, Validators.max(100)]],
       //marketingStatus: [this.projectDto?.marketingStatus, [Validators.required]],
      // implementationMethodology: [this.projectDto?.implementationMethodology, [Validators.required]],
     })

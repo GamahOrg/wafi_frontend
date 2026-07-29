@@ -10,9 +10,9 @@ export interface MasterLicenseProjectEngineeringSupervisionPlannedReportDto {
   projectCode: string;
   startOn: Date;
   endOn: Date;
-  buildingFlatArea: Number;
-  landTotalSpace: Number;
-  landValue: Number;
+  buildingFlatArea: number;
+  landTotalSpace: number;
+  landValue: number;
   //التكلفة الانشائية المتوقعة (ريال سعودي)
   expectedConstructionCost: number;
   //المقاول
@@ -27,11 +27,11 @@ export interface MasterLicenseProjectEngineeringSupervisionPlannedReportDto {
   contractualStartDate: Date;
   //تاريخ نهاية الأعمال التعاقدي
   contractualFinishDate: Date;
-  monthsCount: Number;
-  zonesCount: Number;
-  uniteCount: Number;
-  blockCount: Number;
-  buildingsCount: Number;
+  monthsCount: number;
+  zonesCount: number;
+  uniteCount: number;
+  blockCount: number;
+  buildingsCount: number;
   facility: FacilityShortDto;
   //   licenseProjectEngineeringSupervisionPlannedReportDetails:LicenseProjectEngineeringSupervisionPlannedReportDetailDto[];
   licenseProjectEngineeringSupervisionPlannedReportAttachments: LicenseProjectEngineeringSupervisionPlannedReportAttachmentCreateUpdateDto[];
@@ -76,13 +76,13 @@ export interface LicenseProjectEngineeringSupervisionPlannedReportDetailDto {
   monthDate: Date;
   monthName: string;
   //نسب الإنجاز المخططة الشهرية للمشروع
-  projectMonthlyPlannedCompletionRate: Number;
+  projectMonthlyPlannedCompletionRate: number;
   //إجمالي عدد العمالة المخطط للشهر
-  monthlyTotalPlannedEmployees: Number;
+  monthlyTotalPlannedEmployees: number;
   //نسبه الانجاز المخططه التراكميه
-  cumulativeplannedcompletionpercentage: Number;
+  cumulativeplannedcompletionpercentage: number;
   // نسبة الإنجاز المخططة الشهريةالخاصة بالبنيه التحتيه
-  infrastructureMonthlyPlannedCompletionRate: Number;
+  infrastructureMonthlyPlannedCompletionRate: number;
   //التكلفة الانشائية المتوقعة خلال الشهر
   projectMonthlyPlannedMonthCost: number;
   //اجمال التكلفة الانشائية المتوقعة خلال الشهر

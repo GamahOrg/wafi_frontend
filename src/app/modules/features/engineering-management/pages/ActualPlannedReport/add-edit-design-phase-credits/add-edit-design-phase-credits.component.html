@@ -45,11 +45,10 @@
                         <div class="form-group mb-4">
                             <label class="form-label">تاريخ أول تقديم</label>
                             <div class="input-group">
-                                <input 
-                                type="date" id="control-firstSubmissionDate"
+                                <input bsDatepicker
+                                type="text" id="control-firstSubmissionDate"
                                        class="form-control"
-                                       formControlName="firstSubmissionDate"
-                                       value="{{ controls.firstSubmissionDate.value | date:'yyyy-MM-dd' }}">
+                                       formControlName="firstSubmissionDate">
                                 <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                             </div>
                             <mat-error *ngIf="controls.firstSubmissionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -60,11 +59,10 @@
                         <div class="form-group mb-4">
                             <label class="form-label">تاريخ اخر تقديم</label>
                             <div class="input-group">
-                                <input 
-                                type="date" id="control-lastSubmissionDate"
+                                <input bsDatepicker
+                                type="text" id="control-lastSubmissionDate"
                                        class="form-control"
-                                       formControlName="lastSubmissionDate"
-                                       value="{{ controls.lastSubmissionDate.value | date:'yyyy-MM-dd' }}">
+                                       formControlName="lastSubmissionDate">
                                 <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                             </div>
                             <mat-error *ngIf="controls.lastSubmissionDate?.hasError('required') && showValidation">حقل مطلوب</mat-error>
@@ -75,11 +73,10 @@
                         <div class="form-group mb-4">
                             <label class="form-label">تاريخ الاعتماد النهائى</label>
                             <div class="input-group">
-                                <input 
-                                type="date" id="control-finalApprovalDate"
+                                <input bsDatepicker
+                                type="text" id="control-finalApprovalDate"
                                        class="form-control"
-                                       formControlName="finalApprovalDate"
-                                       value="{{ controls.finalApprovalDate.value | date:'yyyy-MM-dd' }}">
+                                       formControlName="finalApprovalDate">
                                 <span class="input-group-text"><i class="hgi hgi-stroke hgi-calendar-03"></i></span>
                             </div>
                             <mat-error *ngIf="(controls.accreditationStatusId.value==accreditationStatus.Released || controls.accreditationStatusId.value==accreditationStatus.Certified)&& !controls.finalApprovalDate.value  && showValidation">حقل مطلوب</mat-error>

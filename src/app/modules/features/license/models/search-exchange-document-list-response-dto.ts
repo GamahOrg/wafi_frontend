@@ -4,6 +4,7 @@ import {
   LicenseProjectExchangeDocumentStatusEnum,
   LicenseProjectExchangeDocumentSubItemEnum,
 } from '../dataModels/license-project-exchange-document-paging-dto';
+import { LicenseProjectExchangeDocumentRejectionBy } from './exchange-documents-details-response';
 
 export interface SearchExchangeDocumentListResponseDto {
   id: string;
@@ -18,7 +19,9 @@ export interface SearchExchangeDocumentListResponseDto {
   subItem: string | null;
   statusId: LicenseProjectExchangeDocumentStatusEnum | null;
   status: string | null;
+  exchangeDate: Date | null;
   customerType: CustomerTypeEnum | null;
+  licenseProjectExchangeDocumentRejectionBy: LicenseProjectExchangeDocumentRejectionBy | null;
 }
 
 export enum CustomerTypeEnum {

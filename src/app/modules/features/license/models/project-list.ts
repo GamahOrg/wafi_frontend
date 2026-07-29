@@ -1,6 +1,7 @@
 export interface ProjectListDto {
   id: string;
   name: string;
+  developerName: string;
   startDate: Date;
   endDate: Date;
   licenseProjectId: string;

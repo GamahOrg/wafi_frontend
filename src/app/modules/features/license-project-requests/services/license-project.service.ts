@@ -34,6 +34,12 @@ export class LicenseProjectService {
       );
   }
 
-  
+  UpdateEscrowAccount(obj: EscrowAccountDto): Observable<CoreResponseDTO<any>> {
+      return this._httpClient.put<CoreResponseDTO<any>>(Configuration.APIs.LicenseProject.UpdateEscrowAccount,obj).pipe(
+          map((res: CoreResponseDTO<any>) => {
+            return res;
+          })
+        )
+   }
 
 }

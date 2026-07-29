@@ -4,7 +4,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label for="" class="form-label">رقم الهوية <span class="required-star">*</span></label>
-          <input type="text" class="form-control" formControlName="identityNumber" id="control-identityNumber" maxlength="10" minlength="10" />
+          <input type="text" inputmode="numeric" class="form-control" formControlName="identityNumber" id="control-identityNumber" maxlength="10" minlength="10" (input)="onIdentityNumberInput($event)" />
           <div class="text-danger" *ngIf="controls.identityNumber.errors?.['required'] && showValidation">حقل مطلوب</div>
           <div class="text-danger" *ngIf="controls.identityNumber.errors?.['pattern'] && showValidation">يجب أن يكون رقم الهوية 10 أرقام</div>
         </div>

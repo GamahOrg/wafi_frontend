@@ -243,7 +243,7 @@
             [attr.readonly]="showNotesPage ? '' : null"
             id="paymentDeadline"
             name="paymentDeadline"
-            type="text"
+            type="number"
             class="form-control"
             formControlName="paymentDeadline"
           />
@@ -425,7 +425,8 @@
                   <div class="input-group">
                     <input
                       [attr.readonly]="showNotesPage ? '' : null"
-                      type="number"
+                      type="text"
+                      appNumberFormat
                       class="form-control"
                       placeholder="السعر للوحدة"
                       [(ngModel)]="item.unitPrice"

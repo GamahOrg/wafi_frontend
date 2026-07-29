@@ -301,7 +301,7 @@
           <div class="key-value horiz">
             <div class="form-group">
               <label class="form-label">التكاليف الإجمالية للمشروع (بدون ثمن الأرض)</label>
-              <input type="number" class="form-control" min="0" formControlName="totalProjectCosts" [attr.readonly]="isRequirementsCompleted || null" />
+              <input type="text" appNumberFormat class="form-control" min="0" formControlName="totalProjectCosts" [attr.readonly]="isRequirementsCompleted || null" />
               <div class="invalid-feedback d-block" *ngIf="accountantForm.get('totalProjectCosts')?.touched && accountantForm.get('totalProjectCosts')?.hasError('required')">
                 هذا الحقل مطلوب
               </div>
@@ -312,7 +312,7 @@
           <div class="key-value horiz">
             <div class="form-group">
               <label class="form-label">رصيد حساب التكاليف الإنشائية</label>
-              <input type="number" class="form-control readonly-input" formControlName="constructionCostsAvailableAmount" />
+              <input type="text" appNumberFormat class="form-control readonly-input" formControlName="constructionCostsAvailableAmount" />
             </div>
           </div>
         </div>

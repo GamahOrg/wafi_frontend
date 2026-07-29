@@ -36,9 +36,9 @@
                         <td>{{financial.returnOnProjectAssets}}</td>
                         <td>{{financial.averageNetProfitLoss}}</td>
                         <td>{{financial.assetsYearToYear}}</td> -->
-                        <td>{{financial.netRevenue}}</td>
-                        <td>{{financial.netIncreaseDecreaseInCashAndCashEquivalentsDuringTheFiscalYear}}</td>
-                        <td>{{financial.netPresentValue}}</td>
+                        <td>{{financial.netRevenue | number:'1.2-2'}}</td>
+                        <td>{{financial.netIncreaseDecreaseInCashAndCashEquivalentsDuringTheFiscalYear | number:'1.2-2'}}</td>
+                        <td>{{financial.netPresentValue | number:'1.2-2'}}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-end column-gap-2">
                                 <button mat-icon-button

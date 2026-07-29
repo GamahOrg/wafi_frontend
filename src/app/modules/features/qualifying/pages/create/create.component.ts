@@ -9,8 +9,6 @@ import { Configuration } from 'src/app/core/configurations/shared.config';
 import { ToastrNotificatioService } from '../../../../../core/services/toastr-notification/toastr-notificatio.service';
 import { UserDataService } from '../../../../../core/services/user-data/user-data.service';
 import { QualificationTypeCode } from 'src/app/core/enums/qualification-type-code';
-import { QualificationServiceRequestService } from '../../services/qualification-type/qualification-service-request.service';
-import { RequestValidation } from 'src/app/core/models/request-validation.model';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -30,7 +28,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   });
   showValidation: boolean = false;
   model: QualificationTypeDto = new QualificationTypeDto();
-  price: Number = 0;
+  price: number = 0;
   renewRequest: boolean = false;
   get controls() {
     return this.createRequstForm.controls;
@@ -42,8 +40,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _toastrNotificationService: ToastrNotificatioService,
     private _userDataService: UserDataService,
-    private _qualificationServiceRequestService: QualificationServiceRequestService,
-    private _toastrNotificatioService: ToastrNotificatioService,
+   
   ) { }
 
   ngOnInit(): void {

@@ -13,7 +13,7 @@ import { ProjectAgreementSummaryDto } from '../dataModels/project-agreement-summ
 export class LicenseRequestService {
   updateCompletedTapCodesIsClicked : EventEmitter<null> = new EventEmitter()
   updatedCompletePercentage : EventEmitter<null> = new EventEmitter()
-  
+
   Requestvalidation$: BehaviorSubject<RequestValidation | null> = new BehaviorSubject<RequestValidation | null>(null);
   constructor(private _httpClient: HttpClient) { }
 
@@ -60,7 +60,7 @@ export class LicenseRequestService {
       })
     )
   }
-  
+
   GetFarzStatusWhenNaturalTypeUnit(licenseProjectId: string): Observable<FarzStatusWhenNaturalTypeUnitDto | null> {
     return this._httpClient.get<CoreResponseDTO<FarzStatusWhenNaturalTypeUnitDto>>(`${Configuration.APIs.LicenseRequestService.GetFarzStatusWhenNaturalTypeUnit}/${licenseProjectId}`).pipe(
       map((res) => {
@@ -80,7 +80,7 @@ export class LicenseRequestService {
         })
     )
   }
-  
+
   Send(requestId: string) {
     return this._httpClient.get<CoreResponseDTO<string>>(`${Configuration.APIs.LicenseRequestService.Send}/${requestId}`);
   }
@@ -111,6 +111,24 @@ export class LicenseRequestService {
               return null;
             }
             return res.data;
+        })
+    );
+  }
+
+  ValidateFawriaLicenseByProjectId(projectId: string, tabCodes: string[]): Observable<RequestValidation | null> {
+    const params = new HttpParams({
+      fromObject: {
+        typeCode: tabCodes
+      }
+    });
+
+    return this._httpClient.get<CoreResponseDTO<RequestValidation>>(
+        `${Configuration.APIs.LicenseRequestService.ValidateFawriaLicenseByProjectId}/${projectId}`, { params } ).pipe(
+          map((res: CoreResponseDTO<RequestValidation>) => {
+            if (res && res.data && (res.data as RequestValidation).tabs?.length) {
+              return res.data as RequestValidation;
+            }
+            return null;
         })
     );
   }

@@ -141,6 +141,7 @@ export interface RequestDetails {
 
   previousQualificationDegree: number | null;
   qualificationSuspensionRemainingDays: number;
+  remainingNotesProcessingDays: number | null;
 }
 export interface status {
   id: number;

@@ -1,68 +1,156 @@
-<!-- <app-engineering-consultant-agreement-staff></app-engineering-consultant-agreement-staff> -->
 
 <!-- Executive Director Section -->
-<div class="tab-data-section">
-  <h6 class="title">تفعيل حساب الضمان</h6>
-  <div class="row">
-    <div class="col-12 col-lg-3">
-      <div class="key"> <i class="icon hgi hgi-stroke hgi-building-06"></i> اسم البنك </div>
-      <div class="value"> {{ entity.bankName }} </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key"> <i class="icon hgi hgi-stroke hgi-building-06"></i>رقم الآيبان</div>
-      <div class="value"> {{ entity.accountNumber }} </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key"> <i class="icon hgi hgi-stroke hgi-building-06"></i>تاريخ انشاء الحساب</div>
-      <div class="value"> {{ entity.escrowCreationDate | date: 'dd-MM-yyyy' }} </div>
-    </div>
-    <div class="col-12 col-lg-3">
-      <div class="key"> <i class="icon hgi hgi-stroke hgi-building-06"></i>حالة الحساب</div>
-      <div class="value"> 
-       
-       <span class="status-pill" [ngClass]="{'orange': entity.escrowAccountStatus != 'Active', 'green': entity.escrowAccountStatus == 'Active'}">
-          
-           {{ entity.escrowAccountStatus == 'Active' ? 'مفعل' : 'غير فعال' }} 
-        </span>
+<form [formGroup]="escrowAccountForm">
+  <div class="tab-data-section">
+    <h6 class="form-title">تفعيل حساب الضمان</h6>
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <div class="key"> <i class="icon hgi hgi-stroke hgi-building-05"></i> اسم البنك </div>
+        <div class="value"> {{ entity.bankName }} </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key"> <i class="icon hgi hgi-stroke hgi-building-05"></i>رقم الآيبان</div>
+        <div class="value"> {{ entity.accountNumber }} </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key"> <i class="icon hgi hgi-stroke hgi-building-05"></i>تاريخ انشاء الحساب</div>
+        <div class="value"> {{ entity.escrowCreationDate | date: 'dd-MM-yyyy' }} </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="key"> <i class="icon hgi hgi-stroke hgi-building-05"></i>حالة الحساب</div>
+        <div class="value">
+          <span class="status-pill" [ngClass]="entity.escrowAccountStatus == 'Active' ? 'green' : 'orange'">
+            {{ entity.escrowAccountStatus == 'Active' ? 'مفعل' : 'غير فعال' }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <div class="tab-data-section">
+    <h6 class="title">الحسابات الفرعية</h6>
 
-<div class="tab-data-section">
-  <h6 class="title">الحسابات الفرعية</h6>
+    <div class="table-responsive">
+      <table class="table table-light">
+        <thead>
+          <tr>
+            <th scope="col">اسم الحساب الفرعي</th>
+            <th scope="col">رقم الحساب</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="fw-semibold"><span class="required-star">*</span> حساب التكاليف الانشائية</td>
+            <td>
+              <input type="text" class="form-control" formControlName="constructionCostsAccountNumber"
+                pattern="^SA[A-Z0-9]{22}$" maxlength="24" placeholder="رقم الحساب" [readonly]="escrowAccountForm.get('constructionCostsAccountNumber')?.value && entity.escrowAccountStatus == 'Active'"
+                [class.is-invalid]="escrowAccountForm.get('constructionCostsAccountNumber')?.invalid && escrowAccountForm.get('constructionCostsAccountNumber')?.touched" />
+              <div class="invalid-feedback"
+                *ngIf="escrowAccountForm.get('constructionCostsAccountNumber')?.invalid && escrowAccountForm.get('constructionCostsAccountNumber')?.touched">
+                <span *ngIf="escrowAccountForm.get('constructionCostsAccountNumber')?.errors?.['required']">الحقل
+                  مطلوب</span>
+                <span *ngIf="escrowAccountForm.get('constructionCostsAccountNumber')?.errors?.['pattern']">لابد أن يكون
+                  24 حرف أو رقم ويبدأ بـ SA</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold"><span class="required-star">*</span> حساب الاداري والتسويقي</td>
+            <td>
+              <input type="text" class="form-control" formControlName="administrativeAndMarketingAccountNumber"
+                pattern="^SA[A-Z0-9]{22}$" maxlength="24" placeholder="رقم الحساب" [readonly]="escrowAccountForm.get('administrativeAndMarketingAccountNumber')?.value && entity.escrowAccountStatus == 'Active'"
+                [class.is-invalid]="escrowAccountForm.get('administrativeAndMarketingAccountNumber')?.invalid && escrowAccountForm.get('administrativeAndMarketingAccountNumber')?.touched" />
+              <div class="invalid-feedback"
+                *ngIf="escrowAccountForm.get('administrativeAndMarketingAccountNumber')?.invalid && escrowAccountForm.get('administrativeAndMarketingAccountNumber')?.touched">
+                <span
+                  *ngIf="escrowAccountForm.get('administrativeAndMarketingAccountNumber')?.errors?.['required']">الحقل
+                  مطلوب</span>
+                <span *ngIf="escrowAccountForm.get('administrativeAndMarketingAccountNumber')?.errors?.['pattern']">لابد
+                  أن يكون 24 حرف أو رقم ويبدأ بـ SA</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold"><span class="required-star">*</span> حساب الحفظ</td>
+            <td>
+              <input type="text" class="form-control" formControlName="custodyAccountNumber" pattern="^SA[A-Z0-9]{22}$"
+                maxlength="24" placeholder="رقم الحساب" [readonly]="escrowAccountForm.get('custodyAccountNumber')?.value && entity.escrowAccountStatus == 'Active'"
+                [class.is-invalid]="escrowAccountForm.get('custodyAccountNumber')?.invalid && escrowAccountForm.get('custodyAccountNumber')?.touched" />
+              <div class="invalid-feedback"
+                *ngIf="escrowAccountForm.get('custodyAccountNumber')?.invalid && escrowAccountForm.get('custodyAccountNumber')?.touched">
+                <span *ngIf="escrowAccountForm.get('custodyAccountNumber')?.errors?.['required']">الحقل مطلوب</span>
+                <span *ngIf="escrowAccountForm.get('custodyAccountNumber')?.errors?.['pattern']">لابد أن يكون 24 حرف أو
+                  رقم ويبدأ بـ SA</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold">حساب الحوافز</td>
+            <td>
+              <input type="text" class="form-control" formControlName="incentivesSubIBAN" pattern="^SA[A-Z0-9]{22}$"
+                maxlength="24" placeholder="رقم الحساب" 
+                [class.is-invalid]="escrowAccountForm.get('incentivesSubIBAN')?.invalid && escrowAccountForm.get('incentivesSubIBAN')?.touched" />
+              <div class="invalid-feedback"
+                *ngIf="escrowAccountForm.get('incentivesSubIBAN')?.invalid && escrowAccountForm.get('incentivesSubIBAN')?.touched">
+                <span *ngIf="escrowAccountForm.get('incentivesSubIBAN')?.errors?.['pattern']">لابد أن يكون 24 حرف أو رقم
+                  ويبدأ بـ SA</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="fw-semibold">حساب التمويل</td>
+            <td>
+              <input type="text" class="form-control" formControlName="financingSubIBAN" pattern="^SA[A-Z0-9]{22}$"
+                maxlength="24" placeholder="رقم الحساب"
+                [class.is-invalid]="escrowAccountForm.get('financingSubIBAN')?.invalid && escrowAccountForm.get('financingSubIBAN')?.touched" />
+              <div class="invalid-feedback"
+                *ngIf="escrowAccountForm.get('financingSubIBAN')?.invalid && escrowAccountForm.get('financingSubIBAN')?.touched">
+                <span *ngIf="escrowAccountForm.get('financingSubIBAN')?.errors?.['pattern']">لابد أن يكون 24 حرف أو رقم
+                  ويبدأ بـ SA</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <div class="table-responsive">
-    <table class="table table-light">
-      <thead>
-        <tr>
-          <th scope="col">اسم الحساب الفرعي</th>
-          <th scope="col">رقم الحساب</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>حساب التكاليف الانشائية</td>
-          <td>{{ entity.constructionCostsAccountNumber }}</td>
-        </tr>
-        <tr>
-          <td>حساب الاداري والتسويقي</td>
-          <td>{{ entity.administrativeAndMarketingAccountNumber }}</td>
-        </tr>
-        <tr>
-          <td>حساب الحفظ</td>
-          <td>{{ entity.custodyAccountNumber }}</td>
-        </tr>
-        <tr>
-          <td>حساب الحوافز</td>
-          <td>{{ entity.incentivesSubIBAN }}</td>
-        </tr>
-        <tr>
-          <td>حساب التمويل</td>
-          <td>{{ entity.financingSubIBAN }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="text-danger small mt-2" *ngIf="escrowAccountForm.errors?.['accountsDuplicate']">
+      لا يمكن تكرار أرقام الحسابات الفرعية
+    </div>
+
+    <div class="row mt-3" *ngIf="entity.bankDocumentToActivateEscrowAccountsFile?.filePath">
+    <div class="col-12">
+      <div class="key"><i class="icon hgi hgi-stroke hgi-building-06"></i> مستند البنك لتفعيل الحساب</div>
+      <div class="value">
+        <a [href]="baseUrl + entity.bankDocumentToActivateEscrowAccountsFile!.filePath" target="_blank">
+          {{ entity.bankDocumentToActivateEscrowAccountsFile!.fileDescription || 'عرض الملف' }}
+        </a>
+      </div>
+    </div>
   </div>
-</div>
+
+    <div class="mt-4" *ngIf="!entity.bankDocumentToActivateEscrowAccountsFile?.filePath">
+      <label class="form-label fw-semibold"><span class="required-star">*</span> مستند البنك لتفعيل الحساب</label>
+      <app-file-uploader [data]="uploaderConfig" (fileUploaded)="onFileUploaded($event)"></app-file-uploader>
+      <div class="invalid-feedback d-block" *ngIf="fileSubmitAttempted && !bankDocumentToActivateEscrowAccountsFileId">
+        الحقل مطلوب
+      </div>
+    </div>
+
+    <div class="row mt-3" >
+    <div class="col-12">
+      <i class="icon hgi hgi-stroke hgi-building-06"></i> ملاحظات الموظف علي حساب الضمان
+      
+      <div class="value">
+        {{ entity.escrowAccountEmployeeNotes || 'لا توجد ملاحظات' }}
+      </div>
+    </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12 d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-primary" (click)="updateEscrowAccount()">تعديل حسابات الضمان</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -127,7 +127,7 @@
                 <td>{{owner.ownerName}}</td>
                 <td>{{owner.idNumber}}</td>
                 <td>{{owner.owningArea}}</td>
-                <td>{{owner.owningAmount}}</td>
+                <td>{{owner.owningAmount | number:'1.2-2'}}</td>
                 <td>{{owner.bank?.name || '-'}}</td>
                 <td>{{owner.accountNumber || '-'}}</td>
               </tr>

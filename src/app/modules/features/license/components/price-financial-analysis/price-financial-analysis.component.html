@@ -10,13 +10,13 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> المساحة الإجمالية للمشروع</label>
-          <input type="number" id="control-landTotalSpace" class="form-control" formControlName="landTotalSpace" [disabled]="false" />
+          <input type="text" id="control-landTotalSpace" class="form-control" formControlName="landTotalSpace" appNumberFormat [disabled]="false" />
         </div>
       </div>
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> مساحة الأرض </label>
-          <input type="number" id="control-landSpace" class="form-control" formControlName="landSpace" />
+          <input type="text" id="control-landSpace" class="form-control" formControlName="landSpace" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.landSpace?.hasError('required') ||
                 controls.landSpace?.value == 0) &&
@@ -29,7 +29,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> مساحة أرض سكنية</label>
-          <input type="number" id="control-residentialLandSpace" class="form-control" formControlName="residentialLandSpace" />
+          <input type="text" id="control-residentialLandSpace" class="form-control" formControlName="residentialLandSpace" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.residentialLandSpace?.hasError('required') ||
                 controls.residentialLandSpace?.value == 0) &&
@@ -48,7 +48,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> إجمالي قيمة المشروع</label>
-          <input type="number" id="control-totalProjectValue" class="form-control" formControlName="totalProjectValue" />
+          <input type="text" id="control-totalProjectValue" class="form-control" formControlName="totalProjectValue" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.totalProjectValue?.hasError('required') ||
                 controls.totalProjectValue?.value == 0) &&
@@ -62,7 +62,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> تكلفة البناء</label>
-          <input type="number" id="control-constructionCost" class="form-control" formControlName="constructionCost" />
+          <input type="text" id="control-constructionCost" class="form-control" formControlName="constructionCost" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.constructionCost?.hasError('required') ||
                 controls.constructionCost?.value == 0) &&
@@ -76,7 +76,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> تكلفة استشاري</label>
-          <input type="number" id="control-consultantCost" class="form-control" formControlName="consultantCost" />
+          <input type="text" id="control-consultantCost" class="form-control" formControlName="consultantCost" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.consultantCost?.hasError('required') ||
                 controls.consultantCost?.value == 0) &&
@@ -90,7 +90,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> سعر الأرض</label>
-          <input type="number" id="control-landPrice" class="form-control" formControlName="landPrice" />
+          <input type="text" id="control-landPrice" class="form-control" formControlName="landPrice" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.landPrice?.hasError('required') ||
                 controls.landPrice?.value == 0) &&
@@ -104,7 +104,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> الرسوم الإدارية</label>
-          <input type="number" id="control-administrativeFees" class="form-control" formControlName="administrativeFees" />
+          <input type="text" id="control-administrativeFees" class="form-control" formControlName="administrativeFees" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.administrativeFees?.hasError('required') ||
                 controls.administrativeFees?.value == 0) &&
@@ -118,7 +118,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> رسوم التسويق</label>
-          <input type="number" id="control-marketingFees" class="form-control" formControlName="marketingFees" />
+          <input type="text" id="control-marketingFees" class="form-control" formControlName="marketingFees" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.marketingFees?.hasError('required') ||
                 controls.marketingFees?.value == 0) &&
@@ -132,7 +132,7 @@
       <div class="col-12 col-lg-6">
         <div class="form-group">
           <label class="form-label"><span class="required-star">*</span> أرباح</label>
-          <input type="number" id="control-profits" class="form-control" formControlName="profits" />
+          <input type="text" id="control-profits" class="form-control" formControlName="profits" appNumberFormat />
           <div class="invalid-feedback d-block" *ngIf="
               (controls.profits?.hasError('required') ||
                 controls.profits?.value == 0) &&

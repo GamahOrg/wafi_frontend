@@ -1,3 +1,5 @@
+import { SysFileManagerCreateUpdateDto } from "src/app/shared/models/sys-file-manager-create-update-dto";
+
 export interface LicenseProjectDetailsDto {
   id: string;
   name: string;
@@ -20,6 +22,8 @@ export interface LicenseProjectDetailsDto {
 
 export interface EscrowAccountDto {
   licenseProjectId: string;
+  // ملاحظات الموظف علي حساب الضمان
+  escrowAccountEmployeeNotes?: string;
   //حالة حساب الضمان
   escrowAccountStatus?: string;
   //تاريخ انشاء حساب الضمان
@@ -37,5 +41,8 @@ export interface EscrowAccountDto {
   //حساب الحوافز
   incentivesSubIBAN?:string;
   //حساب التمويل
-  financingSubIBAN?:string
+  financingSubIBAN?:string;
+  //معرف ملف حساب الضمان
+  bankDocumentToActivateEscrowAccountsFileId?: string;
+  bankDocumentToActivateEscrowAccountsFile?: SysFileManagerCreateUpdateDto;
 }

@@ -54,7 +54,7 @@
           قيمة العقد
         </label>
         <div class="input-group">
-          <input id="contarctValue" name="contarctValue" type="number" class="form-control" formControlName="contarctValue" readonly />
+          <input id="contarctValue" name="contarctValue" type="text" appNumberFormat class="form-control" formControlName="contarctValue" readonly />
           <span class="input-group-text">
             <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon" />
           </span>
@@ -120,7 +120,7 @@
             </td>
             <td>
               <div class="input-group">
-                <input type="number" class="form-control" placeholder="السعر للوحدة" [(ngModel)]="payment.unitPrice" [ngModelOptions]="{ standalone: true }" readonly />
+                <input type="text" appNumberFormat class="form-control" placeholder="السعر للوحدة" [(ngModel)]="payment.unitPrice" [ngModelOptions]="{ standalone: true }" readonly />
                 <span class="input-group-text">
                   <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon" />
                 </span>

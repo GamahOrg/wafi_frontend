@@ -128,6 +128,9 @@ export const Configuration = {
       GetIntegrationBanks: '/api/SysBank/GetIntegrationBanks',
       GetSysBankTermsCondition: '/api/SysBank/GetSysBankTermsCondition',
     },
+    SysExchangeDocumentType:{
+      getTypes:'/api/SysExchangeDocumentType/Get'
+    },
     SysRequestApproval: {
       GetSysRequestApprovalList:
         '/api/SysRequestApproval/GetSysRequestApprovalList',
@@ -774,6 +777,7 @@ export const Configuration = {
       GetWorkDonePercentage: '/api/LicenseProject/GetWorkDonePercentage',
       GetLicenseProjectDetails: '/api/LicenseProject/GetLicenseProjectDetails',
       GetEscrowAccount: '/api/LicenseProject/GetEscrowAccount',
+      UpdateEscrowAccount: '/api/LicenseProject/UpdateEscrowAccount',
       GetSupervisionReportStatusByLicenseProjectId:
         '/api/LicenseProject/GetSupervisionReportStatusByLicenseProjectId',
       GetRecommendationsLogsList:
@@ -1010,6 +1014,10 @@ export const Configuration = {
         '/api/PeriodCharteredAccountantReport/GetExchangeDocumentOnProject',
       GetPeriodicCharteredAccountantReportDetail:
         '/api/PeriodCharteredAccountantReport/GetPeriodicCharteredAccountantReportDetail',
+      GetReportExchangeDocumentsPaged:
+        '/api/PeriodCharteredAccountantReport/GetReportExchangeDocumentsPaged',
+      GetGeneratedExchangeDocumentsPaged:
+        '/api/PeriodCharteredAccountantReport/GetGeneratedExchangeDocumentsPaged',
       CreateExcel: '/api/PeriodCharteredAccountantReport/CreateExcel',
       GetSysDepositType:
         '/api/PeriodCharteredAccountantReport/GetSysDepositType',
@@ -1268,6 +1276,8 @@ export const Configuration = {
       SendByProjectId: '/api/LicenseRequestService/SendByProjectId',
       SendFawriaLicenseByProjectId:
         '/api/LicenseRequestService/SendFawriaLicenseByProjectId',
+      ValidateFawriaLicenseByProjectId:
+        '/api/LicenseRequestService/ValidateFawriaLicenseByProjectId',
       Compile: '/api/LicenseRequestService/Compile',
       CompileConditionalApproval:
         '/api/LicenseRequestService/CompileConditionalApproval',

@@ -1,151 +1,97 @@
+<div class="details-page">
+  <div class="page-header d-flex justify-content-between align-items-center gap-3">
+    <div class="page-title">
+      <h6 class="title">موقف الاعتمادات المطلوبة من الجهات</h6>
+    </div>
 
+    <button type="button" class="btn btn-primary" (click)="openAddEditDesignPhaseCreditsDialog('')" *ngIf="actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback">تعديل بيانات اعتمادات مرحلة التصميم</button>
+  </div>
 
+  <div class="page-section">
+    <h3 class="title">{{'اعتمادات مرحلة التصميم'}}</h3>
 
-
-
-
-
-
-
-
-
-
-
-
-    <div class="tab-data-section">
-      <div class="row mb-3">
-    
-      <div class="col-12 col-lg-6">
-        <button type="button" class="btn btn-primary" *ngIf="
-        actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
-         actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
-         || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
-    (click)="openAddEditDesignPhaseCreditsDialog('')">تعديل بيانات اعتمادات مرحلة التصميم</button>
-     </div> 
-      </div>
-    </div> 
-    
- 
-
-<h3 class="title">{{'اعتمادات مرحلة التصميم'}}</h3>
-<div class="tab-data-section">
-            <table class="table" style="width:100%">
-                <thead>
-                    <tr>
-                        <th scope="col">نوع الخدمة جهة الاعتماد</th>
-                        <th scope="col"> حالة الاعتماد /الموافقة</th>
-                           <th scope="col">تاريخ أول تقديم</th>
-                             <th scope="col">تاريخ أول تقديم</th>
-                             <th scope="col">تاريخ الاعتماد النهائى</th>
-                            <th scope="col">العمليات</th>
-                    </tr>
-                </thead>
-                <tbody *ngFor="let design of licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDesignStageList">
-                    <tr *ngIf="design">
-                        <td >
-                            <span class="text-dark">{{design?.serviceType?.name}}
-                            </span>
-                        </td>
-                        <td >
-                            <span class="text-dark">{{design?.accreditationStatus?.name}}
-                            </span>
-                        </td>
-                        <td >
-                            <span class="text-dark">{{design.firstSubmissionDate|date:'yyyy/MM/dd'}}
-                            </span>
-                        </td>
-                        <td >
-                            <span class="text-dark">{{design.lastSubmissionDate|date:'yyyy/MM/dd'}}
-                            </span>
-                        </td>
-                        <td >
-                            <span class="text-dark">{{design.finalApprovalDate|date:'yyyy/MM/dd'}}
-                            </span>
-                        </td>
-                      
-                         <td>
-                         
-                            <div class="d-flex align-items-center">
-                                <button type="button" class="btn btn-primary" *ngIf="
+    <ng-container *ngIf="licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDesignStageList">
+      <div class="table-responsive" *ngIf="licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDesignStageList.length > 0">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th scope="col">نوع الخدمة جهة الاعتماد</th>
+              <th scope="col"> حالة الاعتماد /الموافقة</th>
+              <th scope="col">تاريخ أول تقديم</th>
+              <th scope="col">تاريخ أخر تقديم</th>
+              <th scope="col">تاريخ الاعتماد النهائى</th>
+              <th scope="col" class="w-0">العمليات</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let design of licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDesignStageList">
+            <tr *ngIf="design">
+              <td>{{design?.serviceType?.name}}</td>
+              <td>{{design?.accreditationStatus?.name}}</td>
+              <td>{{design.firstSubmissionDate|date:'yyyy/MM/dd'}}</td>
+              <td>{{design.lastSubmissionDate|date:'yyyy/MM/dd'}}</td>
+              <td>{{design.finalApprovalDate|date:'yyyy/MM/dd'}}</td>
+              <td class="text-nowrap">
+                <div class="d-flex align-items-center">
+                  <button type="button" class="btn btn-outline-primary" *ngIf="
                                 actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
                                  actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
-                                 || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
-                             (click)="openAddEditDesignPhaseCreditsDialog(design)" > تعديل </button>
-                                &nbsp;
-                                <button type="button" class="btn btn-primary" (click)="openShowDesignPhaseCreditsDialog(design)" > عرض </button>
-                        </div>
-                        </td> 
-                        
-                    </tr>
-                </tbody>
-            </table>
+                                 || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="openAddEditDesignPhaseCreditsDialog(design)"> تعديل </button>
+                  <button type="button" class="btn btn-primary" (click)="openShowDesignPhaseCreditsDialog(design)"> عرض </button>
+                </div>
+              </td>
 
-            <hr>
-           
-                <div class="tab-data-section">
-                  <div class="row mb-3">
-                
-                  <div class="col-12 col-lg-6">
-                    <button type="button" class="btn btn-primary" *ngIf="
-                    actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
-                     actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
-                     || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
-                 (click)="openAddEditProjectDeliveryPhaseApprovalsDialog('')">تعديل بيانات موافقات مرحلة تسليم المشروع</button>
-                 </div> 
-                  </div>
-                </div> 
-                
-             
-            <h3 class="title">{{'موافقات مرحلة تسليم المشروع'}}</h3>
-            <div class="tab-data-section">
-                        <table class="table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th scope="col">نوع الخدمة جهة الاعتماد</th>
-                                    <th scope="col"> حالة الاعتماد /الموافقة</th>
-                                       <th scope="col">تاريخ أول تقديم</th>
-                                         <th scope="col">تاريخ أول تقديم</th>
-                                         <th scope="col">تاريخ الاعتماد النهائى</th>
-                                        <th scope="col">العمليات</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let delivery of licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesProjectDeliveryPhaseList">
-                                <tr *ngIf="delivery">
-                                    <td >
-                                        <span class="text-dark">{{delivery?.serviceType?.name}}
-                                        </span>
-                                    </td>
-                                    <td >
-                                        <span class="text-dark">{{delivery?.accreditationStatus?.name}}
-                                        </span>
-                                    </td>
-                                    <td >
-                                        <span class="text-dark">{{delivery.firstSubmissionDate|date:'yyyy/MM/dd'}}
-                                        </span>
-                                    </td>
-                                    <td >
-                                        <span class="text-dark">{{delivery.lastSubmissionDate|date:'yyyy/MM/dd'}}
-                                        </span>
-                                    </td>
-                                    <td >
-                                        <span class="text-dark">{{delivery.finalApprovalDate|date:'yyyy/MM/dd'}}
-                                        </span>
-                                    </td>
-                                  
-                                     <td>
-                                     
-                                        <div class="d-flex align-items-center">
-                                            <button type="button" class="btn btn-primary" *ngIf="
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <app-no-data [showCompleteBtn]="false" [showText]="false" *ngIf="!licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesDesignStageList"></app-no-data>
+  </div>
+
+  <div class="page-section">
+    <div class="d-flex align-items-center gap-2">
+      <h3 class="title">{{'موافقات مرحلة تسليم المشروع'}}</h3>
+
+      <button type="button" class="btn btn-outline-primary" (click)="openAddEditProjectDeliveryPhaseApprovalsDialog('')" *ngIf="actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback">تعديل بيانات موافقات مرحلة تسليم المشروع</button>
+    </div>
+
+    <ng-container *ngIf="licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesProjectDeliveryPhaseList">
+      <div class="table-responsive" *ngIf="licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesProjectDeliveryPhaseList.length > 0">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th scope="col">نوع الخدمة جهة الاعتماد</th>
+              <th scope="col"> حالة الاعتماد /الموافقة</th>
+              <th scope="col">تاريخ أول تقديم</th>
+              <th scope="col">تاريخ أخر تقديم</th>
+              <th scope="col">تاريخ الاعتماد النهائى</th>
+              <th scope="col" class="w-0">العمليات</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let delivery of licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesProjectDeliveryPhaseList">
+            <tr *ngIf="delivery">
+              <td>{{delivery?.serviceType?.name}}</td>
+              <td>{{delivery?.accreditationStatus?.name}}</td>
+              <td>{{delivery.firstSubmissionDate|date:'yyyy/MM/dd'}}</td>
+              <td>{{delivery.lastSubmissionDate|date:'yyyy/MM/dd'}}</td>
+              <td>{{delivery.finalApprovalDate|date:'yyyy/MM/dd'}}</td>
+
+              <td class="text-nowrap">
+                <div class="d-flex align-items-center gap-2">
+                  <button type="button" class="btn btn-primary" *ngIf="
                                             actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.Draft ||
                                              actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.New 
-                                             || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback"
-                                         (click)="openAddEditProjectDeliveryPhaseApprovalsDialog(delivery)" > تعديل </button>
-                                            &nbsp;
-                                            <button type="button" class="btn btn-primary" (click)="openShowProjectDeliveryPhaseApprovalsDialog(delivery)" > عرض </button>
-                                    </div>
-                                    </td> 
-                                    
-                                </tr>
-                            </tbody>
-                        </table>
-            
+                                             || actualValueReport?.supervisionPlannedReportStatusId==licenseProjectEngineeringRequestStatusEnum.CustomerFeedback" (click)="openAddEditProjectDeliveryPhaseApprovalsDialog(delivery)"> تعديل </button>
+                  <button type="button" class="btn btn-primary" (click)="openShowProjectDeliveryPhaseApprovalsDialog(delivery)"> عرض </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <app-no-data [showCompleteBtn]="false" [showText]="false" *ngIf="!licenseProjectEngineeringStatusOfFundsRequiredFromEntitiesProjectDeliveryPhaseList"></app-no-data>
+  </div>
+</div>

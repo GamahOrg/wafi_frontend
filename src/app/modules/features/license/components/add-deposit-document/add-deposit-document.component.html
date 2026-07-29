@@ -113,7 +113,7 @@
     <div class="col-12 col-lg-6">
       <div class="form-group">
         <label class="form-label"><span class="required-star">*</span> مبلغ الايداع في حساب التكاليف الانشائية</label>
-        <input id="constructionCostsAmount" formControlName="constructionCostsAmount" type="number" class="form-control" [readOnly]="controls.mainItemId.value === licenseProjectDepositDocumentMainItemEnum.collectionFromClients" />
+        <input id="constructionCostsAmount" formControlName="constructionCostsAmount" type="text" appNumberFormat class="form-control" [readOnly]="controls.mainItemId.value === licenseProjectDepositDocumentMainItemEnum.collectionFromClients" />
         <div class="invalid-feedback d-block" *ngIf="(controls.constructionCostsAmount?.hasError('required') || controls.constructionCostsAmount?.value === 0) && showValidation">حقل مطلوب</div>
       </div>
     </div>

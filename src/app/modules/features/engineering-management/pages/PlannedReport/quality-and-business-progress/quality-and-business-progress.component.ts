@@ -34,7 +34,7 @@ export class QualityAndBusinessProgressComponent {
     pageSize: 10,
     totalCount: 0,
   };
-
+  allowEditing: boolean = false;
   reqList: Pagination<LicenseProjectEngineeringRelativeWeightDto[]> = {} as Pagination<LicenseProjectEngineeringRelativeWeightDto[]>;
   licenseProjectEngineeringMonthlyConsultantStaffRatesList?: LicenseProjectEngineeringMonthlyConsultantStaffRatesDto[];
 
@@ -68,6 +68,7 @@ export class QualityAndBusinessProgressComponent {
         .GetLicenseProjectEngineeringDetails(this.licenseProjectId as string)
         .subscribe((res) => {
           if (res) {
+            this.allowEditing = !!res.engineerinSupervisionPlannedReportAllowToEdit;
             this.years = this.getYearsBetween(
               new Date(res.contractualStartDate),
               new Date(res.contractualFinishDate)

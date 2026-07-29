@@ -6,7 +6,7 @@ id="form-licenseProjectProblemLogForm">
   <div class="col-12 col-lg-6">
     <div class="form-group mb-4">
       <label class="form-label">التكاليف الإجمالية للمشروع (غير شاملة ثمن الأرض) مُحدثة لتاريخ الطلب</label>
-      <input type="number" id="control-totalProjectCosts" class="form-control" formControlName="totalProjectCosts">
+      <input type="text" appNumberFormat id="control-totalProjectCosts" class="form-control" formControlName="totalProjectCosts">
       <div class="invalid-feedback d-block" *ngIf="controls.totalProjectCosts?.hasError('required') && showValidation">
         حقل مطلوب
       </div>

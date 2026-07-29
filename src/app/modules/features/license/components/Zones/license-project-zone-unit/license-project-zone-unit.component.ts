@@ -388,6 +388,12 @@ export class LicenseProjectZoneUnitComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if ((this.selectedProjectUnit as any).constructionEndOn) {
+      const endDate = new Date((this.selectedProjectUnit as any).constructionEndOn);
+      endDate.setHours(12, 0, 0, 0);
+      (this.selectedProjectUnit as any).constructionEndOn = endDate.toISOString();
+    }
+
     this._licenseProjectUnitService
       .Save(this.selectedProjectUnit as ProjectUnit)
       .subscribe({

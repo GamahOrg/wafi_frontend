@@ -190,7 +190,7 @@ export class AgreementsApprovalListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this._licenseRequestService
         .GetProjectAgreementsSummary(
-           this.userData?.facilities[0]?.id ?? Guid.empty as string,
+          this.userData?.facilities[0]?.id ?? Guid.empty as string,
           this.paginationData.currentPage,
           this.paginationData.pageSize
         )

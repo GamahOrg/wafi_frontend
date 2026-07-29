@@ -1,151 +1,149 @@
-<div class="row align-items-end row-gap-3 mb-3" *ngIf="showDate">
-  <div class="col-12 col-lg-6">
-    <label for="" class="form-label"><span class="required-star">*</span> تاريخ البرنامج الزمني</label>
-    <select class="form-select" id="control-areasId" formControlName="monthDate" (change)="onSelectedDateChanged($event)">
-      <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
-      <option *ngFor="let date of dateList" [value]="date">{{date | date:'dd/MM/yyyy'}}</option>
-    </select>
-    <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.monthDate.errors && filesdataForm.controls.monthDate.errors['required'] && isFormSubmitted">حقل مطلوب
+<div class="form-block mb-3">
+  <h6 class="title">تاريخ البرنامج الزمني</h6>
+
+  <div class="row row-gap-4" *ngIf="showDate">
+    <div class="col-12 col-lg-6">
+      <label for="" class="form-label"><span class="required-star">*</span> تاريخ البرنامج الزمني</label>
+      <select class="form-select" id="control-areasId" formControlName="monthDate" (change)="onSelectedDateChanged($event)">
+        <option [ngValue]="null" disabled hidden>يرجى الاختيار</option>
+        <option *ngFor="let date of dateList" [value]="date">{{date | date:'dd/MM/yyyy'}}</option>
+      </select>
+      <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.monthDate.errors && filesdataForm.controls.monthDate.errors['required'] && isFormSubmitted">حقل مطلوب
+      </div>
     </div>
   </div>
 </div>
-<div class="d-flex  p-3 section">
-  <span class="icon"><i class="material-icons">list_alt</i></span>
-  <span class="title">الملفات المطلوبة</span>
 
-</div>
 <div [formGroup]="filesdataForm">
+  <div class="form-block mb-3">
+    <h6 class="title">الملفات المطلوبة</h6>
 
-  <div class="row row-gap-3 mb-3 mt-3" [formGroup]="filesdataForm">
-    <div class="col-6 col-lg-6">
-      <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.threeDReportFile}}</label>
-      <div class="value m-3" *ngIf="filesdataForm.value.threeDReportFileId && uploadedfiles && uploadedfiles.threeDReportFile">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + uploadedfiles.threeDReportFile?.filePath" target="_blank">
-          {{uploadedfiles.threeDReportFile?.fileDescription}}
-        </a>
-      </div>
-      <app-file-uploader (fileUploaded)="onthreeDReportFileUploaded($event)" [data]="singleFilesUploaderData"></app-file-uploader>
-      <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.threeDReportFileId.errors && filesdataForm.controls.threeDReportFileId.errors['required'] && isFormSubmitted">
-        {{localization.required}}
-      </div>
-    </div>
-    <div class="col-6 col-lg-6">
-      <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.generalSitePlanFile}}</label>
-      <div class="value m-3" *ngIf="filesdataForm.value.generalSitePlanFileId && uploadedfiles && uploadedfiles&& uploadedfiles.generalSitePlanFile">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + uploadedfiles.generalSitePlanFile?.filePath" target="_blank">
-          {{uploadedfiles.generalSitePlanFile?.fileDescription}}
-        </a>
-      </div>
-      <app-file-uploader (fileUploaded)="ongeneralSitePlanFileUploaded($event)" [data]="pdfsingleFilesUploaderData"></app-file-uploader>
-      <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.generalSitePlanFileId.errors && filesdataForm.controls.generalSitePlanFileId.errors['required'] && isFormSubmitted">
-        {{localization.required}}
-      </div>
-    </div>
-  </div>
-  <div class="row row-gap-3 mb-3">
-    <div class="col-6 col-lg-6">
-      <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.primaveraFile}}</label>
-      <div class="value m-3" *ngIf="filesdataForm.value.primaveraFileId && uploadedfiles && uploadedfiles.primaveraFile">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + uploadedfiles.primaveraFile?.filePath" target="_blank">
-          {{uploadedfiles.primaveraFile?.fileDescription}}
-        </a>
-      </div>
-      <app-file-uploader (fileUploaded)="onprimaveraFileUploaded($event)" [data]="primaveraFilesUploaderData"></app-file-uploader>
-      <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.primaveraFileId.errors && filesdataForm.controls.primaveraFileId.errors['required'] && isFormSubmitted">
-        {{localization.required}}
-      </div>
-    </div>
-    <div class="col-6 col-lg-6">
-      <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.scheduleFile}}</label>
-      <div class="value m-3" *ngIf="filesdataForm.value.scheduleFileId && uploadedfiles && uploadedfiles.scheduleFile">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + uploadedfiles.scheduleFile?.filePath" target="_blank">
-          {{uploadedfiles.scheduleFile?.fileDescription}}
-        </a>
-      </div>
-      <app-file-uploader (fileUploaded)="onscheduleFileUploaded($event)" [data]="pdfsingleFilesUploaderData"></app-file-uploader>
-      <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.scheduleFileId.errors && filesdataForm.controls.scheduleFileId.errors['required'] && isFormSubmitted">
-        {{localization.required}}
-      </div>
-    </div>
-  </div>
-
-  <div class="row row-gap-3 mb-3">
-    <div class="col-6 col-lg-6">
-      <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile}}</label>
-      <div class="value m-3" *ngIf="filesdataForm.value.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId && uploadedfiles && uploadedfiles.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + uploadedfiles.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.filePath" target="_blank">
-          {{uploadedfiles.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.fileDescription}}
-        </a>
-      </div>
-      <app-file-uploader [data]="execlsingleFilesUploaderData" (fileUploaded)="onworkProgressCurveMonthlyAndCumulativePercentageOfCompletionFileUploaded($event)"></app-file-uploader>
-      <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId.errors && filesdataForm.controls.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId.errors['required'] && isFormSubmitted">
-        {{localization.required}}
-      </div>
-    </div>
-    <div class="col-6 col-lg-6">
-      <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.cashFlowCurveFile}}</label>
-      <div class="value m-3" *ngIf="filesdataForm.value.cashFlowCurveFileId && uploadedfiles && uploadedfiles.cashFlowCurveFile">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + uploadedfiles.cashFlowCurveFile?.filePath" target="_blank">
-          {{uploadedfiles.cashFlowCurveFile?.fileDescription}}
-        </a>
-      </div>
-      <app-file-uploader (fileUploaded)="oncashFlowCurveFileUploaded($event)" [data]="execlsingleFilesUploaderData"></app-file-uploader>
-      <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.cashFlowCurveFileId.errors && filesdataForm.controls.cashFlowCurveFileId.errors['required'] && isFormSubmitted">
-        {{localization.required}}
-      </div>
-    </div>
-  </div>
-  <div class="row row-gap-3 mb-3">
-    <div class="col-6 col-lg-6">
-      <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.employmentCountCurveFile}}</label>
-      <div class="value m-3" *ngIf="filesdataForm.value.employmentCountCurveFileId && uploadedfiles &&uploadedfiles.employmentCountCurveFile">
-        <span class="icon material-icons-outlined">content_copy</span>
-        <a [href]="baseUrl + uploadedfiles.employmentCountCurveFile?.filePath" target="_blank">
-          {{uploadedfiles.employmentCountCurveFile?.fileDescription}}
-        </a>
-      </div>
-      <app-file-uploader [data]="execlsingleFilesUploaderData" (fileUploaded)="onemploymentCountCurveFileUploaded($event)"></app-file-uploader>
-      <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.employmentCountCurveFileId.errors && filesdataForm.controls.employmentCountCurveFileId.errors['required'] && isFormSubmitted">
-        {{localization.required}}
-      </div>
-    </div>
-
-    <div class="col-6 col-lg-6">
-      <label for="licNum" class="form-label">{{localization.licenseProjectTimeScheduleOtherAttachments}}</label>
-      <div class="value m-3" *ngIf="filesdataForm.value.licenseProjectTimeScheduleOtherAttachments">
-        <ng-container *ngFor="let file of uploadedfiles.licenseProjectTimeScheduleOtherAttachments">
+    <div class="row row-gap-4 mt-3" [formGroup]="filesdataForm">
+      <div class="col-6 col-lg-6">
+        <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.threeDReportFile}}</label>
+        <div class="value m-3" *ngIf="filesdataForm.value.threeDReportFileId && uploadedfiles && uploadedfiles.threeDReportFile">
           <span class="icon material-icons-outlined">content_copy</span>
-          <a [href]="baseUrl + file.otherAttachmentFile.filePath" target="_blank">
-            {{file.otherAttachmentFile.fileDescription}}
+          <a [href]="baseUrl + uploadedfiles.threeDReportFile?.filePath" target="_blank">
+            {{uploadedfiles.threeDReportFile?.fileDescription}}
           </a>
-        </ng-container>
+        </div>
+        <app-file-uploader (fileUploaded)="onthreeDReportFileUploaded($event)" [data]="singleFilesUploaderData"></app-file-uploader>
+        <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.threeDReportFileId.errors && filesdataForm.controls.threeDReportFileId.errors['required'] && isFormSubmitted">
+          {{localization.required}}
+        </div>
       </div>
-      <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onlicenseProjectTimeScheduleOtherAttachmentsFileUploaded($event)"></app-file-uploader>
+      <div class="col-6 col-lg-6">
+        <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.generalSitePlanFile}}</label>
+        <div class="value m-3" *ngIf="filesdataForm.value.generalSitePlanFileId && uploadedfiles && uploadedfiles&& uploadedfiles.generalSitePlanFile">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + uploadedfiles.generalSitePlanFile?.filePath" target="_blank">
+            {{uploadedfiles.generalSitePlanFile?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader (fileUploaded)="ongeneralSitePlanFileUploaded($event)" [data]="pdfsingleFilesUploaderData"></app-file-uploader>
+        <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.generalSitePlanFileId.errors && filesdataForm.controls.generalSitePlanFileId.errors['required'] && isFormSubmitted">
+          {{localization.required}}
+        </div>
+      </div>
+    </div>
+    <div class="row row-gap-4">
+      <div class="col-6 col-lg-6">
+        <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.primaveraFile}}</label>
+        <div class="value m-3" *ngIf="filesdataForm.value.primaveraFileId && uploadedfiles && uploadedfiles.primaveraFile">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + uploadedfiles.primaveraFile?.filePath" target="_blank">
+            {{uploadedfiles.primaveraFile?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader (fileUploaded)="onprimaveraFileUploaded($event)" [data]="primaveraFilesUploaderData"></app-file-uploader>
+        <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.primaveraFileId.errors && filesdataForm.controls.primaveraFileId.errors['required'] && isFormSubmitted">
+          {{localization.required}}
+        </div>
+      </div>
+      <div class="col-6 col-lg-6">
+        <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.scheduleFile}}</label>
+        <div class="value m-3" *ngIf="filesdataForm.value.scheduleFileId && uploadedfiles && uploadedfiles.scheduleFile">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + uploadedfiles.scheduleFile?.filePath" target="_blank">
+            {{uploadedfiles.scheduleFile?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader (fileUploaded)="onscheduleFileUploaded($event)" [data]="pdfsingleFilesUploaderData"></app-file-uploader>
+        <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.scheduleFileId.errors && filesdataForm.controls.scheduleFileId.errors['required'] && isFormSubmitted">
+          {{localization.required}}
+        </div>
+      </div>
+    </div>
 
+    <div class="row row-gap-4">
+      <div class="col-6 col-lg-6">
+        <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile}}</label>
+        <div class="value m-3" *ngIf="filesdataForm.value.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId && uploadedfiles && uploadedfiles.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + uploadedfiles.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.filePath" target="_blank">
+            {{uploadedfiles.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFile?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader [data]="execlsingleFilesUploaderData" (fileUploaded)="onworkProgressCurveMonthlyAndCumulativePercentageOfCompletionFileUploaded($event)"></app-file-uploader>
+        <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId.errors && filesdataForm.controls.workProgressCurveMonthlyAndCumulativePercentageOfCompletionFileId.errors['required'] && isFormSubmitted">
+          {{localization.required}}
+        </div>
+      </div>
+      <div class="col-6 col-lg-6">
+        <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.cashFlowCurveFile}}</label>
+        <div class="value m-3" *ngIf="filesdataForm.value.cashFlowCurveFileId && uploadedfiles && uploadedfiles.cashFlowCurveFile">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + uploadedfiles.cashFlowCurveFile?.filePath" target="_blank">
+            {{uploadedfiles.cashFlowCurveFile?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader (fileUploaded)="oncashFlowCurveFileUploaded($event)" [data]="execlsingleFilesUploaderData"></app-file-uploader>
+        <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.cashFlowCurveFileId.errors && filesdataForm.controls.cashFlowCurveFileId.errors['required'] && isFormSubmitted">
+          {{localization.required}}
+        </div>
+      </div>
+    </div>
+    <div class="row row-gap-4">
+      <div class="col-6 col-lg-6">
+        <label for="licNum" class="form-label"><span class="required-star">*</span> {{localization.employmentCountCurveFile}}</label>
+        <div class="value m-3" *ngIf="filesdataForm.value.employmentCountCurveFileId && uploadedfiles &&uploadedfiles.employmentCountCurveFile">
+          <span class="icon material-icons-outlined">content_copy</span>
+          <a [href]="baseUrl + uploadedfiles.employmentCountCurveFile?.filePath" target="_blank">
+            {{uploadedfiles.employmentCountCurveFile?.fileDescription}}
+          </a>
+        </div>
+        <app-file-uploader [data]="execlsingleFilesUploaderData" (fileUploaded)="onemploymentCountCurveFileUploaded($event)"></app-file-uploader>
+        <div class="invalid-feedback d-block" *ngIf="filesdataForm.controls.employmentCountCurveFileId.errors && filesdataForm.controls.employmentCountCurveFileId.errors['required'] && isFormSubmitted">
+          {{localization.required}}
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-6">
+        <label for="licNum" class="form-label">{{localization.licenseProjectTimeScheduleOtherAttachments}}</label>
+        <div class="value m-3" *ngIf="filesdataForm.value.licenseProjectTimeScheduleOtherAttachments">
+          <ng-container *ngFor="let file of uploadedfiles.licenseProjectTimeScheduleOtherAttachments">
+            <span class="icon material-icons-outlined">content_copy</span>
+            <a [href]="baseUrl + file.otherAttachmentFile.filePath" target="_blank">
+              {{file.otherAttachmentFile.fileDescription}}
+            </a>
+          </ng-container>
+        </div>
+        <app-file-uploader [data]="mueltiFilesUploaderData" (fileUploaded)="onlicenseProjectTimeScheduleOtherAttachmentsFileUploaded($event)"></app-file-uploader>
+
+      </div>
     </div>
   </div>
 
 
-
-
-  <div class="d-flex  p-3 section">
-    <span class="icon"><i class="material-icons">list_alt</i></span>
-    <span class="title"> الملاحظات</span>
+  <div class="form-block">
+    <h6 class="title">الملاحظات</h6>
+    <app-rich-text-editor (valueChanged)="onValueChange($event)"></app-rich-text-editor>
   </div>
-  <app-rich-text-editor (valueChanged)="onValueChange($event)"></app-rich-text-editor>
 </div>
 
-<div class="row row-gap-3 mb-3" *ngFor="let item of sysRequestApprovalList; let i = index">
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" [(ngModel)]="item.isApproved" id="item.discerption{{i}}" />
-    <label class="form-check-label" for="chk1">
-      {{item.description}}
-    </label>
-  </div>
+<div class="d-flex flex-column gap-2 mt-3" *ngFor="let item of sysRequestApprovalList; let i = index">
+  <label class="form-check" [for]="'item-'+i">
+    <input class="form-check-input" type="checkbox" [(ngModel)]="item.isApproved" [id]="'item-'+i" />
+    <label class="form-check-label" [for]="'item-'+i">{{item.description}}</label>
+  </label>
 </div>

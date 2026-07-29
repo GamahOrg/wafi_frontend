@@ -47,7 +47,9 @@
             <th scope="col">المستفيد</th>
             <th scope="col">البند الرئيسي</th>
             <th scope="col">البند الفرعي</th>
+            <th scope="col">تاريخ الصرف</th>
             <th scope="col">حالة وثيقة الصرف</th>
+            <th scope="col">سبب الرفض</th>
             <th scope="col" class="w-0">الاجراءات</th>
           </tr>
         </thead>
@@ -69,11 +71,17 @@
               {{ document.subItem }}
             </td>
             <td class="text-nowrap">
+              {{ document.exchangeDate | date:'yyyy-MM-dd' }}
+            </td>
+            <td class="text-nowrap">
               <span class="status-pill" [ngClass]="getStatusClass(document.statusId)">
-                {{ document.statusId ? statusMap[document.statusId] : "-" }}
+                {{ document.statusName ?? '-' }}
               </span>
             </td>
 
+            <td class="text-nowrap">
+              {{ getRejectionOwner(document.licenseProjectExchangeDocumentRejectionBy) }}
+            </td>
             <td class="text-nowrap">
               <div class="d-flex align-items-center">
                 <button class="btn btn-outline-primary" (click)="viewDetails(document)">عرض التفاصيل</button>

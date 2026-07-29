@@ -143,7 +143,7 @@
             </ng-template>
           </label>
 
-          <input id="paymentDeadline" name="paymentDeadline" type="text" class="form-control" formControlName="paymentDeadline" />
+          <input id="paymentDeadline" name="paymentDeadline" type="number" class="form-control" formControlName="paymentDeadline" />
           <div class="invalid-feedback d-block" *ngIf="
               controls['paymentDeadline']?.hasError('required') &&
               controls['paymentDeadline']?.touched
@@ -234,7 +234,7 @@
               <td>
                 <div>
                   <div class="input-group">
-                    <input type="number" class="form-control" [placeholder]="'السعر للوحدة'" [(ngModel)]="item.unitPrice" (ngModelChange)="clearPaymentError(i, 'unitPrice')" [ngModelOptions]="{ standalone: true }" [class.is-invalid]="paymentTableErrors[i]?.unitPrice" />
+                    <input type="text" appNumberFormat class="form-control" [placeholder]="'السعر للوحدة'" [(ngModel)]="item.unitPrice" (ngModelChange)="clearPaymentError(i, 'unitPrice')" [ngModelOptions]="{ standalone: true }" [class.is-invalid]="paymentTableErrors[i]?.unitPrice" />
                     <span class="input-group-text">
                       <img src="assets/images/general/riyal-icon.svg" alt="ريال" class="riyal-icon" />
                     </span>

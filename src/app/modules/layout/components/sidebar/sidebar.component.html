@@ -2,7 +2,7 @@
 
   <div class="logo d-flex flex-column justify-content-between align-items-center py-4"
     [ngClass]="{'gap-md-1': hideSideBar, 'flex-md-row': !hideSideBar}">
-    <span class="sidebar-toggle" (click)="hideSideBar = !hideSideBar">
+    <span class="sidebar-toggle" (click)="toggleSidebar()">
       <i class="material-icons">{{ hideSideBar ? 'menu' : 'close'}}</i>
     </span>
 
@@ -153,11 +153,11 @@
               <span class="icon"><i class="material-icons-outlined">local_police</i></span>
               <span class="nav-link-text">شهادات الترخيص</span>
             </a>
-            <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.renewLicensesList)}"
+            <!-- <a *ngIf="isFacilityTypeCategoryDeveloper" class="nav-link" [ngClass]="{'active': currentUrl.includes(links.renewLicensesList)}"
                href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.renewLicensesList, $event)">
               <span class="icon"><i class="material-icons-outlined">new_releases</i></span>
               <span class="nav-link-text">تجديد الرخص</span>
-            </a>
+            </a> -->
             <!-- <a class="nav-link" [ngClass]="{'active': currentUrl.includes(links.lincenseRequestApprovals)}"
     href="javascript:void(0)" (click)="navigateWithCheck('/' + links.license + '/' + links.lincenseRequestApprovals, $event)">
     <span class="icon"><i class="material-icons-outlined">approval</i></span>

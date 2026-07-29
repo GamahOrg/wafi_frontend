@@ -88,6 +88,7 @@ export class RequestDetailsComponent implements OnInit, OnDestroy {
     remainingDaysToStudy: "الوقت المتبقي لدراسة الطلب",
     remainingDaysToTakeAnAction: "الوقت المتبقي لأخذ قرار",
     qualificationSuspensionRemainingDays: "عدد الايام المتبقية للمعالجة لتعليق الطلب",
+    remainingNotesProcessingDays: "الوقت المتبقى لمعالجة الملاحظات",
   }
 
   StudyDaysProgressSetting: CircularProgressSetting = new CircularProgressSetting;

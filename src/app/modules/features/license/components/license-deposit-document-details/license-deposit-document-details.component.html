@@ -144,7 +144,7 @@
                     <label class="form-label"> المبلغ </label>
                     <div class="form-control-plaintext">
                       <span>
-                        {{ selectedRequest?.amount }}
+                        {{ selectedRequest?.amount | number:'1.2-2' }}
                       </span>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                 <label class="form-label"> مبلغ الايداع في حساب التكاليف الانشائية </label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ selectedRequest?.constructionCostsAmount }}
+                    {{ selectedRequest?.constructionCostsAmount | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
@@ -177,7 +177,7 @@
                 <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ (selectedRequest?.constructionCostsAvailableAmount ?? 0) - (selectedRequest?.constructionCostsAmount ?? 0) }}
+                    {{ ((selectedRequest?.constructionCostsAvailableAmount ?? 0) - (selectedRequest?.constructionCostsAmount ?? 0)) | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
@@ -187,7 +187,7 @@
                 <label class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ selectedRequest?.constructionCostsAvailableAmount }}
+                    {{ selectedRequest?.constructionCostsAvailableAmount | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
@@ -209,7 +209,7 @@
                 <label class="form-label"> مبلغ الايداع في حساب الاداري والتسويقي </label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ selectedRequest?.administrativeAndMarketingAmount }}
+                    {{ selectedRequest?.administrativeAndMarketingAmount | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
@@ -220,7 +220,7 @@
                 <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ (selectedRequest?.administrativeAndMarketingAvailableAmount ?? 0) - (selectedRequest?.administrativeAndMarketingAmount ?? 0) }}
+                    {{ ((selectedRequest?.administrativeAndMarketingAvailableAmount ?? 0) - (selectedRequest?.administrativeAndMarketingAmount ?? 0)) | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
@@ -230,7 +230,7 @@
                 <label class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ selectedRequest?.administrativeAndMarketingAvailableAmount }}
+                    {{ selectedRequest?.administrativeAndMarketingAvailableAmount | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
@@ -252,7 +252,7 @@
                 <label class="form-label"> مبلغ الايداع في حساب الحفظ </label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ selectedRequest?.escrowAccountAmount }}
+                    {{ selectedRequest?.escrowAccountAmount | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
@@ -263,7 +263,7 @@
                 <label class="form-label">المبلغ المتوفر في الحساب قبل الايداع</label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ (selectedRequest?.custodyAvailableAmount ?? 0) - (selectedRequest?.escrowAccountAmount ?? 0) }}
+                    {{ ((selectedRequest?.custodyAvailableAmount ?? 0) - (selectedRequest?.escrowAccountAmount ?? 0)) | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
@@ -273,7 +273,7 @@
                 <label class="form-label">المبلغ المتوفر في الحساب بعد الايداع</label>
                 <div class="form-control-plaintext">
                   <span>
-                    {{ selectedRequest?.custodyAvailableAmount }}
+                    {{ selectedRequest?.custodyAvailableAmount | number:'1.2-2' }}
                   </span>
                 </div>
               </div>
